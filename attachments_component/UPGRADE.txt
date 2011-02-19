@@ -1,0 +1,35 @@
+UPGRADING
+=========
+
+* IMPORTANT: Before upgrading, it is prudent to backup your entire Joomla!
+  MySQL database and the attachments upload directory!  See some notes on
+  backing up the MySQL table for the attachments at the end of this file.
+  See below for details.
+
+UPGRADING FROM 2.0+
+===================
+
+Just install the new version.  There is no need to uninstall any previous
+version.
+
+UPGRADING FROM 1.3.4 to 2.0+
+============================
+
+Just install the new version.  There is no need to uninstall any previous
+version (although this has only been tested with 1.3.4).  Existing
+attachments will not be harmed.  If you wish to discard any existing
+attachments, delete them before installing the new version.
+
+BACKING UP ATTACHMENTS
+======================
+
+To back up the attachments MySQL table (eg, jos_attachments) using
+phpMyAdmin: Select the attachments table (usually jos_attachments), and do
+EXPORT.  Do not export the table (structure), only export the attachments
+table data using 'Complete' inserts (but not 'Extended' inserts).  This
+simplifies reinstallation of the attachments data.  Save the resulting SQL
+code to a file.  The data about the attachments can be restored using a
+MySQL import (you should empty the jos_attachments table before doing the
+import).  Note that saving the SQL saves the data about the attachments but
+not the files themselves.  If you wish to back up the attachment files, you
+should back up the 'attachments' directory.

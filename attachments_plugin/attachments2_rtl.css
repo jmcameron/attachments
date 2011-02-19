@@ -1,0 +1,14 @@
+/* Styles for lists of attachments */
+
+div.attachmentsList {
+    margin-left: 0px;
+    margin-right: 15px;
+    text-align: right;
+}
+
+div.uploadAttachmentsPage p {
+    text-align: right;
+}
+
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
+<install type="plugin" group="content" version="1.5" method="upgrade">
+    <name>Content - Attachments</name>
+    <creationDate>February  6, 2011</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>2.2</version>
+    <description>ATTACHMENT_PLUGIN_INSTALLED</description>
+    <files>
+	<filename plugin="attachments">attachments.php</filename>
+	<filename>attachments.css</filename>
+	<filename>attachments1.css</filename>
+	<filename>attachments2.css</filename>
+	<filename>attachments_rtl.css</filename>
+	<filename>attachments2_rtl.css</filename>
+	<filename>attachments_caching.js</filename>
+	<filename>attachments_refresh.js</filename>
+    </files>
+    <languages>
+	<language tag="en-GB">en-GB.plg_content_attachments.ini</language>
+	<language tag="en-GB">en-GB.plg_frontend_attachments.ini</language>
+    </languages>
+</install>

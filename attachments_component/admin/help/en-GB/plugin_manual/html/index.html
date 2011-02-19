@@ -1,0 +1,926 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Attachments Extension Plugin Manual</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '1.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Attachments Extensions for Joomla! v1.2 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">Attachments Extensions for Joomla! v1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Attachments Extension Plugin Manual</h1><p>By: Jonathan M. Cameron</p>
+<dl class="docutils">
+<dt>Copyright (C) 2010 Jonathan M. Cameron, All Rights Reserved</dt>
+<dd>License: <a class="reference external" href="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</a> GNU/GPL</dd>
+</dl>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#introduction" id="id1">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
+<li><a class="reference internal" href="#terminology" id="id2">2&nbsp;&nbsp;&nbsp;Terminology</a></li>
+<li><a class="reference internal" href="#implementation-procedure" id="id3">3&nbsp;&nbsp;&nbsp;Implementation Procedure</a><ul class="auto-toc">
+<li><a class="reference internal" href="#make-sure-an-attachment-plugin-will-work" id="id4">3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</a></li>
+<li><a class="reference internal" href="#select-the-entity-or-entities-to-handle" id="id5">3.2&nbsp;&nbsp;&nbsp;Select the entity or entities to handle</a></li>
+<li><a class="reference internal" href="#create-the-set-of-files-for-the-plugin" id="id6">3.3&nbsp;&nbsp;&nbsp;Create the set of files for the plugin</a></li>
+<li><a class="reference internal" href="#create-the-plugin-installation-file" id="id7">3.4&nbsp;&nbsp;&nbsp;Create the plugin installation file</a></li>
+<li><a class="reference internal" href="#install-and-test" id="id8">3.5&nbsp;&nbsp;&nbsp;Install and test</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix-a-implement-the-plugin-functionality" id="id9">4&nbsp;&nbsp;&nbsp;Appendix A - Implement the plugin functionality</a><ul class="auto-toc">
+<li><a class="reference internal" href="#functions-you-probably-will-need-to-implement" id="id10">4.1&nbsp;&nbsp;&nbsp;Functions you probably will need to implement</a></li>
+<li><a class="reference internal" href="#functions-you-may-not-need-to-implement" id="id11">4.2&nbsp;&nbsp;&nbsp;Functions you may not need to implement</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix-b-where-the-plugin-files-go-when-installed-in-joomla" id="id12">5&nbsp;&nbsp;&nbsp;Appendix B - Where the plugin files go when installed in Joomla!</a></li>
+<li><a class="reference internal" href="#appendix-c-where-are-attachment-files-saved" id="id13">6&nbsp;&nbsp;&nbsp;Appendix C - Where are attachment files saved?</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The Attachments extension for Joomla! lets users attach files to content items
+such as articles.  The original purpose of the Attachments extension was to
+add attachments to articles and it was not possible to add attachments to
+anything else.  Attachments extension version 2.0 was upgraded and refactored
+so that files can be attached to a variety of content items provided by
+various Joomla! components.  The Attachments extension now accepts its own
+plugins to make this possible for new types of content items.</p>
+<p>Content items correspond to a component.  For instance, articles are part of
+the <tt class="docutils literal"><span class="pre">com_content</span></tt> component.  Plugins for the Attachments extension provide the
+necessary functions to allow attaching files to new types of content items.</p>
+<p>The purpose of this manual is describe how to create new Attachments
+plugins. There are several steps involved in the process.  First, you need to
+create a set of files for the plugin.  A template is provided that includes
+the necessary files.  The files need to be adapted to the new component
+including adding appropriate functionality.  Then the plugin can be installed
+and tested.</p>
+<p>The Attachments plugins are a new type of Joomla! plugin that provide extra
+functionality to the the Attachments extensions.  They are installed like
+other Joomla! plugins and are visible in the plugin manager.</p>
+</div>
+<div class="section" id="terminology">
+<h1><a class="toc-backref" href="#id2">2&nbsp;&nbsp;&nbsp;Terminology</a><a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-component"><strong>Component</strong></dt>
+<dd>The component that defines the content item of interest,
+such as <tt class="docutils literal"><span class="pre">com_content</span></tt>.</dd>
+<dt id="term-content-item"><strong>Content Item</strong></dt>
+<dd>Any item that can be displayed in the front end of a Joomla! website.
+Familiar examples include <em>articles</em>, <em>sections</em>, and <em>categories</em>
+supported by the built-in Joomla! component <tt class="docutils literal"><span class="pre">com_content</span></tt>.  Other
+types of content items might include things like user profiles, event
+descriptions, product descriptions, <em>etc.</em>, that are provided by
+various Joomal! extension components.</dd>
+<dt id="term-parent-type"><strong>Parent Type</strong></dt>
+<dd>This is the name of the component for the content item of interest
+(<em>e.g.</em> <tt class="docutils literal"><span class="pre">com_content</span></tt>).</dd>
+<dt id="term-parent-entity"><strong>Parent Entity</strong></dt>
+<dd>The name of the specific type of content items that you want to attach
+files to.  For instance, for regular Joomla!  content articles, this
+would be <em>article</em>.  In many cases in the rest of this document, we
+will just refer to this as the <em>Entity</em>.  It is possible for there to
+be more than one entity for a component.  In the <tt class="docutils literal"><span class="pre">com_content</span></tt>
+component, there are three: <em>articles</em>, <em>sections</em>, and <em>categories</em>.
+Depending on the context, the term <em>entity</em> may be used in two ways:
+(1) the type of entity to which files may be attached, and (2) a
+specific entity to which a file is attached.  The distinction should
+be clear from the context.</dd>
+<dt id="term-parent"><strong>Parent</strong></dt>
+<dd>The specific entity instance that a file is attached to is called the
+attachment&#8217;s parent.  There is only one parent for any attachment.
+Most commonly, for an <em>article</em> entity, the <em>parent</em> would be the
+specific article that a file is attached to.</dd>
+<dt id="term-attachments-plugin"><strong>Attachments plugin</strong></dt>
+<dd>A Joomla! plugin for that adds extra functionality to the Attachments
+extension for attaching files to new types of content items.</dd>
+</dl>
+</div>
+<div class="section" id="implementation-procedure">
+<h1><a class="toc-backref" href="#id3">3&nbsp;&nbsp;&nbsp;Implementation Procedure</a><a class="headerlink" href="#implementation-procedure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="make-sure-an-attachment-plugin-will-work">
+<span id="diagnostic-section"></span><h2><a class="toc-backref" href="#id4">3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</a><a class="headerlink" href="#make-sure-an-attachment-plugin-will-work" title="Permalink to this headline">¶</a></h2>
+<p>In order to add attachments to a content item, the content item must invoke
+the Joomla! content plugin &#8216;onPrepareContent&#8217; when that item is rendered.  To
+determine if this is the case, we need to do a little diagnostic work.
+Install the Attachments extension and temporarily edit the main attachments
+plugin file:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">plugins/content/attachments.php</span></tt></blockquote>
+<p>Edit this file and look for the <cite>addAttachments()</cite> function and look for the
+line containing <tt class="docutils literal"><span class="pre">global</span> <span class="pre">$option;</span></tt> at the beginning of the function.  In
+order to generate the necessary diagnostic output, insert the following line
+after the line:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">$row-&gt;text .= &quot;&lt;br/&gt;PC: $option,  OBJ: &quot; . get_class($row) . &quot;, VIEW: &quot; . JRequest::getString(&#39;view&#39;);</span>
+<span class="x">return true;</span>
+</pre></div>
+</div>
+<p>where the &#8216;PC&#8217; tag is for the <em>Parent Component</em>, &#8216;OBJ&#8217; is the class of the
+the content item, and &#8216;VIEW&#8217; is the name of the view.</p>
+<p>Refresh the frontpage (or whichever page contains the content item).  Look for
+the diagnostic line beginning with &#8216;PC&#8217; just after your content item.  Make a
+note of what appears after the PC, OBJ, and VIEW tags.  You may need it when
+you implement the <tt class="docutils literal"><span class="pre">getParentId()</span></tt> function (see section
+<a class="reference internal" href="#section-optional-function"><em>4.2&nbsp;&nbsp;&nbsp;Functions you may not need to implement</em></a>).  It may be useful to insert a command to
+dump the entire $row object (<em>e.g.</em> var_dump($row); ).  Note that the display
+of any existing attachments will be superceded by this output; when these two
+lines are removed the display of attachments will return to normal.</p>
+<p>If you do not see any output after your item, it may not be possible to attach
+files to your type of content items using the Attachemnts extension.  Note
+that some components have settings that control whether the &#8216;onPrepareContent&#8217;
+is called by the component code during the rendering process.  Check the
+extension&#8217;s documentation.  Make sure the setting is enabled, if available.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Once you have determined if the &#8216;onPrepareContent&#8217; plugin is called for
+your content item, don&#8217;t forget to restore the <cite>addAttachment()</cite> function
+to its normal operation!</p>
+</div>
+</div>
+<div class="section" id="select-the-entity-or-entities-to-handle">
+<h2><a class="toc-backref" href="#id5">3.2&nbsp;&nbsp;&nbsp;Select the entity or entities to handle</a><a class="headerlink" href="#select-the-entity-or-entities-to-handle" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to identify two things: (1) the parent type and (2) any
+parent entities that you intend to handle in the new Attachments plugin.</p>
+<p>From the diagnostic display you saw in the previous step, you can clearly
+identify the parent type as the component name to the right of the &#8216;PC:&#8217; just
+after the item you want to attach files to.  It should look something like
+<tt class="docutils literal"><span class="pre">com_newcomp</span></tt>. (Obviously, you would replace the &#8216;newcomp&#8217; part with the
+actual name of your component.)  This may not come as a surprise since this
+should correspond to the type of content you are interested in.</p>
+<p>If you are interested in only one type of content item for the new component,
+then this phase is complete.  The parent type is <tt class="docutils literal"><span class="pre">com_newcomp</span></tt>.  The entity
+corresponds to the name of type of content item.  It will also be the default
+one, called <tt class="docutils literal"><span class="pre">default</span></tt>.</p>
+<p>If there is more than one type of entity that you wish to handle for the
+component, pay special attention to the other two items (OBJ and VIEW) for
+each item from the diagnostic display.  More than likely the entities will
+correspond to the primary types of content in the new component.</p>
+<p><strong>Each entity name needs be alphanumeric token without spaces.</strong> Entity names
+will be used in the code and URLs and will be general to all languages.  You
+can use the translation file to create alternate names that have spaces and
+capitalization.</p>
+<p>For instance, for the basic Joomla! content, the parent type is
+<tt class="docutils literal"><span class="pre">com_content</span></tt> and the entities are <tt class="docutils literal"><span class="pre">article</span></tt> (or <tt class="docutils literal"><span class="pre">default</span></tt> for
+articles), and <tt class="docutils literal"><span class="pre">section</span></tt> and <tt class="docutils literal"><span class="pre">category</span></tt>.  These are all basic Joomla!
+content items that can have descriptions or textual content associated with
+them.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The entity names must be unique and not be the same as any other entity
+name in other components.</p>
+</div>
+</div>
+<div class="section" id="create-the-set-of-files-for-the-plugin">
+<span id="fileset-section"></span><h2><a class="toc-backref" href="#id6">3.3&nbsp;&nbsp;&nbsp;Create the set of files for the plugin</a><a class="headerlink" href="#create-the-set-of-files-for-the-plugin" title="Permalink to this headline">¶</a></h2>
+<p>The next thing you need to do is create the basic set of files you need for
+your new Attachments plugin.  First, create a directory for your files and
+create a set of files like this inside that directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">attachments_for_newcomp</span><span class="o">.</span><span class="n">php</span>
+<span class="n">attachments_for_newcomp</span><span class="o">.</span><span class="n">xml</span>
+<span class="n">en</span><span class="o">-</span><span class="n">GB</span><span class="o">.</span><span class="n">plg_attachments_attachments_for_newcomp</span><span class="o">.</span><span class="n">ini</span>
+<span class="n">plugins</span><span class="o">/</span><span class="n">com_newcomp</span><span class="o">.</span><span class="n">ini</span>
+<span class="n">plugins</span><span class="o">/</span><span class="n">com_newcomp</span><span class="o">.</span><span class="n">php</span>
+</pre></div>
+</div>
+<p>where you should replace all occurrences of <tt class="docutils literal"><span class="pre">newcomp</span></tt> with the name of your
+component (the part after the <tt class="docutils literal"><span class="pre">com_</span></tt> prefix) you are building the Attachments
+plugin for.</p>
+<div class="section" id="file-attachments-for-newcomp-xml">
+<span id="index-0"></span><h3>3.3.1&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">attachments_for_newcomp.xml</span></tt><a class="headerlink" href="#file-attachments-for-newcomp-xml" title="Permalink to this headline">¶</a></h3>
+<p>Here is what the installation file <strong>attachments_for_newcomp.xml</strong> should contain:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE install SYSTEM &quot;http://dev.joomla.org/xml/1.5/plugin-install.dtd&quot;&gt;</span>
+<span class="nt">&lt;install</span> <span class="na">type=</span><span class="s">&quot;plugin&quot;</span> <span class="na">group=</span><span class="s">&quot;attachments&quot;</span> <span class="na">version=</span><span class="s">&quot;1.5&quot;</span> <span class="na">method=</span><span class="s">&quot;upgrade&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Attachments - For Newcomp<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;creationDate&gt;</span>???<span class="nt">&lt;/creationDate&gt;</span>
+    <span class="nt">&lt;author&gt;</span>???<span class="nt">&lt;/author&gt;</span>
+    <span class="nt">&lt;authorEmail&gt;</span>???<span class="nt">&lt;/authorEmail&gt;</span>
+    <span class="nt">&lt;authorUrl&gt;</span>???<span class="nt">&lt;/authorUrl&gt;</span>
+    <span class="nt">&lt;copyright&gt;</span>???<span class="nt">&lt;/copyright&gt;</span>
+    <span class="nt">&lt;license&gt;</span>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL<span class="nt">&lt;/license&gt;</span>
+    <span class="nt">&lt;version&gt;</span>???<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;description&gt;</span>ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED<span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;files&gt;</span>
+        <span class="nt">&lt;filename</span> <span class="na">plugin=</span><span class="s">&quot;attachments_for_newcomp&quot;</span><span class="nt">&gt;</span>attachments_for_newcomp.php<span class="nt">&lt;/filename&gt;</span>
+        <span class="nt">&lt;filename&gt;</span>plugins/com_newcomp.php<span class="nt">&lt;/filename&gt;</span>
+        <span class="nt">&lt;filename&gt;</span>plugins/com_newcomp.ini<span class="nt">&lt;/filename&gt;</span>
+    <span class="nt">&lt;/files&gt;</span>
+    <span class="nt">&lt;languages&gt;</span>
+        <span class="nt">&lt;language</span> <span class="na">tag=</span><span class="s">&quot;en-GB&quot;</span><span class="nt">&gt;</span>en-GB.plg_attachments_attachments_for_newcomp.ini<span class="nt">&lt;/language&gt;</span>
+    <span class="nt">&lt;/languages&gt;</span>
+    <span class="nt">&lt;params/&gt;</span>
+<span class="nt">&lt;/install&gt;</span>
+</pre></div>
+</div>
+<p>where you should fill in for all of the <tt class="docutils literal"><span class="pre">???</span></tt> items as well as change all
+occurrences of &#8216;newcomp&#8217; to the name of your new component.  Note that the
+description field is a translation token and should include no spaces.</p>
+</div>
+<div class="section" id="file-attachments-for-newcomp-php">
+<span id="index-1"></span><h3>3.3.2&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">attachments_for_newcomp.php</span></tt><a class="headerlink" href="#file-attachments-for-newcomp-php" title="Permalink to this headline">¶</a></h3>
+<p>The second file is the <strong>attachments_for_newcomp.php</strong> file:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+  <span class="c">// no direct access</span>
+  <span class="nb">defined</span><span class="p">(</span> <span class="s1">&#39;_JEXEC&#39;</span> <span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span> <span class="s1">&#39;Restricted access&#39;</span> <span class="p">);</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>This is basically a placeholder file needed for the installation.  The real
+code for the attachment plugin is in the <tt class="docutils literal"><span class="pre">com_newcomp.php</span></tt> (shown later).</p>
+</div>
+<div class="section" id="file-en-gb-plg-attachments-attachments-for-newcomp-ini">
+<span id="index-2"></span><h3>3.3.3&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">en-GB.plg_attachments_attachments_for_newcomp.ini</span></tt><a class="headerlink" href="#file-en-gb-plg-attachments-attachments-for-newcomp-ini" title="Permalink to this headline">¶</a></h3>
+<p>The translations <tt class="docutils literal"><span class="pre">.ini</span></tt> file should look like this:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="c"># en-GB.plg_attachments_for_newcomp.ini</span>
+<span class="c"># Attachments for Joomla! newcomp extension</span>
+<span class="c"># Copyright (C) ??? ???, All rights reserved.</span>
+<span class="c"># License http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</span>
+<span class="c"># Note : All ini files need to be saved as UTF-8 - No BOM</span>
+
+<span class="c"># English translation</span>
+
+<span class="na">ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED</span><span class="o">=</span><span class="s">This plugin enables adding attachments to Newcomp &#39;Things&#39;</span>
+
+<span class="na">THING</span><span class="o">=</span><span class="s">Thing</span>
+<span class="na">THINGS</span><span class="o">=</span><span class="s">Things</span>
+</pre></div>
+</div>
+<p>This file should define any translation item created in this plugin.  Note that
+the item <tt class="docutils literal"><span class="pre">ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED</span></tt> must be exactly the same
+as the one in the <tt class="docutils literal"><span class="pre">&lt;description&gt;</span></tt> item in the installation <tt class="docutils literal"><span class="pre">.xml</span></tt> file.
+We have also added a translation item for &#8220;thing&#8221;, the basic entity of
+com_newcomp as well as its pluralized version.  Note that the pluralization in
+the translation item on the left is always done by simply adding a &#8216;S&#8217; on the
+end of the translation item; the translation on the right can be spelled
+appropriately.  All translation keys (on the left of the equals sign) must be
+alphanumeric without spaces.</p>
+<p>Each entity name supported should be given with an appropriate translation
+that may include spaces, etc.</p>
+<p>Don&#8217;t forget to add translation items for any error messages you may include
+in the code our write.</p>
+</div>
+<div class="section" id="file-plugin-com-newcomp-ini">
+<span id="index-3"></span><h3>3.3.4&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">plugin/com_newcomp.ini</span></tt><a class="headerlink" href="#file-plugin-com-newcomp-ini" title="Permalink to this headline">¶</a></h3>
+<p>Next we look at the two files in the plugin directory.  First consider the
+configuration file <tt class="docutils literal"><span class="pre">plugin/com_newcomp.ini</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><pre>1
+2
+3
+4
+5
+6</pre></td><td class="code"><div class="highlight"><pre> <span class="k">[default]</span>
+ <span class="na">alias</span> <span class="o">=</span> <span class="s">item</span>
+ <span class="na">entity</span> <span class="o">=</span> <span class="s">THING</span>
+ <span class="na">entity_table</span> <span class="o">=</span> <span class="s">newcomp_thing</span>
+ <span class="na">entity_id_field</span> <span class="o">=</span> <span class="s">id</span>
+ <span class="na">entity_title_field</span> <span class="o">=</span> <span class="s">title</span>
+</pre></div>
+</td></tr></table></div>
+<p>This file should contain a series of blocks for each entity, separated by a
+blank line.  The first line of each block must contain the name of the entity
+in square brackets as shown.  In this example there is only one block, but the
+file could contain as many blocks as needed.  There will be a separate block
+like this for every entity that is supported by the component.  The &#8216;default&#8217;
+one, usually the main one, should be called <em>default</em> (as shown here) and
+should appear first.</p>
+<p>These files are standard configuration files.  All of the lines after the
+first line of each block have assignments.  Only the part to the right of the
+equals sign should be changed.</p>
+<p>Now consider each of the lines above.</p>
+<blockquote>
+<dl class="docutils">
+<dt><strong>Line 1</strong></dt>
+<dd>is the name of the parent entity type in lower case in square brackets.
+<strong>This name must be a single alphanumeric token without spaces</strong> (because
+it may be used in URLs).  Always use &#8216;default&#8217; for the default entity for
+a component.  The first line for the rest of the blocks should contain
+the entity name in square brackets; [default] must appear only once per
+component.</dd>
+<dt><strong>Line 2</strong></dt>
+<dd>gives a comma-separated list of alternate names (or aliases) in lower
+case that can be used in the code for this entity.  If there are no
+aliases, this line can be omitted.  It is possible that several aliases
+will be needed for the same entity, as you should see from the diagnostic
+output (see section <a class="reference internal" href="#diagnostic-section"><em>3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</em></a>).</dd>
+<dt><strong>Line 3</strong></dt>
+<dd>is the formal name of the entity in upper case; the the term to the right
+of the equals sign here is a translation item for this entity and must be
+translated in the translation file.  Note that the translation file must
+also translate a pluralized version of this name (the upper case name
+with an appended &#8216;S&#8217;).</dd>
+<dt><strong>Line 4</strong></dt>
+<dd>is the name of the database table in which the parent entity is found
+(without the leading <tt class="docutils literal"><span class="pre">#__</span></tt> prefix).</dd>
+<dt><strong>Line 5</strong></dt>
+<dd>is the name of the id field for the parent entity in the database
+table <tt class="docutils literal"><span class="pre">entity_table</span></tt>.  This line is optional; it may be ommited if the
+id field is &#8216;id&#8217;;</dd>
+<dt><strong>Line 6</strong></dt>
+<dd>is the name of the title field for the parent entity in the database
+table <tt class="docutils literal"><span class="pre">entity_table</span></tt>.</dd>
+</dl>
+</blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default, the AttachmentsPlugin base class (which your code will extend)
+supports content items that appear in database tables, which usually means
+that they are defined in Joomla! components.  If your entity is not defined
+in a Joomla!  database table, you will have to override several of the base
+class functions, particularly the function to retrieve a content item&#8217;s
+title.</p>
+</div>
+<p>You can refer to the the <tt class="docutils literal"><span class="pre">com_content</span></tt> component configuration file
+<tt class="docutils literal"><span class="pre">plugins/attachments/plugins/com_content.ini</span></tt> for a more involved example
+with multiple blocks and aliases.  (Check after the Attachments extension is
+installed).</p>
+</div>
+<div class="section" id="file-plugin-com-newcomp-php">
+<span id="index-4"></span><h3>3.3.5&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">plugin/com_newcomp.php</span></tt><a class="headerlink" href="#file-plugin-com-newcomp-php" title="Permalink to this headline">¶</a></h3>
+<p>Finally, the main code for the plugin is in <tt class="docutils literal"><span class="pre">plugin/com_newcomp.php</span></tt>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="c">// no direct access</span>
+<span class="nb">defined</span><span class="p">(</span> <span class="s1">&#39;_JEXEC&#39;</span> <span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span> <span class="s1">&#39;Restricted access&#39;</span> <span class="p">);</span>
+
+<span class="k">class</span> <span class="nc">AttachmentsPlugin_com_newcomp</span> <span class="k">extends</span> <span class="nx">AttachmentsPlugin</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Constructor</span>
+<span class="sd">     */</span>
+    <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">(</span><span class="s1">&#39;attachments_for_newcomp&#39;</span><span class="p">,</span> <span class="s1">&#39;com_newcomp&#39;</span><span class="p">,</span> <span class="s1">&#39;newcomp&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="o">...</span> <span class="nx">OTHER</span> <span class="nx">FUNCTIONS</span> <span class="nx">DESCRIBED</span> <span class="nx">IN</span> <span class="nx">SECTION</span> <span class="nx">APPENDEX</span> <span class="nx">A</span> <span class="nx">BELOW</span>
+<span class="p">}</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>where many functions have been omitted for clarity.  Each function that may
+need implementing is described in <a class="reference internal" href="#implement-functionality-appendix"><em>4&nbsp;&nbsp;&nbsp;Appendix A - Implement the plugin functionality</em></a>.
+Replace <tt class="docutils literal"><span class="pre">newcom</span></tt> with the appropriate component name for your component
+throughout this code.</p>
+<p id="index-5">Your new class extends the AttachmentsPlugin class that can be found in the file:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">plugins/attachments/attachments_plugin.php</span></tt></li>
+</ul>
+</blockquote>
+<p>in your Joomla! installation.</p>
+</div>
+</div>
+<div class="section" id="create-the-plugin-installation-file">
+<h2><a class="toc-backref" href="#id7">3.4&nbsp;&nbsp;&nbsp;Create the plugin installation file</a><a class="headerlink" href="#create-the-plugin-installation-file" title="Permalink to this headline">¶</a></h2>
+<p>Once the files have been created (see <a class="reference internal" href="#fileset-section"><em>3.3&nbsp;&nbsp;&nbsp;Create the set of files for the plugin</em></a>) and edited to
+provide the necessary functionality, you will need to create a zip file for
+installation.  Use your favorite zip tool to create a zip file with the 5
+files.  Note that top level files and hierarchy of the zip file should look
+like this:</p>
+<div class="highlight-python"><pre>.
+|-- en-GB.plg_attachments_attachments_for_newcomp.ini
+|
+|-- attachments_for_newcomp.php
+|-- attachments_for_newcomp.xml
+`-- plugins
+    |-- com_newcomp.ini
+    `-- com_newcomp.php</pre>
+</div>
+<p>These files should appear in the zip file directly as shown and not in a
+nested directory.</p>
+</div>
+<div class="section" id="install-and-test">
+<h2><a class="toc-backref" href="#id8">3.5&nbsp;&nbsp;&nbsp;Install and test</a><a class="headerlink" href="#install-and-test" title="Permalink to this headline">¶</a></h2>
+<p>Once you have created your zip file, you should be able to install it into
+Joomla! using the regular installer (under the Extensions &gt; Install/Uninstall
+menu item in the administrative back end).  You will then need to enable the
+plugin.</p>
+<blockquote>
+<strong>DO NOT FORGET TO ENABLE YOUR NEW PLUGIN!</strong></blockquote>
+<p>Once the new attachments plugin is installed and enabled, you should be able
+to test it.</p>
+<p>Go to the front end and log in as a user with adequate permissions to edit the
+content item you are interested in.  You should see a red <strong>Add Attachment</strong>
+link just below the item.  Click on it to add an attachment to make sure it
+works.</p>
+<p>You should also try adding an attachment to a content item in the
+administrative back end.  Click on the &#8216;Attachments&#8217; item under the Components
+menu.  Then click on the [New] button on the task bar.  Near the bottom of the
+form, you will see a row of buttons corresponding to the supported types of
+content entities.  Click on the one corresponding to your new content entity.
+Then click on the [Select] entity button at the right end of the first field
+in the form.  You should see a list of the entities.  Select one and try
+adding the attachment to it.</p>
+<p>Once an attachment has been added to a content item, the usual functions to
+edit, delete, download, <em>etc.</em>, should work properly.</p>
+<p>If your new code does not work properly, you will need to review the functions
+described in section <a class="reference internal" href="#implement-functionality-appendix"><em>4&nbsp;&nbsp;&nbsp;Appendix A - Implement the plugin functionality</em></a>.  You may need to
+fix the code or add functions that you may have omitted.</p>
+<p>You may wish to implement simplified versions of the permission checking
+functions first (<em>e.g.</em>, <tt class="docutils literal"><span class="pre">userMayAddAttachment()</span></tt>,
+<tt class="docutils literal"><span class="pre">userMayEditAttachment()</span></tt>, and <tt class="docutils literal"><span class="pre">userMayAccessAttachment()</span></tt>) first.  It may
+be more productive to get the rest of the functionality working, then
+implement the permissions functions afterwards.</p>
+</div>
+</div>
+<div class="section" id="appendix-a-implement-the-plugin-functionality">
+<span id="implement-functionality-appendix"></span><h1><a class="toc-backref" href="#id9">4&nbsp;&nbsp;&nbsp;Appendix A - Implement the plugin functionality</a><a class="headerlink" href="#appendix-a-implement-the-plugin-functionality" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="functions-you-probably-will-need-to-implement">
+<h2><a class="toc-backref" href="#id10">4.1&nbsp;&nbsp;&nbsp;Functions you probably will need to implement</a><a class="headerlink" href="#functions-you-probably-will-need-to-implement" title="Permalink to this headline">¶</a></h2>
+<p>In your attachments plugin file <tt class="docutils literal"><span class="pre">com_newcomp.php</span></tt>, you will probably need to
+implement some or all of the following functions.</p>
+<div class="section" id="function-getentityviewurl">
+<span id="index-6"></span><h3>4.1.1&nbsp;&nbsp;&nbsp;function getEntityViewURL()<a class="headerlink" href="#function-getentityviewurl" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Get a URL to view the entity</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id the ID for this parent object</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> *</span>
+<span class="x"> * @return a URL to view the entity (non-SEF form)</span>
+<span class="x"> */</span>
+<span class="x">function getEntityViewURL($id, $parent_entity=&#39;default&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function constructs and returns a URL that will view or visit a specific
+entity.  This is specific to each type of component and each implemented type
+of entity.  In your component, find the URL for a view for each entity
+supported and implement them here.  Try to trim anything extra from the URL;
+often extra fields can be eliminated from the URL without affecting its
+operation (eg, dates, category IDs, etc).</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-checkattachmentslisttitle">
+<span id="index-7"></span><h3>4.1.2&nbsp;&nbsp;&nbsp;function checkAttachmentsListTitle()<a class="headerlink" href="#function-checkattachmentslisttitle" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Check to see if a custom title applies to this parent</span>
+<span class="x"> *</span>
+<span class="x"> * Note: this function assumes that the parent_id&#39;s match</span>
+<span class="x"> *</span>
+<span class="x"> * @param string $parent_entity parent entity for the parent of the list</span>
+<span class="x"> * @param string $rtitle_parent_entity the entity of the candidate attachment list title (from params)</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if the custom title should be used</span>
+<span class="x"> */</span>
+<span class="x">function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)</span>
+<span class="x">{</span>
+<span class="x">    if ( $rtitle_parent_entity == &#39;newcomp&#39; ) {</span>
+<span class="x">        return true;</span>
+<span class="x">        }</span>
+
+<span class="x">    return false;</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function checks to see if custom titles for attachments list might apply to
+this parent.  In the options, there is a &#8216;custom titles for attachments lists&#8217;
+option that allows the admin to define custom titles for attachments lists on
+a system wide level or on a entity by entity basis (eg, for a specific article
+with &#8216;article:23&#8217;).  When this function is called, rtitle_parent_entity will
+be &#8216;article&#8217; (or an what ever entity name you specify to the left of the colon
+in the custom title list).</p>
+<p>If you wish this functionality to be available for your new content type, you
+should implement this function. If this function is not re-implemented, custom
+titles for specific component entities will never be applied to your new
+component attachments.</p>
+<p>The code shown above is typical if only one type of parent entity is supported
+for the new content type.  If more are supported, your function will need to
+be more sophisticated; see the attachments <tt class="docutils literal"><span class="pre">com_content.php</span></tt> plugin file for
+an example.</p>
+<p><strong>You should implement this function.</strong></p>
+</div>
+<div class="section" id="function-isparentpublished">
+<span id="index-8"></span><h3>4.1.3&nbsp;&nbsp;&nbsp;function isParentPublished()<a class="headerlink" href="#function-isparentpublished" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Check to see if the parent is published</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id the ID for this parent object</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if the parent is published</span>
+<span class="x"> */</span>
+<span class="x">function isParentPublished($id, $parent_entity=&#39;default&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function checks to see if the parent entity should be published.  Your
+code will need to check the component tables for the parent entity to see if
+it is published.</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-usermayviewparent">
+<span id="index-9"></span><h3>4.1.4&nbsp;&nbsp;&nbsp;function userMayViewparent()<a class="headerlink" href="#function-usermayviewparent" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * May the parent be viewed by the user?</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id the ID for this parent object</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if the parent may be viewed by the user</span>
+<span class="x"> */</span>
+<span class="x">function userMayViewParent($parent_id, $parent_entity=&#39;default&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function checks to see if the parent may be viewed by the current user.
+This function defaults to true (meaning anyone can see the parent).  In most
+cases, each parent object will have its own access rules controlling whether
+the user has adequate privileges to view the parent.  You will need to use the
+authorization functions provided by the parents extension/class to implement
+this function.</p>
+<p><strong>You will probably want to implement this function.</strong></p>
+</div>
+<div class="section" id="function-attachmentshiddenforparent">
+<span id="index-10"></span><h3>4.1.5&nbsp;&nbsp;&nbsp;function attachmentsHiddenForParent()<a class="headerlink" href="#function-attachmentshiddenforparent" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/** Return true if the attachments should be hidden for this parent</span>
+<span class="x"> *</span>
+<span class="x"> * @param &amp;object &amp;$parent The object for the parent that onPrepareContent gives</span>
+<span class="x"> * @param int $parent_id The ID of the parent the attachment is attached to</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> * @param &amp;object &amp;$params The Attachments component parameters object</span>
+<span class="x"> *</span>
+<span class="x"> * Note: this generic version only implements the &#39;frontpage&#39; option.  All</span>
+<span class="x"> *       other options should be handled by the derived classes for other</span>
+<span class="x"> *       content types.</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if the attachments should be hidden for this parent</span>
+<span class="x"> */</span>
+<span class="x">function attachmentsHiddenForParent(&amp;$parent, $parent_id, $parent_entity, &amp;$params)</span>
+<span class="x">{</span>
+<span class="x">    // Check for generic options</span>
+<span class="x">    if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity, $params) ) {</span>
+<span class="x">        return true;</span>
+<span class="x">        }</span>
+
+<span class="x">    ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function checks to see if all the attachments should be hidden for the
+specified parent entity.  Note that the &#8216;Check for generic options&#8217; above
+should be implemented as shown before checks related to your new content type.
+This function call implements the global &#8216;frontpage&#8217; option and should be
+honored by all attachments lists.</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-usermayaddattachment">
+<span id="index-11"></span><h3>4.1.6&nbsp;&nbsp;&nbsp;function userMayAddAttachment()<a class="headerlink" href="#function-usermayaddattachment" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Return true if the user may add an attachment to this parent</span>
+<span class="x"> *</span>
+<span class="x"> * (Note that all of the arguments are assumed to be valid; no sanity checking is done.</span>
+<span class="x"> *  It is up to the caller to validate these objects before calling this function.)</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id The ID of the parent the attachment is attached to</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> * @param bool $new_parent If true, the parent is being created and does not exist yet</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if this user add attachments to this parent</span>
+<span class="x"> */</span>
+<span class="x">function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Checks to see if the current user may add attachments to this entity.</p>
+<p>The simplest implementation would be to always return <strong>true</strong>.  This would
+mean than anyone can add an attachment to your new component.  This is
+obviously not recommended for production but would make it easier to get your
+attachments plugin working quickly for testing purposes.</p>
+<p>If this function is not re-implemented, the default is that no users may add
+attachments for the specified type of parent.  Effectively, this means that
+only admin/superadmin should be able to add attachments (since the code
+assumes they always can).</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-usermayeditattachment">
+<span id="index-12"></span><h3>4.1.7&nbsp;&nbsp;&nbsp;function userMayEditAttachment()<a class="headerlink" href="#function-usermayeditattachment" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/* Return true if this user may edit (modify/update/delete) this attachment for this parent</span>
+<span class="x"> *</span>
+<span class="x"> * (Note that all of the arguments are assumed to be valid; no sanity checking is done.</span>
+<span class="x"> *  It is up to the caller to validate the arguments before calling this function.)</span>
+<span class="x"> *</span>
+<span class="x"> * @param record $attachment database record for the attachment</span>
+<span class="x"> * @param int $parent_id The ID of the parent the attachment is attached to</span>
+<span class="x"> * @param $params The Attachments component parameters object</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if this user may edit this attachment</span>
+<span class="x"> */</span>
+<span class="x">function userMayEditAttachment(&amp;$attachment, $parent_id, &amp;$params)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Check the attachment and see if the current user may edit it.  For
+attachments, &#8216;Edit&#8217; means edit/modify or delete.</p>
+<p>The simplest implementation would be to always return <strong>true</strong>.  This would
+mean than anyone can edit all attachments to your new component.  This is
+obviously not recommended for production but would make it easier to get your
+attachments plugin working quickly for testing purposes.</p>
+<p>If this function is not re-implemented, the default is that no users may edit
+attachments for the specified type of parent.  Effectively, this means that
+only admin/superadmin should be able to edit attachments (since the code
+assumes they always can).</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-usermayaccessattachment">
+<span id="index-13"></span><h3>4.1.8&nbsp;&nbsp;&nbsp;function userMayAccessAttachment()<a class="headerlink" href="#function-usermayaccessattachment" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/** Check to see if the user may access (see/download) the attachments</span>
+<span class="x"> *</span>
+<span class="x"> * @param &amp;record &amp;$attachment database record for the attachment</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if access is okay (false if not)</span>
+<span class="x"> */</span>
+<span class="x">function userMayAccessAttachment( &amp;$attachment )</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Check the attachment and see if the current user may access the attachment.
+By &#8216;access&#8217;, we mean to see the attachments in attachments list and to be able
+to download it.</p>
+<p>The simplest implementation would be to always return <strong>true</strong>.  This would
+mean than anyone can access (see/download) an attachment to your new
+component.  This is obviously not recommended for production but would make it
+easier to get your attachments plugin working quickly for testing purposes.</p>
+<p>Currently, this is only checked in searches.  But it is likely that it will be
+used elsewhere in the Attachments plugin in the future.</p>
+<p><strong>You will need to implement this function.</strong></p>
+</div>
+<div class="section" id="function-determineparententity">
+<span id="index-14"></span><h3>4.1.9&nbsp;&nbsp;&nbsp;function determineParentEntity()<a class="headerlink" href="#function-determineparententity" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Determine the parent entity</span>
+<span class="x"> *</span>
+<span class="x"> * From the view and the class of the parent (row of onPrepareContent plugin),</span>
+<span class="x"> * determine what the entity type is for this entity.</span>
+<span class="x"> *</span>
+<span class="x"> * Derived classes must overrride this if they support more than &#39;default&#39; entities.</span>
+<span class="x"> *</span>
+<span class="x"> * @param &amp;object &amp;$parent The object for the parent (row) that onPrepareContent gets</span>
+<span class="x"> *</span>
+<span class="x"> * @return the correct entity (eg, &#39;default&#39;, &#39;section&#39;, etc) or false if this entity should not be displayed.</span>
+<span class="x"> */</span>
+<span class="x">function determineParentEntity(&amp;$parent)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>If the component does not have more than one type of entity, you will not need
+to define this function; the one in the AttachmentsPlugin base class will be
+fine.</p>
+<p><strong>If there is more than one type of entity</strong>, you will need to write code here to
+distinguish them based on the OBJ and VIEW values you determined for each
+entity in the diagnostic section <a class="reference internal" href="#diagnostic-section"><em>3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</em></a>.  See the
+attachments <tt class="docutils literal"><span class="pre">com_content.php</span></tt> plugin file for an example.</p>
+</div>
+</div>
+<div class="section" id="functions-you-may-not-need-to-implement">
+<span id="section-optional-function"></span><h2><a class="toc-backref" href="#id11">4.2&nbsp;&nbsp;&nbsp;Functions you may not need to implement</a><a class="headerlink" href="#functions-you-may-not-need-to-implement" title="Permalink to this headline">¶</a></h2>
+<p>In your attachments plugin file <tt class="docutils literal"><span class="pre">com_newcomp.php</span></tt>, you may not need to
+implement the following functions:</p>
+<div class="section" id="function-getparentid">
+<span id="index-15"></span><h3>4.2.1&nbsp;&nbsp;&nbsp;function getParentId()<a class="headerlink" href="#function-getparentid" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Return the parent entity / row ID</span>
+<span class="x"> *</span>
+<span class="x"> * This will only be called by the main attachments &#39;onPrepareContent&#39;</span>
+<span class="x"> * plugin if $row does not have an id</span>
+<span class="x"> *</span>
+<span class="x"> * @param object &amp;row the article or content item (potential attachment parent)</span>
+<span class="x"> *</span>
+<span class="x"> * @return id if found, false if this is not a valid parent</span>
+<span class="x"> */</span>
+<span class="x">function getParentId(&amp;$row)</span>
+<span class="x">{</span>
+<span class="x">    ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>When the regular attachments plugin is called from the front end when the
+&#8216;onPrepareContent&#8217; plugin function is invoked, an object for the article or
+content item is passed in as $row.  Normally $row has an ID field $row-&gt;id.
+If your component has the field $row-&gt;id, then you will probably not need to
+implement this function.  If $row does not have an $row-&gt;id field, the ID
+should be some field of the $row object.  This function should extract the
+entity ID and return it.  Note that the <cite>onPrepareContent</cite> call back function
+may be invoked several times for each entity on the page.  You may need to
+examine the other data about the entity (retrieved in the diagnostic section
+<a class="reference internal" href="#diagnostic-section"><em>3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</em></a>) to determine which call you want to process and
+which ones you want to ignore. Return <tt class="docutils literal"><span class="pre">false</span></tt> for the ones you want to
+ignore.</p>
+</div>
+<div class="section" id="function-parentexists">
+<span id="index-16"></span><h3>4.2.2&nbsp;&nbsp;&nbsp;function parentExists()<a class="headerlink" href="#function-parentexists" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Does the parent exist?</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id the ID for this parent object</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if the parent exists</span>
+<span class="x"> */</span>
+<span class="x">function parentExists($id, $parent_entity=&#39;default&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function checks to see if the parent entity exists.  If you have defined
+a table for the entity in the configuration file, you probably will not need
+to redefine this function.</p>
+</div>
+<div class="section" id="function-getentityaddurl">
+<span id="index-17"></span><h3>4.2.3&nbsp;&nbsp;&nbsp;function getEntityAddUrl()<a class="headerlink" href="#function-getentityaddurl" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Get a URL to add an attachment to a specific entity</span>
+<span class="x"> *</span>
+<span class="x"> * @param int $parent_id the ID for the parent entity object (null if the parent does not exist)</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> * @param string $from where the call should return to</span>
+<span class="x"> *</span>
+<span class="x"> * @return the url to add a new attachments to the specified entity</span>
+<span class="x"> */</span>
+<span class="x">function getEntityAddUrl($id, $parent_entity=&#39;default&#39;, $from=&#39;closeme&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function constructs and returns a URL to add an attachment to a specific
+entity.  You probably will not need to redefine it.</p>
+</div>
+<div class="section" id="function-getattachmentpath">
+<span id="index-18"></span><h3>4.2.4&nbsp;&nbsp;&nbsp;function getAttachmentPath()<a class="headerlink" href="#function-getattachmentpath" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Get the path for the uploaded file (on the server file system)</span>
+<span class="x"> *</span>
+<span class="x"> * Note that this does not include the base directory for attachments.</span>
+<span class="x"> *</span>
+<span class="x"> * @param string $parent_entity the type of entity for this parent type</span>
+<span class="x"> * @param int $parent_id the ID for the parent object</span>
+<span class="x"> * @param int $attachment_id the ID for the attachment</span>
+<span class="x"> *</span>
+<span class="x"> * @return string the directory name for this entity (with trailing DS!)</span>
+<span class="x"> */</span>
+<span class="x">function getAttachmentPath($parent_entity, $parent_id, $attachment_id)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function constructs the path for a newly uploaded attachment file.</p>
+<p>You probably will not need to define this function.  If you are satisfied with
+the default attachment file path scheme (see <a class="reference internal" href="#attachment-paths-appendix"><em>6&nbsp;&nbsp;&nbsp;Appendix C - Where are attachment files saved?</em></a>
+for details), then you can use the version already defined in the
+AttachmentsPlugin base class.</p>
+</div>
+<div class="section" id="function-getselectentityurl">
+<span id="index-19"></span><h3>4.2.5&nbsp;&nbsp;&nbsp;function getSelectEntityURL()<a class="headerlink" href="#function-getselectentityurl" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Return the URL that can be called to select a specific content item.</span>
+<span class="x"> *</span>
+<span class="x"> * @param string $parent_entity the type of entity to select from</span>
+<span class="x"> *</span>
+<span class="x"> * @return the URL that can be called to select a specific content item</span>
+<span class="x"> */</span>
+<span class="x">function getSelectEntityURL($parent_entity=&#39;default&#39;)</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This function builds and returns URL that will construct a list of a
+particular type of entity and allow the user to select a specific one from the
+list.  For example, in the Joomla! base component com_content, this is the
+function that allows users to select an article.</p>
+<p>You probably will not need to implement this function.</p>
+</div>
+<div class="section" id="function-addpermissions">
+<span id="index-20"></span><h3>4.2.6&nbsp;&nbsp;&nbsp;function addPermissions()<a class="headerlink" href="#function-addpermissions" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
+<span class="x"> * Add the permissions to the array of attachments data</span>
+<span class="x"> *</span>
+<span class="x"> * @param &amp;array &amp;$attachments An array of attachments for an parent from a DB query.</span>
+<span class="x"> * @param int $parent_id the id of the parent</span>
+<span class="x"> *</span>
+<span class="x"> * @return true if some attachments should be visible, false if none should be visible</span>
+<span class="x"> *</span>
+<span class="x"> * This function adds the following boolean fields to each attachment row:</span>
+<span class="x"> *     - &#39;user_may_see&#39;</span>
+<span class="x"> *     - &#39;user_may_edit&#39;</span>
+<span class="x"> */</span>
+<span class="x">function addPermissions( &amp;$attachments, $parent_id )</span>
+<span class="x">{</span>
+<span class="x">  ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Add the see/edit permissions to each row (attachment) of the array of
+attachments.  This function makes use of the permissions functions and should
+need reimplementation.</p>
+<p>You probably will not need to implement this function.</p>
+</div>
+</div>
+</div>
+<div class="section" id="appendix-b-where-the-plugin-files-go-when-installed-in-joomla">
+<h1><a class="toc-backref" href="#id12">5&nbsp;&nbsp;&nbsp;Appendix B - Where the plugin files go when installed in Joomla!</a><a class="headerlink" href="#appendix-b-where-the-plugin-files-go-when-installed-in-joomla" title="Permalink to this headline">¶</a></h1>
+<p>Once these files are installed in your Joomla! installation, they will go into
+the following locations:</p>
+<div class="highlight-python"><pre>.
+|-- administrator/language/en-GB/en-GB.plg_attachments_attachments_for_newcomp.ini
+|
+'-- plugins
+    `-- attachments
+        |-- attachments_for_newcomp.php
+        |-- attachments_for_newcomp.xml
+        `-- plugins
+            |-- com_newcomp.ini
+            `-- com_newcomp.php</pre>
+</div>
+</div>
+<div class="section" id="appendix-c-where-are-attachment-files-saved">
+<span id="attachment-paths-appendix"></span><h1><a class="toc-backref" href="#id13">6&nbsp;&nbsp;&nbsp;Appendix C - Where are attachment files saved?</a><a class="headerlink" href="#appendix-c-where-are-attachment-files-saved" title="Permalink to this headline">¶</a></h1>
+<p>When the attachment files are uploaded, they are stored in paths with the
+following form</p>
+<div class="highlight-python"><pre>&lt;joomla&gt;/attachments/&lt;entity-name&gt;/&lt;entity-ID&gt;/&lt;filename&gt;</pre>
+</div>
+<p>where:</p>
+<blockquote>
+<dl class="docutils">
+<dt>&lt;joomla&gt;</dt>
+<dd>is the top directory in which your Joomla! installation is installed</dd>
+<dt>&lt;entity-name&gt;</dt>
+<dd>is the name of the entity type (<em>e.g.</em>, <em>article</em>).  Note that
+&#8216;default&#8217; is never used here since all entity names must be unique.</dd>
+<dt>&lt;entity-ID&gt;</dt>
+<dd>is the ID of the specific entity to which the files are attached</dd>
+<dt>&lt;filename&gt;</dt>
+<dd>is the name of the file (without any associated path)</dd>
+</dl>
+</blockquote>
+<p>So for an article, the path might look like this:</p>
+<div class="highlight-python"><pre>&lt;joomla&gt;/attachments/article/23/attachmentFile.txt</pre>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">Attachments Extensions for Joomla! v1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Jonathan M. Cameron.
+      Last updated on May 21, 2010 at 05:39 pm.
+    </div>
+  </body>
+</html>

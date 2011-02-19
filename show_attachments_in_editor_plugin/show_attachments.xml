@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
+<install type="plugin" group="system" version="1.5" method="upgrade">
+    <name>System - Show attachments in editor</name>
+    <author>Jonathan M. Cameron</author>
+    <creationDate>February  6, 2011</creationDate>
+    <copyright>(C) 2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <version>2.2</version>
+    <description>SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_INSTALLED</description>
+    <languages>
+	<language tag="en-GB">en-GB.plg_system_show_attachments.ini</language>
+    </languages>
+    <files>
+	<filename plugin="show_attachments">show_attachments.php</filename>
+    </files>
+</install>

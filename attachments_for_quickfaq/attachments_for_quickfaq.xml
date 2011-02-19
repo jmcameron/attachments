@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
+<install type="plugin" group="attachments" version="1.5" method="upgrade">
+    <name>Attachments - For QuickFaq</name>
+    <creationDate>February  6, 2011</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <copyright>(C) 2009-2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>2.2</version>
+    <description>ATTACHMENTS_FOR_QUICKFAQ_PLUGIN_INSTALLED</description>
+    <files>
+	<filename plugin="attachments_for_quickfaq">attachments_for_quickfaq.php</filename>
+	<filename>plugins/com_quickfaq.php</filename>
+	<filename>plugins/com_quickfaq.ini</filename>
+    </files>
+    <languages>
+	<language tag="en-GB">en-GB.plg_attachments_attachments_for_quickfaq.ini</language>
+    </languages>
+    <params/>
+</install>

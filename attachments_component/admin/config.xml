@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <params>
+    <param name="who_can_see" type="list" default="logged_in"
+           label="WHO_CAN_SEE_ATTACHMENTS"
+           description="WHO_CAN_SEE_ATTACHMENTS_DESCRIPTION">
+      <option value="logged_in">ANY_LOGGED_IN_USER</option>
+      <option value="anyone">ANYONE</option>
+      <option value="no_one">NO_ONE</option>
+    </param>
+    <param name="who_can_add" type="list" default="author"
+           label="WHO_CAN_ADD_ATTACHMENTS"
+           description="WHO_CAN_ADD_ATTACHMENTS_DESCRIPTION">
+      <option value="author">ARTICLE_AUTHOR_ONLY</option>
+      <option value="editor">EDITOR_AND_ABOVE</option>
+      <option value="logged_in">ANY_LOGGED_IN_USER</option>
+      <option value="no_one">NO_ONE</option>
+    </param>
+    <param name="publish_default" type="radio" default="0"
+           label="ATTACHMENTS_PUBLISHED_BY_DEFAULT"
+           description="ATTACHMENTS_PUBLISHED_BY_DEFAULT_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="auto_publish_warning" type="textarea" default=""
+           label="AUTO_PUBLISH_WARNING" rows="2" cols="60"
+           description="AUTO_PUBLISH_WARNING_DESCRIPTION">
+    </param>
+    <param name="show_column_titles" type="radio" default="0"
+           label="SHOW_COLUMN_TITLES"
+           description="SHOW_COLUMN_TITLES_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="show_description" type="radio" default="1"
+           label="SHOW_ATTACHMENT_DESCRIPTION"
+           description="SHOW_ATTACHMENT_DESCRIPTION_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="show_uploader" type="radio" default="0"
+           label="SHOW_ATTACHMENT_UPLOADER"
+           description="SHOW_ATTACHMENT_UPLOADER_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="show_file_size" type="radio" default="1"
+           label="SHOW_ATTACHMENT_FILE_SIZE"
+           description="SHOW_ATTACHMENT_FILE_SIZE_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="show_downloads" type="radio" default="0"
+           label="SHOW_NUMBER_OF_DOWNLOADS"
+           description="SHOW_NUMBER_OF_DOWNLOADS_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="show_modification_date" type="radio" default="0"
+           label="SHOW_FILE_MODIFICATION_DATE"
+           description="SHOW_FILE_MODIFICATION_DATE_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="mod_date_format" type="text" default="%x %H:%M"
+           label="FORMAT_STRING_FOR_MODIFICATION_DATE" size="30"
+           description="FORMAT_STRING_FOR_MODIFICATION_DATE_DESCRIPTION">
+    </param>
+    <param name="sort_order" type="list" default="filename"
+           label="ATTACHMENTS_LIST_ORDER"
+           description="ATTACHMENTS_LIST_ORDER_DESCRIPTION">
+      <option value="filename">SORT_FILENAME</option>
+      <option value="file_size">SORT_FILE_SIZE</option>
+      <option value="file_size_desc">SORT_FILE_SIZE_DESCENDING</option>
+      <option value="description">SORT_DESCRIPTION</option>
+      <option value="display_name">DISPLAY_FILENAME_OR_URL</option>
+      <option value="uploader">UPLOADER</option>
+      <option value="create_date">SORT_CREATE_DATE</option>
+      <option value="create_date_desc">SORT_CREATE_DATE_DESCENDING</option>
+      <option value="modification_date">SORT_MODIFICATION_DATE</option>
+      <option value="modification_date_desc">SORT_MODIFICATION_DATE_DESCENDING</option>
+      <option value="id">SORT_ATTACHMENT_ID</option>
+      <option value="user_field_1">USER_DEFINED_FIELD_1</option>
+      <option value="user_field_2">USER_DEFINED_FIELD_2</option>
+      <option value="user_field_3">USER_DEFINED_FIELD_3</option>
+    </param>
+    <param name="user_field_1_name" type="text" default=""
+           label="USER_DEFINED_FIELD_1_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </param>
+    <param name="user_field_2_name" type="text" default=""
+           label="USER_DEFINED_FIELD_2_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </param>
+    <param name="user_field_3_name" type="text" default=""
+           label="USER_DEFINED_FIELD_3_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </param>
+    <param name="max_filename_length" type="text" default="0"
+           label="MAX_FILENAME_URL_LENGTH" size="2"
+           description="MAX_FILENAME_URL_LENGTH_DESCRIPTION">
+    </param>
+    <param name="attachments_placement" type="list" default="end"
+           label="WHERE_SHOULD_ATTACHMENTS_BE_PLACED"
+           description="WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION">
+      <option value="beginning">AT_THE_BEGINNING</option>
+      <option value="end">AT_THE_END</option>
+      <option value="custom">CUSTOM_PLACEMENT</option>
+      <option value="disabled_filter">DISABLED_FILTER</option>
+      <option value="disabled_nofilter">DISABLED_NOFILTER</option>
+    </param>
+    <param name="attachments_table_style" type="text" default="attachmentsList"
+           label="CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
+           description="CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
+    </param>
+    <param name="register_url" type="text"
+           default="index.php?option=com_user&amp;task=register"
+           label="URL_TO_REGISTER" size="255"
+           description="URL_TO_REGISTER_DESCRIPTION">
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="file_link_open_mode" type="radio" default="in_same_window"
+           label="FILE_LINK_OPEN_MODE"
+           description="FILE_LINK_OPEN_MODE_DESCRIPTION">
+      <option value="in_same_window">IN_SAME_WINDOW</option>
+      <option value="new_window">IN_NEW_WINDOW</option>
+    </param>
+    <param name="attachments_subdir" type="text" default="attachments"
+           label="SUBDIRECTORY_FOR_UPLOADS" size="80"
+           description="SUBDIRECTORY_FOR_UPLOADS_DESCRIPTION">
+    </param>
+    <param name="attachments_titles" type="textarea" default=""
+           label="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS" rows="3" cols="60"
+           description="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION">
+    </param>
+    <param name="hide_attachments_for" type="text" default=""
+           label="HIDE_ATTACHMENTS_FOR" size="255"
+           description="HIDE_ATTACHMENTS_FOR_DESCRIPTION">
+    </param>
+    <param name="link_check_timeout" type="text" default="10"
+           label="TIMEOUT_FOR_CHECKING_LINKS" size="3"
+           description="TIMEOUT_FOR_CHECKING_LINKS_DESCRIPTION">
+    </param>
+    <param name="superimpose_url_link_icons" type="radio" default="1"
+           label="SUPERIMPOSE_URL_LINK_ICONS"
+           description="SUPERIMPOSE_URL_LINK_ICONS_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="suppress_obsolete_attachments" type="radio" default="0"
+           label="SUPPRESS_OBSOLETE_ATTACHMENTS"
+           description="SUPPRESS_OBSOLETE_ATTACHMENTS_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="secure" type="radio" default="0"
+           label="SECURE_ATTACHMENT_DOWNLOADS"
+           description="SECURE_ATTACHMENT_DOWNLOADS_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="secure_list_attachments" type="radio" default="0"
+           label="LIST_ATTACHMENTS_IN_SECURE_MODE"
+           description="LIST_ATTACHMENTS_IN_SECURE_MODE_DESCRIPTION">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="download_mode" type="radio" default="inline"
+           label="DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS"
+           description="DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS_DESCRIPTION">
+      <option value="inline">INLINE</option>
+      <option value="attachment">ATTACHMENT</option>
+    </param>
+  </params>
+</config>

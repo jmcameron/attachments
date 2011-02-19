@@ -1,0 +1,103 @@
+
+/* Styles for the upload page */
+div.uploadAttachmentsPage {
+    width: 95%;
+    margin: 15px 0px 6px 15px;
+    text-align: left;
+}
+
+div.uploadAttachmentsPage p {
+    text-align: left;
+}
+
+
+/* For button-like links to change/switch */
+
+a.changeButton  {
+    padding: 1px 4px 1px 4px;
+    margin-left: 20px;
+    font-size: 90%;
+    color : #333333;
+    text-decoration: none;
+    background-color: #CCCCCC;
+    border: 1px solid #888888;
+}
+a.changeButton:link    { color : #333333; text-decoration: none; }
+a.changeButton:visited { color : #333333; text-decoration: none; }
+a.changeButton:hover   { color : #333333; text-decoration: none; background-color: #DDDDDD; }
+a.changeButton:active  { color : #333333; text-decoration: none; }
+
+
+/* Styles for upload form */
+
+input#description { width: 100%; }
+input#upload { width: 100%; }
+input#display_name {
+    width: 100%;
+}
+
+p.display_name {
+    margin-top: 12px;
+}
+
+input#upload, input#upload_warning {
+    /* width: 100%;  */
+    margin-top: 4px;
+}
+
+
+form.attachments {
+    margin: 0;
+}
+
+form.attachments fieldset { 
+    margin: 0;
+    padding-right: 20px;
+}
+
+form.attachments legend {
+    font-size: 130%;
+    font-weight: bold;
+}
+
+form.attachments div.formWarning {
+    width: 95%;
+    font-size: 140%;
+    font-weight: bold;
+    line-height: 120%;
+    padding: 8px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color: #0000CC;
+    background-color: #FFFF66;
+}
+
+form.attachments input#upload_warning {
+    background-color: #FFFF66;
+}
+
+form.attachments input[type=checkbox] {
+    vertical-align: middle;
+}
+
+form.attachments span.right {
+    float: right;
+}
+
+
+div.uploadAttachmentsPage h1 {
+    color: #000;
+}
+
+div.uploadAttachmentsPage h2 {
+    color: #000;
+}
+
+
+/* Styles for lists of attachments on upload/update forms */
+
+div.attachmentsList caption {
+    font-size: 110%;
+    font-weight: bold;
+    margin-top: 15px;
+}

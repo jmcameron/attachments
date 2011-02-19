@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
+<install type="plugin" group="editors-xtd" version="1.5" method="upgrade">
+    <name>Editor Button - Add Attachment</name>
+    <author>Jonathan M. Cameron</author>
+    <creationDate>February  6, 2011</creationDate>
+    <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <version>2.2</version>
+    <description>ADD_ATTACHMENT_BUTTON_PLUGIN_INSTALLED</description>
+    <languages>
+	<language tag="en-GB">en-GB.plg_editors-xtd_add_attachment.ini</language>
+    </languages>
+    <files>
+	<filename plugin="add_attachment">add_attachment.php</filename>
+	<filename>add_attachment.png</filename>
+	<filename>add_attachment.css</filename>
+	<filename>add_attachment_rtl.png</filename>
+	<filename>add_attachment_rtl.css</filename>
+    </files>
+</install>

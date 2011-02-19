@@ -1,0 +1,53 @@
+ -- Normal --  |  SEF  |
+       |       |   |   |
+       |SECURE |   |SEC|
+       |       |   |   |
+ F : B | F : B | F |  F|
+-------|-------|---|---|------------------------------------
+___:XXX|___|XXX|___|___|  Frontend OK
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPLOAD File (using NEW button)
+   :___|   :___|   |   |  UPLOAD File (using 'Add attachment' link)
+   :___|   :___|   |   |  DELETE File
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPLOAD File --> URL (verify, good, using NEW button)
+   :___|   :___|   |   |  UPLOAD File --> URL (verify, good, using 'Add attachment' link)
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPLOAD File --> URL (verify, bad)
+   :___|   :___|   |   |  UPLOAD File --> URL (no verify, bad)
+   :___|   :___|   |   |  UPLOAD File --> URL (no verify, good)
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPLOAD File --> URL (Add long URL/filename to truncate)
+   :___|   :___|   |   |  UPLOAD File --> URL (Add URL with no filename)
+   :   |   :   |   |   |
+...:...|...:...|...|...|.....................................
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPDATE FILE --> MODIFY FIELDS
+   :___|   :___|   |   |  UPDATE FILE --> NEW FILE
+   :___|   :___|   |   |  UPDATE FILE --> SWITCH ARTICLE
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPDATE FILE --> URL (verify, good, check file deleted)
+   :___|   :___|   |   |  UPDATE FILE --> URL (verify, bad)
+   :___|   :___|   |   |  UPDATE FILE --> URL (no verify, good, check file deleted)
+   :___|   :___|   |   |  UPDATE FILE --> URL (no verify, bad, check file deleted)
+   :   |   :   |   |   |
+...:...|...:...|...|...|.....................................
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPDATE URL --> MODIFY FIELDS
+   :___|   :___|   |   |  UPDATE URL --> SWITCH ARTICLE
+   :___|   :___|   |   |  DELETE URL
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (verify, good, no edit display_filename)
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (verify, good, edit display_filename)
+   :   |   :   |   |   |    (without editing display_filename --> make new one/delete)
+   :   |   :   |   |   |    (editing display_filename --> keep new one)
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (verify, good)
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (verify, bad)
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (no verify, good)
+   :___|   :___|   |   |  UPDATE URL --> NEW URL (no verify, bad)
+   :   |   :   |   |   |
+   :___|   :___|   |   |  UPDATE URL --> NEW FILE
+   :   |   :   |   |   |
+   :XXX|   :XXX|   |   |  Cannot access URL in secure mode (log off first!)
+   :   |   :   |   |   |
+...:...|...:...|...|...|.....................................

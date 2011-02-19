@@ -1,0 +1,73 @@
+/* Styles for lists of attachments */
+
+div.attachmentsList table 
+{
+    direction: rtl;
+}
+
+div.attachmentsList caption 
+{
+    font-family: Times New Roman, Arial;
+    font-size: 130%;
+    text-align: right; 
+}
+
+div.addattach img {
+    padding-right: auto;
+    padding-left: 3px;
+    }
+
+div.attachmentsList img#link {
+    margin-right: -16px;
+    padding-left: 16px;
+}
+
+div.attachmentsList a.at_icon {
+    padding-right: auto;
+    padding-left: 4px;
+    }
+
+div.attachmentsList td.at_file_size { text-align: left; }
+
+/* Styles for the upload page (move to attachments2.css?) */
+div.uploadAttachmentsPage {
+   margin-left: auto;
+   margin-right: 15px;
+}
+
+/* For the link to change the parent */
+
+a.changeButton  {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+/* Styles for upload form */
+
+form.attachments {
+    margin-left: auto;
+    margin-right: -2px;
+}
+
+
+form.attachments div.formWarning {
+    padding-left: auto;
+    padding-right: 15px;
+}
+
+/* Styles for warnings */
+div.warning {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+/* Styles for delete warnings */
+div.deleteWarning {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.at_url 
+{
+    font-family: Times New Roman, Arial;
+}

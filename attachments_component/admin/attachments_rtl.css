@@ -1,0 +1,71 @@
+/* Styles for the main list of attachments in the administrative back end */
+
+table.adminlist th { 
+    text-align: right;
+}
+table.adminlist th.at_filename    { text-align: right; }
+table.adminlist th.at_description { text-align: right; }
+table.adminlist th.at_user_field   { text-align: right; }
+
+table.adminlist td { 
+    text-align: right;
+}
+
+table.adminlist td.at_filename { 
+    text-align: right; 
+    /*font-size: 125%; */
+}
+
+.at_filename a 
+{
+    font-size: 80%;
+}
+
+td.at_filename {
+    white-space:nowrap;
+}
+
+table.adminlist img#link {
+   margin-right: -16px;
+   padding-left: 16px;
+}
+table.adminlist td.at_description { text-align: right; }
+table.adminlist td.at_user_field   { text-align: right; }
+
+/* For the link to download a file */
+
+a.downloadAttach  {
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+
+/* For the upload attachment form */
+
+form.attachmentsBackend {
+    margin-left: auto;
+    margin-right: -8px;
+}
+
+/* Styles for attachments admin */
+div.attachmentsAdmin {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+/* For icons */
+
+.icon-48-attachments 
+{
+    background-position:right;
+}
+
+.icon-16-attachments   
+{
+    background-position:right;
+}
+
+.icon-32-admin 
+{ 
+    background-position:right;
+}

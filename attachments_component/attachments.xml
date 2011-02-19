@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5" method="upgrade">
+    <name>Attachments</name>
+    <creationDate>February  6, 2011</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>2.2</version>
+    <description>ATTACHMENTS_COMPONENT_INSTALLATION</description>
+    <installfile>install.attachments.php</installfile>
+    <uninstallfile>uninstall.attachments.php</uninstallfile>
+    <install>
+	<sql>
+	    <file driver="mysql" charset="utf8">install.mysql.sql</file>
+	    <file driver="mysql">install.noutf8.sql</file>
+	</sql>
+    </install>
+    <uninstall>
+	<sql>
+	    <file driver="mysql" charset="utf8">uninstall.mysql.sql</file> 
+	</sql>
+    </uninstall>
+    <files folder="site">
+	<filename>attachments.php</filename>
+	<filename>controller.php</filename>
+	<filename>helper.php</filename>
+	<filename>file_types.php</filename>
+	<filename>fsockopen5.php</filename>
+	<filename>router.php</filename>
+	<filename>index.html</filename>
+	<filename>controllers/index.html</filename>
+	<filename>controllers/attachments.php</filename>
+	<filename>models/index.html</filename>
+	<filename>models/attachment.php</filename>
+	<filename>models/attachments.php</filename>
+	<filename>views/index.html</filename>
+	<filename>views/attachments/index.html</filename>
+	<filename>views/attachments/metadata.xml</filename>
+	<filename>views/attachments/view.html.php</filename>
+	<filename>views/attachments/view.raw.php</filename>
+	<filename>views/attachments/tmpl/index.html</filename>
+	<filename>views/attachments/tmpl/default.php</filename>
+	<filename>views/attachments/tmpl/default.xml</filename>
+	<filename>views/update/index.html</filename>
+	<filename>views/update/view.php</filename>
+	<filename>views/update/metadata.xml</filename>
+	<filename>views/upload/index.html</filename>
+	<filename>views/upload/metadata.xml</filename>
+	<filename>views/upload/view.php</filename>
+	<folder>media</folder>
+    </files>
+    <languages folder="site">
+	<language tag="en-GB">en-GB.com_attachments.ini</language>
+    </languages>
+    <administration>
+	<menu img="components/com_attachments/attachments.png">Attachments</menu>
+	<languages folder="admin">
+	    <language tag="en-GB">en-GB.com_attachments.ini</language>
+	    <language tag="en-GB">en-GB.com_attachments.menu.ini</language>
+	</languages>
+	<files folder="admin">
+	    <filename>install.mysql.sql</filename>
+	    <filename>install.noutf8.sql</filename>
+	    <filename>uninstall.mysql.sql</filename>
+	    <filename>config.xml</filename>
+	    <filename>admin.attachments.php</filename>
+	    <filename>categories.php</filename>
+	    <filename>controller.php</filename>
+	    <filename>controllers/index.html</filename>
+	    <filename>controllers/attachments.php</filename>
+	    <filename>controllers/special.php</filename>
+	    <filename>models/attachments.php</filename>
+	    <filename>models/index.html</filename>
+	    <filename>models/special.php</filename>
+	    <filename>sections.php</filename>
+	    <filename>tables/attachments.php</filename>
+	    <filename>tables/index.html</filename>
+	    <filename>toolbar.attachments.html.php</filename>
+	    <filename>toolbar.attachments.php</filename>
+	    <filename>update.php</filename>
+	    <filename>views/add/index.html</filename>
+	    <filename>views/add/tmpl/default.php</filename>
+	    <filename>views/add/tmpl/index.html</filename>
+	    <filename>views/add/view.php</filename>
+	    <filename>views/edit/index.html</filename>
+	    <filename>views/edit/tmpl/default.php</filename>
+	    <filename>views/edit/tmpl/index.html</filename>
+	    <filename>views/edit/view.php</filename>
+	    <filename>views/entity/index.html</filename>
+	    <filename>views/entity/tmpl/default.php</filename>
+	    <filename>views/entity/tmpl/index.html</filename>
+	    <filename>views/entity/view.php</filename>
+	    <filename>views/index.html</filename>
+	    <filename>views/list/index.html</filename>
+	    <filename>views/list/tmpl/default.php</filename>
+	    <filename>views/list/tmpl/index.html</filename>
+	    <filename>views/list/view.html.php</filename>
+	    <filename>views/params/index.html</filename>
+	    <filename>views/params/tmpl/default.php</filename>
+	    <filename>views/params/tmpl/index.html</filename>
+	    <filename>views/params/view.php</filename>
+	    <filename>views/special/index.html</filename>
+	    <filename>views/special/view.php</filename>
+	    <filename>views/utils/index.html</filename>
+	    <filename>views/utils/view.php</filename>
+	    <filename>attachments.css</filename>
+	    <filename>attachments_rtl.css</filename>
+	    <filename>attachments.png</filename>
+	    <filename>attachments_utils32.png</filename>
+	    <filename>attachments_logo48.png</filename>
+	    <filename>Changelog.php</filename>
+	    <filename>index.html</filename>
+	    <filename>install/manifest.ini</filename>
+	    <filename>install/add_attachment_btn_plugin.zip</filename>
+	    <filename>install/attachments_for_content.zip</filename>
+	    <filename>install/attachments_plugin_framework.zip</filename>
+	    <filename>install/attachments_plugin.zip</filename>
+	    <filename>install/attachments_search.zip</filename>
+	    <filename>install/insert_attachments_token_btn_plugin.zip</filename>
+	    <filename>install/show_attachments_in_editor_plugin.zip</filename>
+	    <filename>install/index.html</filename>
+	    <filename>help/index.html</filename>
+	    <filename>help/en-GB/help.html</filename>
+	    <filename>help/en-GB/help.css</filename>
+	    <filename>help/en-GB/index.html</filename>
+	    <filename>help/en-GB/plugin_manual/index.html</filename>
+	    <filename>help/en-GB/plugin_manual/html/genindex.html</filename>
+	    <filename>help/en-GB/plugin_manual/html/index.html</filename>
+	    <filename>help/en-GB/plugin_manual/html/search.html</filename>
+	    <filename>help/en-GB/plugin_manual/html/searchindex.js</filename>
+	    <folder>help/en-GB/plugin_manual/html/_static</folder>
+	</files>
+    </administration>
+</install>

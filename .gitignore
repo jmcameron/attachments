@@ -1,0 +1,14 @@
+*~
+*.zip
+*.xcf
+#*#
+/.workspace
+/.directory
+/_Checklist.org
+/_Checklist.txt
+/_tests.*
+/base_nums.py
+/base_nums.pickle
+/fixerrnums.py
+/watch
+/temp

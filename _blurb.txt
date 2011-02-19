@@ -1,0 +1,15 @@
+The 'Attachments' extension for Joomla! allows files to be uploaded and attached to articles and other types of content. 'Attachments' includes ability to attach and edit files from the front end as well as from the administrative back end. There are options to control who can see the attachments and who can upload them, along with many other options to increase its flexibility and usefulness. INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zip file. The component and all plugins are installed in a single step. You may watch a video about the Attachments extension on youtube: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1 . (The video refers to release 1.4, but 1.4 was renamed to 2.0.)
+
+Release 2.0 Attachments uses the Joomla "upgrade" capability and can be installed over previous versions of Attachments.  It has only been tested with v2.0 and v1.3.4 but it should work with earlier ones.  It includes code that updates the database tables, etc.  OBVIOUSLY, before installing/upgrading a live site I STRONGLY encourage you to back up the files and the database so you can restore it if there is a problem. 
+
+If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
+
+Release 2.0 has been significantly refactored and enhanced.  It adds many new features and improvements including simplified installation, ability to "attach" URLs, improved options to control where attachments are displayed, files are saved in separate directories (no more prefixing!), more flexibility to "Who can see" and "Who can update" options, unicode handling in filenames, significant improvements in the adminstrative back end, and a new capability to add attachments to content items other than articles (with additional plugins).  You may now add attachments during article creation.
+
+Version 2.2 uses Ajax to refresh the attachments lists when attachments are added, edited, or deleted.  Since a full page reload is not required, this makes dealing with attachments much more pleasant.  This version significantly improves the ability to create/edit/delete attachments during article editing (or article creation) from the backend and the front end.  Version 2.2 fixes the utility system filename regeneration functions to work better for a wider range of platforms.  This version also fixes various PHP 4 compatibility problems.
+
+The 2.2 translation files are complete for releases 2.0, 2.1.1, and 2.1.2. If you downloaded a translation file before February 5, 2011, you should get the latest version for compatiblity with this version.
+
+The 'Attachments' extension is 1.5 native and does not work on any Joomla 1.0 release. It does not work with Joomla 1.6.
+
+If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.

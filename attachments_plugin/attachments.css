@@ -1,0 +1,179 @@
+/* Styles for lists of attachments */
+
+div.attachmentsContainer {
+    clear: both;
+    margin: 0 0 0.5em 0;
+}
+
+div.attachmentsList table {
+    background-color: transparent;
+    border: 1px solid #C0C0C0;
+}
+
+div.attachmentsList caption {
+    font-size: 110%;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 4px;
+}
+
+div.attachmentsList thead {
+    font-size: 90%;
+    font-weight: bold;
+    background-color: #EEEEEE;
+}
+
+div.attachmentsList th {
+    border: 1px solid #D0D0D0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+div.attachmentsList tr.odd {
+    background-color: transparent;
+}
+
+div.attachmentsList tr.even {
+    background-color: #F6F6F6;
+}
+
+div.attachmentsList td {
+    vertical-align: top;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+div.attachmentsList table a {
+    font-weight: bold;
+}
+
+div.attachmentsList table img {
+    vertical-align: text-bottom;
+    border: 0;
+    margin: 0;
+}
+
+div.attachmentsList table a.modal-button {
+    background-color: transparent;
+    border: 0;
+}
+
+div.attachmentsList img#link {
+    margin-left: -16px;
+}
+
+
+div.addattach img {
+    padding-right: 3px;
+}
+div.addattach a.at_icon:link    { text-decoration: none; }
+div.addattach a.at_icon:visited { text-decoration: none; }
+div.addattach a.at_icon:hover   { text-decoration: none; }
+div.addattach a.at_icon:active  { text-decoration: none; }
+
+
+div.attachmentsList a.at_icon {
+    padding-right: 4px;
+}
+div.attachmentsList a.at_icon:link    { text-decoration: none; }
+div.attachmentsList a.at_icon:visited { text-decoration: none; }
+div.attachmentsList a.at_icon:hover   { text-decoration: none; }
+div.attachmentsList a.at_icon:active  { text-decoration: none; }
+
+div.attachmentsList a.at_url:link     { text-decoration: none; }
+div.attachmentsList a.at_url:visited  { text-decoration: none; }
+div.attachmentsList a.at_url:hover    { text-decoration: underline; }
+div.attachmentsList a.at_url:active   { text-decoration: none; }
+
+div.attachmentsList td.at_file_size { text-align: right; }
+
+div.attachmentsList th.at_downloads { text-align: center; }
+div.attachmentsList td.at_downloads { text-align: center; }
+
+div.attachmentsList th.at_edit { text-align: center; }
+div.attachmentsList td.at_edit { text-align: center; }
+
+
+/* Style for the 'Add Attachment' link */
+
+div.addattach { margin-top: 4px; }
+
+div.addattach a:link    { color : red; text-decoration: none; }
+div.addattach a:visited { color : red; text-decoration: none; }
+div.addattach a:hover   { color : red; text-decoration: underline; }
+div.addattach a:active  { color : red; text-decoration: none; }
+
+div.addattach a img { vertical-align: text-bottom; }
+
+
+/* ---- Misc ----- */
+
+
+div.requestLogin h1 {
+    color: #135cae;
+    font-size: 130%;
+    line-height: 130%;
+}
+
+div.requestLogin h2 {
+    font-size: 115%;
+    line-height: 115%;
+}
+
+div.requestLogin h2 a {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+/* Styles for warnings */
+div.warning {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+div.warning h1 {
+    line-height: normal;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+div.warning h2 {
+    line-height: normal;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+
+/* Styles for delete warnings */
+div.deleteWarning {
+    padding: 10px;
+    margin: 20px;
+}
+
+div.deleteWarning h1 {
+    line-height: normal;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+div.deleteWarning h2 {
+    line-height: normal;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.deleteWarning span.left {
+    width: 8em;
+    float: left;
+}
+div.deleteWarning span.right {
+    width: 8em;
+    float: right;
+}

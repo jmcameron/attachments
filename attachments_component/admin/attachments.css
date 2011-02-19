@@ -1,0 +1,297 @@
+/* Styles for the main list of attachments in the administrative back end */
+
+form#adminForm div.attachments_filter { 
+	padding: 0 0 2px 6px;
+}
+
+form#adminForm button#reset_order {
+	margin: 0 0 0 6em;
+}
+
+form#adminForm div.attachments_filter table,
+form#adminForm div.attachments_filter tbody,
+form#adminForm div.attachments_filter tr,
+form#adminForm div.attachments_filter td { 
+	padding: 0;
+	margin: 0;
+}
+
+form#adminForm input[type=checkbox] {
+	vertical-align: middle;
+}
+
+table.adminlist th { 
+	text-align: left;
+	border-bottom: 0; 
+}
+table.adminlist th.at_published	  { text-align: center; }
+table.adminlist th.at_filename	  { text-align: left; }
+table.adminlist th.at_description { text-align: left; }
+table.adminlist th.at_user_field  { text-align: left; }
+table.adminlist th.at_file_type	  { text-align: center; }
+table.adminlist th.at_file_size	  { text-align: center; }
+table.adminlist th.at_uploader	  { text-align: center; }
+table.adminlist th.at_create_date { text-align: center; }
+table.adminlist th.at_mod_date	  { text-align: center; }
+table.adminlist th.at_downloads	  { text-align: center; }
+
+table.adminlist td { 
+	text-align: left;
+	border-bottom: 0; 
+}
+table.adminlist td.at_published	  { text-align: center; }
+
+table.adminlist img#link {
+	margin-left: -16px;
+}
+
+table.adminlist td.at_filename { 
+	text-align: left; 
+	font-size: 125%; 
+}
+table.adminlist td.at_filename a img { 
+	vertical-align: text-bottom; 
+}
+
+table.adminlist td.at_description { text-align: left; }
+table.adminlist td.at_user_field  { text-align: left; }
+table.adminlist td.at_file_type	  { text-align: center; }
+table.adminlist td.at_file_size	  { text-align: center; }
+table.adminlist td.at_uploader	  { text-align: center; }
+table.adminlist td.at_create_date { text-align: center; }
+table.adminlist td.at_mod_date	  { text-align: center; }
+table.adminlist td.at_downloads	  { text-align: center; }
+
+
+table.adminlist td.at_parentsep {
+	height: 0.8em;
+	background-color: #DDD;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #BBB;
+	font-weight: bold;
+}
+
+span.error {
+	color: #FF0000;
+	font-style: italic;
+	font-size: 110%;
+}
+
+
+table.adminlist td.showlinks a { 
+	font-size: 110%;
+	font-weight: bold;
+	text-align: center; 
+}
+
+
+
+/* For the link to download a file */
+
+a.downloadAttach  {
+	margin-left: 0px;
+	font-size: 80%;
+	color : red; 
+	text-decoration: none; 
+}
+a.downloadAttach:link	 { color : red; text-decoration: none; }
+a.downloadAttach:visited { color : red; text-decoration: none; }
+a.downloadAttach:hover	 { color : red; text-decoration: underline; }
+a.downloadAttach:active	 { color : red; text-decoration: none; }
+
+
+
+/* For the link to add another attachment to an parent */
+
+a.addAttach	  { 
+	font-weight: normal;
+	color: red;
+	text-decoration: none;
+}
+a.addAttach:link	{ color : red; text-decoration: none; }
+a.addAttach:visited { color : red; text-decoration: none; } 
+a.addAttach:hover	{ color : red; text-decoration: underline; }
+a.addAttach:active	{ color : red; text-decoration: none; } 
+
+a.addAttach img {
+	vertical-align: text-bottom;
+}
+
+
+/* Styles for attachments admin */
+div.attachmentsAdmin {
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+div.attachmentsAdmin h1 {
+	line-height: normal;
+	font-size: 200%;
+	font-weight: bold;
+	color: #000088;
+}
+
+div.attachmentsAdmin h2 {
+	line-height: normal;
+	font-size: 150%;
+	font-weight: bold;
+}
+
+div.attachmentsAdmin li a		  { padding: 2px; }
+div.attachmentsAdmin li a:link	  { color: #0000FF; text-decoration: none; }
+div.attachmentsAdmin li a:hover	  { 
+	color: #0000FF; text-decoration: none; 
+	background-color: #DDDDDD;
+	}
+div.attachmentsAdmin li a:visited { color: #0000FF; text-decoration: none; }
+div.attachmentsAdmin li a:active  { color: #0000FF; text-decoration: none; }
+
+div#componentVersion {
+	font-style: italic;
+	float: right;
+}
+
+#redborder {
+	border: 1px solid red;
+}
+
+/* For the link to change the article */
+
+td#key_article {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+a.changeButton	{
+	padding: 1px 4px 1px 4px;
+	margin-left: 12px;
+	font-size: 95%;
+	color : #333333;
+	text-decoration: none;
+	background-color: #CCCCCC;
+	border: 1px solid #888888;
+}
+a.changeButton:link	   { color : #333333; text-decoration: none; }
+a.changeButton:visited { color : #333333; text-decoration: none; }
+a.changeButton:hover   { color : #333333; text-decoration: none; background-color: #DDDDDD; }
+a.changeButton:active  { color : #333333; text-decoration: none; }
+
+a.modal-button {
+	padding-top: 1px;
+	padding-top: 1px;
+	padding-left: 4px;
+	padding-right: 4px;
+	color: #333333;
+	background-color: #CCCCCC;
+	border: 1px solid #888888;
+	font-weight: bold;
+}
+
+a.modal-button:link	   { color: #333333; text-decoration: none; }
+a.modal-button:hover   { color: #333333; text-decoration: none; background-color: #DDDDDD; }
+a.modal-button:visited { color: #333333; text-decoration: none; }
+a.modal-button:active  { color: #333333; text-decoration: none; }
+
+
+/* For the upload attachment form */
+
+form.attachmentsBackend {
+	margin: 0 0 8px 0;
+}
+
+form.attachmentsBackend fieldset {
+	margin: 0;
+}
+
+form.attachmentsBackend legend {
+	font-size: 140%;
+	font-weight: bold;
+}
+
+
+form.attachmentsBackend input {
+	font-size: 1.3em;
+	border: 1px solid #888;
+	color : #333333;
+	background-color: #CCC;
+	margin: 2px;
+}
+
+form.attachmentsBackend input[type="text"] {
+	background-color: transparent;
+}
+
+form.attachmentsBackend input#parent_title {
+	background-color: #BBB;
+	color: #555;
+}
+
+
+form.attachmentsBackend select.inputbox {
+	background-color: #DDD;
+}
+
+form.attachmentsBackend input[type="button"], 
+form.attachmentsBackend input[type="submit"],
+div.deleteWarning input[type="button"], 
+div.deleteWarning input[type="submit"]
+{
+	font-size: 1.3em;
+	font-weight: bold;
+	border: 1px solid #666; 
+}
+
+form.attachmentsBackend span.right {
+    float: right;
+}
+
+form.attachmentsBackend table.admintable td {
+	font-size: 1em;
+	padding-right: 8px;
+}
+
+form.attachmentsBackend table.admintable td.key {
+	background-color: #DADAF0;
+	color: #444;
+	font-size: 1em;
+	width: 11em;
+	padding-right: 4px;
+}
+
+div.attachmentsBackendTitle h1 {
+	font-size: 1.5em;
+	color: #05B;
+	margin: 0;
+	padding: 0 0 4px 0;
+}
+
+div.attachmentsBackendTitle h2 {
+	font-size: 1.25em;
+	color: #05B;
+	margin: 0;
+	padding: 0 0 6px 0;
+}
+
+
+input#upload, input#upload_warning {
+	margin-top: 4px;
+}
+
+
+/* Small fixes for form to edit parameters */
+
+input#paramsregister_url {
+	width: 100%;
+}
+
+input#paramshide_attachments_for {
+	width: 100%;
+}
+
+/* For icons */
+
+.icon-48-attachments  { background-image: url(../../components/com_attachments/attachments_logo48.png); }
+
+.icon-16-attachments  { background-image: url(../../components/com_attachments/icon-16-attachments.png); }
+
+.icon-32-adminUtils   { background-image: url(../../components/com_attachments/attachments_utils32.png); }

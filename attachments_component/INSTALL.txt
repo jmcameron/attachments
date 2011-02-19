@@ -1,0 +1,43 @@
+INSTALLATION INSTRUCTIONS - Attachments 2.2
+===========================================
+
+To install the Attachments extension just use the Joomla! installer on the zip
+file from the Joomlacode website.  It will install the components and all the
+plugins and enable them.  You should not need to do anything else.
+
+If the normal Joomla! installer fails install the component or any of the
+seven Attachments plugins, you may need to install them manually.  Here are
+the steps:
+
+   * Create a new folder
+
+   * Unzip the Attachments 2.0 installation zip file into the folder
+
+   * Install each plugin/component ZIP in the folder using the Joomla! installer:
+       - admin/install/attachments_plugin_framework.zip
+       - admin/install/attachments_for_content.zip
+       - admin/install/attachments_plugin.zip
+       - admin/install/add_attachment_btn_plugin.zip
+       - admin/install/insert_attachments_token_btn_plugin.zip
+       - admin/install/attachments_search.zip
+       - admin/install/show_attachments_in_editor_plugin.zip
+       - admin/install/attachments_component_manual_install.zip
+
+   * Go to the plugin manager and enable the corresponding plugins:
+       - Attachments - For Components Plugin Framework
+       - Attachments - For Content
+       - Content - Attachments
+       - Editor Button - Add Attachment
+       - Editor Button - Insert Attachments Token
+       - Search - Attachments
+       - System - Show attachments in editor
+
+Language packs for many different languages are available
+at: http://joomlacode.org/gf/project/attachments/frs/
+
+Please read the README.txt for a few more usage notes.
+
+See the help page in the Attachments manager for more information, including
+warnings about typical problems.
+
+Enjoy!
