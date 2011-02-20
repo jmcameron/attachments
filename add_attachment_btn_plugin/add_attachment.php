@@ -99,9 +99,9 @@ class plgButtonAdd_attachment extends JPlugin
 		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
 
 		// Figure out where we are and construct the right link and set
-		global $mainframe;
+        $app = JFactory::getApplication();
 		$base_url = JURI::base(true);
-		if ( $mainframe->isAdmin() ) {
+		if ( $app->isAdmin() ) {
 			$base_url = str_replace('/administrator','', $base_url);
 			}
 

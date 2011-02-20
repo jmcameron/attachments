@@ -37,7 +37,7 @@ class AttachmentsViewAttachments extends JView
 	 */
 	function display($tpl = null)
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 
 		$document =& JFactory::getDocument();
 		if ( JRequest::getWord('format', '') == 'raw' ) {
@@ -158,8 +158,8 @@ class AttachmentsViewAttachments extends JView
 		$this->assign('title', $title); // Note: assume it is translated
 
 		// Construct the path for the icons
-		if ( $mainframe->isAdmin() ) {
-			$base_url = $mainframe->getSiteURL();
+		if ( $app->isAdmin() ) {
+			$base_url = $app->getSiteURL();
 			}
 		else {
 			$base_url = JURI::base(true) . '/';

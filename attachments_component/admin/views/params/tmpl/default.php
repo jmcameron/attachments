@@ -14,7 +14,7 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-global $mainframe, $option;
+global $option;
 
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
@@ -22,8 +22,9 @@ $document->addStyleSheet( JURI::base(true) . '/components/com_attachments/attach
 						  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage(); 
+$app = JFactory::getApplication();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments_rtl.css', 
+	$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css', 
 							  'text/css', null, array() );
 	}
 

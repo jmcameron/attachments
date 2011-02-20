@@ -14,16 +14,18 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $mainframe, $option;
+global $option;
 
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
-$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments.css',
+
+$app = JFactory::getApplication();
+$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css',
 			  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments_rtl.css',
+	$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css',
 				  'text/css', null, array() );
 	}
 
@@ -36,7 +38,7 @@ $params = $this->params;
 $secure = $params->get('secure',false);
 $superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 
-$icon_dir = $mainframe->getSiteURL() . 'components/com_attachments/media/icons/';
+$icon_dir = $app->getSiteURL() . 'components/com_attachments/media/icons/';
 
 $num_columns = 9;
 
@@ -130,7 +132,7 @@ for ($i=0, $n=count( $this->attachments ); $i < $n; $i++) {
 			 $url = JRoute::_("index.php?option=com_attachments&amp;task=download&amp;id=" . (int)$row->id);
 			 }
 		 else {
-			 $url = $mainframe->getSiteURL() . $row->url;
+			 $url = $app->getSiteURL() . $row->url;
 			 }
 		 }
 	 else {
@@ -147,16 +149,16 @@ for ($i=0, $n=count( $this->attachments ); $i < $n; $i++) {
 		 $icon_url = $icon_dir . 'generic.gif';
 	 $link_icon_url = $icon_dir . 'link_arrow.png';
 	 $link_broken_icon_url = $icon_dir . 'link_broken.png';
-	 $add_attachment_icon = $mainframe->getSiteURL() . 'components/com_attachments/media/add_attachment.gif';
+	 $add_attachment_icon = $app->getSiteURL() . 'components/com_attachments/media/add_attachment.gif';
 	 $add_attachment_title = JText::_('ADD_ATTACHMENT_TITLE');
 	 $edit_attachment_title = JText::_('EDIT_THIS_ATTACHMENT_TITLE');
 	 $access_attachment_title = JText::_('ACCESS_THIS_ATTACHMENT_TITLE');
 
 	 // Set up the create/modify dates
 	 jimport( 'joomla.utilities.date' );
-	 $cdate = new JDate($row->create_date, -$mainframe->getCfg('offset'));
+	 $cdate = new JDate($row->create_date, -$app->getCfg('offset'));
 	 $create_date = $cdate->toFormat("%x %H:%M");
-	 $mdate = new JDate($row->modification_date, -$mainframe->getCfg('offset'));
+	 $mdate = new JDate($row->modification_date, -$app->getCfg('offset'));
 	 $modification_date = $mdate->toFormat("%x %H:%M");
 
 	 $add_attachment_txt = JText::_('ADD_ATTACHMENT');

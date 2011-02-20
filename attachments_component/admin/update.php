@@ -13,8 +13,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-global $mainframe;
-$mainframe->isAdmin() or die('Must be admin to execute!');
+$app = JFactory::getApplication();
+$app->isAdmin() or die('Must be admin to execute!');
 
 /**
  * A class for update functions
@@ -75,7 +75,7 @@ class AttachmentsUpdate
 	 */
 	function update_null_dates()
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -95,14 +95,14 @@ class AttachmentsUpdate
 			$create_date = $row->create_date;
 			if ( is_null($create_date) OR $create_date == ''  ) {
 				jimport( 'joomla.utilities.date' );
-				$cdate = new JDate(filemtime($row->filename_sys), $mainframe->getCfg('offset'));
+				$cdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
 				$create_date = $cdate->toMySQL();
 				$updated = true;
 				}
 			$mod_date = $row->modification_date;
 			if ( is_null($mod_date) OR $mod_date == '' ) {
 				jimport( 'joomla.utilities.date' );
-				$mdate = new JDate(filemtime($row->filename_sys), $mainframe->getCfg('offset'));
+				$mdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
 				$mod_date = $mdate->toMySQL();
 				$updated = true;
 				}

@@ -14,19 +14,19 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $mainframe, $option;
+global $option;
 
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
-$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments.css',
+
+$app = JFactory::getApplication();
+$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css',
 						  'text/css', null, array() );
 $document->addStyleSheet( JURI::base(true) . '/components/com_attachments/attachments.css',
 						  'text/css', null, array() );
-
-//global $mainframe;
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments_rtl.css',
+	$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 

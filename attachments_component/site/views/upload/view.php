@@ -30,9 +30,8 @@ class AttachmentsViewUpload extends JView
 	 */
 	function display($tpl=null, $error=false, $error_msg=false)
 	{
-		global $mainframe;
-
 		// Add javascript
+		$app = JFactory::getApplication();
 		$doc =& JFactory::getDocument();
 		$doc->addScript( JURI::base(true) . '/plugins/content/attachments_refresh.js' );
 		
@@ -101,7 +100,7 @@ class AttachmentsViewUpload extends JView
 		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/templates/system/css/system.css', $echo_css );
 		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/templates/system/css/general.css', $echo_css );
 		AttachmentsHelper::addStyleSheet(
-			JURI::base(true) . '/templates/' . $mainframe->getTemplate() . '/css/template.css', $echo_css );
+			JURI::base(true) . '/templates/' . $app->getTemplate() . '/css/template.css', $echo_css );
 		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css', $echo_css );
 		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments2.css', $echo_css );
 		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/media/system/css/modal.css', $echo_css );

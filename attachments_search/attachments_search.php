@@ -18,8 +18,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * Register the plugin with the Joomla! system
  */
 
-$mainframe->registerEvent( 'onSearch', 'plgSearchAttachments' );
-$mainframe->registerEvent( 'onSearchAreas', 'plgSearchAttachmentAreas' );
+
+$app = JFactory::getApplication();
+
+$app->registerEvent( 'onSearch', 'plgSearchAttachments' );
+$app->registerEvent( 'onSearchAreas', 'plgSearchAttachmentAreas' );
 
 
 JPlugin::loadLanguage( 'plg_search_attachments', JPATH_ADMINISTRATOR);

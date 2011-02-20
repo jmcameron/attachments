@@ -60,7 +60,7 @@ class AttachmentsadminModelAttachments extends JModel
 	{
 		parent::__construct();
 
-		global $mainframe, $option;
+		global $option;
 		$db =& $this->getDBO();
 
 		// // Get the component parameters
@@ -74,13 +74,14 @@ class AttachmentsadminModelAttachments extends JModel
 		// if ( $suppress_obsolete_attachments ) {
 		//	  $list_for_parents_default = 'PUBLISHED';
 		// }
-		// $state = $mainframe->getUserStateFromRequest( 'com_attachments.listAttachments.list_for_parents',
-		// 											  'list_for_parents', $list_for_parents_default, 'word' );
+		// $state = $app->getUserStateFromRequest( 'com_attachments.listAttachments.list_for_parents',
+		// 				   					       'list_for_parents', $list_for_parents_default, 'word' );
 
 		// Get the limits
-		$limit = $mainframe->getUserStateFromRequest( 'com_attachments.listAttachments.limit',
-													  'limit', $mainframe->getCfg('list_limit'), 'int');
-		$limitstart = $mainframe->getUserStateFromRequest('com_attachments.listAttachments.limitstart',
+		$app = JFactory::getApplication();
+		$limit = $app->getUserStateFromRequest( 'com_attachments.listAttachments.limit',
+													  'limit', $app->getCfg('list_limit'), 'int');
+		$limitstart = $app->getUserStateFromRequest('com_attachments.listAttachments.limitstart',
 														  'limitstart', 0, 'int');
 		// In case limit has been changed, adjust it
 		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
@@ -89,21 +90,21 @@ class AttachmentsadminModelAttachments extends JModel
 		$this->setState('limitstart', $limitstart);
 
 		// Get the ordering information
-		$order	   = $mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
-														 'filter_order', '', 'cmd');
-		$order_Dir = $mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
-														 'filter_order_Dir', '', 'word');
+		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+												   'filter_order', '', 'cmd');
+		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+												   'filter_order_Dir', '', 'word');
 		$this->setState('filter_order', $order);
 		$this->setState('filter_order_Dir', $order_Dir);
 
 		// Get the entity filter info
-		$filter_entity = $mainframe->getUserStateFromRequest('com_attachments.listAttachments.filter_entity',
+		$filter_entity = $app->getUserStateFromRequest('com_attachments.listAttachments.filter_entity',
 															 'filter_entity', 'ALL', 'string' );
 		$filter_entity = $db->getEscaped( trim(JString::strtoupper($filter_entity)) );
 		$this->setState('filter_entity', $filter_entity);
 
 		// Get the search string
-		$search = $mainframe->getUserStateFromRequest('com_attachments.listAttachments.search',
+		$search = $app->getUserStateFromRequest('com_attachments.listAttachments.search',
 													  'search', '', 'string' );
 		$search = $db->getEscaped( trim(JString::strtolower( $search ) ) );
 		$this->setState('search', $search);
@@ -141,9 +142,9 @@ class AttachmentsadminModelAttachments extends JModel
 
 				// Fix the relative URLs
 				if ( $row->uri_type == 'url' ) {
-					global $mainframe;
+					$app = JFactory::getApplication();
 					if ( strpos($row->url, '://') === false ) {
-						$row->url = $mainframe->getSiteURL() . '/' . $row->url;
+						$row->url = $app->getSiteURL() . '/' . $row->url;
 						}
 					}
 
@@ -277,7 +278,7 @@ class AttachmentsadminModelAttachments extends JModel
 	 */
 	function _buildContentOrderBy()
 	{
-		global $mainframe, $option;
+		global $option;
 
 		// Get the ordering information
 		$order	   = $this->getState('filter_order');
@@ -301,7 +302,7 @@ class AttachmentsadminModelAttachments extends JModel
 	 */
 	function _buildContentWhere()
 	{
-		global $mainframe, $option;
+		global $option;
 
 		$where = Array();
 

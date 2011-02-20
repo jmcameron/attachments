@@ -13,8 +13,10 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-$mainframe->registerEvent('onPrepareContent', 'addAttachments');
-$mainframe->registerEvent('onAfterContentSave', 'fixAttachmentsParent');
+$app = JFactory::getApplication();
+
+$app->registerEvent('onPrepareContent', 'addAttachments');
+$app->registerEvent('onAfterContentSave', 'fixAttachmentsParent');
 
 
 /**
@@ -368,7 +370,7 @@ function addAttachments( &$row, &$params, $page=0 )
  */
 function fixAttachmentsParent( &$article, $isNew )
 {
-	global $option, $mainframe;
+	global $option;
 
 	if ( !$isNew )
 		// If the article is not new, this step is not needed

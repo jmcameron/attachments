@@ -380,8 +380,6 @@ class AttachmentsHelper
 	 */
 	function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
-		global $mainframe;
-
 		// Construct the url to save the form
 		$url_base = "index.php?option=com_attachments";
 
@@ -395,7 +393,8 @@ class AttachmentsHelper
 			$parentinfo = "&parent_id=$parent_id&parent_type=$parent_type";
 			}
 		
-		if ( $mainframe->isAdmin() ) {
+		$app = JFactory::getApplication();
+		if ( $app->isAdmin() ) {
 			$upload_task = 'add';
 			$update_task = 'edit';
 			if ( $save_type == 'upload' ) {
@@ -468,8 +467,6 @@ class AttachmentsHelper
 	 */
 	function upload_file(&$row, &$parent, $attachment_id=false, $save_type='update')
 	{
-		global $mainframe;
-
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
@@ -513,7 +510,8 @@ class AttachmentsHelper
 
 		// A little formatting
 		$msgbreak = '<br />';
-		if ( $mainframe->isAdmin() ) {
+		$app = JFactory::getApplication();
+		if ( $app->isAdmin() ) {
 			$msgbreak = '';
 			}
 
@@ -526,7 +524,7 @@ class AttachmentsHelper
 				$error = 'no_file';
 				$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . ' (' . JText::_('YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
-				if ( $mainframe->isAdmin() ) {
+				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -538,7 +536,7 @@ class AttachmentsHelper
 				$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . '(' . JText::_('ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
 				$error_msg .= get_cfg_var('upload_max_filesize') . ')';
-				if ( $mainframe->isAdmin() ) {
+				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -641,7 +639,7 @@ class AttachmentsHelper
 		// If there was an error, refresh the form with a warning
 		if ( $error ) {
 
-			if ( $mainframe->isAdmin() ) {
+			if ( $app->isAdmin() ) {
 				$result = new JObject();
 				$result->error = true;
 				$result->error_msg = $error_msg;
@@ -736,7 +734,7 @@ class AttachmentsHelper
 			$error = 'file_already_on_server';
 			$error_msg = JText::sprintf('ERROR_FILE_S_ALREADY_ON_SERVER', $filename_sys);
 
-			if ( $mainframe->isAdmin() ) {
+			if ( $app->isAdmin() ) {
 				$result = new JObject();
 				$result->error = true;
 				$result->error_msg = $error_msg;
@@ -873,8 +871,6 @@ class AttachmentsHelper
 	 */
 	function parse_url(&$raw_url, $relative_url)
 	{
-		global $mainframe;
-
 		// Set up the return object
 		$result = new JObject();
 		$result->error = false;
@@ -1003,8 +999,6 @@ class AttachmentsHelper
 	 */
 	function get_url_info($raw_url, &$row, $verify, $relative_url)
 	{
-		global $mainframe;
-
 		// Check the URL for existence
 		// * Get 'size' (null if the there were errors accessing the link,
 		//		or 0 if the URL loaded but had None/Null/0 for length
@@ -1049,6 +1043,8 @@ class AttachmentsHelper
 		$errstr = null;
 		$fp = false;
 
+		$app = JFactory::getApplication();
+
 		if ( $timeout > 0 ) {
 			if (version_compare(PHP_VERSION, '5.0.0') >= 0) {
 				require_once(JPATH_COMPONENT_SITE.DS.'fsockopen5.php');
@@ -1056,7 +1052,7 @@ class AttachmentsHelper
 				if ( $u->error ) {
 					$error_msg = JText::sprintf('ERROR_CHECKING_URL_S', $raw_url);
 					$error_msg .= ' <br />(' . $u->err_msg . ' <br />' . $errstr . ')';
-					if ( $mainframe->isAdmin() ) {
+					if ( $app->isAdmin() ) {
 						$result = new JObject();
 						$result->error = true;
 						$result->error_msg = $error_msg;
@@ -1194,8 +1190,6 @@ class AttachmentsHelper
 	function add_url(&$row, &$parent, $verify, $relative_url=false,
 					 $update=false, $attachment_id=false)
 	{
-		global $mainframe;
-
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
@@ -1226,9 +1220,10 @@ class AttachmentsHelper
 		$result = AttachmentsHelper::get_url_info($row->url, $row, $verify, $relative_url);
 
 		// If there was an error, bow out
+		$app = JFactory::getApplication();
 		if ( $result !== true ) {
 
-			if ( $mainframe->isAdmin() ) {
+			if ( $app->isAdmin() ) {
 				return $result;
 				}
 
@@ -1579,8 +1574,8 @@ class AttachmentsHelper
 	function attachmentListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
 								$show_file_links=true, $allow_edit=true)
 	{
-		global $mainframe;
-		
+		$app = JFactory::getApplication();
+
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
 		$db =& JFactory::getDBO();
@@ -1605,7 +1600,7 @@ class AttachmentsHelper
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}
 
-			if ( $mainframe->isAdmin() ) {
+			if ( $app->isAdmin() ) {
 				// Get the html for the attachments list
 				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.
 							 'controllers'.DS.'attachments.php');
@@ -1647,13 +1642,13 @@ class AttachmentsHelper
 	 */
 	function enqueueSystemMessage($msg, $msgType='message')
 	{
-		global $mainframe;
-		$mainframe->enqueueMessage($msg, $msgType);
+		$app = JFactory::getApplication();
+		$app->enqueueMessage($msg, $msgType);
 
 		// Persist the message, borrowed from redirect() function in:
 		//	 libraries/joomla/application/application.php
 		$session =& JFactory::getSession();
-		$session->set('application.queue', $mainframe->getMessageQueue());
+		$session->set('application.queue', $app->getMessageQueue());
 	}
 
 }

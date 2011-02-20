@@ -110,10 +110,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function getEntityViewURL($parent_id, $parent_entity = 'default')
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 
-		if ( $mainframe->isAdmin() ) {
-			$base_url = $mainframe->getSiteURL();
+		if ( $app->isAdmin() ) {
+			$base_url = $app->getSiteURL();
 			}
 		else {
 			$base_url = JURI::base(true) . "/";
@@ -147,10 +147,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
 	{
-		global $mainframe;
+        $app = JFactory::getApplication();
 
 		// Determine the task
-		if ( $mainframe->isAdmin() ) {
+		if ( $app->isAdmin() ) {
 			$task = 'add';
 			}
 		else {

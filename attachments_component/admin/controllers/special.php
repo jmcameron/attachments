@@ -73,10 +73,10 @@ class AttachmentsControllerSpecial extends JController
 	/** Show the current SEF mode */
 	function showSEF()
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo "<html><head><title>SEF Status</title></head><body>";
-		echo "SEF: " . $mainframe->getCfg('sef') . "<br />";
+		echo "SEF: " . $app->getCfg('sef') . "<br />";
 		echo "</body></html>";
 		exit();
 	}

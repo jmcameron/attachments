@@ -129,9 +129,9 @@ class plgSystemShow_attachments extends JPlugin
 			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
 
 			// Add the refresh Javascript
-			global $mainframe;
+			$app = JFactory::getApplication();
 			$base_url = JURI::base(true);
-			if ( $mainframe->isAdmin() ) {
+			if ( $app->isAdmin() ) {
 				$base_url = str_replace('/administrator','', $base_url);
 				}
 			$doc =& JFactory::getDocument();

@@ -14,7 +14,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $mainframe, $option;
+global $option;
+$app = JFactory::getApplication();
 
 
 // Set a few variables for convenience
@@ -131,7 +132,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	if ( $this->show_mod_date ) {
 		jimport( 'joomla.utilities.date' );
-		$date = new JDate($row->modification_date, -$mainframe->getCfg('offset'));
+		$date = new JDate($row->modification_date, -$app->getCfg('offset'));
 		$last_modified = $date->toFormat($this->mod_date_format);
 		}
 

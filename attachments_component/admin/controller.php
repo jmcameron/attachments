@@ -48,7 +48,7 @@ class AttachmentsAdminController extends JController
 	 */
 	function listAttachments()
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -70,7 +70,7 @@ class AttachmentsAdminController extends JController
 			$list_for_parents_default = 'PUBLISHED';
 			}
 		$list_for_parents =
-			$mainframe->getUserStateFromRequest('com_attachments.listAttachments.list_for_parents',
+			$app->getUserStateFromRequest('com_attachments.listAttachments.list_for_parents',
 												'list_for_parents', $list_for_parents_default, 'word');
 		$lists['list_for_parents'] = JString::strtolower($list_for_parents);
 
@@ -126,7 +126,7 @@ class AttachmentsAdminController extends JController
 	 */
 	function add()
 	{
-		global $mainframe, $option;
+		global $option;
 
 		$parent_entity = 'default';
 
@@ -179,9 +179,10 @@ class AttachmentsAdminController extends JController
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
 			$document =&  JFactory::getDocument();
-			$document->addScript( $mainframe->getSiteURL() . 'media/system/js/mootools.js' );
-			$document->addScript( $mainframe->getSiteURL() . 'media/system/js/modal.js' );
-			$document->addScript( $mainframe->getSiteURL() . 'plugins/content/attachments_refresh.js' );
+			$app = JFactory::getApplication();
+			$document->addScript( $app->getSiteURL() . 'media/system/js/mootools.js' );
+			$document->addScript( $app->getSiteURL() . 'media/system/js/modal.js' );
+			$document->addScript( $app->getSiteURL() . 'plugins/content/attachments_refresh.js' );
 
 			$js = "
 	   function jSelectArticle(id, title) {
@@ -335,8 +336,8 @@ class AttachmentsAdminController extends JController
 	 */
 	function edit()
 	{
-		global $option, $mainframe;
-
+		global $option;
+		$app = JFactory::getApplication();
 		$db =& JFactory::getDBO();
 
 		$attachment =& JTable::getInstance('Attachments', 'Table');
@@ -377,7 +378,7 @@ class AttachmentsAdminController extends JController
 		// Massage the data
 		$attachment->size = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
 		if ( $attachment->uri_type == 'file' ) {
-			$attachment->url = $mainframe->getSiteURL() . $attachment->url;
+			$attachment->url = $app->getSiteURL() . $attachment->url;
 			}
 
 		// Get the parent handler
@@ -414,7 +415,7 @@ class AttachmentsAdminController extends JController
 
 		// Set up view for changing parent
 		if ( $change_parent ) {
-			$document->addScript( $mainframe->getSiteURL() . '/media/system/js/modal.js' );
+			$document->addScript( $app->getSiteURL() . '/media/system/js/modal.js' );
 			$js = "
 	   function jSelectArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
@@ -514,9 +515,9 @@ class AttachmentsAdminController extends JController
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
-			$document->addScript( $mainframe->getSiteURL() . 'media/system/js/mootools.js' );
-			$document->addScript( $mainframe->getSiteURL() . 'media/system/js/modal.js' );
-			$document->addScript( $mainframe->getSiteURL() . 'plugins/content/attachments_refresh.js' );
+			$document->addScript( $app->getSiteURL() . 'media/system/js/mootools.js' );
+			$document->addScript( $app->getSiteURL() . 'media/system/js/modal.js' );
+			$document->addScript( $app->getSiteURL() . 'plugins/content/attachments_refresh.js' );
 			$save_url = 'index.php?option=com_attachments&amp;task=save';
 			}
 		$view->assignRef('save_url', $save_url);
@@ -1081,8 +1082,8 @@ class AttachmentsAdminController extends JController
 	 */
 	function download()
 	{
-		global $mainframe;
-		if ( ! $mainframe->isAdmin() ) {
+		$app = JFactory::getApplication();
+		if ( ! $app->isAdmin() ) {
 			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_AS_ADMIN') . ' (ERR 26)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -1193,19 +1194,20 @@ class AttachmentsAdminController extends JController
 	 */
 	function remove_warning()
 	{
-		global $option, $mainframe;
+		global $option;
+		$app = JFactory::getApplication();
 
 		// Meant to be shown in the iframe popup
 		$document =&  JFactory::getDocument();
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this fix is still necessary
@@ -1496,14 +1498,15 @@ class AttachmentsAdminController extends JController
 	 */
 	function warning()
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
+
 		$document =&  JFactory::getDocument();
-		$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments.css',
+		$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css',
 								  'text/css', null, array() );
 
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			$document->addStyleSheet( $mainframe->getSiteURL() . 'plugins/content/attachments_rtl.css',
+			$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css',
 									  'text/css', null, array() );
 			}
 
@@ -1524,8 +1527,6 @@ class AttachmentsAdminController extends JController
 	 */
 	function selectEntity()
 	{
-		global $mainframe;
-
 		// Get the parent type
 		$parent_type = AttachmentsAdminController::_getCmd2('parent_type');
 		if ( !$parent_type ) {
@@ -1555,19 +1556,21 @@ class AttachmentsAdminController extends JController
 		// Set up the display lists
 		$lists = Array();
 
+
 		// table ordering
+		$app = JFactory::getApplication();
 		$filter_order =
-			$mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
-												'filter_order', '', 'cmd');
+			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+										  'filter_order', '', 'cmd');
 		$filter_order_Dir =
-			$mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
-												'filter_order_Dir','',	'word');
+			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+										  'filter_order_Dir','',	'word');
 		$lists['order_Dir'] = $filter_order_Dir;
 		$lists['order']		= $filter_order;
 
 		// search filter
-		$search_filter = $mainframe->getUserStateFromRequest('com_attachments.selectEntity.search',
-															 'search', '', 'string' );
+		$search_filter = $app->getUserStateFromRequest('com_attachments.selectEntity.search',
+													   'search', '', 'string' );
 		$lists['search'] = $search_filter;
 
 		// Get the list of items to display

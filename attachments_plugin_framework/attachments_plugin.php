@@ -396,8 +396,6 @@ class AttachmentsPlugin extends JObject
 	 */
 	function getEntityItems($parent_entity='default', $filter='')
 	{
-		global $mainframe;
-
 		$db =& JFactory::getDBO();
 
 		$parent_entity = $this->getCanonicalEntity($parent_entity);
@@ -407,10 +405,11 @@ class AttachmentsPlugin extends JObject
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$order	   = $mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
-														 'filter_order',		'', 'cmd');
-		$order_Dir = $mainframe->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
-														 'filter_order_Dir',	'', 'word');
+		$app = JFactory::getApplication();
+		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+												   'filter_order',		'', 'cmd');
+		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+												   'filter_order_Dir',	'', 'word');
 
 		// Get all the items
 		$query = "SELECT $entity_id_field,$entity_title_field FROM #__$entity_table";
@@ -508,9 +507,9 @@ class AttachmentsPlugin extends JObject
 	 */
 	function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
 	{
-		global $mainframe;
+		$app = JFactory::getApplication();
 
-		if ( $mainframe->isAdmin() ) {
+		if ( $app->isAdmin() ) {
 			$task = 'add';
 			}
 		else {
