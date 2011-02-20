@@ -13,9 +13,7 @@
         <filename plugin="attachments_for_content">attachments_for_content.php</filename>
         <filename>plugins/com_content.php</filename>
         <filename>plugins/com_content.ini</filename>
+	<folder>language</folder>
     </files>
-    <languages>
-        <language tag="en-GB">en-GB.plg_attachments_attachments_for_content.ini</language>
-    </languages>
     <params/>
 </extension>
