@@ -9,10 +9,10 @@
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <version>2.2</version>
     <description>SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_INSTALLED</description>
-    <languages>
-	<language tag="en-GB">en-GB.plg_system_show_attachments.ini</language>
-    </languages>
+
     <files>
 	<filename plugin="show_attachments">show_attachments.php</filename>
+	<folder>language</folder>
     </files>
+
 </extension>
