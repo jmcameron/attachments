@@ -9,14 +9,15 @@
   <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
   <version>2.2</version>
   <description>ATTACHMENTS_SEARCH_INSTALLED</description>
+
   <files>
-    <filename plugin="attachments">attachments.php</filename>
+    <filename plugin="attachments_search">attachments_search.php</filename>
+    <folder>language</folder>
   </files>
-  <languages>
-    <language tag="en-GB">en-GB.plg_search_attachments.ini</language>
-  </languages>
+
   <params>
     <param name="search_limit" type="text" size="5" default="50"
            label="SEARCH_LIMIT" description="SEARCH_LIMIT_DESCRIPTION"/>
   </params>
+
 </extension>
