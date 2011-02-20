@@ -9,9 +9,7 @@
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <version>2.2</version>
     <description>ADD_ATTACHMENT_BUTTON_PLUGIN_INSTALLED</description>
-    <languages>
-	<language tag="en-GB">en-GB.plg_editors-xtd_add_attachment.ini</language>
-    </languages>
+
     <files>
 	<filename plugin="add_attachment">add_attachment.php</filename>
 	<filename>add_attachment.png</filename>
@@ -19,4 +17,5 @@
 	<filename>add_attachment_rtl.png</filename>
 	<filename>add_attachment_rtl.css</filename>
     </files>
+
 </extension>
