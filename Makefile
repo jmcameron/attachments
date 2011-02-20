@@ -9,7 +9,8 @@ INSTALLS = attachments_plugin \
 	   attachments_plugin_framework \
 	   attachments_for_content \
 	   attachments_search \
-	   show_attachments_in_editor_plugin
+	   show_attachments_in_editor_plugin \
+	   attachments_component
 
 EXTRAS = 
 
@@ -18,7 +19,6 @@ NAMES = $(INSTALLS) $(EXTRAS)
 ZIPS = $(NAMES:=.zip)
 
 ZIPIGNORES = -x "*.svn/*" -x ".svnignore" -x ".directory" -x "*.xcf"
-
 
 parts: $(ZIPS)
 

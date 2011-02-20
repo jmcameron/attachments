@@ -10,12 +10,14 @@
 	<update></update>
 
 	<files folder="packages">
-	  <file type="plugin"	id="attachments"			group="content">attachments_plugin.zip</file>
-	  <file type="plugin"	id="attachments_plugin_framework"	group="attachments">attachments_plugin_framework.zip</file>
-	  <file type="plugin"	id="attachments_for_content"		group="attachments">attachments_for_content.zip</file>
-	  <file type="plugin"	id="show_attachments"			group="system">show_attachments_in_editor_plugin.zip</file>
-	  <file type="plugin"	id="add_attachment"			group="editors-xtd">add_attachment_btn_plugin.zip</file>
-	  <file type="plugin"	id="insert_attachments_token"		group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
+	  <file type="plugin"	  id="attachments"			group="content">attachments_plugin.zip</file>
+	  <file type="plugin"	  id="attachments_plugin_framework"	group="attachments">attachments_plugin_framework.zip</file>
+	  <file type="plugin"	  id="attachments_for_content"		group="attachments">attachments_for_content.zip</file>
+	  <file type="plugin"	  id="show_attachments"			group="system">show_attachments_in_editor_plugin.zip</file>
+	  <file type="plugin"	  id="add_attachment"			group="editors-xtd">add_attachment_btn_plugin.zip</file>
+	  <file type="plugin"	  id="insert_attachments_token"		group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
+
+	  <file type="component"  id="com_attachments">attachments_component.zip</file>
 	</files>
 
 </extension>
