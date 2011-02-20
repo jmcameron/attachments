@@ -32,8 +32,8 @@ parts: $(ZIPS)
 attachments-$(VERSION).zip: $(ZIPS)
 	@echo "-------------------------------------------------------"
 	@echo "Creating extension zip file: attachments-$(VERSION).zip"
-	@mv $(INSTALLS:=.zip) attachments_component/admin/install/
-	@(cd attachments_component; zip -r ../$@ * $(ZIPIGNORES))
+	@mv $(INSTALLS:=.zip) pkg_attachments/packages/
+	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
 
 
 clean:
@@ -41,7 +41,7 @@ clean:
 	@rm -f _tests.pdf
 
 veryclean: clean
-	@rm -f $(ZIPS) attachments_component/admin/install/*.zip
+	@rm -f $(ZIPS) pkg_attachments/packages/*.zip
 	@rm -f attachments-$(VERSION).zip
 
 fixversions:
