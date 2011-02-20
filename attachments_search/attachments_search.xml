@@ -11,7 +11,7 @@
   <description>ATTACHMENTS_SEARCH_INSTALLED</description>
 
   <files>
-    <filename plugin="attachments_search">attachments_search.php</filename>
+    <filename plugin="attachments">attachments_search.php</filename>
     <folder>language</folder>
   </files>
 
