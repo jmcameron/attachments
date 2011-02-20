@@ -8,7 +8,7 @@
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <version>2.2</version>
-    <description>INSERT_ATTACHMENTS_TOKEN_BUTTON_PLUGIN_INSTALLED</description>
+    <description>INSERT_ATTACHMENTS_TOKEN_BUTTON_PLUGIN_DESCRIPTION</description>
 
     <files>
 	<filename plugin="insert_attachments_token">insert_attachments_token.php</filename>
