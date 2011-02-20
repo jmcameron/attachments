@@ -13,7 +13,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-define('AttachmentsComponentVersion', '2.2');
+define('AttachmentsComponentVersion', '3.0');
 
 
 /**

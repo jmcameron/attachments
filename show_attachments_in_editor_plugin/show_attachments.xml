@@ -2,12 +2,12 @@
 <extension type="plugin" group="system" version="1.6" method="upgrade">
     <name>System - Show attachments in editor</name>
     <author>Jonathan M. Cameron</author>
-    <creationDate>February  6, 2011</creationDate>
+    <creationDate>February 19, 2011</creationDate>
     <copyright>(C) 2011 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-    <version>2.2</version>
+    <version>3.0</version>
     <description>SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_DESCRIPTION</description>
 
     <files>

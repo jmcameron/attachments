@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 2.2 - February  6, 2011**
+**Version 3.0 - February 19, 2011**
 
 .. contents::
     :depth: 1

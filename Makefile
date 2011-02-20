@@ -1,5 +1,5 @@
-VERSION = '2.2'
-# DATE = 'December  3, 2010'
+VERSION = '3.0'
+# DATE = 'February 19, 2011'
 
 all: parts attachments-$(VERSION).zip
 
@@ -11,7 +11,7 @@ INSTALLS = attachments_plugin \
 	   attachments_search \
 	   show_attachments_in_editor_plugin
 
-EXTRAS = attachments_for_quickfaq attachments_for_jevents
+EXTRAS = 
 
 NAMES = $(INSTALLS) $(EXTRAS)
 
