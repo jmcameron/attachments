@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6" method="upgrade">
-    <name>Attachments</name>
-    <creationDate>February 19, 2011</creationDate>
+    <name>com_attachments</name>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>3.0</version>
-    <description>ATTACHMENTS_COMPONENT_INSTALLATION</description>
-    <installfile>install.attachments.php</installfile>
-    <uninstallfile>uninstall.attachments.php</uninstallfile>
+    <creationDate>February 19, 2011</creationDate>
+    <description>ATTACHMENTS_COMPONENT_DESCRIPTION</description>
+
+    <scriptfile>attachments.install.php</scriptfile>
+
     <install>
 	<sql>
 	    <file driver="mysql" charset="utf8">install.mysql.sql</file>
-	    <file driver="mysql">install.noutf8.sql</file>
 	</sql>
     </install>
+
     <uninstall>
 	<sql>
 	    <file driver="mysql" charset="utf8">uninstall.mysql.sql</file> 
 	</sql>
     </uninstall>
+
     <files folder="site">
 	<filename>attachments.php</filename>
 	<filename>controller.php</filename>
@@ -50,16 +52,10 @@
 	<filename>views/upload/metadata.xml</filename>
 	<filename>views/upload/view.php</filename>
 	<folder>media</folder>
+	<folder>language</folder>
     </files>
-    <languages folder="site">
-	<language tag="en-GB">en-GB.com_attachments.ini</language>
-    </languages>
     <administration>
 	<menu img="components/com_attachments/attachments.png">Attachments</menu>
-	<languages folder="admin">
-	    <language tag="en-GB">en-GB.com_attachments.ini</language>
-	    <language tag="en-GB">en-GB.com_attachments.menu.ini</language>
-	</languages>
 	<files folder="admin">
 	    <filename>install.mysql.sql</filename>
 	    <filename>install.noutf8.sql</filename>
@@ -112,15 +108,6 @@
 	    <filename>attachments_logo48.png</filename>
 	    <filename>Changelog.php</filename>
 	    <filename>index.html</filename>
-	    <filename>install/manifest.ini</filename>
-	    <filename>install/add_attachment_btn_plugin.zip</filename>
-	    <filename>install/attachments_for_content.zip</filename>
-	    <filename>install/attachments_plugin_framework.zip</filename>
-	    <filename>install/attachments_plugin.zip</filename>
-	    <filename>install/attachments_search.zip</filename>
-	    <filename>install/insert_attachments_token_btn_plugin.zip</filename>
-	    <filename>install/show_attachments_in_editor_plugin.zip</filename>
-	    <filename>install/index.html</filename>
 	    <filename>help/index.html</filename>
 	    <filename>help/en-GB/help.html</filename>
 	    <filename>help/en-GB/help.css</filename>
@@ -132,5 +119,9 @@
 	    <filename>help/en-GB/plugin_manual/html/searchindex.js</filename>
 	    <folder>help/en-GB/plugin_manual/html/_static</folder>
 	</files>
+	<languages folder="admin">
+	    <language tag="en-GB">en-GB.com_attachments.ini</language>
+	    <language tag="en-GB">en-GB.com_attachments.menu.ini</language>
+	</languages>
     </administration>
 </extension>
