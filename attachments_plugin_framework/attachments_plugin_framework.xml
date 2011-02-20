@@ -9,15 +9,14 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>2.2</version>
     <description>ATTACHMENTS_FOR_COMPONENTS_PLUGIN_FRAMEWORK_INSTALLED</description>
+
     <files>
         <filename plugin="attachments_plugin_framework">attachments_plugin_framework.php</filename>
         <filename>attachments_plugin.php</filename>
         <filename>attachments_plugin_manager.php</filename>
         <filename>index.html</filename>
         <filename>plugins/index.html</filename>
+        <folder>language</folder>
     </files>
-    <languages>
-        <language tag="en-GB">en-GB.plg_attachments_attachments_plugin_framework.ini</language>
-    </languages>
-    <params/>
+
 </extension>
