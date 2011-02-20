@@ -9,11 +9,12 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>2.2</version>
     <description>ATTACHMENTS_FOR_CONTENT_PLUGIN_INSTALLED</description>
+
     <files>
         <filename plugin="attachments_for_content">attachments_for_content.php</filename>
         <filename>plugins/com_content.php</filename>
         <filename>plugins/com_content.ini</filename>
 	<folder>language</folder>
     </files>
-    <params/>
+
 </extension>
