@@ -8,7 +8,7 @@
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <version>2.2</version>
-    <description>SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_INSTALLED</description>
+    <description>SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_DESCRIPTION</description>
 
     <files>
 	<filename plugin="show_attachments">show_attachments.php</filename>
