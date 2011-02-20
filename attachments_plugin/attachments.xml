@@ -11,7 +11,7 @@
     <description>ATTACHMENTS_PLUGIN_INSTALLED</description>
 
     <files>
-	<filename plugin="attachments_plugin">attachments.php</filename>
+	<filename plugin="attachments">attachments.php</filename>
 	<filename>attachments.css</filename>
 	<filename>attachments1.css</filename>
 	<filename>attachments2.css</filename>
