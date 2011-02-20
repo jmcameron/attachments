@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
-<install type="plugin" group="search" version="1.5" method="upgrade">
+<extension type="plugin" group="search" version="1.6" method="upgrade">
   <name>Search - Attachments</name>
   <creationDate>February  6, 2011</creationDate>
   <author>Jonathan M. Cameron</author>
@@ -20,4 +19,4 @@
     <param name="search_limit" type="text" size="5" default="50"
            label="SEARCH_LIMIT" description="SEARCH_LIMIT_DESCRIPTION"/>
   </params>
-</install>
+</extension>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
-<install type="plugin" group="editors-xtd" version="1.5" method="upgrade">
+<extension type="plugin" group="editors-xtd" version="1.6" method="upgrade">
     <name>Editor Button - Insert Attachments Token</name>
     <author>Jonathan M. Cameron</author>
     <creationDate>February  6, 2011</creationDate>
@@ -20,4 +19,4 @@
 	<filename>insert_attachments_token_rtl.png</filename>
 	<filename>insert_attachments_token_rtl.css</filename>
     </files>
-</install>
+</extension>
