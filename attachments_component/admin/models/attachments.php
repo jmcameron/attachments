@@ -142,9 +142,9 @@ class AttachmentsadminModelAttachments extends JModel
 
 				// Fix the relative URLs
 				if ( $row->uri_type == 'url' ) {
-					$app = JFactory::getApplication();
+                    $uri = JFactory::getURI();
 					if ( strpos($row->url, '://') === false ) {
-						$row->url = $app->getSiteURL() . '/' . $row->url;
+						$row->url = $uri->root(true) . '/' . $row->url;
 						}
 					}
 

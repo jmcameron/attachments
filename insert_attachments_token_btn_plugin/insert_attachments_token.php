@@ -99,17 +99,19 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 			";
 		$doc =& JFactory::getDocument();
+		$uri = JFactory::getURI();
+
 		$doc->addScriptDeclaration($js);
 
 		// Add the regular css file
 		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/editors-xtd/insert_attachments_token.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/editors-xtd/insert_attachments_token.css' );
 
 		// Handle RTL styling (if necessary)
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments_rtl.css' );
-			AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/editors-xtd/insert_attachments_token_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/editors-xtd/insert_attachments_token_rtl.css' );
 			}
 		
 		$button = new JObject();

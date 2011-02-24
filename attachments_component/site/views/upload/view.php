@@ -33,7 +33,8 @@ class AttachmentsViewUpload extends JView
 		// Add javascript
 		$app = JFactory::getApplication();
 		$doc =& JFactory::getDocument();
-		$doc->addScript( JURI::base(true) . '/plugins/content/attachments_refresh.js' );
+		$uri = JFactory::getURI();
+		$doc->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
 		
 		$parent_id = $this->parent_id;
 		if ( $parent_id === null ) {
@@ -72,7 +73,7 @@ class AttachmentsViewUpload extends JView
 
 		// Needed URLs
 		$save_url = JRoute::_($this->save_url);
-		$base_url = JURI::base(true) . "/";
+		$base_url = $uri->root(true) . '/';
 	
 		$params = $this->params;
 
@@ -97,18 +98,18 @@ class AttachmentsViewUpload extends JView
 
 		// Add the stylesheets
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/templates/system/css/system.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/templates/system/css/general.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/templates/system/css/system.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/templates/system/css/general.css', $echo_css );
 		AttachmentsHelper::addStyleSheet(
-			JURI::base(true) . '/templates/' . $app->getTemplate() . '/css/template.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments2.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/media/system/css/modal.css', $echo_css );
+			$uri->root(true) . '/templates/' . $app->getTemplate() . '/css/template.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments2.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/media/system/css/modal.css', $echo_css );
 
 		// Handle RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments_rtl.css', $echo_css );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css', $echo_css );
 			}
 
 		// Display the form

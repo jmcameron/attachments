@@ -42,7 +42,9 @@ function attachments_fixScripts()
 	if ( $modal_url ) {
 		unset($document->_scripts[$modal_url]);
 		}
-	$document->addScript( JURI::base(true) . '/media/system/js/modal.js' );
+
+	$uri = JFactory::getURI();
+	$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 }
 
 
@@ -136,7 +138,8 @@ function attachments_attachmentButtonsHTML($parent_id, $parent_entity, $Itemid, 
 		$url .= "&from=closeme";
 		}
 	$url = JRoute::_($url);
-	$icon_url = JURI::base(true) . '/components/com_attachments/media/add_attachment.gif';
+	$uri = JFactory::getURI();
+	$icon_url = $uri->root(true) . '/components/com_attachments/media/add_attachment.gif';
 
 	$add_attachment_txt = JText::_('ADD_ATTACHMENT');
 	$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
@@ -159,17 +162,18 @@ function attachments_attachmentButtonsHTML($parent_id, $parent_entity, $Itemid, 
 function addAttachments( &$row, &$params, $page=0 )
 {
 	global $option;
+	$uri = JFactory::getURI();
 
 	$parent_type = $option;
 
 	// Always include the hide rule (since it may be needed to hide the custom tags)
 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-	AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments1.css' );
+	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments1.css' );
 
 	// JHTML::_('behavior.mootools');
 
 	$doc =& JFactory::getDocument();
-	$js_path = JURI::base(true) . '/plugins/content/attachments_refresh.js';
+	$js_path = $uri->root(true) . '/plugins/content/attachments_refresh.js';
 	$doc->addScript( $js_path );
 
 	// Get the article/parent handler
@@ -280,7 +284,7 @@ function addAttachments( &$row, &$params, $page=0 )
 
 	if ( $html OR $user_can_add ) {
 		// Add the style sheet
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 		}
 
 	// Construct the add-attachments button, if appropriate

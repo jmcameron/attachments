@@ -130,13 +130,15 @@ class plgSystemShow_attachments extends JPlugin
 
 			// Add the refresh Javascript
 			$app = JFactory::getApplication();
-			$base_url = JURI::base(true);
+	        $uri = JFactory::getURI();
+			$base_url = $uri->root(true);
 			if ( $app->isAdmin() ) {
+				// ??? This should not be necessary
 				$base_url = str_replace('/administrator','', $base_url);
 				}
 			$doc =& JFactory::getDocument();
 			$js_path = $base_url . '/plugins/content/attachments_refresh.js';
-			// $doc->addScript( $js_path );
+			// ??? $doc->addScript( $js_path );
 
 			// Get the article/parent handler
 			$parent =& $apm->getAttachmentsPlugin($parent_type);

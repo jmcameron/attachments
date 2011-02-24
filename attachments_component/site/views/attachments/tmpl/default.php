@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 
 global $option;
 $app = JFactory::getApplication();
-
+$uri = JFactory::getURI();
 
 // Set a few variables for convenience
 $rows =& $this->list;
@@ -39,12 +39,12 @@ if ( $format != 'raw' ) {
 
 	// Get the attachments helper to add the stylesheet
 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-	AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
+	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 
 	// Handle RTL styling (if necessary)
 	$lang =& JFactory::getLanguage();
 	if ( $lang->isRTL() ) {
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments_rtl.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
 		}
 
 	// Construct the empty div for the attachments

@@ -100,7 +100,8 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// Figure out where we are and construct the right link and set
         $app = JFactory::getApplication();
-		$base_url = JURI::base(true);
+		$uri = JFactory::getURI();
+		$base_url = $uri->root(true) . '/';
 		if ( $app->isAdmin() ) {
 			$base_url = str_replace('/administrator','', $base_url);
 			}

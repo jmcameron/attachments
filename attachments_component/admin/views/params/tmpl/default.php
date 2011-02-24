@@ -18,13 +18,14 @@ global $option;
 
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
-$document->addStyleSheet( JURI::base(true) . '/components/com_attachments/attachments.css', 
+$uri = JFactory::getURI();
+$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/attachments.css', 
 						  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage(); 
-$app = JFactory::getApplication();
+
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css', 
+	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css', 
 							  'text/css', null, array() );
 	}
 

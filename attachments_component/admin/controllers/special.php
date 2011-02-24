@@ -147,7 +147,8 @@ class AttachmentsControllerSpecial extends JController
 
 		AttachmentsUpdate::update_attachments_table();
 
-		$return_url = JURI::base(true);
+		$uri = JFactory::getURI();
+		$return_url = $uri->base(true);
 		echo "<br />&nbsp;<br /><a href=\"$return_url\">Return to Admin page</a>\n";
 		echo "</body>\n</html>";
 

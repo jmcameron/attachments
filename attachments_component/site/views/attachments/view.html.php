@@ -37,8 +37,6 @@ class AttachmentsViewAttachments extends JView
 	 */
 	function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
-
 		$document =& JFactory::getDocument();
 		if ( JRequest::getWord('format', '') == 'raw' ) {
 			// Choose raw text even though it is actually html
@@ -46,7 +44,8 @@ class AttachmentsViewAttachments extends JView
 			}
 
 		// Add javascript
-		$document->addScript( JURI::base(true) . '/plugins/content/attachments_refresh.js' );
+	    $uri = JFactory::getURI();
+		$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
 
 		// Get the model
 		$model =& $this->getModel('Attachments');
@@ -158,12 +157,8 @@ class AttachmentsViewAttachments extends JView
 		$this->assign('title', $title); // Note: assume it is translated
 
 		// Construct the path for the icons
-		if ( $app->isAdmin() ) {
-			$base_url = $app->getSiteURL();
-			}
-		else {
-			$base_url = JURI::base(true) . '/';
-			}
+        $uri = JFactory::getURI();
+		$base_url = $uri->root(true) . '/';
 		$this->assign('base_url', $base_url);
 		$this->assign('icon_url_base', $base_url . 'components/com_attachments/media/icons/');
 

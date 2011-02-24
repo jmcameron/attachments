@@ -20,11 +20,13 @@ JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
 
 /* Add the Attachments CSS file */
 $document =& JFactory::getDocument();
-$document->addStyleSheet( JURI::base(true) . '/components/com_attachments/attachments.css', 
+$uri = JFactory::getURI();
+
+$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/attachments.css', 
 						  'text/css', null, array() );
 $lang =& JFactory::getLanguage(); 
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( JURI::base(true) . '/components/com_attachments/attachments_rtl.css', 
+	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/attachments_rtl.css', 
 							  'text/css', null, array() );
 	}
 

@@ -226,19 +226,20 @@ class AttachmentsController extends JController
 
 		// How to redirect?
 		$from = JRequest::getWord('from');
+	    $uri = JFactory::getURI();
 		if ( $from ) {
 			if ( $from == 'frontpage' ) {
-				$redirect_to = JURI::base(true);
+				$redirect_to = $uri->root(true);
 				}
 			elseif ( $from == 'article' ) {
 				$redirect_to = JRoute::_("index.php?option=com_content&view=article&id=$parent_id", False);
 				}
 			else {
-				$redirect_to = JURI::base(true);
+				$redirect_to = $uri->root(true);
 				}
 			}
 		else {
-			$redirect_to = JURI::base(true);
+			$redirect_to = $uri->root(true);
 			}
 
 		// See if we should cancel
@@ -386,7 +387,7 @@ class AttachmentsController extends JController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			$base_url = JURI::base(true);
+			$base_url = $uri->root(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
 			echo "<script type=\"text/javascript\">
 			   window.parent.document.getElementById('sbox-window').close();
@@ -427,9 +428,10 @@ class AttachmentsController extends JController
 	function request_login()
 	{
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		$uri = JFactory::getURI();
 
 		// Add CSS for styling
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 
 		// Get the component parameters for the registration URL
 		jimport('joomla.application.component.helper');
@@ -440,7 +442,7 @@ class AttachmentsController extends JController
 		// Deal with RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base() . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
 			}
 
 		// Get a phrase from the login module
@@ -554,6 +556,7 @@ class AttachmentsController extends JController
 		// Figure out how to redirect
 		$from = JRequest::getWord('from');
 		$known_froms = array('frontpage', 'article', 'closeme');
+	    $uri = JFactory::getURI();
 		if ( in_array( $from, $known_froms ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -565,7 +568,7 @@ class AttachmentsController extends JController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			$base_url = JURI::base(true);
+			$base_url = $uri->root(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
 			echo "<script type=\"text/javascript\">
 			   window.parent.document.getElementById('sbox-window').close();
@@ -575,7 +578,7 @@ class AttachmentsController extends JController
 			
 			}
 		else {
-			$redirect_to = JURI::base(true);
+			$redirect_to = $uri->root(true);
 			}
 
 		$this->setRedirect( $redirect_to, $msg );
@@ -591,15 +594,16 @@ class AttachmentsController extends JController
 
 		// Meant to be shown in the iframe popup
 		$document =&  JFactory::getDocument();
+		$uri = JFactory::getURI();
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this fix is still necessary
@@ -809,15 +813,16 @@ class AttachmentsController extends JController
 	function warning()
 	{
 		$document =&  JFactory::getDocument();
+	    $uri = JFactory::getURI();
 
 		// Add the stylesheet
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this is still necessary

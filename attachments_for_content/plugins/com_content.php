@@ -110,14 +110,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function getEntityViewURL($parent_id, $parent_entity = 'default')
 	{
-		$app = JFactory::getApplication();
+		$uri = JFactory::getURI();
 
-		if ( $app->isAdmin() ) {
-			$base_url = $app->getSiteURL();
-			}
-		else {
-			$base_url = JURI::base(true) . "/";
-			}
+		$base_url = $uri->root(true) . '/';
 
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {

@@ -179,10 +179,10 @@ class AttachmentsAdminController extends JController
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
 			$document =&  JFactory::getDocument();
-			$app = JFactory::getApplication();
-			$document->addScript( $app->getSiteURL() . 'media/system/js/mootools.js' );
-			$document->addScript( $app->getSiteURL() . 'media/system/js/modal.js' );
-			$document->addScript( $app->getSiteURL() . 'plugins/content/attachments_refresh.js' );
+			$uri = JFactory::getURI();
+			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
+			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
+			$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
 
 			$js = "
 	   function jSelectArticle(id, title) {
@@ -337,7 +337,7 @@ class AttachmentsAdminController extends JController
 	function edit()
 	{
 		global $option;
-		$app = JFactory::getApplication();
+        $uri = JFactory::getURI();
 		$db =& JFactory::getDBO();
 
 		$attachment =& JTable::getInstance('Attachments', 'Table');
@@ -378,7 +378,7 @@ class AttachmentsAdminController extends JController
 		// Massage the data
 		$attachment->size = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
 		if ( $attachment->uri_type == 'file' ) {
-			$attachment->url = $app->getSiteURL() . $attachment->url;
+			$attachment->url = $uri->root(true) . '/' . $attachment->url;
 			}
 
 		// Get the parent handler
@@ -415,7 +415,7 @@ class AttachmentsAdminController extends JController
 
 		// Set up view for changing parent
 		if ( $change_parent ) {
-			$document->addScript( $app->getSiteURL() . '/media/system/js/modal.js' );
+			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 			$js = "
 	   function jSelectArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
@@ -465,7 +465,7 @@ class AttachmentsAdminController extends JController
 				}
 			}
 
-		$change_parent_url = JURI::base(true) .
+		$change_parent_url = $uri->base(true) .
 			"/index.php?option=com_attachments&amp;task=edit&amp;cid[]=$attachment_id&amp;change=parent";
 		if ( $layout ) {
 			$change_parent_url .= "&amp;from=$from&amp;tmpl=$layout";
@@ -515,9 +515,9 @@ class AttachmentsAdminController extends JController
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
-			$document->addScript( $app->getSiteURL() . 'media/system/js/mootools.js' );
-			$document->addScript( $app->getSiteURL() . 'media/system/js/modal.js' );
-			$document->addScript( $app->getSiteURL() . 'plugins/content/attachments_refresh.js' );
+			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
+			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
+			$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
 			$save_url = 'index.php?option=com_attachments&amp;task=save';
 			}
 		$view->assignRef('save_url', $save_url);
@@ -832,7 +832,8 @@ class AttachmentsAdminController extends JController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			$base_url = JURI::base(true);
+	        $uri = JFactory::getURI();
+			$base_url = $uri->base(true);
 			echo "<script type=\"text/javascript\">
 				   window.parent.document.getElementById('sbox-window').close();
 				   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
@@ -1032,7 +1033,8 @@ class AttachmentsAdminController extends JController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			$base_url = JURI::base(true);
+	        $uri = JFactory::getURI();
+			$base_url = $uri->base(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
 			echo "<script type=\"text/javascript\">
 			   window.parent.document.getElementById('sbox-window').close();
@@ -1176,7 +1178,8 @@ class AttachmentsAdminController extends JController
 					}
 
 				// Close the iframe and refresh the attachments list in the parent window
-				$base_url = JURI::base(true);
+	            $uri = JFactory::getURI();
+				$base_url = $uri->base(true);
 				echo "<script type=\"text/javascript\">
 				   window.parent.document.getElementById('sbox-window').close();
 				   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
@@ -1195,19 +1198,19 @@ class AttachmentsAdminController extends JController
 	function remove_warning()
 	{
 		global $option;
-		$app = JFactory::getApplication();
+        $uri = JFactory::getURI();
 
 		// Meant to be shown in the iframe popup
 		$document =&  JFactory::getDocument();
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this fix is still necessary
@@ -1425,7 +1428,8 @@ class AttachmentsAdminController extends JController
 		JHTML::_('behavior.tooltip', '.hasTip', $opts);
 
 		// Set up url/link/tooltip for each command
-		$url_top = JURI::base(true) . "/index.php?option=com_attachments&amp;controller=special";
+	    $uri = JFactory::getURI();
+		$url_top = $uri->base(true) . "/index.php?option=com_attachments&amp;controller=special";
 		$closeme = '&amp;tmpl=component&amp;close=1';
 
 		// Set up the array of entries
@@ -1498,15 +1502,15 @@ class AttachmentsAdminController extends JController
 	 */
 	function warning()
 	{
-		$app = JFactory::getApplication();
+		$uri = JFactory::getURI();
 
 		$document =&  JFactory::getDocument();
-		$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments.css',
+		$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css',
 								  'text/css', null, array() );
 
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			$document->addStyleSheet( $app->getSiteURL() . 'plugins/content/attachments_rtl.css',
+			$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css',
 									  'text/css', null, array() );
 			}
 
