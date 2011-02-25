@@ -45,7 +45,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Add javascript
 	    $uri = JFactory::getURI();
-		$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
+		$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 		// Get the model
 		$model =& $this->getModel('Attachments');

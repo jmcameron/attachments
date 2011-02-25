@@ -39,12 +39,12 @@ if ( $format != 'raw' ) {
 
 	// Get the attachments helper to add the stylesheet
 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 	// Handle RTL styling (if necessary)
 	$lang =& JFactory::getLanguage();
 	if ( $lang->isRTL() ) {
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 		}
 
 	// Construct the empty div for the attachments

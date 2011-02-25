@@ -108,17 +108,17 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// up the style sheet (to get the visual for the button working)
 		$doc =& JFactory::getDocument();
-		$js_path = $base_url . '/plugins/content/attachments_refresh.js';
+		$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
 		$doc->addScript( $js_path );
 
 		// Add the regular css file
 		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css' );
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment.css' );
 
 		// Handle RTL styling (if necessary)
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments_rtl.css' );
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment_rtl.css' );
 			}
 

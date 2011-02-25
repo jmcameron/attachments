@@ -87,17 +87,17 @@ class AttachmentsViewUpdate extends JView
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/templates/system/css/general.css', $echo_css );
 		AttachmentsHelper::addStyleSheet(
 			$uri->root(true) . '/templates/' . $app->getTemplate() . '/css/template.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css', $echo_css );
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments2.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/media/system/css/modal.css', $echo_css );
 
 		// Add javascript
 		$doc =& JFactory::getDocument();
-		$doc->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
+		$doc->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 		// Handle RTL styling
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css', $echo_css );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', $echo_css );
 			}
 
 		echo "<div class=\"uploadAttachmentsPage\">\n";

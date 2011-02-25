@@ -168,12 +168,12 @@ function addAttachments( &$row, &$params, $page=0 )
 
 	// Always include the hide rule (since it may be needed to hide the custom tags)
 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments1.css' );
+	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
 
 	// JHTML::_('behavior.mootools');
 
 	$doc =& JFactory::getDocument();
-	$js_path = $uri->root(true) . '/plugins/content/attachments_refresh.js';
+	$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
 	$doc->addScript( $js_path );
 
 	// Get the article/parent handler
@@ -284,7 +284,7 @@ function addAttachments( &$row, &$params, $page=0 )
 
 	if ( $html OR $user_can_add ) {
 		// Add the style sheet
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 		}
 
 	// Construct the add-attachments button, if appropriate

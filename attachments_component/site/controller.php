@@ -431,7 +431,7 @@ class AttachmentsController extends JController
 		$uri = JFactory::getURI();
 
 		// Add CSS for styling
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 		// Get the component parameters for the registration URL
 		jimport('joomla.application.component.helper');
@@ -442,7 +442,7 @@ class AttachmentsController extends JController
 		// Deal with RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 			}
 
 		// Get a phrase from the login module
@@ -598,12 +598,12 @@ class AttachmentsController extends JController
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this fix is still necessary
@@ -817,12 +817,12 @@ class AttachmentsController extends JController
 
 		// Add the stylesheet
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this is still necessary

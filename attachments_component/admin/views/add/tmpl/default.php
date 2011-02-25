@@ -20,14 +20,14 @@ global $option;
 $document =&  JFactory::getDocument();
 $uri = JFactory::getURI();
 
-$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css',
+$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 						  'text/css', null, array() );
 $document->addStyleSheet( $uri->base(true) . '/components/com_attachments/attachments.css',
 						  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css',
+	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 

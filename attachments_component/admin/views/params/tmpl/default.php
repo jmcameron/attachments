@@ -25,7 +25,7 @@ $document->addStyleSheet( $uri->root(true) . '/components/com_attachments/attach
 $lang =& JFactory::getLanguage(); 
 
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css', 
+	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', 
 							  'text/css', null, array() );
 	}
 

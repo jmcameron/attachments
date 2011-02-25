@@ -46,7 +46,7 @@ class AttachmentsHelper
 			// If caching, load the Javascript function that allows dynamic insertion of stylesheets
 			if ( !$added_js ) {
 	            $uri = JFactory::getURI();
-				$js_path = $uri->root(true) . '/plugins/content/attachments_caching.js';
+				$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_caching.js';
 				echo "<script type=\"text/javascript\" src=\"$js_path\"></script>\n";
 				$added_js = true;
 				}

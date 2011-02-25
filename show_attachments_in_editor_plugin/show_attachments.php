@@ -137,7 +137,7 @@ class plgSystemShow_attachments extends JPlugin
 				$base_url = str_replace('/administrator','', $base_url);
 				}
 			$doc =& JFactory::getDocument();
-			$js_path = $base_url . '/plugins/content/attachments_refresh.js';
+			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
 			// ??? $doc->addScript( $js_path );
 
 			// Get the article/parent handler

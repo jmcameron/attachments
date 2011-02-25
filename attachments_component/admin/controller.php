@@ -182,7 +182,7 @@ class AttachmentsAdminController extends JController
 			$uri = JFactory::getURI();
 			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
 			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
-			$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
+			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 			$js = "
 	   function jSelectArticle(id, title) {
@@ -517,7 +517,7 @@ class AttachmentsAdminController extends JController
 			$in_popup = true;
 			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
 			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
-			$document->addScript( $uri->root(true) . '/plugins/content/attachments_refresh.js' );
+			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 			$save_url = 'index.php?option=com_attachments&amp;task=save';
 			}
 		$view->assignRef('save_url', $save_url);
@@ -1205,12 +1205,12 @@ class AttachmentsAdminController extends JController
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css' );
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 		// Handle the RTL styling
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 			}
 
 		// ??? Not sure if this fix is still necessary
@@ -1505,12 +1505,12 @@ class AttachmentsAdminController extends JController
 		$uri = JFactory::getURI();
 
 		$document =&  JFactory::getDocument();
-		$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css',
+		$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 								  'text/css', null, array() );
 
 		$lang =& JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css',
+			$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
 									  'text/css', null, array() );
 			}
 

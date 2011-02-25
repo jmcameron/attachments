@@ -21,12 +21,12 @@ $uri = JFactory::getURI();
 $document =&  JFactory::getDocument();
 
 $app = JFactory::getApplication();
-$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments.css',
+$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 			  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments_rtl.css',
+	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
 				  'text/css', null, array() );
 	}
 
