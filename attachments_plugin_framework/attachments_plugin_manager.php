@@ -221,6 +221,8 @@ class AttachmentsPluginManager extends JObject
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.file');
 
+		JPluginHelper::importPlugin('attachments');
+
 		// Scan through and find the parent_types for all installed plugins
 		$files = JFolder::files(dirname(__FILE__).DS.'plugins', '[^\.]*\.ini$');
 		foreach ($files as $filename) {
