@@ -442,6 +442,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Get the options and scan them
 		$hide_attachments_for =
 			JString::str_ireplace('-', '_', JString::trim($params->get('hide_attachments_for', '')));
+		$hide_before_readmore = false;
 		$all_but_article_views = false;
 		$always_show_section_attachments = false;
 		$always_show_category_attachments = false;
@@ -449,7 +450,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$hide_specs = explode(',', $hide_attachments_for);
 			$view = JRequest::getCmd('view');
 			foreach ( $hide_specs as $hide ) {
-				if ( JString::trim($hide) == 'all_but_article_views' ) {
+				if ( JString::trim($hide) == 'hide_before_readmore' ) {
+					$hide_before_readmore = true;
+					}
+				elseif ( JString::trim($hide) == 'all_but_article_views' ) {
 					$all_but_article_views = true;
 					}
 				elseif ( JString::trim($hide) == 'always_show_section_attachments' ) {
@@ -460,6 +464,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 					}
 				}
 			}
+
+		if( $hide_before_readmore && isset($parent->readmore) && $parent->readmore ) {
+			return true;
+			}
+		
 
 		// Make sure the parent is valid and get info about it
 		$db =& JFactory::getDBO();
@@ -538,6 +547,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			if ( $hide_attachments_for <> '' ) {
 				$hide_specs = explode(',', $hide_attachments_for);
 				$ignore_specs = Array('frontpage', 'blog', 'all_but_article_views',
+									  'hide_before_readmore',
 									  'always_show_section_attachments',
 									  'always_show_category_attachments');
 				foreach ( $hide_specs as $hide ) {
