@@ -225,7 +225,7 @@ class AttachmentsController extends JController
 		$Itemid = JRequest::getInt('Itemid', 1);
 
 		// How to redirect?
-		$from = JRequest::getWord('from');
+		$from = JRequest::getWord('from', 'closeme');
 	    $uri = JFactory::getURI();
 		if ( $from ) {
 			if ( $from == 'frontpage' ) {
@@ -375,7 +375,7 @@ class AttachmentsController extends JController
 			}
 
 		// If we are supposed to close this iframe, do it now.
-		$known_froms = array('frontpage', 'article', 'editor', 'closeme');
+		$known_froms = array('frontpage', 'article', 'editor', 'details', 'closeme');
 		if ( in_array( $from, $known_froms ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -389,6 +389,9 @@ class AttachmentsController extends JController
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
+			if ( $parent_entity == 'default' ) {
+				$parent_entity = $parent->getDefaultEntity();
+				}
 			echo "<script type=\"text/javascript\">
 			   window.parent.document.getElementById('sbox-window').close();
 			   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
@@ -554,8 +557,8 @@ class AttachmentsController extends JController
 		$msg = JText::_('DELETED_ATTACHMENT') . " '$filename'";
 		
 		// Figure out how to redirect
-		$from = JRequest::getWord('from');
-		$known_froms = array('frontpage', 'article', 'closeme');
+		$from = JRequest::getWord('from', 'closeme');
+		$known_froms = array('frontpage', 'article', 'details', 'closeme');
 	    $uri = JFactory::getURI();
 		if ( in_array( $from, $known_froms ) ) {
 
@@ -570,6 +573,9 @@ class AttachmentsController extends JController
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
+			if ( $parent_entity == 'default' ) {
+				$parent_entity = $parent->getDefaultEntity();
+				}
 			echo "<script type=\"text/javascript\">
 			   window.parent.document.getElementById('sbox-window').close();
 			   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
