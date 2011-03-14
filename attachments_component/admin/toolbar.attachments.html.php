@@ -49,7 +49,7 @@ class TOOLBAR_attachments
 	 */
 	function _EDIT_PARAMS()
 	{
-		$text = JText::_( 'EDIT_PARAMETERS' );
+		$text = JText::_( 'EDIT_OPTIONS' );
 
 		JToolBarHelper::title( JText::_( 'ATTACHMENTS' ).': [ '. $text.' ]', 'attachments.png' );
 
@@ -71,7 +71,8 @@ class TOOLBAR_attachments
 		JToolBarHelper::addNewX();
 		JToolBarHelper::deleteList();
 
-		JToolBarHelper::customX('editParams', 'config', '', JText::_('PARAMETERS'), false);
+		// JToolBarHelper::customX('editParams', 'options', '', JText::_('OPTIONS'), false);
+		JToolBarHelper::preferences('com_attachments');
 
 		// Add a button for extra admin commands
 		$bar =&  JToolBar::getInstance('toolbar');
