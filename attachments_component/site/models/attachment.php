@@ -94,9 +94,10 @@ class AttachmentsModelAttachment extends JModel
 				}
 
 			// Retrieve the information about the parent
-			JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 			$parent_type = $this->_attachment->parent_type;
 			$parent_entity = $this->_attachment->parent_entity;
+			JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$this->_attachment->parent_type = false;

@@ -209,6 +209,7 @@ class AttachmentsModelAttachments extends JModel
 
 			// Get the parent handler
 			JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 89)';

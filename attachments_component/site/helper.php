@@ -36,7 +36,8 @@ class AttachmentsHelper
 
 		// See if we are caching
 		$cache =& JFactory::getCache();
-		$caching = $config->get('cache') OR $cache->_options['caching'];
+		// ??? $caching = $config->get('cache') OR $cache->_options['caching'];
+		$caching = false;
 
 		// Add the style sheet
 		if ( $echo ) {
@@ -248,6 +249,7 @@ class AttachmentsHelper
 		// Get the known content entities (for filename paths)
 		$entities = Array();
 		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		$parent_types = $apm->getInstalledParentTypes();
 		foreach ($parent_types as $parent_type) {
@@ -1390,6 +1392,7 @@ class AttachmentsHelper
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
@@ -1498,6 +1501,7 @@ class AttachmentsHelper
 			$parent_entity = $row->parent_entity;
 			}
 		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 49)';
