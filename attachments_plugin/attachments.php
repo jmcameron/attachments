@@ -15,8 +15,8 @@ defined('_JEXEC') or die('Restricted access');
 
 $app = JFactory::getApplication();
 
-$app->registerEvent('onPrepareContent', 'addAttachments');
-$app->registerEvent('onAfterContentSave', 'fixAttachmentsParent');
+$app->registerEvent('onContentBeforeDisplay', 'addAttachments');
+$app->registerEvent('onContentAfterSave', 'fixAttachmentsParent');
 
 
 /**
@@ -52,6 +52,7 @@ function attachments_fixScripts()
 /**
  * Return a list of attachments as HTML code.
  *
+ * @param string $parent_type of the parent object
  * @param int $parent_id ID of the parent object
  * @param string $parent_entity type of the entity involved
  * @param bool $user_can_add true if the user can add attachments to this parent object
@@ -60,12 +61,8 @@ function attachments_fixScripts()
  *
  * @return a list of attachments as HTML code
  */
-function attachments_attachmentListHTML($parent_id, $parent_entity, $user_can_add, $Itemid, $from)
+function attachments_attachmentListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
 {
-	global $option;
-
-	$parent_type = $option;
-
 	// Generate the HTML for the attachments for the specified parent
 	$alist = '';
 	$db =& JFactory::getDBO();
@@ -112,20 +109,17 @@ function attachments_attachmentListHTML($parent_id, $parent_entity, $user_can_ad
  *
  * @return the HTML for the "Add Attachments" link
  */
-function attachments_attachmentButtonsHTML($parent_id, $parent_entity, $Itemid, $from)
+function attachments_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
 {
-	global $option;
-
 	$document =& JFactory::getDocument();
 
 	JHTML::_('behavior.modal', 'a.modal-button');
 
 	// Generate the HTML for a	button for the user to click to get to a form to add an attachment
-	if ( $option == 'com_content' AND $parent_entity == 'default' ) {
+	if ( $parent_type == 'com_content' AND $parent_entity == 'default' ) {
 		$url = "index.php?option=com_attachments&task=upload&article_id=$parent_id&tmpl=component";
 		}
 	else {
-		$parent_type = $option;
 		if ( $parent_entity != 'default' ) {
 			$parent_type .= ':'.$parent_entity;
 			}
@@ -153,24 +147,40 @@ function attachments_attachmentButtonsHTML($parent_id, $parent_entity, $Itemid, 
 /**
  * The content plugin that inserts the attachments list into content items
  *
+ * @param string The context of the content being passed to the plugin.
  * @param &object &$row the content object (eg, article) being displayed
  * @param &object &$params the parameters
  * @param int $page the 'page' number
  *
  * @return true if anything has been inserted into the content object
  */
-function addAttachments( &$row, &$params, $page=0 )
+function addAttachments($context, &$row, &$params, $page=0 )
 {
-	global $option;
 	$uri = JFactory::getURI();
 
-	$parent_type = $option;
+	list ($parent_type, $parent_entity) = explode('.', $context, 2);
+
+	// Figure out the name of the text field
+	if ( isset($row->text) ) {
+		$text_field_name = 'text';
+		}
+	elseif ( isset($row->fulltext) ) {
+		$text_field_name = 'fulltext';
+		}
+	elseif ( isset($row->introtext) ) {
+		$text_field_name = 'introtext';
+		}
+	else {
+		// Unrecognized
+		return false;
+		}
+
+	$lang =& JFactory::getLanguage();
+	$lang->load('plg_content_attachments', dirname(__FILE__));
 
 	// Always include the hide rule (since it may be needed to hide the custom tags)
 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
-
-	// JHTML::_('behavior.mootools');
 
 	$doc =& JFactory::getDocument();
 	$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
@@ -178,6 +188,7 @@ function addAttachments( &$row, &$params, $page=0 )
 
 	// Get the article/parent handler
 	JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+	JPluginHelper::importPlugin('attachments');
 	$apm =& getAttachmentsPluginManager();
 	if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 		// Exit quietly if there is no Attachments plugin to handle this parent_type
@@ -241,8 +252,8 @@ function addAttachments( &$row, &$params, $page=0 )
 	$attachments_tag = '';
 	$attachments_tag_args = '';
 	$match = false;
-	if ( JString::strpos($row->text, '{attachments') ) {
-		if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $row->text, $match) ) {
+	if ( JString::strpos($row->introtext, '{attachments') ) {
+		if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $row->introtext, $match) ) {
 			$attachments_tag = true;
 			}
 		if ( isset($match[1]) AND $match[1] ) {
@@ -270,7 +281,7 @@ function addAttachments( &$row, &$params, $page=0 )
 	if ( ( $who_can_see == 'anyone' ) OR
 		 ( ($who_can_see == 'logged_in') AND $logged_in ) ) {
 		$attachments_list =
-			attachments_attachmentListHTML($parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+			attachments_attachmentListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
@@ -290,7 +301,7 @@ function addAttachments( &$row, &$params, $page=0 )
 	// Construct the add-attachments button, if appropriate
 	if ( $user_can_add ) {
 		$add_attachments_btn =
-			attachments_attachmentButtonsHTML($parent_id, $parent_entity, $Itemid, $from);
+			attachments_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
 		$html .= $add_attachments_btn;
 		}
 
@@ -307,10 +318,10 @@ function addAttachments( &$row, &$params, $page=0 )
 		// Put the attachments list at the beginning of the article/entity
 		if ( $attachments_list OR $user_can_add ) {
 			if ( $attachments_tag ) {
-				$row->text = $html . $row->text;
+				$row->$text_field_name = $html . $row->$text_field_name;
 				}
 			else {
-				$row->text = $html . JString::str_ireplace($attachments_tag, '', $row->text);
+				$row->$text_field_name = $html . JString::str_ireplace($attachments_tag, '', $row->introtext);
 				}
 			}
 		break;
@@ -319,11 +330,11 @@ function addAttachments( &$row, &$params, $page=0 )
 		// Insert the attachments at the desired location
 		if ( $attachments_list OR $user_can_add ) {
 			if ( $attachments_tag ) {
-				$row->text = JString::str_ireplace($attachments_tag, $html, $row->text);
+				$row->$text_field_name = JString::str_ireplace($attachments_tag, $html, $row->$text_field_name);
 				}
 			else {
 				// If there is no tag, insert the attachments at the end
-				$row->text .= $html;
+				$row->$text_field_name .= $html;
 				}
 			}
 		break;
@@ -331,7 +342,7 @@ function addAttachments( &$row, &$params, $page=0 )
 	case 'disabled_filter':
 		// Disable and strip out any attachments tags
 		if ( $attachments_tag ) {
-			$row->text = JString::str_ireplace($attachments_tag, '', $row->text);
+			$row->$text_field_name = JString::str_ireplace($attachments_tag, '', $row->$text_field_name);
 			}
 		break;
 
@@ -339,10 +350,10 @@ function addAttachments( &$row, &$params, $page=0 )
 		// Add the attachments to the end of the article
 		if ( $attachments_list OR $user_can_add ) {
 			if ( $attachments_tag ) {
-				$row->text = JString::str_ireplace($attachments_tag, '', $row->text) . $html;
+				$row->$text_field_name = JString::str_ireplace($attachments_tag, '', $row->$text_field_name) . $html;
 				}
 			else {
-				$row->text .= $html;
+				$row->$text_field_name .= $html;
 				}
 			}
 		break;
@@ -364,6 +375,7 @@ function addAttachments( &$row, &$params, $page=0 )
  *
  * This method is called right after the content is saved.
  *
+ * @param string The context of the content being passed to the plugin.
  * @param &object &$article A JTableContent object
  * @param bool $isNew If the content is newly created
  *
@@ -372,13 +384,15 @@ function addAttachments( &$row, &$params, $page=0 )
  * NOTE: Currently this only supports attachment parents being articles since
  *		 this will only be invoked when articles are saved.
  */
-function fixAttachmentsParent( &$article, $isNew )
+function fixAttachmentsParent($context, &$article, $isNew )
 {
-	global $option;
-
 	if ( !$isNew )
 		// If the article is not new, this step is not needed
 		return true;
+
+	$ctxinfo = explode('.', $context);
+	$parent_type = $ctxinfo[0];
+	$parent_entity = $ctxinfo[1];
 
 	// Get the attachments associated with this newly created object
 	// NOTE: We assume that all attachments that have parent_id=null
@@ -390,7 +404,6 @@ function fixAttachmentsParent( &$article, $isNew )
 		. "WHERE uploader_id='$user_id' AND parent_id IS NULL";
 	$db->setQuery($query);
 	$rows = $db->loadObjectList();
-	$parent_type = $option;
 
 	// Change the attachment to the new article!
 	JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');

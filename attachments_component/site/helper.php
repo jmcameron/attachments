@@ -155,8 +155,8 @@ class AttachmentsHelper
 		if ( JFile::exists($index_fname) ) {
 			return true;
 			}
-		JFile::write($index_fname,
-					 "<html><body><br /><h2 align=\"center\">Access denied.</h2></body></html>");
+		$contents = "<html><body><br /><h2 align=\"center\">Access denied.</h2></body></html>";
+		JFile::write($index_fname, $contents);
 
 		return JFile::exists($index_fname);
 	}
@@ -729,7 +729,10 @@ class AttachmentsHelper
 
 		// Get ready to save the file
 		$filename_sys = $fullpath . $filename;
-		$url = JString::str_ireplace(DS, '/', $upload_url . '/' . $path . $filename);
+		
+		// ??? $url = JString::str_ireplace(DS, '/', $upload_url . '/' . $path . $filename);
+		// BROKEN: $url = $upload_url . '/' . $path . JString::str_ireplace(DS, '/', $filename);
+		$url = $upload_url . '/' . $path . $filename;
 
 		// If not updating, make sure the system filename doesn't already exist
 		$error = false;
@@ -1435,9 +1438,8 @@ class AttachmentsHelper
 		$len = filesize($filename_sys);
 
 		// Update the download count
-		JTable::addIncludePath(
-			JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$attachment =& JTable::getInstance('attachments', 'Table');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$attachment->load($id);
 		$dl_count = (int)$attachment->download_count;
 		$attachment->download_count = $dl_count + 1;

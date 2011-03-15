@@ -1,29 +1,47 @@
 /* Styles for lists of attachments */
 
-div.attachmentsContainer {
+#main div.attachmentsContainer {
     clear: both;
     margin: 0 0 0.5em 0;
+    background: transparent;
 }
 
-div.attachmentsList table {
-    background-color: transparent;
+#main div.attachmentsList table {
+    background: transparent;
     border: 1px solid #C0C0C0;
+    font-size: 90%;
+    font-weight: bold;
 }
 
-div.attachmentsList caption {
+#main div.attachmentsList caption {
     font-size: 110%;
     font-weight: bold;
     text-align: left;
     margin-top: 4px;
 }
 
-div.attachmentsList thead {
-    font-size: 90%;
-    font-weight: bold;
+#main div.attachmentsList thead tr {
     background-color: #EEEEEE;
 }
 
-div.attachmentsList th {
+#main div.attachmentsList tbody {
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr {
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr.odd {
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr.even {
+    background-color: #F6F6F6;
+}
+
+#main div.attachmentsList table thead th {
+    background: transparent;
     border: 1px solid #D0D0D0;
     padding-left: 3px;
     padding-right: 3px;
@@ -31,85 +49,103 @@ div.attachmentsList th {
     padding-bottom: 0px;
 }
 
-div.attachmentsList tr.odd {
-    background-color: transparent;
-}
-
-div.attachmentsList tr.even {
-    background-color: #F6F6F6;
-}
-
-div.attachmentsList td {
+#main div.attachmentsList table tbody td {
+    background: transparent;
     vertical-align: top;
-    padding-left: 3px;
-    padding-right: 3px;
+    padding: 1px 3px 1px 3px;
 }
 
-div.attachmentsList table a {
+#main div.attachmentsList table a {
     font-weight: bold;
 }
 
-div.attachmentsList table img {
+#main div.attachmentsList table img {
     vertical-align: text-bottom;
     border: 0;
     margin: 0;
 }
 
-div.attachmentsList table a.modal-button {
-    background-color: transparent;
+#main div.attachmentsList table a.modal-button {
+    background: transparent;
     border: 0;
 }
 
-div.attachmentsList img#link {
+#main div.attachmentsList img#link {
     margin-left: -16px;
 }
 
-
-div.addattach img {
-    padding-right: 3px;
-}
-div.addattach a.at_icon:link    { text-decoration: none; }
-div.addattach a.at_icon:visited { text-decoration: none; }
-div.addattach a.at_icon:hover   { text-decoration: none; }
-div.addattach a.at_icon:active  { text-decoration: none; }
-
-
-div.attachmentsList a.at_icon {
+#main div.attachmentsList a.at_icon {
     padding-right: 4px;
 }
-div.attachmentsList a.at_icon:link    { text-decoration: none; }
-div.attachmentsList a.at_icon:visited { text-decoration: none; }
-div.attachmentsList a.at_icon:hover   { text-decoration: none; }
-div.attachmentsList a.at_icon:active  { text-decoration: none; }
 
-div.attachmentsList a.at_url:link     { text-decoration: none; }
-div.attachmentsList a.at_url:visited  { text-decoration: none; }
-div.attachmentsList a.at_url:hover    { text-decoration: underline; }
-div.attachmentsList a.at_url:active   { text-decoration: none; }
+#main div.attachmentsList a.at_icon:link    { text-decoration: none; }
+#main div.attachmentsList a.at_icon:visited { text-decoration: none; }
+#main div.attachmentsList a.at_icon:hover   { text-decoration: none; color: #F00; background: transparent; }
+#main div.attachmentsList a.at_icon:active  { text-decoration: none; }
 
-div.attachmentsList td.at_file_size { text-align: right; }
+#main div.attachmentsList a.at_url { background: none;  background-color: transparent; }
+#main div.attachmentsList a.at_url:link     { text-decoration: none; }
+#main div.attachmentsList a.at_url:visited  { text-decoration: none; }
+#main div.attachmentsList a.at_url:hover    { text-decoration: underline; color: #F00; background: transparent; }
+#main div.attachmentsList a.at_url:active   { text-decoration: none; }
 
-div.attachmentsList th.at_downloads { text-align: center; }
-div.attachmentsList td.at_downloads { text-align: center; }
+#main div.attachmentsList td.at_file_size { text-align: right; }
 
-div.attachmentsList th.at_edit { text-align: center; }
-div.attachmentsList td.at_edit { text-align: center; }
+#main div.attachmentsList th.at_downloads { text-align: center; }
+#main div.attachmentsList td.at_downloads { text-align: center; }
+
+#main div.attachmentsList th.at_edit { text-align: center; }
+#main div.attachmentsList td.at_edit { text-align: center; background: transparent; }
 
 
 /* Style for the 'Add Attachment' link */
 
-div.addattach { margin-top: 4px; }
+#main div.addattach { 
+    margin-top: 4px; 
+    background: transparent;
+}
 
-div.addattach a:link    { color : red; text-decoration: none; }
-div.addattach a:visited { color : red; text-decoration: none; }
-div.addattach a:hover   { color : red; text-decoration: underline; }
-div.addattach a:active  { color : red; text-decoration: none; }
 
-div.addattach a img { vertical-align: text-bottom; }
+#main div.addattach img,
+#main div.addattach a img {
+    background: transparent;
+    padding-right: 0px;
+    border: 0;
+}
+
+#main div.addattach a {
+    background: transparent;
+    border: 0;
+}
+
+#main div.addattach a:hover {
+    background: transparent;
+    color: #F00;
+    border: 0;
+}
+
+#main div.addattach a img { vertical-align: text-bottom; }
+
+#main div.addattach a.at_icon { background: transparent; }
+#main div.addattach a.at_icon:link    { text-decoration: none; }
+#main div.addattach a.at_icon:visited { text-decoration: none; }
+#main div.addattach a.at_icon:hover   { text-decoration: none; background: transparent; }
+#main div.addattach a.at_icon:active  { text-decoration: none; }
+
+#main div.addattach a { background: transparent; }
+#main div.addattach a:link    { color : red; text-decoration: none; }
+#main div.addattach a:visited { color : red; text-decoration: none; }
+#main div.addattach a:hover   { color : red; text-decoration: underline; color: #F00; background: transparent; }
+#main div.addattach a:active  { color : red; text-decoration: none; }
+
+#main div.addattach a.modal-button { background: transparent; }
+#main div.addattach a.modal-button:link { background: transparent; }
+#main div.addattach a.modal-button:visited { background: transparent; }
+#main div.addattach a.modal-button:hover { color: #F00; background: transparent; }
+#main div.addattach a.modal-button:active { background: transparent; }
 
 
 /* ---- Misc ----- */
-
 
 div.requestLogin h1 {
     color: #135cae;

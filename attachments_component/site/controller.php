@@ -265,7 +265,8 @@ class AttachmentsController extends JController
 			}
 
 		// Bind the info from the form
-		$row =& JTable::getInstance('Attachments', 'Table');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		$row =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( $attachment_id AND !$row->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 60)';
 			JError::raiseError(500, $errmsg);
@@ -630,7 +631,8 @@ class AttachmentsController extends JController
 			}
 
 		// Get the attachment record
-		$attachment =& JTable::getInstance('attachments', 'Table');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( !$attachment->load($id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 73)';
 			JError::raiseError(500, $errmsg);
@@ -687,7 +689,8 @@ class AttachmentsController extends JController
 			}
 
 		// Get the attachment record (??? convert to model)
-		$attachment =& JTable::getInstance('attachments', 'Table');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( !$attachment->load($id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 75)';
 			JError::raiseError(500, $errmsg);

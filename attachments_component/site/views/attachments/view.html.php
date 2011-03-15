@@ -73,7 +73,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Load the language files from the backend
 		$lang =&  JFactory::getLanguage();
-		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
+		$lang->load('plg_content_attachments', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'attachments');
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
