@@ -115,7 +115,8 @@ class AttachmentsViewAttachments extends JView
 		$from = JRequest::getWord('from', 'closeme');
 		$parent_id = $model->getParentId();
 		$parent_type = $model->getParentType();
-		$parent_entity = $model->getParentEntity();
+		// ??? $parent_entity = $model->getParentEntity();
+		$parent_entity = 'article';
 		$this->assign('parent_id', $parent_id);
 		$this->assignRef('parent_type', $parent_type);
 		$this->assignRef('parent_entity', $parent_entity);

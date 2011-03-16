@@ -806,7 +806,7 @@ class AttachmentsHelper
 		$row->url = $url;
 		$row->file_type = $ftype;
 		$row->file_size = $_FILES['upload']['size'];
-		$row->published = $auto_publish;
+		$row->state = $auto_publish;
 
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
@@ -1340,7 +1340,7 @@ class AttachmentsHelper
 		$now = new JDate();
 		$row->create_date = $now->toMySQL();
 		$row->modification_date = $row->create_date;
-		$row->published = $auto_publish;
+		$row->state = $auto_publish;
 		$row->uri_type = 'url';
 
 		// Set up the parent entity to save
@@ -1588,7 +1588,7 @@ class AttachmentsHelper
 		$alist = '';
 		$db =& JFactory::getDBO();
 		$query = "SELECT count(*) FROM #__attachments "
-			. "WHERE parent_id='".(int)$parent_id."' AND published='1' AND parent_type='$parent_type'";
+			. "WHERE parent_id='".(int)$parent_id."' AND status='1' AND parent_type='$parent_type'";
 		$db->setQuery($query);
 		$total = $db->loadResult();
 

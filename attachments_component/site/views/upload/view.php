@@ -34,6 +34,7 @@ class AttachmentsViewUpload extends JView
 		$app = JFactory::getApplication();
 		$doc =& JFactory::getDocument();
 		$uri = JFactory::getURI();
+		JHTML::_('behavior.mootools');
 		$doc->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 		
 		$parent_id = $this->parent_id;
@@ -200,7 +201,7 @@ class AttachmentsViewUpload extends JView
 				<input type="submit" name="submit" value="<?php echo $upload_button_text ?>" />
 				<span class="right">
 				  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-						 onClick="window.parent.document.getElementById('sbox-window').close();" />
+						 onClick="window.parent.SqueezeBox.close();" />
 				</span>
 			</div>
 		</form>

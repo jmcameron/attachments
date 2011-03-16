@@ -93,6 +93,7 @@ class AttachmentsViewUpdate extends JView
 
 		// Add javascript
 		$doc =& JFactory::getDocument();
+		JHTML::_('behavior.mootools');
 		$doc->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 		// Handle RTL styling
@@ -232,7 +233,7 @@ class AttachmentsViewUpdate extends JView
 				<input type="submit" name="submit" value="<?php echo JText::_('UPDATE'); ?>" />
 				<span class="right">
 				  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-						 onClick="window.parent.document.getElementById('sbox-window').close();" />
+						 onClick="window.parent.SqueezeBox.close();" />
 				</span>
 			</div>
 		</form>

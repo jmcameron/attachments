@@ -357,7 +357,7 @@ class AttachmentsModelAttachments extends JModel
 		else {
 			$query	= "SELECT a.*, u.name as uploader_name FROM #__attachments AS a " .
 				"LEFT JOIN #__users AS u ON u.id = a.uploader_id " .
-				"WHERE a.parent_id='".(int)$parent_id."' AND a.published='1' " .
+				"WHERE a.parent_id='".(int)$parent_id."' AND a.state='1' " .
 				"AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity' " .
 				"ORDER BY " . $this->_sort_order;
 			}

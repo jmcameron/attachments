@@ -67,7 +67,7 @@ function attachments_attachmentListHTML($parent_type, $parent_id, $parent_entity
 	$alist = '';
 	$db =& JFactory::getDBO();
 	$query = "SELECT count(*) FROM #__attachments "
-		. "WHERE parent_id='".(int)$parent_id."' AND published='1' AND parent_type='$parent_type'";
+		. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
 	$db->setQuery($query);
 	$total = $db->loadResult();
 

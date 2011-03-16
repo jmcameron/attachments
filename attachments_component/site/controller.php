@@ -378,7 +378,7 @@ class AttachmentsController extends JController
 			}
 
 		// If we are supposed to close this iframe, do it now.
-		$known_froms = array('frontpage', 'article', 'editor', 'details', 'closeme');
+		$known_froms = array('frontpage', 'article', 'editor', 'details', 'closeme', 'featured');
 		if ( in_array( $from, $known_froms ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -396,8 +396,9 @@ class AttachmentsController extends JController
 				$parent_entity = $parent->getDefaultEntity();
 				}
 			echo "<script type=\"text/javascript\">
-			   window.parent.document.getElementById('sbox-window').close();
-			   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+               var fn = window.parent.refreshAttachments;
+			   window.parent.SqueezeBox.close();
+			   fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 			</script>";
 			exit();
 			}
@@ -562,7 +563,7 @@ class AttachmentsController extends JController
 		
 		// Figure out how to redirect
 		$from = JRequest::getWord('from', 'closeme');
-		$known_froms = array('frontpage', 'article', 'details', 'closeme');
+		$known_froms = array('frontpage', 'article', 'details', 'closeme', 'featured');
 	    $uri = JFactory::getURI();
 		if ( in_array( $from, $known_froms ) ) {
 
@@ -581,8 +582,9 @@ class AttachmentsController extends JController
 				$parent_entity = $parent->getDefaultEntity();
 				}
 			echo "<script type=\"text/javascript\">
-			   window.parent.document.getElementById('sbox-window').close();
-			   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+               var fn = window.parent.refreshAttachments;
+			   window.parent.SqueezeBox.close();
+			   fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 			</script>";
 			exit();
 			
@@ -605,6 +607,7 @@ class AttachmentsController extends JController
 		// Meant to be shown in the iframe popup
 		$document =&  JFactory::getDocument();
 		$uri = JFactory::getURI();
+		JHTML::_('behavior.mootools');
 
 		// Add the regular css file
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
@@ -659,7 +662,7 @@ class AttachmentsController extends JController
 			    <input type="submit" name="submit" value="<?php echo JText::_('DELETE'); ?>" />
 				<span class="right">
 				  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-						 onClick="window.parent.document.getElementById('sbox-window').close();" />
+						 onClick="window.parent.SqueezeBox.close();" />
 				</span>
 			</div>
 		  </form>

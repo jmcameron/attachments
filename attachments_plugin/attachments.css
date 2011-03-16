@@ -21,7 +21,7 @@
 }
 
 #main div.attachmentsList thead tr {
-    background-color: #EEEEEE;
+    background-color: #DADADA;
 }
 
 #main div.attachmentsList tbody {
@@ -37,10 +37,11 @@
 }
 
 #main div.attachmentsList tbody tr.even {
-    background-color: #F6F6F6;
+    background-color: #F8F8F8;
 }
 
 #main div.attachmentsList table thead th {
+    vertical-align: center;
     background: transparent;
     border: 1px solid #D0D0D0;
     padding-left: 3px;
@@ -51,7 +52,7 @@
 
 #main div.attachmentsList table tbody td {
     background: transparent;
-    vertical-align: top;
+    vertical-align: center;
     padding: 1px 3px 1px 3px;
 }
 

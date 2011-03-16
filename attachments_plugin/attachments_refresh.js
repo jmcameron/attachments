@@ -23,7 +23,8 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
     if ( !alist ) {
 	alist = window.parent.document.getElementById(id);
 	}
-    var a = new Ajax( url, { 
+    var a = new Request({ 
+                url: url,
                 method: 'get', 
 		onComplete: function( response ) {  
 
@@ -39,5 +40,5 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
 			    });
 			});
 
-	    }}).request();
+	    }}).send();
 };
