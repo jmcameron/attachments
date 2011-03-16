@@ -14,6 +14,9 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+// Make sure this is loaded for derived classes
+require_once(dirname(__FILE__).DS.'attachments_plugin.php');
+
 /**
  * Get the plugin manager for attachments
  */

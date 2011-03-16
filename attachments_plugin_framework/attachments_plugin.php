@@ -21,14 +21,22 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * AttachmentsPlugin is the base class for all the plugins to allow
  * attaching files to various types of content entities
  *
- * Derived classes must name the files that contain the class
- * definition to be the same as the parent_type and it must go into
- * the plugins/attachments/plugins directory.
+ * The derived attachments plugin class must be in the main PHP file for that
+ * plugin.  For instance for content articles or categories, the parent type
+ * is 'com_content'.  The parent type is simply the name of the component
+ * involved (eg, 'com_content').  The derived attachments plugin class (such
+ * as 'AttachmentsPlugin_com_content') should be defined in the main file for
+ * the plugin (eg, attachments_for_conent.php).
  *
- * For instance, for content articles, the parent type is
- * 'com_content'.  So the file containing the attachments plugin class
- * for content articles should be named 'com_content.php' and be
- * installed in:  plugins/attachments/plugins/com_content.php.
+ * Derived attachments plugin classes must also include the following lines of
+ * code after the class definition to register the derived class with the
+ * Attachments plugin manager:
+ *
+ *   $apm =& getAttachmentsPluginManager();
+ *   $apm->addParentType('com_content');
+ *
+ * where 'com_content' should be replaced by the name of the appropriate
+ * parent type (component).
  *
  * @package Attachments
  */
@@ -115,6 +123,8 @@ class AttachmentsPlugin extends JObject
 		// Set up the default alias
 		$this->_entity_alias = Array( 'default' => 'default' );
 
+		/* OBSOLETE
+
 		// Since the registry loader does not process sections,
 		// we must invoke the INI handler directly
 		$handler =& JRegistryFormat::getInstance('INI');
@@ -156,6 +166,7 @@ class AttachmentsPlugin extends JObject
 					}
 				}
 			}
+		*/
 	}
 
 
@@ -173,10 +184,11 @@ class AttachmentsPlugin extends JObject
 		$lang =& JFactory::getLanguage();
 
 		// Always load the main language file for global items
-		$lang->load('plg_attachments_attachments_plugin_framework', JPATH_ADMINISTRATOR);
+		$lang->load('plg_attachments_attachments_plugin_framework');
 
 		// Load the plugin-specifc language file
-		$okay = $lang->load('plg_attachments_' . $this->_name, JPATH_ADMINISTRATOR);
+		$okay = $lang->load('plg_attachments_' . $this->_name,
+							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name );
 
 		if ( $okay ) {
 			$this->_language_loaded = true;

@@ -56,8 +56,6 @@ class AttachmentsPluginManager extends JObject
 	function __construct()
 	{
 		parent::__construct();
-
-		$this->_findInstalledPlugins();
 	}
 
 
@@ -95,6 +93,19 @@ class AttachmentsPluginManager extends JObject
 
 
 	/**
+	 * Add a new parent type
+	 */
+	function addParentType($new_parent_type)
+	{
+		if ( in_array( $new_parent_type, $this->_parent_types ) ) {
+			return;
+			}
+		else {
+			$this->_parent_types[] = $new_parent_type;
+			}
+	}
+
+	/**
 	 * Return the list of installed parent types
 	 *
 	 * @return an array of the installed parent types
@@ -102,7 +113,7 @@ class AttachmentsPluginManager extends JObject
 	function &getInstalledParentTypes()
 	{
 		return $this->_parent_types;
-		}
+	}
 
 	/**
 	 * Return the list of installed parent entities
@@ -204,35 +215,13 @@ class AttachmentsPluginManager extends JObject
 			}
 
 		// Install the plugin
-		require_once( dirname(__FILE__).DS.'attachments_plugin.php' );
-		require_once( dirname(__FILE__).DS.'plugins'.DS.$parent_type.'.php' );
+		// ??? require_once( dirname(__FILE__).DS.'attachments_plugin.php' );
+		// ??? require_once( dirname(__FILE__).DS.'plugins'.DS.$parent_type.'.php' );
 		$className = 'AttachmentsPlugin_' . $parent_type;
 		$this->_plugin[$parent_type] = new $className($parent_type);
 
 		return is_object($this->_plugin[$parent_type]);
 	}
-
-
-	/**
-	 * Explore and find all installed attachments plugins
-	 */
-	function _findInstalledPlugins()
-	{
-		jimport('joomla.filesystem.folder');
-		jimport('joomla.filesystem.file');
-
-		JPluginHelper::importPlugin('attachments');
-
-		// Scan through and find the parent_types for all installed plugins
-		$files = JFolder::files(dirname(__FILE__).DS.'plugins', '[^\.]*\.ini$');
-		foreach ($files as $filename) {
-			$this->_parent_types[] = basename($filename, '.ini');
-			}
-
-		// Sort the list so they appear alphabetically
-		sort($this->_parent_types);
-	}
-
 
 }
 
