@@ -14,7 +14,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport('joomla.event.plugin');
+jimport('joomla.plugin.plugin');
 
 /**
  * Class for the button that allows you to add attachments from the editor
@@ -26,17 +26,15 @@ class plgButtonAdd_attachment extends JPlugin
 	/**
 	 * Constructor
 	 *
-	 * For php4 compatability we must not use the __constructor as a constructor for plugins
-	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-	 * This causes problems with cross-referencing necessary for the observer design pattern.
-	 *
-	 * @param &object &$subject The object to observe
-	 * @param array  $config	An array that holds the plugin configuration
+	 * @access      protected
+	 * @param       object  $subject The object to observe
+	 * @param       array   $config  An array that holds the plugin configuration
 	 * @since 1.5
 	 */
-	function plgAdd_attachment(&$subject, $config)
+	public function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
+		$this->loadLanguage();
 	}
 
 	/**
@@ -47,18 +45,16 @@ class plgButtonAdd_attachment extends JPlugin
 	function onDisplay($name)
 	{
 		// Avoid displaying the button for anything except for registered parents
-		global $option;
-		$parent_type = $option;
+		$parent_type = JRequest::getCMD('option');
+		if (!$parent_type) {
+			return;
+			}
 		$parent_entity = 'default';
 		$editor = 'article';
 
 		// Handle sections and categories specially (since they are really com_content)
-		if ($option == 'com_sections') {
-			$parent_type = 'com_content';
-			$parent_entity = 'section';
-			$editor = 'section';
-			}
-		if ($option == 'com_categories') {
+		// ??? Still true?
+		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			$parent_entity = 'category';
 			$editor = 'category';
@@ -90,13 +86,9 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Disable adding attachments when creating sections or categories
-		if ( $id == 0 and (($parent_entity == 'section') or ($parent_entity == 'category'))) {
+		if ( $id == 0 and ($parent_entity == 'category')) {
 			return new JObject();
 			}
-
-		// Load the language file from the backend
-		$lang =&  JFactory::getLanguage();
-		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
 
 		// Figure out where we are and construct the right link and set
         $app = JFactory::getApplication();
@@ -114,16 +106,17 @@ class plgButtonAdd_attachment extends JPlugin
 		// Add the regular css file
 		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css' );
-		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment.css' );
+		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment.css' );
 
 		// Handle RTL styling (if necessary)
+		$lang =&  JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments_rtl.css' );
-			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment_rtl.css' );
+			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment_rtl.css' );
 			}
 
 		// Load the language file from the frontend
-		$lang->load('com_attachments', JPATH_SITE);
+		$lang->load('com_attachments', JPATH_SITE.DS.'components'.DS.'com_attachments');
 
 		// Create the [Add Attachment] button object
 		$button = new JObject();
