@@ -385,10 +385,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
 
-		case 'section':
-			$table = 'sections';
-			break;
-
 		case 'category':
 			$table = 'categories';
 			break;
@@ -397,6 +393,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$table = 'content';
 			break;
 			}
+
+		// ??? REWORK for new ACL
+		return true;
 
 		// Get the item's access level
 		$query = "SELECT access from #__$table WHERE id='".(int)$parent_id."'";
