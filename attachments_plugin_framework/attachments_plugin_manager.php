@@ -125,7 +125,7 @@ class AttachmentsPluginManager extends JObject
 		if ( count($this->_entity_info) == 0 ) {
 
 			// Add an option for each entity
-			JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
 			$apm->loadLanguage();
 

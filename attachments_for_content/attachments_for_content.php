@@ -14,6 +14,8 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+
 /**
  * The class for the Attachments plugin for regular Joomla! content (articles, sections, categories)
  *

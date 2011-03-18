@@ -156,7 +156,7 @@ function plgSearchAttachments( $text, $phrase='', $ordering='', $areas=null )
 	// Construct and execute the query
 	$query = 'SELECT * FROM #__attachments AS a'
 		. ' WHERE ('. $where .')'
-		. ' AND a.published = 1'
+		. ' AND a.state = 1'
 		. ' ORDER BY '. $order;
 	$db->setQuery( $query, 0, $limit );
 	$rows = $db->loadObjectList();
@@ -170,7 +170,7 @@ function plgSearchAttachments( $text, $phrase='', $ordering='', $areas=null )
 		}
 
 	// Prepare to get parent info
-	JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+	JPluginHelper::importPlugin('attachments');
 	$apm =& getAttachmentsPluginManager();
 
 	// Add the result data to the results of the search

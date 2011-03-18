@@ -248,7 +248,6 @@ class AttachmentsHelper
 
 		// Get the known content entities (for filename paths)
 		$entities = Array();
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		$parent_types = $apm->getInstalledParentTypes();
@@ -1394,7 +1393,6 @@ class AttachmentsHelper
 		$parent_entity = $attachment->parent_entity;
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
@@ -1502,7 +1500,6 @@ class AttachmentsHelper
 			$parent_type = $row->parent_type;
 			$parent_entity = $row->parent_entity;
 			}
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {

@@ -65,7 +65,7 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type

@@ -89,7 +89,6 @@ class AttachmentsController extends JController
 			}
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
@@ -196,7 +195,6 @@ class AttachmentsController extends JController
 		$new_parent = JRequest::getBool('new_parent', false);
 		$parent_type = AttachmentsController::_getCmd2('parent_type', 'com_content');
 		$parent_entity = JRequest::getCmd('parent_entity', 'default');
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
@@ -506,7 +504,6 @@ class AttachmentsController extends JController
 		$parent_entity = $rows[0]->parent_entity;
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
@@ -706,7 +703,6 @@ class AttachmentsController extends JController
 		// Get the article/parent handler
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {

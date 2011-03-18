@@ -187,7 +187,6 @@ function addAttachments($context, &$row, &$params, $page=0 )
 	$doc->addScript( $js_path );
 
 	// Get the article/parent handler
-	JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 	JPluginHelper::importPlugin('attachments');
 	$apm =& getAttachmentsPluginManager();
 	if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
