@@ -25,54 +25,34 @@ jimport('joomla.event.plugin');
 class plgSystemShow_attachments extends JPlugin
 {
 	/**
-	 * Constructor
-	 *
-	 * For php4 compatability we must not use the __constructor as a constructor for plugins
-	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-	 * This causes problems with cross-referencing necessary for the observer design pattern.
-	 *
-	 * @access	protected
-	 * @param &object &$subject The object to observe
-	 * @param array	 $config	An array that holds the plugin configuration
-	 * @since 1.5
-	 */
-	function plgShow_attachments(&$subject, $config) 
-	{
-		parent::__construct($subject, $config);
-	}
-
-
-	/**
 	 * Inserts the attachments list above the row of xtd-buttons
 	 *
 	 * @access	public
 	 * @since	1.5
 	 */
-	function onAfterRender()
+	public function onAfterRender()
 	{
-		// Make sure this we can handle this
-		global $option;
-		$parent_type = $option;
+		// Make sure this we should handle this
+		$parent_type = JRequest::getCMD('option');
+		if (!$parent_type) {
+			return;
+			}
 		$parent_entity = 'default';
 		$editor = 'article';
 
 		// Handle sections and categories specially (since they are really com_content)
-		if ($option == 'com_sections') {
-			$parent_type = 'com_content';
-			$parent_entity = 'section';
-			$editor = 'section';
-			}
-		if ($option == 'com_categories') {
+		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			$parent_entity = 'category';
 			$editor = 'category';
 			}
 
 		// Get the article/parent handler
-		if ( !JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework') ) {
+		if ( !JPluginHelper::importPlugin('attachments') ) {
 			// Exit if the framework does not exist (eg, during uninstallaton)
 			return false;
 			}
+
 		if ( !function_exists('getAttachmentsPluginManager') ) {
 			// Exit if the function does not exist (eg, during uninstallaton)
 			return false;
@@ -123,7 +103,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 			}
 
-		if ( ($task =='edit') OR ($task == 'add') OR ( ($view == 'article') AND ( $layout=='form') ) ) {
+		if ( ($layout =='edit') OR ( ($view == 'article') AND ( $layout=='form') ) ) {
 
 			// Load the code from the attachments plugin to create the list
 			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
