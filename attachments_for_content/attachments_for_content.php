@@ -106,13 +106,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		switch ($parent_entity) {
 
-		case 'section':
 		case 'category':
 			return parent::getSelectEntityURL($parent_entity);
 		break;
 
 		default:
-			return "index.php?option=com_content&amp;task=element&amp;tmpl=component";
+			return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jsSelectParent";
 			}
 	}
 
