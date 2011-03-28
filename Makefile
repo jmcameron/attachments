@@ -86,12 +86,12 @@ fixperms:
 	@chmod g-s *.ppr
 
 watchfiles:
-	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work/watch &
+	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch &
 
 # windmill:
 # 	$(eval APASS := `kdialog --password "Admin password:"`)
 # 	@echo "START: `date`"
-# 	@../testing/make_nonsef /var/www/test/joomla/configuration.php
+# 	@../testing/make_nonsef /var/www/test/joomla16/configuration.php
 # 	windmill firefox exit http://localhost/test/joomla test=tests password=$(APASS)
 # 	@echo "FINISH: `date`"
 # 
