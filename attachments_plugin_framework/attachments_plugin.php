@@ -226,6 +226,20 @@ class AttachmentsPlugin extends JObject
 
 
 	/**
+	 * Return a string of the where clause for filter
+	 *
+	 * @param $parent_state string the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
+	 * @param $filter_entity string the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
+	 *
+	 * @return an array of (join_clause, where_clause) items
+	 */
+	function getParentPublishedFilter($parent_state, $filter_entity)
+	{
+		return '';
+	}
+
+
+	/**
 	 * Determine the parent entity
 	 *
 	 * From the view and the class of the parent (row of onPrepareContent plugin),

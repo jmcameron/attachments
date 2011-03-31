@@ -43,7 +43,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$this->_entity_name['category'] = 'CATEGORY';
 		$this->_entity_table['category'] = 'categories';
 		$this->_entity_id_field['category'] = 'id';
-		$this->_entity_title_field['default'] = 'title';
+		$this->_entity_title_field['category'] = 'title';
 	}
 
 
@@ -353,6 +353,69 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		return $archived;
+	}
+
+
+	/**
+	 * Return a string of the where clause for filter
+	 *
+	 * @param $parent_state string the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
+	 * @param $filter_entity string the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
+	 *
+	 * @return an array of where clauses
+	 */
+	function getParentPublishedFilter($parent_state, $filter_entity)
+	{
+		// If we want all attachments, do no filtering
+		if ( $parent_state == 'ALL' ) {
+			return null;
+			}
+
+		$where = Array();
+
+		if ( $parent_state == 'PUBLISHED' ) {
+			// These where clauses will be combined by OR
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE') {
+				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=1))";
+				}
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY') {
+				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=1))";
+				}
+			}
+		elseif ( $parent_state == 'UNPUBLISHED' ) {
+			// These where clauses will be combined by OR
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=0))";
+				}
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=0))";
+				}
+			}
+		elseif ( $parent_state == 'ARCHIVED' ) {
+			// These where clauses will be combined by OR
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=2))";
+				}
+			// Note that 'archived' does not apply to categories because they are either published or not
+			}
+		elseif ( $parent_state == 'NONE' ) {
+			// NOTE: The 'NONE' clauses will be combined with AND (with other tests for a.parent_id)
+			$where[] = "(NOT EXISTS( SELECT * FROM #__content as c1 " .
+				"WHERE a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id ))";
+
+			$where[] = "(NOT EXISTS( SELECT * FROM #__categories as c2 " .
+				"WHERE a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id ))";
+			}
+		else {
+			// ??? Add Error message here!
+			}
+
+		return $where;
 	}
 
 
