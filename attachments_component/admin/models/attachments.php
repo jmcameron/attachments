@@ -1,273 +1,167 @@
 <?php
-/**
- * Attachments component
- *
- * @package Attachments
- * @subpackage Attachments_Component
- *
- * @copyright Copyright (C) 2010-2011 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
- * @author Jonathan M. Cameron
- */
-
-// no direct access
+// No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.application.component.model');
+// import the Joomla modellist library
+jimport('joomla.application.component.modellist');
 
 /**
- * Attachments Component Attachments Model
- *
- * @package Attachments
- * @subpackage Attachments_Component
+ * Attachments Model
  */
-class AttachmentsadminModelAttachments extends JModel
+class AttachmentsModelAttachments extends JModelList
 {
-	/**
-	 * Attachments data
-	 *
-	 * @var object
-	 */
-	var $_data = null;
-
-	/**
-	 * Items total
-	 *
-	 * @var integer
-	 */
-	var $_total = null;
-
-	/**
-	 * Pagination object
-	 *
-	 * @var object
-	 */
-	var $_pagination = null;
-
-	/**
-	 * The attachments plugin manager object
-	 */
-	var $_apm;
-
-
 	/**
 	 * Constructor
 	 *
-	 * @since 1.0
+	 * @param	array	An optional associative array of configuration settings.
+	 * @see		JController
+	 * @since	1.6
 	 */
-	function __construct()
+	public function __construct($config = array())
 	{
-		parent::__construct();
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+				'id', 
+				'a.state',
+				'a.filename',
+				'a.description',
+				'a.user_field_1',
+				'a.user_field_2',
+				'a.user_field_3',
+				'a.file_type',
+				'a.file_size',
+				'uploader_name', 'u.name',
+				'a.create_date',
+				'a.modification_date',
+				'a.download_count'
+			);
+		}
 
-		global $option;
-		$db =& $this->getDBO();
-
-		// // Get the component parameters
-		// ??? Use this later when we filter on state
-		// jimport('joomla.application.component.helper');
-		// $params =& JComponentHelper::getParams('com_attachments');
-		// 
-		// // Get the desired state
-		// $list_for_parents_default = 'ALL';
-		// $suppress_obsolete_attachments = $params->get('suppress_obsolete_attachments', false);
-		// if ( $suppress_obsolete_attachments ) {
-		//	  $list_for_parents_default = 'PUBLISHED';
-		// }
-		// $state = $app->getUserStateFromRequest( 'com_attachments.listAttachments.list_for_parents',
-		// 				   					       'list_for_parents', $list_for_parents_default, 'word' );
-
-		// Get the limits
-		$app = JFactory::getApplication();
-		$limit = $app->getUserStateFromRequest( 'com_attachments.listAttachments.limit',
-													  'limit', $app->getCfg('list_limit'), 'int');
-		$limitstart = $app->getUserStateFromRequest('com_attachments.listAttachments.limitstart',
-														  'limitstart', 0, 'int');
-		// In case limit has been changed, adjust it
-		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
-
-		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);
-
-		// Get the ordering information
-		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
-												   'filter_order', '', 'cmd');
-		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
-												   'filter_order_Dir', '', 'word');
-		$this->setState('filter_order', $order);
-		$this->setState('filter_order_Dir', $order_Dir);
-
-		// Get the entity filter info
-		$filter_entity = $app->getUserStateFromRequest('com_attachments.listAttachments.filter_entity',
-															 'filter_entity', 'ALL', 'string' );
-		$filter_entity = $db->getEscaped( trim(JString::strtoupper($filter_entity)) );
-		$this->setState('filter_entity', $filter_entity);
-
-		// Get the search string
-		$search = $app->getUserStateFromRequest('com_attachments.listAttachments.search',
-													  'search', '', 'string' );
-		$search = $db->getEscaped( trim(JString::strtolower( $search ) ) );
-		$this->setState('search', $search);
+		parent::__construct($config);
 	}
 
+
+
 	/**
-	 * Method to get attachments data
+	 * Method to build an SQL query to load the attachments data.
 	 *
-	 * @access public
-	 * @return object
+	 * @return  JDatabaseQuery   An SQL query
 	 */
-	function &getData()
+	protected function getListQuery()
 	{
-		// Load the attachments if they do not already exist
-		if (empty($this->_data))
-		{
-			$query = $this->_buildQuery();
-			$db =& $this->getDBO();
+		// Create a new query object.         
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
 
-			// Get the list of attachments
-			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
-			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ERROR_GETTING_LIST_OF_ATTACHMENTS') . $db->getErrorMsg() . ' (ERR 12)';
-				JError::raiseError(500, $errmsg);
-				}
+		$query->select('a.*, a.id as id');
+		$query->from('#__attachments as a');
 
-			$apm =& $this->getAttachmentsPluginManager();
+		$query->select('u.name as uploader_name');
+		$query->join('LEFT', '#__users AS u ON u.id = a.uploader_id');
 
-			// Go through the attachments and add some extra information
-			$count = count($this->_data);
-
-			for($i = 0; $i < $count; $i++)
-			{
-				$row =& $this->_data[$i];
-
-				// Fix the relative URLs
-				if ( $row->uri_type == 'url' ) {
-                    $uri = JFactory::getURI();
-					if ( strpos($row->url, '://') === false ) {
-						$row->url = $uri->root(true) . '/' . $row->url;
-						}
-					}
-
-				// Get the content parent object
-				$row->parent_exists = true;
-				$parent =& $apm->getAttachmentsPlugin($row->parent_type);
-				$entity = $row->parent_entity;
-
-				if ( $parent ) {
-
-					// Handle the normal case
-					$entity = $parent->getCanonicalEntity( $entity );
-					$row->parent_entity = $entity;
-					$parent->loadLanguage();
-					$row->parent_entity_type = JText::_($parent->getEntityName($entity));
-					$title = $parent->getTitle($row->parent_id, $entity);
-					if ( $title ) {
-						$row->parent_title = $title;
-						}
-					else {
-						$row->parent_title = JText::sprintf('NO_PARENT_S', $row->parent_entity_type);
-						}
-					$row->parent_exists = $parent->parentExists($row->parent_id, $row->parent_entity);
-					$row->parent_published = $parent->isParentPublished($row->parent_id, $entity);
-					$row->parent_archived = $parent->isParentArchived($row->parent_id, $entity);
-					$row->parent_url =
-						JFilterOutput::ampReplace( $parent->getEntityViewURL($row->parent_id, $entity) );
-					}
-				else {
-					// Handle case where there is no parent handler
-					// (eg, deleted component)
-					$row->parent_exists = false;
-					$row->parent_entity_type = $entity;
-					$row->parent_title = JText::_('UNKNOWN');
-					$row->parent_published = false;
-					$row->parent_archived = false;
-					$row->parent_url = '';
-					}
-				}
+		// Add the where clause
+		$where = $this->_buildContentWhere($query);
+		if ($where) {
+			$query->where($where);
 			}
 
-		return $this->_data;
+		// ??? echo "WHERE: '$where' <br/>";
+
+		// Add the order-by clause
+		$order_by = $this->_buildContentOrderBy();
+		if ($order_by) {
+			$query->order($db->getEscaped($order_by));
+			}
+
+		return $query;
 	}
 
-	/**
-	 * Method to get the total number of the Items
-	 *
-	 * @access public
-	 * @return integer
-	 */
-	function getTotal()
-	{
-		// Lets load the Items if it doesn't already exist
-		if (empty($this->_total))
-		{
-			$query = $this->_buildQuery();
-			$this->_total = $this->_getListCount($query);
-		}
 
-		return $this->_total;
-	}
 
 	/**
-	 * Method to get a pagination object for the Items
-	 */
-	function &getPagination()
-	{
-		// Lets load the Items if it doesn't already exist
-		if (empty($this->_pagination))
-		{
-			jimport('joomla.html.pagination');
-
-			// Get the pagination info
-			$total = $this->getTotal();
-			$limitstart = $this->getState('limitstart');
-			$limit = $this->getState('limit');
-
-			// Create the pagination object
-			$this->_pagination = new JPagination( $total, $limitstart, $limit );
-		}
-
-		return $this->_pagination;
-	}
-
-	/**
-	 * Method to get/build the attachments plugin manager
-	 */
-	function &getAttachmentsPluginManager()
-	{
-		if (empty($this->_apm))
-		{
-			// Get the attachments plugin manager object
-			JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
-			$this->_apm =& getAttachmentsPluginManager();
-		}
-
-		return $this->_apm;
-	}
-
-	/**
-	 * Method to build the query for the Items
+	 * Method to build the where clause of the query for the Items
 	 *
 	 * @access private
 	 * @return string
 	 * @since 1.0
 	 */
-	function _buildQuery()
+	function _buildContentWhere($query)
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
+		$where = Array();
 
-		// Create the query
-		$query = "SELECT a.*, a.id as id, u.name as uploader_name "
-			. "FROM #__attachments as a "
-			. "LEFT JOIN #__users AS u ON u.id = a.uploader_id "
-			. $where
-			. $orderby
-			;
+		// Set up the search
+		$search = $this->getState('filter.search');
 
-		return $query;
+		if ( $search ) {
+			if ( ($search != '') AND is_numeric($search) ) {
+				$where[] = 'a.id = ' . (int) $search . '';
+				}
+			else {
+				$db =& $this->getDBO();
+				$where[] = '(LOWER( a.filename ) LIKE ' .
+					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					' OR LOWER( a.description ) LIKE ' .
+					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					' OR LOWER( a.display_name ) LIKE ' .
+					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) . ')';
+				}
+			}
+
+		// Get the entity filter info
+		$filter_entity = $this->getState('filter.entity');
+		if ( $filter_entity != 'ALL' ) {
+			$where[] = "a.parent_entity = '$filter_entity'";
+			}
+
+		// Get the parent_state filter
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
+		
+		// Get the desired state
+		$filter_parent_state_default = 'ALL';
+		$suppress_obsolete_attachments = $params->get('suppress_obsolete_attachments', false);
+		if ( $suppress_obsolete_attachments ) {
+			$filter_parent_state_default = 'PUBLISHED';
+			}
+		$filter_parent_state = $this->getState('filter.parent_state', $filter_parent_state_default);
+		if ( $filter_parent_state != 'ALL' ) {
+
+			$fps_wheres = Array();
+
+			// Get the contributions for all the known content types
+			JPluginHelper::importPlugin('attachments');
+			$apm =& getAttachmentsPluginManager();
+			$known_parent_types = $apm->getInstalledParentTypes();
+			foreach ($known_parent_types as $parent_type) {
+				$parent = $apm->getAttachmentsPlugin($parent_type);
+				$pwheres = $parent->getParentPublishedFilter($filter_parent_state, $filter_entity);
+				foreach ($pwheres as $pw) {
+					$fps_wheres[] = $pw;
+					}
+				}
+
+			if ( $filter_parent_state == 'NONE' ) {
+				$basic = '';
+				$fps_wheres = '( (a.parent_id = 0) OR (a.parent_id IS NULL) ' .
+					(count($fps_wheres) ?
+					 ' OR (' . implode(' AND ', $fps_wheres) . ')' : '') . ')';
+				}
+			else {
+				$fps_wheres = (count($fps_wheres) ? '(' . implode(' OR ', $fps_wheres) . ')' : '');
+				}
+
+			// Copy the new where clauses into our main list
+			if ( $fps_wheres) {
+				$where[] = $fps_wheres;
+				}
+			}
+
+		// Construct the WHERE clause
+		$where = (count($where) ? implode(' AND ', $where) : '');
+
+		return $where;
 	}
-
+	
 
 	/**
 	 * Method to build the orderby clause of the query for the Items
@@ -278,62 +172,139 @@ class AttachmentsadminModelAttachments extends JModel
 	 */
 	function _buildContentOrderBy()
 	{
-		global $option;
-
 		// Get the ordering information
-		$order	   = $this->getState('filter_order');
-		$order_Dir = $this->getState('filter_order_Dir');
+		$orderCol	= $this->state->get('list.ordering');
+		$orderDirn	= $this->state->get('list.direction');
 
 		// Construct the ORDER BY clause
-		$order_by = " ORDER by a.parent_type, a.parent_entity, a.parent_id";
-		if ( $order ) {
-			$order_by = " ORDER BY $order $order_Dir, a.parent_entity, a.parent_id";
+		$order_by = "a.parent_type, a.parent_entity, a.parent_id";
+		if ( $orderCol ) {
+			$order_by = "$orderCol $orderDirn, a.parent_entity, a.parent_id";
 			}
-		
+
 		return $order_by;
 	}
 
+
 	/**
-	 * Method to build the where clause of the query for the Items
+	 * Method to auto-populate the model state.
 	 *
-	 * @access private
-	 * @return string
-	 * @since 1.0
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @since	1.6
 	 */
-	function _buildContentWhere()
+	protected function populateState($ordering = null, $direction = null)
 	{
-		global $option;
+		// Initialise variables.
+		$app = JFactory::getApplication('administrator');
 
-		$where = Array();
+		// Load the filter state.
+		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
 
-		// Set up the search
-		$search = $this->getState('search');
+		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'ALL');
+		$this->setState('filter.entity', $entity);
 
-		if ( $search ) {
-			if ( ($search != '') AND is_numeric($search) ) {
-				$where[] = 'a.id = ' . (int) $search . '';
+		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', 'ALL');
+		$this->setState('filter.parent_state', $parent_state);
+
+		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+		$this->setState('filter.state', $state);
+
+		// Load the parameters.
+		$params = JComponentHelper::getParams('com_attachments');
+		$this->setState('params', $params);
+
+		// List state information.
+		parent::populateState('', 'asc');
+	}
+	
+
+	/**
+	 * Method to get an array of data items.
+	 *
+	 * @return	mixed	An array of data items on success, false on failure.
+	 * @since	1.6
+	 */
+	public function getItems()
+	{
+		$items = parent::getItems();
+
+		// Update the attachments with information about thier parents
+		JPluginHelper::importPlugin('attachments');
+		$apm =& getAttachmentsPluginManager();
+		foreach ($items as $item) {
+			$parent_id = $item->parent_id;
+			$parent_type = $item->parent_type;
+			$parent_entity = $item->parent_entity;
+			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
 				}
+			$parent = $apm->getAttachmentsPlugin($parent_type);
+
+			if ( $parent ) {
+
+				// Handle the normal case
+				$parent->loadLanguage();
+				$item->parent_entity_type = JText::_($parent->getEntityName($parent_entity));
+				$title = $parent->getTitle($parent_id, $parent_entity);
+				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);
+				if ( $item->parent_exists and $title ) {
+					$item->parent_title = $title;
+					$item->parent_url =
+						JFilterOutput::ampReplace( $parent->getEntityViewURL($parent_id, $parent_entity) );
+					}
+				else {
+					$item->parent_title = JText::sprintf('NO_PARENT_S', $item->parent_entity_type);
+					$item->parent_url = '';
+					}
+				}
+
 			else {
-				$db =& $this->getDBO();
-				$where[] = 'LOWER( a.filename ) LIKE ' .
-					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
-					' OR LOWER( a.description ) LIKE ' .
-					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false );
+				// Handle pathalogical case where there is no parent handler
+				// (eg, deleted component)
+				$item->parent_exists = false;
+				$item->parent_entity_type = $parent_entity;
+				$item->parent_title = JText::_('UNKNOWN');
+				$item->parent_published = false;
+				$item->parent_archived = false;
+				$item->parent_url = '';
 				}
 			}
 
-		// Get the entity filter info
-		$filter_entity = $this->getState('filter_entity');
-		if ( $filter_entity != 'ALL' ) {
-			$where[] = "a.parent_entity = '$filter_entity'";
-			}
-
-		// Construct the WHERE clause
-		$where = (count($where) ? ' WHERE '.implode(' AND ', $where) : '');
-
-		return $where;
+		// Return from the cache
+		return $items;
 	}
 
-}
 
-?>
+	/**
+	 * Returns a reference to the a Table object, always creating it.
+	 *
+	 * @param       type    The table type to instantiate
+	 * @param       string  A prefix for the table class name. Optional.
+	 * @param       array   Configuration array for model. Optional.
+	 * @return      JTable  A database object
+	 * @since       1.6
+	 */
+	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array()) 
+	{
+		return JTable::getInstance($type, $prefix, $config);
+	}
+
+
+	/**
+	 * Publish attachment(s)
+	 *
+	 * Applied to any selected attachments
+	 */
+	function publish($cid, $value)
+	{
+		// Get the ids and make sure they are integers
+		$attachmentTable = $this->getTable();
+		$attachmentTable = JTable::getInstance('Attachment', 'AttachmentsTable');
+
+		return $attachmentTable->publish($cid, $value);
+	}
+	
+}
