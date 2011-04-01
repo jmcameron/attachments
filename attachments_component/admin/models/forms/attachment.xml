@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+        <fieldset>
+                <field name="id" type="text" default="0" 
+			label="ATTACHMENT_ID" description="ATTACHMENT_ID_DESCRIPTION"
+			readonly="true" class="readonly"
+                />
+                <field  name="state" type="radio" default="0"
+                        label="JPUBLISHED" description="" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="parent_type" type="text"
+                        label="PARENT_TYPE" description="PARENT_TYPE_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="parent_entity" type="text"
+                        label="PARENT_ENTITY" description="PARENT_ENTITY_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="parent_id" type="text"
+                        label="PARENT_ID" description="PARENT_ID_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="filename" type="text"
+                        label="FILENAME" description="FILENAME_DESCRIPTION"
+		        readonly="true" class="readonly"
+                        size="80"
+                />
+                <field  name="filename_sys" type="text"
+                        label="SYSTEM_FILENAME" description="SYSTEM_FILENAME_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="file_type" type="text"
+                        label="FILE_TYPE" description="FILE_TYPE_DESCRIPTION"
+		        readonly="true" class="readonly"
+                        size="70"
+                />
+                <field  name="file_size" type="text"
+                        label="FILE_SIZE_KB" description=""
+		        readonly="true" class="readonly"
+                />
+		<field  name="icon_filename" type="Iconfilenames"
+                        label="ICON_FILENAME" description="ICON_FILENAME_DESCRIPTION"
+                />
+                <field  name="uri_type" type="text"
+                        label="ATTACHMENT_TYPE" description=""
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+                <field  name="url" type="text"
+		        readonly="true" class="readonly"
+                        label="URL" description="URL_DESCRIPTION"
+			size="70"
+                />
+                <field  name="url_valid" type="radio"
+                        label="URL_IS_VALID" description="URL_IS_VALID_TOOLTIP"
+			default="1" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="display_name" type="text" class="inputbox"
+                        label="DISPLAY_NAME" description="DISPLAY_NAME_DESCRIPTION"
+                        size="80" maxlength="255"
+                        default=""
+                />
+                <field  name="user_field_1" type="text" class="inputbox"
+                        label="USER_DEFINED_FIELD_1" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="user_field_2" type="text" class="inputbox"
+                        label="USER_DEFINED_FIELD_2" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="user_field_3" type="text" class="inputbox"
+                        label="USER_DEFINED_FIELD_3" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="description" type="text" class="inputbox"
+                        label="DESCRIPTION" description="DESCRIPTION_DESCRIPTION"
+                        size="80" maxlength="255"
+                        default=""
+                />
+		<field name="create_date" type="Date"
+			label="DATE_CREATED" description=""
+		        readonly="true" class="readonly" 
+                />
+		<field name="modification_date" type="Date"
+			label="LAST_MODIFIED" description=""
+		        readonly="true" class="readonly" 
+                />
+                <field  name="download_count" type="text"
+                        label="NUMBER_OF_DOWNLOADS" description="NUMBER_OF_DOWNLOADS_TOOLTIP"
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+                <field  name="uploader_id" type="text"
+                        label="Uploader ID" description=""
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+        </fieldset>
+</form>
