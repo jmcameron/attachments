@@ -183,9 +183,6 @@ class AttachmentsPlugin extends JObject
 
 		$lang =& JFactory::getLanguage();
 
-		// Always load the main language file for global items
-		$lang->load('plg_attachments_attachments_plugin_framework');
-
 		// Load the plugin-specifc language file
 		$okay = $lang->load('plg_attachments_' . $this->_name,
 							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name );
