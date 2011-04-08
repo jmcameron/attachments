@@ -6,6 +6,10 @@ form#adminForm
     font-size: 1.2em;
 }
 
+div#element-box div.m form#adminForm table#attachmentsList tr td a {
+    font-size: 100%;
+}
+
 form#adminForm div.attachments_filter { 
 	padding: 0 0 2px 6px;
 }
@@ -143,7 +147,7 @@ div.attachmentsAdmin h2 {
 	font-weight: bold;
 }
 
-div.attachmentsAdmin li a		  { padding: 2px; }
+div.attachmentsAdmin li a	  { padding: 2px; }
 div.attachmentsAdmin li a:link	  { color: #0000FF; text-decoration: none; }
 div.attachmentsAdmin li a:hover	  { 
 	color: #0000FF; text-decoration: none; 
