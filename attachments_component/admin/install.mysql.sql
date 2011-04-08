@@ -8,11 +8,12 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `url` TEXT NOT NULL DEFAULT '',
     `uri_type` ENUM('file', 'url') DEFAULT 'file',
     `url_valid` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+    `url_relative` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
     `display_name` VARCHAR(80) NOT NULL DEFAULT '',
     `description` VARCHAR(255) NOT NULL DEFAULT '',
     `icon_filename` VARCHAR(20) NOT NULL,
     `uploader_id` INT(11) NOT NULL,
-    `published` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+    `state` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
     `user_field_1` VARCHAR(100) NOT NULL DEFAULT '',
     `user_field_2` VARCHAR(100) NOT NULL DEFAULT '',
     `user_field_3` VARCHAR(100) NOT NULL DEFAULT '',
@@ -22,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `create_date` DATETIME DEFAULT NULL,
     `modification_date` DATETIME DEFAULT NULL,
     `download_count` INT(11) UNSIGNED DEFAULT '0',
+    `params` TEXT NOT NULL DEFAULT '',
+
      PRIMARY KEY (`id`)
 
 ) ENGINE=MyISAM CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
