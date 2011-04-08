@@ -385,7 +385,7 @@ class AttachmentsModelAttachments extends JModel
 					$url = $row->url;
 					if ( strpos($url, '://') === false ) {
 	                    $uri = JFactory::getURI();
-						$row->url = $uri->true(true) . '/' . $url;
+						$row->url = $uri->base(true) . '/' . $url;
 						}
 					}
 				}
