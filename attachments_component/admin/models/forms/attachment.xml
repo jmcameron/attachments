@@ -22,10 +22,8 @@
                         label="PARENT_ID" description="PARENT_ID_DESCRIPTION"
 		        readonly="true" class="readonly"
                 />
-                <field  name="filename" type="text"
+                <field  name="filename" type="file"
                         label="FILENAME" description="FILENAME_DESCRIPTION"
-		        readonly="true" class="readonly"
-                        size="80"
                 />
                 <field  name="filename_sys" type="text"
                         label="SYSTEM_FILENAME" description="SYSTEM_FILENAME_DESCRIPTION"
@@ -56,6 +54,12 @@
                 <field  name="url_valid" type="radio"
                         label="URL_IS_VALID" description="URL_IS_VALID_TOOLTIP"
 			default="1" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="url_relative" type="radio"
+                        label="URL_IS_RELATIVE" description="URL_IS_RELATIVE_TOOLTIP"
+			default="0" >
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
                 </field>

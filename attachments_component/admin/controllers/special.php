@@ -110,10 +110,9 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	function add_icon_filenames()
 	{
-		global $option;
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 		$msg = AttachmentsUpdate::add_icon_filenames();
-		$this->setRedirect('index.php?option=' . $option, $msg);
+		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
 
 
@@ -123,12 +122,11 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	function update_null_dates()
 	{
-		global $option;
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
 		$msg = JText::sprintf( 'UPDATED_N_ATTACHMENTS', $numUpdated );
-		$this->setRedirect('index.php?option=' . $option, $msg);
+		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
 
 
@@ -138,7 +136,6 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	function update_attachments_table()
 	{
-		global $option;
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
@@ -171,12 +168,11 @@ class AttachmentsControllerSpecial extends JController
 			AttachmentsHelper::enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -194,12 +190,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -216,12 +211,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -239,12 +233,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -262,12 +255,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+		$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -285,12 +277,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -307,12 +298,11 @@ class AttachmentsControllerSpecial extends JController
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo "<script>window.parent.document.getElementById('sbox-window').close();
+			echo "<script>window.parent.SqueezeBox.close();
 				  window.parent.location.reload();</script>";
 			}
 		else {
-			global $option;
-			$this->setRedirect('index.php?option=' . $option, $msg);
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
 			}
 	}
 
@@ -368,7 +358,7 @@ class AttachmentsControllerSpecial extends JController
 			}
 
 		/*
-		JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 
 		$entity_info =& $apm->getInstalledEntityInfo();

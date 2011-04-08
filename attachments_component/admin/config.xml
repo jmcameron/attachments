@@ -20,8 +20,8 @@
     <field name="publish_default" type="radio" default="0"
            label="ATTACHMENTS_PUBLISHED_BY_DEFAULT"
            description="ATTACHMENTS_PUBLISHED_BY_DEFAULT_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="auto_publish_warning" type="textarea" default=""
            label="AUTO_PUBLISH_WARNING" rows="2" cols="60"
@@ -30,38 +30,38 @@
     <field name="show_column_titles" type="radio" default="0"
            label="SHOW_COLUMN_TITLES"
            description="SHOW_COLUMN_TITLES_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="show_description" type="radio" default="1"
            label="SHOW_ATTACHMENT_DESCRIPTION"
            description="SHOW_ATTACHMENT_DESCRIPTION_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="show_uploader" type="radio" default="0"
            label="SHOW_ATTACHMENT_UPLOADER"
            description="SHOW_ATTACHMENT_UPLOADER_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="show_file_size" type="radio" default="1"
            label="SHOW_ATTACHMENT_FILE_SIZE"
            description="SHOW_ATTACHMENT_FILE_SIZE_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="show_downloads" type="radio" default="0"
            label="SHOW_NUMBER_OF_DOWNLOADS"
            description="SHOW_NUMBER_OF_DOWNLOADS_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="show_modification_date" type="radio" default="0"
            label="SHOW_FILE_MODIFICATION_DATE"
            description="SHOW_FILE_MODIFICATION_DATE_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="mod_date_format" type="text" default="%x %H:%M"
            label="FORMAT_STRING_FOR_MODIFICATION_DATE" size="30"
@@ -148,14 +148,14 @@
     <field name="superimpose_url_link_icons" type="radio" default="1"
            label="SUPERIMPOSE_URL_LINK_ICONS"
            description="SUPERIMPOSE_URL_LINK_ICONS_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="suppress_obsolete_attachments" type="radio" default="0"
            label="SUPPRESS_OBSOLETE_ATTACHMENTS"
            description="SUPPRESS_OBSOLETE_ATTACHMENTS_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
   </fieldset>
 
@@ -164,14 +164,14 @@
     <field name="secure" type="radio" default="0"
            label="SECURE_ATTACHMENT_DOWNLOADS"
            description="SECURE_ATTACHMENT_DOWNLOADS_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="secure_list_attachments" type="radio" default="0"
            label="LIST_ATTACHMENTS_IN_SECURE_MODE"
            description="LIST_ATTACHMENTS_IN_SECURE_MODE_DESCRIPTION">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
     <field name="download_mode" type="radio" default="inline"
            label="DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS"

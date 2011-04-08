@@ -1,129 +1,116 @@
 <?php
-/**
- * Attachments component
- *
- * @package Attachments
- * @subpackage Attachments_Component (admin)
- *
- * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
- * @author Jonathan M. Cameron
- */
-
+// No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-jimport( 'joomla.application.component.controller' );
-
+ 
+// import Joomla controlleradmin library
+jimport('joomla.application.component.controlleradmin');
+ 
 /**
- * Class for a controller for dealing with lists of attachments
- *
- * @package Attachments
+ * Attachments Controller
  */
-class AttachmentsControllerAttachments extends JController
+class AttachmentsControllerAttachments extends JControllerAdmin
 {
-	/**
-	 * Constructor
-	 */
-	function __construct( $default = array('default_task' => 'noop') )
-	{
-		parent::__construct( $default );
-	}
 
-	/** A noop function so this controller does not have a usable default */
-	function noop()
+	/**
+	 * Proxy for getModel.
+	 * @since       1.6
+	 */
+	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel') 
 	{
-		$errmsg = JText::_('ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 107)';
-		JError::raiseError(500, $errmsg);
+		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
+		return $model;
 	}
 
 
 	/**
-	 * Display the attachments list
-	 *
-	 * @param int $parent_id the id of the parent
-	 * @param string $parent_type the type of parent
-	 * @param string $parent_entity the type entity of the parent
-	 * @param string $title title to be shown above the list of articles.  If null, use system defaults.
-	 * @param bool $show_file_links enable showing links for the filenames
-	 * @param bool $allow_edit enable showing edit/delete links (if permissions are okay)
-	 * @param bool $echo if true the output will be echoed; otherwise the results are returned.
-	 * @param string $from The 'from' info
-	 *
-	 * @return the string (if $echo is false)
+	 * Delete attachment(s)
 	 */
-	function display($parent_id, $parent_type, $parent_entity,
-					 $title=null, $show_file_links=true, $allow_edit=true,
-					 $echo=true, $from=null)
+	function delete()
 	{
-		$document =& JFactory::getDocument();
+		// Check for request forgeries
+		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-		// Get an instance of the model
-		$this->addModelPath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'models');
-		$model =& $this->getModel('Attachments');
-		if ( !$model ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 108)';
-			JError::raiseError(500, $errmsg);
-			}
+		// Get attachments to remove from the request
+		$cid = JRequest::getVar('cid', array(), '', 'array');
 
-		$model->setParentId($parent_id, $parent_type, $parent_entity);
+		if (count($cid)) {
+			jimport('joomla.filesystem.file');
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+			$cids = implode(',', $cid);
 
-		// Set up to list the attachments for this artticle
-		$sort_order = $params->get('sort_order', 'filename');
-		$model->setSortOrder($sort_order);
+			$db =& JFactory::getDBO();
+			$query = "SELECT * FROM #__attachments WHERE id IN ( $cids )";
+			$db->setQuery($query);
+			$rows = $db->loadObjectList();
 
-		// If none of the attachments should be visible, exit now
-		if ( ! $model->someVisible() ) {
-			return false;
-			}
+			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
-		// Get the view
-		$this->addViewPath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'views');
-		$viewType = $document->getType();
-		$view =& $this->getView('Attachments', $viewType);
-		if ( !$view ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 109)';
-			JError::raiseError(500, $errmsg);
-			}
-		$view->setModel($model);
-
-		// Construct the update URL template
-		$update_url = "index.php?option=com_attachments&task=edit&cid[]=%d";
-		$update_url .= "&from=$from&tmpl=component";
-		$view->assignRef('update_url', $update_url);
-
-		// Construct the delete URL template
-		$delete_url = "index.php?option=com_attachments&task=remove_warning&id=%d";
-		$delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
-		$delete_url .= "&from=$from&tmpl=component";
-		$view->assignRef('delete_url', $delete_url);
-
-		// Set some display settings
-		$view->assign('title', $title);
-		$view->assign('show_file_links', $show_file_links);
-		$view->assign('allow_edit', $allow_edit);
-		$view->assign('from', $from);
-
-		// Get the view to generate the display output from the template
-		if ( $view->display() === true ) {
-
-			// Display or return the results
-			if ( $echo ) {
-				echo $view->getOutput();
-				}
-			else {
-				return $view->getOutput();
+			// First delete the actual attachment files
+			foreach ($rows as $row) {
+				if ( JFile::exists($row->filename_sys) ) {
+					JFile::delete($row->filename_sys);
+					AttachmentsHelper::clean_directory($row->filename_sys);
+					}
 				}
 
+			// Delete the entries in the attachments table
+			$query = "DELETE FROM #__attachments WHERE id IN ( $cids )";
+			$db->setQuery($query);
+			if (!$db->query()) {
+				$errmsg = $db->getErrorMsg() . ' (ERR 28)';
+				JError::raiseError(500, $errmsg);
+				}
+
+			// Figure out how to redirect
+			$from = JRequest::getWord('from');
+			$known_froms = array('frontpage', 'article', 'editor', 'closeme');
+			if ( in_array( $from, $known_froms ) ) {
+
+				// Get the parent info from the first attachment
+				$parent_id	   = $rows[0]->parent_id;
+				$parent_type   = $rows[0]->parent_type;
+				$parent_entity = $rows[0]->parent_entity;
+
+				// Get the article/parent handler
+				JPluginHelper::importPlugin('attachments');
+				$apm =& getAttachmentsPluginManager();
+				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+					$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 103)';
+					JError::raiseError(500, $errmsg);
+					}
+				$parent =& $apm->getAttachmentsPlugin($parent_type);
+
+				// Make sure the parent exists
+				// NOTE: $parent_id===null means the parent is being created
+				if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
+					$entity_name = JText::_($parent->getEntityName($parent_entity));
+					$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_S_ID_N',
+											 $entity_name, $parent_id) . ' (ERR 104)';
+					JError::raiseError(500, $errmsg);
+					}
+				$parent_entity = $parent->getCanonicalEntity($parent_entity);
+
+				// If there is no parent_id, the parent is being created, use the username instead
+				if ( !$parent_id ) {
+					$pid = 0;
+					}
+				else {
+					$pid = (int)$parent_id;
+					}
+
+				// Close the iframe and refresh the attachments list in the parent window
+	            $uri = JFactory::getURI();
+				$base_url = $uri->base(true);
+				echo "<script type=\"text/javascript\">
+				   window.parent.SqueezeBox.close();
+				   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+				   </script>";
+				exit();
+				}
 			}
 
-		return false;
+		$this->setRedirect( 'index.php?option=' . $this->option);
 	}
+
 
 }
-
-?>
