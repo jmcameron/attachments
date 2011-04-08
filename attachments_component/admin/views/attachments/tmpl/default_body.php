@@ -21,24 +21,6 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 {
 	$item =& $this->items[$i];
 
-
-	// ??? Need to move this into models/attachments.php
-	/* ???
-	echo "FPS2: Setting='{$this->filter_parent_state}',  --> item_parent_published='{$item->parent_published}' <br/>";
-
-	if ( $this->filter_parent_state == 'PUBLISHED' AND !$item->parent_published ) {
-		continue;
-		}
-	if ( $this->filter_parent_state == 'UNPUBLISHED' AND $item->parent_published ) {
-		continue;
-		}
-	if ( $this->filter_parent_state == 'ARCHIVED' AND !$item->parent_archived ) {
-		continue;
-		}
-	if ( $this->filter_parent_state == 'NONE' AND $item->parent_exists ) {
-		continue;
-		}
-	*/
 	if ( $item->uri_type == 'file' ) {
 		if ( $secure ) {
 			$url = JRoute::_("index.php?option=com_attachments&amp;task=download&amp;id=" . (int)$item->id);
@@ -53,8 +35,8 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$checked = JHTML::_('grid.id', $i, $item->id );
 	$published = JHTML::_('jgrid.published', $item->state, $i, 'attachments.' );
 
-	$size = (int)(10 * $item->file_size / 1024) / 10.0;
-	$link = JFilterOutput::ampReplace( 'index.php?option=com_attachments&amp;view=attachment&amp;layout=edit&amp;id='. (int)$item->id );
+	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
+	$link = JFilterOutput::ampReplace( 'index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]='. (int)$item->id );
 	$view_parent_title = JText::_('VIEW_ARTICLE_TITLE');
 	if ( JString::strlen($item->icon_filename) > 0 )
 		$icon_url = $icon_dir . $item->icon_filename;
@@ -79,7 +61,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 		OR $item->parent_entity != $last_parent_entity ) {
 		$parent_type = $item->parent_type;
 		if ( $item->parent_entity != 'default' ) {
-			$parent_type .= ':' . $item->parent_entity;
+			$parent_type .= '.' . $item->parent_entity;
 			}
 		if ( $item->parent_id == null OR !$item->parent_exists ) {
 			$artLine = '<tr><td class="at_parentsep" colspan="'.$this->num_columns.'">';
@@ -87,7 +69,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 			$artLine .= '</td></tr>';
 			}
 		else {
-			$addAttachLink = 'index.php?option=com_attachments&amp;task=add&amp;parent_id='. $item->parent_id .
+			$addAttachLink = 'index.php?option=com_attachments&amp;task=attachment.add&amp;parent_id='. $item->parent_id .
 				'&amp;parent_type=' . $parent_type . '&amp;editor=add_to_parent';
 			$addAttachLink = JFilterOutput::ampReplace($addAttachLink);
 			$artLine = "<tr><td class=\"at_parentsep\" colspan=\"$this->num_columns\">";
@@ -152,7 +134,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 		 <td class="at_user_field"><?php echo $item->user_field_3; ?></td>
 	  <?php endif; ?>
 	  <td class="at_file_type"><?php echo $item->file_type; ?></td>
-	  <td class="at_file_size"><?php echo $size; ?></td>
+	  <td class="at_file_size"><?php echo $size_kb; ?></td>
 	  <td class="at_uploader"><?php echo $item->uploader_name; ?></td>
 	  <td class="at_create_date"><?php echo $create_date; ?></td>
 	  <td class="at_mod_date"><?php echo $modification_date ?></td>

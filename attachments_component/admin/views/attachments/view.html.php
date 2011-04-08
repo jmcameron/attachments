@@ -35,15 +35,13 @@ class AttachmentsViewAttachments extends JView
 	{
 		$this->pagination = $this->get('Pagination');
 		$this->state = $this->get('State');
-		$items = $this->get('Items');
+		$this->items = $this->get('Items');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
-
-		$this->items = $items;
 
 		// Get the params
 		jimport('joomla.application.component.helper');
@@ -131,7 +129,7 @@ class AttachmentsViewAttachments extends JView
 	 */
 	protected function addToolBar() 
 	{
-		JToolBarHelper::title(JText::_('Attachments'));
+		JToolBarHelper::title(JText::_('ATTACHMENTS'));
 		JToolBarHelper::addNewX('attachment.add');
 		JToolBarHelper::editListX('attachment.edit');
 		JToolBarHelper::divider();
