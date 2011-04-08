@@ -1,5 +1,11 @@
 /* Styles for the main list of attachments in the administrative back end */
 
+form.attachmentsBackend,
+form#adminForm 
+{
+    font-size: 1.2em;
+}
+
 form#adminForm div.attachments_filter { 
 	padding: 0 0 2px 6px;
 }
@@ -187,7 +193,7 @@ a.modal-button {
 	font-weight: bold;
 }
 
-a.modal-button:link	   { color: #333333; text-decoration: none; }
+a.modal-button:link    { color: #333333; text-decoration: none; }
 a.modal-button:hover   { color: #333333; text-decoration: none; background-color: #DDDDDD; }
 a.modal-button:visited { color: #333333; text-decoration: none; }
 a.modal-button:active  { color: #333333; text-decoration: none; }
@@ -199,9 +205,38 @@ form.attachmentsBackend {
 	margin: 0 0 8px 0;
 }
 
-form.attachmentsBackend fieldset {
+form.attachmentsBackend fieldset,
+form.attachmentsBackend td > fieldset.radio {
 	margin: 0;
 }
+
+form.attachmentsBackend fieldset.adminform table.admintable td label,
+form.attachmentsBackend fieldset.adminform table.admintable td input[type="radio"],
+form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"]
+{
+	float: none;
+	padding: 0;
+	margin: 0 0 0 1em;
+	display: inline;
+}
+
+form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"] {
+	margin: 0 0 0 0.25em;
+}
+
+form.attachmentsBackend fieldset.adminform table.admintable td label {
+	font-size: 1.1em;
+}
+
+
+form.attachmentsBackend fieldset.adminform table.admintable td label.radiobtn {
+	float: none;
+	min-width: 0em;
+	padding: 0;
+	margin: 0 1em 0 0;
+	display: inline;
+}
+
 
 form.attachmentsBackend legend {
 	font-size: 140%;
@@ -210,7 +245,7 @@ form.attachmentsBackend legend {
 
 
 form.attachmentsBackend input {
-	font-size: 1.3em;
+	float: none;
 	border: 1px solid #888;
 	color : #333333;
 	background-color: #CCC;
@@ -242,20 +277,45 @@ div.deleteWarning input[type="submit"]
 }
 
 form.attachmentsBackend span.right {
-    float: right;
+	float: right;
 }
 
 form.attachmentsBackend table.admintable td {
-	font-size: 1em;
+	/* font-size: 1em; */
 	padding-right: 8px;
+	vertical-align: middle;
+}
+
+form.attachmentsBackend table.admintable td span {
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+form.attachmentsBackend table.admintable td span.optional {
+	vertical-align: inherit;
+	margin-left: 10px;
 }
 
 form.attachmentsBackend table.admintable td.key {
 	background-color: #DADAF0;
 	color: #444;
-	font-size: 1em;
-	width: 11em;
-	padding-right: 4px;
+	width: 10em;
+	padding: 0 4px 0 4px;
+	margin: 2px 0 2px 0;
+	vertical-align: middle;
+	text-align: right;
+}
+
+
+form.attachmentsBackend fieldset.adminform label {
+	vertical-align: middle;
+	text-align: right;
+}
+
+form.attachmentsBackend fieldset.adminform label#upload_file_label {
+	display: inline-block;
+        margin-top: 1.2em;
 }
 
 div.attachmentsBackendTitle h1 {
@@ -271,7 +331,6 @@ div.attachmentsBackendTitle h2 {
 	margin: 0;
 	padding: 0 0 6px 0;
 }
-
 
 input#upload, input#upload_warning {
 	margin-top: 4px;
