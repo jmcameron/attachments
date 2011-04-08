@@ -55,7 +55,11 @@
 	<folder>language</folder>
     </files>
     <administration>
-	<menu img="components/com_attachments/attachments.png">Attachments</menu>
+	<menu img="components/com_attachments/media/attachments.png">Attachments</menu>
+	<submenu>
+	    <menu link="index.php?option=com_attachments" view="attachments" 
+		  img="" alt="Attachments/Attachments">Attachments</menu>
+        </submenu>
 	<files folder="admin">
 	    <filename>install.mysql.sql</filename>
 	    <filename>install.noutf8.sql</filename>
@@ -101,11 +105,12 @@
 	    <filename>views/special/view.php</filename>
 	    <filename>views/utils/index.html</filename>
 	    <filename>views/utils/view.php</filename>
-	    <filename>attachments.css</filename>
-	    <filename>attachments_rtl.css</filename>
-	    <filename>attachments.png</filename>
-	    <filename>attachments_utils32.png</filename>
-	    <filename>attachments_logo48.png</filename>
+	    <filename>media/attachments.css</filename>
+	    <filename>media/attachments_rtl.css</filename>
+	    <filename>media/attachments.png</filename>
+	    <filename>media/attachments_utils32.png</filename>
+	    <filename>media/attachments_logo48.png</filename>
+	    <filename>media/index.html</filename>
 	    <filename>Changelog.php</filename>
 	    <filename>index.html</filename>
 	    <filename>help/index.html</filename>
