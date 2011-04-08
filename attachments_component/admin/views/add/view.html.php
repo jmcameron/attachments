@@ -29,7 +29,21 @@ class AttachmentsViewAdd extends JView
 	 */
 	function display($tpl = null)
 	{
+		// Set the toolbar
+		$this->addToolBar();
+
 		parent::display($tpl);
+	}
+
+	/**
+	 * Setting the toolbar
+	 */
+	protected function addToolBar() 
+	{
+		// ??? JRequest::setVar('hidemainmenu', true);
+		JToolBarHelper::title(JText::_('ADD_ATTACHMENT'));
+		JToolBarHelper::save('attachment.saveNew');
+		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
 	}
 }
 

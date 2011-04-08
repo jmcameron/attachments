@@ -14,20 +14,20 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $option;
-
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
 $uri = JFactory::getURI();
 
 $document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 						  'text/css', null, array() );
-$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/attachments.css',
+$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
 						  'text/css', null, array() );
 
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
 	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
+							  'text/css', null, array() );
+	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 
@@ -43,82 +43,111 @@ if ( $this->parent_title ) {
 	  action="<?php echo $this->save_url; ?>" method="post">
 	<fieldset class="adminform">
 		<legend><?php echo JText::_('ADD_ATTACHMENT'); ?></legend>
-<?php if ( $this->new_parent ): ?>
-		<input type="hidden" name="new_parent" value="1" />
-<?php elseif ( $this->parent_id ): ?>
-		<input type="hidden" name="parent_id" value="<?php echo $this->parent_id; ?>" />
-<?php else: ?>
-	  <label for="parent_title"><b><?php echo $this->selpar_label ?></b></label>
-	  <input id="parent_title" value="" disabled="disabled" type="text" size="60" />&nbsp;
+<table class="admintable">
+<?php if ( !$this->new_parent AND !$this->parent_id ): ?>
+  <tr>
+	<td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
+	<td> <input id="parent_title" value="" disabled="disabled" type="text" size="60" />&nbsp;
 	  <a class="modal-button" type="button"
 		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
 		 rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
 	  <input id="parent_id" name="parent_id" value="-1" type="hidden" />
-	  <br />&nbsp;<br />
+    </td>
+  </tr>
 <?php endif; ?>
 <?php if ( $this->uri_type == 'file' ): ?>
-	<p><label for="upload"><b><?php echo JText::_('ATTACH_FILE_COLON') ?></b></label>
+  <tr>
+	<td class="key"><label for="upload" id="upload_file_label"><?php echo JText::_('ATTACH_FILE_COLON') ?></label></td>
+    <td>
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
 		 echo $this->upload_toggle_button_text;?></a><br />
 	  <input type="file" name="upload" id="<?php echo $upload_id; ?>"
-			 size="74" maxlength="512" /></p>
-	<p><label for="display_name"
+			 size="74" maxlength="512" /></div>
+	</td>
+  </tr>
+  <tr>
+	<td class="key"><label for="display_name"
 			  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
-			  ><b><?php echo JText::_('DISPLAY_FILENAME_COLON'); ?></b></label>
-	   <input type="text" name="display_name" id="display_name" size="70" maxlength="80"
+			  ><?php echo JText::_('DISPLAY_FILENAME'); ?></label></td>
+	<td>		  
+	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
-			  value="" />&nbsp;<?php echo JText::_('OPTIONAL'); ?></p>
+			  value="" /><span class="optional"><?php echo JText::_('OPTIONAL'); ?></span.
+   </td>
 <?php else: ?>
-	  <label for="upload"><b><?php echo JText::_('ENTER_URL_COLON') ?></b></label>
-	  &nbsp;&nbsp;&nbsp;&nbsp;
+  <tr>
+    <td class="key"><label for="upload"><?php echo JText::_('ENTER_URL_COLON') ?></label></td>
+    <td>
 	  <label for="verify_url"><?php echo JText::_('VERIFY_URL_EXISTENCE') ?></label>
-	  <input type="checkbox" name="verify_url" value="verify" checked
+ 	  <input type="checkbox" name="verify_url" value="verify" checked
 			 title="<?php echo JText::_('VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
-	  &nbsp;&nbsp;&nbsp;&nbsp;
-	  <label for="relative_url"><?php echo JText::_('RELATIVE_URL') ?></label>
-	  <input type="checkbox" name="relative_url" value="relative"
-			 title="<?php echo JText::_('RELATIVE_URL_TOOLTIP'); ?>" />
+	  <label for="url_relative"><?php echo JText::_('RELATIVE_URL') ?></label>
+	  <input type="checkbox" name="url_relative" value="relative" 
+             title="<?php echo JText::_('RELATIVE_URL_TOOLTIP'); ?>" />
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
-	  echo $this->upload_toggle_button_text;?></a><br />
+	     echo $this->upload_toggle_button_text;?></a><br />
+
 	  <input type="text" name="url" id="<?php echo $upload_id; ?>"
 		 size="86" title="<?php echo JText::_('ENTER_URL_TOOLTIP'); ?>"
 		 value="<?php echo $this->url; ?>" /><br /><?php
 	  echo JText::_('NOTE_ENTER_URL_WITH_HTTP'); ?>
-	<p><label for="display_name"
+    </td>
+ </tr>
+ <tr>
+	<td class="key"><label for="display_name"
 			  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
-			  ><b><?php echo JText::_('DISPLAY_URL_COLON'); ?></b></label>
-	   <input type="text" name="display_name" id="display_name" size="70" maxlength="80"
+			  ><?php echo JText::_('DISPLAY_URL'); ?></label></td>
+    <td>
+	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
-			  value="" />&nbsp;<?php echo JText::_('OPTIONAL'); ?></p>
+			  value="" />&nbsp;<?php echo JText::_('OPTIONAL'); ?>
+    </td>
+ </tr>
 <?php endif; ?>
-	<p><label for="description"
+  <tr>
+	<td class="key"><label for="description"
 			  title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"
-		  ><b><?php echo JText::_('DESCRIPTION_COLON'); ?></b></label>
+		  ><?php echo JText::_('DESCRIPTION'); ?></label></td>
+    <td>
 	   <input type="text" name="description" id="description"
 		  title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"
-		  size="75" maxlength="255" value="" /></p>
+		  size="75" maxlength="255" value="" />
+    </td>
+ </tr>
 <?php if ( $this->show_user_field_1 ): ?>
-	<p><label for="user_field_1"><b><?php echo $this->user_field_1_name; ?>:</b></label>
-	   <input type="text" name="user_field_1" id="user_field_1" size="70" maxlength="100" value="" /></p>
+ <tr>
+	<td class="key"><label for="user_field_1"><?php echo $this->user_field_1_name; ?></label></td>
+	<td><input type="text" name="user_field_1" id="user_field_1" size="75" maxlength="100" value="" /></td>
+ </tr>
 <?php endif; ?>
 <?php if ( $this->show_user_field_2 ): ?>
-	<p><label for="user_field_2"><b><?php echo $this->user_field_2_name; ?>:</b></label>
-	   <input type="text" name="user_field_2" id="user_field_2" size="70" maxlength="100" value="" /></p>
+ <tr>
+	<td class="key"><label for="user_field_2"><?php echo $this->user_field_2_name; ?></label></td>
+	<td><input type="text" name="user_field_2" id="user_field_2" size="75" maxlength="100" value="" /></td>
+ </tr>
 <?php endif; ?>
 <?php if ( $this->show_user_field_3 ): ?>
-	<p><label for="user_field_3"><b><?php echo $this->user_field_3_name; ?>:</b></label>
-	   <input type="text" name="user_field_3" id="user_field_3" size="70" maxlength="100" value="" /></p>
+ <tr>
+	<td class="key"><label for="user_field_3"><?php echo $this->user_field_3_name; ?></label></td>
+	<td><input type="text" name="user_field_3" id="user_field_3" size="75" maxlength="100" value="" /></td>
+ <tr>
 <?php endif; ?>
+</table>
 	</fieldset>
+<?php if ( $this->new_parent ): ?>
+	<input type="hidden" name="new_parent" value="1" />
+<?php elseif ( $this->parent_id ): ?>
+	<input type="hidden" name="parent_id" value="<?php echo $this->parent_id; ?>" />
+<?php endif; ?>
 	<input type="hidden" name="MAX_FILE_SIZE" value="524288" />
 	<input type="hidden" name="save_type" value="upload" />
 	<input type="hidden" name="parent_type" value="<?php echo $this->parent_type; ?>" />
 	<input type="hidden" name="parent_entity" value="<?php echo $this->parent_entity; ?>" />
 	<input type="hidden" name="uri_type" value="<?php echo $this->uri_type; ?>" />
-	<input type="hidden" name="option" value="<?php echo $option;?>" />
-	<input type="hidden" name="task" value="new" />
+	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
+	<input type="hidden" name="task" value="attachment.add" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<?php if ( $this->from == 'closeme' ): ?>
 	<div align="center">
@@ -127,7 +156,7 @@ if ( $this->parent_title ) {
 			  value="<?php echo JText::_('UPLOAD_VERB'); ?>" />
 	   <span class="right">
 		  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-				 onClick="window.parent.document.getElementById('sbox-window').close();" />
+				 onClick="window.parent.SqueezeBox.close();" />
 	   </span>
 	</div>
 	<?php endif; ?>
@@ -135,14 +164,16 @@ if ( $this->parent_title ) {
 </form>
 <?php
 
-// Show the existing attachments
-if ( $this->uri_type == 'file' AND $this->parent_id ) {
-	/** Get the Attachments controller class */
-	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
-	$controller = new AttachmentsControllerAttachments();
-	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
-			 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
-}
+							
+// ???
+// // Show the existing attachments
+// if ( $this->uri_type == 'file' AND $this->parent_id ) {
+// 	/** Get the Attachments controller class */
+// 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
+// 	$controller = new AttachmentsControllerAttachments();
+// 	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
+// 			 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
+// }
 
 
 // Show buttons for adding the attachments to other entitites (if appropriate)
@@ -150,7 +181,7 @@ $editor = JRequest::getWord('editor');
 $exceptions = Array('article', 'section', 'category', 'add_to_parent');
 if ( !in_array($editor, $exceptions) ) {
 
-	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=add";
+	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=attachment.add";
 
 	// Add a footer section with buttons to attach files to the supported content types/entities
 	echo "<br />&nbsp;<br />";
@@ -170,7 +201,7 @@ if ( !in_array($editor, $exceptions) ) {
 			$tooltip = JText::sprintf('ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
 									  $cename, $this->parent_entity_name);
 			if ( $centity != 'default' ) {
-				$url .= ':' . $centity;
+				$url .= '.' . $centity;
 				}
 			if ( $this->uri_type == 'url' ) {
 				$url .= '&amp;uri=url';

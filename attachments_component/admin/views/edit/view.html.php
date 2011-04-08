@@ -28,7 +28,21 @@ class AttachmentsViewEdit extends JView
 	 */
 	function display($tpl = null)
 	{
+		// Set the toolbar
+		$this->addToolBar();
+
 		parent::display($tpl);
+	}
+
+	/**
+	 * Setting the toolbar
+	 */
+	protected function addToolBar() 
+	{
+		JRequest::setVar('hidemainmenu', true);
+		JToolBarHelper::title(JText::_('EDIT_ATTACHMENT'));
+		JToolBarHelper::save('attachment.save');
+		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CLOSE');
 	}
 }
 
