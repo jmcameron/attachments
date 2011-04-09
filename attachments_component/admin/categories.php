@@ -42,6 +42,7 @@ class JElementCategories extends JElement
 	{
 		$db = &JFactory::getDBO();
 
+		// ??? NEEDS TO BE REWORKED TO REMOVE SECTIONS
 		$section	= $node->attributes('section');
 
 		if (!isset ($section)) {

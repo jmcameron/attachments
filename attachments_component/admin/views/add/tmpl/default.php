@@ -178,7 +178,7 @@ if ( $this->parent_title ) {
 
 // Show buttons for adding the attachments to other entitites (if appropriate)
 $editor = JRequest::getWord('editor');
-$exceptions = Array('article', 'section', 'category', 'add_to_parent');
+$exceptions = Array('article', 'category', 'add_to_parent');
 if ( !in_array($editor, $exceptions) ) {
 
 	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=attachment.add";

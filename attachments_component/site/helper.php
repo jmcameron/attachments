@@ -412,7 +412,7 @@ class AttachmentsHelper
 			// Keep track of what are supposed to do after saving
 			$save_url .= "&from=closeme";
 			}
-		$view->assign('save_url', JRoute::_($save_url));
+		$view->save_url = JRoute::_($save_url);
 
 		// Construct the URL to upload a URL instead of a file
 		if ( $save_type == 'upload' ) {
@@ -426,8 +426,8 @@ class AttachmentsHelper
 				}
 
 			// Add the URL
-			$view->assign('upload_file_url', JRoute::_($upload_file_url));
-			$view->assign('upload_url_url', JRoute::_($upload_url_url));
+			$view->upload_file_url = JRoute::_($upload_file_url);
+			$view->upload_url_url = JRoute::_($upload_url_url);
 			}
 
 		elseif ( $save_type == 'update' ) {
@@ -444,9 +444,9 @@ class AttachmentsHelper
 				}
 
 			// Add the URLs
-			$view->assign('change_file_url',   JRoute::_($change_file_url));
-			$view->assign('change_url_url',	   JRoute::_($change_url_url));
-			$view->assign('normal_update_url', JRoute::_($normal_update_url));
+			$view->change_file_url = JRoute::_($change_file_url);
+			$view->change_url_url = 	   JRoute::_($change_url_url);
+			$view->normal_update_url = JRoute::_($normal_update_url);
 			}
 	}
 
@@ -550,15 +550,15 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
 				$view = new AttachmentsViewUpdate();
-				$view->assign('update', JRequest::getWord('update'));
+				$view->update = JRequest::getWord('update');
 
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $row->url_valid);
-				$view->assignRef('lists', $lists);
-				$view->assignRef('attachment', $row);
+				$view->lists = $lists;
+				$view->attachment = $row;
 
 				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type,
 												 $attachment_id, $from);
@@ -569,14 +569,14 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type,
 												 $attachment_id, null, $from);
 
-				$view->assignRef('uri_type',		 $row->uri_type);
-				$view->assignRef('url',				 $row->url);
-				$view->assign(	 'parent_id',		 $row->parent_id);
-				$view->assignRef('parent_type',		 $row->parent_type);
-				$view->assignRef('description',		 $row->description);
-				$view->assignRef('user_field_1',	 $row->user_field_1);
-				$view->assignRef('user_field_2',	 $row->user_field_2);
-				$view->assignRef('user_field_3',	 $row->user_field_3);
+				$view->uri_type = 		 $row->uri_type;
+				$view->url = 				 $row->url;
+				$view->parent_id = $row->parent_id;
+				$view->parent_type = 		 $row->parent_type;
+				$view->description = 		 $row->description;
+				$view->user_field_1 = 	 $row->user_field_1;
+				$view->user_field_2 = 	 $row->user_field_2;
+				$view->user_field_3 = 	 $row->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -589,17 +589,17 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->assignRef('parent_entity',	 $row->parent_entity);
-			$view->assignref('parent_entity_name', $parent_entity_name);
-			$view->assignRef('parent_title',	 $parent->title);
-			$view->assign(	 'new_parent',		 $parent->new);
+			$view->parent_entity = 	 $row->parent_entity;
+			$view->parent_entity_name = $parent_entity_name;
+			$view->parent_title = 	 $parent->title;
+			$view->new_parent = $parent->new;
 
-			$view->assignRef('display_name',	 $display_name);
+			$view->display_name = 	 $display_name;
 
-			$view->assignRef('params', $params);
+			$view->params = $params;
 
-			$view->assign(	 'from',			 $from);
-			$view->assign(	 'Itemid', JRequest::getInt('Itemid', 1));
+			$view->from = $from;
+			$view->Itemid = JRequest::getInt('Itemid', 1);
 
 			// Display the view
 			$view->display(null, $error, $error_msg);
@@ -652,15 +652,15 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
 				$view = new AttachmentsViewUpdate();
-				$view->assign('update', JRequest::getWord('update'));
+				$view->update = JRequest::getWord('update');
 
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $row->url_valid);
-				$view->assignRef('lists', $lists);
-				$view->assignRef('attachment', $row);
+				$view->lists = $lists;
+				$view->attachment = $row;
 
 				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type,
 												 $attachment_id, $from);
@@ -670,14 +670,14 @@ class AttachmentsHelper
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 
-				$view->assignRef('uri_type',		 $row->uri_type);
-				$view->assignRef('url',				 $row->url);
-				$view->assign(	 'parent_id',		 $row->parent_id);
-				$view->assignRef('parent_type',		 $row->parent_type);
-				$view->assignRef('description',		 $row->description);
-				$view->assignRef('user_field_1',	 $row->user_field_1);
-				$view->assignRef('user_field_2',	 $row->user_field_2);
-				$view->assignRef('user_field_3',	 $row->user_field_3);
+				$view->uri_type = 		 $row->uri_type;
+				$view->url = 				 $row->url;
+				$view->parent_id = $row->parent_id;
+				$view->parent_type = 		 $row->parent_type;
+				$view->description = 		 $row->description;
+				$view->user_field_1 = 	 $row->user_field_1;
+				$view->user_field_2 = 	 $row->user_field_2;
+				$view->user_field_3 = 	 $row->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -690,17 +690,17 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->assignRef('parent_entity',	 $row->parent_entity);
-			$view->assignref('parent_entity_name', $parent_entity_name);
-			$view->assignRef('parent_title',	 $parent->title);
-			$view->assign(	 'new_parent',		 $parent->new);
+			$view->parent_entity = 	 $row->parent_entity;
+			$view->parent_entity_name = $parent_entity_name;
+			$view->parent_title = 	 $parent->title;
+			$view->new_parent = $parent->new;
 
-			$view->assignRef('display_name',	 $display_name);
+			$view->display_name = 	 $display_name;
 
-			$view->assignRef('params',			 $params);
+			$view->params = 			 $params;
 
-			$view->assign('from',			 $from);
-			$view->assign('Itemid',			 JRequest::getInt('Itemid', 1));
+			$view->from = 			 $from;
+			$view->Itemid = 			 JRequest::getInt('Itemid', 1);
 
 			// Display the view
 			$view->display(null, $error, $error_msg);
@@ -754,22 +754,22 @@ class AttachmentsHelper
 			AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 
 			// Set up the view
-			$view->assignRef('uri_type',		 $row->uri_type);
-			$view->assignRef('url',				 $row->url);
-			$view->assign(	 'parent_id',		 $row->parent_id);
-			$view->assignRef('parent_type',		 $row->parent_type);
-			$view->assignRef('parent_entity',	 $row->parent_entity);
-			$view->assignref('parent_entity_name', $parent_entity_name);
-			$view->assignRef('parent_title',	 $parent->title);
-			$view->assign(	 'new_parent',		 $parent->new);
-			$view->assignRef('description',		 $row->description);
-			$view->assignRef('display_name',	 $row->display_name);
-			$view->assignRef('user_field_1',	 $row->user_field_1);
-			$view->assignRef('user_field_2',	 $row->user_field_2);
-			$view->assignRef('user_field_3',	 $row->user_field_3);
-			$view->assignRef('from',			 $from);
-			$view->assign(	 'Itemid',			 JRequest::getInt('Itemid', 1));
-			$view->assignRef('params',			 $params);
+			$view->uri_type = 		 $row->uri_type;
+			$view->url = 				 $row->url;
+			$view->parent_id = $row->parent_id;
+			$view->parent_type = 		 $row->parent_type;
+			$view->parent_entity = 	 $row->parent_entity;
+			$view->parent_entity_name = $parent_entity_name;
+			$view->parent_title = 	 $parent->title;
+			$view->new_parent = $parent->new;
+			$view->description = 		 $row->description;
+			$view->display_name = 	 $row->display_name;
+			$view->user_field_1 = 	 $row->user_field_1;
+			$view->user_field_2 = 	 $row->user_field_2;
+			$view->user_field_3 = 	 $row->user_field_3;
+			$view->from = 			 $from;
+			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->params = 			 $params;
 
 			// Display the view
 			$view->display(null, $error, $error_msg);
@@ -1239,15 +1239,15 @@ class AttachmentsHelper
 			if ( $update ) {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
 				$view = new AttachmentsViewUpdate();
-				$view->assign('update', $update_form);
+				$view->update = $update_form;
 
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $row->url_valid);
-				$view->assignRef('lists', $lists);
-				$view->assignRef('attachment', $row);
+				$view->lists = $lists;
+				$view->attachment = $row;
 
 				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type, $attachment_id, $from);
 				}
@@ -1256,14 +1256,14 @@ class AttachmentsHelper
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 
-				$view->assignRef('uri_type',		 $row->uri_type);
-				$view->assignRef('url',				 $row->url);
-				$view->assign(	 'parent_id',		 $row->parent_id);
-				$view->assignRef('parent_type',		 $row->parent_type);
-				$view->assignRef('description',		 $row->description);
-				$view->assignRef('user_field_1',	 $row->user_field_1);
-				$view->assignRef('user_field_2',	 $row->user_field_2);
-				$view->assignRef('user_field_3',	 $row->user_field_3);
+				$view->uri_type = 		 $row->uri_type;
+				$view->url = 				 $row->url;
+				$view->parent_id = $row->parent_id;
+				$view->parent_type = 		 $row->parent_type;
+				$view->description = 		 $row->description;
+				$view->user_field_1 = 	 $row->user_field_1;
+				$view->user_field_2 = 	 $row->user_field_2;
+				$view->user_field_3 = 	 $row->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -1273,17 +1273,17 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->assignRef('parent_entity',	   $row->parent_entity);
-			$view->assignref('parent_entity_name', $parent_entity_name);
-			$view->assignRef('parent_title',	   $parent->title);
-			$view->assign(	 'new_parent',		 $parent->new);
+			$view->parent_entity = 	   $row->parent_entity;
+			$view->parent_entity_name = $parent_entity_name;
+			$view->parent_title = 	   $parent->title;
+			$view->new_parent = $parent->new;
 
-			$view->assignRef('display_name',	   $display_name);
+			$view->display_name = 	   $display_name;
 
-			$view->assignRef('params',	$params);
+			$view->params = 	$params;
 
-			$view->assignRef('from',	$from);
-			$view->assign(	 'Itemid',	JRequest::getInt('Itemid', 1));
+			$view->from = 	$from;
+			$view->Itemid = JRequest::getInt('Itemid', 1);
 
 			// Display the view
 			$view->display(null, $result->error, $result->error_msg);

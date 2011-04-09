@@ -154,22 +154,22 @@ class AttachmentsController extends JController
 		// Set up the view
 		AttachmentsHelper::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 
-		$view->assignRef('uri_type',	  $uri_type);
-		$view->assign('url',			  '');
-		$view->assignRef('parent_id',		 $parent_id);
-		$view->assignRef('parent_type',		 $parent_type);
-		$view->assignRef('parent_entity',	 $parent_entity);
-		$view->assignRef('parent_entity_name', $parent_entity_name);
-		$view->assignRef('parent_title',  $parent_title);
-		$view->assignRef('new_parent',		 $new_parent);
-		$view->assign('description',	  '');
-		$view->assign('display_name',	  '');
-		$view->assign('user_field_1',	  '');
-		$view->assign('user_field_2',	  '');
-		$view->assign('user_field_3',	  '');
-		$view->assignRef('Itemid',		  $Itemid);
-		$view->assignRef('from',		  $from);
-		$view->assignRef('params',		  $params);
+		$view->uri_type = 	  $uri_type;
+		$view->url = 			  '';
+		$view->parent_id = 		 $parent_id;
+		$view->parent_type = 		 $parent_type;
+		$view->parent_entity = 	 $parent_entity;
+		$view->parent_entity_name = $parent_entity_name;
+		$view->parent_title = $parent_title;
+		$view->new_parent = 		 $new_parent;
+		$view->description = 	  '';
+		$view->display_name = 	  '';
+		$view->user_field_1 = 	  '';
+		$view->user_field_2 = 	  '';
+		$view->user_field_3 = 	  '';
+		$view->Itemid = 		  $Itemid;
+		$view->from = 		  $from;
+		$view->params = 		  $params;
 
 		// Display the view
 		$view->display(null, false, false);
@@ -773,19 +773,19 @@ class AttachmentsController extends JController
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
 										 $attachment->parent_type, $id, $from);
 
-		$view->assign('update',				$update);
-		$view->assign('new_parent',			$new_parent);
-		$view->assign('parent_title',		$parent_title);
-		$view->assign('parent_entity',		$parent_entity);
-		$view->assign('parent_entity_name', $parent_entity_name);
-		$view->assign('display_name',		$display_name);
+		$view->update = 				$update;
+		$view->new_parent = 			$new_parent;
+		$view->parent_title = 		$parent_title;
+		$view->parent_entity = 		$parent_entity;
+		$view->parent_entity_name = $parent_entity_name;
+		$view->display_name = 		$display_name;
 
-		$view->assignRef('lists',	   $lists);
-		$view->assignRef('params',	   $params);
-		$view->assignRef('attachment', $attachment);
+		$view->lists = 	   $lists;
+		$view->params = 	   $params;
+		$view->attachment = $attachment;
 
-		$view->assign('from',		   $from);
-		$view->assign('Itemid',		   JRequest::getInt('Itemid', 1));
+		$view->from = 		   $from;
+		$view->Itemid = 		   JRequest::getInt('Itemid', 1);
 
 		$view->display(null, false, false);
 	}

@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 
 /**
- * The class for the Attachments plugin for regular Joomla! content (articles, sections, categories)
+ * The class for the Attachments plugin for regular Joomla! content (articles, categories)
  *
  * @package Attachments
  */
@@ -55,28 +55,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @param &object &$parent The object for the parent (row) that onPrepareContent gets
 	 *
-	 * @return the correct entity (eg, 'default', 'section', etc)
+	 * @return the correct entity (eg, 'default', 'category')
 	 */
 	function determineParentEntity(&$parent)
 	{
-		static $seen_section = false;
-
 		$view = JRequest::getCmd('view');
-
-		// Handle sections
-		if ( $view == 'section' AND get_class($parent) == 'JTableContent') {
-
-			// For some reason, the content plugin can be called multiple
-			// times for sections and for categories on the same page,
-			// although they all look like sections.  So accept the first one
-			// and ignore the rest.
-			if ( $seen_section ) {
-				return false;
-				}
-			$seen_section = true;
-
-			return 'section';
-			}
 
 		// Handle category calls
 		if ( $view == 'category' AND get_class($parent) == 'JTableContent') {
@@ -133,10 +116,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
 
-		case 'section' :
-			return $base_url . 'index.php?option=com_content&view=section&id=' . $parent_id . '&layout=blog';
-			break;
-
 		case 'category':
 			return $base_url . 'index.php?option=com_content&view=category&id=' . $parent_id;
 			break;
@@ -180,7 +159,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Build the right URL for each entity
 		switch ( $parent_entity ) {
 
-		case 'section' :
 		case 'category':
 			$parent_entity = $this->getCanonicalEntity($parent_entity);
 		$url .= "&parent_type=com_content:$parent_entity&from=$from";
@@ -211,7 +189,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 
-		if ( (($parent_entity == 'section') OR ($parent_entity == 'category')) AND
+		if ( ($parent_entity == 'category') AND
 			 ( $parent_entity == $rtitle_parent_entity ) ) {
 			return true;
 			}
@@ -242,7 +220,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
 
-		case 'section' :
 		case 'category':
 			$entity_table = $this->_entity_table[$parent_entity];
 			$query = "SELECT published FROM #__$entity_table WHERE id='".(int)$parent_id."'";
@@ -327,7 +304,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
 
-		case 'section' :
 		case 'category':
 			// You apparently cannot archive sections or categories
 			break;
@@ -492,8 +468,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
 	{
-		static $seen_section2 = false;
-
 		// Check for generic options
 		if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity, $params) ) {
 			return true;
@@ -506,11 +480,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Make sure we have a valid parent ID
-		if ( !$parent_id AND ($parent_entity == 'section' OR $parent_entity == 'category') ) {
+		if ( !$parent_id AND ($parent_entity == 'category') ) {
 			$parent_id = JRequest::getInt('id');
 			}
 		if ( $parent_id !== 0 ) {
-			// parent_id of 0 may be allowed for sections/categories, so don't abort
+			// parent_id of 0 may be allowed for categories, so don't abort
 			if ( $parent_id == null OR $parent_id == '' OR !is_numeric($parent_id) ) {
 				$errmsg = JText::sprintf('ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 404)';
 				JError::raiseError(500, $errmsg);
@@ -522,7 +496,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			JString::str_ireplace('-', '_', JString::trim($params->get('hide_attachments_for', '')));
 		$hide_before_readmore = false;
 		$all_but_article_views = false;
-		$always_show_section_attachments = false;
 		$always_show_category_attachments = false;
 		if ( $hide_attachments_for <> '' ) {
 			$hide_specs = explode(',', $hide_attachments_for);
@@ -533,9 +506,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 					}
 				elseif ( JString::trim($hide) == 'all_but_article_views' ) {
 					$all_but_article_views = true;
-					}
-				elseif ( JString::trim($hide) == 'always_show_section_attachments' ) {
-					$always_show_section_attachments = true;
 					}
 				elseif ( JString::trim($hide) == 'always_show_category_attachments' ) {
 					$always_show_category_attachments = true;
@@ -549,28 +519,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// Make sure the parent is valid and get info about it
 		$db =& JFactory::getDBO();
 
-		if ( $parent_entity == 'section' AND $pclass == 'JTableContent' ) {
-
-			if ( $seen_section2 ) {
-				return true;
-				}
-			if ( $always_show_section_attachments ) {
-				return false;
-				}
-			if ( $all_but_article_views ) {
-				return true;
-				}
-			$seen_section2 = $parent_id;
-			$description = $parent->text;
-			$query = "SELECT id from #__sections "
-				. "WHERE description=" . $db->Quote($description) . " AND id='".(int)$parent_id."'";
-			$db->setQuery($query);
-			if ( (int)$parent_id != (int)$db->loadResult() ) {
-				return true;
-				}
-			}
-
-		elseif ( $parent_entity == 'category' AND $pclass == 'JTableContent' ) {
+		if ( $parent_entity == 'category' AND $pclass == 'JTableContent' ) {
 
 			if ( $always_show_category_attachments ) {
 				return false;
@@ -596,7 +545,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// Make sure we have a valid article
-			$query = "SELECT created_by, sectionid, catid from #__content "
+			$query = "SELECT created_by, catid from #__content "
 				. "WHERE id='".(int)$parent_id."'";
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
@@ -616,7 +565,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 			// See if the options apply to this article
 			$created_by = (int)$rows[0]->created_by;
-			$sectionid = (int)$rows[0]->sectionid;
+			$sectionid = 0; // ??? 
 			$catid = (int)$rows[0]->catid;
 
 			// First, check to see whether the attachments should be hidden for this parent
@@ -624,7 +573,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				$hide_specs = explode(',', $hide_attachments_for);
 				$ignore_specs = Array('frontpage', 'blog', 'all_but_article_views',
 									  'hide_before_readmore',
-									  'always_show_section_attachments',
 									  'always_show_category_attachments');
 				foreach ( $hide_specs as $hide ) {
 					if ( in_array(JString::trim($hide), $ignore_specs) ) {
@@ -708,7 +656,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 
-		// If it is a new parent (article/section/category), check general permissions
+		// If it is a new parent (article/category), check general permissions
 		if ( $new_parent ) {
 			return $user->authorize('com_content', 'add', 'content', 'all');
 			}
@@ -723,9 +671,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		switch ( $parent_entity ) {
 
-		case 'section':
 		case 'category':
-			// Assume only admins can add attachments to sections or categories
+			// Assume only admins can add attachments to categories
 			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
 			break;
 
@@ -792,9 +739,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		switch ( $attachment->parent_entity ) {
 
-		case 'section':
 		case 'category':
-			// Assume only admins can edit attachments to sections or categories
+			// Assume only admins can edit attachments to categories
 			$user_type = $user->get('usertype', false);
 			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
 			break;

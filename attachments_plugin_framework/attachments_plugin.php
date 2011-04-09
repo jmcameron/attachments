@@ -122,51 +122,6 @@ class AttachmentsPlugin extends JObject
 
 		// Set up the default alias
 		$this->_entity_alias = Array( 'default' => 'default' );
-
-		/* OBSOLETE
-
-		// Since the registry loader does not process sections,
-		// we must invoke the INI handler directly
-		$handler =& JRegistryFormat::getInstance('INI');
-
-		// Read the file
-		jimport('joomla.filesystem.file');
-		$file = dirname(__FILE__).DS.'plugins'.DS.$parent_type.'.ini';
-		$data = JFile::read($file);
-
-		// Construct an object with the info from the INI file
-		$ns = $handler->stringToObject($data, $process_sections = true );
-
-		// Process the supported entity types
-		foreach ( array_keys(get_object_vars($ns)) as $et ) {
-
-			$et = JString::strtolower($et);
-
-			// Note it
-			$this->_entities[] = $et;
-
-			// Save basic info
-			$this->_entity_name[$et]  = JString::trim($ns->$et->entity);
-			$this->_entity_table[$et] = JString::trim($ns->$et->entity_table);
-			$this->_entity_title_field[$et] = JString::trim($ns->$et->entity_title_field);
-
-			// Add the entity id field name
-			if ( isset($ns->$et->entity_id_field) ) {
-				$this->_entity_id_field[$et] = JString::trim($ns->$et->entity_id_field);
-				}
-			else {
-				$this->_entity_id_field[$et] = 'id';
-				}
-
-			// Process aliases if given
-			if ( isset($ns->$et->alias) ) {
-				foreach ( explode(',', JString::trim($ns->$et->alias)) as $alias ) {
-					// Do not check for collisions
-					$this->_entity_alias[ JString::trim(JString::strtolower($alias))] = $et;
-					}
-				}
-			}
-		*/
 	}
 
 
@@ -246,7 +201,7 @@ class AttachmentsPlugin extends JObject
 	 *
 	 * @param &object &$parent The object for the parent (row) that onPrepareContent gets
 	 *
-	 * @return the correct entity (eg, 'default', 'section', etc) or false if this entity should not be displayed.
+	 * @return the correct entity (eg, 'default', 'category', etc) or false if this entity should not be displayed.
 	 */
 	function determineParentEntity(&$parent)
 	{

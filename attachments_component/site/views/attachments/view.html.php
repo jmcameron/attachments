@@ -86,30 +86,30 @@ class AttachmentsViewAttachments extends JView
 		if ( $user_field_1_name != '' ) {
 			if ( $user_field_1_name[JString::strlen($user_field_1_name)-1] != '*' ) {
 				$show_user_field_1 = true;
-				$this->assignRef('user_field_1_name', $user_field_1_name);
+				$this->user_field_1_name = $user_field_1_name;
 				}
 			}
-		$this->assign('show_user_field_1', $show_user_field_1);
+		$this->show_user_field_1 = $show_user_field_1;
 		// User field 2
 		$show_user_field_2 = false;
 		$user_field_2_name = $params->get('user_field_2_name', '');
 		if ( $user_field_2_name != '' ) {
 			if ( $user_field_2_name[JString::strlen($user_field_2_name)-1] != '*' ) {
 				$show_user_field_2 = true;
-				$this->assignRef('user_field_2_name', $user_field_2_name);
+				$this->user_field_2_name = $user_field_2_name;
 				}
 			}
-		$this->assign('show_user_field_2', $show_user_field_2);
+		$this->show_user_field_2 = $show_user_field_2;
 		// User field 3
 		$show_user_field_3 = false;
 		$user_field_3_name = $params->get('user_field_3_name', '');
 		if ( $user_field_3_name != '' ) {
 			if ( $user_field_3_name[JString::strlen($user_field_3_name)-1] != '*' ) {
 				$show_user_field_3 = true;
-				$this->assignRef('user_field_3_name', $user_field_3_name);
+				$this->user_field_3_name = $user_field_3_name;
 				}
 			}
-		$this->assign('show_user_field_3', $show_user_field_3);
+		$this->show_user_field_3 = $show_user_field_3;
 		
 		// Set up for the template
 		$from = JRequest::getWord('from', 'closeme');
@@ -117,35 +117,33 @@ class AttachmentsViewAttachments extends JView
 		$parent_type = $model->getParentType();
 		// ??? $parent_entity = $model->getParentEntity();
 		$parent_entity = 'article';
-		$this->assign('parent_id', $parent_id);
-		$this->assignRef('parent_type', $parent_type);
-		$this->assignRef('parent_entity', $parent_entity);
-		$this->assign('parent_title', $model->getParentTitle());
-		$this->assign('parent_entity_name', $model->getParentEntityName());
+		$this->parent_id = $parent_id;
+		$this->parent_type = $parent_type;
+		$this->parent_entity = $parent_entity;
+		$this->parent_title = $model->getParentTitle();
+		$this->parent_entity_name = $model->getParentEntityName();
 
-		$this->assign('some_attachments_visible', $model->someVisible());
-		$this->assign('some_attachments_modifiable', $model->someModifiable());
-		$this->assign('superimpose_link_icons', $params->get('superimpose_url_link_icons', true));
+		$this->some_attachments_visible = $model->someVisible();
+		$this->some_attachments_modifiable = $model->someModifiable();
+		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 
-		$this->assignRef('from', $from);
+		$this->from = $from;
 
-		$this->assignRef('list', $list);
+		$this->list = $list;
 
 		// Get the display options
-		$this->assign('style', $params->get('attachments_table_style', 'attachmentsList'));
-		$this->assign('secure', $params->get('secure', false));
-		$this->assign('who_can_see', $params->get('who_can_see', 'logged_in'));
-		$this->assign('show_column_titles', $params->get('show_column_titles', false));
-		$this->assign('show_description', $params->get('show_description', true));
-		$this->assign('show_uploader',	$params->get('show_uploader', false));
-		$this->assign('show_file_size', $params->get('show_file_size', true));
-		$this->assign('show_downloads', $params->get('show_downloads', false));
-		$this->assign('show_mod_date',	$params->get('show_modification_date', false));
-		$this->assign('file_link_open_mode',
-					  $params->get('file_link_open_mode', 'in_same_window'));
+		$this->style = $params->get('attachments_table_style', 'attachmentsList');
+		$this->secure = $params->get('secure', false);
+		$this->who_can_see = $params->get('who_can_see', 'logged_in');
+		$this->show_column_titles = $params->get('show_column_titles', false);
+		$this->show_description = $params->get('show_description', true);
+		$this->show_uploader = 	$params->get('show_uploader', false);
+		$this->show_file_size = $params->get('show_file_size', true);
+		$this->show_downloads = $params->get('show_downloads', false);
+		$this->show_mod_date = 	$params->get('show_modification_date', false);
+		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 		if ( $this->show_mod_date ) {
-			$this->assign('mod_date_format',
-						  $params->get('mod_date_format', '%Y-%m-%d %I:%M%P'));
+			$this->mod_date_format = $params->get('mod_date_format', '%Y-%m-%d %I:%M%P');
 			}
 
 		// Get the attachments list title
@@ -155,13 +153,13 @@ class AttachmentsViewAttachments extends JView
 			}
 		$parent =& $model->getParentClass();
 		$title = $parent->attachmentsListTitle($title, $params, $parent_id, $parent_entity);
-		$this->assign('title', $title); // Note: assume it is translated
+		$this->title = $title; // Note: assume it is translated
 
 		// Construct the path for the icons
         $uri = JFactory::getURI();
 		$base_url = $uri->root(true) . '/';
-		$this->assign('base_url', $base_url);
-		$this->assign('icon_url_base', $base_url . 'components/com_attachments/media/icons/');
+		$this->base_url = $base_url;
+		$this->icon_url_base = $base_url . 'components/com_attachments/media/icons/';
 
 		// Get the output of the template
 		$result = $this->loadTemplate($tpl);

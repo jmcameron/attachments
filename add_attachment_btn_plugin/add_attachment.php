@@ -52,7 +52,7 @@ class plgButtonAdd_attachment extends JPlugin
 		$parent_entity = 'default';
 		$editor = 'article';
 
-		// Handle sections and categories specially (since they are really com_content)
+		// Handle categories specially (since they are really com_content)
 		// ??? Still true?
 		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
@@ -85,7 +85,7 @@ class plgButtonAdd_attachment extends JPlugin
 				}
 			}
 
-		// Disable adding attachments when creating sections or categories
+		// Disable adding attachments when creating categories
 		if ( $id == 0 and ($parent_entity == 'category')) {
 			return new JObject();
 			}

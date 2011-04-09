@@ -40,7 +40,7 @@ class plgSystemShow_attachments extends JPlugin
 		$parent_entity = 'default';
 		$editor = 'article';
 
-		// Handle sections and categories specially (since they are really com_content)
+		// Handle categories specially (since they are really com_content)
 		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			$parent_entity = 'category';

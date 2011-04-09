@@ -62,9 +62,6 @@ class plgButtonInsert_attachments_token extends JPlugin
 		$parent_type = $option;
 
 		// Handle sections and categories specially (since they are really com_content)
-		if ($option == 'com_sections') {
-			$parent_type = 'com_content';
-			}
 		if ($option == 'com_categories') {
 			$parent_type = 'com_content';
 			}

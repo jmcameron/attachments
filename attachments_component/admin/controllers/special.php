@@ -65,7 +65,7 @@ class AttachmentsControllerSpecial extends JController
 
 		require_once(JPATH_COMPONENT.DS.'views'.DS.'special'.DS.'view.php');
 		$view = new AttachmentsViewSpecial( );
-		$view->assignRef('component', $table);
+		$view->component = $table;
 		$view->setModel( $model, true );
 		$view->display();
 	}
@@ -85,7 +85,7 @@ class AttachmentsControllerSpecial extends JController
 	function listAttachmentIDs()
 	{
 		$db =& JFactory::getDBO();
-		$query = "SELECT attach.id,parent_id,parent_type,art.sectionid,art.catid FROM #__attachments as attach ";
+		$query = "SELECT attach.id,parent_id,parent_type,art.catid FROM #__attachments as attach ";
 		$query .= "LEFT JOIN #__content as art ON attach.parent_id = art.id ORDER BY art.id";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -93,7 +93,7 @@ class AttachmentsControllerSpecial extends JController
 		echo "\n<html><head><title>Attachment IDs</title></head><body>\n";
 		echo "Attachment IDS:";
 		foreach ($rows as $row) {
-			echo " " . $row->id . "/" . $row->parent_id . "/" . $row->parent_type . "/" . $row->sectionid . "/" . $row->catid;
+			echo " " . $row->id . "/" . $row->parent_id . "/" . $row->parent_type . "/" . $row->catid;
 			}
 		echo "\n</body></html>";
 		exit();
