@@ -18,7 +18,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 require_once(dirname(__FILE__).DS.'attachments_plugin.php');
 
 /**
- * Get the plugin manager for attachments
+ * Get the singleton plugin manager for attachments
  */
 function &getAttachmentsPluginManager()
 {

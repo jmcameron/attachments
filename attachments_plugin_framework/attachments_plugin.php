@@ -40,12 +40,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  *
  * @package Attachments
  */
-class AttachmentsPlugin extends JObject
+class AttachmentsPlugin extends JPlugin
 {
-	/** Name of the extension (eg, 'attachments_for_content')
-	 * (must set it in constructor to load language files)
+	/** Parent_type: com_content, com_quickfaq, etc
 	 */
-	var $_name = null;
+	var $_parent_type = null;
 
 	/** Name for the default parent_entity type
 	 *
@@ -55,14 +54,9 @@ class AttachmentsPlugin extends JObject
 	 */
 	var $_default_entity = null;
 
-	/** Parent_type: com_content, com_quickfaq, etc
-	 */
-	var $_parent_type = null;
-
 	/** known entities
 	 */
 	var $_entities = null;
-
 
 	/** An associative array of entity names
 	 */
@@ -112,42 +106,41 @@ class AttachmentsPlugin extends JObject
 	 * @param string $default_name Name of default entity for the parent_type
 	 *
 	 */
-	function __construct($extension_name, $parent_type, $default_name)
+	public function __construct(&$subject, $config = array())
 	{
-		parent::__construct();
+		parent::__construct($subject, $config);
 
-		$this->_parent_type = $parent_type;
-		$this->_name = $extension_name;
-		$this->_default_entity = $default_name;
+		// Save the plugin type
+		$this->_type = 'attachments';
 
 		// Set up the default alias
 		$this->_entity_alias = Array( 'default' => 'default' );
 	}
 
 
-	/**
-	 * Loads the plugin language file
-	 *
-	 * @return	boolean True, if the file has successfully loaded.
-	 */
-	function loadLanguage()
-	{
-		if ( $this->_language_loaded ) {
-			return true;
-			}
-
-		$lang =& JFactory::getLanguage();
-
-		// Load the plugin-specifc language file
-		$okay = $lang->load('plg_attachments_' . $this->_name,
-							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name);
-
-		if ( $okay ) {
-			$this->_language_loaded = true;
-			}
-
-		return $okay;
-	}
+// 	/**
+// 	 * Loads the plugin language file
+// 	 *
+// 	 * @return	boolean True, if the file has successfully loaded.
+// 	 */
+// 	function loadLanguage()
+// 	{
+// 		if ( $this->_language_loaded ) {
+// 			return true;
+// 			}
+// 
+// 		$lang =& JFactory::getLanguage();
+// 
+// 		// Load the plugin-specifc language file
+// 		$okay = $lang->load('plg_attachments_' . $this->_name,
+// 							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name);
+// 
+// 		if ( $okay ) {
+// 			$this->_language_loaded = true;
+// 			}
+// 
+// 		return $okay;
+// 	}
 
 
 	/**
@@ -351,7 +344,6 @@ class AttachmentsPlugin extends JObject
 		$query = "SELECT $entity_title_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."'";
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
-			$this->loadLanguage();
 			$errmsg = JText::sprintf('ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
@@ -410,7 +402,6 @@ class AttachmentsPlugin extends JObject
 		// Do the query
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
-			$this->loadLanguage();
 			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
 									 $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
@@ -781,7 +772,6 @@ class AttachmentsPlugin extends JObject
 	{
 		// Make sure we have a valid parent ID
 		if ( $parent_id === null OR $parent_id === '' OR !is_numeric($parent_id) ) {
-			$this->loadLanguage();
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
 									 $this->_parent_type, $parent_id) . ' (ERR 303)';
 			JError::raiseError(500, $errmsg);

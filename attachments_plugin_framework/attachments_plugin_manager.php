@@ -56,6 +56,8 @@ class AttachmentsPluginManager extends JObject
 	function __construct()
 	{
 		parent::__construct();
+
+		
 	}
 
 
@@ -127,12 +129,10 @@ class AttachmentsPluginManager extends JObject
 			// Add an option for each entity
 			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
-			$apm->loadLanguage();
 
 			// process all the parent types
 			foreach ($this->_parent_types as $parent_type) {
 				$parent =& $apm->getAttachmentsPlugin($parent_type);
-				$parent->loadLanguage();
 				$entities = $parent->getEntities();
 
 				// Process each entity for this parent type
@@ -179,7 +179,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return the parent handler object
 	 */
-	function &getAttachmentsPlugin($parent_type)
+	function getAttachmentsPlugin($parent_type)
 	{
 		// Make sure the parent type is valid
 		if ( !in_array( $parent_type, $this->_parent_types ) ) {
@@ -187,12 +187,12 @@ class AttachmentsPluginManager extends JObject
 			JError::raiseError(500, $errmsg);
 			}
 
-		// Instantiate the plugin object, if we have not already done it
-		if ( !array_key_exists( $parent_type, $this->_plugin ) ) {
-			$this->_installPlugin($parent_type);
-			}
-
-		return $this->_plugin[$parent_type];
+ 		// Instantiate the plugin object, if we have not already done it
+ 		if ( !array_key_exists( $parent_type, $this->_plugin ) ) {
+ 			$this->_installPlugin($parent_type);
+ 			}
+ 
+ 		return $this->_plugin[$parent_type];
 	}
 
 
@@ -211,10 +211,9 @@ class AttachmentsPluginManager extends JObject
 			}
 
 		// Install the plugin
-		// ??? require_once( dirname(__FILE__).DS.'attachments_plugin.php' );
-		// ??? require_once( dirname(__FILE__).DS.'plugins'.DS.$parent_type.'.php' );
+		$dispatcher	= JDispatcher::getInstance();
 		$className = 'AttachmentsPlugin_' . $parent_type;
-		$this->_plugin[$parent_type] = new $className($parent_type);
+		$this->_plugin[$parent_type] = new $className($dispatcher);
 
 		return is_object($this->_plugin[$parent_type]);
 	}

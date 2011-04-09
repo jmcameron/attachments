@@ -16,8 +16,6 @@ defined('_JEXEC') or die('Restricted access');
 /** Load the default controller */
 require_once( JPATH_COMPONENT.DS.'controller.php' );
 
-// ??? JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-
 // Check for requests for named controller
 $controller = JRequest::getWord('controller', False);
 if ( $controller ) {

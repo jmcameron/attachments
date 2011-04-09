@@ -65,8 +65,6 @@ class AttachmentsModelAttachments extends JModelList
 			$query->where($where);
 			}
 
-		// ??? echo "WHERE: '$where' <br/>";
-
 		// Add the order-by clause
 		$order_by = $this->_buildContentOrderBy();
 		if ($order_by) {
@@ -246,7 +244,6 @@ class AttachmentsModelAttachments extends JModelList
 			if ( $parent ) {
 
 				// Handle the normal case
-				$parent->loadLanguage();
 				$item->parent_entity_type = JText::_($parent->getEntityName($parent_entity));
 				$title = $parent->getTitle($parent_id, $parent_entity);
 				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);

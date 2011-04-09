@@ -91,10 +91,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
 
+		$document =&  JFactory::getDocument();
+		$uri = JFactory::getURI();
+		$document->addScript( $uri->root(true) . '/media/system/js/core.js' );
+
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
-			$document =&  JFactory::getDocument();
-			$uri = JFactory::getURI();
 			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
 			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
@@ -535,6 +537,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		$document =&  JFactory::getDocument();
+		$document->addScript( $uri->root(true) . '/media/system/js/core.js' );
 
 		// Set up view for changing parent
 		if ( $change_parent ) {
@@ -612,7 +615,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$view->change_url_url	 .= "&amp;change=parent&amp;new_parent_type=$new_parent_type";
 			$view->normal_update_url .= "&amp;change=parent&amp;new_parent_type=$new_parent_type";
 			if ( $new_parent_entity != 'default' ) {
-				// ??? Needs cleanup
 				$view->change_file_url	 .= ".$new_parent_entity";
 				$view->change_url_url	 .= ".$new_parent_entity";
 				$view->normal_update_url .= ".$new_parent_entity";

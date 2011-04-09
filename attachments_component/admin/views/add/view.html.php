@@ -40,7 +40,7 @@ class AttachmentsViewAdd extends JView
 	 */
 	protected function addToolBar() 
 	{
-		// ??? JRequest::setVar('hidemainmenu', true);
+		JRequest::setVar('hidemainmenu', true);
 		JToolBarHelper::title(JText::_('ADD_ATTACHMENT'));
 		JToolBarHelper::save('attachment.saveNew');
 		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');

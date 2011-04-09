@@ -26,9 +26,14 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	/**
 	 * Constructor
 	 */
-	function __construct()
+	public function __construct(&$subject, $config = array())
 	{
-		parent::__construct('attachments_for_content', 'com_content', 'article');
+		parent::__construct($subject, $config);
+
+		// Set basic defaults
+		$this->_name = 'attachments_for_content';
+		$this->_parent_type = 'com_content';
+		$this->_default_entity = 'article';
 
 		// Add the information about the default entity (article)
 		$this->_entities[] = 'default';
@@ -44,6 +49,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$this->_entity_table['category'] = 'categories';
 		$this->_entity_id_field['category'] = 'id';
 		$this->_entity_title_field['category'] = 'title';
+
+		// Always load the language
+		$this->loadLanguage();
 	}
 
 
@@ -208,11 +216,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function isParentPublished($parent_id, $parent_entity='default')
 	{
-		$published = false;
-
-		$this->loadLanguage();
-
 		$db =& JFactory::getDBO();
+
+		$published = false;
 
 		$parent_entity = $this->getCanonicalEntity($parent_entity);
 		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
@@ -292,11 +298,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function isParentArchived($parent_id, $parent_entity='default')
 	{
-		$archived = false;
-
-		$this->loadLanguage();
-
 		$db =& JFactory::getDBO();
+
+		$archived = false;
 
 		$parent_entity = $this->getCanonicalEntity($parent_entity);
 		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
@@ -410,12 +414,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return false;
 			}
 
+		$db =& JFactory::getDBO();
+
 		$access = 0;
 		$table = null;
-
-		$this->loadLanguage();
-
-		$db =& JFactory::getDBO();
 
 		$parent_entity = $this->getCanonicalEntity($parent_entity);
 		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
@@ -473,8 +475,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 		$pclass = get_class($parent);
-
-		$this->loadLanguage();
 
 		$parent_entity = $this->getCanonicalEntity($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
