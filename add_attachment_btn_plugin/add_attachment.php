@@ -45,7 +45,7 @@ class plgButtonAdd_attachment extends JPlugin
 	function onDisplay($name)
 	{
 		// Avoid displaying the button for anything except for registered parents
-		$parent_type = JRequest::getCMD('option');
+		$parent_type = JRequest::getCmd('option');
 		if (!$parent_type) {
 			return;
 			}
