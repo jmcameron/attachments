@@ -166,8 +166,7 @@ class AttachmentsPluginManager extends JObject
 
 		$lang =& JFactory::getLanguage();
 
-		$this->_language_loaded = $lang->load('plg_attachments_attachments_plugin_framework',
-											  JPATH_PLUGINS.DS.'attachments'.DS.'attachments_plugin_framework');
+		$this->_language_loaded = $lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 
 		return $this->_language_loaded;
 	}

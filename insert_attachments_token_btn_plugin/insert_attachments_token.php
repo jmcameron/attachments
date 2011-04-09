@@ -79,7 +79,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 
 		// Get ready for language things
 		$lang =&  JFactory::getLanguage();
-		if ( !$lang->load('plg_editors-xtd_insert_attachments_token', JPATH_ADMINISTRATOR) ) {
+		if ( !$lang->load('plg_editors-xtd_insert_attachments_token', dirname(__FILE__)) ) {
 			// If the desired translation is not available, at least load the English
 			$lang->load('plg_editors-xtd_insert_attachments_token', JPATH_ADMINISTRATOR, 'en-GB');
 			}

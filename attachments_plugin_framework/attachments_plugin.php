@@ -185,7 +185,7 @@ class AttachmentsPlugin extends JObject
 
 		// Load the plugin-specifc language file
 		$okay = $lang->load('plg_attachments_' . $this->_name,
-							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name );
+							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name);
 
 		if ( $okay ) {
 			$this->_language_loaded = true;
@@ -299,7 +299,7 @@ class AttachmentsPlugin extends JObject
 		// Check aliases
 		if ( !array_key_exists($parent_entity, $this->_entity_alias) ) {
 			$lang =& JFactory::getLanguage();
-			$lang->load('plg_attachments_attachments_plugin_framework', JPATH_ADMINISTRATOR);
+			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = JText::sprintf('ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
 									 $parent_entity, $parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);

@@ -116,7 +116,7 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Load the language file from the frontend
-		$lang->load('com_attachments', JPATH_SITE.DS.'components'.DS.'com_attachments');
+		$lang->load('com_attachments', dirname(__FILE__));
 
 		// Create the [Add Attachment] button object
 		$button = new JObject();
