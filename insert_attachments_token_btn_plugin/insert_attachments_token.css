@@ -1,2 +1,3 @@
-.button2-left .insert_attachments_token { 
-     background: url(../../plugins/editors-xtd/insert_attachments_token.png) 100% 0  no-repeat; }
+div.button2-left > div.insert_attachments_token { 
+     background: url(insert_attachments_token.png) no-repeat scroll 100% 0; 
+}

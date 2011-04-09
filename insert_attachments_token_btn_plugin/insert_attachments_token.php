@@ -37,6 +37,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 	function plgInsert_attachments_token(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
+		$this->loadLanguage();
 	}
 
 	/**
@@ -58,11 +59,10 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 
 		// Avoid displaying the button for anything except for registered parents
-		global $option;
-		$parent_type = $option;
+		$parent_type = JRequest::getCmd('option');
 
 		// Handle sections and categories specially (since they are really com_content)
-		if ($option == 'com_categories') {
+		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			}
 
@@ -95,6 +95,8 @@ class plgButtonInsert_attachments_token extends JPlugin
 				}
 			}
 			";
+
+        $app =& JFactory::getApplication();
 		$doc =& JFactory::getDocument();
 		$uri = JFactory::getURI();
 
@@ -120,7 +122,13 @@ class plgButtonInsert_attachments_token extends JPlugin
 		$button->set('onclick', 'insertAttachmentsToken(\''.$name.'\');return false;');
 		$button->set('text', JText::_('ATTACHMENTS_TOKEN'));
 		$button->set('title', JText::_('ATTACHMENTS_TOKEN_DESCRIPTION'));
-		$button->set('name', 'insert_attachments_token');
+
+		if ( $app->isAdmin() ) {
+			$button->set('name', 'insert_attachments_token');
+			}
+		else {
+			$button->set('name', 'insert_attachments_token_frontend');
+			}
 
 		// TODO: The button writer needs to take into account the javascript directive
 		// $button->set('link', 'javascript:void(0)');
