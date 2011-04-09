@@ -80,10 +80,7 @@ class plgSearchAttachments extends JPlugin
 			return array();
 			}
 
-		// load plugin params info
-		// ??? $plugin =& JPluginHelper::getPlugin('search', 'attachments');
-		// ??? $pluginParams = new JParameter( $plugin->params );
-		// ??? $limit = $pluginParams->def( 'search_limit', 50 );
+		// load search limit from plugin params 
 		$limit = $this->params->def('search_limit', 50);
 
 		// Get the component parameters
