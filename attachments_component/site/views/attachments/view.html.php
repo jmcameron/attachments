@@ -134,10 +134,6 @@ class AttachmentsViewAttachments extends JView
 		$this->who_can_see = $params->get('who_can_see', 'logged_in');
 
 		// Get the display options
-		if ( !$app->isAdmin() ) {
-			$app = JFactory::getApplication('site');
-			$params =& $app->getParams('com_attachments');
-			}
 		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 		$this->style = $params->get('attachments_table_style', 'attachmentsList');
 		$this->show_column_titles = $params->get('show_column_titles', false);

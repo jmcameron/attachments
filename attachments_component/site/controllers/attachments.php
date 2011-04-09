@@ -69,8 +69,8 @@ class AttachmentsControllerAttachments extends JController
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
-		$app = JFactory::getApplication('site');
- 		$params =& $app->getParams('com_attachments');
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Set up to list the attachments for this artticle
 		$sort_order = $params->get('sort_order', 'filename');

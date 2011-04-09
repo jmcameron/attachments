@@ -469,17 +469,9 @@ class AttachmentsHelper
 	 */
 	function upload_file(&$row, &$parent, $attachment_id=false, $save_type='update')
 	{
-		$app = JFactory::getApplication();
-
 		// Get the component parameters
-		if ( $app->isAdmin() ) {
-			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
-			}
-		else {
-			$app = JFactory::getApplication('site');
-			$params =& $app->getParams('com_attachments');
-			}
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Get the auto-publish setting
 		$auto_publish = $params->get('publish_default', false);
@@ -520,6 +512,7 @@ class AttachmentsHelper
 
 		// A little formatting
 		$msgbreak = '<br />';
+		$app = JFactory::getApplication();
 		if ( $app->isAdmin() ) {
 			$msgbreak = '';
 			}
@@ -614,12 +607,7 @@ class AttachmentsHelper
 			}
 
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
-		if ( $app->isAdmin() ) {
-			$cmparams =& JComponentHelper::getParams( 'com_media' );
-			}
-		else {
-			$cmparams =& $app->getParams('com_media');
-			}
+		$cmparams =& JComponentHelper::getParams('com_media');
 
 		// First check to make sure the extension is allowed
 		jimport('joomla.filesystem.file');
@@ -1208,17 +1196,9 @@ class AttachmentsHelper
 	function add_url(&$row, &$parent, $verify, $relative_url=false,
 					 $update=false, $attachment_id=false)
 	{
-		$app = JFactory::getApplication();
-
 		// Get the component parameters
-		if ( $app->isAdmin() ) {
-			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
-			}
-		else {
-			$app = JFactory::getApplication('site');
-			$params =& $app->getParams('com_attachments');
-			}
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Get the auto-publish setting
 		$auto_publish = $params->get('publish_default', false);
@@ -1246,9 +1226,9 @@ class AttachmentsHelper
 		$result = AttachmentsHelper::get_url_info($row->url, $row, $verify, $relative_url);
 
 		// If there was an error, bow out
-		$app = JFactory::getApplication();
 		if ( $result !== true ) {
 
+			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
 				return $result;
 				}
@@ -1435,15 +1415,8 @@ class AttachmentsHelper
 			}
 
 		// Get the component parameters
-		$app = JFactory::getApplication();
-		if ( $app->isAdmin() ) {
-			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
-			}
-		else {
-			$app = JFactory::getApplication('site');
-			$params =& $app->getParams('com_attachments');
-			}
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
 
 		$who_can_see = $params->get('who_can_see', 'logged_in'); // ??? Update later with ACL?
 
