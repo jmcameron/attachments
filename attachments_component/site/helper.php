@@ -1576,8 +1576,8 @@ class AttachmentsHelper
 	 *
 	 * @return the html as a string
 	 */
-	function attachmentListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
-								$show_file_links=true, $allow_edit=true)
+	function attachmentsListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
+								 $show_file_links=true, $allow_edit=true)
 	{
 		$app = JFactory::getApplication();
 
@@ -1585,7 +1585,7 @@ class AttachmentsHelper
 		$alist = '';
 		$db =& JFactory::getDBO();
 		$query = "SELECT count(*) FROM #__attachments "
-			. "WHERE parent_id='".(int)$parent_id."' AND status='1' AND parent_type='$parent_type'";
+			. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
 		$db->setQuery($query);
 		$total = $db->loadResult();
 
@@ -1615,7 +1615,9 @@ class AttachmentsHelper
 				require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
 							 'controllers'.DS.'attachments.php');
 				}
+			
 			$controller = new AttachmentsControllerAttachments();
+
 			$alist = $controller->display($parent_id, $parent_type, $parent_entity,
 										  null, $show_file_links, $allow_edit, false, $from);
 			}

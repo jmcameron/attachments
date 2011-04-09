@@ -65,6 +65,9 @@ class plgSystemShow_attachments extends JPlugin
 
 		// Get the article ID (strip off any SEF name appended with a colon)
 		$parent_id = JRequest::getVar('id');
+		if ( empty($parent_id) ) {
+			$parent_id = JRequest::getVar('a_id');
+			}
 		if ( strpos($parent_id, ':') > 0 ) {
 			$parent_id = substr($parent_id,0,strpos($parent_id,':'));
 			if ( is_numeric($parent_id) ) {
@@ -93,7 +96,8 @@ class plgSystemShow_attachments extends JPlugin
 
 		// If we cannot determine the article ID
 		if (!$parent_id) {
-			if ( $task == 'add' OR ( ($view == 'article') AND ( $layout=='form') ) ) {
+			if ( $task == 'add' OR (($view == 'article') AND ( $layout=='edit'))
+				                OR (($view == 'form') AND ( $layout=='edit')) ) {
 				// If we are creating an article, note that
 				$parent_id = 0;
 				}
@@ -112,13 +116,17 @@ class plgSystemShow_attachments extends JPlugin
 			$app = JFactory::getApplication();
 	        $uri = JFactory::getURI();
 			$base_url = $uri->root(true);
+			$doc =& JFactory::getDocument();
+
 			if ( $app->isAdmin() ) {
 				// ??? This should not be necessary
 				$base_url = str_replace('/administrator','', $base_url);
 				}
-			$doc =& JFactory::getDocument();
 			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
-			// ??? $doc->addScript( $js_path );
+			$doc->addScript( $js_path );
+
+			$doc->addStyleSheet( $base_url . 'plugins/content/attachments/attachments.css',
+								 'text/css', null, array() );
 
 			// Get the article/parent handler
 			$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -127,7 +135,7 @@ class plgSystemShow_attachments extends JPlugin
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
 			$from = 'editor';
-			$attachments = AttachmentsHelper::attachmentListHTML($parent_id, $parent_type, $parent_entity,
+			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
 																 $user_can_add, $Itemid, $from, true, true);
 
 			// Embed the username in liu of the parent_id (if the parent_id is missing)

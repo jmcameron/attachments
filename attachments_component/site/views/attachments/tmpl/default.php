@@ -178,7 +178,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 				}
 			}
 		$html .= "</a>";
-		$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
+		$html .= "<a class=\"at_url\" href=\"$url\"$target target=\"_blank\" title=\"$tooltip\">$filename</a>";
 		}
 	else {
 		$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $row->filename);

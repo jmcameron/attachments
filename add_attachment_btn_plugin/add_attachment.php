@@ -93,7 +93,7 @@ class plgButtonAdd_attachment extends JPlugin
 		// Figure out where we are and construct the right link and set
         $app = JFactory::getApplication();
 		$uri = JFactory::getURI();
-		$base_url = $uri->root(true) . '/';
+		$base_url = $uri->root(true);
 		if ( $app->isAdmin() ) {
 			$base_url = str_replace('/administrator','', $base_url);
 			}
@@ -128,7 +128,13 @@ class plgButtonAdd_attachment extends JPlugin
 		$button->set('modal', true);
 		$button->set('class', 'modal');
 		$button->set('text', JText::_('ADD_ATTACHMENT'));
-		$button->set('name', 'add_attachment');
+
+		if ( $app->isAdmin() ) {
+			$button->set('name', 'add_attachment');
+			}
+		else {
+			$button->set('name', 'add_attachment_frontend');
+			}
 		$button->set('link', $link);
 		$button->set('options', "{handler: 'iframe', size: {x: 900, y: 530}}");
 

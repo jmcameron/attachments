@@ -95,20 +95,20 @@ class AttachmentsControllerAttachments extends JController
 		$update_url = "index.php?option=com_attachments&task=update&id=%d";
 		$update_url .= "&from=$from&tmpl=component";
 		$update_url = JRoute::_($update_url);
-		$view->assignRef('update_url', $update_url);
+		$view->update_url = $update_url;
 
 		// Construct the delete URL template
 		$delete_url = "index.php?option=com_attachments&task=delete_warning&id=%d";
 		$delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
 		$delete_url .= "&from=$from&tmpl=component";
 		$delete_url = JRoute::_($delete_url);
-		$view->assignRef('delete_url', $delete_url);
+		$view->delete_url = $delete_url;
 
 		// Set some display settings
-		$view->assign('title', $title);
-		$view->assign('show_file_links', $show_file_links);
-		$view->assign('allow_edit', $allow_edit);
-		$view->assign('from', $from);
+		$view->title = $title;
+		$view->show_file_links = $show_file_links;
+		$view->allow_edit = $allow_edit;
+		$view->from = $from;
 
 		// Get the view to generate the display output from the template
 		if ( $view->display() === true ) {

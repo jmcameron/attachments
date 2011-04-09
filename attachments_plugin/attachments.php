@@ -174,7 +174,7 @@ class plgContentAttachments extends JPlugin
 		if ( ( $who_can_see == 'anyone' ) OR
 			 ( ($who_can_see == 'logged_in') AND $logged_in ) ) {
 			$attachments_list =
-				$this->_attachmentListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+				$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments_list == '' ) {
@@ -370,7 +370,7 @@ class plgContentAttachments extends JPlugin
 	 *
 	 * @return a list of attachments as HTML code
 	 */
-	function _attachmentListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
+	function _attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
 	{
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';

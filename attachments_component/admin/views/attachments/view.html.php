@@ -129,7 +129,7 @@ class AttachmentsViewAttachments extends JView
 	 */
 	protected function addToolBar() 
 	{
-		JToolBarHelper::title(JText::_('ATTACHMENTS'));
+		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');
 		JToolBarHelper::addNewX('attachment.add');
 		JToolBarHelper::editListX('attachment.edit');
 		JToolBarHelper::divider();

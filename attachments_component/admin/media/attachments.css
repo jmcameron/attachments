@@ -1,13 +1,17 @@
 /* Styles for the main list of attachments in the administrative back end */
 
+form.attachmentsBackend * {
+	float: none;
+}
+
 form.attachmentsBackend,
 form#adminForm 
 {
-    font-size: 1.2em;
+	font-size: 1.2em;
 }
 
 div#element-box div.m form#adminForm table#attachmentsList tr td a {
-    font-size: 100%;
+	font-size: 85%;
 }
 
 form#adminForm div.attachments_filter { 
@@ -353,8 +357,8 @@ input#paramshide_attachments_for {
 
 /* For icons */
 
-.icon-48-attachments  { background-image: url(../../components/com_attachments/attachments_logo48.png); }
+.icon-48-attachments  { background-image: url(attachments_logo48.png); }
 
-.icon-16-attachments  { background-image: url(../../components/com_attachments/icon-16-attachments.png); }
+.icon-16-attachments  { background-image: url(attachments.png); }
 
-.icon-32-adminUtils   { background-image: url(../../components/com_attachments/attachments_utils32.png); }
+.icon-32-adminUtils   { background-image: url(attachments_utils32.png); }

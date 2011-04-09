@@ -1,46 +1,55 @@
 /* Styles for lists of attachments */
 
-#main div.attachmentsContainer {
+#main div.attachmentsContainer,
+div.attachmentsContainer {
     clear: both;
     margin: 0 0 0.5em 0;
     background: transparent;
 }
 
-#main div.attachmentsList table {
+#main div.attachmentsList table,
+div.attachmentsList table {
     background: transparent;
     border: 1px solid #C0C0C0;
     font-size: 90%;
     font-weight: bold;
 }
 
-#main div.attachmentsList caption {
+#main div.attachmentsList caption,
+div.attachmentsList caption {
     font-size: 110%;
     font-weight: bold;
     text-align: left;
     margin-top: 4px;
 }
 
-#main div.attachmentsList thead tr {
+#main div.attachmentsList thead tr,
+div.attachmentsList thead tr {
     background-color: #DADADA;
 }
 
-#main div.attachmentsList tbody {
+#mian div.attachmentsList tbody,
+div.attachmentsList tbody {
     background: transparent;
 }
 
-#main div.attachmentsList tbody tr {
+#main div.attachmentsList tbody tr,
+div.attachmentsList tbody tr {
     background: transparent;
 }
 
-#main div.attachmentsList tbody tr.odd {
+# div.attachmentsList tbody tr.odd,
+div.attachmentsList tbody tr.odd {
     background: transparent;
 }
 
-#main div.attachmentsList tbody tr.even {
+#main div.attachmentsList tbody tr.even,
+div.attachmentsList tbody tr.even {
     background-color: #F8F8F8;
 }
 
-#main div.attachmentsList table thead th {
+#main div.attachmentsList table thead th,
+div.attachmentsList table thead th {
     vertical-align: center;
     background: transparent;
     border: 1px solid #D0D0D0;
@@ -50,100 +59,117 @@
     padding-bottom: 0px;
 }
 
-#main div.attachmentsList table tbody td {
+#main div.attachmentsList table tbody td,
+div.attachmentsList table tbody td {
     background: transparent;
     vertical-align: center;
     padding: 1px 3px 1px 3px;
 }
 
-#main div.attachmentsList table a {
+#main div.attachmentsList table a,
+div.attachmentsList table a {
     font-weight: bold;
 }
 
-#main div.attachmentsList table img {
+#main div.attachmentsList table img,
+div.attachmentsList table img {
     vertical-align: text-bottom;
     border: 0;
     margin: 0;
 }
 
-#main div.attachmentsList table a.modal-button {
+#main div.attachmentsList table a.modal-button,
+div.attachmentsList table a.modal-button {
     background: transparent;
     border: 0;
 }
 
-#main div.attachmentsList img#link {
+div.attachmentsList table td.at_edit a.modal-button {
+    float: none;
+    display: inline;
+}
+
+div.attachmentsList table td.at_edit a.modal-button img {
+    float: none;
+    display: inline;
+}
+
+#main div.attachmentsList img#link,
+div.attachmentsList img#link {
     margin-left: -16px;
 }
 
-#main div.attachmentsList a.at_icon {
+#main div.attachmentsList a.at_icon, 
+div.attachmentsList a.at_icon {
     padding-right: 4px;
 }
 
-#main div.attachmentsList a.at_icon:link    { text-decoration: none; }
-#main div.attachmentsList a.at_icon:visited { text-decoration: none; }
-#main div.attachmentsList a.at_icon:hover   { text-decoration: none; color: #F00; background: transparent; }
-#main div.attachmentsList a.at_icon:active  { text-decoration: none; }
+div.attachmentsList a.at_icon:link    { text-decoration: none; }
+div.attachmentsList a.at_icon:visited { text-decoration: none; }
+div.attachmentsList a.at_icon:hover   { text-decoration: none; color: #F00; background: transparent; }
+div.attachmentsList a.at_icon:active  { text-decoration: none; }
 
-#main div.attachmentsList a.at_url { background: none;  background-color: transparent; }
-#main div.attachmentsList a.at_url:link     { text-decoration: none; }
-#main div.attachmentsList a.at_url:visited  { text-decoration: none; }
-#main div.attachmentsList a.at_url:hover    { text-decoration: underline; color: #F00; background: transparent; }
-#main div.attachmentsList a.at_url:active   { text-decoration: none; }
+div.attachmentsList a.at_url { background: none;  background-color: transparent; }
+div.attachmentsList a.at_url:link     { text-decoration: none; }
+div.attachmentsList a.at_url:visited  { text-decoration: none; }
+div.attachmentsList a.at_url:hover    { text-decoration: underline; color: #F00; background: transparent; }
+div.attachmentsList a.at_url:active   { text-decoration: none; }
 
-#main div.attachmentsList td.at_file_size { text-align: right; }
+div.attachmentsList td.at_file_size { text-align: right; }
 
-#main div.attachmentsList th.at_downloads { text-align: center; }
-#main div.attachmentsList td.at_downloads { text-align: center; }
+div.attachmentsList th.at_downloads { text-align: center; }
+div.attachmentsList td.at_downloads { text-align: center; }
 
-#main div.attachmentsList th.at_edit { text-align: center; }
-#main div.attachmentsList td.at_edit { text-align: center; background: transparent; }
+div.attachmentsList th.at_edit { text-align: center; }
+div.attachmentsList td.at_edit { text-align: center; background: transparent; }
 
 
 /* Style for the 'Add Attachment' link */
 
-#main div.addattach { 
+#main div.addattach,
+div.addattach { 
     margin-top: 4px; 
     background: transparent;
 }
 
 
-#main div.addattach img,
-#main div.addattach a img {
+div.addattach img,
+div.addattach a img {
     background: transparent;
     padding-right: 0px;
     border: 0;
 }
 
-#main div.addattach a {
+div.addattach a {
     background: transparent;
     border: 0;
 }
 
-#main div.addattach a:hover {
+div.addattach a:hover {
     background: transparent;
     color: #F00;
     border: 0;
 }
 
-#main div.addattach a img { vertical-align: text-bottom; }
+div.addattach a img { vertical-align: text-bottom; }
 
-#main div.addattach a.at_icon { background: transparent; }
-#main div.addattach a.at_icon:link    { text-decoration: none; }
-#main div.addattach a.at_icon:visited { text-decoration: none; }
-#main div.addattach a.at_icon:hover   { text-decoration: none; background: transparent; }
-#main div.addattach a.at_icon:active  { text-decoration: none; }
+div.addattach a.at_icon { background: transparent; }
+div.addattach a.at_icon:link    { text-decoration: none; }
+div.addattach a.at_icon:visited { text-decoration: none; }
+div.addattach a.at_icon:hover   { text-decoration: none; background: transparent; }
+div.addattach a.at_icon:active  { text-decoration: none; }
 
-#main div.addattach a { background: transparent; }
-#main div.addattach a:link    { color : red; text-decoration: none; }
-#main div.addattach a:visited { color : red; text-decoration: none; }
-#main div.addattach a:hover   { color : red; text-decoration: underline; color: #F00; background: transparent; }
-#main div.addattach a:active  { color : red; text-decoration: none; }
+div.addattach a { background: transparent; }
+div.addattach a:link    { color : red; text-decoration: none; }
+div.addattach a:visited { color : red; text-decoration: none; }
+div.addattach a:hover   { color : red; text-decoration: underline; color: #F00; background: transparent; }
+div.addattach a:active  { color : red; text-decoration: none; }
 
-#main div.addattach a.modal-button { background: transparent; }
-#main div.addattach a.modal-button:link { background: transparent; }
-#main div.addattach a.modal-button:visited { background: transparent; }
-#main div.addattach a.modal-button:hover { color: #F00; background: transparent; }
-#main div.addattach a.modal-button:active { background: transparent; }
+div.addattach a.modal-button { background: transparent; }
+div.addattach a.modal-button:link { background: transparent; }
+div.addattach a.modal-button:visited { background: transparent; }
+div.addattach a.modal-button:hover { color: #F00; background: transparent; }
+div.addattach a.modal-button:active { background: transparent; }
 
 
 /* ---- Misc ----- */
