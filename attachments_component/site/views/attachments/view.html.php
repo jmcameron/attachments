@@ -125,16 +125,21 @@ class AttachmentsViewAttachments extends JView
 
 		$this->some_attachments_visible = $model->someVisible();
 		$this->some_attachments_modifiable = $model->someModifiable();
-		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 
 		$this->from = $from;
 
 		$this->list = $list;
 
-		// Get the display options
-		$this->style = $params->get('attachments_table_style', 'attachmentsList');
 		$this->secure = $params->get('secure', false);
 		$this->who_can_see = $params->get('who_can_see', 'logged_in');
+
+		// Get the display options
+		if ( !$app->isAdmin() ) {
+			$app = JFactory::getApplication('site');
+			$params =& $app->getParams('com_attachments');
+			}
+		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
+		$this->style = $params->get('attachments_table_style', 'attachmentsList');
 		$this->show_column_titles = $params->get('show_column_titles', false);
 		$this->show_description = $params->get('show_description', true);
 		$this->show_uploader = 	$params->get('show_uploader', false);
@@ -142,6 +147,7 @@ class AttachmentsViewAttachments extends JView
 		$this->show_downloads = $params->get('show_downloads', false);
 		$this->show_mod_date = 	$params->get('show_modification_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
+
 		if ( $this->show_mod_date ) {
 			$this->mod_date_format = $params->get('mod_date_format', '%Y-%m-%d %I:%M%P');
 			}
