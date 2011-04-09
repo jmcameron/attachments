@@ -68,7 +68,8 @@ else
 	<h2><?php echo JText::sprintf('FOR_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title); ?></h2>
 </div>
 <?php endif; ?>
-<form class="attachmentsBackend" action="<?php echo $this->save_url; ?>" method="post" <?php echo $enctype ?> name="adminForm" id="adminForm">
+<form class="attachmentsBackend" action="<?php echo $this->save_url; ?>" method="post" <?php echo $enctype ?>
+	  name="adminForm" id="adminForm">
 <fieldset class="adminform">
 <legend><?php echo JText::_('UPDATE_ATTACHMENT'); ?></legend>
 <table class="admintable">
