@@ -78,6 +78,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 			}
 
+		// Set up mootools/modal
+		$document =&  JFactory::getDocument();
+		JHTML::_('behavior.modal', 'a.modal-button');
+
 		// Add the published selection
 		$lists['published'] = JHTML::_('select.booleanlist', 'state',
 									   'class="inputbox"', false);
@@ -91,14 +95,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
 
-		$document =&  JFactory::getDocument();
-		$uri = JFactory::getURI();
-		$document->addScript( $uri->root(true) . '/media/system/js/core.js' );
-
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
-			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
-			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
+			$uri = JFactory::getURI();
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 			$js = "
@@ -108,7 +107,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		   window.parent.SqueezeBox.close();
 		   }";
 			$document->addScriptDeclaration($js);
-			JHTML::_('behavior.modal', 'a.modal-button');
 			}
 		else {
 			if ( !is_numeric($parent_id) ) {
@@ -475,6 +473,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$from = JRequest::getWord('from');
 		$layout = JRequest::getWord('tmpl');
 
+		// Set up mootools/modal
+		$document =&  JFactory::getDocument();
+		JHTML::_('behavior.modal', 'a.modal-button');
+
 		// set up lists for form controls
 		$lists = array();
 		$lists['published'] = JHTML::_('select.booleanlist', 'state',
@@ -536,20 +538,15 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$update = false;
 			}
 
-		$document =&  JFactory::getDocument();
-		$document->addScript( $uri->root(true) . '/media/system/js/core.js' );
-
 		// Set up view for changing parent
 		if ( $change_parent ) {
-			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 			$js = "
 	   function jSelectArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;
 		   window.parent.SqueezeBox.close();
-		   }";
+		   };";
 			$document->addScriptDeclaration($js);
-			JHTML::_('behavior.modal', 'a.modal-button');
 			}
 
 		JRequest::setVar( 'hidemainmenu', 1 );
@@ -643,8 +640,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
-			$document->addScript( $uri->root(true) . '/media/system/js/mootools.js' );
-			$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 			$save_url = 'index.php?option=com_attachments&amp;task=attachment.save';
 			}
