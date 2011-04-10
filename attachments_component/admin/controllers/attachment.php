@@ -100,12 +100,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$uri = JFactory::getURI();
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
-			$js = "
-	   function jSelectArticle(id, title) {
-		   document.getElementById('parent_id').value = id;
-		   document.getElementById('parent_title').value = title;
-		   window.parent.SqueezeBox.close();
-		   }";
+			$js = '
+	   function jSelectArticle(id, title, catid, object) {
+		   document.id("parent_id").value = id;
+		   document.id("parent_title").value = title;
+		   SqueezeBox.close();
+		   }';
 			$document->addScriptDeclaration($js);
 			}
 		else {

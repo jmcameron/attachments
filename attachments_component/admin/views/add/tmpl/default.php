@@ -50,7 +50,7 @@ if ( $this->parent_title ) {
 	<td> <input id="parent_title" value="" disabled="disabled" type="text" size="60" />&nbsp;
 	  <a class="modal-button" type="button"
 		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
-		 rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
+		 rel="{handler: 'iframe', size: {x: 800, y: 450}}"><?php echo $this->selpar_btn_text ?></a>
 	  <input id="parent_id" name="parent_id" value="-1" type="hidden" />
     </td>
   </tr>
