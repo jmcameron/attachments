@@ -184,7 +184,7 @@ if ( !in_array($editor, $exceptions) ) {
 	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=attachment.add";
 
 	// Add a footer section with buttons to attach files to the supported content types/entities
-	echo "<br />&nbsp;<br />";
+	echo '<div id="attachmentsPotentialParents">';
 
 	// For normal LTR, put the label on the left
 	if ( !$lang->isRTL() ) {
@@ -215,5 +215,7 @@ if ( !in_array($editor, $exceptions) ) {
 		echo '<b>' . JText::_('ADD_ATTACHMENT_TO') . '</b>';
 		}
 	}
+
+	echo '</div>';
 
 ?>

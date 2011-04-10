@@ -344,6 +344,10 @@ input#upload, input#upload_warning {
 	margin-top: 4px;
 }
 
+div#attachmentsPotentialParents {
+	margin: 2em 0 0 0;
+	font-size: 1.2em;
+}
 
 /* Small fixes for form to edit parameters */
 
