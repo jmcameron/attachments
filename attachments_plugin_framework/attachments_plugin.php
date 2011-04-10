@@ -118,31 +118,6 @@ class AttachmentsPlugin extends JPlugin
 	}
 
 
-// 	/**
-// 	 * Loads the plugin language file
-// 	 *
-// 	 * @return	boolean True, if the file has successfully loaded.
-// 	 */
-// 	function loadLanguage()
-// 	{
-// 		if ( $this->_language_loaded ) {
-// 			return true;
-// 			}
-// 
-// 		$lang =& JFactory::getLanguage();
-// 
-// 		// Load the plugin-specifc language file
-// 		$okay = $lang->load('plg_attachments_' . $this->_name,
-// 							JPATH_PLUGINS.DS.'attachments'.DS.$this->_name);
-// 
-// 		if ( $okay ) {
-// 			$this->_language_loaded = true;
-// 			}
-// 
-// 		return $okay;
-// 	}
-
-
 	/**
 	 * Return the parent entity / row ID
 	 *
@@ -382,7 +357,7 @@ class AttachmentsPlugin extends JPlugin
 												   'filter_order_Dir',	'', 'word');
 
 		// Get all the items
-		$query = "SELECT $entity_id_field,$entity_title_field FROM #__$entity_table";
+		$query = "SELECT DISTINCT $entity_id_field,$entity_title_field FROM #__$entity_table";
 		if ( $filter ) {
 			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
 			$query .= ' WHERE ' . $entity_title_field . ' LIKE ' . $filter;
@@ -444,7 +419,7 @@ class AttachmentsPlugin extends JPlugin
 		// Add on the parent type and entity
 		$entity = "&amp;parent_type=" . $this->_parent_type;
 		if ( $parent_entity != 'default' ) {
-			$entity .= ':' . $parent_entity;
+			$entity .= '.' . $parent_entity;
 			}
 
 		return "index.php?option=com_attachments&amp;task=selectEntity" . $entity . "&amp;tmpl=component";

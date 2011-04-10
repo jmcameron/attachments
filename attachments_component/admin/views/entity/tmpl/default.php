@@ -14,18 +14,19 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $option;
-
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
 $uri = JFactory::getURI();
 $document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 						  'text/css', null, array() );
-$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/attachments.css',
+$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
 						  'text/css', null, array() );
+
 $lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
 	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
+							  'text/css', null, array() );
+	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 
@@ -35,6 +36,9 @@ $lists = $this->lists;
 <form class="attachmentsBackend" enctype="multipart/form-data"
 	  name="adminForm" id="adminForm"
 	  action="<?php echo $this->post_url ?>" method="post">
+
+	<fieldset class="adminform">
+	<legend><?php echo JText::sprintf('SELECT_ENTITY_S', $this->entity_name) ?></legend>
 <div class="attachments_filter">
 	<?php echo JText::_( 'FILTER' ); ?>:
 	<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>"
@@ -42,9 +46,6 @@ $lists = $this->lists;
 	<button onclick="this.form.submit();"><?php echo JText::_( 'GO' ); ?></button>
 	<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('RESET') ?></button>
 </div>
-
-	<fieldset class="adminform">
-	<legend><?php echo JText::sprintf('SELECT_ENTITY_S', JText::_($this->entity_name)) ?></legend>
 	<table class="adminlist" cellspacing="1">
 	<thead>
 	   <tr>
@@ -81,7 +82,7 @@ $lists = $this->lists;
 	</fieldset>
 	<input type="hidden" name="parent_type" value="<?php echo $this->parent_type ?>" />
 	<input type="hidden" name="parent_entity" value="<?php echo $this->parent_entity ?>" />
-	<input type="hidden" name="option" value="<?php echo $option;?>" />
+	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
 	<input type="hidden" name="task" value="selectEntity" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 

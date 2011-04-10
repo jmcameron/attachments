@@ -57,7 +57,7 @@ class AttachmentsPluginManager extends JObject
 	{
 		parent::__construct();
 
-		
+		$this->loadLanguage();
 	}
 
 

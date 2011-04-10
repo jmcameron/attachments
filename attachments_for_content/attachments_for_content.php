@@ -107,6 +107,85 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	}
 
 
+	/**
+	 * Return an array of entity items (with id,title pairs for each item)
+	 *
+	 * @param string $parent_entity the type of entity to search for
+	 * @param string $filter filter the results for matches for this filter string
+	 *
+	 * @return the array of entity id,title pairs
+	 */
+	function getEntityItems($parent_entity='default', $filter='')
+	{
+		$db =& JFactory::getDBO();
+
+		// Note that article is handled separately
+		if ( JString::strtolower($parent_entity) != 'category' ) {
+			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+									 $parent_entity_name) . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity_name = $this->_entity_name[$parent_entity];
+		$entity_table = $this->_entity_table[$parent_entity];
+		$entity_title_field = $this->_entity_title_field[$parent_entity];
+		$entity_id_field = $this->_entity_id_field[$parent_entity];
+
+		// Get the ordering information
+		$app = JFactory::getApplication();
+		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+												   'filter_order',		'', 'cmd');
+		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+												   'filter_order_Dir',	'', 'word');
+
+		// Get all the items
+		$query	= $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__categories');
+
+		// Filter
+		if ( $filter ) {
+			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
+			$query->where('title LIKE ' . $filter);
+			}
+		$query->where("extension='com_content'");
+
+		// Ignore any requested order since only ordering by lft makes the hierarchy work
+		$query->order('lft');
+
+		// Do the query
+		$db->setQuery($query);
+		if ( $db->getErrorNum() ) {
+			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+									 $parent_entity_name) . ' (ERRN1)';
+			JError::raiseError(500, $errmsg);
+			}
+		else {
+			$items = $db->loadObjectList();
+			}
+
+		// Make sure there were no errors
+		if ( $db->getErrorNum() ) {
+			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+									 $parent_entity_name) . ' (ERRN2)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		if ( $items == null ) {
+			return null;
+			}
+
+		// Set up the hierarchy indenting
+		foreach ($items as &$item) {
+			$repeat = ( $item->level - 1 >= 0 ) ? $item->level - 1 : 0;
+			$item->title = str_repeat('- ', $repeat).$item->title;
+			}
+
+		return $items;
+	}
+
+
 
 	/**
 	 * Get a URL to view the content article

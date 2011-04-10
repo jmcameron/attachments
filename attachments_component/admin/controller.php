@@ -34,6 +34,79 @@ class AttachmentsController extends JController
 		parent::display($cachable);
 	}
 
+
+	/**
+	 * Set up to display the entity selection view
+	 *
+	 * This allows users to select entities (sections, categories, and other
+	 * content items that are supported with Attachments plugins).
+	 */
+	function selectEntity()
+	{
+		// Get the parent type
+		$parent_type = JRequest::getCmd('parent_type');
+		if ( !$parent_type ) {
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
+				$db->getErrorMsg() . ' (ERR 33)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		// Parse the parent type and entity
+		$parent_entity = JRequest::getCmd('parent_entity', 'default');
+		if ( strpos($parent_type, '.') ) {
+			$parts = explode('.', $parent_type);
+			$parent_type = $parts[0];
+			$parent_entity = $parts[1];
+			}
+
+		// Get the content parent object
+		JPluginHelper::importPlugin('attachments');
+		$apm =& getAttachmentsPluginManager();
+		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent->loadLanguage();
+		$entity_name = JText::_($parent->getEntityName($parent_entity));
+
+		// Get the URL to repost (for filtering)
+		$post_url = $parent->getSelectEntityURL($parent_entity);
+
+		// Set up the display lists
+		$lists = Array();
+
+		// table ordering
+		$app = JFactory::getApplication();
+		$filter_order =
+			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+										  'filter_order', '', 'cmd');
+		$filter_order_Dir =
+			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+										  'filter_order_Dir','',	'word');
+		$lists['order_Dir'] = $filter_order_Dir;
+		$lists['order']		= $filter_order;
+
+		// search filter
+		$search_filter = $app->getUserStateFromRequest('com_attachments.selectEntity.search',
+													   'search', '', 'string' );
+		$lists['search'] = $search_filter;
+
+		// Get the list of items to display
+		$items = $parent->getEntityItems($parent_entity, $search_filter);
+
+		// Set up the view
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'entity'.DS.'view.php');
+		$view = new AttachmentsViewEntity( );
+		$view->option = JRequest::getCmd('option');
+		$view->from = 'closeme';
+		$view->post_url = $post_url;
+		$view->parent_type = $parent_type;
+		$view->parent_entity = $parent_entity;
+		$view->entity_name = $entity_name;
+		$view->lists = $lists;
+		$view->items = $items;
+
+		$view->display();
+	}
+	
+
 	/**
 	 * Display links for the admin Utility functions
 	 */
