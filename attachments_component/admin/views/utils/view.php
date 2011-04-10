@@ -29,8 +29,27 @@ class AttachmentsViewAdminUtils extends JView
 	 */
 	function display()
 	{
+		$document =& JFactory::getDocument();
+		$app = JFactory::getApplication();
+		$uri = JFactory::getURI();
+
+		$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
+								  'text/css', null, array() );
+
+		$lang =& JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/media/attachments_rtl.css',
+									  'text/css', null, array() );
+			}
+
+		// Hide the vertical scrollbar using javascript
+		$hide_scrollbar = "window.addEvent('domready', function() {
+               document.documentElement.style.overflow = \"hidden\";
+               document.body.scroll = \"no\";});";
+		$document->addScriptDeclaration($hide_scrollbar);
+
 ?>
-<div class="attachmentsAdmin">
+<div class="attachmentsAdmin" id="utilsList">
   <h1><?php echo JText::_('ATTACHMENTS_ADMINISTRATIVE_UTILITY_COMMANDS'); ?></h1>
   <ul>
 <?php foreach ($this->entries as $link_html) {
