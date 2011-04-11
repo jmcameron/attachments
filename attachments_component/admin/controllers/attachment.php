@@ -4,29 +4,23 @@ defined('_JEXEC') or die('Restricted access');
  
 // import Joomla controllerform library
 jimport('joomla.application.component.controllerform');
+
+require_once(JPATH_COMPONENT.DS.'defines.php');
  
+
 /**
  * Attachment Controller
  */
 class AttachmentsControllerAttachment extends JControllerForm
 {
-	/** Supported save types for uploading/updating
-	 * ??? Refactor somewhere
+	/** ??? docs?
 	 */
-	var $_legal_save_types = array('upload', 'update');
-
-
-	/** Supported URI types for uploading/updating
-	 * ??? Refactor somewhere
-	 */
-	var $_legal_uri_types = array('file', 'url');
-
-
 	protected function checkEditId($context, $id)
 	{
 		// ??? workaround until ACL integration
 		return true;
 	}
+
 
 	/**
 	 * Add - create a new attachment
@@ -143,7 +137,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Determine the type of upload
 		$default_uri_type = 'file';
 		$uri_type = JRequest::getWord('uri', $default_uri_type);
-		if ( !in_array( $uri_type, $this->_legal_uri_types ) ) {
+		if ( !in_array( $uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			}
 
@@ -330,7 +324,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// See if we are uploading a file or URL
 		$new_uri_type = JRequest::getWord('uri_type');
-		if ( $new_uri_type AND !in_array( $new_uri_type, $this->_legal_uri_types ) ) {
+		if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$new_uri_type = '';
 			}
@@ -534,7 +528,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$attachment->parent_title = $parent_title;
 		$attachment->parent_published = $parent->isParentPublished($parent_id, $parent_entity);
 		$update = JRequest::getWord('update');
-		if ( $update AND !in_array($update, $this->_legal_uri_types) ) {
+		if ( $update AND !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
 			$update = false;
 			}
 
@@ -732,7 +726,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// See if we are updating a file or URL
 		$new_uri_type = JRequest::getWord('update');
-		if ( $new_uri_type AND !in_array( $new_uri_type, $this->_legal_uri_types ) ) {
+		if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$new_uri_type = '';
 			}
@@ -1054,7 +1048,3 @@ class AttachmentsControllerAttachment extends JControllerForm
 	
 
 }
-
-
-
-

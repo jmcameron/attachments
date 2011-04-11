@@ -1,6 +1,6 @@
 <?php
 /**
- * ???
+ * ??? add docs
  */
 
 defined('JPATH_BASE') or die;

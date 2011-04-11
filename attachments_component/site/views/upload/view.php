@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 jimport( 'joomla.application.component.view' );
 
+
 /**
  * View for the uploads
  *
@@ -23,8 +24,6 @@ jimport( 'joomla.application.component.view' );
  */
 class AttachmentsViewUpload extends JView
 {
-	var $_legal_uri_types = array('file', 'url');
-
 	/**
 	 * Display the view
 	 */

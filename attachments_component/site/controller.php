@@ -15,6 +15,8 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.application.component.controller' );
 
+require_once(JPATH_COMPONENT.DS.'defines.php');
+
 
 /**
  * The main attachments controller class (for the front end)
@@ -23,15 +25,6 @@ jimport( 'joomla.application.component.controller' );
  */
 class AttachmentsController extends JController
 {
-	/** Supported save types for uploading/updating
-	 */
-	var $_legal_save_types = array('upload', 'update');
-
-
-	/** Supported URI types for uploading/updating
-	 */
-	var $_legal_uri_types = array('file', 'url');
-
 
 	/**
 	 * Constructor
@@ -142,7 +135,7 @@ class AttachmentsController extends JController
 		// Determine the type of upload
 		$default_uri_type = 'file';
 		$uri_type = JRequest::getWord('uri', $default_uri_type);
-		if ( !in_array( $uri_type, $this->_legal_uri_types ) ) {
+		if ( !in_array( $uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$uri_type = 'file';
 			}
@@ -251,7 +244,7 @@ class AttachmentsController extends JController
 
 		// Figure out if we are uploading or updating
 		$save_type = JString::strtolower(JRequest::getWord('save_type'));
-		if ( !in_array($save_type, $this->_legal_save_types) ) {
+		if ( !in_array($save_type, AttachmentsDefines::$LEGAL_SAVE_TYPES) ) {
 			$errmsg = JText::_('ERROR_INVALID_SAVE_PARAMETERS') . ' (ERR 59)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -284,7 +277,7 @@ class AttachmentsController extends JController
 		if ( $save_type == 'upload' ) {
 			// See if we are uploading a file or URL
 			$new_uri_type = JRequest::getWord('uri_type');
-			if ( $new_uri_type AND !in_array( $new_uri_type, $this->_legal_uri_types ) ) {
+			if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
 				}
@@ -293,7 +286,7 @@ class AttachmentsController extends JController
 		elseif ( $save_type == 'update' ) {
 			// See if we are updating a file or URL
 			$new_uri_type = JRequest::getWord('update');
-			if ( $new_uri_type AND !in_array( $new_uri_type, $this->_legal_uri_types ) ) {
+			if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
 				}
@@ -750,7 +743,7 @@ class AttachmentsController extends JController
 
 		// Make sure the update parameter is legal
 		$update = JRequest::getWord('update');
-		if ( $update AND !in_array($update, $this->_legal_uri_types) ) {
+		if ( $update AND !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
 			$update = false;
 			}
 
