@@ -328,14 +328,13 @@ else
 </form>
 <?php
 
-// ???
-// // Show the existing attachments (if any)
-// if ( $attachment->parent_id ) {
-// 	/** Get the attachments controller class */
-// 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
-// 	$controller = new AttachmentsControllerAttachments();
-// 	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
-// 						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
-// }
+// Show the existing attachments (if any)
+if ( $attachment->parent_id ) {
+	/** Get the attachments controller class */
+	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
+	$controller = new AttachmentsControllerAttachments();
+	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
+						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
+}
 
 ?>

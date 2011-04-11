@@ -349,6 +349,10 @@ div#attachmentsPotentialParents {
 	font-size: 1.2em;
 }
 
+div.attachmentsList {
+	font-size: 1.1em;
+}
+
 /* Small fixes for form to edit parameters */
 
 input#paramsregister_url {

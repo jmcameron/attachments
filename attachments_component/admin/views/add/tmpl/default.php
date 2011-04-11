@@ -163,18 +163,15 @@ if ( $this->parent_title ) {
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 <?php
-
-							
-// ???
-// // Show the existing attachments
-// if ( $this->uri_type == 'file' AND $this->parent_id ) {
-// 	/** Get the Attachments controller class */
-// 	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
-// 	$controller = new AttachmentsControllerAttachments();
-// 	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
-// 			 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
-// }
-
+						
+// Show the existing attachments
+if ( $this->uri_type == 'file' AND $this->parent_id ) {
+	/** Get the Attachments controller class */
+	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
+	$controller = new AttachmentsControllerAttachments();
+	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
+			 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
+}
 
 // Show buttons for adding the attachments to other entitites (if appropriate)
 $editor = JRequest::getWord('editor');

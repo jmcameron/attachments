@@ -59,8 +59,8 @@ class AttachmentsControllerAttachments extends JController
 		$document =& JFactory::getDocument();
 
 		// Get an instance of the model
-		$this->addModelPath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'models');
-		$model =& $this->getModel('Attachments');
+		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'models'.DS.'attachments.php');
+		$model = new AttachmentsModelAttachments();
 		if ( !$model ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 81)';
 			JError::raiseError(500, $errmsg);
