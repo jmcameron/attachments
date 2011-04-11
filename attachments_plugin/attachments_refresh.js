@@ -23,6 +23,11 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
     if ( !alist ) {
 	alist = window.parent.document.getElementById(id);
 	}
+    if ( !alist ) {
+	// ??? This should not be necessary...
+	id = "attachmentsList_" + ptype + "_default_" + pid;
+	alist = window.parent.document.getElementById(id);
+	}
     var a = new Request({ 
                 url: url,
                 method: 'get', 
@@ -31,13 +36,10 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
 		   // Refresh the attachments list
                    alist.innerHTML = response;
 
-		   // Since the html has been replaced, we need to reconnect the events
-		   // (Note: addEvent checks to prevent adding duplicate events)
-		   $$('a.modal-button').each(function(el) {
-			el.addEvent('click', function(e) {
-			    new Event(e).stop();
-			    SqueezeBox.fromElement(el);
-			    });
+		   // Since the html has been replaced, we need to reconnect the modal button events
+		   SqueezeBox.initialize({});
+		   SqueezeBox.assign($$('a.modal-button'), {
+		        parse: 'rel'
 			});
 
 	    }}).send();
