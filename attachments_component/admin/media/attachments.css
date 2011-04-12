@@ -363,6 +363,55 @@ input#paramshide_attachments_for {
 	width: 100%;
 }
 
+dl#config-tabs-com_attachments_configuration h3 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+dl#config-tabs-com_attachments_configuration > dt.open {
+    background-color: #CACACA;
+}
+
+ul#attachments-options {
+    font-size: 1.2em;
+}
+
+ul#attachments-options > li label,
+ul#attachments-options > li select,
+ul#attachments-options > li textarea,
+ul#attachments-options > li input,
+ul#attachments-options > li > fieldset.radio
+{
+	float: none;
+	display: inline-block;
+	min-width: 2.75em;
+}
+
+ul#attachments-options > li {
+	background-color: #D9D9D9;
+	margin: 3px 0 3px 0;
+}
+
+ul#attachments-options > li textarea {
+	vertical-align: middle;
+}
+
+ul#attachments-options > li > label {
+	min-width: 20em;
+	width: 20em;
+	text-align: right;
+	padding: 0 8px 0 0;
+	margin: 0 2px 4px 0;
+}
+
+fieldset#jform_download_mode label {
+   width: 4em;
+}
+
+
+input#jform_register_url {
+    /* width: 60em; */
+}
 /* For icons */
 
 .icon-48-attachments  { background-image: url(attachments_logo48.png); }

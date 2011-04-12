@@ -14,38 +14,87 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-global $option;
+$template = JFactory::getApplication()->getTemplate();
 
-// Add the plugins stylesheet to style the list of attachments
-$document =&  JFactory::getDocument();
+// Load the tooltip behavior.
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.formvalidation');
+
+$document =& JFactory::getDocument();
 $uri = JFactory::getURI();
-$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/attachments.css', 
+
+$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
 						  'text/css', null, array() );
 
-$lang =& JFactory::getLanguage(); 
-
+$lang =& JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', 
+	$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/media/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 
 ?>
-	<form action="index.php" method="post" name="adminForm">
+<script type="text/javascript">
+	Joomla.submitbutton = function(task)
+	{
+		if (document.formvalidator.isValid(document.id('component-form'))) {
+			Joomla.submitform(task, document.getElementById('component-form'));
+		}
+	}
+</script>
+<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
 
-		<fieldset class="attachments">
-			<legend>
-				<?php echo JText::_( 'CONFIGURATION' ); ?>
-			</legend>
-			<?php echo $this->params->render(); ?>
-		</fieldset>
+	<!--
+	<fieldset>
+		<div class="fltrt">
+			<button type="button" onclick="Joomla.submitform('component.apply', this.form);">
+				<?php echo JText::_('JAPPLY');?></button>
+			<button type="button" onclick="Joomla.submitform('component.save', this.form);">
+				<?php echo JText::_('JSAVE');?></button>
+			<button type="button" onclick="window.parent.SqueezeBox.close();">
+				<?php echo JText::_('JCANCEL');?></button>
+		</div>
+		<div class="configuration" >
+			<?php echo JText::_($this->component->option.'_configuration') ?>
+		</div>
+	</fieldset>
+	-->
 
+	<?php
+	echo JHtml::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
+		$fieldSets = $this->form->getFieldsets();
+		foreach ($fieldSets as $name => $fieldSet) :
+			$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
+			echo JHtml::_('tabs.panel',JText::_($label), 'publishing-details');
+			if (isset($fieldSet->description) && !empty($fieldSet->description)) :
+				echo '<p class="tab-description">'.JText::_($fieldSet->description).'</p>';
+			endif;
+	?>
+			<ul class="config-option-list" id="attachments-options">
+			<?php
+			foreach ($this->form->getFieldset($name) as $field):
+			?>
+				<li>
+				<?php if (!$field->hidden) : ?>
+				<?php echo $field->label; ?>
+				<?php endif; ?>
+				<?php echo $field->input; ?>
+				</li>
+			<?php
+			endforeach;
+			?>
+			</ul>
+
+
+	<div class="clr"></div>
+	<?php
+		endforeach;
+	echo JHtml::_('tabs.end');
+	?>
+	<div>
 		<input type="hidden" name="id" value="<?php echo $this->component->id;?>" />
 		<input type="hidden" name="option" value="com_attachments" />
-		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
-		<input type="hidden" name="old_upload_dir" value="<?php echo $this->params->get('attachments_subdir', 'attachments'); ?>" />
-		<input type="hidden" name="task" value="editParams" />
-		<?php echo JHTML::_( 'form.token' ); ?>
-	</form>
-<?php
-
-?>
+		<input type="hidden" name="component" value="com_attachments" />
+		<input type="hidden" name="task" value="" />
+		<?php echo JHtml::_('form.token'); ?>
+	</div>
+</form>

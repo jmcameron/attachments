@@ -105,6 +105,9 @@ class AttachmentsController extends JController
 
 		$view->display();
 	}
+
+
+	
 	
 
 	/**

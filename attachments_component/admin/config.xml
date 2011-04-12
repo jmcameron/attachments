@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-  <fieldset name="basic"
+  <fieldset name="basic" id="attachments-fieldset"
 	    label="COM_ATTACHMENTS_CONFIG_BASIC_SETTINGS_LABEL">
     <field name="who_can_see" type="list" default="logged_in"
            label="WHO_CAN_SEE_ATTACHMENTS"
@@ -27,6 +27,35 @@
            label="AUTO_PUBLISH_WARNING" rows="2" cols="60"
            description="AUTO_PUBLISH_WARNING_DESCRIPTION">
     </field>
+    <field name="user_field_1_name" type="text" default=""
+           label="USER_DEFINED_FIELD_1_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </field>
+    <field name="user_field_2_name" type="text" default=""
+           label="USER_DEFINED_FIELD_2_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </field>
+    <field name="user_field_3_name" type="text" default=""
+           label="USER_DEFINED_FIELD_3_NAME" size="40"
+           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    </field>
+    <field name="max_filename_length" type="text" default="0"
+           label="MAX_FILENAME_URL_LENGTH" size="2"
+           description="MAX_FILENAME_URL_LENGTH_DESCRIPTION">
+    </field>
+    <field name="attachments_placement" type="list" default="end"
+           label="WHERE_SHOULD_ATTACHMENTS_BE_PLACED"
+           description="WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION">
+      <option value="beginning">AT_THE_BEGINNING</option>
+      <option value="end">AT_THE_END</option>
+      <option value="custom">CUSTOM_PLACEMENT</option>
+      <option value="disabled_filter">DISABLED_FILTER</option>
+      <option value="disabled_nofilter">DISABLED_NOFILTER</option>
+    </field>
+  </fieldset>
+
+  <fieldset name="formatting"
+	    label="COM_ATTACHMENTS_CONFIG_FORMATTING_SETTINGS_LABEL">
     <field name="show_column_titles" type="radio" default="0"
            label="SHOW_COLUMN_TITLES"
            description="SHOW_COLUMN_TITLES_DESCRIPTION">
@@ -85,30 +114,37 @@
       <option value="user_field_2">USER_DEFINED_FIELD_2</option>
       <option value="user_field_3">USER_DEFINED_FIELD_3</option>
     </field>
-    <field name="user_field_1_name" type="text" default=""
-           label="USER_DEFINED_FIELD_1_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+  </fieldset>
+
+  <fieldset name="visibility"
+	    label="COM_ATTACHMENTS_CONFIG_VISIBILITY_SETTINGS_LABEL">
+    <field name="hide_on_frontpage" type="radio" default="0"
+           label="HIDE_ATTACHMENTS_ON_FRONTPAGE"
+           description="HIDE_ATTACHMENTS_ON_FRONTPAGE_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
-    <field name="user_field_2_name" type="text" default=""
-           label="USER_DEFINED_FIELD_2_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    <field name="hide_on_blogs" type="radio" default="0"
+           label="HIDE_ATTACHMENTS_ON_BLOGS"
+           description="HIDE_ATTACHMENTS_ON_BLOGS_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
-    <field name="user_field_3_name" type="text" default=""
-           label="USER_DEFINED_FIELD_3_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+    <field name="hide_except_article_views" type="radio" default="0"
+           label="HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS"
+           description="HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
-    <field name="max_filename_length" type="text" default="0"
-           label="MAX_FILENAME_URL_LENGTH" size="2"
-           description="MAX_FILENAME_URL_LENGTH_DESCRIPTION">
+    <field name="always_show_category_attachments" type="radio" default="0"
+           label="ALWAYS_SHOW_CATEGORY_ATTACHMENTS"
+           description="ALWAYS_SHOW_CATEGORY_ATTACHMENTS_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
     </field>
-    <field name="attachments_placement" type="list" default="end"
-           label="WHERE_SHOULD_ATTACHMENTS_BE_PLACED"
-           description="WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION">
-      <option value="beginning">AT_THE_BEGINNING</option>
-      <option value="end">AT_THE_END</option>
-      <option value="custom">CUSTOM_PLACEMENT</option>
-      <option value="disabled_filter">DISABLED_FILTER</option>
-      <option value="disabled_nofilter">DISABLED_NOFILTER</option>
+    <field name="hide_attachments_for_categories" type="categories" default=""
+           label="HIDE_ATTACHMENTS_FOR_CATEGORIES" size="6"
+           description="HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
   </fieldset>
 
@@ -120,7 +156,7 @@
     </field>
     <field name="register_url" type="text"
            default="index.php?option=com_user&amp;task=register"
-           label="URL_TO_REGISTER" size="255"
+           label="URL_TO_REGISTER" size="80" maxwidth="255"
            description="URL_TO_REGISTER_DESCRIPTION">
     </field>
     <field name="file_link_open_mode" type="radio" default="in_same_window"
@@ -136,10 +172,6 @@
     <field name="attachments_titles" type="textarea" default=""
            label="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS" rows="3" cols="60"
            description="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION">
-    </field>
-    <field name="hide_attachments_for" type="text" default=""
-           label="HIDE_ATTACHMENTS_FOR" size="255"
-           description="HIDE_ATTACHMENTS_FOR_DESCRIPTION">
     </field>
     <field name="link_check_timeout" type="text" default="10"
            label="TIMEOUT_FOR_CHECKING_LINKS" size="3"
