@@ -142,8 +142,9 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
-    <field name="hide_attachments_for_categories" type="categories" default=""
-           label="HIDE_ATTACHMENTS_FOR_CATEGORIES" size="6"
+    <field name="hide_attachments_for_categories" type="category" default=""
+           label="HIDE_ATTACHMENTS_FOR_CATEGORIES" size="8"
+           extension="com_content" multiple="multiple"
            description="HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
   </fieldset>

@@ -397,7 +397,8 @@ ul#attachments-options > li {
 	margin: 3px 0 3px 0;
 }
 
-ul#attachments-options > li textarea {
+ul#attachments-options > li textarea,
+ul#attachments-options > li select {
 	vertical-align: middle;
 }
 
@@ -410,13 +411,10 @@ ul#attachments-options > li > label {
 }
 
 fieldset#jform_download_mode label {
-   width: 4em;
+	width: 4em;
 }
 
 
-input#jform_register_url {
-    /* width: 60em; */
-}
 /* For icons */
 
 .icon-48-attachments  { background-image: url(attachments_logo48.png); }
