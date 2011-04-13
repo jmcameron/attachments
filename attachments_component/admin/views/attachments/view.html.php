@@ -132,15 +132,18 @@ class AttachmentsViewAttachments extends JView
 		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');
 		JToolBarHelper::addNewX('attachment.add');
 		JToolBarHelper::editListX('attachment.edit');
-		JToolBarHelper::divider();
-		JToolBarHelper::publishList('attachments.publish');
-		JToolBarHelper::unpublishList('attachments.unpublish');
-		JToolBarHelper::divider();
-		JToolBarHelper::deleteListX('', 'attachments.delete');
+
 		JToolBarHelper::divider();
 
-		// JToolBarHelper::customX('editParams', 'options', '', JText::_('OPTIONS'), false);
-		JToolBarHelper::preferences('com_attachments');
+		JToolBarHelper::publishList('attachments.publish');
+		JToolBarHelper::unpublishList('attachments.unpublish');
+
+		JToolBarHelper::divider();
+
+		JToolBarHelper::deleteListX('', 'attachments.delete');
+
+		JToolBarHelper::divider();
+		JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
 		// Add a button for extra admin commands
 		$bar =&  JToolBar::getInstance('toolbar');

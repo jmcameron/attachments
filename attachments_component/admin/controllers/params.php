@@ -14,6 +14,22 @@ jimport('joomla.application.component.controllerform');
 class AttachmentsControllerParams extends JControllerForm
 {
 	/**
+	 * Class Constructor
+	 *
+	 * @param	array	$config		An optional associative array of configuration settings.
+	 * @return	void
+	 * @since	1.5
+	 */
+	function __construct($config = array())
+	{
+		parent::__construct($config);
+
+		// Map the apply task to the save method.
+		$this->registerTask('apply', 'save');
+	}
+
+
+	/**
 	 * Edit the component parameters
 	 */
 	public function edit()
@@ -21,10 +37,6 @@ class AttachmentsControllerParams extends JControllerForm
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
-
-		// load the component's language file
-		// ??? $lang =&  JFactory::getLanguage();
-		// ??? $lang->load( $component );
 
 		// Get the component model/table
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_config'.DS.'models'.DS.'component.php');
@@ -62,45 +74,91 @@ class AttachmentsControllerParams extends JControllerForm
 	/**
 	 * Save the parameters
 	 */
-	protected function _save()
+	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries
 		JRequest::checkToken() or jexit( 'Invalid Token' );
 
-		// Get a record for the componet table
-		$component = 'com_attachments';
-		$table =& JTable::getInstance('component');
-		if (!$table->loadByOption( $component )) {
-			$errmsg = JText::sprintf('NOT_A_VALID_COMPONENT_S', $component) . ' (ERR 30)';
-			JError::raiseWarning( 500, $errmsg );
-			return false;
+		$app = JFactory::getApplication();
+
+		// Get the old component parameters
+		jimport('joomla.application.component.helper');
+		$old_params =& JComponentHelper::getParams('com_attachments');
+		$old_secure = JRequest::getInt('old_secure');
+		$old_upload_dir = JRequest::getString('old_upload_dir');
+
+		// Set FTP credentials, if given.
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+
+		// Initialise variables.
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_config'.DS.'models'.DS.'component.php');
+		$model = new ConfigModelComponent();
+		$form	= $model->getForm();
+		$data	= JRequest::getVar('jform', array(), 'post', 'array');
+		$id		= JRequest::getInt('id');
+		$option	= JRequest::getCmd('component');
+
+		// Get the new component parameters
+		$new_secure = $data['secure'];
+		$new_upload_dir = $data['attachments_subdir'];
+
+		// Check if the user is authorized to do this.
+		if (!JFactory::getUser()->authorise('core.admin', $option))
+		{
+			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			return;
+		}
+
+		// Validate the posted data.
+		$return = $model->validate($form, $data);
+
+		// Check for validation errors.
+		if ($return === false) {
+
+			// Get the validation messages.
+			$errors	= $model->getErrors();
+
+			// Push up to three validation messages out to the user.
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if (JError::isError($errors[$i])) {
+					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
+				} else {
+					$app->enqueueMessage($errors[$i], 'warning');
+				}
 			}
 
-		// Load with data from the from
-		$post = JRequest::get( 'post' );
-		$post['option'] = 'com_attachments';
-		$table->bind( $post );
-		$new_params = new JParameter($table->params);
+			// Save the data in the session.
+			$app->setUserState('com_config.config.global.data', $data);
 
-		// pre-save checks
-		if (!$table->check()) {
-			$errmsg = $table->getError() . ' (ERR 31)';
-			JError::raiseWarning(500, $errmsg);
+			// Redirect back to the edit screen.
+			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit', false));
 			return false;
-			}
+		}
 
-		// save the changes
-		if (!$table->store()) {
-			$errmsg = $table->getError() . ' (ERR 32)';
-			JError::raiseWarning( 500, $errmsg );
+		// Attempt to save the configuration.
+		$data	= array(
+					'params'	=> $return,
+					'id'		=> $id,
+					'option'	=> $option
+					);
+		$return = $model->save($data);
+
+		// Check the return value.
+		if ($return === false)
+		{
+			// Save the data in the session.
+			$app->setUserState('com_config.config.global.data', $data);
+
+			// Save failed, go back to the screen and display a notice.
+			$message = JText::sprintf('JERROR_SAVE_FAILED', $model->getError());
+			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit'), false);
+
+			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit'), $message, 'error');
 			return false;
-			}
+		}
 
 		// Deal with any changes in the 'secure mode' (or upload directories)
-		$old_secure = JRequest::getInt('old_secure');
-		$new_secure = (int)$new_params->get('secure');
-		$old_upload_dir = JRequest::getString('old_upload_dir');
-		$new_upload_dir = $new_params->get('attachments_subdir', 'attachments');
 		if ( ($new_secure != $old_secure) OR
 			 ($new_upload_dir != $old_upload_dir) ) {
 
@@ -118,36 +176,29 @@ class AttachmentsControllerParams extends JControllerForm
 			$msg = JText::_( 'UPDATED_ATTACHMENTS_PARAMETERS' );
 			}
 
-		return $msg;
-	}
+		// Set the redirect based on the task.
+		switch ($this->getTask())
+		{
+			case 'apply':
+				$this->setRedirect('index.php?option=com_attachments&task=params.edit', $msg, 'message');
+				break;
 
-	/**
-	 * Save parameters and redirect back to the edit view
-	 */
-	public function apply()
-	{
-		$msg = AttachmentsControllerParams::_save();
-		$this->setRedirect('index.php?option=com_attachments&task=params.edit', $msg, 'message');
-	}
+			case 'save':
+			default:
+				$this->setRedirect('index.php?option=com_attachments', $msg, 'message');
+				break;
+		}
 
-
-	/**
-	 * Save parameters and go back to the main listing display
-	 */
-	function save()
-	{
-		$msg = AttachmentsControllerParams::_save();
-		$this->setRedirect('index.php?option=com_attachments', $msg, 'message');
+		return true;
 	}
 
 
 	/**
 	 * Save parameters and go back to the main listing display
 	 */
-	function cancel()
+	public function cancel($key = null)
 	{
 		$this->setRedirect('index.php?option=com_attachments');
 	}
-	
 
 }

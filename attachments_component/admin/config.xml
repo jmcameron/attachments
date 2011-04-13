@@ -40,7 +40,7 @@
            description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
     </field>
     <field name="max_filename_length" type="text" default="0"
-           label="MAX_FILENAME_URL_LENGTH" size="2"
+           label="MAX_FILENAME_URL_LENGTH" size="2" filter="integer"
            description="MAX_FILENAME_URL_LENGTH_DESCRIPTION">
     </field>
     <field name="attachments_placement" type="list" default="end"

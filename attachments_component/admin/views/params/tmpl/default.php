@@ -42,23 +42,6 @@ if ( $lang->isRTL() ) {
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
-
-	<!--
-	<fieldset>
-		<div class="fltrt">
-			<button type="button" onclick="Joomla.submitform('component.apply', this.form);">
-				<?php echo JText::_('JAPPLY');?></button>
-			<button type="button" onclick="Joomla.submitform('component.save', this.form);">
-				<?php echo JText::_('JSAVE');?></button>
-			<button type="button" onclick="window.parent.SqueezeBox.close();">
-				<?php echo JText::_('JCANCEL');?></button>
-		</div>
-		<div class="configuration" >
-			<?php echo JText::_($this->component->option.'_configuration') ?>
-		</div>
-	</fieldset>
-	-->
-
 	<?php
 	echo JHtml::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
 		$fieldSets = $this->form->getFieldsets();
@@ -94,7 +77,9 @@ if ( $lang->isRTL() ) {
 		<input type="hidden" name="id" value="<?php echo $this->component->id;?>" />
 		<input type="hidden" name="option" value="com_attachments" />
 		<input type="hidden" name="component" value="com_attachments" />
-		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
+		<input type="hidden" name="old_upload_dir" value="<?php echo $this->params->get('attachments_subdir', 'attachments'); ?>" />
+		<input type="hidden" name="task" value="params.edit" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>

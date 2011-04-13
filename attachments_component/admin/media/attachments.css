@@ -368,8 +368,13 @@ dl#config-tabs-com_attachments_configuration h3 {
     font-weight: bold;
 }
 
-dl#config-tabs-com_attachments_configuration > dt.open {
+
+dl#config-tabs-com_attachments_configuration > dt {
     background-color: #CACACA;
+}
+
+dl#config-tabs-com_attachments_configuration > dt.open {
+    background-color: transparent;
 }
 
 ul#attachments-options {

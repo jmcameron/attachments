@@ -350,7 +350,8 @@ class AttachmentsHelper
 		if ( $secure ) {
 			$hta_ok = false;
 
-			JFile::write($hta_fname, "order deny,allow\ndeny from all\n");
+			$line = "order deny,allow\ndeny from all\n";
+			JFile::write($hta_fname, $line);
 			if ( JFile::exists($hta_fname) ) {
 				$hta_ok = true;
 				}

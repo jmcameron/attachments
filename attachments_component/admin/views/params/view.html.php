@@ -32,14 +32,7 @@ class AttachmentsViewParams extends JView
 		$this->addToolBar();
 
 		parent::display($tpl);
-
-		// Deactivate the main menu
-		// ??? JRequest::setVar( 'hidemainmenu', 1 );
 	}
-
-// 			<button type="button" onclick="Joomla.submitform('component.apply', this.form);">
-// 			<button type="button" onclick="Joomla.submitform('component.save', this.form);">
-// 			<button type="button" onclick="window.parent.SqueezeBox.close();">
 
 	/**
 	 * Setting the toolbar
