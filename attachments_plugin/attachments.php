@@ -278,9 +278,10 @@ class plgContentAttachments extends JPlugin
 	 */
 	function onContentAfterSave($context, &$article, $isNew )
 	{
-		if ( !$isNew )
+		if ( !$isNew ) {
 			// If the article is not new, this step is not needed
 			return true;
+			}
 
 		$ctxinfo = explode('.', $context);
 		$parent_type = $ctxinfo[0];
@@ -297,9 +298,14 @@ class plgContentAttachments extends JPlugin
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
+		// Exit if there are no new attachments
+		if ( count($rows) == 0 ) {
+			return true;
+			}
+
 		// Change the attachment to the new article!
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$atrow =& JTable::getInstance('attachments', 'Table');
+		$atrow =& JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
 

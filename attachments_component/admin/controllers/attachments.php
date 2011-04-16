@@ -35,9 +35,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 *
 	 * @return the string (if $echo is false)
 	 */
-	function display($parent_id, $parent_type, $parent_entity,
-					 $title=null, $show_file_links=true, $allow_edit=true,
-					 $echo=true, $from=null)
+	public function display($parent_id, $parent_type, $parent_entity,
+							$title=null, $show_file_links=true, $allow_edit=true,
+							$echo=true, $from=null)
 	{
 		$document =& JFactory::getDocument();
 
@@ -111,7 +111,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	/**
 	 * Delete attachment(s)
 	 */
-	function delete()
+	public function delete()
 	{
 		// Check for request forgeries
 		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));

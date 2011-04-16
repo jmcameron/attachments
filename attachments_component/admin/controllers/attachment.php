@@ -438,9 +438,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 	        $uri = JFactory::getURI();
 			$base_url = $uri->base(true);
 			$parent_entity = $parent->getCanonicalEntity($parent_entity);
+			if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
+				$parent_entity = 'article';
+				}
 			echo "<script type=\"text/javascript\">
-			   window.parent.SqueezeBox.close();
-			   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+                   var fn = window.parent.refreshAttachments;
+			       window.parent.SqueezeBox.close();
+			       fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 			</script>";
 			exit();
 			}
@@ -958,9 +962,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 	        $uri = JFactory::getURI();
 			$base_url = $uri->base(true);
+			// ??? FIX THIS LATER!
+			if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
+				$parent_entity = 'article';
+				}
 			echo "<script type=\"text/javascript\">
-				   window.parent.SqueezeBox.close();
-				   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+                   var fn = window.parent.refreshAttachments;
+			       window.parent.SqueezeBox.close();
+			       fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 				   </script>";
 			exit();
 			}

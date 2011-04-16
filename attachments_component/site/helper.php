@@ -1608,18 +1608,24 @@ class AttachmentsHelper
 			if ( $app->isAdmin() ) {
 				// Get the html for the attachments list
 				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.
-							 'controllers'.DS.'attachments.php');
+							 'controllers'.DS.'list.php');
+
+				$controller = new AttachmentsControllerList();
+
+				$alist = $controller->display($parent_id, $parent_type, $parent_entity,
+											  null, $show_file_links, $allow_edit, false, $from);
 				}
 			else {
 				// Get the html for the attachments list
 				require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
 							 'controllers'.DS.'attachments.php');
+
+				$controller = new AttachmentsControllerAttachments();
+
+				$alist = $controller->display($parent_id, $parent_type, $parent_entity,
+											  null, $show_file_links, $allow_edit, false, $from);
 				}
 			
-			$controller = new AttachmentsControllerAttachments();
-
-			$alist = $controller->display($parent_id, $parent_type, $parent_entity,
-										  null, $show_file_links, $allow_edit, false, $from);
 			}
 
 		return $alist;

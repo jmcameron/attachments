@@ -152,7 +152,7 @@ if ( $this->parent_title ) {
 	<?php if ( $this->from == 'closeme' ): ?>
 	<div align="center">
 	   <input type="submit" name="Submit" class="button"
-			  onclick="javascript: submitbutton('saveNew')"
+			  onclick="javascript: submitbutton('attachment.saveNew')"
 			  value="<?php echo JText::_('UPLOAD_VERB'); ?>" />
 	   <span class="right">
 		  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
@@ -167,10 +167,10 @@ if ( $this->parent_title ) {
 // Show the existing attachments
 if ( $this->uri_type == 'file' AND $this->parent_id ) {
 	/** Get the Attachments controller class */
-	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
-	$controller = new AttachmentsControllerAttachments();
+	require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+	$controller = new AttachmentsControllerList();
 	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
-			 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
+						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
 
 // Show buttons for adding the attachments to other entitites (if appropriate)

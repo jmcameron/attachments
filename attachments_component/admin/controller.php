@@ -107,8 +107,6 @@ class AttachmentsController extends JController
 	}
 
 
-	
-	
 
 	/**
 	 * Display links for the admin Utility functions
@@ -192,6 +190,33 @@ class AttachmentsController extends JController
 		$view->display();
 	}
 	
+
+	/**
+	 * Return the attachments list as HTML (for use by Ajax)
+	 */
+	public function attachmentsList()
+	{
+		$parent_id = JRequest::getInt('parent_id', false);
+		$parent_type = JRequest::getWord('parent_type', '');
+		$parent_entity = JRequest::getWord('parent_entity', 'default');
+		$show_links = JRequest::getBool('show_links', true);
+		$allow_edit = JRequest::getBool('allow_edit', true);
+		$from = JRequest::getWord('from', 'closeme');
+		$title = '';
+
+		$response = '';
+
+		if ( ($parent_id === false) OR ($parent_type == '') ) {
+			return '';
+			}
+
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+		$controller = new AttachmentsControllerList();
+		$response = $controller->display($parent_id, $parent_type, $parent_entity,
+										 $title, $show_links, $allow_edit, false, $from);
+		echo $response;
+	}
+
 	
 }
 

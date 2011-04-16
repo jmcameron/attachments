@@ -71,7 +71,7 @@ class AttachmentsViewAttachments extends JView
 					   'html' . DS . 'com_attachments' . DS . 'attachments';
 		$this->addTemplatePath($templateDir);
 
-		// Load the language files from the backend
+		// Load the language files from the attachments plugin
 		$lang =&  JFactory::getLanguage();
 		$lang->load('plg_content_attachments', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'attachments');
 
@@ -115,8 +115,11 @@ class AttachmentsViewAttachments extends JView
 		$from = JRequest::getWord('from', 'closeme');
 		$parent_id = $model->getParentId();
 		$parent_type = $model->getParentType();
-		// ??? $parent_entity = $model->getParentEntity();
-		$parent_entity = 'article';
+		$parent_entity = JString::strtolower($model->getParentEntity());
+		// ?? fix this!
+		if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
+			$parent_entity = 'article';
+			}
 		$this->parent_id = $parent_id;
 		$this->parent_type = $parent_type;
 		$this->parent_entity = $parent_entity;

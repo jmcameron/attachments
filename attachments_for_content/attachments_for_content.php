@@ -228,7 +228,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Determine the task
 		if ( $app->isAdmin() ) {
-			$task = 'add';
+			$task = 'attachment.add';
 			}
 		else {
 			$task = 'upload';
@@ -248,7 +248,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		case 'category':
 			$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$url .= "&parent_type=com_content:$parent_entity&from=$from";
+		$url .= "&parent_type=com_content.$parent_entity&from=$from";
 		break;
 
 		default:

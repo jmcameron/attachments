@@ -320,7 +320,7 @@ else
 	<input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" value="<?php echo JText::_('SAVE'); ?>" />
 	<span class="right">
 	   <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-			  onClick="SqueezeBox.close();" />
+			  onClick="window.parent.SqueezeBox.close();" />
 	</span>
 </div>
 <?php endif; ?>
@@ -331,8 +331,8 @@ else
 // Show the existing attachments (if any)
 if ( $attachment->parent_id ) {
 	/** Get the attachments controller class */
-	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
-	$controller = new AttachmentsControllerAttachments();
+	require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+	$controller = new AttachmentsControllerList();
 	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
