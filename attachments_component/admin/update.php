@@ -71,6 +71,7 @@ class AttachmentsUpdate
 		return JText::sprintf( 'ADDED_ICON_FILENAMES_TO_N_ATTACHMENTS', $numUpdated );
 	}
 
+
 	/**
 	 * Update dates for all attachments with null dates
 	 */
@@ -124,6 +125,7 @@ class AttachmentsUpdate
 
 		return $numUpdated;
 	}
+
 
 	/**
 	 * Update the attachments table to the current release

@@ -13,6 +13,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+// ??? Add access check to make sure only Admins can run these commands
+
 /**
  * The controller for utils requests
  * (adapted from administrator/components/com_config/controllers/component.php)
@@ -43,8 +45,30 @@ class AttachmentsControllerUtils extends JController
 	}
 
 
-	// Define some functions for URLs to invoke the udpate functions
-	//	 (We could move these to an update controller...)
+	/**
+	 * Add icon filenames for attachments missing an icon
+	 * (See AttachmentsUpdate::add_icon_filenames() in update.php for details )
+	 */
+	function add_icon_filenames()
+	{
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		$msg = AttachmentsUpdate::add_icon_filenames();
+		$this->setRedirect('index.php?option=' . $this->option, $msg);
+	}
+
+
+	/**
+	 * Update any null dates in any attachments
+	 * (See AttachmentsUpdate::update_null_dates() in update.php for details )
+	 */
+	function update_null_dates()
+	{
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+
+		$numUpdated = AttachmentsUpdate::update_null_dates();
+		$msg = JText::sprintf( 'UPDATED_N_ATTACHMENTS', $numUpdated );
+		$this->setRedirect('index.php?option=' . $this->option, $msg);
+	}
 
 
 	/**
@@ -102,26 +126,6 @@ class AttachmentsControllerUtils extends JController
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
-
-		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
-			echo $this->_close_script;
-			}
-		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
-			}
-	}
-
-	/**
-	 * Update system filenames to attachments-2.0 format
-	 * (See AttachmentsUpdate::update_system_filenames() in update.php for details )
-	 */
-	function update_system_filenames()
-	{
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
-
-		$msg = AttachmentsUpdate::update_system_filenames();
 
 		if ( JRequest::getBool('close') ) {
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
