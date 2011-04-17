@@ -12,8 +12,6 @@
 
     <files>
         <filename plugin="attachments_for_content">attachments_for_content.php</filename>
-        <filename>plugins/com_content.php</filename>
-        <filename>plugins/com_content.ini</filename>
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6" method="upgrade">
-    <name>com_attachments</name>
+    <name>Attachments component</name>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
@@ -55,12 +55,10 @@
 	<folder>media</folder>
 	<folder>language</folder>
     </files>
+
     <administration>
 	<menu img="components/com_attachments/media/attachments.png">Attachments</menu>
-	<submenu>
-	    <menu link="index.php?option=com_attachments" view="attachments" 
-		  img="" alt="Attachments/Attachments">Attachments</menu>
-        </submenu>
+
 	<files folder="admin">
 	    <filename>attachments.php</filename>
 	    <filename>Changelog.php</filename>
@@ -97,7 +95,7 @@
 	    <filename>models/fields/index.html</filename>
 	    <filename>models/fields/modal/index.html</filename>
 	    <filename>models/fields/modal/parent.php</filename>
-	    <filename>models/forms/attachments.xml</filename>
+	    <filename>models/forms/attachment.xml</filename>
 	    <filename>models/forms/index.html</filename>
 	    <filename>models/index.html</filename>
 	    <filename>tables/attachment.php</filename>
@@ -142,4 +140,5 @@
 	    <language tag="en-GB">en-GB.com_attachments.menu.ini</language>
 	</languages>
     </administration>
+
 </extension>
