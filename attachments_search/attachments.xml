@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="plugin" group="search" method="upgrade">
-  <name>Search - Attachments</name>
-  <creationDate>February 19, 2011</creationDate>
-  <author>Jonathan M. Cameron</author>
-  <authorEmail>jmcameron@jmcameron.net</authorEmail>
-  <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-  <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
-  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-  <version>3.0</version>
-  <description>ATTACHMENTS_SEARCH_PLUGIN_DESCRIPTION</description>
+    <name>Search - Attachments</name>
+    <creationDate>February 19, 2011</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>3.0</version>
+    <description>ATTACHMENTS_SEARCH_PLUGIN_DESCRIPTION</description>
 
-  <files>
-    <filename plugin="attachments">attachments.php</filename>
-    <folder>language</folder>
-  </files>
+    <files>
+	<filename plugin="attachments">attachments.php</filename>
+	<filename>index.html</filename>
+	<folder>language</folder>
+    </files>
 
-  <config>
-    <fields name="params">
-      <fieldset name="basic">
-	<field name="search_limit" type="text" size="5" default="50"
-	       label="SEARCH_LIMIT" description="SEARCH_LIMIT_DESCRIPTION"/>
-      </fieldset>
-    </fields>
-  </config>
+    <config>
+	<fields name="params">
+	    <fieldset name="basic">
+		<field name="search_limit" type="text" size="5" default="50"
+		       label="SEARCH_LIMIT" description="SEARCH_LIMIT_DESCRIPTION"/>
+	    </fieldset>
+	</fields>
+    </config>
 
 </extension>
