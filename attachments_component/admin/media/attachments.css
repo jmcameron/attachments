@@ -105,13 +105,13 @@ table.adminlist td.showlinks a {
 a.downloadAttach  {
 	margin-left: 0px;
 	font-size: 80%;
-	color : red; 
+	color : #F00; 
 	text-decoration: none; 
 }
-a.downloadAttach:link	 { color : red; text-decoration: none; }
-a.downloadAttach:visited { color : red; text-decoration: none; }
-a.downloadAttach:hover	 { color : red; text-decoration: underline; }
-a.downloadAttach:active	 { color : red; text-decoration: none; }
+a.downloadAttach:link	 { color : #F00; text-decoration: none; }
+a.downloadAttach:visited { color : #F00; text-decoration: none; }
+a.downloadAttach:hover	 { color : #F00; text-decoration: underline; }
+a.downloadAttach:active	 { color : #F00; text-decoration: none; }
 
 
 
@@ -119,13 +119,13 @@ a.downloadAttach:active	 { color : red; text-decoration: none; }
 
 a.addAttach	  { 
 	font-weight: normal;
-	color: red;
+	color: #F00;
 	text-decoration: none;
 }
-a.addAttach:link	{ color : red; text-decoration: none; }
-a.addAttach:visited { color : red; text-decoration: none; } 
-a.addAttach:hover	{ color : red; text-decoration: underline; }
-a.addAttach:active	{ color : red; text-decoration: none; } 
+a.addAttach:link	{ color : #F00; text-decoration: none; }
+a.addAttach:visited { color : #F00; text-decoration: none; } 
+a.addAttach:hover	{ color : #F00; text-decoration: underline; }
+a.addAttach:active	{ color : #F00; text-decoration: none; } 
 
 a.addAttach img {
 	vertical-align: text-bottom;
@@ -165,8 +165,8 @@ div#componentVersion {
 	float: right;
 }
 
-#redborder {
-	border: 1px solid red;
+##F00border {
+	border: 1px solid #F00;
 }
 
 /* For the link to change the article */
@@ -276,8 +276,6 @@ form.attachmentsBackend select.inputbox {
 
 form.attachmentsBackend input[type="button"], 
 form.attachmentsBackend input[type="submit"],
-div.deleteWarning input[type="button"], 
-div.deleteWarning input[type="submit"]
 {
 	font-size: 1.3em;
 	font-weight: bold;
@@ -412,6 +410,48 @@ ul#attachments-options > li > label {
 
 fieldset#jform_download_mode label {
 	width: 4em;
+}
+
+/* For warning dialog */
+
+div.attachmentsWarning {
+    padding: 10px;
+    margin: 20px;
+}
+
+div.attachmentsWarning h1 {
+    line-height: normal;
+    font-size: 250%;
+    font-weight: bold;
+    text-align: center;
+    color: #F00;
+}
+
+div.attachmentsWarning h2 {
+    line-height: normal;
+    font-size: 175%;
+    font-weight: bold;
+    text-align: center;
+    margin: 1em 0 1em 0;
+}
+
+div.attachmentsWarning input[type="button"], 
+div.attachmentsWarning input[type="submit"]
+{
+	font-size: 1.3em;
+	font-weight: bold;
+	border: 1px solid #666; 
+	background-color: #EEE;
+}
+
+div.attachmentsWarning span.left {
+    width: 8em;
+    float: left;
+}
+
+div.attachmentsWarning span.right {
+    width: 8em;
+    float: right;
 }
 
 

@@ -139,6 +139,8 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					}
 				}
 
+			// ?? ADD CHECK HERE THAT USER HAS PERMISSIONS TO DELETE...
+
 			// Delete the entries in the attachments table
 			$query = "DELETE FROM #__attachments WHERE id IN ( $cids )";
 			$db->setQuery($query);
@@ -175,6 +177,10 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					JError::raiseError(500, $errmsg);
 					}
 				$parent_entity = $parent->getCanonicalEntity($parent_entity);
+				// ??? FIX THIS
+				if ( ($parent_type == 'com_content') AND ($parent_entity = 'default') ) {
+					$parent_entity = 'article';
+					}
 
 				// If there is no parent_id, the parent is being created, use the username instead
 				if ( !$parent_id ) {
@@ -188,8 +194,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	            $uri = JFactory::getURI();
 				$base_url = $uri->base(true);
 				echo "<script type=\"text/javascript\">
-				   window.parent.SqueezeBox.close();
-				   parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+                   var fn = window.parent.refreshAttachments;
+			       window.parent.SqueezeBox.close();
+			       fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 				   </script>";
 				exit();
 				}
