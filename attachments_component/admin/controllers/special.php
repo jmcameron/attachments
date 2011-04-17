@@ -38,7 +38,11 @@ class AttachmentsControllerSpecial extends JController
 	}
 
 
-	/** Show the current SEF mode */
+	/**
+	 * Show the current SEF mode
+	 *
+	 * This is for system testing purposes only
+	 */
 	function showSEF()
 	{
 		$app = JFactory::getApplication();
@@ -50,21 +54,50 @@ class AttachmentsControllerSpecial extends JController
 	}
 
 
-	/** Show a list of all attachment IDs */
+	/**
+	 * Show a list of all attachment IDs
+	 *
+	 * This is for system testing purposes only
+	 */
 	function listAttachmentIDs()
 	{
 		$db =& JFactory::getDBO();
-		$query = "SELECT attach.id,parent_id,parent_type,art.catid FROM #__attachments as attach ";
-		$query .= "LEFT JOIN #__content as art ON attach.parent_id = art.id ORDER BY art.id";
+
+		$query = "SELECT att.id,parent_id,parent_type,parent_entity,art.catid FROM #__attachments as att ";
+		$query .= "LEFT JOIN #__content as art ON att.parent_id = art.id WHERE att.parent_entity='ARTICLE' ORDER BY art.id";
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
+		$arows = $db->loadObjectList();
+
+		$query = "SELECT att.id,att.parent_id,parent_type,parent_entity FROM #__attachments as att ";
+		$query .= "LEFT JOIN #__categories as c ON att.parent_id = c.id WHERE att.parent_entity='CATEGORY' ORDER BY c.id";
+		$db->setQuery($query);
+		$crows = $db->loadObjectList();
+
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
-		echo "\n<html><head><title>Attachment IDs</title></head><body>\n";
-		echo "Attachment IDS:";
-		foreach ($rows as $row) {
-			echo " " . $row->id . "/" . $row->parent_id . "/" . $row->parent_type . "/" . $row->catid;
+		echo '<html><head><title>Attachment IDs</title></head><body>';
+		echo 'Attachment IDs:<br/>';
+
+		// Do the article attachments
+		foreach ($arows as $row) {
+			if ( empty($row->id) ) {
+				$row->id = '0';
+				}
+			if ( empty($row->catid) ) {
+				$row->catid = '0';
+				}
+			$parent_entity = JString::strtolower($row->parent_entity);
+			echo ' ' . $row->id . '/' . $row->parent_id . '/' .
+				$row->parent_type . '/' . $parent_entity . '/' . $row->catid . '<br/>';
 			}
-		echo "\n</body></html>";
+		foreach ($crows as $row) {
+			if ( empty($row->id) ) {
+				$row->id = '0';
+				}
+			$parent_entity = JString::strtolower($row->parent_entity);
+			echo ' ' . $row->id . '/' . $row->parent_id . '/' .
+					$row->parent_type . '/' . $parent_entity . '/' . $row->parent_id . '<br/>';
+			}
+		echo '</body></html>';
 		exit();
 	}
 
