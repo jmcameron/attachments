@@ -12,6 +12,7 @@
 
     <files>
 	<filename plugin="show_attachments">show_attachments.php</filename>
+	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
 
