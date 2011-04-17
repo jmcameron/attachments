@@ -15,10 +15,11 @@
 	<filename>attachments.css</filename>
 	<filename>attachments1.css</filename>
 	<filename>attachments2.css</filename>
-	<filename>attachments_rtl.css</filename>
 	<filename>attachments2_rtl.css</filename>
 	<filename>attachments_caching.js</filename>
 	<filename>attachments_refresh.js</filename>
+	<filename>attachments_rtl.css</filename>
+	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
 
