@@ -92,7 +92,7 @@ class AttachmentsController extends JController
 		$items = $parent->getEntityItems($parent_entity, $search_filter);
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'entity'.DS.'view.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'entity'.DS.'view.html.php');
 		$view = new AttachmentsViewEntity( );
 		$view->option = JRequest::getCmd('option');
 		$view->from = 'closeme';
