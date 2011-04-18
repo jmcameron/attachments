@@ -93,7 +93,7 @@ class AttachmentsControllerList extends JController
 		$view->update_url = $update_url;
 
 		// Construct the delete URL template
-		$delete_url = "index.php?option=com_attachments&task=delete_warning&id=%d";
+		$delete_url = "index.php?option=com_attachments&task=attachment.delete_warning&id=%d";
 		$delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
 		$delete_url .= "&from=$from&tmpl=component";
 		$view->delete_url = $delete_url;
