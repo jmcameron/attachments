@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package" version="1.6">
-    <name>Attachments for Joomla 1.6 package</name>
-    <packagename>Attachments</packagename>
+    <name>Package: Attachments for Joomla 1.6</name>
+    <packagename>attachments</packagename>
     <version>3.0</version>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-    <url>http://joomlacode.org/gf/project/attachments/</url>
     <packager>Jonathan M. Cameron</packager>
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
     <creationDate>February 19, 2011</creationDate>
@@ -15,14 +14,14 @@
 
     <files folder="packages">
 	<file type="plugin" id="attachments"			group="content">attachments_plugin.zip</file>
-	<file type="plugin" id="attachments_search"		group="search">attachments_search.zip</file>
+	<file type="plugin" id="attachments"		        group="search">attachments_search.zip</file>
 	<file type="plugin" id="attachments_plugin_framework"	group="attachments">attachments_plugin_framework.zip</file>
 	<file type="plugin" id="attachments_for_content"	group="attachments">attachments_for_content.zip</file>
 	<file type="plugin" id="show_attachments"		group="system">show_attachments_in_editor_plugin.zip</file>
 	<file type="plugin" id="add_attachment"			group="editors-xtd">add_attachment_btn_plugin.zip</file>
 	<file type="plugin" id="insert_attachments_token"	group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
 
-	<file type="component"  id="com_attachments">attachments_component.zip</file>
+	<file type="component" id="com_attachments">attachments_component.zip</file>
     </files>
 
 </extension>
