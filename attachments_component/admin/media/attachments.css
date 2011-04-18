@@ -425,6 +425,7 @@ div.attachmentsWarning h1 {
     font-weight: bold;
     text-align: center;
     color: #F00;
+    border-bottom: 1px solid #DDD;
 }
 
 div.attachmentsWarning h2 {
@@ -435,14 +436,16 @@ div.attachmentsWarning h2 {
     margin: 1em 0 1em 0;
 }
 
+*
 div.attachmentsWarning input[type="button"], 
 div.attachmentsWarning input[type="submit"]
 {
 	font-size: 1.3em;
 	font-weight: bold;
 	border: 1px solid #666; 
-	background-color: #EEE;
+	background-color: #DDD;
 }
+
 
 div.attachmentsWarning span.left {
     width: 8em;
