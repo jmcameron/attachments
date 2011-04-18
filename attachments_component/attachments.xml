@@ -61,6 +61,10 @@
 
     <administration>
 	<menu img="components/com_attachments/media/attachments.png">ATTACHMENTS</menu>
+	<submenu>
+	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ADD_NEW_ATTACHMENT</menu>
+	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
+	</submenu>
 
 	<files folder="admin">
 	    <filename>attachments.php</filename>
