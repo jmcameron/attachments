@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6" method="upgrade">
-    <name>Attachments component</name>
+    <name>com_attachments</name>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
@@ -53,11 +53,14 @@
 	<filename>views/upload/metadata.xml</filename>
 	<filename>views/upload/view.php</filename>
 	<folder>media</folder>
-	<folder>language</folder>
     </files>
 
+    <languages folder="site">
+	<language tag="en-GB">en-GB.com_attachments.ini</language>
+    </languages>
+
     <administration>
-	<menu img="components/com_attachments/media/attachments.png">Attachments</menu>
+	<menu img="components/com_attachments/media/attachments.png">ATTACHMENTS</menu>
 
 	<files folder="admin">
 	    <filename>attachments.php</filename>
@@ -137,7 +140,7 @@
 	</files>
 	<languages folder="admin">
 	    <language tag="en-GB">en-GB.com_attachments.ini</language>
-	    <language tag="en-GB">en-GB.com_attachments.menu.ini</language>
+	    <language tag="en-GB">en-GB.com_attachments.sys.ini</language>
 	</languages>
     </administration>
 
