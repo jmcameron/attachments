@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" version="1.6" method="upgrade">
-    <name>Content - Attachments</name>
+    <name>plg_content_attachments</name>
     <creationDate>February 19, 2011</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
