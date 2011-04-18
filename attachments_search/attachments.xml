@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="plugin" group="search" method="upgrade">
-    <name>Search - Attachments</name>
+    <name>plg_search_attachments</name>
     <creationDate>February 19, 2011</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
