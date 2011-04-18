@@ -1054,6 +1054,41 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$view->normal_update_url = JRoute::_($normal_update_url);
 			}
 	}
+
+
+	/**
+	 * Put up a dialog to double-check before deleting an attachment
+	 */
+	public function delete_warning()
+	{
+		// Make sure we have a valid attachment ID
+		$id = JRequest::getInt('id', null);
+		if ( is_numeric($id) ) {
+			$id = (int)$id;
+			}
+		else {
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 105)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		// Set up the view
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'warning'.DS.'view.html.php');
+		$view = new AttachmentsViewWarning( );
+		$view->parent_id = $id;
+		$view->option = JRequest::getCmd('option');
+		$view->from = JRequest::getWord('from');
+		$view->tmpl = JRequest::getWord('tmpl');
+
+		// Prepare for the query
+		$view->warning_title = JText::_('WARNING');
+		$view->warning_question = JText::_('REALLY_DELETE_ATTACHMENT');
+		$view->action_button_label = JText::_('DELETE');
+
+		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$id;
+		$view->action_url .= "&ampfrom=" . $view->from;
+
+		$view->display();
+	}
 	
 
 }
