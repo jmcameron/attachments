@@ -42,6 +42,18 @@ function AttachmentsBuildRoute(&$query)
 
 	$segments = array();
 
+	// get a menu item based on Itemid or currently active
+	$app		= JFactory::getApplication();
+	$menu		= $app->getMenu();
+
+	// we need a menu item.  Either the one specified in the query, or the current active one if none specified
+	if (empty($query['Itemid'])) {
+		$menuItem = $menu->getActive();
+	}
+	else {
+		$menuItem = $menu->getItem($query['Itemid']);
+	}
+
 	$task = $query['task'];
 
 	if ( isset($query['task']) ) {
