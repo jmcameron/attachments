@@ -13,8 +13,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-define('AttachmentsComponentVersion', '3.0');
-
 
 /**
  * A class for attachments helper functions
