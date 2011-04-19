@@ -162,11 +162,8 @@ div.attachmentsAdmin li a:active  { color: #0000FF; text-decoration: none; }
 
 div#componentVersion {
 	font-style: italic;
-	float: right;
-}
-
-div#componentVersion a {
 	font-size: 1.2em;
+	float: right;
 }
 
 ##F00border {
