@@ -570,36 +570,26 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 			}
 
-		// Get the options and scan them
-		$hide_attachments_for =
-			JString::str_ireplace('-', '_', JString::trim($params->get('hide_attachments_for', '')));
-		$hide_before_readmore = false;
-		$all_but_article_views = false;
-		$always_show_category_attachments = false;
-		if ( $hide_attachments_for <> '' ) {
-			$hide_specs = explode(',', $hide_attachments_for);
-			$view = JRequest::getCmd('view');
-			foreach ( $hide_specs as $hide ) {
-				if ( JString::trim($hide) == 'hide_before_readmore' ) {
-					$hide_before_readmore = true;
-					}
-				elseif ( JString::trim($hide) == 'all_but_article_views' ) {
-					$all_but_article_views = true;
-					}
-				elseif ( JString::trim($hide) == 'always_show_category_attachments' ) {
-					$always_show_category_attachments = true;
-					}
-				}
-			}
-		if( $hide_before_readmore && isset($parent->readmore) && $parent->readmore ) {
+		// Check to see if it should be hidden with readmore
+		$hide_with_readmore = $params->get('hide_with_readmore', false);
+		if( $hide_with_readmore && isset($parent->readmore) && $parent->readmore ) {
 			return true;
 			}
+
+		// Get the options
+		$all_but_article_views = $params->get('hide_except_article_views', false);
 
 		// Make sure the parent is valid and get info about it
 		$db =& JFactory::getDBO();
 
-		if ( $parent_entity == 'category' AND $pclass == 'JTableContent' ) {
+		if ( $parent_entity == 'category' ) {
 
+			// ??? This code is apparently never invoked because categories don't invoke content plugins
+			$errmsg = 'ERROR in attachment_for_content for categories!';
+			JError::raiseError(500, $errmsg);
+
+			// Handle categories
+			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
 			if ( $always_show_category_attachments ) {
 				return false;
 				}
@@ -644,34 +634,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 			// See if the options apply to this article
 			$created_by = (int)$rows[0]->created_by;
-			$sectionid = 0; // ??? 
 			$catid = (int)$rows[0]->catid;
 
 			// First, check to see whether the attachments should be hidden for this parent
-			if ( $hide_attachments_for <> '' ) {
-				$hide_specs = explode(',', $hide_attachments_for);
-				$ignore_specs = Array('frontpage', 'blog', 'all_but_article_views',
-									  'hide_before_readmore',
-									  'always_show_category_attachments');
-				foreach ( $hide_specs as $hide ) {
-					if ( in_array(JString::trim($hide), $ignore_specs) ) {
-						continue;
-						}
-					else {
-						// We assume it must be section/category specs
-						$sect_cat = explode('/', $hide);
-						$hide_sect_id = (int)$sect_cat[0];
-						$hide_cat_id = -1;
-						if ( count($sect_cat) > 1 )
-							$hide_cat_id = (int)$sect_cat[1];
-						if ( ($hide_cat_id == -1) and ($sectionid == $hide_sect_id) ) {
-							return true;
-							}
-						if ( ($sectionid == $hide_sect_id) and ($catid == $hide_cat_id) ) {
-							return true;
-							}
-						}
-					}
+			$hide_attachments_for_categories = $params->get('hide_attachments_for_categories',Array());
+			if ( in_array( $catid, $hide_attachments_for_categories) ) {
+				return true;
 				}
 			}
 

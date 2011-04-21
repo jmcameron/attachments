@@ -124,6 +124,12 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
+    <field name="hide_with_readmore" type="radio" default="0"
+           label="HIDE_ATTACHMENTS_WITH_READMORE"
+           description="HIDE_ATTACHMENTS_WITH_READMORE_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
     <field name="hide_on_blogs" type="radio" default="0"
            label="HIDE_ATTACHMENTS_ON_BLOGS"
            description="HIDE_ATTACHMENTS_ON_BLOGS_DESCRIPTION">

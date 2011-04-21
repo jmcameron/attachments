@@ -655,25 +655,18 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
 	{
+		$layout = JRequest::getCmd('layout');
+
 		// Check to see whether the attachments should be hidden on the front page
-		$hide_attachments_for =
-			JString::str_ireplace('-', '_', JString::trim($params->get('hide_attachments_for', '')));
-		if ( $hide_attachments_for <> '' ) {
-			$hide_specs = explode(',', $hide_attachments_for);
-			foreach ( $hide_specs as $hide ) {
-				if ( JString::trim($hide) == 'frontpage' ) {
-					$view = JRequest::getCmd('view');
-					if ( $view == 'frontpage' ) {
-						return true;
-						}
-					}
-				if ( JString::trim($hide) == 'blog' ) {
-					$layout = JRequest::getCmd('layout');
-					if ( $layout == 'blog' ) {
-						return true;
-						}
-					}
-				}
+		$hide_on_frontpage = $params->get('hide_on_frontpage', false);
+		if ( $hide_on_frontpage AND (JRequest::getVar('view') == 'featured') ) {
+			return true;
+			}
+
+		// Hide on blog pages?
+		$hide_on_blogs = $params->get('hide_on_blogs', false);
+		if ( $hide_on_blogs AND ($layout == 'blog') ) {
+			return true;
 			}
 
 		return false;

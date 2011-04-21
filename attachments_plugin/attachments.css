@@ -13,6 +13,7 @@ div.attachmentsList table {
     border: 1px solid #C0C0C0;
     font-size: 90%;
     font-weight: bold;
+    line-height: 160%;
 }
 
 #main div.attachmentsList caption,
