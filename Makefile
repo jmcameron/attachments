@@ -1,7 +1,8 @@
-VERSION = '3.0'
-# DATE = 'February 19, 2011'
+VERSION = "3.0 pre-Alpha"
+VERSION_ZIPFILE = "3.0-pre-alpha"
+# DATE = "February 19, 2011"
 
-all: parts attachments-$(VERSION).zip
+all: parts attachments-$(VERSION_ZIPFILE).zip
 
 INSTALLS = attachments_plugin \
 	   add_attachment_btn_plugin \
@@ -29,9 +30,9 @@ parts: $(ZIPS)
 	@(cd $*; zip -r ../$@ * $(ZIPIGNORES))
 
 
-attachments-$(VERSION).zip: $(ZIPS)
+attachments-$(VERSION_ZIPFILE).zip: $(ZIPS)
 	@echo "-------------------------------------------------------"
-	@echo "Creating extension zip file: attachments-$(VERSION).zip"
+	@echo "Creating extension zip file: attachments-$(VERSION_ZIPFILE).zip"
 	@mv $(INSTALLS:=.zip) pkg_attachments/packages/
 	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
 
@@ -42,15 +43,15 @@ clean:
 
 veryclean: clean
 	@rm -f $(ZIPS) pkg_attachments/packages/*.zip
-	@rm -f attachments-$(VERSION).zip
+	@rm -f attachments-$(VERSION_ZIPFILE).zip
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
-	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'helper.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec ./fixvd {} \;
+	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec ./fixvd {} \;
 
 revertversions:
 	@echo "Reverting all install xml files"
-	@find . \( -name 'helper.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
+	@find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
 
 check: 
 	find . -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual)'
