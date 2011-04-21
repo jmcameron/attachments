@@ -24,6 +24,44 @@ jimport('joomla.event.plugin');
  */
 class plgSystemShow_attachments extends JPlugin
 {
+
+	/**
+	 * Attach the Attachments CSS sheets for category pages
+	 *
+	 * @param	string	The context of the content being passed to the plugin.
+	 * @param	object	The article object.  Note $article->text is also available
+	 * @param	object	The article params
+	 * @param	int		The 'page' number
+	 *
+	 * @return	void
+	 */
+	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	{  
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getWord('layout');
+
+		if ( ($view == 'category') AND ($layout == 'blog') ) {
+			
+			$app = JFactory::getApplication();
+			if ( $app->isAdmin() ) {
+				return;
+				}
+
+			$doc =& JFactory::getDocument();
+	        $uri = JFactory::getURI();
+			$base_url = $uri->root(true);
+
+			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css',
+								 'text/css', null, array() );
+			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments1.css',
+								 'text/css', null, array() );
+
+			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
+			$doc->addScript( $js_path );
+			}
+	}
+
+
 	/**
 	 * Inserts the attachments list above the row of xtd-buttons
 	 *
@@ -94,20 +132,20 @@ class plgSystemShow_attachments extends JPlugin
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
-		// If we cannot determine the article ID
-		if (!$parent_id) {
-			if ( $task == 'add' OR (($view == 'article') AND ( $layout=='edit'))
-				                OR (($view == 'form') AND ( $layout=='edit')) ) {
-				// If we are creating an article, note that
-				$parent_id = 0;
-				}
-			else {
-				// Otherwise do not show attachments
-				return;
-				}
-			}
-
 		if ( ($layout =='edit') OR ( ($view == 'article') AND ( $layout=='form') ) ) {
+
+			// If we cannot determine the article ID
+			if (!$parent_id) {
+				if ( $task == 'add' OR (($view == 'article') AND ( $layout=='edit'))
+					 OR (($view == 'form') AND ( $layout=='edit')) ) {
+					// If we are creating an article, note that
+					$parent_id = 0;
+					}
+				else {
+					// Otherwise do not show attachments
+					return;
+					}
+				}
 
 			// Load the code from the attachments plugin to create the list
 			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
@@ -159,6 +197,55 @@ class plgSystemShow_attachments extends JPlugin
 			$body = str_replace('<div id="editor-xtd-buttons">',
 								$attachments . '<div id="editor-xtd-buttons">', $body);
 			JResponse::setBody($body);
+			}
+
+		elseif ( $parent_id AND ($view == 'category') AND ($layout == 'blog') ) {
+
+			// Display attachments lists for category descriptions!
+
+			$parent_entity = 'category';
+
+			// Only dislay this in the front end
+			$app = JFactory::getApplication();
+			if ( $app->isAdmin() ) {
+				return;
+				}
+
+			// Load the code from the attachments plugin to create the list
+			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+
+			// Add the refresh Javascript
+	        $uri = JFactory::getURI();
+			$base_url = $uri->root(true);
+			$doc =& JFactory::getDocument();
+
+
+			// Get the article/parent handler
+			$parent =& $apm->getAttachmentsPlugin($parent_type);
+			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
+
+			// Construct the attachment list
+			$Itemid = JRequest::getInt( 'Itemid', 1);
+			$from = '';
+			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
+																 $user_can_add, $Itemid, $from, true, false);
+
+			// If the attachments list is empty, insert an empty div for it
+			if ( $attachments == '' ) {
+				jimport('joomla.application.component.helper');
+				$params =& JComponentHelper::getParams('com_attachments');
+				$class_name = $params->get('attachments_table_style', 'attachmentsList');
+				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
+				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
+				}
+
+			// Insert the attachments above the editor buttons
+			// NOTE: Assume that anyone editing the article can see its attachments
+			$body = JResponse::getBody();
+			$body = str_replace('<div class="clr"></div>',
+			 					$attachments . '<div class="clr"></div>', $body);
+			JResponse::setBody($body);
+
 			}
 		else {
 			return;
