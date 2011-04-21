@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 3.0 - February 19, 2011**
+**Version 3.0 pre-Alpha - April 20, 2011**
 
 .. contents::
     :depth: 1
