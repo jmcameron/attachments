@@ -34,11 +34,11 @@ parts: $(ZIPS)
 
 $(ZIPFILE): $(ZIPS)
 	@echo "-------------------------------------------------------"
-	@echo "Creating extension zip file: attachments-$(VERSION2).zip"
+	@echo "Creating extension zip file: $(ZIPFILE)"
 	@mv $(INSTALLS:=.zip) pkg_attachments/packages/
 	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
 	@echo "-------------------------------------------------------"
-	@echo "Done."
+	@echo "Finished creating package $(ZIPFILE)."
 	@echo
 
 clean:
@@ -47,7 +47,7 @@ clean:
 
 veryclean: clean
 	@rm -f $(ZIPS) pkg_attachments/packages/*.zip
-	@rm -f attachments-$(VERSION2).zip
+	@rm -f $(ZIPFILE).zip
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
