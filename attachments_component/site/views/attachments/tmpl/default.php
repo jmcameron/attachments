@@ -145,6 +145,10 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		$filename = $row->filename;
 	else
 		$filename = $row->display_name;
+	$actual_filename = $row->filename;
+	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
+	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
+	// $filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
 	if ( $this->show_file_links ) {
 		if ( $row->uri_type == 'file' ) {
 			if ( $this->secure ) {
@@ -156,7 +160,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 				   $url = utf8_encode($url);
 				   }
 				}
-			$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $row->filename);
+			$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
 			$user =& JFactory::getUser();
@@ -181,7 +185,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		$html .= "<a class=\"at_url\" href=\"$url\"$target target=\"_blank\" title=\"$tooltip\">$filename</a>";
 		}
 	else {
-		$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $row->filename);
+		$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
 		$html .= "<img src=\"$icon_url\" alt=\"$tooltip\" />&nbsp;";
 		$html .= $filename;
 		}
@@ -261,7 +265,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		// Create the edit link
 		$update_url = sprintf($this->update_url, (int)$row->id);
 		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
-		$tooltip = JText::_('UPDATE_THIS_FILE') . ' (' . $row->filename . ')';
+		$tooltip = JText::_('UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 580}}\"";
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
@@ -269,7 +273,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		// Create the delete link	
 		$delete_url = sprintf($this->delete_url, (int)$row->id);
 		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
-		$tooltip = JText::_('DELETE_THIS_FILE') . ' (' . $row->filename . ')';
+		$tooltip = JText::_('DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$del_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
 		$del_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\"";
 		$del_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";
