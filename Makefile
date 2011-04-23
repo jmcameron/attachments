@@ -1,8 +1,10 @@
 VERSION = "3.0 pre-Alpha"
-VERSION_ZIPFILE = "3.0-pre-alpha"
+VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
+ZIPFILE = attachments-$(VERSION2).zip
+
 # DATE = "February 19, 2011"
 
-all: parts attachments-$(VERSION_ZIPFILE).zip
+all: parts $(ZIPFILE)
 
 INSTALLS = attachments_plugin \
 	   add_attachment_btn_plugin \
@@ -25,17 +27,19 @@ parts: $(ZIPS)
 
 %.zip:
 	@echo "-------------------------------------------------------"
-	@echo $*
+	@echo "Creating zip file for: $*"
 	@rm -f $@
 	@(cd $*; zip -r ../$@ * $(ZIPIGNORES))
 
 
-attachments-$(VERSION_ZIPFILE).zip: $(ZIPS)
+$(ZIPFILE): $(ZIPS)
 	@echo "-------------------------------------------------------"
-	@echo "Creating extension zip file: attachments-$(VERSION_ZIPFILE).zip"
+	@echo "Creating extension zip file: attachments-$(VERSION2).zip"
 	@mv $(INSTALLS:=.zip) pkg_attachments/packages/
 	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
-
+	@echo "-------------------------------------------------------"
+	@echo "Done."
+	@echo
 
 clean:
 	@find . -name '*~' -exec rm {} \;
@@ -43,7 +47,7 @@ clean:
 
 veryclean: clean
 	@rm -f $(ZIPS) pkg_attachments/packages/*.zip
-	@rm -f attachments-$(VERSION_ZIPFILE).zip
+	@rm -f attachments-$(VERSION2).zip
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
