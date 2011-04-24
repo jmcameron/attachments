@@ -949,10 +949,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 			     	$errmsg = $msg;
 				if ( DS == "\\" ) {
 				    // Fix filename on Windows system so alert can display it
-				    $errmsg = JString::str_ireplace("\\", "\\\\", $errmsg);
+				    $errmsg = str_replace("\\", "\\\\", $errmsg);
 				    }
-				$errmsg = JString::str_ireplace("'", "\'", $errmsg);
-				$errmsg = JString::str_ireplace("<br />", "\\n", $errmsg);
+				$errmsg = str_replace("'", "\'", $errmsg);
+				$errmsg = str_replace("<br />", "\\n", $errmsg);
 				echo "<script type=\"text/javascript\"> alert('$errmsg');  window.history.go(-1); </script>";
 				exit();
 				}
