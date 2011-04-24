@@ -63,8 +63,8 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
-		$parent->loadLanguage();
-		$entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Get the URL to repost (for filtering)
 		$post_url = $parent->getSelectEntityURL($parent_entity);
@@ -99,7 +99,7 @@ class AttachmentsController extends JController
 		$view->post_url = $post_url;
 		$view->parent_type = $parent_type;
 		$view->parent_entity = $parent_entity;
-		$view->entity_name = $entity_name;
+		$view->parent_entity_name = $parent_entity_name;
 		$view->lists = $lists;
 		$view->items = $items;
 

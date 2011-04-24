@@ -100,7 +100,7 @@ else
 	// Create all the buttons to switch to other types of parents
 	foreach ($this->entity_info as $einfo) {
 		$parent_type = $einfo['parent_type'];
-		$centity = $einfo['id_canonical'];
+		$centity = $einfo['id'];
 		$cename = $einfo['name'];
 		if ( ($parent_type != $attachment->parent_type) OR ($centity != $attachment->parent_entity) ) {
 			$url = $this->change_parent_url . "&amp;new_parent_type=" . $parent_type;

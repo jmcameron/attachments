@@ -167,19 +167,15 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					JError::raiseError(500, $errmsg);
 					}
 				$parent =& $apm->getAttachmentsPlugin($parent_type);
+				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 				// Make sure the parent exists
 				// NOTE: $parent_id===null means the parent is being created
 				if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
-					$entity_name = JText::_($parent->getEntityName($parent_entity));
+					$parent_entity_name = JText::_($parent_entity);
 					$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-											 $entity_name, $parent_id) . ' (ERR 104)';
+											 $parent_entity_name, $parent_id) . ' (ERR 104)';
 					JError::raiseError(500, $errmsg);
-					}
-				$parent_entity = $parent->getCanonicalEntity($parent_entity);
-				// ??? FIX THIS
-				if ( ($parent_type == 'com_content') AND ($parent_entity = 'default') ) {
-					$parent_entity = 'article';
 					}
 
 				// If there is no parent_id, the parent is being created, use the username instead

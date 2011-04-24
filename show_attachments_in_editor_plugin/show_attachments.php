@@ -101,6 +101,9 @@ class plgSystemShow_attachments extends JPlugin
 			return false;
 			}
 
+		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+
 		// Get the article ID (strip off any SEF name appended with a colon)
 		$parent_id = JRequest::getVar('id');
 		if ( empty($parent_id) ) {
@@ -132,13 +135,29 @@ class plgSystemShow_attachments extends JPlugin
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
-		if ( ($layout =='edit') OR ( ($view == 'article') AND ( $layout=='form') ) ) {
+		// Front end:
+		//    - Edit existing article:  com_content,view=form,layout=edit,a_id=#
+		//    - Create new article: same but no a_id
+
+		// Back end
+		//    - Edit existing article: com_content,view=article,layout=edit,id=#
+		//    - Create new article: same but no id
+		///
+		//    - Edit existing category: com_categories,view=category,layout=edit,id=#
+		//    - Create new category: same but no id
+
+		if ( ($parent_type == 'com_content') AND ($layout =='edit') AND
+			 ($view == 'form' OR $view == 'article' OR $view == 'category' ) ) {
 
 			// If we cannot determine the article ID
 			if (!$parent_id) {
 				if ( $task == 'add' OR (($view == 'article') AND ( $layout=='edit'))
 					 OR (($view == 'form') AND ( $layout=='edit')) ) {
 					// If we are creating an article, note that
+					$parent_id = 0;
+					}
+				elseif ( ($view == 'category') AND ($layout == 'edit') ) {
+					// If we are creating an category, note that
 					$parent_id = 0;
 					}
 				else {
@@ -167,7 +186,6 @@ class plgSystemShow_attachments extends JPlugin
 								 'text/css', null, array() );
 
 			// Get the article/parent handler
-			$parent =& $apm->getAttachmentsPlugin($parent_type);
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 
 			// Construct the attachment list

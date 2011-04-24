@@ -252,11 +252,8 @@ class AttachmentsHelper
 		foreach ($parent_types as $parent_type) {
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			foreach ( $parent->getEntities() as $raw_entity ) {
-				$entity = $parent->getCanonicalEntity($raw_entity);
-				if ( $entity == 'default' ) {
-					$entity = $parent->getDefaultEntity();
-					}
-				$entities[] = $entity;
+				// ??? Not sure this getCanonicalEntityId() call is necessary
+				$entities[] = $parent->getCanonicalEntityId($raw_entity);
 				}
 			}
 
@@ -505,9 +502,8 @@ class AttachmentsHelper
 		$from = JRequest::getWord('from');
 
 		// Set up the entity name for display
-		$parent->loadLanguage();
-		$parent_entity = $parent->getCanonicalEntity($row->parent_entity);
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity = $parent->getCanonicalEntityId($row->parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		// A little formatting
 		$msgbreak = '<br />';
@@ -728,8 +724,6 @@ class AttachmentsHelper
 		// Get ready to save the file
 		$filename_sys = $fullpath . $filename;
 		
-		// ??? $url = JString::str_ireplace(DS, '/', $upload_url . '/' . $path . $filename);
-		// BROKEN: $url = $upload_url . '/' . $path . JString::str_ireplace(DS, '/', $filename);
 		$url = $upload_url . '/' . $path . $filename;
 
 		// If not updating, make sure the system filename doesn't already exist
@@ -815,9 +809,6 @@ class AttachmentsHelper
 		// Add the icon file type
 		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
 		$row->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
-
-		// Set up the parent entity to save
-		$row->parent_entity = $parent->getEntityname( $row->parent_entity );
 
 		// Save the updated attachment
 		if (!$row->store()) {
@@ -1214,9 +1205,8 @@ class AttachmentsHelper
 			}
 
 		// Set up the entity name for display
-		$parent->loadLanguage();
-		$parent_entity = $parent->getCanonicalEntity($row->parent_entity);
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity = $row->parent_entity;
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Check to make sure the URL is valid
 		$from = JRequest::getWord('from');
@@ -1338,9 +1328,6 @@ class AttachmentsHelper
 		$row->modification_date = $row->create_date;
 		$row->state = $auto_publish;
 		$row->uri_type = 'url';
-
-		// Set up the parent entity to save
-		$row->parent_entity = $parent->getEntityname( $row->parent_entity );
 
 		// Save the updated attachment
 		if (!$row->store()) {
@@ -1507,9 +1494,8 @@ class AttachmentsHelper
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
 		// Set up the entity name for display
-		$parent->loadLanguage();
-		$parent_entity = $parent->getCanonicalEntity($parent_entity);
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');

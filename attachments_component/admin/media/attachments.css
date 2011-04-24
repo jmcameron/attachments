@@ -364,7 +364,6 @@ input#paramshide_attachments_for {
 
 dl#config-tabs-com_attachments_configuration h3 {
     font-size: 1.4em;
-    font-weight: bold;
 }
 
 
@@ -374,6 +373,10 @@ dl#config-tabs-com_attachments_configuration > dt {
 
 dl#config-tabs-com_attachments_configuration > dt.open {
     background-color: transparent;
+}
+
+dl#config-tabs-com_attachments_configuration > dt.open h3 {
+    font-weight: bold;
 }
 
 ul#attachments-options {

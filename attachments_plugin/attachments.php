@@ -287,6 +287,11 @@ class plgContentAttachments extends JPlugin
 		$parent_type = $ctxinfo[0];
 		$parent_entity = $ctxinfo[1];
 
+		// Special handling for categories
+		if ( $parent_type == 'com_categories' ) {
+			$parent_type = 'com_content';
+			}
+
 		// Get the attachments associated with this newly created object
 		// NOTE: We assume that all attachments that have parent_id=null
 		//		 and are created by the current user are for this article.

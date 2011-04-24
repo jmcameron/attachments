@@ -59,22 +59,18 @@ class AttachmentsPlugin extends JPlugin
 	var $_entities = null;
 
 	/** An associative array of entity names
-	 */
-	var $_entity_name = Array();
-
-	/** An associative array of aliases for the default entity name
 	 *
 	 *	For each type of attachments plugin, there will be a default
 	 *	entity types.  For com_content, the default is 'article'.  If
 	 *	the $default value for the function calls below is omitted,
 	 *	the entity is assumed to be 'article'.	In some cases, the
-	 *	actual proper name of the entity will be availalbe and will be
+	 *	actual proper name of the entity will be available and will be
 	 *	passed in to the $default argument.	 It is important that the
-	 *	plugin code recognizes that the entity 'article' is an alias
-	 *	for 'default'.	This array allows a simple associative array
-	 *	lookup to transform 'article' to 'default'.
+	 *	plugin code recognizes that the entity 'default' is an alias
+	 *	for 'article'.	This array allows a simple associative array
+	 *	lookup to transform 'default' to 'article'.
 	 */
-	var $_entity_alias = null;
+	var $_entity_name = Array();
 
 	/** An associative array of entity tables
 	 */
@@ -112,9 +108,6 @@ class AttachmentsPlugin extends JPlugin
 
 		// Save the plugin type
 		$this->_type = 'attachments';
-
-		// Set up the default alias
-		$this->_entity_alias = Array( 'default' => 'default' );
 	}
 
 
@@ -165,7 +158,7 @@ class AttachmentsPlugin extends JPlugin
 	 * From the view and the class of the parent (row of onPrepareContent plugin),
 	 * determine what the entity type is for this entity.
 	 *
-	 * Derived classes must overrride this if they support more than 'default' entities.
+	 * Derived classes MUST overrride this
 	 *
 	 * @param &object &$parent The object for the parent (row) that onPrepareContent gets
 	 *
@@ -184,7 +177,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	function getEntities()
 	{
-		return $this->_entity_name;
+		return $this->_entities;
 	}
 
 
@@ -199,36 +192,36 @@ class AttachmentsPlugin extends JPlugin
 
 
 	/**
-	 * Get the canonical extension entity name
+	 * Get the canonical extension entity Id (eg, 'article' instead of 'default')
 	 *
-	 * This is the canonical entity ID for content item to which attachments
-	 * will be added.  Note that each content type ($option) may support
-	 * several different entities (for attachments) and some entities may have
-	 * more than one name (hence the 'alias' entry in the .ini file.
+	 * This is the canonical Id of content element/item to which attachments will be added.
 	 *
-	 * @param string $parent_entity the type of entity for this parent type (potentially an alias)
+	 * that each content type ($option) may support several different entities
+	 * (for attachments) and some entities may have more than one name.
+	 *
+	 * Note, for com_content, the default is 'article'
+	 *
+	 * @param string $parent_entity the type of entity for this parent type
 	 *
 	 * @return the canonical extension entity
 	 */
-	function getCanonicalEntity($parent_entity)
+	function getCanonicalEntityId($parent_entity)
 	{
-		$parent_entity = JString::strtolower($parent_entity);
-
 		// It it is a known entity, just return it
 		if ( in_array($parent_entity, $this->_entities) ) {
 			return $parent_entity;
 			}
 
 		// Check aliases
-		if ( !array_key_exists($parent_entity, $this->_entity_alias) ) {
+		if ( array_key_exists($parent_entity, $this->_entity_name) ) {
+			return $this->_entity_name[$parent_entity];
+			}
+		else {
 			$lang =& JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = JText::sprintf('ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
 									 $parent_entity, $parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);
-			}
-		else {
-			return $this->_entity_alias[$parent_entity];
 			}
 	}
 
@@ -246,41 +239,13 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
 	{
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		if ( $parent_entity == 'default' ) {
-			$base = $this->_default_entity;
-			}
-		else {
-			if ( array_key_exists($parent_entity, $this->_entity_alias) ) {
-				$base = $this->_entity_alias[$parent_entity];
-				}
-			else {
-				$base = $parent_entity;
-				}
-			}
+		$path = sprintf("%s%s%d%s", $parent_entity, DS, $parent_id, DS);
 
-		$path = sprintf("%s%s%d%s", $base, DS, $parent_id, DS);
-
-		return JString::strtolower($path);
+		return $path;
 	}
 
-
-
-	/**
-	 * Get the proper extension entity name (eg, 'article' instead of 'default')
-	 *
-	 * This is the content item to which attachments will be added.
-	 * For com_content, this would be 'article' by default
-	 *
-	 * @param string $parent_entity the type of entity for this parent type
-	 *
-	 * @return the proper extension entity name
-	 */
-	function getEntityName($parent_entity)
-	{
-		return $this->_entity_name[ $this->getCanonicalEntity($parent_entity) ];
-	}
 
 
 
@@ -299,9 +264,8 @@ class AttachmentsPlugin extends JPlugin
 			return '';
 			}
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$parent_entity_name = $this->_entity_name[$parent_entity];
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
@@ -319,6 +283,7 @@ class AttachmentsPlugin extends JPlugin
 		$query = "SELECT $entity_title_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."'";
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
+			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
@@ -343,8 +308,8 @@ class AttachmentsPlugin extends JPlugin
 	{
 		$db =& JFactory::getDBO();
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$parent_entity_name = $this->_entity_name[$parent_entity];
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
@@ -377,6 +342,7 @@ class AttachmentsPlugin extends JPlugin
 		// Do the query
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
+			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
 									 $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
@@ -548,7 +514,7 @@ class AttachmentsPlugin extends JPlugin
 	function parentExists($parent_id, $parent_entity='default')
 	{
 		// Look up the parent
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
 		$db =& JFactory::getDBO();

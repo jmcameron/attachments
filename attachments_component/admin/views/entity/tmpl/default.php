@@ -38,7 +38,7 @@ $lists = $this->lists;
 	  action="<?php echo $this->post_url ?>" method="post">
 
 	<fieldset class="adminform">
-	<legend><?php echo JText::sprintf('SELECT_ENTITY_S', $this->entity_name) ?></legend>
+	<legend><?php echo JText::sprintf('SELECT_ENTITY_S', $this->parent_entity_name) ?></legend>
 <div class="attachments_filter">
 	<?php echo JText::_( 'FILTER' ); ?>:
 	<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>"

@@ -56,6 +56,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 			}
 
+		// Special handling for categories
+		if ( $parent_type == 'com_categories' ) {
+			$parent_type = 'com_content';
+			}
+
 		// Get the parent id and see if the parent is new
 		$parent_id = null;
 		$new_parent = false;
@@ -85,9 +90,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$apm =& getAttachmentsPluginManager();
 		$entity_info =& $apm->getInstalledEntityInfo();
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
-		$parent->loadLanguage();
 
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
@@ -130,7 +135,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 				JError::raiseError(500, $errmsg);
 				}
 			$parent =& $apm->getAttachmentsPlugin($parent_type);
-			$parent->loadLanguage();
 			$parent_title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
@@ -261,6 +265,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$parent_type = JRequest::getCmd('parent_type', 'com_content');
 		$parent_entity = JRequest::getCmd('parent_entity', 'default');
 
+		// Special handling for categories
+		if ( $parent_type == 'com_categories' ) {
+			$parent_type = 'com_content';
+			}
+
 		// Exit if there is no Attachments plugin to handle this parent_type
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
@@ -269,6 +278,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Make sure we have a valid parent ID
 		$parent_id = JRequest::getInt('parent_id', null);
@@ -278,17 +289,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
 
 			// Warn the user to select an article/parent in a popup
-			$parent->loadLanguage();
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_MUST_SELECT_PARENT_S', $entity_name);
+			$errmsg = JText::sprintf('ERROR_MUST_SELECT_PARENT_S', $parent_entity_name);
 			echo "<script type=\"text/javascript\"> alert('$errmsg'); window.history.go(-1); </script>\n";
 			exit();
 			}
 
 		// Make sure this user has permission to upload (should never fail with admin?)
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $entity_name) . ' (ERR 23)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 23)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -312,7 +320,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 		else {
 			$attachment->parent_id = $parent_id;
-			$parent->loadLanguage();
 			$parent->title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
@@ -383,7 +390,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		else {
 
 			// Set up the parent entity to save
-			$attachment->parent_entity = $parent->getEntityname( $attachment->parent_entity );
+			$attachment->parent_entity = $parent_entity;
 
 			// Save the updated attachment info
 			if (!$attachment->store()) {
@@ -437,10 +444,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 	        $uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			$parent_entity = $parent->getCanonicalEntity($parent_entity);
-			if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
-				$parent_entity = 'article';
-				}
 			echo "<script type=\"text/javascript\">
                    var fn = window.parent.refreshAttachments;
 			       window.parent.SqueezeBox.close();
@@ -519,12 +522,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 		$entity_info =& $apm->getInstalledEntityInfo();
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
-		$parent_entity = $parent->getCanonicalEntity( $attachment->parent_entity );
-		$attachment->parent_entity = $parent_entity;
 
-		// Get the parent name
-		$parent->loadLanguage();
-		$attachment->parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		// Get the parent info
+		$attachment->parent_entity_name = JText::_($parent_entity);
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 		if ( !$parent_title ) {
 			$parent_title = JText::sprintf('NO_PARENT_S', $attachment->parent_entity_name);
@@ -563,8 +563,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 					}
 
 				$new_parent =& $apm->getAttachmentsPlugin($new_parent_type);
-				$new_parent->loadLanguage();
-				$new_parent_entity_name = JText::_($new_parent->getEntityName($new_parent_entity));
+				$new_parent_entity = $new_parent->getCanonicalEntityId($new_parent_entity);
+				$new_parent_entity_name = JText::_($new_parent_entity);
 
 				// Set up the 'select parent' button
 				$selpar_label = JText::sprintf('SELECT_ENTITY_S_COLON', $new_parent_entity_name);
@@ -713,7 +713,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// parent_id===0 is the same as null for articles
 		if ( $attachment->parent_type == 'com_content' AND
-			 $attachment->parent_entity == 'default' AND
+			 $attachment->parent_entity == 'article' AND
 			 $attachment->parent_id == 0 ) {
 			$attachment->parent_id = null;
 			}
@@ -821,6 +821,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the title of the article/parent
 		$new_parent = JRequest::getBool('new_parent', false);
@@ -830,7 +831,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$parent->title = '';
 			}
 		else {
-			$parent->loadLanguage();
 			$parent->title = $parent->getTitle($attachment->parent_id, $parent_entity);
 			}
 
@@ -903,9 +903,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 				$attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
 				}
 
-			// Set up the parent entity to save
-			$attachment->parent_entity = $parent->getEntityname( $attachment->parent_entity );
-
 			// Save the updated attachment info
 			if ( !$attachment->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 20)';
@@ -962,10 +959,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 	        $uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			// ??? FIX THIS LATER!
-			if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
-				$parent_entity = 'article';
-				}
 			echo "<script type=\"text/javascript\">
                    var fn = window.parent.refreshAttachments;
 			       window.parent.SqueezeBox.close();

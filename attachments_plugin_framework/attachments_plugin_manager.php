@@ -32,8 +32,7 @@ class AttachmentsPluginManager extends JObject
 
 	/** An array of info about the installed entities.
 	 *	Each item in the array is an associative array with the following entries:
-	 *	  'id' - the unique name of entity as stored in the jos_attachments table (all upper case)
-	 *	  'id_canonical' - the canonical ID (lower case, may be 'default')
+	 *	  'id' - the unique name of entity as stored in the jos_attachments table (all lower case)
 	 *	  'name' - the translated name of the entity
 	 *	  'name_plural' - the translated plural name of the entity
 	 *	  'parent_type' - the parent type for the entity
@@ -137,12 +136,10 @@ class AttachmentsPluginManager extends JObject
 
 				// Process each entity for this parent type
 				foreach ($entities as $entity) {
-					$centity = $parent->getCanonicalEntity($entity);
-					$cename = $parent->getEntityName($centity);
-					$this->_entity_info[] = array('id' => $entity,
-												  'id_canonical' => $centity,
-												  'name' => JText::_($cename),
-												  'name_plural' => JText::_($cename . 'S'),
+					$centity = $parent->getCanonicalEntityId($entity);
+					$this->_entity_info[] = array('id' => $centity,
+												  'name' => JText::_($centity),
+												  'name_plural' => JText::_($centity . 's'),
 												  'parent_type' => $parent_type
 												  );
 					}

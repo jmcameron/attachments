@@ -244,7 +244,7 @@ class AttachmentsModelAttachments extends JModelList
 			if ( $parent ) {
 
 				// Handle the normal case
-				$item->parent_entity_type = JText::_($parent->getEntityName($parent_entity));
+				$item->parent_entity_type = JText::_($parent_entity);
 				$title = $parent->getTitle($parent_id, $parent_entity);
 				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);
 				if ( $item->parent_exists and $title ) {

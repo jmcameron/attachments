@@ -191,7 +191,7 @@ if ( !in_array($editor, $exceptions) ) {
 	// Create all the buttons
 	foreach ($this->entity_info as $einfo) {
 		$parent_type = $einfo['parent_type'];
-		$centity = $einfo['id_canonical'];
+		$centity = $einfo['id'];
 		$cename = $einfo['name'];
 		if ( ($parent_type != $this->parent_type) OR ($centity != $this->parent_entity) ) {
 			$url = $base_url . "&amp;parent_type=" . $parent_type;

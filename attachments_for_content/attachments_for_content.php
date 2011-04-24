@@ -36,16 +36,16 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$this->_default_entity = 'article';
 
 		// Add the information about the default entity (article)
-		$this->_entities[] = 'default';
-		$this->_entity_name['default'] = 'ARTICLE';
-		$this->_entity_alias['article'] = 'default';
-		$this->_entity_table['default'] = 'content';
-		$this->_entity_id_field['default'] = 'id';
-		$this->_entity_title_field['default'] = 'title';
+		$this->_entities[] = 'article';
+		$this->_entity_name['article'] = 'article';
+		$this->_entity_name['default'] = 'article';
+		$this->_entity_table['article'] = 'content';
+		$this->_entity_id_field['article'] = 'id';
+		$this->_entity_title_field['article'] = 'title';
 
 		// Add information about the category entity
 		$this->_entities[] = 'category';
-		$this->_entity_name['category'] = 'CATEGORY';
+		$this->_entity_name['category'] = 'category';
 		$this->_entity_table['category'] = 'categories';
 		$this->_entity_id_field['category'] = 'id';
 		$this->_entity_title_field['category'] = 'title';
@@ -93,7 +93,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function getSelectEntityURL($parent_entity='default')
 	{
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		switch ($parent_entity) {
 
@@ -119,6 +119,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	{
 		$db =& JFactory::getDBO();
 
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
+
 		// Note that article is handled separately
 		if ( JString::strtolower($parent_entity) != 'category' ) {
 			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
@@ -126,8 +129,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			JError::raiseError(500, $errmsg);
 			}
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$parent_entity_name = $this->_entity_name[$parent_entity];
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
@@ -226,6 +227,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	{
         $app = JFactory::getApplication();
 
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+
 		// Determine the task
 		if ( $app->isAdmin() ) {
 			$task = 'attachment.add';
@@ -247,12 +250,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		switch ( $parent_entity ) {
 
 		case 'category':
-			$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$url .= "&parent_type=com_content.$parent_entity&from=$from";
-		break;
+			$url .= "&parent_type=com_content.$parent_entity&from=$from";
+			break;
 
 		default:
-			$url .= "&parent_type=com_content&from=$from";
+			$url .= "&parent_type=com_content.article&from=$from";
 			}
 
 		return $url;
@@ -299,8 +301,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		$published = false;
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
@@ -321,10 +323,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			else {
 				$published = false;
 				}
-		break;
+			break;
 
 		default:
 
+			// ??? Convert to use some com_content function
 			$query = "SELECT state, publish_up, publish_down FROM #__content WHERE id='".(int)$parent_id."'";
 			$db->setQuery($query);
 			$article = $db->loadObject();
@@ -381,22 +384,22 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		$archived = false;
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
 
 		case 'category':
-			// You apparently cannot archive sections or categories
+			// You apparently cannot archive categories
 			break;
 
 		default:
-
+			// Articles
 			$query = "SELECT state FROM #__content WHERE id='".(int)$parent_id."'";
 			$db->setQuery($query);
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
+				$parent_entity_name = JText::_($parent_entity);
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name,  $parent_id) . ' (ERR 402)';
 				JError::raiseError(500, $errmsg);
@@ -498,8 +501,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$access = 0;
 		$table = null;
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
-		$parent_entity_name = JText::_($this->getEntityname($parent_entity));
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
@@ -521,6 +523,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$db->setQuery($query, 0, 1);
 		$obj = $db->loadObject();
 		if ( $db->getErrorNum() ) {
+			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 403)';
 			JError::raiseError(500, $errmsg);
@@ -532,6 +535,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		$user =& JFactory::getUser();
 		$aid  = $user->get('aid');
+
+		// ??? Do ACL checking here?
 
 		return $access <= $aid;
 	}
@@ -555,7 +560,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 		$pclass = get_class($parent);
 
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Make sure we have a valid parent ID
@@ -714,7 +719,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		// Handle each entity type
-		$parent_entity = $this->getCanonicalEntity($parent_entity);
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		switch ( $parent_entity ) {
 

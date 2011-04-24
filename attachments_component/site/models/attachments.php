@@ -189,6 +189,13 @@ class AttachmentsModelAttachments extends JModel
 			$errmsg = JText::_('ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERR 87)';
 			JError::raiseError(500, $errmsg);
 			}
+
+		// Make sure we have a good parent_entity value
+		if ( $this->_parent_entity == 'default' ) {
+			$parent = $this->getParentClass();
+			$this->_parent_entity = $parent->getDefaultEntity();
+			}
+
 		return $this->_parent_entity;
 	}
 
@@ -230,7 +237,8 @@ class AttachmentsModelAttachments extends JModel
 	{
 		// Get the title if we have not done it before
 		if ( $this->_parent_title == null ) {
-			$this->_parent_class = $this->getParentClass();
+
+			$parent = $this->getParentClass();
 
 			// Make sure we have an article ID
 			if ( $this->_parent_id === null ) {
@@ -238,8 +246,7 @@ class AttachmentsModelAttachments extends JModel
 				JError::raiseError(500, $errmsg);
 				}
 
-			$this->_parent_title =
-				$this->_parent_class->getTitle( $this->_parent_id, $this->_parent_entity );
+			$this->_parent_title = $parent->getTitle( $this->_parent_id, $this->_parent_entity );
 			}
 
 		return $this->_parent_title;
@@ -255,7 +262,6 @@ class AttachmentsModelAttachments extends JModel
 	{
 		// Get the parent entity name if we have not done it before
 		if ( $this->_parent_entity_name == null ) {
-			$this->_parent_class = $this->getParentClass();
 
 			// Make sure we have an article ID
 			if ( $this->_parent_id === null ) {
@@ -263,7 +269,7 @@ class AttachmentsModelAttachments extends JModel
 				JError::raiseError(500, $errmsg);
 				}
 
-			$this->_parent_entity_name = JText::_($this->_parent_class->getEntityName( $this->_parent_entity ));
+			$this->_parent_entity_name = JText::_($this->getParentEntity());
 			}
 
 		return $this->_parent_entity_name;
@@ -333,7 +339,6 @@ class AttachmentsModelAttachments extends JModel
 
 		// Use parent entity corresponding to values saved in the attachments table
 		$parent = $this->getParentClass();
-		$parent_entity = $parent->getEntityName($parent_entity);
 
 		// Define the list order
 		if ( ! $this->_sort_order ) {

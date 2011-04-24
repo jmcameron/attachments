@@ -218,7 +218,6 @@ class plgSearchAttachments extends JPlugin
 				}
 
 			// Add the parent title
-			$parent->loadLanguage();
 			$row->parent_title = $parent->getTitle( $row->parent_id, $parent_entity );
 
 			// Construct the download URL if necessary
@@ -267,11 +266,11 @@ class plgSearchAttachments extends JPlugin
 			$row->created = $row->create_date;
 			$row->browsernav = 2;
 
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
+			$parent_entity_name = JText::_($parent_entity);
 			$parent_title = JText::_($parent->getTitle($row->parent_id, $parent_entity));
 
 			$row->section = JText::sprintf('ATTACHED_TO_PARENT_S_TITLE_S',
-										   $entity_name, $parent_title);
+										   $parent_entity_name, $parent_title);
 
 			$results[$k] = $row;
 			$k++;

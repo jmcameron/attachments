@@ -53,7 +53,6 @@ class plgButtonAdd_attachment extends JPlugin
 		$editor = 'article';
 
 		// Handle categories specially (since they are really com_content)
-		// ??? Still true?
 		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			$parent_entity = 'category';
@@ -70,6 +69,7 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// Get the parent handler
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the parent ID (id or first of cid array)
 		//	   NOTE: $id=0 means no id (usually means creating a new entity)
@@ -84,10 +84,11 @@ class plgButtonAdd_attachment extends JPlugin
 				$id = (int)$nid;
 				}
 			}
-
-		// Disable adding attachments when creating categories
-		if ( $id == 0 and ($parent_entity == 'category')) {
-			return new JObject();
+		if ( $id == 0) {
+			$nid = JRequest::getInt('a_id');
+			if ( !is_null($nid) ) {
+				$id = (int)$nid;
+				}
 			}
 
 		// Figure out where we are and construct the right link and set

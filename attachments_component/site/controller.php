@@ -60,8 +60,8 @@ class AttachmentsController extends JController
 			$parent_type = AttachmentsController::_getCmd2('parent_type', 'com_content');
 
 			// If the entity is embedded in the parent type, split them
-			if ( strpos($parent_type, ':') ) {
-				$parts = explode(':', $parent_type);
+			if ( strpos($parent_type, '.') ) {
+				$parts = explode('.', $parent_type);
 				$parent_type = $parts[0];
 				$parent_entity = $parts[1];
 				}
@@ -90,24 +90,21 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
+
 		// Make sure this user can add attachments to this parent
 		$user =& JFactory::getUser();
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $entity_name) . ' (ERR 53)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 53)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the title of the parent
 		$parent_title = '';
 		if ( !$new_parent ) {
-			$parent->loadLanguage();
 			$parent_title = $parent->getTitle($parent_id, $parent_entity);
 			}
-
-		// Set up the entity name for display
-		$parent->loadLanguage();
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
 
 		// Use a different template for the iframe view
 		$from = JRequest::getWord('from');
@@ -196,21 +193,22 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_entity_name = JText::_($parent_entity);
+
 		// Make sure we have a valid parent ID
 		$parent_id = JRequest::getInt('parent_id', -1);
 		if ( !$new_parent and (($parent_id == 0) or
 							   ($parent_id == -1) or
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-									 $entity_name , $parent_id) . ' (ERR 57)';
+									 $parent_entity_name , $parent_id) . ' (ERR 57)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Verify that this user may add attachments to this parent
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $entity_name) . ' (ERR 58)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 58)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -329,7 +327,6 @@ class AttachmentsController extends JController
 			}
 		else {
 			$row->parent_id = $parent_id;
-			$parent->loadLanguage();
 			$parent->title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
@@ -352,9 +349,6 @@ class AttachmentsController extends JController
 			}
 
 		else {
-			
-			// Set up the parent entity to save
-			$row->parent_entity = $parent->getEntityname( $row->parent_entity );
 
 			// Save the updated attachment info
 			if (!$row->store()) {
@@ -382,10 +376,6 @@ class AttachmentsController extends JController
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			$parent_entity = $parent->getCanonicalEntity($parent_entity);
-			if ( $parent_entity == 'default' ) {
-				$parent_entity = $parent->getDefaultEntity();
-				}
 			echo "<script type=\"text/javascript\">
                var fn = window.parent.refreshAttachments;
 			   window.parent.SqueezeBox.close();
@@ -505,15 +495,15 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
+		$parent_entity_name = JText::_($parent_entity);
+
 		// Make sure the parent exists
 		// NOTE: $parent_id===null means the parent is being created
 		if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-									 $entity_name, $parent_id) . ' (ERR 69)';
+									 $parent_entity_name, $parent_id) . ' (ERR 69)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent_entity = $parent->getCanonicalEntity($parent_entity);
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -521,8 +511,7 @@ class AttachmentsController extends JController
 
 		// See if this user can edit (or delete) the attachment
 		if ( !$parent->userMayEditAttachment($rows[0], $parent_id, $params) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $entity_name) . ' (ERR 70)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERR 70)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -567,10 +556,6 @@ class AttachmentsController extends JController
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			$parent_entity = $parent->getCanonicalEntity($parent_entity);
-			if ( $parent_entity == 'default' ) {
-				$parent_entity = $parent->getDefaultEntity();
-				}
 			echo "<script type=\"text/javascript\">
                var fn = window.parent.refreshAttachments;
 			   window.parent.SqueezeBox.close();
@@ -704,13 +689,8 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
-		// Restore the canonical name
-		$parent_entity = $parent->getCanonicalEntity($parent_entity);
-		$attachment->parent_entity = $parent_entity;
-
 		// Set up the entity name for display
-		$parent->loadLanguage();
-		$parent_entity_name = JText::_($parent->getEntityName($parent_entity));
+		$parent_entity_name = JText::_($parent_entity);
 
 		// Verify that this user may add attachments to this parent
 		$user =& JFactory::getUser();
@@ -720,11 +700,9 @@ class AttachmentsController extends JController
 			$parent_id = 0;
 			$new_parent = true;
 			}
-		$parent->loadLanguage();
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 		if ( !$parent->userMayEditAttachment($attachment, $parent_id, $params ) ) {
-			$entity_name = JText::_($parent->getEntityName($parent_entity));
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $entity_name) . ' (ERR 77)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 77)';
 			JError::raiseError(500, $errmsg);
 			}
 
