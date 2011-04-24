@@ -56,6 +56,8 @@ class plgSystemShow_attachments extends JPlugin
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments1.css',
 								 'text/css', null, array() );
 
+			JHTML::_('behavior.modal', 'a.modal-button');
+
 			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
 			$doc->addScript( $js_path );
 			}
@@ -255,9 +257,9 @@ class plgSystemShow_attachments extends JPlugin
 
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
-			$from = '';
+			$from = 'frontpage';
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
-																 $user_can_add, $Itemid, $from, true, false);
+																 $user_can_add, $Itemid, $from, true, $user_can_add);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
