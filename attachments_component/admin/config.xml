@@ -153,6 +153,12 @@
            extension="com_content" multiple="multiple"
            description="HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
+    <field name="hide_add_attachments_link" type="radio" default="0"
+           label="HIDE_ADD_ATTACHMENTS_LINK"
+           description="HIDE_ADD_ATTACHMENTS_LINK_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
   </fieldset>
 
   <fieldset name="advanced"
@@ -162,7 +168,7 @@
            description="CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
     </field>
     <field name="register_url" type="text"
-           default="index.php?option=com_user&amp;task=register"
+           default="index.php?option=com_user&amp;view=registration"
            label="URL_TO_REGISTER" size="80" maxwidth="255"
            description="URL_TO_REGISTER_DESCRIPTION">
     </field>
