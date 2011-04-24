@@ -23,7 +23,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	if ( $item->uri_type == 'file' ) {
 		if ( $secure ) {
-			$url = JRoute::_("index.php?option=com_attachments&amp;task=download&amp;id=" . (int)$item->id);
+			$url = JRoute::_("index.php?option=com_attachments&amp;task=attachment.download&amp;id=" . (int)$item->id);
 			}
 		else {
 			$url = $uri->root(true) . '/' . $item->url;

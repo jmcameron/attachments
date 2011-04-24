@@ -54,9 +54,8 @@ function AttachmentsBuildRoute(&$query)
 		$menuItem = $menu->getItem($query['Itemid']);
 	}
 
-	$task = $query['task'];
-
 	if ( isset($query['task']) ) {
+		$task = $query['task'];
 		$segments[] = $task;
 		unset($query['task']);
 		}

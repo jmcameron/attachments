@@ -730,7 +730,7 @@ class AttachmentsHelper
 		$error = false;
 		if ( $save_type == 'upload' AND JFile::exists($filename_sys) ) {
 			$error = 'file_already_on_server';
-			$error_msg = JText::sprintf('ERROR_FILE_S_ALREADY_ON_SERVER', $filename_sys);
+			$error_msg = JText::sprintf('ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
 			if ( $app->isAdmin() ) {
 				$result = new JObject();

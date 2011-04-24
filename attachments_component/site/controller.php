@@ -424,7 +424,7 @@ class AttachmentsController extends JController
 		// Get the component parameters for the registration URL
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
-		$url = $params->get('register_url', "index.php?option=com_user&task=register");
+		$url = $params->get('register_url', "index.php?option=com_user&view=registration");
 		$url = JRoute::_($url);
 
 		// Deal with RTL styling

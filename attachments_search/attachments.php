@@ -69,7 +69,7 @@ class plgSearchAttachments extends JPlugin
 
 		// Exit if the search does not include attachments
 		if (is_array($areas)) {
-			if (!array_intersect( $areas, array_keys( $this->onConentSearchAreas()))) {
+			if (!array_intersect( $areas, array_keys( $this->onContentSearchAreas()))) {
 				return array();
 				}
 			}

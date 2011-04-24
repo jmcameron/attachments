@@ -240,6 +240,17 @@ class plgSystemShow_attachments extends JPlugin
 
 			// Get the article/parent handler
 			$parent =& $apm->getAttachmentsPlugin($parent_type);
+
+			// Figure out if the attachments list should be visible for this category
+			jimport('joomla.application.component.helper');
+			$params =& JComponentHelper::getParams('com_attachments');
+
+			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
+			$all_but_article_views = $params->get('hide_except_article_views', false);
+			if ( $all_but_article_views AND !$always_show_category_attachments ) {
+				return;
+				}
+
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 
 			// Construct the attachment list

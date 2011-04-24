@@ -725,6 +725,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		case 'category':
 			// Assume only admins can add attachments to categories
+			// ??? Fix with new ACL?
 			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
 			break;
 

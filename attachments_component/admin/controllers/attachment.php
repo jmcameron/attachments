@@ -13,6 +13,15 @@ require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
  */
 class AttachmentsControllerAttachment extends JControllerForm
 {
+	// ??? DOCS?
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+
+		$this->registerTask('applyNew',	'saveNew');
+	}
+
+
 	/** ??? docs?
 	 */
 	protected function checkEditId($context, $id)
@@ -401,12 +410,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// See where to go to next
-		switch (JRequest::getWord('task')) {
+		$task = $this->getTask();
+		switch ( $task ) {
 		case 'applyNew':
-			$link = 'index.php?option=com_attachments&task=edit&cid[]=' . (int)$attachment->id;
+			$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
 			break;
 
-		case 'attachment.saveNew':
+		case 'saveNew':
 		default:
 			$link = 'index.php?option=com_attachments';
 		    break;
@@ -414,6 +424,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// If called from the editor, go back to it
 		if ($from == 'editor') {
+			// ??? This is probably obsolete
 			$link = 'index.php?option=com_content&task=edit&cid[]=' . $parent_id;
 			}
 
@@ -425,10 +436,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 			     	$errmsg = $msg;
 				if ( DS == "\\" ) {
 				    // Fix filename on Windows system so alert can display it
-				    $errmsg = JString::str_ireplace("\\", "\\\\", $errmsg);
+				    $errmsg = str_replace("\\", "\\\\", $errmsg);
 				    }
-				$errmsg = JString::str_ireplace("'", "\'", $errmsg);
-				$errmsg = JString::str_ireplace("<br />", "\\n", $errmsg);
+				$errmsg = str_replace("'", "\'", $errmsg);
+				$errmsg = str_replace("<br />", "\\n", $errmsg);
 				echo "<script type=\"text/javascript\"> alert('$errmsg');  window.history.go(-1); </script>";
 				exit();
 				}
@@ -908,21 +919,21 @@ class AttachmentsControllerAttachment extends JControllerForm
 				$errmsg = $attachment->getError() . ' (ERR 20)';
 				JError::raiseError(500, $errmsg);
 				}
-			$msg = JText::_('ATTACHMENT_UPDATED');
 			}
 
-		switch ( JRequest::getWord('task') )  {
+		switch ( $this->getTask() )  {
+
 			case 'apply':
 				if ( !$msg ) {
 					$msg = JText::_('CHANGES_TO_ATTACHMENT_SAVED');
 					}
-				$link = 'index.php?option=com_attachments&task=edit&cid[]=' . (int)$attachment->id;
+				$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
 				break;
 
 			case 'save':
 			default:
 				if ( !$msg ) {
-					$msg = JText::_('ATTACHMENT_SAVED');
+					$msg = JText::_('ATTACHMENT_UPDATED');
 					}
 			$link = 'index.php?option=com_attachments';
 			break;
@@ -966,7 +977,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 				   </script>";
 			exit();
 			}
-
 
 		$this->setRedirect($link, $msg, $msgType . " " . $from);
 	}
@@ -1047,6 +1057,32 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$view->normal_update_url = JRoute::_($normal_update_url);
 			}
 	}
+
+	/**
+	 * Download an attachment
+	 */
+	function download()
+	{
+		$app = JFactory::getApplication();
+		// ??? Rework this wit new ACL
+		if ( ! $app->isAdmin() ) {
+			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_AS_ADMIN') . ' (ERR 26)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		// Get the attachment ID
+		$id = JRequest::getInt('id');
+		if ( !is_numeric($id) ) {
+			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 27)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+
+		AttachmentsHelper::download_attachment($id);
+	}
+	
+
 
 
 	/**

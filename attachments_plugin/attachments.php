@@ -192,7 +192,8 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Construct the add-attachments button, if appropriate
-		if ( $user_can_add ) {
+		$hide_add_attachments_link = $attachParams->get('hide_add_attachments_link', 0);
+		if ( $user_can_add AND !$hide_add_attachments_link ) {
 			$add_attachments_btn =
 				$this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
 			$html .= $add_attachments_btn;
@@ -205,6 +206,8 @@ class plgContentAttachments extends JPlugin
 
 		// Finally, add the attachments
 
+		// NOTE: Hope str_replace() below is UTF8 safe...
+
 		switch ( $attachments_placement ) {
 
 		case 'beginning':
@@ -214,7 +217,7 @@ class plgContentAttachments extends JPlugin
 					$row->$text_field_name = $html . $row->$text_field_name;
 					}
 				else {
-					$row->$text_field_name = $html . JString::str_ireplace($attachments_tag, '', $row->$text_field_name);
+					$row->$text_field_name = $html . str_replace($attachments_tag, '', $row->$text_field_name);
 					}
 				}
 			break;
@@ -223,7 +226,7 @@ class plgContentAttachments extends JPlugin
 			// Insert the attachments at the desired location
 			if ( $attachments_list OR $user_can_add ) {
 				if ( $attachments_tag ) {
-					$row->$text_field_name = JString::str_ireplace($attachments_tag, $html, $row->$text_field_name);
+					$row->$text_field_name = str_replace($attachments_tag, $html, $row->$text_field_name);
 					}
 				else {
 					// If there is no tag, insert the attachments at the end
@@ -235,7 +238,7 @@ class plgContentAttachments extends JPlugin
 		case 'disabled_filter':
 			// Disable and strip out any attachments tags
 			if ( $attachments_tag ) {
-				$row->$text_field_name = JString::str_ireplace($attachments_tag, '', $row->$text_field_name);
+				$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name);
 				}
 			break;
 
@@ -243,7 +246,7 @@ class plgContentAttachments extends JPlugin
 			// Add the attachments to the end of the article
 			if ( $attachments_list OR $user_can_add ) {
 				if ( $attachments_tag ) {
-					$row->$text_field_name = JString::str_ireplace($attachments_tag, '', $row->$text_field_name) . $html;
+					$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name) . $html;
 					}
 				else {
 					$row->$text_field_name .= $html;
