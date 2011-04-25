@@ -463,7 +463,21 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=2))";
 				}
-			// Note that 'archived' does not apply to categories because they are either published or not
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=2))";
+				}
+			}
+		elseif ( $parent_state == 'TRASHED' ) {
+			// These where clauses will be combined by OR
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=-2))";
+				}
+			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=-2))";
+				}
 			}
 		elseif ( $parent_state == 'NONE' ) {
 			// NOTE: The 'NONE' clauses will be combined with AND (with other tests for a.parent_id)

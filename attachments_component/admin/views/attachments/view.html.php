@@ -70,6 +70,7 @@ class AttachmentsViewAttachments extends JView
 		$filter_parent_state_options[] = JHTML::_('select.option', 'PUBLISHED', JText::_( 'PUBLISHED_PARENTS' ) );
 		$filter_parent_state_options[] = JHTML::_('select.option', 'UNPUBLISHED', JText::_( 'UNPUBLISHED_PARENTS' ) );
 		$filter_parent_state_options[] = JHTML::_('select.option', 'ARCHIVED', JText::_( 'ARCHIVED_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'TRASHED', JText::_( 'TRASHED_PARENTS' ) );
 		$filter_parent_state_options[] = JHTML::_('select.option', 'NONE', JText::_( 'NO_PARENTS' ) );
 		$filter_parent_state_tooltip = JText::_('SHOW_FOR_PARENTS_TOOLTIP');
 		$lists['filter_parent_state_menu'] =
