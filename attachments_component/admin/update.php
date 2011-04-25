@@ -393,7 +393,7 @@ class AttachmentsUpdate
 			}
 
 		// Overwrite the old file with a commented out version
-		$new_contents = implode("\n", $new_lines);
+		$new_contents = implode("\n", $new_lines) . "\n";
 		JFile::write($tempfilename, $new_contents);
 		if ( ! JFile::copy( $tempfilename, $filename) ) {
 			$msg = JText::_('ERROR_UPDATING_FILE') . ": $filename!";
@@ -560,13 +560,11 @@ class AttachmentsUpdate
 				if ( $finfo->oldstyle AND $finfo->prefix ) {
 					$new_filename_sys = $new_path . $finfo->basename_no_prefix;
 					$attachment->filename = $finfo->basename_no_prefix;
-					$new_url = JString::str_ireplace(DS, '/', $upload_url . '/' .
-													 $newdir . $finfo->basename_no_prefix);
+					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $finfo->basename_no_prefix);
 					}
 				else {
 					$new_filename_sys = $new_path . $basename;
-					$new_url = JString::str_ireplace(DS, '/', $upload_url . '/' .
-													 $newdir . $basename);
+					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $basename);
 					}
 
 				// Make sure the target directory exists
@@ -665,7 +663,7 @@ class AttachmentsUpdate
 			$filename_info = pathinfo($old_filename_sys);
 			$basename = $filename_info['basename'];
 			$filename_sys = $upload_dir.DS.$basename;
-			$new_basename = JString::str_ireplace(' ', '_', $basename);
+			$new_basename = str_replace(' ', '_', $basename);
 			$new_filename_sys = $filename_info['dirname'].DS.$new_basename;
 
 			// If the filename has not changed, do not change anything
@@ -681,9 +679,9 @@ class AttachmentsUpdate
 				}
 
 			// Construct the new URL (figuire it out from the system filename)
-			$attachments_dir = JString::str_ireplace(JPATH_SITE, '', $filename_info['dirname']);
+			$attachments_dir = str_replace(JPATH_SITE, '', $filename_info['dirname']);
 			$attachments_dir = JString::trim($attachments_dir, DS);
-			$attachments_dir = JString::str_ireplace(DS, '/', $attachments_dir);
+			$attachments_dir = str_replace(DS, '/', $attachments_dir);
 			$new_url = $attachments_dir . '/' . $new_basename;
 
 			// Update the record
