@@ -577,72 +577,48 @@ class AttachmentsController extends JController
 	 */
 	function delete_warning()
 	{
-		global $option;
-
-		// Meant to be shown in the iframe popup
-		$document =&  JFactory::getDocument();
-		$uri = JFactory::getURI();
-		JHTML::_('behavior.mootools');
-
-		// Add the regular css file
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
-
-		// Handle the RTL styling
-		$lang =& JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
-			}
-
-		// ??? Not sure if this fix is still necessary
-		$document->addStyleDeclaration(
-			'div.componentheading { display: none; } * { overflow: hidden; };');
-
 		// Make sure we have a valid attachment ID
-		$id = JRequest::getInt('id');
-		if ( is_numeric($id) ) {
-			$id = (int)$id;
+		$attachment_id = JRequest::getInt('id');
+		if ( is_numeric($attachment_id) ) {
+			$attachment_id = (int)$attachment_id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 72)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 72)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the attachment record
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
-		if ( !$attachment->load($id) ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 73)';
+		if ( !$attachment->load($attachment_id) ) {
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 73)';
 			JError::raiseError(500, $errmsg);
 			}
 
-		// Set up the URL
-		$from = JRequest::getWord('from', 'closeme');
-		$delete_url = "index.php?option=com_attachments&task=delete&id=$id";
-		$delete_url .= "&from=$from";
+		// Set up the view
+		require_once(JPATH_COMPONENT.DS.'views'.DS.'warning'.DS.'view.html.php');
+		$view = new AttachmentsViewWarning( );
+		$view->parent_id = $attachment_id;
+		$view->option = JRequest::getCmd('option');
+		$view->from = JRequest::getWord('from', 'closeme');
+		$view->tmpl = JRequest::getWord('tmpl');
+
+		// Prepare for the query
+		$view->warning_title = JText::_('WARNING');
+		if ( $attachment->uri_type == 'file' ) {
+			$fname = "( {$attachment->filename} )";
+			}
+		else {
+			$fname = "( {$attachment->url} )";
+			}
+		$view->warning_question = JText::_('REALLY_DELETE_ATTACHMENT') . '<br/>' . $fname;
+
+		$delete_url = "index.php?option=com_attachments&task=delete&id=$attachment_id";
 		$delete_url = JRoute::_($delete_url);
-?>
-		<div class="deleteWarning">
-			 <h1><?php echo JText::_('WARNING'); ?></h1>
-			 <h2 id="warning_msg"><?php echo JText::_('REALLY_DELETE_ATTACHMENT'); ?><br />
-			 (<?php if ( $attachment->uri_type == 'file' ) {
-				 echo " " . $attachment->filename . " ";
-				 }
-			 else {
-				 echo $attachment->url;
-				 } ?>)</h2>
-		  <form action="<?php echo $delete_url; ?>" name="warning_form" method="post">
-			<div align="center">
-			    <span class="left">&nbsp;</span>
-			    <input type="submit" name="submit" value="<?php echo JText::_('DELETE'); ?>" />
-				<span class="right">
-				  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-						 onClick="window.parent.SqueezeBox.close();" />
-				</span>
-			</div>
-		  </form>
-		 </div>
-<?php
+		$view->action_url = $delete_url;
+		$view->action_button_label = JText::_('DELETE');
+
+		$view->display();
 
 	}
 
