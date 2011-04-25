@@ -211,34 +211,3 @@ div.warning h2 {
     font-weight: bold;
 }
 
-
-/* Styles for delete warnings */
-#main div.deleteWarning {
-    padding: 10px;
-    margin: 20px;
-}
-
-#main div.deleteWarning h1 {
-    line-height: normal;
-    font-size: 200%;
-    font-weight: bold;
-    text-align: center;
-    color: red;
-}
-
-#main div.deleteWarning h2 {
-    line-height: normal;
-    font-size: 150%;
-    font-weight: bold;
-    text-align: center;
-}
-
-#main div.deleteWarning span.left {
-    width: 8em;
-    float: left;
-}
-
-#main div.deleteWarning span.right {
-    width: 8em;
-    float: right;
-}
