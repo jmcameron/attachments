@@ -968,9 +968,9 @@ class AttachmentsHelper
 			$result->protocol = $protocol;
 			$result->domain = $domain;
 			$result->port = $port;
-			$result->path = JString::str_ireplace('//', '/', $path);
+			$result->path = str_replace('//', '/', $path);
 			$result->params = $parameters;
-			$result->url = JString::str_ireplace('//', '/', $path . $result->params);
+			$result->url = str_replace('//', '/', $path . $result->params);
 			}
 		else {
 			// Reject bad url syntax
