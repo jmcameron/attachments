@@ -466,7 +466,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
-
+	// ??? DOCS
 	public function edit()
 	{
         $uri = JFactory::getURI();
@@ -1091,29 +1091,46 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function delete_warning()
 	{
 		// Make sure we have a valid attachment ID
-		$id = JRequest::getInt('id', null);
-		if ( is_numeric($id) ) {
-			$id = (int)$id;
+		$attachment_id = JRequest::getInt('id', null);
+		if ( is_numeric($attachment_id) ) {
+			$attachment_id = (int)$attachment_id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 105)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 105)';
+			JError::raiseError(500, $errmsg);
+			}
+
+		// Load the attachment
+		$model		= $this->getModel();
+		$attachment = $model->getTable();
+
+		// Make sure the article ID is valid
+		$attachment_id = JRequest::getInt('id');
+		if ( !$attachment->load($attachment_id) ) {
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 105)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Set up the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'warning'.DS.'view.html.php');
 		$view = new AttachmentsViewWarning( );
-		$view->parent_id = $id;
+		$view->parent_id = $attachment_id;
 		$view->option = JRequest::getCmd('option');
 		$view->from = JRequest::getWord('from');
 		$view->tmpl = JRequest::getWord('tmpl');
 
 		// Prepare for the query
 		$view->warning_title = JText::_('WARNING');
-		$view->warning_question = JText::_('REALLY_DELETE_ATTACHMENT');
+		if ( $attachment->uri_type == 'file' ) {
+			$msg = "( {$attachment->filename} )";
+			}
+		else {
+			$msg = "( {$attachment->url} )";
+			}
+		$view->warning_question = JText::_('REALLY_DELETE_ATTACHMENT') . '<br/>' . $msg;
 		$view->action_button_label = JText::_('DELETE');
 
-		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$id;
+		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id;
 		$view->action_url .= "&ampfrom=" . $view->from;
 
 		$view->display();
