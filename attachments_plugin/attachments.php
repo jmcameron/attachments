@@ -13,6 +13,9 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+
+
 /**
  * Attachments plugin
  *
@@ -401,7 +404,7 @@ class plgContentAttachments extends JPlugin
 			$params =& JComponentHelper::getParams('com_attachments');
 
 			// Check the security status
-			$attach_dir = JPATH_SITE.DS.$params->get('attachments_subdir', 'attachments');
+			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			$secure = $params->get('secure', false);
 			$hta_filename = $attach_dir.DS.'.htaccess';
 			if ( ($secure AND !file_exists($hta_filename)) OR
