@@ -118,11 +118,7 @@ class AttachmentsController extends JController
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
-		$upload_subdir = $params->get('attachments_subdir', 'attachments');
-		if ( $upload_subdir == '' ) {
-			$upload_subdir = 'attachments';
-			}
-		$upload_dir = JPATH_BASE.DS.$upload_subdir;
+		$upload_dir = JPATH_BASE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 54)';
@@ -684,11 +680,7 @@ class AttachmentsController extends JController
 
 		// Make sure the attachments directory exists
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		$upload_subdir = $params->get('attachments_subdir', 'attachments');
-		if ( $upload_subdir == '' ) {
-			$upload_subdir = 'attachments';
-			}
-		$upload_dir = JPATH_BASE.DS.$upload_subdir;
+		$upload_dir = JPATH_BASE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 78)';

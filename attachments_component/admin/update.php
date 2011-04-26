@@ -13,6 +13,9 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+
+// ??? Update with ACL stuff
 $app = JFactory::getApplication();
 $app->isAdmin() or die('Must be admin to execute!');
 
@@ -481,8 +484,7 @@ class AttachmentsUpdate
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_url = $params->get('attachments_subdir', 'attachments');
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -624,8 +626,7 @@ class AttachmentsUpdate
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_url = $params->get('attachments_subdir', 'attachments');
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -711,8 +712,7 @@ class AttachmentsUpdate
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_url = $params->get('attachments_subdir', 'attachments');
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();

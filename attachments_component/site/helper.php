@@ -13,6 +13,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+
 
 /**
  * A class for attachments helper functions
@@ -202,9 +204,7 @@ class AttachmentsHelper
 		// (This can occur when upgrading pre-2.0 attachments (with prefixes) since
 		// they were all saved in the top-level directory.)
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$upload_subdir = $params->get('attachments_subdir', 'attachments');
-		$upload_dir = JPATH_SITE.DS.$upload_subdir;
+		$upload_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		if ( realpath(rtrim($upload_dir,DS)) == realpath(rtrim($dirname,DS)) ) {
 			return;
 			}
@@ -218,80 +218,6 @@ class AttachmentsHelper
 			}
 	}
 
-
-	/**
-	 * Return a list of the currently active attachments upload directories
-	 *
-	 * If attachments exist when someone switches the upload directory, they
-	 * old attachments still work and live in thier own directory.	When
-	 * secure mode changes, all of these directories must be updated.
-	 * Therefore it is necessary to scan all attachments and find all upload
-	 * directories.	 For most users, this will only return the current upload
-	 * directory.
-	 *
-	 * @return an array of known upload directories
-	 */
-	function get_upload_directories()
-	{
-		$dirs = Array();
-		$dirs[] = 'attachments';   // Always check the canonical directory, if it exists
-
-		// First get the currently configured upload directory
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$upload_dir = $params->get('attachments_subdir', 'attachments');
-		if ( !in_array($upload_dir, $dirs) ) {
-			$dirs[] = $upload_dir;
-			}
-
-		// Get the known content entities (for filename paths)
-		$entities = Array();
-		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
-		$parent_types = $apm->getInstalledParentTypes();
-		foreach ($parent_types as $parent_type) {
-			$parent = $apm->getAttachmentsPlugin($parent_type);
-			foreach ( $parent->getEntities() as $raw_entity ) {
-				// ??? Not sure this getCanonicalEntityId() call is necessary
-				$entities[] = $parent->getCanonicalEntityId($raw_entity);
-				}
-			}
-
-		// Get the full filenames
-		$db =& JFactory::getDBO();
-		$query = "SELECT filename_sys FROM #__attachments WHERE uri_type='file'";
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		foreach ($rows as $row) {
-			$file = str_replace(JPATH_SITE.DS, '', $row->filename_sys);
-			if ( $file == '' ) {
-				// Skip empty filenames
-				continue;
-				}
-			$parts = explode(DS, $file);
-
-			// Git rid of the filename part
-			array_pop($parts);
-
-			// Pop off the id numer, if present
-			if ( is_numeric(end($parts)) ) {
-				array_pop($parts);
-				}
-
-			// Pop off the entity part, if present
-			if ( in_array(end($parts), $entities) ) {
-				array_pop($parts);
-				}
-
-			// Add the directory, if not already added
-			$dir = implode(DS, $parts);
-			if ( !in_array($dir, $dirs) ) {
-				$dirs[] = $dir;
-				}
-			}
-
-		return $dirs;
-	}
 
 	/**
 	 * Set up the upload directory
@@ -473,11 +399,7 @@ class AttachmentsHelper
 		$auto_publish = $params->get('publish_default', false);
 
 		// Make sure the attachments directory exists
-		$upload_subdir = $params->get('attachments_subdir', 'attachments'); // ??? remove this option
-		if ( $upload_subdir == '' ) {
-			$upload_subdir = 'attachments';
-			}
-		$upload_dir = JPATH_SITE.DS.$upload_subdir;
+		$upload_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 40)';
@@ -701,10 +623,6 @@ class AttachmentsHelper
 			$view->display(null, $error, $error_msg);
 			exit();
 			}
-
-		// Define where the attachments go
-		$upload_url = $params->get('attachments_subdir', 'attachments');
-		$upload_dir = JPATH_SITE . DS . $upload_url;
 
 		// Figure out the system filename
 		$path = $parent->getAttachmentPath($row->parent_entity,
@@ -1502,7 +1420,7 @@ class AttachmentsHelper
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments move to
-		$upload_url = $params->get('attachments_subdir', 'attachments');
+		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$upload_dir = JPATH_SITE . DS . $upload_url;
 
 		// Figure out the new system filename
@@ -1580,7 +1498,7 @@ class AttachmentsHelper
 			$params =& JComponentHelper::getParams('com_attachments');
 
 			// Check the security status
-			$attach_dir = JPATH_SITE.DS.$params->get('attachments_subdir', 'attachments');
+			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			$secure = $params->get('secure', false);
 			$hta_filename = $attach_dir.DS.'.htaccess';
 			if ( ($secure AND !file_exists($hta_filename)) OR

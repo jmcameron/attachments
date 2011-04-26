@@ -178,10 +178,6 @@
       <option value="in_same_window">IN_SAME_WINDOW</option>
       <option value="new_window">IN_NEW_WINDOW</option>
     </field>
-    <field name="attachments_subdir" type="text" default="attachments"
-           label="SUBDIRECTORY_FOR_UPLOADS" size="80"
-           description="SUBDIRECTORY_FOR_UPLOADS_DESCRIPTION">
-    </field>
     <field name="attachments_titles" type="textarea" default=""
            label="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS" rows="3" cols="60"
            description="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION">

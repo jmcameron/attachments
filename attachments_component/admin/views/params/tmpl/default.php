@@ -78,7 +78,6 @@ if ( $lang->isRTL() ) {
 		<input type="hidden" name="option" value="com_attachments" />
 		<input type="hidden" name="component" value="com_attachments" />
 		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
-		<input type="hidden" name="old_upload_dir" value="<?php echo $this->params->get('attachments_subdir', 'attachments'); ?>" />
 		<input type="hidden" name="task" value="params.edit" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>

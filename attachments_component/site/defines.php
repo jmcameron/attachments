@@ -35,4 +35,29 @@ class AttachmentsDefines
 	/** Supported URI types for uploading/updating
 	 */
 	static $LEGAL_URI_TYPES = Array('file', 'url');
+
+	/** Attachments subdirectory
+	 *
+	 * NOTE: If you have any existing attachments, follow one of these procedures
+	 *
+	 *    1. If you do not care to keep any existing attachments, follow these steps:
+	 *          - Suspend front-end operation of your website
+	 *          - In the back end attachments page, delete all attachments
+	 *          - Delete the attachments directory
+	 *          - Change the value below and save this file
+	 *          - Resume front-end operation of your website
+	 *
+	 *    2. If you are simply renaming the attachments directory, do the following
+	 *       steps:
+	 *          - Suspend front-end operation of your website
+	 *          - Rename the attachments directory (must be within the top
+	 *            directory of your website)
+	 *          - Change the value below and save this file
+	 *          - In the back end attachments page, under the "Utilities" command
+	 *            on the right end of the toolbar, choose the "Regenerate system filenames"
+	 *            command
+	 *          - Resume front-end operation of your website
+	 */
+	static $ATTACHMENTS_SUBDIR = 'attachments';
+
 }

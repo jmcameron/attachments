@@ -101,7 +101,6 @@ class AttachmentsControllerParams extends JControllerForm
 
 		// Get the new component parameters
 		$new_secure = $data['secure'];
-		$new_upload_dir = $data['attachments_subdir'];
 
 		// Check if the user is authorized to do this.
 		if (!JFactory::getUser()->authorise('core.admin', $option))
@@ -159,16 +158,12 @@ class AttachmentsControllerParams extends JControllerForm
 		}
 
 		// Deal with any changes in the 'secure mode' (or upload directories)
-		if ( ($new_secure != $old_secure) OR
-			 ($new_upload_dir != $old_upload_dir) ) {
+		if ( $new_secure != $old_secure ) {
 
-			// Check the security status
+			// Check/update the security status
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			$dirs = AttachmentsHelper::get_upload_directories();
-			foreach ($dirs as $dir) {
-				$dir = JPATH_SITE.DS.$dir;
-				AttachmentsHelper::setup_upload_directory($dir, $new_secure == 1);
-				}
+			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 
 			$msg = JText::_('UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
 			}
