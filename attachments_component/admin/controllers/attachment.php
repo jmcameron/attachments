@@ -318,7 +318,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$errmsg = $attachment->getError() . ' (ERR 24)';
 			JError::raiseError(500, $errmsg);
 			}
-		$attachment->uploader_id = $user->get('id');
+		$attachment->created_by = $user->get('id');
 		$attachment->parent_type = $parent_type;
 		$parent->new = $new_parent;
 
@@ -509,7 +509,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 					 $attachment->icon_filename);
 
 		// Get the uploaders name
-		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->uploader_id."' LIMIT 1";
+		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->created_by."' LIMIT 1";
 		$db->setQuery($query);
 		$attachment->uploader_name = $db->loadResult();
 
@@ -868,7 +868,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Compute the update time
 		jimport( 'joomla.utilities.date' );
 		$now = new JDate();
-		$attachment->modification_date = $now->toMySQL();
+		$attachment->modified = $now->toMySQL();
 
 		// Upload new file/url and create/update the attachment
 		$msg = null;

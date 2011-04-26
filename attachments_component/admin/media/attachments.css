@@ -45,7 +45,7 @@ table.adminlist th.at_user_field  { text-align: left; }
 table.adminlist th.at_file_type	  { text-align: center; }
 table.adminlist th.at_file_size	  { text-align: center; }
 table.adminlist th.at_uploader	  { text-align: center; }
-table.adminlist th.at_create_date { text-align: center; }
+table.adminlist th.at_created     { text-align: center; }
 table.adminlist th.at_mod_date	  { text-align: center; }
 table.adminlist th.at_downloads	  { text-align: center; }
 
@@ -72,7 +72,7 @@ table.adminlist td.at_user_field  { text-align: left; }
 table.adminlist td.at_file_type	  { text-align: center; }
 table.adminlist td.at_file_size	  { text-align: center; }
 table.adminlist td.at_uploader	  { text-align: center; }
-table.adminlist td.at_create_date { text-align: center; }
+table.adminlist td.at_created     { text-align: center; }
 table.adminlist td.at_mod_date	  { text-align: center; }
 table.adminlist td.at_downloads	  { text-align: center; }
 

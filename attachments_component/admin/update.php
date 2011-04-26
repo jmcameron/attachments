@@ -97,14 +97,14 @@ class AttachmentsUpdate
 
 			// Update the new create and update dates if they are null
 			$updated = false;
-			$create_date = $row->create_date;
-			if ( is_null($create_date) OR $create_date == ''  ) {
+			$created = $row->created;
+			if ( is_null($created) OR $created == ''  ) {
 				jimport( 'joomla.utilities.date' );
 				$cdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
-				$create_date = $cdate->toMySQL();
+				$created = $cdate->toMySQL();
 				$updated = true;
 				}
-			$mod_date = $row->modification_date;
+			$mod_date = $row->modified;
 			if ( is_null($mod_date) OR $mod_date == '' ) {
 				jimport( 'joomla.utilities.date' );
 				$mdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
@@ -114,8 +114,8 @@ class AttachmentsUpdate
 
 			// Update the record
 			if ( $updated ) {
-				$query = "UPDATE #__attachments set modification_date='{$mod_date}', " .
-					"create_date='{$create_date}' WHERE id='".(int)$row->id."'";
+				$query = "UPDATE #__attachments set modified='{$mod_date}', " .
+					"created='{$created}' WHERE id='".(int)$row->id."'";
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
@@ -232,10 +232,10 @@ class AttachmentsUpdate
 			"ALTER TABLE #__attachments ADD `user_field_2` VARCHAR(100) NOT NULL DEFAULT ''";
 		$new_fields['user_field_3'] =
 			"ALTER TABLE #__attachments ADD `user_field_3` VARCHAR(100) NOT NULL DEFAULT ''";
-		$new_fields['create_date'] =
-			"ALTER TABLE #__attachments ADD `create_date` DATETIME DEFAULT NULL";
-		$new_fields['modification_date'] =
-			"ALTER TABLE #__attachments ADD `modification_date` DATETIME DEFAULT NULL";
+		$new_fields['created'] =
+			"ALTER TABLE #__attachments ADD `created` DATETIME DEFAULT NULL";
+		$new_fields['modified'] =
+			"ALTER TABLE #__attachments ADD `modified` DATETIME DEFAULT NULL";
 		$new_fields['download_count'] =
 			"ALTER TABLE #__attachments ADD `download_count` INT(11) UNSIGNED DEFAULT '0'";
 		$new_fields['parent_type'] =
@@ -256,7 +256,7 @@ class AttachmentsUpdate
 					JError::raiseError( 500, $errmsg );
 					return false;
 					}
-				if ( $field == 'create_date' )
+				if ( $field == 'created' )
 					$dates_added = true;
 				$num_fields_added++;
 				}
@@ -266,7 +266,7 @@ class AttachmentsUpdate
 
 		// Fix any null dates
 		if ( $dates_added ) {
-			echo $indent . JText::_('ADDING_MISSING_CREATE_OR_MODIFICATION_DATES') . "<br />";
+			echo $indent . JText::_('ADDING_MISSING_CREATE_OR_MODIFIEDS') . "<br />";
 
 			$num = AttachmentsUpdate::update_null_dates();
 			if ( $num == 0 )
@@ -300,7 +300,7 @@ class AttachmentsUpdate
 		// Drop the default values for fields that are not supposed to be nullable
 		$default_null_fields =
 			Array( 'filename', 'filename_sys', 'file_size', 'icon_filename',
-				   'parent_id', 'uploader_id' );
+				   'parent_id', 'created_by' );
 		foreach ($default_null_fields as $field) {
 			if ( $default[$field] != 'NULL' ) {
 				$query = "ALTER TABLE `#__attachments` ALTER `$field` DROP DEFAULT";
@@ -339,8 +339,8 @@ class AttachmentsUpdate
 		$new_indexes['attachment_parent_id_index'] =
 			"CREATE INDEX attachment_parent_id_index ON `#__attachments` (`parent_id`)";
 
-		// NOTE: Adding indeces to `filename`, `file_size`, `create_data`, and
-		// modification_date` probably does not add much benefit.
+		// NOTE: Adding indeces to `filename`, `file_size`, `created`, and
+		//       `modified` probably does not add much benefit.
 		// SEE: http://dev.mysql.com/doc/refman/5.0/en/order-by-optimization.html
 
 		// Add any missing indexes

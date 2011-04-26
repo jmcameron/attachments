@@ -51,10 +51,10 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	// Set up the create/modify dates
 	jimport( 'joomla.utilities.date' );
-	$cdate = new JDate($item->create_date, -$app->getCfg('offset'));
-	$create_date = $cdate->toFormat("%x %H:%M");
-	$mdate = new JDate($item->modification_date, -$app->getCfg('offset'));
-	$modification_date = $mdate->toFormat("%x %H:%M");
+	$cdate = new JDate($item->created, -$app->getCfg('offset'));
+	$created = $cdate->toFormat("%x %H:%M");
+	$mdate = new JDate($item->modified, -$app->getCfg('offset'));
+	$modified = $mdate->toFormat("%x %H:%M");
 
 	$add_attachment_txt = JText::_('ADD_ATTACHMENT');
 	if ($item->parent_id != $last_parent_id OR $item->parent_type != $last_parent_type
@@ -136,8 +136,8 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	  <td class="at_file_type"><?php echo $item->file_type; ?></td>
 	  <td class="at_file_size"><?php echo $size_kb; ?></td>
 	  <td class="at_uploader"><?php echo $item->uploader_name; ?></td>
-	  <td class="at_create_date"><?php echo $create_date; ?></td>
-	  <td class="at_mod_date"><?php echo $modification_date ?></td>
+	  <td class="at_created"><?php echo $created; ?></td>
+	  <td class="at_mod_date"><?php echo $modified ?></td>
 	  <?php if ( $secure ): ?>
 		 <td class="at_downloads"><?php echo $item->download_count; ?></td>
 	  <?php endif; ?>

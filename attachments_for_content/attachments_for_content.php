@@ -821,7 +821,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			if ( $parent_id == 0 ) {
 				// Parent is being created, it is not in the content table yet!
 				// (So verify that the current user is the one that uploaded the attachment)
-				$created_by = $attachment->uploader_id;
+				$created_by = $attachment->created_by;
 				}
 			else {
 				// Load info about the parent
@@ -837,7 +837,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				
 			// Verify that this user can edit/delete this attachment for this parent
 			if ( $who_can_add == 'logged_in' ) {
-				if ( ($user_id == $attachment->uploader_id) OR
+				if ( ($user_id == $attachment->created_by) OR
 					 ($user_id == $created_by) ) {
 					// Registered users and authors can only edit attachments if
 					//	 they added the attachment or they own the parent

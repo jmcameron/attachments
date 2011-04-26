@@ -48,10 +48,10 @@ else {
 
 // Set up the create/modify dates
 jimport( 'joomla.utilities.date' );
-$cdate = new JDate($attachment->create_date, -$app->getCfg('offset'));
-$create_date = $cdate->toFormat("%x %H:%M");
-$mdate = new JDate($attachment->modification_date, -$app->getCfg('offset'));
-$modification_date = $mdate->toFormat("%x %H:%M");
+$cdate = new JDate($attachment->created, -$app->getCfg('offset'));
+$created = $cdate->toFormat("%x %H:%M");
+$mdate = new JDate($attachment->modified, -$app->getCfg('offset'));
+$modified = $mdate->toFormat("%x %H:%M");
 
 $update = $this->update;
 $uri_type = $attachment->uri_type;
@@ -279,12 +279,12 @@ else
 	  <td><?php echo $attachment->file_type; ?></td>
   </tr>
   <tr><td class="key"><label><?php echo JText::_('DATE_CREATED'); ?></label></td>
-	<td><?php echo $create_date; ?></td>
+	<td><?php echo $created; ?></td>
 	<td class="key"><label><?php echo JText::_('FILE_SIZE'); ?></label></td>
 	<td><?php echo $attachment->size_kb; ?> <?php echo JText::_('KB'); ?></td>
   </tr>
   <tr><td class="key"><label><?php echo JText::_('DATE_LAST_UPDATED'); ?></label></td>
-	<td><?php echo $modification_date; ?></td>
+	<td><?php echo $modified; ?></td>
 	<td class="key"><label><?php echo JText::_('UPLOADER_NAME'); ?></label></td>
 	<td><?php echo $attachment->uploader_name;?></td>
   </tr>

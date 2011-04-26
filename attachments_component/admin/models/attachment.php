@@ -44,7 +44,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$query	= $db->getQuery(true);
 			$query->select('name');
 			$query->from('#__users');
-			$query->where("id = '".(int)$item->uploader_id."'");
+			$query->where("id = '".(int)$item->created_by."'");
 			$db->setQuery($query);
 			$item->uploader_name = $db->loadResult();
 

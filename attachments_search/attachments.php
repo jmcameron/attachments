@@ -152,11 +152,11 @@ class plgSearchAttachments extends JPlugin
 		switch ( $ordering )
 		{
 		case 'oldest':
-			$order = 'a.create_date ASC';
+			$order = 'a.created ASC';
 			break;
 
 		case 'newest':
-			$order = 'a.create_date DESC';
+			$order = 'a.created DESC';
 			break;
 
 		case 'alpha':
@@ -263,7 +263,7 @@ class plgSearchAttachments extends JPlugin
 				$text .= " | " . $user_field_3_name	 . ": " . $row->user_field_3;
 				}
 			$row->text = $text;
-			$row->created = $row->create_date;
+			$row->created = $row->created;
 			$row->browsernav = 2;
 
 			$parent_entity_name = JText::_($parent_entity);

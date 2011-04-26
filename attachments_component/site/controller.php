@@ -311,7 +311,7 @@ class AttachmentsController extends JController
 
 		// Handle the various ways this function might get invoked
 		if ( $save_type == 'upload' ) {
-			$row->uploader_id = $user->get('id');
+			$row->created_by = $user->get('id');
 			$row->parent_id = $parent_id;
 			}
 

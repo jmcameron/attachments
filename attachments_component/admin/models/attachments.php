@@ -31,8 +31,8 @@ class AttachmentsModelAttachments extends JModelList
 				'a.file_type',
 				'a.file_size',
 				'uploader_name', 'u.name',
-				'a.create_date',
-				'a.modification_date',
+				'a.created',
+				'a.modified',
 				'a.download_count'
 			);
 		}
@@ -57,7 +57,7 @@ class AttachmentsModelAttachments extends JModelList
 		$query->from('#__attachments as a');
 
 		$query->select('u.name as uploader_name');
-		$query->join('LEFT', '#__users AS u ON u.id = a.uploader_id');
+		$query->join('LEFT', '#__users AS u ON u.id = a.created_by');
 
 		// Add the where clause
 		$where = $this->_buildContentWhere($query);

@@ -721,8 +721,8 @@ class AttachmentsHelper
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
 		$now = new JDate();
-		$row->create_date = $now->toMySQL();
-		$row->modification_date = $row->create_date;
+		$row->created = $now->toMySQL();
+		$row->modified = $row->created;
 
 		// Add the icon file type
 		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
@@ -1242,8 +1242,8 @@ class AttachmentsHelper
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
 		$now = new JDate();
-		$row->create_date = $now->toMySQL();
-		$row->modification_date = $row->create_date;
+		$row->created = $now->toMySQL();
+		$row->modified = $row->created;
 		$row->state = $auto_publish;
 		$row->uri_type = 'url';
 

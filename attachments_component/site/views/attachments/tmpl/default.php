@@ -132,7 +132,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	if ( $this->show_mod_date ) {
 		jimport( 'joomla.utilities.date' );
-		$date = new JDate($row->modification_date, -$app->getCfg('offset'));
+		$date = new JDate($row->modified, -$app->getCfg('offset'));
 		$last_modified = $date->toFormat($this->mod_date_format);
 		}
 

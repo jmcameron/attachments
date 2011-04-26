@@ -41,10 +41,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							 'a.file_size', $listDirn, $listOrder ) ?></th>
 	 <th class="at_uploader"><?php echo JHTML::_('grid.sort', JText::_('UPLOADER'),
 							 'u.name', $listDirn, $listOrder ) ?></th>
-	 <th class="at_create_date"><?php echo JHTML::_('grid.sort', JText::_('CREATED'),
-								'a.create_date', $listDirn, $listOrder ) ?></th>
+	 <th class="at_created"><?php echo JHTML::_('grid.sort', JText::_('CREATED'),
+								'a.created', $listDirn, $listOrder ) ?></th>
 	 <th class="at_mod_date"><?php echo JHTML::_('grid.sort', JText::_('LAST_MODIFIED'),
-							 'a.modification_date', $listDirn, $listOrder ) ?></th>
+							 'a.modified', $listDirn, $listOrder ) ?></th>
 	 <?php if ( $secure ): ?>
 	   <th class="at_downloads"><?php echo JHTML::_('grid.sort', JText::_('DOWNLOADS'),
 													'a.download_count', $listDirn, $listOrder ) ?></th>

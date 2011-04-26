@@ -293,14 +293,14 @@ class AttachmentsModelAttachments extends JModel
 			$order_by = "description";
 		else if ( $new_sort_order == 'display_name' )
 			$order_by = "display_name, filename";
-		else if ( $new_sort_order == 'create_date' )
-			$order_by = "create_date";
-		else if ( $new_sort_order == 'create_date_desc' )
-			$order_by = "create_date DESC";
-		else if ( $new_sort_order == 'modification_date' )
-			$order_by = "modification_date";
-		else if ( $new_sort_order == 'modification_date_desc' )
-			$order_by = "modification_date DESC";
+		else if ( $new_sort_order == 'created' )
+			$order_by = "created";
+		else if ( $new_sort_order == 'created_desc' )
+			$order_by = "created DESC";
+		else if ( $new_sort_order == 'modified' )
+			$order_by = "modified";
+		else if ( $new_sort_order == 'modified_desc' )
+			$order_by = "modified DESC";
 		else if ( $new_sort_order == 'user_field_1' )
 			$order_by = "user_field_1";
 		else if ( $new_sort_order == 'user_field_2' )
@@ -353,14 +353,14 @@ class AttachmentsModelAttachments extends JModel
 			$user =& JFactory::getUser();
 			$user_id = $user->get('id');
 			$query	= "SELECT a.*, u.name as uploader_name FROM #__attachments AS a " .
-				"LEFT JOIN #__users AS u ON u.id = a.uploader_id " .
+				"LEFT JOIN #__users AS u ON u.id = a.created_by " .
 				"WHERE a.parent_id IS NULL AND u.id='" . (int)$user_id . "' " .
 				"AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity' " .
 				"ORDER BY " . $this->_sort_order;
 			}
 		else {
 			$query	= "SELECT a.*, u.name as uploader_name FROM #__attachments AS a " .
-				"LEFT JOIN #__users AS u ON u.id = a.uploader_id " .
+				"LEFT JOIN #__users AS u ON u.id = a.created_by " .
 				"WHERE a.parent_id='".(int)$parent_id."' AND a.state='1' " .
 				"AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity' " .
 				"ORDER BY " . $this->_sort_order;

@@ -52,6 +52,10 @@
 	<filename>views/upload/index.html</filename>
 	<filename>views/upload/metadata.xml</filename>
 	<filename>views/upload/view.php</filename>
+	<filename>views/warning/index.html</filename>
+	<filename>views/warning/tmpl/default.php</filename>
+	<filename>views/warning/tmpl/index.html</filename>
+	<filename>views/warning/view.html.php</filename>
 	<folder>media</folder>
     </files>
 
@@ -89,7 +93,6 @@
 	    <filename>help/index.html</filename>
 	    <filename>index.html</filename>
 	    <filename>install.mysql.sql</filename>
-	    <filename>install.noutf8.sql</filename>
 	    <filename>media/attachments.css</filename>
 	    <filename>media/attachments.png</filename>
 	    <filename>media/attachments_logo48.png</filename>

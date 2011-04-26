@@ -88,11 +88,11 @@
                         size="80" maxlength="255"
                         default=""
                 />
-		<field name="create_date" type="Date"
+		<field name="created" type="Date"
 			label="DATE_CREATED" description=""
 		        readonly="true" class="readonly" 
                 />
-		<field name="modification_date" type="Date"
+		<field name="modified" type="Date"
 			label="LAST_MODIFIED" description=""
 		        readonly="true" class="readonly" 
                 />
@@ -101,8 +101,8 @@
 		        readonly="true" class="readonly"
                         size="10"
                 />
-                <field  name="uploader_id" type="text"
-                        label="Uploader ID" description=""
+                <field  name="created_by" type="text"
+                        label="Creator ID" description=""
 		        readonly="true" class="readonly"
                         size="10"
                 />

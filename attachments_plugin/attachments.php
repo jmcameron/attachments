@@ -305,7 +305,7 @@ class plgContentAttachments extends JPlugin
 		$user_id = $user->get('id');
 		$db =& JFactory::getDBO();
 		$query = "SELECT * FROM #__attachments "
-			. "WHERE uploader_id='$user_id' AND parent_id IS NULL";
+			. "WHERE created_by='$user_id' AND parent_id IS NULL";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 

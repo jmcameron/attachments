@@ -144,7 +144,7 @@ class AttachmentsViewAttachments extends JView
 		$this->show_uploader = 	$params->get('show_uploader', false);
 		$this->show_file_size = $params->get('show_file_size', true);
 		$this->show_downloads = $params->get('show_downloads', false);
-		$this->show_mod_date = 	$params->get('show_modification_date', false);
+		$this->show_mod_date = 	$params->get('show_modified_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 
 		if ( $this->show_mod_date ) {

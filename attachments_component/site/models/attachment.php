@@ -82,7 +82,7 @@ class AttachmentsModelAttachment extends JModel
 				
 			$query = "SELECT a.*, a.id as id, u.name as uploader_name " 
 				. "FROM #__attachments as a "
-				. "LEFT JOIN #__users AS u ON u.id = a.uploader_id "
+				. "LEFT JOIN #__users AS u ON u.id = a.created_by "
 				. "WHERE a.id = '".(int)$this->_id."'";
 			
 			$db =& $this->getDBO();

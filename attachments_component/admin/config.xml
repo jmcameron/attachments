@@ -86,9 +86,9 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
-    <field name="show_modification_date" type="radio" default="0"
-           label="SHOW_FILE_MODIFICATION_DATE"
-           description="SHOW_FILE_MODIFICATION_DATE_DESCRIPTION">
+    <field name="show_modified_date" type="radio" default="0"
+           label="SHOW_MODIFICATION_DATE"
+           description="SHOW_MODIFICATION_DATE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
@@ -105,10 +105,10 @@
       <option value="description">SORT_DESCRIPTION</option>
       <option value="display_name">DISPLAY_FILENAME_OR_URL</option>
       <option value="uploader">UPLOADER</option>
-      <option value="create_date">SORT_CREATE_DATE</option>
-      <option value="create_date_desc">SORT_CREATE_DATE_DESCENDING</option>
-      <option value="modification_date">SORT_MODIFICATION_DATE</option>
-      <option value="modification_date_desc">SORT_MODIFICATION_DATE_DESCENDING</option>
+      <option value="created">SORT_CREATED_DATE</option>
+      <option value="created_desc">SORT_CREATED_DATE_DESCENDING</option>
+      <option value="modified">SORT_MODIFICATION_DATE</option>
+      <option value="modified_desc">SORT_MODIFICATION_DATE_DESCENDING</option>
       <option value="id">SORT_ATTACHMENT_ID</option>
       <option value="user_field_1">USER_DEFINED_FIELD_1</option>
       <option value="user_field_2">USER_DEFINED_FIELD_2</option>
