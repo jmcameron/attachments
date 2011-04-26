@@ -624,6 +624,10 @@ class AttachmentsHelper
 			exit();
 			}
 
+		// Define where the attachments go
+		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_SITE . DS . $upload_url;
+
 		// Figure out the system filename
 		$path = $parent->getAttachmentPath($row->parent_entity,
 										   $row->parent_id, null);

@@ -484,7 +484,8 @@ class AttachmentsUpdate
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_SITE . DS . $upload_url;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -559,6 +560,7 @@ class AttachmentsUpdate
 				$newdir = $parent->getAttachmentPath($attachment->parent_entity,
 													 $attachment->parent_id, null);
 				$new_path = $upload_dir.DS.$newdir;
+
 				if ( $finfo->oldstyle AND $finfo->prefix ) {
 					$new_filename_sys = $new_path . $finfo->basename_no_prefix;
 					$attachment->filename = $finfo->basename_no_prefix;
