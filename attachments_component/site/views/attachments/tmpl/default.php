@@ -66,7 +66,7 @@ $html .= "<caption>{$this->title}</caption>\n";
 // Add the column titles, if requested
 if ( $this->show_column_titles ) {
 	$html .= "<thead>\n<tr>";
-	$html .= "<th class=\"at_filename\">" . JText::_('FILE') . "</th>";
+	$html .= "<th class=\"at_filename\">" . JText::_('FILE_URL') . "</th>";
 	if ( $this->show_description ) {
 		$html .= "<th class=\"at_description\">" . JText::_('DESCRIPTION') . "</th>";
 		}

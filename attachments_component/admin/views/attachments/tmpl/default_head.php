@@ -19,7 +19,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	 </th>
 	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('PUBLISHED'),
 							 'a.state', $listDirn, $listOrder ) ?></th>
-	 <th class="at_filename"><?php echo JHTML::_('grid.sort', JText::_('ATTACHMENT_FILENAME'),
+	 <th class="at_filename"><?php echo JHTML::_('grid.sort', JText::_('ATTACHMENT_FILENAME_URL'),
 							 'a.filename', $listDirn, $listOrder ) ?></th>
 	 <th class="at_description"><?php echo JHTML::_('grid.sort', JText::_('DESCRIPTION'),
 							 'a.description', $listDirn, $listOrder ) ?></th>
