@@ -56,12 +56,9 @@
 	<filename>views/warning/tmpl/default.php</filename>
 	<filename>views/warning/tmpl/index.html</filename>
 	<filename>views/warning/view.html.php</filename>
+	<folder>language</folder>
 	<folder>media</folder>
     </files>
-
-    <languages folder="site">
-	<language tag="en-GB">en-GB.com_attachments.ini</language>
-    </languages>
 
     <administration>
 	<menu img="components/com_attachments/media/attachments.png">ATTACHMENTS</menu>
@@ -144,11 +141,8 @@
 	    <filename>views/warning/tmpl/index.html</filename>
 	    <filename>views/warning/view.html.php</filename>
 	    <folder>help/en-GB/plugin_manual/html/_static</folder>
+	    <folder>language</folder>
 	</files>
-	<languages folder="admin">
-	    <language tag="en-GB">en-GB.com_attachments.ini</language>
-	    <language tag="en-GB">en-GB.com_attachments.sys.ini</language>
-	</languages>
     </administration>
 
 </extension>
