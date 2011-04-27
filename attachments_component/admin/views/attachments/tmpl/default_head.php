@@ -39,7 +39,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							 'a.file_type', $listDirn, $listOrder ) ?></th>
 	 <th class="at_file_size"><?php echo JHTML::_('grid.sort', JText::_('FILE_SIZE_KB'),
 							 'a.file_size', $listDirn, $listOrder ) ?></th>
-	 <th class="at_uploader"><?php echo JHTML::_('grid.sort', JText::_('UPLOADER'),
+	 <th class="at_creator_name"><?php echo JHTML::_('grid.sort', JText::_('CREATOR'),
 							 'u.name', $listDirn, $listOrder ) ?></th>
 	 <th class="at_created"><?php echo JHTML::_('grid.sort', JText::_('CREATED'),
 								'a.created', $listDirn, $listOrder ) ?></th>

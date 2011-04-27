@@ -80,7 +80,7 @@ class AttachmentsModelAttachment extends JModel
 		
 		if ( empty($this->_attachment) ) {
 				
-			$query = "SELECT a.*, a.id as id, u.name as uploader_name " 
+			$query = "SELECT a.*, a.id as id, u.name as creator_name " 
 				. "FROM #__attachments as a "
 				. "LEFT JOIN #__users AS u ON u.id = a.created_by "
 				. "WHERE a.id = '".(int)$this->_id."'";

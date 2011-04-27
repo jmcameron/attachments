@@ -486,14 +486,14 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type,
 												 $attachment_id, null, $from);
 
-				$view->uri_type = 		 $row->uri_type;
-				$view->url = 				 $row->url;
-				$view->parent_id = $row->parent_id;
-				$view->parent_type = 		 $row->parent_type;
-				$view->description = 		 $row->description;
-				$view->user_field_1 = 	 $row->user_field_1;
-				$view->user_field_2 = 	 $row->user_field_2;
-				$view->user_field_3 = 	 $row->user_field_3;
+				$view->uri_type     = $row->uri_type;
+				$view->url          = $row->url;
+				$view->parent_id    = $row->parent_id;
+				$view->parent_type  = $row->parent_type;
+				$view->description  = $row->description;
+				$view->user_field_1 = $row->user_field_1;
+				$view->user_field_2 = $row->user_field_2;
+				$view->user_field_3 = $row->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -725,8 +725,13 @@ class AttachmentsHelper
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
 		$now = new JDate();
-		$row->created = $now->toMySQL();
-		$row->modified = $row->created;
+		$now = $now->toMySQL();
+
+		// Update the create/modify info
+		if ( $save_type == 'upload' ) {
+			$row->created = $now;
+			}
+		$row->modified = $now;
 
 		// Add the icon file type
 		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');

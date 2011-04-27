@@ -318,7 +318,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$errmsg = $attachment->getError() . ' (ERR 24)';
 			JError::raiseError(500, $errmsg);
 			}
-		$attachment->created_by = $user->get('id');
 		$attachment->parent_type = $parent_type;
 		$parent->new = $new_parent;
 
@@ -362,7 +361,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Update the url_relative field
 		$attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
 
-		// Upload new file/url and create/update the attachment
+		// Update create/modify info
+		$attachment->created_by = $user->get('id');
+		$attachment->modified_by = $user->get('id');
+
+		// Upload new file/url and create the attachment
 		$msg = '';
 		$msgType = 'message';
 		if ( $new_uri_type == 'file' ) {
@@ -508,11 +511,16 @@ class AttachmentsControllerAttachment extends JControllerForm
 					 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
 					 $attachment->icon_filename);
 
-		// Get the uploaders name
+		// Get the creators name
 		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->created_by."' LIMIT 1";
 		$db->setQuery($query);
-		$attachment->uploader_name = $db->loadResult();
+		$attachment->creator_name = $db->loadResult();
 
+		// Get the modifiers name
+		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->modified_by."' LIMIT 1";
+		$db->setQuery($query);
+		$attachment->modifier_name = $db->loadResult();
+		
 		// Compute the attachment size in KB
 		$attachment->size_kb = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
 
@@ -868,6 +876,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Compute the update time
 		jimport( 'joomla.utilities.date' );
 		$now = new JDate();
+
+		// Update create/modify info
+		$user =& JFactory::getUser();
+		$attachment->modified_by = $user->get('id');
 		$attachment->modified = $now->toMySQL();
 
 		// Upload new file/url and create/update the attachment

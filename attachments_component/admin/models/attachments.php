@@ -30,7 +30,9 @@ class AttachmentsModelAttachments extends JModelList
 				'a.user_field_3',
 				'a.file_type',
 				'a.file_size',
-				'uploader_name', 'u.name',
+				'creator_name',
+				'modifier_name',
+				'u.name',
 				'a.created',
 				'a.modified',
 				'a.download_count'
@@ -56,8 +58,11 @@ class AttachmentsModelAttachments extends JModelList
 		$query->select('a.*, a.id as id');
 		$query->from('#__attachments as a');
 
-		$query->select('u.name as uploader_name');
-		$query->join('LEFT', '#__users AS u ON u.id = a.created_by');
+		$query->select('u1.name as creator_name');
+		$query->join('LEFT', '#__users AS u1 ON u1.id = a.created_by');
+
+		$query->select('u2.name as modifier_name');
+		$query->join('LEFT', '#__users AS u2 ON u2.id = a.modified_by');
 
 		// Add the where clause
 		$where = $this->_buildContentWhere($query);

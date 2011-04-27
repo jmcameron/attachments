@@ -79,8 +79,8 @@ if ( $this->show_column_titles ) {
 	if ( $this->show_user_field_3 ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_3_name . "</th>";
 		}
-	if ( $this->show_uploader ) {
-		$html .= "<th class=\"at_uploader\">" . JText::_('UPLOADER') . "</th>";
+	if ( $this->show_creator ) {
+		$html .= "<th class=\"at_creator_name\">" . JText::_('CREATOR') . "</th>";
 		}
 	if ( $this->show_file_size ) {
 		$html .= "<th class=\"at_file_size\">" . JText::_('FILE_SIZE') . "</th>";
@@ -231,9 +231,9 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
 		}
 
-	// Add the uploader's username (if requested)
-	if ( $this->show_uploader ) {
-		$html .= "<td class=\"at_uploader\">{$row->uploader_name}</td>";
+	// Add the creator's username (if requested)
+	if ( $this->show_creator ) {
+		$html .= "<td class=\"at_creator_name\">{$row->creator_name}</td>";
 		}
 
 	// Add file size (maybe)

@@ -315,6 +315,9 @@ class AttachmentsController extends JController
 			$row->parent_id = $parent_id;
 			}
 
+		// Update the modified info
+		$row->modified_by = $user->get('id');
+
 		// Set up a couple of items that the upload function may need
 		$parent->new = $new_parent;
 		if ( $new_parent ) {

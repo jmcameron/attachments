@@ -68,9 +68,9 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
-    <field name="show_uploader" type="radio" default="0"
-           label="SHOW_ATTACHMENT_UPLOADER"
-           description="SHOW_ATTACHMENT_UPLOADER_DESCRIPTION">
+    <field name="show_creator" type="radio" default="0"
+           label="SHOW_ATTACHMENT_CREATOR"
+           description="SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
@@ -104,7 +104,7 @@
       <option value="file_size_desc">SORT_FILE_SIZE_DESCENDING</option>
       <option value="description">SORT_DESCRIPTION</option>
       <option value="display_name">DISPLAY_FILENAME_OR_URL</option>
-      <option value="uploader">UPLOADER</option>
+      <option value="creator">CREATOR</option>
       <option value="created">SORT_CREATED_DATE</option>
       <option value="created_desc">SORT_CREATED_DATE_DESCENDING</option>
       <option value="modified">SORT_MODIFICATION_DATE</option>

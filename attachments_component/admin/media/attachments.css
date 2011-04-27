@@ -38,16 +38,16 @@ table.adminlist th {
 	text-align: left;
 	border-bottom: 0; 
 }
-table.adminlist th.at_published	  { text-align: center; }
-table.adminlist th.at_filename	  { text-align: left; }
-table.adminlist th.at_description { text-align: left; }
-table.adminlist th.at_user_field  { text-align: left; }
-table.adminlist th.at_file_type	  { text-align: center; }
-table.adminlist th.at_file_size	  { text-align: center; }
-table.adminlist th.at_uploader	  { text-align: center; }
-table.adminlist th.at_created     { text-align: center; }
-table.adminlist th.at_mod_date	  { text-align: center; }
-table.adminlist th.at_downloads	  { text-align: center; }
+table.adminlist th.at_published	   { text-align: center; }
+table.adminlist th.at_filename	   { text-align: left; }
+table.adminlist th.at_description  { text-align: left; }
+table.adminlist th.at_user_field   { text-align: left; }
+table.adminlist th.at_file_type	   { text-align: center; }
+table.adminlist th.at_file_size	   { text-align: center; }
+table.adminlist th.at_creator_name { text-align: center; }
+table.adminlist th.at_created      { text-align: center; }
+table.adminlist th.at_mod_date	   { text-align: center; }
+table.adminlist th.at_downloads	   { text-align: center; }
 
 table.adminlist td { 
 	text-align: left;
@@ -67,14 +67,14 @@ table.adminlist td.at_filename a img {
 	vertical-align: text-bottom; 
 }
 
-table.adminlist td.at_description { text-align: left; }
-table.adminlist td.at_user_field  { text-align: left; }
-table.adminlist td.at_file_type	  { text-align: center; }
-table.adminlist td.at_file_size	  { text-align: center; }
-table.adminlist td.at_uploader	  { text-align: center; }
-table.adminlist td.at_created     { text-align: center; }
-table.adminlist td.at_mod_date	  { text-align: center; }
-table.adminlist td.at_downloads	  { text-align: center; }
+table.adminlist td.at_description  { text-align: left; }
+table.adminlist td.at_user_field   { text-align: left; }
+table.adminlist td.at_file_type	   { text-align: center; }
+table.adminlist td.at_file_size	   { text-align: center; }
+table.adminlist td.at_creator_name { text-align: center; }
+table.adminlist td.at_created      { text-align: center; }
+table.adminlist td.at_mod_date	   { text-align: center; }
+table.adminlist td.at_downloads	   { text-align: center; }
 
 
 table.adminlist td.at_parentsep {
@@ -287,8 +287,12 @@ form.attachmentsBackend span.right {
 	float: right;
 }
 
+form.attachmentsBackend table.admintable {
+	padding: 4px;
+	border: 1px solid #CCC;
+}
+
 form.attachmentsBackend table.admintable td {
-	/* font-size: 1em; */
 	padding-right: 8px;
 	vertical-align: middle;
 }
@@ -304,14 +308,29 @@ form.attachmentsBackend table.admintable td span.optional {
 	margin-left: 10px;
 }
 
-form.attachmentsBackend table.admintable td.key {
+
+form.attachmentsBackend table.admintable td.key,
+form.attachmentsBackend table.admintable td.key2 {
 	background-color: #DADAF0;
 	color: #444;
-	width: 10em;
+	width: 12em;
 	padding: 0 4px 0 4px;
 	margin: 2px 0 2px 0;
 	vertical-align: middle;
 	text-align: right;
+}
+
+form.attachmentsBackend table.admintable td.key2 {
+	width: 8em;
+}
+
+form.attachmentsBackend table.admintable td.switch {
+	padding: 0 4px 0 10px;
+	border: 1px solid #CCC;
+}
+
+form.attachmentsBackend table.admintable td.at_title {
+	-- max-width: 18em;
 }
 
 
