@@ -42,6 +42,18 @@ class AttachmentsController extends JController
 		JError::raiseError(500, $errmsg);
 	}
 
+
+	/**
+	 * Proxy for getModel.
+	 * @since       1.6
+	 */
+	public function getModel($name = 'Attachments', $prefix = 'AttachmentModel') 
+	{
+		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
+		return $model;
+	}
+
+
 	/**
 	 * Display a form for uploading a file/url
 	 */
@@ -641,10 +653,14 @@ class AttachmentsController extends JController
 			JError::raiseError(500, $errmsg);
 			}
 
-		// Get the attachment record (??? convert to model)
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
-		if ( !$attachment->load($id) ) {
+		// Get the attachment record
+		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		$model = new AttachmentsModelAttachment();
+		$model->setId($id);
+		$attachment = $model->getAttachment();
+		// JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		// $attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		if ( !$attachment ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 75)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -709,7 +725,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
+		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
 		$view = new AttachmentsViewUpdate();
 		$from = JRequest::getWord('from', 'closeme');
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
