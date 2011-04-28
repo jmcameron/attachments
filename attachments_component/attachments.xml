@@ -49,6 +49,8 @@
 	<filename>views/update/index.html</filename>
 	<filename>views/update/metadata.xml</filename>
 	<filename>views/update/view.php</filename>
+	<filename>views/update/tmpl/default.php</filename>
+	<filename>views/update/tmpl/index.html</filename>
 	<filename>views/upload/index.html</filename>
 	<filename>views/upload/metadata.xml</filename>
 	<filename>views/upload/view.php</filename>
