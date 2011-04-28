@@ -80,12 +80,27 @@ class AttachmentsModelAttachment extends JModel
 		
 		if ( empty($this->_attachment) ) {
 				
-			$query = "SELECT a.*, a.id as id, u.name as creator_name " 
-				. "FROM #__attachments as a "
-				. "LEFT JOIN #__users AS u ON u.id = a.created_by "
-				. "WHERE a.id = '".(int)$this->_id."'";
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+
+			$query->select('a.*, a.id as id');
+			$query->from('#__attachments as a');
+
+			$query->select('u1.name as creator_name');
+			$query->join('LEFT', '#__users AS u1 ON u1.id = a.created_by');
+
+			$query->select('u2.name as modifier_name');
+			$query->join('LEFT', '#__users AS u2 ON u2.id = a.modified_by');
 			
-			$db =& $this->getDBO();
+			$query->where("a.id = '" . (int)$this->_id."'");
+			/* 
+			$query = "SELECT a.*, a.id as id, u1.name as creator_name, u2.name as modifier_name " 
+				. "FROM #__attachments as a "
+				. "LEFT JOIN #__users AS u1 ON u1.id = a.created_by "
+				. "LEFT JOIN #__users AS u2 ON u2.id = a.modified_by "
+				. "WHERE a.id = '".(int)$this->_id."'";
+			*/
+			
 			$db->setQuery($query);
 			$this->_attachment = $db->loadObject();
 			

@@ -1,14 +1,22 @@
 /* Styles for the upload page */
-div.uploadAttachmentsPage {
+div#uploadAttachmentsPage {
     width: 95%;
-    margin: 15px 0px 6px 15px;
+    margin: 5px 0px 0px 15px;
     text-align: left;
 }
 
-div.uploadAttachmentsPage p {
+div#uploadAttachmentsPage p {
     text-align: left;
+    margin: 0;
 }
 
+div#uploadAttachmentsPage fieldset {
+    padding-bottom: 0px;
+}
+
+div#uploadAttachmentsPage legend {
+    padding: 3px 0;
+}
 
 /* For button-like links to change/switch */
 
@@ -55,7 +63,7 @@ form.attachments fieldset {
 }
 
 form.attachments legend {
-    font-size: 130%;
+    font-size: 125%;
     font-weight: bold;
 }
 
@@ -83,14 +91,20 @@ form.attachments span.right {
     float: right;
 }
 
-
-div.uploadAttachmentsPage h1 {
+div#uploadAttachmentsPage h1 {
+    font-size: 150%;
     color: #000;
 }
 
-div.uploadAttachmentsPage h2 {
+div#uploadAttachmentsPage h2 {
     color: #000;
 }
+
+div#uploadAttachmentsPage div.form_buttons {
+    margin: 6px 0 0 0;
+    text-align: center;
+}
+
 
 
 /* Styles for lists of attachments on upload/update forms */

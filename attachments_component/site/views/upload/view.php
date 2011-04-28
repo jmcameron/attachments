@@ -114,7 +114,7 @@ class AttachmentsViewUpload extends JView
 
 		// Display the form
 		?>
-		<div class="uploadAttachmentsPage">
+		<div id="uploadAttachmentsPage">
 	<h1><?php echo JText::sprintf('FOR_PARENT_S_COLON_S', $this->parent_entity_name, $this->parent_title) ?></h1>
 		<form class="attachments" enctype="multipart/form-data" name="upload_form"
 			  action="<?php echo $this->save_url; ?>" method="post">
@@ -196,7 +196,7 @@ class AttachmentsViewUpload extends JView
 			<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<div align="center">
+			<br/><div class="form_buttons">
 				<input type="submit" name="submit" value="<?php echo $upload_button_text ?>" />
 				<span class="right">
 				  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
