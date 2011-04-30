@@ -303,9 +303,11 @@ class plgContentAttachments extends JPlugin
 		//		 and are created by the current user are for this article.
 		$user =& JFactory::getUser();
 		$user_id = $user->get('id');
+		// ??? $query = "SELECT * FROM #__attachments WHERE created_by='$user_id' AND parent_id IS NULL";
 		$db =& JFactory::getDBO();
-		$query = "SELECT * FROM #__attachments "
-			. "WHERE created_by='$user_id' AND parent_id IS NULL";
+		$query	= $db->getQuery(true);
+		$query->select('*')->from("#__attachments");
+		$query->where('created_by='.(int)$user_id.' AND parent_id IS NULL');
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
@@ -392,8 +394,11 @@ class plgContentAttachments extends JPlugin
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
 		$db =& JFactory::getDBO();
-		$query = "SELECT count(*) FROM #__attachments "
-			. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
+		// ??? $query = "SELECT count(*) FROM #__attachments "
+		// ??? 	. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
+		$query	= $db->getQuery(true);
+		$query->select('count(*)')->from("#__attachments");
+		$query->where("parent_id=".(int)$parent_id." AND state=1 AND parent_type='$parent_type'");
 		$db->setQuery($query);
 		$total = $db->loadResult();
 

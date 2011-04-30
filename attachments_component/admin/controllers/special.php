@@ -61,15 +61,28 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	function listAttachmentIDs()
 	{
+		// ??? Add test to make sure only admin can access this
 		$db =& JFactory::getDBO();
 
-		$query = "SELECT att.id,parent_id,parent_type,parent_entity,art.catid FROM #__attachments as att ";
-		$query .= "LEFT JOIN #__content as art ON att.parent_id = art.id WHERE att.parent_entity='ARTICLE' ORDER BY art.id";
+		// ??? $query = "SELECT att.id,parent_id,parent_type,parent_entity,art.catid FROM #__attachments as att ";
+		// ??? $query .= "LEFT JOIN #__content as art ON att.parent_id = art.id WHERE att.parent_entity='ARTICLE' ORDER BY art.id";
+		$query	= $db->getQuery(true);
+		$query->select('att.id,parent_id,parent_type,parent_entity,art.catid');
+		$query->from('#__attachments as att');
+		$query->leftJoin('#__content as art ON att.parent_id = art.id');
+		$query->where("att.parent_entity='article'");
+		$query->order('art.id');
 		$db->setQuery($query);
 		$arows = $db->loadObjectList();
 
-		$query = "SELECT att.id,att.parent_id,parent_type,parent_entity FROM #__attachments as att ";
-		$query .= "LEFT JOIN #__categories as c ON att.parent_id = c.id WHERE att.parent_entity='CATEGORY' ORDER BY c.id";
+		// ??? $query = "SELECT att.id,att.parent_id,parent_type,parent_entity FROM #__attachments as att ";
+		// ??? $query .= "LEFT JOIN #__categories as c ON att.parent_id = c.id WHERE att.parent_entity='CATEGORY' ORDER BY c.id";
+		$query	= $db->getQuery(true);
+		$query->select('att.id,att.parent_id,parent_type,parent_entity');
+		$query->from('#__attachments as att');
+		$query->leftJoin('#__categories as c ON att.parent_id = c.id');
+		$query->where("att.parent_entity='category'");
+		$query->order('c.id');
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
 

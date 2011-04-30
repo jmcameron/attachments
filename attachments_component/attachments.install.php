@@ -71,8 +71,7 @@ class Com_AttachmentsInstallerScript {
 			$query	= $db->getQuery(true);
 			$query->update('#__extensions');
 			$query->set("enabled = 1");
-			$query->where("type = 'plugin'");
-			$query->where("name = '" . $plugin_name . "'");
+			$query->where("type = 'plugin' AND name = '" . $plugin_name . "'");
 			$db->setQuery($query);
 			$db->query();
 

@@ -54,11 +54,10 @@ class JFormFieldModal_Parent extends JFormField
 		$link	= 'index.php?option=com_content&amp;view=parents&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParent_'.$this->id;
 
 		$db	= JFactory::getDBO();
-		$db->setQuery(
-			'SELECT title' .
-			' FROM #__content' .
-			' WHERE id = '.(int) $this->value
-		);
+		// ??? $db->setQuery('SELECT title FROM #__content WHERE id = '.(int) $this->value	);
+		$query = $db->getQuery(true);
+		$query->select('title')->from('#__content')->where('id = '.(int)$this->value);
+		$db->setQuery($query);
 		$title = $db->loadResult();
 
 		if ($error = $db->getErrorMsg()) {

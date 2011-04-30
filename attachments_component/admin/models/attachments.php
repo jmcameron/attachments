@@ -59,10 +59,10 @@ class AttachmentsModelAttachments extends JModelList
 		$query->from('#__attachments as a');
 
 		$query->select('u1.name as creator_name');
-		$query->join('LEFT', '#__users AS u1 ON u1.id = a.created_by');
+		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
 
 		$query->select('u2.name as modifier_name');
-		$query->join('LEFT', '#__users AS u2 ON u2.id = a.modified_by');
+		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
 
 		// Add the where clause
 		$where = $this->_buildContentWhere($query);

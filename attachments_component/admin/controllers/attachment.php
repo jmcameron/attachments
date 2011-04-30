@@ -512,13 +512,17 @@ class AttachmentsControllerAttachment extends JControllerForm
 					 $attachment->icon_filename);
 
 		// Get the creators name
-		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->created_by."' LIMIT 1";
-		$db->setQuery($query);
+		// ??? $query = "SELECT name FROM #__users WHERE id='".(int)$attachment->created_by."' LIMIT 1";
+		$query	= $db->getQuery(true);
+		$query->select('name')->from('#__users')->where('id='.(int)$attachment->created_by);
+		$db->setQuery($query, 0, 1);
 		$attachment->creator_name = $db->loadResult();
 
 		// Get the modifiers name
-		$query = "SELECT name FROM #__users WHERE id='".(int)$attachment->modified_by."' LIMIT 1";
-		$db->setQuery($query);
+		// ??? $query = "SELECT name FROM #__users WHERE id='".(int)$attachment->modified_by."' LIMIT 1";
+		$query	= $db->getQuery(true);
+		$query->select('name')->from('#__users')->where('id='.(int)$attachment->modified_by);
+		$db->setQuery($query, 0, 1);
 		$attachment->modifier_name = $db->loadResult();
 		
 		// Compute the attachment size in KB
@@ -782,8 +786,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 				// Load the attachment so we can get its filename_sys
 				$db =& JFactory::getDBO();
-				$query = "SELECT filename_sys, id FROM #__attachments WHERE id='".(int)$attachment->id."' LIMIT 1";
-				$db->setQuery($query);
+				// ??? $query = "SELECT filename_sys, id FROM #__attachments WHERE id='".(int)$attachment->id."' LIMIT 1";
+				$query	= $db->getQuery(true);
+				$query->select('filename_sys, id')->from('#__attachments')->where('id='.(int)$attachment->id);
+				$db->setQuery($query, 0, 1);
 				$filename_sys = $db->loadResult();
 				JFile::delete($filename_sys);
 				AttachmentsHelper::clean_directory($filename_sys);

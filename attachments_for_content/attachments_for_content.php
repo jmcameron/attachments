@@ -142,8 +142,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Get all the items
 		$query	= $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__categories');
+		$query->select('*')->from('#__categories');
 
 		// Filter
 		if ( $filter ) {
@@ -152,7 +151,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 		$query->where("extension='com_content'");
 
-		// Ignore any requested order since only ordering by lft makes the hierarchy work
+		// NOTE: Ignore any requested order since only ordering by lft makes the hierarchy work
 		$query->order('lft');
 
 		// Do the query
@@ -309,7 +308,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		case 'category':
 			$entity_table = $this->_entity_table[$parent_entity];
-			$query = "SELECT published FROM #__$entity_table WHERE id='".(int)$parent_id."'";
+			// ??? $query = "SELECT published FROM #__$entity_table WHERE id='".(int)$parent_id."'";
+			$query	= $db->getQuery(true);
+			$query->select('published')->from("#__$entity_table")->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$obj = $db->loadObject();
 			if ( $db->getErrorNum() ) {
@@ -318,7 +319,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				JError::raiseError(500, $errmsg);
 				}
 			if ( is_object( $obj ) ) {
-				$published = $obj->published;
+				$published = $obj->published == 1;
 				}
 			else {
 				$published = false;
@@ -328,7 +329,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		default:
 
 			// ??? Convert to use some com_content function
-			$query = "SELECT state, publish_up, publish_down FROM #__content WHERE id='".(int)$parent_id."'";
+			// ??? $query = "SELECT state, publish_up, publish_down FROM #__content WHERE id='".(int)$parent_id."'";
+			$query	= $db->getQuery(true);
+			$query->select('state, publish_up, publish_down')->from('#__content');
+			$query->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
@@ -380,8 +384,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	function isParentArchived($parent_id, $parent_entity='default')
 	{
-		$db =& JFactory::getDBO();
-
 		$archived = false;
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
@@ -395,7 +397,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		default:
 			// Articles
-			$query = "SELECT state FROM #__content WHERE id='".(int)$parent_id."'";
+			$db =& JFactory::getDBO();
+			// ??? $query = "SELECT state FROM #__content WHERE id='".(int)$parent_id."'";
+			$query = $db->getQuery(true);
+			$query->select('state')->from("#__content")->where(' id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
@@ -510,7 +515,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return false;
 			}
 
-		$db =& JFactory::getDBO();
 
 		$access = 0;
 		$table = null;
@@ -533,7 +537,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		return true;
 
 		// Get the item's access level
-		$query = "SELECT access from #__$table WHERE id='".(int)$parent_id."'";
+		$db =& JFactory::getDBO();
+		// ??? $query = "SELECT access from #__$table WHERE id='".(int)$parent_id."'";
+		$query	= $db->getQuery(true);
+		$query->select('access')->from("#__$table")->where('id = ' . (int)$parent_id);
 		$db->setQuery($query, 0, 1);
 		$obj = $db->loadObject();
 		if ( $db->getErrorNum() ) {
@@ -617,8 +624,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			$description = $parent->text;
-			$query = "SELECT id from #__categories "
-				. "WHERE description=" . $db->Quote($description) . " AND id='".(int)$parent_id."'";
+			// ??? $query = "SELECT id from #__categories WHERE " .
+			// ??           "description=" . $db->Quote($description) . " AND id='".(int)$parent_id."'";
+			$query	= $db->getQuery(true);
+			$query->select('id')->from("#__categories");
+			$query->where('description=' . $db->Quote($description) . ' AND id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			if ( (int)$parent_id != (int)$db->loadResult() ) {
 				return true;
@@ -633,8 +643,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// Make sure we have a valid article
-			$query = "SELECT created_by, catid from #__content "
-				. "WHERE id='".(int)$parent_id."'";
+			// ??? $query = "SELECT created_by, catid from #__content WHERE id='".(int)$parent_id."'";
+			$query	= $db->getQuery(true);
+			$query->select('created_by, catid')->from("#__content")->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 			if ( count($rows) == 0 ) {
@@ -760,7 +771,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 			// Get the creator
 			$db =& JFactory::getDBO();
-			$query = "SELECT created_by from #__content WHERE id='".(int)$parent_id."'";
+			// ??? $query = "SELECT created_by from #__content WHERE id='".(int)$parent_id."'";
+			$query	= $db->getQuery(true);
+			$query->select('created_by')->from("#__content")->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 			if ( count($rows) == 0 ) {
@@ -825,8 +838,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 			else {
 				// Load info about the parent
+				// ??? $query = "SELECT created_by from #__content WHERE id='".(int)$parent_id."'";
 				$db =& JFactory::getDBO();
-				$query = "SELECT created_by from #__content WHERE id='".(int)$parent_id."'";
+				$query = $db->getQuery(true);
+				$query->select('created_by')->from("#__content")->where('id = ' . (int)$parent_id);
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
 				if ( count($rows) == 0 ) {

@@ -168,10 +168,14 @@ class plgSearchAttachments extends JPlugin
 		$user =& JFactory::getUser();
 
 		// Construct and execute the query
-		$query = 'SELECT * FROM #__attachments AS a'
-			. ' WHERE ('. $where .')'
-			. ' AND a.state = 1'
-			. ' ORDER BY '. $order;
+		// ??? $query = 'SELECT * FROM #__attachments AS a'
+		// ??? 	. ' WHERE ('. $where .')'
+		// ??? 	. ' AND a.state = 1'
+		// ??? 	. ' ORDER BY '. $order;
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__attachments AS a');
+		$query->where("('. $where .')' AND a.state = 1'");
+		$query->order($order);
 		$db->setQuery( $query, 0, $limit );
 		$rows = $db->loadObjectList();
 

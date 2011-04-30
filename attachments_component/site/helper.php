@@ -763,7 +763,9 @@ class AttachmentsHelper
 				$msg = JText::_('UPLOADED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
 			}
 		else {
-			$query ="DELETE FROM #__attachments WHERE id='".(int)$attachment_id."'";
+			// ??? $query ="DELETE FROM #__attachments WHERE id='".(int)$attachment_id."'";
+			$query = $db->getQuery(true);
+			$query->delete('#__attachments')->where('id = '.(int)$attachment_id);
 			$db->setQuery($query);
 			$result = $db->query();
 			$msg = JText::_('ERROR_MOVING_FILE')
@@ -1291,8 +1293,10 @@ class AttachmentsHelper
 	{
 		// Get the info about the attachment
 		$db =& JFactory::getDBO();
-		$query = "SELECT * FROM #__attachments WHERE id='".(int)$id."' LIMIT 1";
-		$db->setQuery($query);
+		// ??? $query = "SELECT * FROM #__attachments WHERE id='".(int)$id."' LIMIT 1";
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__attachments')->where('id = ' .(int)$id);
+		$db->setQuery($query, 0, 1);
 		$rows = $db->loadObjectList();
 		if ( count($rows) != 1 ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 44)';
@@ -1495,8 +1499,11 @@ class AttachmentsHelper
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
 		$db =& JFactory::getDBO();
-		$query = "SELECT count(*) FROM #__attachments "
-			. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
+		// ??? $query = "SELECT count(*) FROM #__attachments "
+		// ??? 	. "WHERE parent_id='".(int)$parent_id."' AND state='1' AND parent_type='$parent_type'";
+		$query = $db->getQuery(true);
+		$query->select('count(*)')->from('#__attachments');
+		$query->where("parent_id=".(int)$parent_id." AND state='1' AND parent_type='$parent_type'");
 		$db->setQuery($query);
 		$total = $db->loadResult();
 

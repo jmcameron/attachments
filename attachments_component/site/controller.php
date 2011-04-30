@@ -483,7 +483,9 @@ class AttachmentsController extends JController
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
-		$query = "SELECT * FROM #__attachments WHERE id='".(int)$id."'";
+		// ??? $query = "SELECT * FROM #__attachments WHERE id='".(int)$id."'";
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__attachments')->where('id = '.(int)$id);
 		$db->setQuery($query);
 		// ??? Convert to use model
 		$rows = $db->loadObjectList();
@@ -535,7 +537,9 @@ class AttachmentsController extends JController
 			}
 
 		// Delete the entries in the attachments table
-		$query = "DELETE FROM #__attachments WHERE id='".(int)$id."' LIMIT 1";
+		// ??? $query = "DELETE FROM #__attachments WHERE id='".(int)$id."' LIMIT 1";
+		$query = $db->getQuery(true);
+		$query->delete('#__attachments')->where('id = '.(int)$id);
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$errmsg = $db->getErrorMsg() . ' (ERR 71)';

@@ -125,9 +125,12 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$cids = implode(',', $cid);
 
 			$db =& JFactory::getDBO();
-			$query = "SELECT * FROM #__attachments WHERE id IN ( $cids )";
+			// ??? $query = "SELECT * FROM #__attachments WHERE id IN ( $cids )";
+			$query = $db->getQuery(true);
+			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
+			// ??? check for db errors?
 
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
@@ -142,7 +145,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			// ?? ADD CHECK HERE THAT USER HAS PERMISSIONS TO DELETE...
 
 			// Delete the entries in the attachments table
-			$query = "DELETE FROM #__attachments WHERE id IN ( $cids )";
+			// ??? $query = "DELETE FROM #__attachments WHERE id IN ( $cids )";
+			$query	= $db->getQuery(true);
+			$query->delete('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
 			if (!$db->query()) {
 				$errmsg = $db->getErrorMsg() . ' (ERR 28)';

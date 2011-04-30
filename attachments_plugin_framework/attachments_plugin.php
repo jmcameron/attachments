@@ -280,7 +280,10 @@ class AttachmentsPlugin extends JPlugin
 
 		// Look up the title
 		$db =& JFactory::getDBO();
-		$query = "SELECT $entity_title_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."'";
+		// ??? $query = "SELECT $entity_title_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."'";
+		$query	= $db->getQuery(true);
+		$query->select($entity_title_field)->from("#__$entity_table");
+		$query->where("$entity_id_field=".(int)$parent_id);
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_($parent_entity);
@@ -306,8 +309,6 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	function getEntityItems($parent_entity='default', $filter='')
 	{
-		$db =& JFactory::getDBO();
-
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		$entity_table = $this->_entity_table[$parent_entity];
@@ -322,22 +323,31 @@ class AttachmentsPlugin extends JPlugin
 												   'filter_order_Dir',	'', 'word');
 
 		// Get all the items
-		$query = "SELECT DISTINCT $entity_id_field,$entity_title_field FROM #__$entity_table";
+		$db =& JFactory::getDBO();
+		$query	= $db->getQuery(true);
+		// ??? $query = "SELECT DISTINCT $entity_id_field,$entity_title_field FROM #__$entity_table";
+		$query->select("DISTINCT $entity_id_field,$entity_title_field");
+		$query->from("#__$entity_table");
 		if ( $filter ) {
 			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
-			$query .= ' WHERE ' . $entity_title_field . ' LIKE ' . $filter;
+			$query->where($entity_title_field . ' LIKE ' . $filter);
+			// ??? $query .= ' WHERE ' . $entity_title_field . ' LIKE ' . $filter;
 			}
 		if ( $order ) {
 			if ( $order == 'title' ) {
-				$query .= " ORDER BY $entity_title_field " . $order_Dir;
+				// ??? $query .= " ORDER BY $entity_title_field " . $order_Dir;
+				$query->order("$entity_title_field " . $order_Dir);
 				}
 			else if ( $order == 'id' ) {
-				$query .= " ORDER BY $entity_id_field " . $order_Dir;
+				// ??? $query .= " ORDER BY $entity_id_field " . $order_Dir;
+				$query->order("$entity_id_field " . $order_Dir);
 				}
 			else {
 				// Ignore unrecognized columns
 				}
 			}
+
+		echo (string)$query . "<br/>";
 
 		// Do the query
 		$db->setQuery($query);
@@ -517,9 +527,13 @@ class AttachmentsPlugin extends JPlugin
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
+		// ??? $query = "SELECT $entity_id_field FROM #__$entity_table " .
+		// ??? "WHERE $entity_id_field='".(int)$parent_id."' LIMIT 1";
 		$db =& JFactory::getDBO();
-		$query = "SELECT $entity_id_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."' LIMIT 1";
-		$db->setQuery($query);
+		$query = $db->getQuery(true);
+		$query->select($entity_id_field)->from("#__$entity_table");
+		$query->where("$entity_id_field=".(int)$parent_id);
+		$db->setQuery($query, 0, 1);
 		if ( $db->loadResult() === null ) {
 			return false;
 			}
