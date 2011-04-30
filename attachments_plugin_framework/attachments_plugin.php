@@ -93,6 +93,13 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	var $_language_loaded = false;
 
+	/** Cache for parentExists check
+	 */
+	var $_parent_exists_cache = Array();
+
+	/** Cache for parent titles
+	 */
+	var $_title_cache = Array();
 
 	/**
 	 * Constructor - Load the informaton from the INI file
@@ -266,6 +273,12 @@ class AttachmentsPlugin extends JPlugin
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
+		// Check the cache first
+		$cache_key = $parent_entity.(int)$parent_id;
+		if ( array_key_exists($cache_key, $this->_title_cache) ) {
+			return $this->_title_cache[$cache_key];
+			}
+
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
@@ -280,22 +293,22 @@ class AttachmentsPlugin extends JPlugin
 
 		// Look up the title
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT $entity_title_field FROM #__$entity_table WHERE $entity_id_field='".(int)$parent_id."'";
-		$query	= $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=".(int)$parent_id);
 		$db->setQuery($query);
+		$title = $db->loadResult();
+
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 			}
-		else {
-			$title = $db->loadResult();
-			}
 
-		return $title;
+		$this->_title_cache[$cache_key] = $title;
+
+		return $this->_title_cache[$cache_key];
 	}
 
 
@@ -324,22 +337,18 @@ class AttachmentsPlugin extends JPlugin
 
 		// Get all the items
 		$db =& JFactory::getDBO();
-		$query	= $db->getQuery(true);
-		// ??? $query = "SELECT DISTINCT $entity_id_field,$entity_title_field FROM #__$entity_table";
+		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
-		$query->from("#__$entity_table");
+		$query->from('#__$entity_table');
 		if ( $filter ) {
 			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
 			$query->where($entity_title_field . ' LIKE ' . $filter);
-			// ??? $query .= ' WHERE ' . $entity_title_field . ' LIKE ' . $filter;
 			}
 		if ( $order ) {
 			if ( $order == 'title' ) {
-				// ??? $query .= " ORDER BY $entity_title_field " . $order_Dir;
 				$query->order("$entity_title_field " . $order_Dir);
 				}
 			else if ( $order == 'id' ) {
-				// ??? $query .= " ORDER BY $entity_id_field " . $order_Dir;
 				$query->order("$entity_id_field " . $order_Dir);
 				}
 			else {
@@ -523,23 +532,33 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	function parentExists($parent_id, $parent_entity='default')
 	{
-		// Look up the parent
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+		// Check the cache first
+		$cache_key = $parent_entity.(int)$parent_id;
+		if ( array_key_exists($cache_key, $this->_parent_exists_cache) ) {
+			return $this->_parent_exists_cache[$cache_key];
+			}
+
+		// First time, so look up the parent
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
-		// ??? $query = "SELECT $entity_id_field FROM #__$entity_table " .
-		// ??? "WHERE $entity_id_field='".(int)$parent_id."' LIMIT 1";
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=".(int)$parent_id);
 		$db->setQuery($query, 0, 1);
-		if ( $db->loadResult() === null ) {
-			return false;
+		$result = $db->loadResult();
+		if ( $result === null ) {
+			$this->_parent_exists_cache[$cache_key] = false;
 			}
 		else {
-			return (int)$parent_id == (int)$db->loadResult();
+			// ??? Is this test necessary?
+			$this->_parent_exists_cache[$cache_key] =
+				(int)$parent_id == (int)$result;
 			}
+
+		return $this->_parent_exists_cache[$cache_key];
 	}
 
 
