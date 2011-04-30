@@ -57,7 +57,7 @@ class JFormFieldModal_Parent extends JFormField
 		// ??? $db->setQuery('SELECT title FROM #__content WHERE id = '.(int) $this->value	);
 		$query = $db->getQuery(true);
 		$query->select('title')->from('#__content')->where('id = '.(int)$this->value);
-		$db->setQuery($query);
+		$db->setQuery($query, 0, 1);
 		$title = $db->loadResult();
 
 		if ($error = $db->getErrorMsg()) {

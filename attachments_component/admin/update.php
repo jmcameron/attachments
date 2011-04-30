@@ -35,7 +35,6 @@ class AttachmentsUpdate
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT id, filename, file_type, icon_filename FROM #__attachments WHERE file_type IS NULL";
 		$query = $db->getQuery(true);
 		$query->select('id, filename, file_type, icon_filename')->from('#__attachments');
 		$query->where('file_type IS NULL');
@@ -86,7 +85,6 @@ class AttachmentsUpdate
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT * FROM #__attachments";
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
 		$db->setQuery($query);
@@ -118,8 +116,6 @@ class AttachmentsUpdate
 
 			// Update the record
 			if ( $updated ) {
-				// ??? $query = "UPDATE #__attachments set modified='{$mod_date}', " .
-				// ??? 	"created='{$created}' WHERE id='".(int)$row->id."'";
 				$query = $db->getQuery(true);
 				$query->update('#__attachments');
 				$query->set("modified='{$mod_date}', created='{$created}'");
@@ -323,8 +319,6 @@ class AttachmentsUpdate
 			}
 
 		// If there are any old attachments, make sure they correspond with the new DB scheme
-		// ??? $query = "UPDATE `#__attachments` SET `parent_entity` = 'ARTICLE' " .
-		// ??? 	"WHERE `parent_type` = 'com_content' AND  `parent_entity` = 'default'";
 		$query = $db->getQuery(true);
 		$query->update('#__attachments');
 		$query->set("parent_entity = 'article'");
@@ -501,7 +495,6 @@ class AttachmentsUpdate
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT id FROM #__attachments WHERE uri_type='file'";
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -535,7 +528,6 @@ class AttachmentsUpdate
 
 			// Get the actual parent id for this attachment
 			// (Needed because orphaned parent_id is null, which the Table loads as 1)
-			// ??? $query = "SELECT parent_id FROM #__attachments WHERE id='".(int)$id."' LIMIT 1";
 			$query = $db->getQuery(true);
 			$query->select('parent_id')->from('#__attachments')->where('id = ' . (int)$id);
 			$db->setQuery($query, 0, 1);
@@ -647,7 +639,6 @@ class AttachmentsUpdate
 		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
-		// ??? $query = "SELECT id FROM #__attachments WHERE uri_type='file'";
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
@@ -736,7 +727,6 @@ class AttachmentsUpdate
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT id FROM #__attachments WHERE uri_type='file'";
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -786,7 +776,6 @@ class AttachmentsUpdate
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get all the attachment IDs
-		// ??? $query = "SELECT id FROM #__attachments WHERE uri_type='file'";
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
@@ -839,7 +828,6 @@ class AttachmentsUpdate
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
-		// ??? $query = "SELECT id FROM #__attachments WHERE uri_type='url'";
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='url'");
 		$db->setQuery($query);

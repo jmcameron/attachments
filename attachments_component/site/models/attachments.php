@@ -352,6 +352,7 @@ class AttachmentsModelAttachments extends JModel
 			// do the query differently
 			$user =& JFactory::getUser();
 			$user_id = $user->get('id');
+
 			// ??? $query	= "SELECT a.*, u.name as creator_name FROM #__attachments AS a " .
 			// ??? 	"LEFT JOIN #__users AS u ON u.id = a.created_by " .
 			// ??? 	"WHERE a.parent_id IS NULL AND u.id='" . (int)$user_id . "' " .
@@ -367,12 +368,19 @@ class AttachmentsModelAttachments extends JModel
 			// ??? NEED TO REWORK with 2 wheres (one for main query, one for join)
 			}
 		else {
-			// ??? NEEDS conversion
-			$query	= "SELECT a.*, u.name as creator_name FROM #__attachments AS a " .
-				"LEFT JOIN #__users AS u ON u.id = a.created_by " .
-				"WHERE a.parent_id='".(int)$parent_id."' AND a.state='1' " .
-				"AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity' " .
-				"ORDER BY " . $this->_sort_order;
+			// ?? $query	= "SELECT a.*, u.name as creator_name FROM #__attachments AS a " .
+			// ?? 	"LEFT JOIN #__users AS u ON u.id = a.created_by " .
+			// ?? 	"WHERE a.parent_id='".(int)$parent_id."' AND a.state='1' " .
+			// ?? 	"AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity' " .
+			// ?? 	"ORDER BY " . $this->_sort_order;
+
+			$query = $db->getQuery(true);
+			$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
+			$query->leftJoin('#__users AS u ON u.id = a.created_by');
+			$query->where('a.parent_id='.(int)$parent_id." AND a.state='1' " .
+						  "AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
+			$query->order($this->_sort_order);
+			// ??? NEED TO REWORK with 2 wheres (one for main query, one for join)
 			}
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();

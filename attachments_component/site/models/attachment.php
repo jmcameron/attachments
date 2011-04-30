@@ -81,7 +81,7 @@ class AttachmentsModelAttachment extends JModel
 		if ( empty($this->_attachment) ) {
 				
 			$db		= $this->getDbo();
-			$query	= $db->getQuery(true);
+			$query  = $db->getQuery(true);
 
 			$query->select('a.*, a.id as id');
 			$query->from('#__attachments as a');
@@ -101,7 +101,7 @@ class AttachmentsModelAttachment extends JModel
 				. "WHERE a.id = '".(int)$this->_id."'";
 			*/
 			
-			$db->setQuery($query);
+			$db->setQuery($query, 0, 1);
 			$this->_attachment = $db->loadObject();
 			
 			if ( empty($this->_attachment) ) {

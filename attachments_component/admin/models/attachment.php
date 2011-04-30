@@ -40,13 +40,12 @@ class AttachmentsModelAttachment extends JModelAdmin
 			// If the item exists, get more info
 
 			// Get the creator name
-			// ??? $query->where("id = '".(int)$item->created_by."'");
 			$db		= $this->getDbo();
-			$query	= $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->created_by);
-			$db->setQuery($query);
-			// ??? Should check for error here
+			$db->setQuery($query, 0, 1);
 			$item->creator_name = $db->loadResult();
+			// ??? Should check for error here
 
 			// Get the parent info
 			$parent_type = $item->parent_type;

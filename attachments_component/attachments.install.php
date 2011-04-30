@@ -68,7 +68,7 @@ class Com_AttachmentsInstallerScript {
 		{
 			// Make the query to enable the plugin
 			$plugin_title = JText::_($plugin_name);
-			$query	= $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->update('#__extensions');
 			$query->set("enabled = 1");
 			$query->where("type = 'plugin' AND name = '" . $plugin_name . "'");
