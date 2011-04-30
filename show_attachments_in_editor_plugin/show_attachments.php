@@ -194,7 +194,7 @@ class plgSystemShow_attachments extends JPlugin
 			$Itemid = JRequest::getInt( 'Itemid', 1);
 			$from = 'editor';
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
-																 $user_can_add, $Itemid, $from, true, true);
+																  $user_can_add, $Itemid, $from, true, true);
 
 			// Embed the username in liu of the parent_id (if the parent_id is missing)
 			// (eg, when articles are being created)

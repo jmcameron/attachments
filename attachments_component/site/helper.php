@@ -332,8 +332,9 @@ class AttachmentsHelper
 		$save_url = $url_base . "&task=" . $save_task . $template;
 		if ( $from == 'closeme') {
 			// Keep track of what are supposed to do after saving
-			$save_url .= "&from=closeme";
+			// ??? $save_url .= "&from=closeme";
 			}
+		$save_url .= "&from=$from";
 		$view->save_url = JRoute::_($save_url);
 
 		// Construct the URL to upload a URL instead of a file
@@ -343,9 +344,12 @@ class AttachmentsHelper
 
 			// Keep track of what are supposed to do after saving
 			if ( $from == 'closeme') {
-				$upload_file_url .= "&from=closeme";
-				$upload_url_url .= "&from=closeme";
+				// ??? $upload_file_url .= "&from=closeme";
+				// ??? $upload_url_url .= "&from=closeme";
 				}
+
+			$upload_file_url .= "&from=$from";
+			$upload_url_url .= "&from=$from";
 
 			// Add the URL
 			$view->upload_file_url = JRoute::_($upload_file_url);
@@ -360,10 +364,14 @@ class AttachmentsHelper
 
 			// Keep track of what are supposed to do after saving
 			if ( $from == 'closeme') {
-				$change_file_url .= "&from=closeme";
-				$change_url_url .= "&from=closeme";
-				$normal_update_url .= "&from=closeme";
+				// ??? $change_file_url .= "&from=closeme";
+				// ??? $change_url_url .= "&from=closeme";
+				// ??? $normal_update_url .= "&from=closeme";
 				}
+
+			$change_file_url .= "&from=$from";
+			$change_url_url .= "&from=$from";
+			$normal_update_url .= "&from=$from";
 
 			// Add the URLs
 			$view->change_file_url = JRoute::_($change_file_url);

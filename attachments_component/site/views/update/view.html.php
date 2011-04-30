@@ -28,6 +28,7 @@ class AttachmentsViewUpdate extends JView
 	 */
 	function display($tpl=null, $error=false, $error_msg=false)
 	{
+		// ??? Pull these back to the controller and pass via $this?
 		$this->error = $error;
 		$this->error_msg = $error_msg;
 

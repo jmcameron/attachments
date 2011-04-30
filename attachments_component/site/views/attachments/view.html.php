@@ -77,34 +77,44 @@ class AttachmentsViewAttachments extends JView
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =&	JComponentHelper::getParams('com_attachments');
+		$params =& JComponentHelper::getParams('com_attachments');
 
 		// See whether the user-defined fields should be shown
+		$from = JRequest::getWord('from', 'closeme');
+		$layout = JRequest::getWord('layout');
+		$tmpl = JRequest::getWord('tmpl');
+		$show_hidden_user_fields = false;
+		if ( $app->isAdmin() OR ($from == 'editor') OR ($layout == 'edit') OR ($tmpl == 'component') ) {
+			$show_hidden_user_fields = true;
+			}
+
 		// User field 1
 		$show_user_field_1 = false;
-		$user_field_1_name = $params->get('user_field_1_name', '');
-		if ( $user_field_1_name != '' ) {
-			if ( $user_field_1_name[JString::strlen($user_field_1_name)-1] != '*' ) {
+		$user_field_1_name = $params->get('user_field_1_name');
+		if ( $user_field_1_name ) {
+			if ( $show_hidden_user_fields OR $user_field_1_name[JString::strlen($user_field_1_name)-1] != '*' ) {
 				$show_user_field_1 = true;
 				$this->user_field_1_name = $user_field_1_name;
 				}
 			}
 		$this->show_user_field_1 = $show_user_field_1;
+
 		// User field 2
 		$show_user_field_2 = false;
-		$user_field_2_name = $params->get('user_field_2_name', '');
-		if ( $user_field_2_name != '' ) {
-			if ( $user_field_2_name[JString::strlen($user_field_2_name)-1] != '*' ) {
+		$user_field_2_name = $params->get('user_field_2_name');
+		if ( $user_field_2_name ) {
+			if ( $show_hidden_user_fields OR $user_field_2_name[JString::strlen($user_field_2_name)-1] != '*' ) {
 				$show_user_field_2 = true;
 				$this->user_field_2_name = $user_field_2_name;
 				}
 			}
 		$this->show_user_field_2 = $show_user_field_2;
+
 		// User field 3
 		$show_user_field_3 = false;
-		$user_field_3_name = $params->get('user_field_3_name', '');
-		if ( $user_field_3_name != '' ) {
-			if ( $user_field_3_name[JString::strlen($user_field_3_name)-1] != '*' ) {
+		$user_field_3_name = $params->get('user_field_3_name');
+		if ( $user_field_3_name ) {
+			if ( $show_hidden_user_fields OR $user_field_3_name[JString::strlen($user_field_3_name)-1] != '*' ) {
 				$show_user_field_3 = true;
 				$this->user_field_3_name = $user_field_3_name;
 				}
@@ -112,7 +122,6 @@ class AttachmentsViewAttachments extends JView
 		$this->show_user_field_3 = $show_user_field_3;
 		
 		// Set up for the template
-		$from = JRequest::getWord('from', 'closeme');
 		$parent_id = $model->getParentId();
 		$parent_type = $model->getParentType();
 		$parent_entity = JString::strtolower($model->getParentEntity());

@@ -189,17 +189,17 @@ else {
 		<p><label for="description"><b><?php echo JText::_('DESCRIPTION_COLON'); ?></b></label>
 		   <input type="text" name="description" id="description"
 				  size="70" maxlength="255" value="<?php echo $attachment->description; ?>" /></p>
-		<?php if ( $params->get('user_field_1_name', false) ): ?>
+		<?php if ( $params->get('user_field_1_name') ): ?>
 		<p><label for="user_field_1"><b><?php echo $params->get('user_field_1_name'); ?>:</b></label>
 		   <input type="text" name="user_field_1" id="user_field_1" size="70" maxlength="100"
 				  value="<?php echo $attachment->user_field_1; ?>" /></p>
 		<?php endif; ?>
-		<?php if ( $params->get('user_field_2_name', false) ): ?>
+		<?php if ( $params->get('user_field_2_name') ): ?>
 		<p><label for="user_field_2"><b><?php echo $params->get('user_field_2_name'); ?>:</b></label>
 		   <input type="text" name="user_field_2" id="user_field_2" size="70" maxlength="100"
 				  value="<?php echo $attachment->user_field_2; ?>" /></p>
 		<?php endif; ?>
-		<?php if ( $params->get('user_field_3_name', false) ): ?>
+		<?php if ( $params->get('user_field_3_name') ): ?>
 		<p><label for="user_field_3"><b><?php echo $params->get('user_field_3_name'); ?>:</b></label>
 		   <input type="text" name="user_field_3" id="user_field_3" size="70" maxlength="100"
 				  value="<?php echo $attachment->user_field_3; ?>" /></p>
