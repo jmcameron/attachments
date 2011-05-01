@@ -17,8 +17,7 @@ defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
 
 /**
- * View for the special controller
- * (adapted from administrator/components/com_config/views/component/view.php)
+ * View for warnings
  *
  * @package Attachments
  */
