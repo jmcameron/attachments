@@ -53,7 +53,9 @@
 	<filename>views/update/tmpl/index.html</filename>
 	<filename>views/upload/index.html</filename>
 	<filename>views/upload/metadata.xml</filename>
-	<filename>views/upload/view.php</filename>
+	<filename>views/upload/view.html.php</filename>
+	<filename>views/upload/tmpl/default.php</filename>
+	<filename>views/upload/tmpl/index.html</filename>
 	<filename>views/warning/index.html</filename>
 	<filename>views/warning/tmpl/default.php</filename>
 	<filename>views/warning/tmpl/index.html</filename>

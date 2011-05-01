@@ -473,7 +473,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = JRequest::getWord('update');
 
@@ -489,7 +489,7 @@ class AttachmentsHelper
 												 $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type,
 												 $attachment_id, null, $from);
@@ -575,7 +575,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = JRequest::getWord('update');
 
@@ -591,7 +591,7 @@ class AttachmentsHelper
 												 $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 
@@ -672,7 +672,7 @@ class AttachmentsHelper
 			$save_url = JRoute::_("index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
-			require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.php');
+			require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 			$view = new AttachmentsViewUpload();
 			AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 
@@ -1162,7 +1162,7 @@ class AttachmentsHelper
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = $update_form;
 
@@ -1177,7 +1177,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type, $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.php');
+				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
 

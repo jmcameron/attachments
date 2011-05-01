@@ -146,7 +146,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up the view to redisplay the form with warnings
-		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.php');
+		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 		$view = new AttachmentsViewUpload();
 
 		// Set up the view
@@ -160,14 +160,21 @@ class AttachmentsController extends JController
 		$view->parent_entity_name = $parent_entity_name;
 		$view->parent_title = $parent_title;
 		$view->new_parent = 		 $new_parent;
-		$view->description = 	  '';
+		$view->parent       = $parent;
+		$view->description  = 	  '';
 		$view->display_name = 	  '';
 		$view->user_field_1 = 	  '';
 		$view->user_field_2 = 	  '';
 		$view->user_field_3 = 	  '';
-		$view->Itemid = 		  $Itemid;
-		$view->from = 		  $from;
-		$view->params = 		  $params;
+		$view->Itemid       =	  $Itemid;
+		$view->from         =	  $from;
+
+		$view->params = $params;
+
+		// ??? $view->upload_toggle_url = $upload_toggle_url;
+		// ??? $view->upload_toggle_button_text = $upload_toggle_button_text;
+		// ??? $view->upload_button_text = $upload_button_text;
+
 
 		// Display the view
 		$view->display(null, false, false);
@@ -734,19 +741,19 @@ class AttachmentsController extends JController
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
 										 $attachment->parent_type, $id, $from);
 
-		$view->update = 				$update;
-		$view->new_parent = 			$new_parent;
+		$view->update = 			$update;
+		$view->new_parent = 		$new_parent;
 		$view->parent_title = 		$parent_title;
 		$view->parent_entity = 		$parent_entity;
 		$view->parent_entity_name = $parent_entity_name;
 		$view->display_name = 		$display_name;
 
-		$view->lists = 	   $lists;
-		$view->params = 	   $params;
+		$view->lists      = $lists;
+		$view->params     = $params;
 		$view->attachment = $attachment;
 
-		$view->from = 		   $from;
-		$view->Itemid = 		   JRequest::getInt('Itemid', 1);
+		$view->from       = $from;
+		$view->Itemid     = JRequest::getInt('Itemid', 1);
 
 		$view->display(null, false, false);
 	}
