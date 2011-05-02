@@ -383,7 +383,7 @@ class AttachmentsUpdate
 		jimport('joomla.filesystem.file');
 
 		// Construct the filenames
-		$filename = JPATH_COMPONENT_ADMINISTRATOR.DS."uninstall.$dbtype.sql";
+		$filename = JPATH_COMPONENT_ADMINISTRATOR.DS.'sql'.DS."uninstall.$dbtype.sql";
 		$tempfilename = $filename.'.tmp';
 		$msg = '';
 
