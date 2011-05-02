@@ -14,13 +14,13 @@
 
     <install>
 	<sql>
-	    <file driver="mysql" charset="utf8">install.mysql.sql</file>
+	    <file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
 	</sql>
     </install>
 
     <uninstall>
 	<sql>
-	    <file driver="mysql" charset="utf8">uninstall.mysql.sql</file> 
+	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file> 
 	</sql>
     </uninstall>
 
