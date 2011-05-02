@@ -24,8 +24,7 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `modified` DATETIME DEFAULT NULL,
     `modified_by` INT(11) NOT NULL,
     `download_count` INT(11) UNSIGNED DEFAULT '0',
-    `params` TEXT NOT NULL DEFAULT '',
 
      PRIMARY KEY (`id`)
 
-) ENGINE=MyISAM CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
