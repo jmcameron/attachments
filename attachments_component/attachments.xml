@@ -93,7 +93,6 @@
 	    <filename>help/en-GB/plugin_manual/index.html</filename>
 	    <filename>help/index.html</filename>
 	    <filename>index.html</filename>
-	    <filename>install.mysql.sql</filename>
 	    <filename>media/attachments.css</filename>
 	    <filename>media/attachments.png</filename>
 	    <filename>media/attachments_logo48.png</filename>
@@ -109,9 +108,12 @@
 	    <filename>models/forms/attachment.xml</filename>
 	    <filename>models/forms/index.html</filename>
 	    <filename>models/index.html</filename>
+	    <filename>sql/uninstall.mysql.sql</filename>
+	    <filename>sql/install.mysql.sql</filename>
+	    <filename>sql/index.html</filename>
+	    <filename>sql/updates/index.html</filename>
 	    <filename>tables/attachment.php</filename>
 	    <filename>tables/index.html</filename>
-	    <filename>uninstall.mysql.sql</filename>
 	    <filename>update.php</filename>
 	    <filename>views/add/index.html</filename>
 	    <filename>views/add/tmpl/default.php</filename>
