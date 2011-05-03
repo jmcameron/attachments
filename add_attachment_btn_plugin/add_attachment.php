@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.plugin.plugin');
 
 /**
- * Class for the button that allows you to add attachments from the editor
+ * Button that allows you to add attachments from the editor
  *
  * @package Attachments
  */
@@ -27,7 +27,7 @@ class plgButtonAdd_attachment extends JPlugin
 	 * Constructor
 	 *
 	 * @access      protected
-	 * @param       object  $subject The object to observe
+	 * @param &object &$subject The object to observe
 	 * @param       array   $config  An array that holds the plugin configuration
 	 * @since 1.5
 	 */
