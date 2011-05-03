@@ -37,12 +37,17 @@ class plgButtonAdd_attachment extends JPlugin
 		$this->loadLanguage();
 	}
 
+
 	/**
 	 * Add Attachment button
 	 *
+	 * @param string $name The name of the editor form
+	 * @param int $asset The asset ID for the entity being edited
+	 * @param int $authro The ID of the author of the entity
+	 *
 	 * @return a button
 	 */
-	function onDisplay($name)
+	public function onDisplay($name, $asset, $author)
 	{
 		// Avoid displaying the button for anything except for registered parents
 		$parent_type = JRequest::getCmd('option');
@@ -58,6 +63,9 @@ class plgButtonAdd_attachment extends JPlugin
 			$parent_entity = 'category';
 			$editor = 'category';
 			}
+
+		// Make sure we have permissions to add attachments to this article or category
+		// ??? ACL check
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
