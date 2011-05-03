@@ -14,10 +14,10 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport('joomla.event.plugin');
+jimport('joomla.plugin.plugin');
 
 /**
- * Class for the button that allows you to add attachments from the editor
+ * Button that allows you to insert an {attachments} token into the text from the editor
  *
  * @package Attachments
  */
@@ -26,26 +26,27 @@ class plgButtonInsert_attachments_token extends JPlugin
 	/**
 	 * Constructor
 	 *
-	 * For php4 compatability we must not use the __constructor as a constructor for plugins
-	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-	 * This causes problems with cross-referencing necessary for the observer design pattern.
-	 *
 	 * @param &object &$subject The object to observe
 	 * @param array  $config	An array that holds the plugin configuration
 	 * @since 1.5
 	 */
-	function plgInsert_attachments_token(&$subject, $config)
+	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
 
+
 	/**
 	 * Insert attachments token button
 	 *
+	 * @param string $name The name of the editor form
+	 * @param int $asset The asset ID for the entity being edited
+	 * @param int $authro The ID of the author of the entity
+	 *
 	 * @return a button
 	 */
-	function onDisplay($name)
+	public function onDisplay($name, $asset, $author)
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -65,6 +66,9 @@ class plgButtonInsert_attachments_token extends JPlugin
 		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			}
+
+		// Make sure we have access (to show attachments)
+		// ??? ACL check
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
