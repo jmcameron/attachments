@@ -63,6 +63,9 @@ check:
 check2: 
 	find . -name '*.php' -exec egrep -n -e "^[[:space:]]+echo.*<br.*" {} /dev/null \;
 
+classdefs: 
+	find . -name '*.php' -exec egrep -n -e "^class " {} /dev/null \;
+
 purge:
 	@find . -name '*.bak' -exec rm {} \;
 
