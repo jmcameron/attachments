@@ -3,7 +3,7 @@
  * Add Attachments Button plugin
  *
  * @package Attachments
- * @subpackage Add_Attachment_Button_Plugin
+ * @subpackage Insert_Attachments_Token_Button_Plugin
  *
  * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL

@@ -80,7 +80,7 @@ _tests.pdf: _tests.rst
 docs:
 	@echo "Generating documentation using PhpDocumentor..."
 	@echo " (Note: see docerrs.log for error log)"
-	@phpdoc -c /home/jmcameron/src/attachments/work/docs.ini | egrep -v -e '(Ignored|File not parsed)' > docerrs.log
+	@phpdoc -c /home/jmcameron/src/attachments/work-j1.6/docs.ini | egrep -v -e '(Ignored|File not parsed)' > docerrs.log
 
 fixperms:
 	@find . -name '*.gif' -exec chmod -x {} \;

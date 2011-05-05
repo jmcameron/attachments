@@ -1,4 +1,16 @@
 <?php
+/**
+ * Attachments component attachment table
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
+ */
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
  
@@ -7,6 +19,8 @@ jimport('joomla.database.table');
  
 /**
  * Attachments table class
+ *
+ * @package Attachments
  */
 class AttachmentsTableAttachment extends JTable
 {

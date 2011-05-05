@@ -1,11 +1,34 @@
 <?php
 /**
+ * Attachments component installation script
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
  */
 
+// No direct access
+defined('_JEXEC') or die('Restricted access');
+
+/**
+ * The main attachments installation class
+ *
+ * @package Attachments
+ */
 class Com_AttachmentsInstallerScript {
 
+	/**
+	 * name of moved attachments directory (if present)
+	 */
 	var $moved_attachments_dir = null;
 
+	/**
+	 * List of the plugins
+	 */
 	var $plugins = Array('plg_content_attachments',
 						 'plg_search_attachments',
 						 'plg_attachments_plugin_framework',
@@ -15,6 +38,11 @@ class Com_AttachmentsInstallerScript {
 						 'plg_system_show_attachments_in_editor');
 
 
+	/**
+	 * Attachments component install function
+	 *
+	 * @param $parent : the name of the installer parent
+	 */
 	function install($parent)
 	{
 		$app = JFactory::getApplication('administrator');
@@ -22,14 +50,31 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 	}
 
+	/**
+	 * Attachments component uninstall function
+	 *
+	 * @param $parent : the name of the installer parent
+	 */
 	function uninstall($parent)
 	{
 	}
 
+	/**
+	 * Attachments component update function
+	 *
+	 * @param $parent : the name of the installer parent
+	 */
 	function update($parent)
 	{
 	}
 
+
+	/**
+	 * Attachments component preflight function
+	 *
+	 * @param $type : type of installation
+	 * @param $parent : the name of the installer parent
+	 */
 	function preflight($type, $parent)
 	{
 		// Load the installation language
@@ -54,6 +99,12 @@ class Com_AttachmentsInstallerScript {
 	}
 
 
+	/**
+	 * Attachments component postflight function
+	 *
+	 * @param $type : type of installation
+	 * @param $parent : the name of the installer parent
+	 */
 	function postflight($type, $parent) 
 	{
 		$app = JFactory::getApplication('administrator');

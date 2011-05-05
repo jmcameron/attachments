@@ -3,7 +3,7 @@
  * Attachments component
  *
  * @package Attachments
- * @subpackage Attachments_Component (admin)
+ * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL

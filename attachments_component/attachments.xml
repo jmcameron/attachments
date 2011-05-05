@@ -103,8 +103,6 @@
 	    <filename>models/attachments.php</filename>
 	    <filename>models/fields/iconfilenames.php</filename>
 	    <filename>models/fields/index.html</filename>
-	    <filename>models/fields/modal/index.html</filename>
-	    <filename>models/fields/modal/parent.php</filename>
 	    <filename>models/forms/attachment.xml</filename>
 	    <filename>models/forms/index.html</filename>
 	    <filename>models/index.html</filename>

@@ -1,15 +1,30 @@
  <?php
+/**
+ * Attachments component param controller
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
+ */
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
  
 // import Joomla controllerform library
 jimport('joomla.application.component.controllerform');
 
+
 // ??? require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
- 
+
 
 /**
  * Attachment Controller
+ *
+ * @package Attachments
  */
 class AttachmentsControllerParams extends JControllerForm
 {

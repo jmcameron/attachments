@@ -1,19 +1,41 @@
  <?php
+/**
+ * Attachments component attachment controller
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
+ */
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
  
 // import Joomla controllerform library
 jimport('joomla.application.component.controllerform');
 
+/** Load the Attachments defines */
 require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
  
 
 /**
  * Attachment Controller
+ *
+ * @package Attachments
  */
 class AttachmentsControllerAttachment extends JControllerForm
 {
-	// ??? DOCS?
+
+	/**
+	 * Constructor.
+	 *
+	 * @param	array An optional associative array of configuration settings.
+	 *
+	 * @return	JControllerForm
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -22,7 +44,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 	}
 
 
-	/** ??? docs?
+	/**
+	 * Method to check whether an ID is in the edit list.
+	 *
+	 * @param	string	$context	The context for the session storage.
+	 * @param	int		$id			The ID of the record to add to the edit list.
+	 *
+	 * @return	boolean	True if the ID is in the edit list.
 	 */
 	protected function checkEditId($context, $id)
 	{
@@ -33,6 +61,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 	/**
 	 * Add - create a new attachment
+	 *
+	 * ??? MORE
 	 */
 	public function add()
 	{
@@ -469,7 +499,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
-	// ??? DOCS
+
+	/**
+	 * ??? DOCS
+	 * 
+	 */
 	public function edit()
 	{
         $uri = JFactory::getURI();

@@ -3,7 +3,7 @@
  * Attachments plugin for inserting attachments lists into content
  *
  * @package Attachments
- * @subpackage Main_plugin
+ * @subpackage Main_Attachments_Plugin
  *
  * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -13,15 +13,14 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+/** Load the Attachments defines */
 require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
 
 
 /**
  * Attachments plugin
  *
- * @package		Joomla
- * @subpackage	plg_pagebreak
- * @since		1.6
+ * @package		Attachments
  */
 class plgContentAttachments extends JPlugin
 {
@@ -319,6 +318,7 @@ class plgContentAttachments extends JPlugin
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
 		$atrow =& JTable::getInstance('Attachment', 'AttachmentsTable');
 
+		/// Load the Attachments helper
 		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
 
 		foreach ($rows as $row) {

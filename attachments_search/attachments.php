@@ -3,7 +3,7 @@
  * Attachments search plugin
  *
  * @package Attachments
- * @subpackage Search_Plugin
+ * @subpackage Attachments_Search_Plugin
  *
  * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -20,9 +20,7 @@ jimport('joomla.plugin.plugin');
 /**
  * Attachments Search plugin
  *
- * @package		Joomla
- * @subpackage	Search
- * @since		1.6
+ * @package		Attachments
  */
 class plgSearchAttachments extends JPlugin
 {

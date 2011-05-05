@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+/** Load the Attachments defines */
 require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
 
 

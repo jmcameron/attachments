@@ -14,8 +14,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted Access');
 
-// NOTE: The normal html view does exactly what we want so just use it
-
+/** The normal html view does exactly what we want so just use it */
 require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'attachments'.DS.'view.html.php');
 
 ?>

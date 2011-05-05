@@ -1,6 +1,6 @@
 <?php
 /**
- * Attachments component
+ * Attachments component attachments view
  *
  * @package Attachments
  * @subpackage Attachments_Component

@@ -3,7 +3,7 @@
  * System plugin to display the existing attachments in the editor
  *
  * @package Attachments
- * @subpackage Show_Attachments_in_Editor_Plugin
+ * @subpackage Show_Attachments_In_Editor_Plugin
  *
  * @copyright Copyright (C) 2009-2011 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL

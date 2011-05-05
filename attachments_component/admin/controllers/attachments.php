@@ -1,4 +1,16 @@
 <?php
+/**
+ * Attachments component attachments controller
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
+ */
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
  
@@ -7,19 +19,27 @@ jimport('joomla.application.component.controlleradmin');
  
 /**
  * Attachments Controller
+ *
+ * @package Attachments
  */
 class AttachmentsControllerAttachments extends JControllerAdmin
 {
 
 	/**
-	 * Proxy for getModel.
-	 * @since       1.6
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param	string	The model name. Optional.
+	 * @param	string	The class prefix. Optional.
+	 * @param	array	Configuration array for model. Optional.
+	 *
+	 * @return	object	The model.
 	 */
 	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel') 
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}
+
 
 	/**
 	 * Display the attachments list

@@ -16,6 +16,8 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Attachments extension definies
+ *
+ * @package Attachments
  */
 class AttachmentsDefines
 {

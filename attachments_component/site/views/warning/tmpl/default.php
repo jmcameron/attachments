@@ -25,8 +25,10 @@ $document =& JFactory::getDocument();
 // Meant to be shown in the iframe popup
 JHTML::_('behavior.mootools');
 
-// Add the regular css file
+/** Load the Attachments helper */
 require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+
+// Add the regular css file
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );
 
 // Handle the RTL styling

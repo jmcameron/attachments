@@ -85,8 +85,10 @@ $echo_css = $this->error;
 
 JHTML::_('behavior.mootools');
 
-// Add the stylesheets
+/** Load the Attachments helper */
 require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+
+// Add the stylesheets
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
 
