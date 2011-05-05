@@ -40,7 +40,7 @@ class AttachmentsModelAttachment extends JModel
 	/** 
 	 * Constructor, build object and determines its ID
 	 */
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -62,7 +62,7 @@ class AttachmentsModelAttachment extends JModel
 	/** 
 	 * Reset the model ID and data
 	 */
-	function setId($id=0)
+	public function setId($id=0)
 	{
 		$this->_id = $id;
 		$this->_attachment = null;
@@ -71,8 +71,10 @@ class AttachmentsModelAttachment extends JModel
 	
 	/**
 	 * Load the attachment data
+	 *
+	 * @return true if loaded succesfully
 	 */
-	function _loadAttachment()
+	private function _loadAttachment()
 	{
 		if ($this->_id == 0) {
 			return false;
@@ -133,18 +135,19 @@ class AttachmentsModelAttachment extends JModel
 	/**
 	 * Create a new Attachment object  
 	 */
-	function _initAttachment()
+	private function _initAttachment()
 	{
 		echo "_initData not implemented yet <br />";	
 		return null;	
 	}
+
 	
 	/**
 	 * Get the data
 	 *
 	 * @return object
 	 */
-	function getAttachment()
+	public function getAttachment()
 	{
 		if ( !$this->_loadAttachment() ) {
 			// If the load fails, create a new one
@@ -162,7 +165,7 @@ class AttachmentsModelAttachment extends JModel
 	 *
 	 * @return Boolean true on success
 	 */
-	function save($data)
+	public function save($data)
 	{
 		// Get the table
 		$table =& $this->getTable('Attachments');

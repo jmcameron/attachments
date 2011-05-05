@@ -37,7 +37,7 @@ class JFormFieldIconfilenames extends JFormField
 	 * @return	string	The field input markup.
 	 * @since	1.6
 	 */
-	protected function getInput()
+	public function getInput()
 	{
 		// Initialize variables.
 		$html = array();

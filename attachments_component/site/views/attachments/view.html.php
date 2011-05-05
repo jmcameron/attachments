@@ -35,7 +35,7 @@ class AttachmentsViewAttachments extends JView
 	 *		   if everything is okay, return true
 	 *		   if there is an error, return the error code
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$document =& JFactory::getDocument();
 		if ( JRequest::getWord('format', '') == 'raw' ) {
@@ -189,11 +189,10 @@ class AttachmentsViewAttachments extends JView
 	 *
 	 * @return string the output
 	 */
-	function getOutput()
+	public function getOutput()
 	{
 		return $this->_output;
 	}
-
 
 }
 

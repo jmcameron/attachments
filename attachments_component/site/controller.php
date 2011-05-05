@@ -29,15 +29,22 @@ class AttachmentsController extends JController
 
 	/**
 	 * Constructor
+	 *
+	 * @param array $default : An optional associative array of configuration settings.
+	 * Recognized key values include 'name', 'default_task', 'model_path', and
+	 * 'view_path' (this list is not meant to be comprehensive).
 	 */
-	function __construct( $default = array() )
+	public function __construct( $default = array() )
 	{
 		parent::__construct( $default );
 		// $this->registerTask('apply', 'save');
 	}
 
-	/** A noop function so this controller does not have a usable default */
-	function noop()
+
+	/**
+	 * A noop function so this controller does not have a usable default
+	 */
+	public function noop()
 	{
 		$errmsg = JText::_('ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 51)';
 		JError::raiseError(500, $errmsg);
@@ -45,8 +52,12 @@ class AttachmentsController extends JController
 
 
 	/**
-	 * Proxy for getModel.
-	 * @since       1.6
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param	string	The model name. Optional.
+	 * @param	string	The class prefix. Optional.
+	 * @param	array	Configuration array for model. Optional.
+	 * @return	object	The model.
 	 */
 	public function getModel($name = 'Attachments', $prefix = 'AttachmentModel') 
 	{
@@ -58,7 +69,7 @@ class AttachmentsController extends JController
 	/**
 	 * Display a form for uploading a file/url
 	 */
-	function upload()
+	public function upload()
 	{
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
@@ -70,7 +81,7 @@ class AttachmentsController extends JController
 			}
 		else {
 			$pid_info = explode(',', JRequest::getString('parent_id'));
-			$parent_type = AttachmentsController::_getCmd2('parent_type', 'com_content');
+			$parent_type = JRequest::getCmd('parent_type', 'com_content');
 
 			// If the entity is embedded in the parent type, split them
 			if ( strpos($parent_type, '.') ) {
@@ -185,7 +196,7 @@ class AttachmentsController extends JController
 	/**
 	 * Save a new or edited attachment
 	 */
-	function save()
+	public function save()
 	{
 		// Check for request forgeries
 		JRequest::checkToken() or die( 'Invalid Token');
@@ -199,7 +210,7 @@ class AttachmentsController extends JController
 
 		// Get the article/parent handler
 		$new_parent = JRequest::getBool('new_parent', false);
-		$parent_type = AttachmentsController::_getCmd2('parent_type', 'com_content');
+		$parent_type = JRequest::getCmd('parent_type', 'com_content');
 		$parent_entity = JRequest::getCmd('parent_entity', 'default');
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
@@ -410,7 +421,7 @@ class AttachmentsController extends JController
 	/**
 	 * Download a file
 	 */
-	function download()
+	public function download()
 	{
 
 		// Get the attachment ID
@@ -425,6 +436,7 @@ class AttachmentsController extends JController
 		AttachmentsHelper::download_attachment($id);
 	}
 
+
 	/**
 	 * Display a page requesting that the user log in.
 	 *
@@ -432,7 +444,7 @@ class AttachmentsController extends JController
 	 * secure mode and they are not logged in (and 'who can see' is not set to
 	 * 'anyone').
 	 */
-	function request_login()
+	public function request_login()
 	{
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 		$uri = JFactory::getURI();
@@ -470,8 +482,10 @@ class AttachmentsController extends JController
 
 	/**
 	 * Delete an attachment
+	 *
+	 * ??? Should this be protected?
 	 */
-	function delete()
+	public function delete()
 	{
 		$db =& JFactory::getDBO();
 
@@ -597,7 +611,7 @@ class AttachmentsController extends JController
 	/**
 	 * Show the warning for deleting an attachment
 	 */
-	function delete_warning()
+	public function delete_warning()
 	{
 		// Make sure we have a valid attachment ID
 		$attachment_id = JRequest::getInt('id');
@@ -648,7 +662,7 @@ class AttachmentsController extends JController
 	/**
 	 * Display a form for updating/editing an attachment
 	 */
-	function update()
+	public function update()
 	{
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 		// Call with: index.php?option=com_attachments&task=update&id=1&tmpl=component
@@ -763,7 +777,7 @@ class AttachmentsController extends JController
 	/**
 	 * Return the attachments list as HTML (for use by Ajax)
 	 */
-	function attachmentsList()
+	public function attachmentsList()
 	{
 		$parent_id = JRequest::getInt('parent_id', false);
 		$parent_type = JRequest::getWord('parent_type', '');
@@ -790,8 +804,10 @@ class AttachmentsController extends JController
 	/**
 	 * Show a warning (that has previously been saved via the
 	 * AttachmentsHelper::save_warning_message() function.
+	 *
+	 * ??? Is this obsolete?
 	 */
-	function warning()
+	public function warning()
 	{
 		$document =&  JFactory::getDocument();
 	    $uri = JFactory::getURI();
@@ -817,20 +833,6 @@ class AttachmentsController extends JController
 		echo '</h2></div>';
 	}
 
-
-
-	/**
-	 * Filter out the request - Like JRequest::getCmd() but allows colons
-	 *
-	 * @param string $name name of the item to get from the request
-	 *
-	 * @return the filtered string
-	 */
-	function _getCmd2($name, $default='')
-	{
-		$source = JRequest::getString($name, $default);
-		return (string) preg_replace( '/[^A-Z0-9_\.:-]/i', '', $source );
-	}
 }
 
 ?>

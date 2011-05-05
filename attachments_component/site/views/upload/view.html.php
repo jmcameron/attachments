@@ -28,7 +28,7 @@ class AttachmentsViewUpload extends JView
 	/**
 	 * Display the view
 	 */
-	function display($tpl=null, $error=false, $error_msg=false)
+	public function display($tpl=null, $error=false, $error_msg=false)
 	{
 		// ??? Pull these back to the controller and pass via $this?
 		$this->error = $error;

@@ -102,7 +102,7 @@ class AttachmentsModelAttachments extends JModelList
 	 * @return string
 	 * @since 1.0
 	 */
-	function _buildContentWhere($query)
+	private function _buildContentWhere($query)
 	{
 		$where = Array();
 
@@ -187,7 +187,7 @@ class AttachmentsModelAttachments extends JModelList
 	 * @return string
 	 * @since 1.0
 	 */
-	function _buildContentOrderBy()
+	private function _buildContentOrderBy()
 	{
 		// Get the ordering information
 		$orderCol	= $this->state->get('list.ordering');
@@ -314,7 +314,7 @@ class AttachmentsModelAttachments extends JModelList
 	 *
 	 * Applied to any selected attachments
 	 */
-	function publish($cid, $value)
+	public function publish($cid, $value)
 	{
 		// Get the ids and make sure they are integers
 		$attachmentTable = $this->getTable();

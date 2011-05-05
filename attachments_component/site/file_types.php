@@ -20,14 +20,19 @@ defined('_JEXEC') or die('Restricted access');
  */
 class AttachmentsFileTypes {
 
+	/** Array of lookups for icon filename given a filename extension */
 	var $attachments_icon_from_file_extension;
+
+	/** Array of lookups for icon filename from mime type */
 	var $attachments_icon_from_mime_type;
+
+	/** Array of lookups for mime type from filename extension */
 	var $attachments_mime_type_from_extension;
 
 	/**
 	 * Initialization function
 	 */
-	function _init()
+	private function _init()
 	{
 		global $attachments_icon_from_file_extension;
 		global $attachments_icon_from_mime_type;
@@ -216,7 +221,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return the icon filename (or '' if none is found)
 	 */
-	function icon_filename($filename, $mime_type)
+	public function icon_filename($filename, $mime_type)
 	{
 		// Recognize some special cases first
 		if ( $mime_type == 'link/unknown' ) {
@@ -267,7 +272,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return an array of unique icon filenames
 	 */
-	function unique_icon_filenames()
+	public function unique_icon_filenames()
 	{
 		global $attachments_icon_from_file_extension;
 		
@@ -288,7 +293,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return the mime type string
 	 */
-	function mime_type($filename)
+	public function mime_type($filename)
 	{
 		$path_info = pathinfo($filename);
 

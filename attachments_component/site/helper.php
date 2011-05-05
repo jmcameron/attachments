@@ -26,9 +26,10 @@ class AttachmentsHelper
 {
 	/**
 	 * Install the specified stylesheet (handles caching)
+	 *
 	 * @param string $css_path the URL/path to the CSS file to add to the document
 	 */
-	function addStyleSheet($css_path, $echo=false)
+	public function addStyleSheet($css_path, $echo=false)
 	{
 		static $added_js = false;
 
@@ -69,7 +70,7 @@ class AttachmentsHelper
 	 *
 	 * @return the truncated filename
 	 */
-	function truncate_filename($raw_filename, $maxlen)
+	private function truncate_filename($raw_filename, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
 		if ( $maxlen == 0 OR strlen($raw_filename) <= $maxlen ) {
@@ -103,7 +104,7 @@ class AttachmentsHelper
 	 *
 	 * @return the truncated URL
 	 */
-	function truncate_url($raw_url, $maxlen)
+	private function truncate_url($raw_url, $maxlen)
 	{
 		$url_len = strlen($raw_url);
 
@@ -127,9 +128,11 @@ class AttachmentsHelper
 	 *
 	 * @param int $parent_id The ID to be checked (may be a string)
 	 *
+	 * ??? This is apparently not used, should it be?
+	 *
 	 * @return the parent ID if valid, never returns if not
 	 */
-	function valid_parent_id($parent_id)
+	public function valid_parent_id($parent_id)
 	{
 		if ( is_numeric($parent_id) ) {
 			$parent_id = (int)$parent_id;
@@ -148,7 +151,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if the file was succesfully written
 	 */
-	function write_empty_index_html($dir)
+	public function write_empty_index_html($dir)
 	{
 		jimport('joomla.filesystem.file');
 
@@ -169,7 +172,7 @@ class AttachmentsHelper
 	 *
 	 * @param string $filename path of the file to have its containing directory cleaned.
 	 */
-	function clean_directory($filename)
+	public function clean_directory($filename)
 	{
 		jimport('joomla.filesystem.folder');
 
@@ -228,7 +231,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if succesful
 	 */
-	function setup_upload_directory($upload_dir, $secure)
+	public function setup_upload_directory($upload_dir, $secure)
 	{
 		$subdir_ok = false;
 
@@ -303,7 +306,7 @@ class AttachmentsHelper
 	 * @param int $attachment_id id for the attachment
 	 * @param string $from the from ($option) value
 	 */
-	function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
+	public function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
 		$url_base = "index.php?option=com_attachments";
@@ -398,7 +401,7 @@ class AttachmentsHelper
 	 * NOTE: The caller should set up all the parent info in the record before calling this
 	 *		 (see $parent->* below for necessary items)
 	 */
-	function upload_file(&$row, &$parent, $attachment_id=false, $save_type='update')
+	public function upload_file(&$row, &$parent, $attachment_id=false, $save_type='update')
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -801,7 +804,7 @@ class AttachmentsHelper
 	 *
 	 * @return an object (if successful) with the parts as attributes (or a error string in case of error)
 	 */
-	function parse_url(&$raw_url, $relative_url)
+	private function parse_url(&$raw_url, $relative_url)
 	{
 		// Set up the return object
 		$result = new JObject();
@@ -930,7 +933,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if the URL is okay, or an error object if not
 	 */
-	function get_url_info($raw_url, &$row, $verify, $relative_url)
+	public function get_url_info($raw_url, &$row, $verify, $relative_url)
 	{
 		// Check the URL for existence
 		// * Get 'size' (null if the there were errors accessing the link,
@@ -1120,8 +1123,8 @@ class AttachmentsHelper
 	 *
 	 * @return an error message if there is a problem
 	 */
-	function add_url(&$row, &$parent, $verify, $relative_url=false,
-					 $update=false, $attachment_id=false)
+	public function add_url(&$row, &$parent, $verify, $relative_url=false,
+							$update=false, $attachment_id=false)
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -1297,7 +1300,7 @@ class AttachmentsHelper
 	 *
 	 * @param int $id the attachment id
 	 */
-	function download_attachment($id)
+	public function download_attachment($id)
 	{
 		// Get the info about the attachment
 		$db =& JFactory::getDBO();
@@ -1405,7 +1408,8 @@ class AttachmentsHelper
 	 *
 	 * @return '' if succesful, else an error message
 	 */
-	function switch_parent(&$row, $old_parent_id, $new_parent_id, $new_parent_type=null, $new_parent_entity=null)
+	public function switch_parent(&$row, $old_parent_id, $new_parent_id,
+								  $new_parent_type=null, $new_parent_entity=null)
 	{
 		// Switch the parent as specified, renaming the file as necessary
 		// Return success status
@@ -1499,8 +1503,8 @@ class AttachmentsHelper
 	 *
 	 * @return the html as a string
 	 */
-	function attachmentsListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
-								 $show_file_links=true, $allow_edit=true)
+	public function attachmentsListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
+										$show_file_links=true, $allow_edit=true)
 	{
 		$app = JFactory::getApplication();
 
@@ -1562,9 +1566,11 @@ class AttachmentsHelper
 	 *
 	 * Note that the message is saved in the dom so it will be lost after any refreshes/redirects
 	 *
+	 * ??? Is this obsolete?
+	 *
 	 * @param string $msg the message to be saved
 	 */
-	function save_warning_message($msg)
+	public function save_warning_message($msg)
 	{
 		$doc =& JFactory::getDocument();
 		$doc->addScriptDeclaration(
@@ -1575,10 +1581,12 @@ class AttachmentsHelper
 	/**
 	 * Save a system message in the session to be displayed in the next redirect
 	 *
+	 * ??? Is this needed?  If not, get rid of it and convert to $app->enqueueMessage()
+	 *
 	 * @param string $msg the message to be saved
 	 * @param string $msgType the type of message
 	 */
-	function enqueueSystemMessage($msg, $msgType='message')
+	public function enqueueSystemMessage($msg, $msgType='message')
 	{
 		$app = JFactory::getApplication();
 		$app->enqueueMessage($msg, $msgType);

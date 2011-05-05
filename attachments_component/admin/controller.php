@@ -25,7 +25,7 @@ class AttachmentsController extends JController
 	 *
 	 * @return void
 	 */
-	function display($cachable = false)
+	public function display($cachable = false)
 	{
 		// Set the default view (if not specified)
 		JRequest::setVar('view', JRequest::getCmd('view', 'Attachments'));
@@ -41,7 +41,7 @@ class AttachmentsController extends JController
 	 * This allows users to select entities (sections, categories, and other
 	 * content items that are supported with Attachments plugins).
 	 */
-	function selectEntity()
+	public function selectEntity()
 	{
 		// Get the parent type
 		$parent_type = JRequest::getCmd('parent_type');
@@ -111,7 +111,7 @@ class AttachmentsController extends JController
 	/**
 	 * Display links for the admin Utility functions
 	 */
-	function adminUtils()
+	public function adminUtils()
 	{
 		// $this->loadLanguage();
 		

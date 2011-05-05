@@ -27,7 +27,7 @@ class AttachmentsViewParams extends JView
 	/**
 	 * Display the params view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$this->addToolBar();
 

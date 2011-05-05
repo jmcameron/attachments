@@ -26,7 +26,7 @@ class AttachmentsViewEdit extends JView
 	/**
 	 * Display the edit view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		// Set the toolbar
 		$this->addToolBar();

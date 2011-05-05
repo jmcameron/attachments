@@ -27,7 +27,7 @@ class AttachmentsViewWarning extends JView
 	/**
 	 * Display the view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		parent::display($tpl);
 	}

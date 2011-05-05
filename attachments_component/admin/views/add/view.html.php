@@ -27,7 +27,7 @@ class AttachmentsViewAdd extends JView
 	/**
 	 * Display the add/create view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		// Set the toolbar
 		$this->addToolBar();

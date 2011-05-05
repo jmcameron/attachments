@@ -350,7 +350,7 @@ class plgContentAttachments extends JPlugin
     /**
 	 * Fix the Javascript order problem that occurs occasionally
 	 */
-	function _fixScripts()
+	private function _fixScripts()
 	{
 		// Fix the document's list of scripts to remove modal.js and
 		// then re-add it in order to force it to be after mootools.js
@@ -388,7 +388,7 @@ class plgContentAttachments extends JPlugin
 	 *
 	 * @return a list of attachments as HTML code
 	 */
-	function _attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
+	private function _attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
 	{
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
@@ -437,7 +437,7 @@ class plgContentAttachments extends JPlugin
 	 *
 	 * @return the HTML for the "Add Attachments" link
 	 */
-	function _attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
+	private function _attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
 	{
 		$document =& JFactory::getDocument();
 

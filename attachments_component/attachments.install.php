@@ -41,9 +41,9 @@ class Com_AttachmentsInstallerScript {
 	/**
 	 * Attachments component install function
 	 *
-	 * @param $parent : the name of the installer parent
+	 * @param $parent : the installer parent
 	 */
-	function install($parent)
+	public function install($parent)
 	{
 		$app = JFactory::getApplication('administrator');
 		$app->enqueueMessage(JText::sprintf('ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
@@ -53,18 +53,18 @@ class Com_AttachmentsInstallerScript {
 	/**
 	 * Attachments component uninstall function
 	 *
-	 * @param $parent : the name of the installer parent
+	 * @param $parent : the installer parent
 	 */
-	function uninstall($parent)
+	public function uninstall($parent)
 	{
 	}
 
 	/**
 	 * Attachments component update function
 	 *
-	 * @param $parent : the name of the installer parent
+	 * @param $parent : the installer parent
 	 */
-	function update($parent)
+	public function update($parent)
 	{
 	}
 
@@ -73,9 +73,9 @@ class Com_AttachmentsInstallerScript {
 	 * Attachments component preflight function
 	 *
 	 * @param $type : type of installation
-	 * @param $parent : the name of the installer parent
+	 * @param $parent : the installer parent
 	 */
-	function preflight($type, $parent)
+	public function preflight($type, $parent)
 	{
 		// Load the installation language
 		$lang =&  JFactory::getLanguage();
@@ -103,9 +103,9 @@ class Com_AttachmentsInstallerScript {
 	 * Attachments component postflight function
 	 *
 	 * @param $type : type of installation
-	 * @param $parent : the name of the installer parent
+	 * @param $parent : the installer parent
 	 */
-	function postflight($type, $parent) 
+	public function postflight($type, $parent) 
 	{
 		$app = JFactory::getApplication('administrator');
 		$db =& JFactory::getDBO();

@@ -29,7 +29,7 @@ class AttachmentsViewEntity extends JView
 	/**
 	 * Display the entity view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		parent::display($tpl);
 	}

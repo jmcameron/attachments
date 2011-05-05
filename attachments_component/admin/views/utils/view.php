@@ -27,7 +27,7 @@ class AttachmentsViewAdminUtils extends JView
 	/**
 	 * Display the view
 	 */
-	function display()
+	public function display()
 	{
 		$document =& JFactory::getDocument();
 		$app = JFactory::getApplication();

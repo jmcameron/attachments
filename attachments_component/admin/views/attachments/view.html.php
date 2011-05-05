@@ -31,7 +31,7 @@ class AttachmentsViewAttachments extends JView
 	/**
 	 * Display the list view
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$this->pagination = $this->get('Pagination');
 		$this->state = $this->get('State');

@@ -29,7 +29,7 @@ class AttachmentsTableAttachment extends JTable
 	 *
 	 * @param object Database connector object
 	 */
-	function __construct(&$db) 
+	public function __construct(&$db) 
 	{
 		parent::__construct('#__attachments', 'id', $db);
 	}

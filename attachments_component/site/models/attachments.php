@@ -86,7 +86,7 @@ class AttachmentsModelAttachments extends JModel
 	/**
 	 * Constructor
 	 */
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 	}
@@ -101,7 +101,7 @@ class AttachmentsModelAttachments extends JModel
 	 * @param string $parent_type the parent type (defaults to 'com_content')
 	 * @param string $parent_entity the parent entity (defaults to 'default')
 	 */
-	function setParentId($id=null, $parent_type='com_content', $parent_entity='default')
+	public function setParentId($id=null, $parent_type='com_content', $parent_entity='default')
 	{
 		// Get the parent id and type
 		if ( is_numeric($id) ) {
@@ -153,7 +153,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the parent id
 	 */
-	function getParentId()
+	public function getParentId()
 	{
 		if ( $this->_parent_id === null ) {
 			$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 85)';
@@ -168,7 +168,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the parent type
 	 */
-	function getParentType()
+	public function getParentType()
 	{
 		if ( $this->_parent_type == null ) {
 			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 86)';
@@ -183,7 +183,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the parent entity
 	 */
-	function getParentEntity()
+	public function getParentEntity()
 	{
 		if ( $this->_parent_entity == null ) {
 			$errmsg = JText::_('ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERR 87)';
@@ -205,7 +205,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the parent class object
 	 */
-	function &getParentClass()
+	public function &getParentClass()
 	{
 		if ( $this->_parent_type == null ) {
 			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 88)';
@@ -233,7 +233,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the title for the parent
 	 */
-	function getParentTitle()
+	public function getParentTitle()
 	{
 		// Get the title if we have not done it before
 		if ( $this->_parent_title == null ) {
@@ -258,7 +258,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the entity name for the parent
 	 */
-	function getParentEntityName()
+	public function getParentEntityName()
 	{
 		// Get the parent entity name if we have not done it before
 		if ( $this->_parent_entity_name == null ) {
@@ -281,7 +281,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @param string $new_sort_order name of the new sort order
 	 */
-	function setSortOrder($new_sort_order)
+	public function setSortOrder($new_sort_order)
 	{
 		if ( $new_sort_order == 'filename' )
 			$order_by = "filename";
@@ -322,7 +322,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the list of attachments for this parent
 	 */
-	function &getAttachmentsList()
+	public function &getAttachmentsList()
 	{
 		// Just return it if it has already been created
 		if ( $this->_list != null ) {
@@ -420,7 +420,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return the number of attachments for this parent
 	 */
-	function numAttachments()
+	public function numAttachments()
 	{
 		return $this->_num_attachments;
 	}
@@ -431,7 +431,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return true if there are attachments and some should be visible
 	 */
-	function someVisible()
+	public function someVisible()
 	{
 		// See if the attachments list has been loaded
 		if ( $this->_list == null ) {
@@ -466,7 +466,7 @@ class AttachmentsModelAttachments extends JModel
 	 *
 	 * @return true if there are attachments and some should be modifiable
 	 */
-	function someModifiable()
+	public function someModifiable()
 	{
 		// See if the attachments list has been loaded
 		if ( $this->_list == null ) {
