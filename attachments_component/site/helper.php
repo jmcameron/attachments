@@ -982,24 +982,35 @@ class AttachmentsHelper
 		$app = JFactory::getApplication();
 
 		if ( $timeout > 0 ) {
-			if (version_compare(PHP_VERSION, '5.0.0') >= 0) {
-				require_once(JPATH_COMPONENT_SITE.DS.'fsockopen5.php');
-				$fp = fsockopen_protected($u, $errno, $errstr, $timeout, $verify);
-				if ( $u->error ) {
-					$error_msg = JText::sprintf('ERROR_CHECKING_URL_S', $raw_url);
-					$error_msg .= ' <br />(' . $u->err_msg . ' <br />' . $errstr . ')';
-					if ( $app->isAdmin() ) {
-						$result = new JObject();
-						$result->error = true;
-						$result->error_msg = $error_msg;
-						return $result;
-						}
-					$u->error_msg = $error_msg;
-					return $u;
+
+			// Set up error handler in case it times out or some other error occurs
+			set_error_handler(create_function('$a, $b, $c, $d',
+				'throw new Exception("fsockopen error");'), E_ALL);
+			try {
+				$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
+				restore_error_handler();
+				}
+			catch (Exception $e) {
+				restore_error_handler();
+				if ( $verify ) {
+					$u->error = true;
+					$u->error_code = 'url_check_exception';
+					$u->err_msg = $e->getMessage();
+					return false;
 					}
 				}
-			else {
-				$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
+
+			if ( $u->error ) {
+				$error_msg = JText::sprintf('ERROR_CHECKING_URL_S', $raw_url);
+				$error_msg .= ' <br />(' . $u->err_msg . ' <br />' . $errstr . ')';
+				if ( $app->isAdmin() ) {
+					$result = new JObject();
+					$result->error = true;
+					$result->error_msg = $error_msg;
+					return $result;
+					}
+				$u->error_msg = $error_msg;
+				return $u;
 				}
 			}
 
