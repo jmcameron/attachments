@@ -1,6 +1,14 @@
 <?php
 /**
- * ??? add docs
+ * Attachments component icon filenames selector
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @author Jonathan M. Cameron
  */
 
 defined('JPATH_BASE') or die;
@@ -11,9 +19,7 @@ jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of icon filenames
  *
- * @package		Joomla.Administrator
- * @subpackage	com_weblinks
- * @since		1.6
+ * @package		Attachments
  */
 class JFormFieldIconfilenames extends JFormField
 {
