@@ -52,10 +52,9 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Constructor
 	 */
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
-
 		$this->loadLanguage();
 	}
 
@@ -67,7 +66,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return Boolean true if the plugin is available (false if not)
 	 */
-	function attachmentsPluginInstalled($parent_type)
+	public function attachmentsPluginInstalled($parent_type)
 	{
 		return in_array( $parent_type, $this->_parent_types );
 	}
@@ -80,7 +79,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return true if the attachment is enabled (false if disabled)
 	 */
-	function attachmentsPluginEnabled($parent_type)
+	public function attachmentsPluginEnabled($parent_type)
 	{
 		// Extract the component name (the part after 'com_')
 		if ( strpos($parent_type, 'com_') == 0 ) {
@@ -96,7 +95,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Add a new parent type
 	 */
-	function addParentType($new_parent_type)
+	public function addParentType($new_parent_type)
 	{
 		if ( in_array( $new_parent_type, $this->_parent_types ) ) {
 			return;
@@ -111,7 +110,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return an array of the installed parent types
 	 */
-	function &getInstalledParentTypes()
+	public function &getInstalledParentTypes()
 	{
 		return $this->_parent_types;
 	}
@@ -121,7 +120,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return array of entity info (see var $_entity_info definition above)
 	 */
-	function &getInstalledEntityInfo()
+	public function &getInstalledEntityInfo()
 	{
 		if ( count($this->_entity_info) == 0 ) {
 
@@ -155,7 +154,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return true of the language was loaded succesfullly
 	 */
-	function loadLanguage()
+	public function loadLanguage()
 	{
 		if ( $this->_language_loaded ) {
 			return true;
@@ -176,7 +175,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return the parent handler object
 	 */
-	function getAttachmentsPlugin($parent_type)
+	public function getAttachmentsPlugin($parent_type)
 	{
 		// Make sure the parent type is valid
 		if ( !in_array( $parent_type, $this->_parent_types ) ) {
@@ -200,7 +199,7 @@ class AttachmentsPluginManager extends JObject
 	 *
 	 * @return true if successful (false if not)
 	 */
-	function _installPlugin($parent_type)
+	private function _installPlugin($parent_type)
 	{
 		// Do nothing if the plugin is already installed
 		if ( array_key_exists( $parent_type, $this->_plugin ) ) {

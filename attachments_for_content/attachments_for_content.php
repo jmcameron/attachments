@@ -14,6 +14,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+/** Load the attachments plugin class */
 JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
 
 /**
@@ -23,8 +24,14 @@ JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
  */
 class AttachmentsPlugin_com_content extends AttachmentsPlugin
 {
+
 	/**
 	 * Constructor
+	 *
+	 * @param object $subject The object to observe
+	 * @param array  $config  An optional associative array of configuration settings.
+	 * Recognized key values include 'name', 'group', 'params', 'language'
+	 * (this list is not meant to be comprehensive).
 	 */
 	public function __construct(&$subject, $config = array())
 	{
@@ -63,9 +70,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @param &object &$parent The object for the parent (row) that onPrepareContent gets
 	 *
-	 * @return the correct entity (eg, 'default', 'category')
+	 * @return the correct parent entity (eg, 'article', 'category')
 	 */
-	function determineParentEntity(&$parent)
+	public function determineParentEntity(&$parent)
 	{
 		$view = JRequest::getCmd('view');
 
@@ -91,7 +98,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return the URL that can be called to select a specific content item
 	 */
-	function getSelectEntityURL($parent_entity='default')
+	public function getSelectEntityURL($parent_entity='default')
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -115,7 +122,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return the array of entity id,title pairs
 	 */
-	function getEntityItems($parent_entity='default', $filter='')
+	public function getEntityItems($parent_entity='default', $filter='')
 	{
 		$db =& JFactory::getDBO();
 
@@ -191,10 +198,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 * Get a URL to view the content article
 	 *
 	 * @param int $parent_id the ID for this parent object
+	 * @param string $parent_entity the type of parent element/entity
 	 *
 	 * @return a URL to view the entity (non-SEF form)
 	 */
-	function getEntityViewURL($parent_id, $parent_entity = 'default')
+	public function getEntityViewURL($parent_id, $parent_entity = 'default')
 	{
 		$uri = JFactory::getURI();
 
@@ -222,7 +230,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return the url to add a new attachments to the specified entity
 	 */
-	function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
+	public function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
 	{
         $app = JFactory::getApplication();
 
@@ -270,7 +278,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if the custom title should be used
 	 */
-	function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
+	public function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
 	{
 		if ( (($parent_entity == 'default') OR ($parent_entity == 'article')) AND
 			 (($rtitle_parent_entity == 'default' ) OR ($rtitle_parent_entity == 'article')) ) {
@@ -294,7 +302,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if the parent is published
 	 */
-	function isParentPublished($parent_id, $parent_entity='default')
+	public function isParentPublished($parent_id, $parent_entity='default')
 	{
 		$db =& JFactory::getDBO();
 
@@ -380,7 +388,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if the parent is archived
 	 */
-	function isParentArchived($parent_id, $parent_entity='default')
+	public function isParentArchived($parent_id, $parent_entity='default')
 	{
 		$archived = false;
 
@@ -428,7 +436,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return an array of where clauses
 	 */
-	function getParentPublishedFilter($parent_state, $filter_entity)
+	public function getParentPublishedFilter($parent_state, $filter_entity)
 	{
 		// If we want all attachments, do no filtering
 		if ( $parent_state == 'ALL' ) {
@@ -505,7 +513,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
-	function userMayViewParent($parent_id, $parent_entity='default')
+	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
 		// Check general attachments permissions first
 		if ( parent::userMayViewParent($parent_id, $parent_entity) == false ) {
@@ -569,7 +577,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
-	function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
+	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
 	{
 		// Check for generic options
 		if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity, $params) ) {
@@ -683,7 +691,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if this user add attachments to this parent
 	 */
-	function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
+	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -798,7 +806,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	function userMayEditAttachment(&$attachment, $parent_id, &$params)
+	public function userMayEditAttachment(&$attachment, $parent_id, &$params)
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
@@ -868,7 +876,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if access is okay (false if not)
 	 */
-	function userMayAccessAttachment( &$attachment )
+	public function userMayAccessAttachment( &$attachment )
 	{
 		$user =& JFactory::getUser();
 
@@ -902,6 +910,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 }
 
+/** Register this attachments type */
 $apm =& getAttachmentsPluginManager();
 $apm->addParentType('com_content');
 

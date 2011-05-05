@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  *
  * @return the plugin manager singleton object
  */
- function &getAttachmentsPluginManager()
+function &getAttachmentsPluginManager()
 {
 	static $instance;
 

@@ -101,13 +101,14 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	var $_title_cache = Array();
 
+
 	/**
-	 * Constructor - Load the informaton from the INI file
+	 * Constructor
 	 *
-	 * @param string $extension_name Name of the extension (eg, 'extensions_for_content')
-	 * @param string $parent_type Name of the parent type (eg, 'com_content')
-	 * @param string $default_name Name of default entity for the parent_type
-	 *
+	 * @param object $subject The object to observe
+	 * @param array  $config  An optional associative array of configuration settings.
+	 * Recognized key values include 'name', 'group', 'params', 'language'
+	 * (this list is not meant to be comprehensive).
 	 */
 	public function __construct(&$subject, $config = array())
 	{
@@ -128,7 +129,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return id if found, false if this is not a valid parent
 	 */
-	function getParentId(&$row)
+	public function getParentId(&$row)
 	{
 		return JRequest::getInt('id', false);
 	}
@@ -139,7 +140,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the component name for this parent object
 	 */
-	function getParentType()
+	public function getParentType()
 	{
 		return $this->_parent_type;
 	}
@@ -153,7 +154,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return an array of (join_clause, where_clause) items
 	 */
-	function getParentPublishedFilter($parent_state, $filter_entity)
+	public function getParentPublishedFilter($parent_state, $filter_entity)
 	{
 		return '';
 	}
@@ -171,7 +172,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the correct entity (eg, 'default', 'category', etc) or false if this entity should not be displayed.
 	 */
-	function determineParentEntity(&$parent)
+	public function determineParentEntity(&$parent)
 	{
 		return 'default';
 	}
@@ -182,7 +183,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the array of entities supported by this parent object
 	 */
-	function getEntities()
+	public function getEntities()
 	{
 		return $this->_entities;
 	}
@@ -192,7 +193,7 @@ class AttachmentsPlugin extends JPlugin
 	 * Get the default entity ID
 	 * @return string the default entity ID
 	 */
-	function getDefaultEntity()
+	public function getDefaultEntity()
 	{
 		return $this->_default_entity;
 	}
@@ -212,7 +213,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the canonical extension entity
 	 */
-	function getCanonicalEntityId($parent_entity)
+	public function getCanonicalEntityId($parent_entity)
 	{
 		// It it is a known entity, just return it
 		if ( in_array($parent_entity, $this->_entities) ) {
@@ -244,7 +245,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return string the directory name for this entity (with trailing DS!)
 	 */
-	function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
+	public function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -264,7 +265,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the name or title for the specified object
 	 */
-	function getTitle($parent_id, $parent_entity='default')
+	public function getTitle($parent_id, $parent_entity='default')
 	{
 		// Short-circuit if there is no parent ID
 		if ( !is_numeric($parent_id) ) {
@@ -320,7 +321,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the array of entity id,title pairs
 	 */
-	function getEntityItems($parent_entity='default', $filter='')
+	public function getEntityItems($parent_entity='default', $filter='')
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -399,7 +400,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the URL that can be called to select a specific content item
 	 */
-	function getSelectEntityURL($parent_entity='default')
+	public function getSelectEntityURL($parent_entity='default')
 	{
 		// Add on the parent type and entity
 		$entity = "&amp;parent_type=" . $this->_parent_type;
@@ -419,7 +420,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return a URL to view the entity (non-SEF form)
 	 */
-	function getEntityViewURL($parent_id, $parent_entity='default')
+	public function getEntityViewURL($parent_id, $parent_entity='default')
 	{
 		return null;
 	}
@@ -434,7 +435,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the url to add a new attachments to the specified entity
 	 */
-	function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
+	public function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
 	{
 		$app = JFactory::getApplication();
 
@@ -460,14 +461,14 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Check to see if a custom title applies to this parent
 	 *
-	 * Note: this function assumes that the parent_id's match
+	 * Note: this public function assumes that the parent_id's match
 	 *
 	 * @param string $parent_entity parent entity for the parent of the list
 	 * @param string $rtitle_parent_entity the entity of the candidate attachment list title (from params)
 	 *
 	 * @return true if the custom title should be used
 	 */
-	function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
+	public function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
 	{
 		return false;
 	}
@@ -482,7 +483,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the translated title string
 	 */
-	function attachmentsListTitle($title, &$params, $parent_id, $parent_entity='default')
+	public function attachmentsListTitle($title, &$params, $parent_id, $parent_entity='default')
 	{
 		$rtitle_str = $params->get('attachments_titles', '');
 		if ( ($title != 'EXISTING_ATTACHMENTS') AND ($rtitle_str != '') ) {
@@ -530,7 +531,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent exists
 	 */
-	function parentExists($parent_id, $parent_entity='default')
+	public function parentExists($parent_id, $parent_entity='default')
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -570,7 +571,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent is published
 	 */
-	function isParentPublished($parent_id, $parent_entity='default')
+	public function isParentPublished($parent_id, $parent_entity='default')
 	{
 		return false;
 	}
@@ -584,7 +585,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent is archived
 	 */
-	function isParentArchived($parent_id, $parent_entity='default')
+	public function isParentArchived($parent_id, $parent_entity='default')
 	{
 		return false;
 	}
@@ -593,7 +594,7 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * May the parent be viewed by the user?
 	 *
-	 * This function should be called by derived class functions.
+	 * This public function should be called by derived class functions.
 	 *
 	 * Note that this base class function only determines necessary
 	 * conditions. If this function returns FALSE, then viewing is definitely
@@ -606,7 +607,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
-	function userMayViewParent($parent_id, $parent_entity='default')
+	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
 		$user =& JFactory::getUser();
 
@@ -652,7 +653,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
-	function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
+	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
 	{
 		$layout = JRequest::getCmd('layout');
 
@@ -685,7 +686,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if this user add attachments to this parent
 	 */
-	function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
+	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
 		return false;
 	}
@@ -704,7 +705,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	function userMayEditAttachment(&$attachment, $parent_id, &$params)
+	public function userMayEditAttachment(&$attachment, $parent_id, &$params)
 	{
 		return false;
 	}
@@ -717,7 +718,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if access is okay (false if not)
 	 */
-	function userMayAccessAttachment( &$attachment )
+	public function userMayAccessAttachment( &$attachment )
 	{
 		return false;
 	}
@@ -735,7 +736,7 @@ class AttachmentsPlugin extends JPlugin
 	 *	   - 'user_may_see'
 	 *	   - 'user_may_edit'
 	 */
-	function addPermissions( &$attachments, $parent_id )
+	public function addPermissions( &$attachments, $parent_id )
 	{
 		// Make sure we have a valid parent ID
 		if ( $parent_id === null OR $parent_id === '' OR !is_numeric($parent_id) ) {
