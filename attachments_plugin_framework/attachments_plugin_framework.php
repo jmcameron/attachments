@@ -34,5 +34,3 @@ function &getAttachmentsPluginManager()
 
 /** Make sure the plugin class is loaded for derived classes */
 require_once(dirname(__FILE__).DS.'attachments_plugin.php');
-
-?>

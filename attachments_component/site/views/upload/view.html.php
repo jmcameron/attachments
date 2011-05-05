@@ -37,5 +37,3 @@ class AttachmentsViewUpload extends JView
 		parent::display($tpl);
 	}
 }
-
-?>

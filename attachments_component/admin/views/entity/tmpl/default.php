@@ -91,6 +91,3 @@ $lists = $this->lists;
 
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
-<?php
-
-?>

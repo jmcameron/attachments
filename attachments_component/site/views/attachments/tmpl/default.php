@@ -291,5 +291,3 @@ if ( $format != 'raw' ) {
 	}
 
 echo $html;
-
-?>

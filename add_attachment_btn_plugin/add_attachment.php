@@ -148,5 +148,3 @@ class plgButtonAdd_attachment extends JPlugin
 		return $button;
 	}
 }
-
-?>

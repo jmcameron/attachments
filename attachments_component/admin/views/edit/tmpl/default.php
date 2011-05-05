@@ -348,5 +348,3 @@ if ( $attachment->parent_id ) {
 	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
-
-?>

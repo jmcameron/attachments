@@ -141,5 +141,3 @@ class plgButtonInsert_attachments_token extends JPlugin
 		return $button;
 	}
 }
-
-?>

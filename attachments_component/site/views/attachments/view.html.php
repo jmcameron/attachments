@@ -195,5 +195,3 @@ class AttachmentsViewAttachments extends JView
 	}
 
 }
-
-?>

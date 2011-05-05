@@ -880,5 +880,3 @@ class AttachmentsUpdate
 
 
 }
-
-?>

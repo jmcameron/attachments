@@ -48,5 +48,3 @@ function &fsockopen_protected(&$u, &$errno, &$errstr, $timeout, $verify)
 
 	return $fp;
 }
-
-?>

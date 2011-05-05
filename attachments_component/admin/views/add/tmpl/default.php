@@ -214,5 +214,3 @@ if ( !in_array($editor, $exceptions) ) {
 	}
 
 	echo '</div>';
-
-?>

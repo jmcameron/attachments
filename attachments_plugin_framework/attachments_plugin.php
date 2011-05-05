@@ -794,5 +794,3 @@ class AttachmentsPlugin extends JPlugin
 	}
 
 }
-
-?>

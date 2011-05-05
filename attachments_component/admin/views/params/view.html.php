@@ -47,5 +47,3 @@ class AttachmentsViewParams extends JView
 	}
 	
 }
-
-?>

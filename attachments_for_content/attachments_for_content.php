@@ -913,5 +913,3 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 /** Register this attachments type */
 $apm =& getAttachmentsPluginManager();
 $apm->addParentType('com_content');
-
-?>

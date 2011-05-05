@@ -283,5 +283,3 @@ class plgSystemShow_attachments extends JPlugin
 			}
 	}
 }
-
-?>

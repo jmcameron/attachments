@@ -40,5 +40,3 @@ else {
 $controller = new $classname( array('default_task' => 'noop') );
 $controller->execute( JRequest::getCmd('task') );
 $controller->redirect();
-
-?>

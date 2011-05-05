@@ -238,5 +238,3 @@ class AttachmentsControllerUtils extends JController
 	}
 
 }
-
-?>

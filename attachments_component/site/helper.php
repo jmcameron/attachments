@@ -1598,5 +1598,3 @@ class AttachmentsHelper
 	}
 
 }
-
-?>

@@ -484,5 +484,3 @@ class AttachmentsModelAttachments extends JModel
 	}
 
 }
-
-?>

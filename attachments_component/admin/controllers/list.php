@@ -128,5 +128,3 @@ class AttachmentsControllerList extends JController
 
 	
 }
-
-?>

@@ -215,5 +215,3 @@ class AttachmentsPluginManager extends JObject
 	}
 
 }
-
-?>

@@ -34,6 +34,3 @@ class AttachmentsViewEntity extends JView
 		parent::display($tpl);
 	}
 }
-
-?>
-

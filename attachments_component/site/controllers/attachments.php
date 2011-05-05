@@ -134,5 +134,3 @@ class AttachmentsControllerAttachments extends JController
 	}
 
 }
-
-?>

@@ -47,6 +47,3 @@ class AttachmentsViewAdd extends JView
 		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
 	}
 }
-
-?>
-
