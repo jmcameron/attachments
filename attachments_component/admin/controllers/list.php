@@ -23,16 +23,22 @@ jimport( 'joomla.application.component.controller' );
 class AttachmentsControllerList extends JController
 {
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param	array An optional associative array of configuration settings.
+	 *
+	 * @return	JControllerForm
 	 */
-	function __construct( $default = array('default_task' => 'noop') )
+	public function __construct( $default = array('default_task' => 'noop') )
 	{
 		parent::__construct( $default );
 	}
 
 
-	/** A noop function so this controller does not have a usable default */
-	function noop()
+	/**
+	 * A noop function so this controller does not have a usable default
+	 */
+	public function noop()
 	{
 		$errmsg = JText::_('ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 107)';
 		JError::raiseError(500, $errmsg);
@@ -53,9 +59,9 @@ class AttachmentsControllerList extends JController
 	 *
 	 * @return the string (if $echo is false)
 	 */
-	function display($parent_id, $parent_type, $parent_entity,
-					 $title=null, $show_file_links=true, $allow_edit=true,
-					 $echo=true, $from=null)
+	public function display($parent_id, $parent_type, $parent_entity,
+							$title=null, $show_file_links=true, $allow_edit=true,
+							$echo=true, $from=null)
 	{
 		$document =& JFactory::getDocument();
 

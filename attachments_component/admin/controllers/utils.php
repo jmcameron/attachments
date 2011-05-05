@@ -28,17 +28,23 @@ class AttachmentsControllerUtils extends JController
 	 */
 	var $_close_script = '<script>var myparent = window.parent; window.parent.SqueezeBox.close(); myparent.location.reload();</script>';
 
+
 	/**
-	 * Custom Constructor
+	 * Constructor.
+	 *
+	 * @param	array An optional associative array of configuration settings.
 	 */
-	function __construct( $default = array())
+	public function __construct( $default = array())
 	{
 		$default['default_task'] = 'noop';
 		parent::__construct( $default );
 	}
 
-	/** A noop function so this controller does not have a usable default */
-	function noop()
+
+	/**
+	 * A noop function so this controller does not have a usable default
+	 */
+	public function noop()
 	{
 		echo "<h1>" . JText::_('ERROR_NO_UTILS_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
@@ -49,7 +55,7 @@ class AttachmentsControllerUtils extends JController
 	 * Add icon filenames for attachments missing an icon
 	 * (See AttachmentsUpdate::add_icon_filenames() in update.php for details )
 	 */
-	function add_icon_filenames()
+	public function add_icon_filenames()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 		$msg = AttachmentsUpdate::add_icon_filenames();
@@ -61,7 +67,7 @@ class AttachmentsControllerUtils extends JController
 	 * Update any null dates in any attachments
 	 * (See AttachmentsUpdate::update_null_dates() in update.php for details )
 	 */
-	function update_null_dates()
+	public function update_null_dates()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -75,7 +81,7 @@ class AttachmentsControllerUtils extends JController
 	 * Update the attachments table
 	 * (See AttachmentsUpdate::update_attachments_table() in update.php for details )
 	 */
-	function update_attachments_table()
+	public function update_attachments_table()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -98,7 +104,7 @@ class AttachmentsControllerUtils extends JController
 	 * Disalbe SQL uninstall of existing attachments (when Attachments is uninstalled)
 	 * (See AttachmentsUpdate::disable_sql_uninstall() in update.php for details )
 	 */
-	function disable_sql_uninstall()
+	public function disable_sql_uninstall()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -121,7 +127,7 @@ class AttachmentsControllerUtils extends JController
 	 * Regenerate system filenames
 	 * (See AttachmentsUpdate::regenerate_system_filenames() in update.php for details )
 	 */
-	function regenerate_system_filenames()
+	public function regenerate_system_filenames()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -142,7 +148,7 @@ class AttachmentsControllerUtils extends JController
 	 * Remove spaces from system filenames for all attachments
 	 * (See AttachmentsUpdate::remove_spaces_from_system_filenames() in update.php for details )
 	 */
-	function remove_spaces_from_system_filenames()
+	public function remove_spaces_from_system_filenames()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -163,7 +169,7 @@ class AttachmentsControllerUtils extends JController
 	 * Update file sizes for all attachments
 	 * (See AttachmentsUpdate::update_file_sizes() in update.php for details )
 	 */
-	function update_file_sizes()
+	public function update_file_sizes()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -184,7 +190,7 @@ class AttachmentsControllerUtils extends JController
 	 * Check all files in any attachments
 	 * (See AttachmentsUpdate::check_files() in update.php for details )
 	 */
-	function check_files()
+	public function check_files()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -204,7 +210,7 @@ class AttachmentsControllerUtils extends JController
 	 * Validate all URLS in any attachments
 	 * (See AttachmentsUpdate::validate_urls() in update.php for details )
 	 */
-	function validate_urls()
+	public function validate_urls()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
@@ -224,7 +230,7 @@ class AttachmentsControllerUtils extends JController
 	/**
 	 * Test function
 	 */
-	function test()
+	public function test()
 	{
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 

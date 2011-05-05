@@ -33,9 +33,8 @@ class AttachmentsControllerParams extends JControllerForm
 	 *
 	 * @param	array	$config		An optional associative array of configuration settings.
 	 * @return	void
-	 * @since	1.5
 	 */
-	function __construct($config = array())
+	public function __construct($config = array())
 	{
 		parent::__construct($config);
 

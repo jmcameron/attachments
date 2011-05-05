@@ -1042,7 +1042,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 * @param int $attachment_id id for the attachment
 	 * @param string $from the from ($option) value
 	 */
-	function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
+	private function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
 		$url_base = "index.php?option=com_attachments";
@@ -1107,10 +1107,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 	}
 
+
 	/**
 	 * Download an attachment
 	 */
-	function download()
+	public function download()
 	{
 		$app = JFactory::getApplication();
 		// ??? Rework this wit new ACL

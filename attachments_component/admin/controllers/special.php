@@ -22,16 +22,21 @@ defined('_JEXEC') or die('Restricted access');
 class AttachmentsControllerSpecial extends JController
 {
 	/**
-	 * Custom Constructor
+	 * Constructor.
+	 *
+	 * @param	array An optional associative array of configuration settings.
 	 */
-	function __construct( $default = array())
+	public function __construct( $default = array())
 	{
 		$default['default_task'] = 'noop';
 		parent::__construct( $default );
 	}
 
-	/** A noop function so this controller does not have a usable default */
-	function noop()
+
+	/**
+	 * A noop function so this controller does not have a usable default
+	 */
+	public function noop()
 	{
 		echo "<h1>" . JText::_('ERROR_NO_SPECIAL_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
@@ -43,7 +48,7 @@ class AttachmentsControllerSpecial extends JController
 	 *
 	 * This is for system testing purposes only
 	 */
-	function showSEF()
+	public function showSEF()
 	{
 		$app = JFactory::getApplication();
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
@@ -59,7 +64,7 @@ class AttachmentsControllerSpecial extends JController
 	 *
 	 * This is for system testing purposes only
 	 */
-	function listAttachmentIDs()
+	public function listAttachmentIDs()
 	{
 		// ??? Add test to make sure only admin can access this
 
