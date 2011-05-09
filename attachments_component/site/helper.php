@@ -1316,6 +1316,7 @@ class AttachmentsHelper
 		// Get the info about the attachment
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
+		// ??? Use model here?
 		$query->select('*')->from('#__attachments')->where('id = ' .(int)$id);
 		// ??? SQL could probably be improved
 		$db->setQuery($query, 0, 1);
@@ -1374,13 +1375,12 @@ class AttachmentsHelper
 		$len = filesize($filename_sys);
 
 		// Update the download count
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
-		$attachment->load($id);
-		$dl_count = (int)$attachment->download_count;
-		$attachment->download_count = $dl_count + 1;
-		if ( !$attachment->store() ) {
-			$errmsg = $row->getError() . ' (ERR 48)';
+		$query = $db->getQuery(true);
+		$query->update('#__attachments')->set('download_count = (download_count + 1)');
+		$query->where('id = ' .(int)$id);
+		$db->setQuery($query);
+		if ( !$db->query() ) {
+			$errmsg = $db->stderr() . ' (ERR 48)';
 			JError::raiseError(500, $errmsg);
 			}
 
