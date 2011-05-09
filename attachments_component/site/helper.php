@@ -401,14 +401,13 @@ class AttachmentsHelper
 	 * NOTE: The caller should set up all the parent info in the record before calling this
 	 *		 (see $parent->* below for necessary items)
 	 */
-	public function upload_file(&$row, &$parent, $attachment_id=false, $save_type='update')
+	public function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
 	{
+		$db =& JFactory::getDBO();
+
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
-
-		// Get the auto-publish setting
-		$auto_publish = $params->get('publish_default', false);
 
 		// Make sure the attachments directory exists
 		$upload_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -421,10 +420,10 @@ class AttachmentsHelper
 		// If we are updating, note the name of the old filename
 		$old_filename = null;
 		$old_filename_sys = null;
-		$old_uri_type = $row->uri_type;
+		$old_uri_type = $attachment->uri_type;
 		if ( $old_uri_type ) {
-			$old_filename = $row->filename;
-			$old_filename_sys = $row->filename_sys;
+			$old_filename = $attachment->filename;
+			$old_filename_sys = $attachment->filename_sys;
 			}
 
 		// Get the new filename
@@ -436,7 +435,7 @@ class AttachmentsHelper
 		$from = JRequest::getWord('from');
 
 		// Set up the entity name for display
-		$parent_entity = $parent->getCanonicalEntityId($row->parent_entity);
+		$parent_entity = $parent->getCanonicalEntityId($attachment->parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
 
 		// A little formatting
@@ -485,40 +484,40 @@ class AttachmentsHelper
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
-											   $row->url_valid);
+											   $attachment->url_valid);
 				$view->lists = $lists;
-				$view->attachment = $row;
+				$view->attachment = $attachment;
 
-				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type,
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type,
 												 $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type,
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type,
 												 $attachment_id, null, $from);
 
-				$view->uri_type     = $row->uri_type;
-				$view->url          = $row->url;
-				$view->parent_id    = $row->parent_id;
-				$view->parent_type  = $row->parent_type;
-				$view->description  = $row->description;
-				$view->user_field_1 = $row->user_field_1;
-				$view->user_field_2 = $row->user_field_2;
-				$view->user_field_3 = $row->user_field_3;
+				$view->uri_type     = $attachment->uri_type;
+				$view->url          = $attachment->url;
+				$view->parent_id    = $attachment->parent_id;
+				$view->parent_type  = $attachment->parent_type;
+				$view->description  = $attachment->description;
+				$view->user_field_1 = $attachment->user_field_1;
+				$view->user_field_2 = $attachment->user_field_2;
+				$view->user_field_3 = $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
-			$display_name = $row->display_name;
+			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
-				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $row->uri_type)) ) {
+				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $attachment->uri_type)) ) {
 					$display_name = '';
 					}
 				}
 
 			// Set up the view
-			$view->parent_entity = 	 $row->parent_entity;
+			$view->parent_entity = 	 $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title = 	 $parent->title;
 			$view->new_parent = $parent->new;
@@ -587,39 +586,39 @@ class AttachmentsHelper
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
-											   $row->url_valid);
+											   $attachment->url_valid);
 				$view->lists = $lists;
-				$view->attachment = $row;
+				$view->attachment = $attachment;
 
-				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type,
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type,
 												 $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
-				$view->uri_type = 		 $row->uri_type;
-				$view->url = 				 $row->url;
-				$view->parent_id = $row->parent_id;
-				$view->parent_type = 		 $row->parent_type;
-				$view->description = 		 $row->description;
-				$view->user_field_1 = 	 $row->user_field_1;
-				$view->user_field_2 = 	 $row->user_field_2;
-				$view->user_field_3 = 	 $row->user_field_3;
+				$view->uri_type = 		 $attachment->uri_type;
+				$view->url = 				 $attachment->url;
+				$view->parent_id = $attachment->parent_id;
+				$view->parent_type = 		 $attachment->parent_type;
+				$view->description = 		 $attachment->description;
+				$view->user_field_1 = 	 $attachment->user_field_1;
+				$view->user_field_2 = 	 $attachment->user_field_2;
+				$view->user_field_3 = 	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
-			$display_name = $row->display_name;
+			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
-				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $row->uri_type)) ) {
+				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $attachment->uri_type)) ) {
 					$display_name = '';
 					}
 				}
 
 			// Set up the view
-			$view->parent_entity = 	 $row->parent_entity;
+			$view->parent_entity = 	 $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title = 	 $parent->title;
 			$view->new_parent = $parent->new;
@@ -641,8 +640,8 @@ class AttachmentsHelper
 		$upload_dir = JPATH_SITE . DS . $upload_url;
 
 		// Figure out the system filename
-		$path = $parent->getAttachmentPath($row->parent_entity,
-										   $row->parent_id, null);
+		$path = $parent->getAttachmentPath($attachment->parent_entity,
+										   $attachment->parent_id, null);
 		$fullpath = $upload_dir . DS . $path;
 
 		// Make sure the directory exists
@@ -660,9 +659,26 @@ class AttachmentsHelper
 		
 		$url = $upload_url . '/' . $path . $filename;
 
-		// If not updating, make sure the system filename doesn't already exist
+		// Make sure the system filename doesn't already exist
 		$error = false;
+		$duplicate_filename = false;
 		if ( $save_type == 'upload' AND JFile::exists($filename_sys) ) {
+			// Cannot overwrite an existing file when creating a new attachment!
+			$duplicate_filename = true;
+			}
+		if ( $save_type == 'update' AND JFile::exists($filename_sys) ) {
+			// If updating, we may replace the existing file but may not overwrite any other existing file
+			$query = $db->getQuery(true);
+			$query->select('id')->from('#__attachments');
+			$query->where("filename_sys = '" . $filename_sys . "' AND id != " . (int)$attachment->id);
+			$db->setQuery($query, 0, 1);
+			if ( $db->loadResult() > 0 ) {
+				$duplicate_filename = true;
+				}
+			}
+
+		// Handle duplicate filename error
+		if ( $duplicate_filename ) {
 			$error = 'file_already_on_server';
 			$error_msg = JText::sprintf('ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
@@ -678,22 +694,22 @@ class AttachmentsHelper
 			// Set up the view to redisplay the form with warnings
 			require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 			$view = new AttachmentsViewUpload();
-			AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
+			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
 			// Set up the view
-			$view->uri_type = 		 $row->uri_type;
-			$view->url = 				 $row->url;
-			$view->parent_id = $row->parent_id;
-			$view->parent_type = 		 $row->parent_type;
-			$view->parent_entity = 	 $row->parent_entity;
+			$view->uri_type = 		 $attachment->uri_type;
+			$view->url = 				 $attachment->url;
+			$view->parent_id = $attachment->parent_id;
+			$view->parent_type = 		 $attachment->parent_type;
+			$view->parent_entity = 	 $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title = 	 $parent->title;
 			$view->new_parent = $parent->new;
-			$view->description = 		 $row->description;
-			$view->display_name = 	 $row->display_name;
-			$view->user_field_1 = 	 $row->user_field_1;
-			$view->user_field_2 = 	 $row->user_field_2;
-			$view->user_field_3 = 	 $row->user_field_3;
+			$view->description = 		 $attachment->description;
+			$view->display_name = 	 $attachment->display_name;
+			$view->user_field_1 = 	 $attachment->user_field_1;
+			$view->user_field_2 = 	 $attachment->user_field_2;
+			$view->user_field_3 = 	 $attachment->user_field_3;
 			$view->from = 			 $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 			$view->params = 			 $params;
@@ -713,26 +729,36 @@ class AttachmentsHelper
 			}
 
 		// See of the display name needs to change
-		if ( $row->display_name AND ($save_type == 'update') AND ( $filename != $old_filename ) ) {
-			$row->display_name = '';
+		if ( $attachment->display_name AND ($save_type == 'update') AND ( $filename != $old_filename ) ) {
+			$attachment->display_name = '';
 			}
 
 		// Create a display filename, if needed (for long filenames)
 		if ( ($max_filename_length > 0) and
-			 ( JString::strlen($row->display_name) == 0 ) and
+			 ( JString::strlen($attachment->display_name) == 0 ) and
 			 ( JString::strlen($filename) > $max_filename_length ) ) {
-			$row->display_name = AttachmentsHelper::truncate_filename($filename,
-																	  $max_filename_length);
+			$attachment->display_name = AttachmentsHelper::truncate_filename($filename,
+																			 $max_filename_length);
 			}
 
 		// Copy the info about the uploaded file into the new record
-		$row->uri_type = 'file';
-		$row->filename = $filename;
-		$row->filename_sys = $filename_sys;
-		$row->url = $url;
-		$row->file_type = $ftype;
-		$row->file_size = $_FILES['upload']['size'];
-		$row->state = $auto_publish;
+		$attachment->uri_type = 'file';
+		$attachment->filename = $filename;
+		$attachment->filename_sys = $filename_sys;
+		$attachment->url = $url;
+		$attachment->file_type = $ftype;
+		$attachment->file_size = $_FILES['upload']['size'];
+
+		// If we are creating the attachment, set its initial state
+		if ( $save_type == 'upload' ) {
+			$auto_publish = $params->get('publish_default', false);
+			if ( $auto_publish ) {
+				$attachment->state = 1;
+				}
+			else {
+				$attachment->state = 0;
+				}
+			}
 
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
@@ -741,22 +767,21 @@ class AttachmentsHelper
 
 		// Update the create/modify info
 		if ( $save_type == 'upload' ) {
-			$row->created = $now;
+			$attachment->created = $now;
 			}
-		$row->modified = $now;
+		$attachment->modified = $now;
 
 		// Add the icon file type
 		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
-		$row->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
+		$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
 
 		// Save the updated attachment
-		if (!$row->store()) {
-			$errmsg = JText::_('ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $row->getError() . ' (ERR 42)';
+		if (!$attachment->store()) {
+			$errmsg = JText::_('ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 42)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the attachment id
-		$db =& JFactory::getDBO();
 		// If we're updating we may not get an insertid, so don't blindly overwrite the old
 		// attachment_id just in case (Thanks to Franz-Xaver Geiger for a bug fix on this)
 		$new_attachment_id = $db->insertid();
@@ -767,7 +792,7 @@ class AttachmentsHelper
 		// Move the file
 		$msg = "";
 		if (JFile::upload($_FILES['upload']['tmp_name'], $filename_sys)) {
-			$size = (int)( $row->file_size / 1024.0 );
+			$size = (int)( $attachment->file_size / 1024.0 );
 			chmod($filename_sys, 0644);
 			if ( $save_type == 'update' )
 				$msg = JText::_('UPDATED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
