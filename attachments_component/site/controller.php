@@ -282,20 +282,20 @@ class AttachmentsController extends JController
 
 		// Bind the info from the form
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$row =& JTable::getInstance('Attachment', 'AttachmentsTable');
-		if ( $attachment_id AND !$row->load($attachment_id) ) {
+		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		if ( $attachment_id AND !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 60)';
 			JError::raiseError(500, $errmsg);
 			}
-		if (!$row->bind(JRequest::get('post'))) {
-			$errmsg = $row->getError() . ' (ERR 61)';
+		if (!$attachment->bind(JRequest::get('post'))) {
+			$errmsg = $attachment->getError() . ' (ERR 61)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Note what the old uri type is, if updating
 		$old_uri_type = null;
 		if ( $save_type	 == 'update' ) {
-			$old_uri_type = $row->uri_type;
+			$old_uri_type = $attachment->uri_type;
 			}
 
 		// Figure out what the new URI is
@@ -323,7 +323,7 @@ class AttachmentsController extends JController
 
 			// Double-check to see if the URL changed
 			$old_url = JRequest::getString('old_url');
-			if ( !$new_uri_type AND $old_url AND $old_url != $row->url ) {
+			if ( !$new_uri_type AND $old_url AND $old_url != $attachment->url ) {
 				$new_uri_type = 'url';
 				}
 			}
@@ -342,21 +342,21 @@ class AttachmentsController extends JController
 
 		// Handle the various ways this function might get invoked
 		if ( $save_type == 'upload' ) {
-			$row->created_by = $user->get('id');
-			$row->parent_id = $parent_id;
+			$attachment->created_by = $user->get('id');
+			$attachment->parent_id = $parent_id;
 			}
 
 		// Update the modified info
-		$row->modified_by = $user->get('id');
+		$attachment->modified_by = $user->get('id');
 
 		// Set up a couple of items that the upload function may need
 		$parent->new = $new_parent;
 		if ( $new_parent ) {
-			$row->parent_id = null;
+			$attachment->parent_id = null;
 			$parent->title = '';
 			}
 		else {
-			$row->parent_id = $parent_id;
+			$attachment->parent_id = $parent_id;
 			$parent->title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
@@ -366,14 +366,14 @@ class AttachmentsController extends JController
 		if ( $new_uri_type == 'file' ) {
 
 			// Upload a new file
-			$msg = AttachmentsHelper::upload_file($row, $parent, $attachment_id, $save_type);
+			$msg = AttachmentsHelper::upload_file($attachment, $parent, $attachment_id, $save_type);
 			// NOTE: store() is not needed if upload_file() is called since it does it
 			}
 
 		elseif ( $new_uri_type == 'url' ) {
 
 			// Upload/add the new URL
-			$msg = AttachmentsHelper::add_url($row, $parent, $verify_url, $relative_url,
+			$msg = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url,
 											  $old_uri_type, $attachment_id);
 			// NOTE: store() is not needed if upload_url() is called since it does it
 			}
@@ -381,8 +381,8 @@ class AttachmentsController extends JController
 		else {
 
 			// Save the updated attachment info
-			if (!$row->store()) {
-				$errmsg = $row->getError() . ' (ERR 62)';
+			if (!$attachment->store()) {
+				$errmsg = $attachment->getError() . ' (ERR 62)';
 				JError::raiseError(500, $errmsg);
 				}
 
