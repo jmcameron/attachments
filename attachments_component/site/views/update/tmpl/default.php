@@ -81,6 +81,7 @@ AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachmen
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
 
 // Add javascript
+JHTML::_('behavior.mootools');
 $document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 // Handle RTL styling

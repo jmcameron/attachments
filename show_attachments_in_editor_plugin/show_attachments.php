@@ -56,6 +56,7 @@ class plgSystemShow_attachments extends JPlugin
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments1.css',
 								 'text/css', null, array() );
 
+			JHTML::_('behavior.mootools');
 			JHTML::_('behavior.modal', 'a.modal-button');
 
 			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
@@ -176,7 +177,7 @@ class plgSystemShow_attachments extends JPlugin
 	        $uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			$doc =& JFactory::getDocument();
-
+			JHTML::_('behavior.mootools');
 			if ( $app->isAdmin() ) {
 				// ??? This should not be necessary
 				$base_url = str_replace('/administrator','', $base_url);

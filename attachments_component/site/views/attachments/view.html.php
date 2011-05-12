@@ -45,6 +45,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Add javascript
 	    $uri = JFactory::getURI();
+		JHTML::_('behavior.mootools');
 		$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 		// Get the model

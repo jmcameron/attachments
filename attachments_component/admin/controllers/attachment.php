@@ -136,6 +136,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
 			$uri = JFactory::getURI();
+			JHTML::_('behavior.mootools');
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 			$js = '
@@ -693,6 +694,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
+			JHTML::_('behavior.mootools');
 			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 			$save_url = 'index.php?option=com_attachments&amp;task=attachment.save';
 			}

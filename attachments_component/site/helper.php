@@ -48,6 +48,7 @@ class AttachmentsHelper
 		elseif ( $caching ) {
 			// If caching, load the Javascript function that allows dynamic insertion of stylesheets
 			if ( !$added_js ) {
+				// ??? JHTML::_('behavior.mootools');
 	            $uri = JFactory::getURI();
 				$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_caching.js';
 				echo "<script type=\"text/javascript\" src=\"$js_path\"></script>\n";

@@ -78,6 +78,7 @@ class plgContentAttachments extends JPlugin
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
 
 		$doc =& JFactory::getDocument();
+		JHTML::_('behavior.mootools');
 		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
 		$doc->addScript( $js_path );
 
@@ -352,27 +353,29 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _fixScripts()
 	{
-		// Fix the document's list of scripts to remove modal.js and
-		// then re-add it in order to force it to be after mootools.js
-		//
-		// NOTE: Not sure why this hack is necessary, but with some other
-		//		 extensions, mootools.js seems to pop up after modal.js
-		//		 which does not work since modal.js depends on mootools.js.
-
-		$document =&  JFactory::getDocument();
-
-		$modal_url = false;
-		foreach ($document->_scripts as $url => $type) {
-			if ( JString::strpos($url, '/media/system/js/modal.js') ) {
-				$modal_url = $url;
-				}
-			}
-		if ( $modal_url ) {
-			unset($document->_scripts[$modal_url]);
-			}
-
-		$uri = JFactory::getURI();
-		$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
+// ??? NECESSARY?
+		
+// 		// Fix the document's list of scripts to remove modal.js and
+// 		// then re-add it in order to force it to be after mootools.js
+// 		//
+// 		// NOTE: Not sure why this hack is necessary, but with some other
+// 		//		 extensions, mootools.js seems to pop up after modal.js
+// 		//		 which does not work since modal.js depends on mootools.js.
+// 
+// 		$document =&  JFactory::getDocument();
+// 
+// 		$modal_url = false;
+// 		foreach ($document->_scripts as $url => $type) {
+// 			if ( JString::strpos($url, '/media/system/js/modal.js') ) {
+// 				$modal_url = $url;
+// 				}
+// 			}
+// 		if ( $modal_url ) {
+// 			unset($document->_scripts[$modal_url]);
+// 			}
+// 
+// 		$uri = JFactory::getURI();
+// 		$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
 	}
 
 

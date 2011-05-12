@@ -107,6 +107,7 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// up the style sheet (to get the visual for the button working)
 		$doc =& JFactory::getDocument();
+		JHTML::_('behavior.mootools');
 		$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
 		$doc->addScript( $js_path );
 
