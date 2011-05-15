@@ -221,4 +221,16 @@
       <option value="attachment">ATTACHMENT</option>
     </field>
   </fieldset>
+
+  <fieldset name="permissions" 
+            label="JCONFIG_PERMISSIONS_LABEL"
+            description="COM_ATTACHMENTS_PERMISSIONS_DESC">
+    <field name="rules" type="rules"
+           component="com_attachments"
+           filter="rules"
+           validate="rules"
+           label="JCONFIG_PERMISSIONS_LABEL3"
+           section="component" />
+  </fieldset>
+
 </config>

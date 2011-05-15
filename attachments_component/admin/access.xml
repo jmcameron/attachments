@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<access component="com_attachments">
+	<section name="component">
+		<action name="core.admin" title="COM_ATTACHMENTS_ADMIN" 
+			description="COM_ATTACHMENTS_ADMIN_COMPONENT_DESC" />
+
+		<action name="core.manage" title="COM_ATTACHMENTS_MANAGE" 
+			description="COM_ATTACHMENTS_MANAGE_COMPONENT_DESC" />
+
+		<action name="core.create" title="COM_ATTACHMENTS_CREATE" 
+			description="COM_ATTACHMENTS_CREATE_COMPONENT_DESC" />
+
+		<action name="core.delete" title="COM_ATTACHMENTS_DELETE" 
+			description="COM_ATTACHMENTS_DELETE_COMPONENT_DESC" />
+
+		<action name="core.edit" title="COM_ATTACHMENTS_EDIT" 
+			description="COM_ATTACHMENTS_EDIT_COMPONENT_DESC" />
+
+		<action name="core.edit.state" title="COM_ATTACHMENTS_EDITSTATE" 
+			description="COM_ATTACHMENTS_EDITSTATE_COMPONENT_DESC" />
+
+		<action name="core.edit.own" title="COM_ATTACHMENTS_EDITOWN" 
+			description="COM_ATTACHMENTS_EDITOWN_COMPONENT_DESC" />
+	</section>
+</access>

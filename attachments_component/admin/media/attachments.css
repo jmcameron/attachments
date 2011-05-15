@@ -431,6 +431,24 @@ ul#attachments-options > li > label {
 	margin: 0 2px 4px 0;
 }
 
+
+ul#attachments-options > li > label#jform_rules-lbl {
+    display: none;
+}
+
+ul#attachments-options div#permissions-sliders {
+    margin: 4px 0 0 0;
+}
+
+form#component-form p.tab-description {
+    font-size: 150%;
+    margin: 0 0 0 0;
+}
+
+ul#attachments-options div.pane-sliders p {
+    margin: 0 0 4px 0;
+}
+
 fieldset#jform_download_mode label {
 	width: 4em;
 }

@@ -72,7 +72,7 @@
 
 	<files folder="admin">
 	    <filename>attachments.php</filename>
-	    <filename>Changelog.php</filename>
+	    <filename>access.xml</filename>
 	    <filename>config.xml</filename>
 	    <filename>controller.php</filename>
 	    <filename>controllers/attachment.php</filename>
@@ -143,6 +143,7 @@
 	    <filename>views/warning/tmpl/default.php</filename>
 	    <filename>views/warning/tmpl/index.html</filename>
 	    <filename>views/warning/view.html.php</filename>
+	    <filename>Changelog.php</filename>
 	    <folder>help/en-GB/plugin_manual/html/_static</folder>
 	    <folder>language</folder>
 	</files>
