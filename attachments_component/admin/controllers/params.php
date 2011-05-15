@@ -48,6 +48,11 @@ class AttachmentsControllerParams extends JControllerForm
 	 */
 	public function edit()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');

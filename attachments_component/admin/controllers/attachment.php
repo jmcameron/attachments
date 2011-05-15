@@ -67,6 +67,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function add()
 	{
 		// Access check.
+		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
+		// Access check.
 		if (!$this->allowAdd()) {
 			// Set the internal error and also the redirect error.
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED'));
@@ -507,6 +512,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	public function edit()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
         $uri = JFactory::getURI();
 		$db =& JFactory::getDBO();
 
@@ -1142,6 +1152,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	public function delete_warning()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		// Make sure we have a valid attachment ID
 		$attachment_id = JRequest::getInt('id', null);
 		if ( is_numeric($attachment_id) ) {

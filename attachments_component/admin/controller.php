@@ -113,7 +113,10 @@ class AttachmentsController extends JController
 	 */
 	public function adminUtils()
 	{
-		// $this->loadLanguage();
+		// Access check
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
 		
 		// Set up the tooltip behavior
 		$opts = Array( 'hideDelay' => 0, 'showDelay' => 0 );

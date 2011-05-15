@@ -71,6 +71,11 @@ class AttachmentsController extends JController
 	 */
 	public function upload()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
 		// Get the parent info
@@ -423,6 +428,7 @@ class AttachmentsController extends JController
 	 */
 	public function download()
 	{
+		// ??? NEED ACCESS CHECK
 
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
@@ -487,6 +493,11 @@ class AttachmentsController extends JController
 	 */
 	public function delete()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		$db =& JFactory::getDBO();
 
 		// Verify the user is logged in
@@ -613,6 +624,11 @@ class AttachmentsController extends JController
 	 */
 	public function delete_warning()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		// Make sure we have a valid attachment ID
 		$attachment_id = JRequest::getInt('id');
 		if ( is_numeric($attachment_id) ) {
@@ -664,6 +680,11 @@ class AttachmentsController extends JController
 	 */
 	public function update()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 		// Call with: index.php?option=com_attachments&task=update&id=1&tmpl=component
 		//		  or: component/attachments/update/id/1/tmpl/component

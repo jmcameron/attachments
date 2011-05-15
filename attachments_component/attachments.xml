@@ -105,6 +105,7 @@
 	    <filename>models/forms/attachment.xml</filename>
 	    <filename>models/forms/index.html</filename>
 	    <filename>models/index.html</filename>
+	    <filename>permissions.php</filename>
 	    <filename>sql/index.html</filename>
 	    <filename>sql/install.mysql.sql</filename>
 	    <filename>sql/uninstall.mysql.sql</filename>

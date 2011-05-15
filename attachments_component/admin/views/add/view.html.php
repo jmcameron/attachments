@@ -14,6 +14,12 @@
 // no direct access
  
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+// Access check.
+if (!JFactory::getUser()->authorise('core.add', 'com_attachments')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+}
+
  
 jimport( 'joomla.application.component.view');
  

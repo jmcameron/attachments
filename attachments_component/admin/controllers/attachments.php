@@ -133,6 +133,11 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 */
 	public function delete()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		// Check for request forgeries
 		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
 

@@ -57,6 +57,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function add_icon_filenames()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 		$msg = AttachmentsUpdate::add_icon_filenames();
 		$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -69,6 +74,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function update_null_dates()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
@@ -83,6 +93,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function update_attachments_table()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
@@ -106,6 +121,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function disable_sql_uninstall()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
@@ -129,6 +149,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function regenerate_system_filenames()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
@@ -150,6 +175,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function remove_spaces_from_system_filenames()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
@@ -171,6 +201,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function update_file_sizes()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::update_file_sizes();
@@ -192,6 +227,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function check_files()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::check_files_existance();
@@ -212,6 +252,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function validate_urls()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		$msg = AttachmentsUpdate::validate_urls();
@@ -232,6 +277,11 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function test()
 	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
 
 		exit();

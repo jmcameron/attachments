@@ -13,6 +13,12 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+// Access check.
+if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	}
+
+
 /**
  * The controller for special requests
  * (adapted from administrator/components/com_config/controllers/component.php)

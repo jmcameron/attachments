@@ -131,28 +131,42 @@ class AttachmentsViewAttachments extends JView
 	 */
 	protected function addToolBar() 
 	{
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'permissions.php');
+		$canDo = AttachmentsPermissions::getActions();		
+
 		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');
-		JToolBarHelper::addNewX('attachment.add');
-		JToolBarHelper::editListX('attachment.edit');
 
-		JToolBarHelper::divider();
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::addNewX('attachment.add');
+			}
 
-		JToolBarHelper::publishList('attachments.publish');
-		JToolBarHelper::unpublishList('attachments.unpublish');
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editListX('attachment.edit');
+			}
 
-		JToolBarHelper::divider();
+		if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::divider();
+			JToolBarHelper::publishList('attachments.publish');
+			JToolBarHelper::unpublishList('attachments.unpublish');
+			}
 
-		JToolBarHelper::deleteListX('', 'attachments.delete');
+		if ($canDo->get('core.delete')) {
+			JToolBarHelper::divider();
+			JToolBarHelper::deleteListX('', 'attachments.delete');
+			}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
+		if ($canDo->get('core.admin')) {
+			JToolBarHelper::divider();
+			JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
-		// Add a button for extra admin commands
-		$bar =&  JToolBar::getInstance('toolbar');
-		$bar->appendButton( 'Popup', 'adminUtils', $alt='UTILITIES',
-							'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',	
-							$width='600', $height='400' );
+			// Add a button for extra admin commands
+			$bar =&  JToolBar::getInstance('toolbar');
+			$bar->appendButton( 'Popup', 'adminUtils', $alt='UTILITIES',
+								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',	
+								$width='600', $height='400' );
 
+			}
+		
 		JToolBarHelper::divider();
 		JToolBarHelper::help('help', true);
 	}
