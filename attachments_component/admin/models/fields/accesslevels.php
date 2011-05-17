@@ -29,6 +29,7 @@ class JFormFieldAccessLevels extends JFormField
 	 */
 	public $type = 'AccessLevels';
 
+
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -44,7 +45,7 @@ class JFormFieldAccessLevels extends JFormField
 
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
-		
+
 		$query->select('a.*');
 		$query->from('#__viewlevels AS a');
 		$query->where('a.id in ('.$user_levels.')');
@@ -67,9 +68,9 @@ class JFormFieldAccessLevels extends JFormField
 			$level_options[] = JHTML::_('select.option', $level->id, JText::_($level->title));
 			}
 
-		return JHTML::_('select.genericlist',  $level_options, 'jform[access_levels]',
+		return JHTML::_('select.genericlist',  $level_options, $this->name,
 						'class="inputbox" size="1"', 'value', 'text', $this->value,
-						'jform_access_levels'
+						'jform_'.$this->fieldname
 						);
 	}
 }
