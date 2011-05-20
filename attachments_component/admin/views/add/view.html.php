@@ -16,7 +16,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.add', 'com_attachments')) {
+if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 

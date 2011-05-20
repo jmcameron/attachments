@@ -693,56 +693,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
 
-		// Check who may add attachments
-		$who_can_add = $params->get('who_can_add', 'author');
-
-		// A user must be logged in to add attachments
 		$user =& JFactory::getUser();
-		if ( $user->get('username') == '' ) {
-			return false;
-			}
-
-		// Exit if no one is allowed to add attachments (make an exception for admins)
-		$user_type = $user->get('usertype', false);
-		if ( $who_can_add == 'no_one' ) {
-			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
-			}
-
-		// If who-can-add is 'Editor', do not allow anyone with lower permissions to add attachments
-		if (( $who_can_add == 'editor' ) AND
-			(( $user_type == 'Registered' ) OR ( $user_type == 'Author' ) )) {
-			return false;
-			}
-
-		// Check everyone but authors if authors need to be handled separately.
-		if ( ( $who_can_add == 'author' ) AND ($user_type != 'Author') AND
-			 $user->authorize('com_content', 'add', 'content', 'all') ) {
-			// If the user generally has permissions to add content, they qualify.
-			// (editor, publisher, admin, etc)
-			return true;
-			}
-
-		// Check everyone but editors if editors need to be handled separately.
-		if ( ( $who_can_add == 'editor' ) AND ($user_type != 'Editor') AND
-			 $user->authorize('com_content', 'add', 'content', 'all') ) {
-			// If the user generally has permissions to add content, they qualify.
-			// (editor, publisher, admin, etc)
-			return true;
-			}
-
-		// If it is a new parent (article/category), check general permissions
-		if ( $new_parent ) {
-			return $user->authorize('com_content', 'add', 'content', 'all');
-			}
-
-		// Make sure the parent is valid
-		if ( $parent_id == null OR $parent_id == '' OR !is_numeric($parent_id) ) {
-			return false;
-			}
 
 		// Handle each entity type
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
@@ -750,9 +703,17 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		switch ( $parent_entity ) {
 
 		case 'category':
-			// Assume only admins can add attachments to categories
-			// ??? Fix with new ACL?
-			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
+
+			// First, determine if the user can edit this category
+			if ( !AttachmentsPermissions::userMayEditCategory($parent_id) ) {
+				return false;
+				}
+
+			// Finally, see if the user has permissions to create attachments
+			if ($user->authorise('core.create', 'com_attachments')) {
+				return true;
+				}
+
 			break;
 
 		default:

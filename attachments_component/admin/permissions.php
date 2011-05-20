@@ -46,4 +46,44 @@ class AttachmentsPermissions
 		return $result;
 	}
 
+	
+	protected function userMayEditCategory($category_id)
+	{
+		$user =& JFactory::getUser();
+
+		// Check general edit permission first.
+		if ($user->authorise('core.edit', 'com_content')) {
+			return true;
+		}
+
+		// Check specific edit permission.
+		if ($user->authorise('core.edit', 'com_content.category.'.$category_id)) {
+			return true;
+		}
+
+		// No general permissions, see if 'edit own' is permitted for this category
+		if ( $user->authorise('core.edit.own', 'com_content.category.'.$category_id) ||
+			 $user->authorise('core.edit.own', 'com_content')) {
+
+			// Yes, Find out if the user created the category
+			$db =& JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select('id')->from('#__categories');
+			$query->where('id = '.(int)$parent_id.' AND created_user_id = '.(int)$user->id());
+			$db->setQuery($query, 0, 1);
+			$results = $db->loadObject();
+			if ($db->getErrorNum()) {
+				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_OWNERSHIP');
+				JError::raiseError(500, $errmsg);
+				}
+
+			if ( !empty($results) ) {
+				// The user did actually create the category
+				return true;
+				}
+			}
+
+		return false;
+	}
+
 }	
