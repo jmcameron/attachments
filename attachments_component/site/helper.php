@@ -71,7 +71,7 @@ class AttachmentsHelper
 	 *
 	 * @return the truncated filename
 	 */
-	private function truncate_filename($raw_filename, $maxlen)
+	protected function truncate_filename($raw_filename, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
 		if ( $maxlen == 0 OR strlen($raw_filename) <= $maxlen ) {
@@ -80,17 +80,19 @@ class AttachmentsHelper
 
 		$filename_info = pathinfo($raw_filename);
 		$basename = $filename_info['basename'];
-		$extension = $filename_info['extension'];
+		$filename = $filename_info['filename'];
 
-		// Construct the filename without extension (since pathinfo doesn't
-		// support directly this for PHP pre 5.2.0)
-		$filename = JString::substr($basename, 0, strlen($basename) - strlen($extension) - 1);
+		$extension = '';
+		if ($basename != $filename) {
+			$extension = $filename_info['extension'];
+			}
 
 		if ( JString::strlen($extension) > 0 ) {
 			$maxlen = max( $maxlen - (JString::strlen($extension) + 2), 1);
 			return JString::substr($filename, 0, $maxlen) . '~.' . $extension;
 			}
 		else {
+			$maxlen = max( $maxlen - 1, 1);
 			return JString::substr($filename, 0, $maxlen) . '~';
 			}
 	}
@@ -100,27 +102,47 @@ class AttachmentsHelper
 	 * Truncate the URL if it is longer than the maxlen
 	 * Do this by deleting necessary characters from the middle of the URL
 	 *
+	 * Always preserve the 'http://' part on the left.
+	 *
+	 * NOTE: The 'maxlen' applies only to the part after the 'http://'
+	 *
 	 * @param string $raw_url the input URL
 	 * @param int $maxlen the maximum allowed length (0 means no limit)
 	 *
 	 * @return the truncated URL
 	 */
-	private function truncate_url($raw_url, $maxlen)
+	protected function truncate_url($raw_url, $maxlen)
 	{
-		$url_len = strlen($raw_url);
-
 		// Do not truncate if $maxlen is 0 or no truncation is needed
-		if ( $maxlen == 0 OR $url_len <= $maxlen ) {
+		if ( $maxlen == 0 OR strlen($raw_url) <= $maxlen ) {
 			return $raw_url;
 			}
 
-		$left = (int)(($maxlen-2)/2);
-		if ( 2*$left + 1 < $maxlen ) {
-			$left++;
+		// Get the part after the protocol ('http://')
+		$parts = explode('//', $raw_url, 2);
+		$protocol = $parts[0];
+
+		// Let the 'address' be the part of the URL after the '//'
+		$address = $parts[1];
+		$address_len = strlen($address);
+
+		// Return if only the address part is okay
+		if ( $address_len <= $maxlen ) {
+			return $raw_url;
 			}
 
-		return substr($raw_url, 0, $left) . '&#183;&#183;' .
-			substr($raw_url, $url_len - $left + 1);
+		// Work out length of left part to insert ellipses in the middle
+		$left = (int)(($maxlen-2)/2);
+		if ( 2*$left + 2 < $maxlen ) {
+			$left++;
+			}
+		$right = $maxlen - $left - 2;
+
+		// Truncate the address part of the URL
+		$truncated_address = substr($address, 0, $left) . '&#183;&#183;' .
+			substr($address, $address_len - $right);
+
+		return $protocol . '//' . $truncated_address;
 	}
 
 
