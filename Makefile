@@ -69,6 +69,13 @@ classdefs:
 purge:
 	@find . -name '*.bak' -exec rm {} \;
 
+unittests:
+	@echo
+	@echo "Running unit tests..."
+	@cd test; phing -Droot=/var/www/test/joomla16/ unit_tests
+	@firefox test/coverage_result/index.html
+	@echo
+
 manual: extensions_manual/manual.rst
 	@echo "Creating Attachments Extension Manual"
 	rst2pdf extensions_manual/manual.rst -o extensions_manual.pdf --stylesheets extensions_manual/.rst2style
