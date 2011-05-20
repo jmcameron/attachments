@@ -73,8 +73,10 @@ unittests:
 	@echo
 	@echo "Running unit tests..."
 	@cd test; phing -Droot=/var/www/test/joomla16/ unit_tests
-	@firefox test/coverage_result/index.html
 	@echo
+
+unittests_show: unittests
+	@firefox test/coverage_result/index.html
 
 manual: extensions_manual/manual.rst
 	@echo "Creating Attachments Extension Manual"
