@@ -146,26 +146,6 @@ class AttachmentsHelper
 	}
 
 
-	/**
-	 * Check to see if the given parent ID is valid
-	 *
-	 * @param int $parent_id The ID to be checked (may be a string)
-	 *
-	 * ??? This is apparently not used, should it be?
-	 *
-	 * @return the parent ID if valid, never returns if not
-	 */
-	public function valid_parent_id($parent_id)
-	{
-		if ( is_numeric($parent_id) ) {
-			$parent_id = (int)$parent_id;
-			}
-		else {
-			$errmsg = JText::_('ERROR_BAD_ARTICLE_ID') . ' (ERR 36)';
-			JError::raiseError(500, $errmsg);
-			}
-		return $parent_id;
-	}
 
 	/**
 	 * Write an empty 'index.html' file in the specified directory to prevent snooping
