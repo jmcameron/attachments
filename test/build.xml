@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<project name="attachments" default="code_coverage" basedir=".">
+
+  <fileset dir="${root}" id="php">
+    <include name="components/com_attachments/helper.php"/>
+  </fileset>
+
+  <fileset dir="." id="tests">
+    <include name="test*.php"/>
+    <include name="*Test.php"/>
+    <include name="**/test*.php"/>
+    <include name="**/*Test.php"/>
+  </fileset>
+
+  <target name="unit_tests">
+
+    <mkdir dir="coverage_db"/>
+    <mkdir dir="coverage_result"/>
+
+    <coverage-setup database="coverage_db/coverage.db">
+      <fileset refid="php"/>
+    </coverage-setup>
+  
+    <phpunit3 codecoverage="true" bootstrap="bootstrap.php">
+      <batchtest>
+        <fileset refid="tests"/>
+      </batchtest>
+    </phpunit3>
+
+    <coverage-report outfile="coverage_db/coverage.xml">
+      <report todir="coverage_result"/>
+    </coverage-report>
+
+  </target>
+</project>
