@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="attachments" default="code_coverage" basedir=".">
+<project name="attachments" default="unit_tests" basedir=".">
 
   <fileset dir="${root}" id="php">
     <include name="components/com_attachments/file_types.php"/>
@@ -24,7 +24,7 @@
     </coverage-setup>
   
     <phpunit3 codecoverage="true" bootstrap="bootstrap.php">
-      <formatter type="summary" usefile="false" />
+      <formatter type="plain" usefile="false" />
       <batchtest>
         <fileset refid="tests"/>
       </batchtest>

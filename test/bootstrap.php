@@ -52,6 +52,7 @@ session_start();
 // Include relative constants, JLoader and the jimport and jexit functions.
 require_once JPATH_BASE.'/includes/defines.php';
 require_once JPATH_LIBRARIES.'/import.php';
+require_once JPATH_LIBRARIES.'/joomla/utilities/string.php';
 require_once JPATH_LIBRARIES.'/joomla/registry/registry.php';
 
 // Include the Joomla session library.
