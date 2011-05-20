@@ -1,2 +1,4 @@
 config.php
 test1.php
+coverage_db
+coverage_result

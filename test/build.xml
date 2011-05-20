@@ -3,6 +3,7 @@
 <project name="attachments" default="code_coverage" basedir=".">
 
   <fileset dir="${root}" id="php">
+    <include name="components/com_attachments/file_types.php"/>
     <include name="components/com_attachments/helper.php"/>
   </fileset>
 
@@ -23,10 +24,15 @@
     </coverage-setup>
   
     <phpunit3 codecoverage="true" bootstrap="bootstrap.php">
+      <formatter type="summary" usefile="false" />
       <batchtest>
         <fileset refid="tests"/>
       </batchtest>
     </phpunit3>
+
+    <phplint>
+      <fileset refid="php"/>
+    </phplint>
 
     <coverage-report outfile="coverage_db/coverage.xml">
       <report todir="coverage_result"/>
