@@ -14,7 +14,7 @@ jimport('joomla.application.component.helper');
 require_once JPATH_BASE.'/administrator/components/com_attachments/permissions.php';
 
 
-class CategoryAccessTest extends JoomlaDatabaseTestCase
+class CategoryEditTest extends JoomlaDatabaseTestCase
 {
 	protected $object;
 
@@ -27,9 +27,9 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 	 */
 	static function errorCallback( $error )
 	{
-		CategoryAccessTest::$actualError['code'] = $error->get('code');
-		CategoryAccessTest::$actualError['msg'] = $error->get('message');
-		CategoryAccessTest::$actualError['info'] = $error->get('info');
+		CategoryEditTest::$actualError['code'] = $error->get('code');
+		CategoryEditTest::$actualError['msg'] = $error->get('message');
+		CategoryEditTest::$actualError['info'] = $error->get('info');
 		return false;
 	}
 
@@ -47,8 +47,8 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 
 		$this->saveFactoryState();
 		$this->saveErrorHandlers();
-		$this->setErrorCallback('CategoryAccessTest');
-		CategoryAccessTest::$actualError = array();
+		$this->setErrorCallback('CategoryEditTest');
+		CategoryEditTest::$actualError = array();
 	}
 
 
@@ -77,7 +77,7 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
     /**
      * @dataProvider provider
      */
-	public function testCategoryAccess($user_id,$username,$cat_id,$may_edit)
+	public function testCategoryEdit($user_id,$username,$cat_id,$may_edit)
 	{
 		$result = AttachmentsPermissions::userMayEditCategory((int)$cat_id, (int)$user_id);
 
@@ -88,7 +88,7 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 
 	public function provider()
     {
-        return new CsvFileIterator(dirname(__FILE__).'/testCategoryAccessData.csv');
+        return new CsvFileIterator(dirname(__FILE__).'/testCategoryEditData.csv');
     }
 
 
