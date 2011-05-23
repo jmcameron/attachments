@@ -100,6 +100,7 @@
 	    <filename>media/index.html</filename>
 	    <filename>models/attachment.php</filename>
 	    <filename>models/attachments.php</filename>
+	    <filename>models/fields/accesslevels.php</filename>
 	    <filename>models/fields/iconfilenames.php</filename>
 	    <filename>models/fields/index.html</filename>
 	    <filename>models/forms/attachment.xml</filename>
