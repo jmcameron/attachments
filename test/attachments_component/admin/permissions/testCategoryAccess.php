@@ -11,8 +11,6 @@ jimport('joomla.filter.filterinput');
 jimport('joomla.environment.request');
 jimport('joomla.application.component.helper');
 
-require_once JPATH_BASE.'/plugins/attachments/attachments_plugin_framework/attachments_plugin_framework.php';
-
 require_once JPATH_BASE.'/administrator/components/com_attachments/permissions.php';
 
 
@@ -76,20 +74,15 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 	}
 
 
-	public function testCategoryAccess()
+    /**
+     * @dataProvider provider
+     */
+	public function testCategoryAccess($user_id,$username,$cat_id,$may_edit)
 	{
+		$result = AttachmentsPermissions::userMayEditCategory((int)$cat_id, (int)$user_id);
 
-		
-
-	/* ???
-		require_once JPATH_BASE.'/plugins/attachments/attachments_for_content/attachments_for_content.php';
-		JPluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
-		$parent = $apm->getAttachmentsPlugin('com_content');
-	*/
-		$this->markTestIncomplete(
-		'This test has not been implemented yet.'
-		);
+		$this->assertEquals($result, (bool)$may_edit,
+							"----> Failed for $username edit category $cat_id, expected $may_edit, got $result");
 	}
 	
 

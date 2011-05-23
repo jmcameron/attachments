@@ -5,6 +5,7 @@
   <fileset dir="${root}" id="php">
     <include name="components/com_attachments/file_types.php"/>
     <include name="components/com_attachments/helper.php"/>
+    <include name="administrator/components/com_attachments/permissions.php"/>
     <include name="plugins/attachments/attachments_plugin_framework/attachments_plugin.php"/>
     <include name="plugins/attachments/attachments_plugin_framework/attachments_plugin_manager.php"/>
     <include name="plugins/attachments/attachments_for_content/attachments_for_content.php"/>
