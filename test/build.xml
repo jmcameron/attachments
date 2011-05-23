@@ -34,9 +34,11 @@
       </batchtest>
     </phpunit3>
 
+    <!--
     <phplint>
       <fileset refid="php"/>
     </phplint>
+    -->
 
     <coverage-report outfile="coverage_db/coverage.xml">
       <report todir="coverage_result"/>
