@@ -40,6 +40,12 @@ class JFormFieldAccessLevels extends JFormField
 	 */
 	protected function getInput()
 	{
+		return $this->getAccessLevels($this->value, $this->name, 'jform_'.$this->fieldname);
+	}
+
+
+	public function getAccessLevels($value, $for_name, $fieldname)
+	{
 		$user   = JFactory::getUser();
 		$user_levels = implode(',', $user->authorisedLevels());
 
@@ -50,6 +56,9 @@ class JFormFieldAccessLevels extends JFormField
 		$query->from('#__viewlevels AS a');
 		$query->where('a.id in ('.$user_levels.')');
 		$query->order('a.ordering ASC');
+
+		// ??? Make sure $value is in returned levels, otherwise set $value
+		// to legal value, use default_access_level as default
 
 		// Get the levels
 		$db->setQuery($query);
@@ -68,9 +77,9 @@ class JFormFieldAccessLevels extends JFormField
 			$level_options[] = JHTML::_('select.option', $level->id, JText::_($level->title));
 			}
 
-		return JHTML::_('select.genericlist',  $level_options, $this->name,
-						'class="inputbox" size="1"', 'value', 'text', $this->value,
-						'jform_'.$this->fieldname
+		return JHTML::_('select.genericlist',  $level_options, $for_name,
+						'class="inputbox" size="1"', 'value', 'text', $value,
+						$fieldname
 						);
 	}
 }
