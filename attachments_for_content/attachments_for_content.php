@@ -693,6 +693,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
+		// ??? TEMPORARY WORK-AROUND
+		return true;
+
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
 
 		$user =& JFactory::getUser();
