@@ -13,6 +13,7 @@ jimport('joomla.application.component.helper');
 
 require_once JPATH_BASE.'/plugins/attachments/attachments_plugin_framework/attachments_plugin_framework.php';
 
+require_once JPATH_BASE.'/administrator/components/com_attachments/permissions.php';
 
 
 class CategoryAccessTest extends JoomlaDatabaseTestCase
@@ -52,6 +53,7 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 		CategoryAccessTest::$actualError = array();
 	}
 
+
 	/**
 	 * Tears down the fixture, for example, closes a network connection.
 	 * This method is called after a test is executed.
@@ -70,23 +72,33 @@ class CategoryAccessTest extends JoomlaDatabaseTestCase
 	 */
 	protected function getDataSet()
 	{
-		return $this->createXMLDataSet(JPATH_BASE . '/tests/unit/stubs/testqqq.xml');
+		return $this->createXMLDataSet(JPATH_TESTS . '/joomla_db.xml');
 	}
 
 
 	public function testCategoryAccess()
 	{
-		require_once JPATH_BASE.'/plugins/attachments/attachments_for_content/attachments_for_content.php';
 
+		
+
+	/* ???
+		require_once JPATH_BASE.'/plugins/attachments/attachments_for_content/attachments_for_content.php';
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		$parent = $apm->getAttachmentsPlugin('com_content');
-
+	*/
 		$this->markTestIncomplete(
 		'This test has not been implemented yet.'
 		);
 	}
 	
+
+	public function provider()
+    {
+        return new CsvFileIterator(dirname(__FILE__).'/testCategoryAccessData.csv');
+    }
+
+
 }
 
 ?>
