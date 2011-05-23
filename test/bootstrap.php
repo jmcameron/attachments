@@ -30,6 +30,12 @@ if (!defined('JPATH_BASE'))
 	define('JPATH_BASE', '/var/www/test/joomla16');
 }
 
+if (!defined('JPATH_JOOMLA_TESTS'))
+{
+	define('JPATH_JOOMLA_TESTS', JPATH_BASE . '/tests/unit');
+}
+
+
 if (!defined('JPATH_TESTS'))
 {
 	define('JPATH_TESTS', dirname(__FILE__));
@@ -46,8 +52,8 @@ ini_set('display_errors', 1);
 session_start();
 
 // Include the base test cases.
-// ??? require_once JPATH_TESTS.'/JoomlaTestCase.php';
-// ??? require_once JPATH_TESTS.'/JoomlaDatabaseTestCase.php';
+require_once JPATH_JOOMLA_TESTS.'/JoomlaTestCase.php';
+require_once JPATH_JOOMLA_TESTS.'/JoomlaDatabaseTestCase.php';
 
 // Include relative constants, JLoader and the jimport and jexit functions.
 require_once JPATH_BASE.'/includes/defines.php';
@@ -62,6 +68,6 @@ require_once JPATH_BASE.'/libraries/joomla/session/session.php';
 // ??? PHPUnit_Util_Filter::addDirectoryToFilter(JPATH_BASE . '/tests');
 
 // Set error handling.
-// ??? JError::setErrorHandling(E_NOTICE, 'ignore');
-// ??? JError::setErrorHandling(E_WARNING, 'ignore');
-// ??? JError::setErrorHandling(E_ERROR, 'ignore');
+JError::setErrorHandling(E_NOTICE, 'ignore');
+JError::setErrorHandling(E_WARNING, 'ignore');
+JError::setErrorHandling(E_ERROR, 'ignore');
