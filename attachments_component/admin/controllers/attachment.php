@@ -711,6 +711,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->save_url = $save_url;
 		$view->in_popup = $in_popup;
 
+		// Set up the access field
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
+		$view->access_level = JFormFieldAccessLevels::getAccessLevels($attachment->access, 'access', 'access');
+
 		// Set up view info
 		$view->update            = $update;
 		$view->change_parent     = $change_parent;
@@ -719,6 +724,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->change_parent_url = $change_parent_url;
 		$view->display_name      = $display_name;
 		$view->entity_info       = $entity_info;
+
+		$view->display_filename_tooltip = JText::_('DISPLAY_FILENAME') . '::' . JText::_('DISPLAY_FILENAME_TOOLTIP');
 
 		$view->lists      = $lists;
 		$view->attachment = $attachment;

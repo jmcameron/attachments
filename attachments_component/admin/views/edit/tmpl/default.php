@@ -14,6 +14,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+// Load the tooltip behavior.
+JHtml::_('behavior.tooltip');
+
 // Add the plugins stylesheet to style the list of attachments
 $document =& JFactory::getDocument();
 $app = JFactory::getApplication();
@@ -84,7 +87,7 @@ else
 		  echo $this->selpar_label ?></b></label></td>
 	  <td colspan="5"><input id="parent_title" value="<?php echo $this->selpar_parent_title; ?>"
 				 disabled="disabled" type="text" size="60" />&nbsp;
-		 <a class="modal-button" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
+		 <a class="modal-button hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
 			href="<?php echo $this->selpar_btn_url ?>"
 			rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
 	  </td>
@@ -100,7 +103,7 @@ else
 			} ?>
        </td>
 	   <td class="switch">
- 	    <a class="changeButton" href="<?php echo $this->change_parent_url; ?>"
+ 	    <a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
 	       title="<?php echo JText::sprintf('CHANGE_ENTITY_S_TOOLTIP',$attachment->parent_entity_name); ?>"
 		   ><?php echo JText::sprintf('CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a>
        </td>
@@ -123,7 +126,7 @@ else
 			if ( $update == 'url' ) {
 				$url .= '&amp;update=url';
 				}
-			echo "<a class=\"changeButton\" href=\"$url\" title=\"$tooltip\">$cename</a>";
+			echo "<a class=\"changeButton hasTip\" href=\"$url\" title=\"$tooltip\">$cename</a>";
 			}
 		}
 ?>
@@ -133,20 +136,23 @@ else
   <tr><td class="key"><label><?php echo JText::_('PUBLISHED'); ?></label></td>
 	  <td colspan="5"><?php echo $this->lists['published']; ?></td>
   </tr>
+  <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+      <td colspan="5"><?php echo $this->access_level; ?></td>
+  </tr>
   </tr>
   <tr><td class="key"><label><?php echo JText::_('ATTACHMENT_TYPE'); ?></label></td>
   <td colspan="5"><?php echo JText::_(JString::strtoupper($uri_type));?>
   <?php if ( $uri_type == 'file' AND ( $update != 'url' ) ): ?>
-	  <a class="changeButton" href="<?php echo $this->change_url_url ?>"
+	  <a class="changeButton hasTip" href="<?php echo $this->change_url_url ?>"
 		 title="<?php echo JText::_('CHANGE_TO_URL_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_TO_URL') ?></a>
   <?php elseif ( $uri_type == 'url' AND $update != 'file' ): ?>
-	  <a class="changeButton" href="<?php echo $this->change_file_url ?>"
+	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
 		 title="<?php echo JText::_('CHANGE_TO_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_TO_FILE') ?></a>
   <?php elseif ( ($uri_type == 'file' AND $update != 'file') OR
 				 ($uri_type == 'url' AND $update != 'url') ): ?>
-	  <a class="changeButton" href="<?php echo $this->normal_update_url ?>"
+	  <a class="changeButton hasTip" href="<?php echo $this->normal_update_url ?>"
 		 title="<?php echo JText::_('NORMAL_UPDATE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('NORMAL_UPDATE') ?></a>
   <?php endif; ?>
@@ -184,7 +190,7 @@ else
    <tr>
 	  <td class="key"><label><?php echo JText::_('FILENAME'); ?></label></td>
 	  <td colspan="5"><?php echo $attachment->filename; ?>
-	  <a class="changeButton" href="<?php echo $this->change_file_url ?>"
+	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
 		 title="<?php echo JText::_('CHANGE_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_FILE') ?></a>
 	  </td>
@@ -228,10 +234,10 @@ else
 
 <?php if ( $update == 'file' OR $uri_type == 'file' ): ?>
 
-  <tr><td class="key"><label for="display_name"
-							 title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
+  <tr><td class="key"><label class="hasTip" for="display_name"
+							 title="<?php echo $this->display_filename_tooltip; ?>"
 							 ><?php echo JText::_('DISPLAY_FILENAME'); ?></label></td>
-	  <td colspan="5"><input class="text" type="text" name="display_name"
+	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
 				 value="<?php echo $attachment->display_name;?>"
@@ -240,10 +246,10 @@ else
 	 </td>
   </tr>
 <?php elseif ( $update == 'url' OR $uri_type == 'url' ): ?>
-  <tr><td class="key"><label for="display_name"
+  <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
 							 ><?php echo JText::_('DISPLAY_URL'); ?></label></td>
-	  <td colspan="5"><input class="text" type="text" name="display_name"
+	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
 				 value="<?php echo $attachment->display_name;?>"
@@ -253,10 +259,10 @@ else
   </tr>
 <?php endif; ?>
 
-  <tr><td class="key"><label for="description"
+  <tr><td class="key"><label class="hasTip" for="description"
 				 title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"><?php
 				 echo JText::_('DESCRIPTION'); ?></label></td>
-	  <td colspan="5"><input class="text" type="text" name="description"
+	  <td colspan="5"><input class="text hasTip" type="text" name="description"
 			 title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"
 				 id="description" size="80" maxlength="255"
 				 value="<?php echo $attachment->description;?>" /></td>
@@ -306,8 +312,8 @@ else
   </tr>
 <?php if ( $show_download_count ): ?>
   <tr>
-	<td class="key" title="<?php echo $download_count_tooltip; ?>"><label><?php echo JText::_('NUMBER_OF_DOWNLOADS'); ?></label></td>
-	<td colspan="5" title="<?php echo $download_count_tooltip; ?>"><?php echo $attachment->download_count; ?></td>
+	<td class="key"><label class="hasTip" title="<?php echo $download_count_tooltip; ?>"><?php echo JText::_('NUMBER_OF_DOWNLOADS'); ?></label></td>
+	<td colspan="5" class="hasTip" title="<?php echo $download_count_tooltip; ?>"><?php echo $attachment->download_count; ?></td>
   </tr>
 <?php endif; ?>
 
