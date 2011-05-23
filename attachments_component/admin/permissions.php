@@ -46,10 +46,12 @@ class AttachmentsPermissions
 		return $result;
 	}
 
-	
-	protected function userMayEditCategory($category_id)
+	/**
+	 * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 */
+	protected function userMayEditCategory($category_id, $id = null)
 	{
-		$user =& JFactory::getUser();
+		$user =& JFactory::getUser($id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
