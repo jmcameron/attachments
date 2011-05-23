@@ -27,9 +27,9 @@ class AttachmentsPermissions
 	 *
 	 * @return an array of which actions are permitted for this user
 	 */
-	public static function getActions()
+	public static function getActions($user_id = null)
 	{
-		$user	= JFactory::getUser();
+		$user	= JFactory::getUser($user_id);
 		$result	= new JObject;
  
 		$assetName = 'com_attachments';
@@ -46,12 +46,13 @@ class AttachmentsPermissions
 		return $result;
 	}
 
+
 	/**
 	 * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
 	 */
-    public function userMayEditCategory($category_id, $id = null)
+    public function userMayEditCategory($category_id, $user_id = null)
 	{
-		$user =& JFactory::getUser($id);
+		$user =& JFactory::getUser($user_id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
