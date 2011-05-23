@@ -16,50 +16,14 @@ require_once JPATH_BASE.'/administrator/components/com_attachments/permissions.p
 
 class CategoryEditTest extends JoomlaDatabaseTestCase
 {
-	protected $object;
-
-	/**
-	 * Receives the callback from JError and logs the required error information for the test.
-	 *
-	 * @param	JException	The JException object from JError
-	 *
-	 * @return	bool	To not continue with JError processing
-	 */
-	static function errorCallback( $error )
-	{
-		CategoryEditTest::$actualError['code'] = $error->get('code');
-		CategoryEditTest::$actualError['msg'] = $error->get('message');
-		CategoryEditTest::$actualError['info'] = $error->get('info');
-		return false;
-	}
-
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 */
 	protected function setUp()
 	{
-		include_once JPATH_BASE . '/libraries/joomla/database/table.php';
-		include_once JPATH_BASE . '/libraries/joomla/user/user.php';
-
 		parent::setUp();
 		parent::setUpBeforeClass();
-
-		$this->saveFactoryState();
-		$this->saveErrorHandlers();
-		$this->setErrorCallback('CategoryEditTest');
-		CategoryEditTest::$actualError = array();
-	}
-
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown()
-	{
-		$this->setErrorhandlers($this->savedErrorState);
-		$this->restoreFactoryState();
 	}
 
 
@@ -82,7 +46,7 @@ class CategoryEditTest extends JoomlaDatabaseTestCase
 		$result = AttachmentsPermissions::userMayEditCategory((int)$cat_id, (int)$user_id);
 
 		$this->assertEquals($result, (bool)$may_edit,
-							"----> Failed for $username edit category $cat_id, expected $may_edit, got $result");
+							"----> Failed test for $username edit category $cat_id, expected $may_edit, got $result");
 	}
 	
 
