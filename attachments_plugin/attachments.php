@@ -263,7 +263,7 @@ class plgContentAttachments extends JPlugin
 			$this->_fixScripts();
 			}
 
-		return true;
+		return;
 	}
 
 
