@@ -49,7 +49,7 @@ class AttachmentsPermissions
 	/**
 	 * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
 	 */
-	protected function userMayEditCategory($category_id, $id = null)
+    public function userMayEditCategory($category_id, $id = null)
 	{
 		$user =& JFactory::getUser($id);
 
@@ -71,7 +71,7 @@ class AttachmentsPermissions
 			$db =& JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
-			$query->where('id = '.(int)$parent_id.' AND created_user_id = '.(int)$user->id());
+			$query->where('id = '.(int)$category_id.' AND created_user_id = '.(int)$user->id);
 			$db->setQuery($query, 0, 1);
 			$results = $db->loadObject();
 			if ($db->getErrorNum()) {
