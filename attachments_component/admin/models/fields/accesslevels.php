@@ -40,25 +40,22 @@ class JFormFieldAccessLevels extends JFormField
 	 */
 	protected function getInput()
 	{
-		return $this->getAccessLevels($this->value, $this->name, 'jform_'.$this->fieldname);
+		return $this->getAccessLevels($this->name, 'jform_'.$this->fieldname, $this->value);
 	}
 
 
-	public function getAccessLevels($value, $for_name, $fieldname)
+	public function getAccessLevels($for_name, $fieldname, $level_value=null)
 	{
 		$user   = JFactory::getUser();
-		$user_levels = implode(',', $user->authorisedLevels());
+		$user_levels = array_unique($user->authorisedLevels());
 
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.*');
 		$query->from('#__viewlevels AS a');
-		$query->where('a.id in ('.$user_levels.')');
+		$query->where('a.id in ('.implode(',', $user_levels).')');
 		$query->order('a.ordering ASC');
-
-		// ??? Make sure $value is in returned levels, otherwise set $value
-		// to legal value, use default_access_level as default
 
 		// Get the levels
 		$db->setQuery($query);
@@ -67,18 +64,35 @@ class JFormFieldAccessLevels extends JFormField
 		// Check for a database error.
 		if ($db->getErrorNum()) {
 			JError::raiseWarning(500, $db->getErrorMsg());
-			return null;
-		}
+			}
+
+		// Make sure there is a $level_value
+		if ( $level_value === null ) {
+			jimport('joomla.application.component.helper');
+			$params =& JComponentHelper::getParams('com_attachments');
+			$level_value = $params->get('default_access_level', 2);
+			}
+
+		// Make sure the $level_value is in the user's authorised levels
+		if ( !in_array($level_value, $user_levels) ) {
+			// If not, set $level_value to the lowest legal non-public value
+			$registered = 2;
+			if ( in_array($registered, $user_levels) ) {
+				$level_value = $registered;
+				}
+			else {
+				$sorted_user_levels = sort($user_levels, SORT_NUMERIC);
+				$level_value = $sorted_user_levels[0];
+				}
+			}
 
 		// Construct the drop-down list
 		$level_options = Array();
-
 		foreach ( $levels as $level ) {
 			$level_options[] = JHTML::_('select.option', $level->id, JText::_($level->title));
 			}
-
 		return JHTML::_('select.genericlist',  $level_options, $for_name,
-						'class="inputbox" size="1"', 'value', 'text', $value,
+						'class="inputbox" size="1"', 'value', 'text', $level_value,
 						$fieldname
 						);
 	}
