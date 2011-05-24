@@ -41,6 +41,7 @@ table.adminlist th {
 table.adminlist th.at_published	   { text-align: center; }
 table.adminlist th.at_filename	   { text-align: left; }
 table.adminlist th.at_description  { text-align: left; }
+table.adminlist th.at_access	   { text-align: center; }
 table.adminlist th.at_user_field   { text-align: left; }
 table.adminlist th.at_file_type	   { text-align: center; }
 table.adminlist th.at_file_size	   { text-align: center; }
@@ -53,7 +54,6 @@ table.adminlist td {
 	text-align: left;
 	border-bottom: 0; 
 }
-table.adminlist td.at_published	  { text-align: center; }
 
 table.adminlist img#link {
 	margin-left: -16px;
@@ -67,7 +67,9 @@ table.adminlist td.at_filename a img {
 	vertical-align: text-bottom; 
 }
 
+table.adminlist td.at_published	   { text-align: center; }
 table.adminlist td.at_description  { text-align: left; }
+table.adminlist td.at_access	   { text-align: center; }
 table.adminlist td.at_user_field   { text-align: left; }
 table.adminlist td.at_file_type	   { text-align: center; }
 table.adminlist td.at_file_size	   { text-align: center; }

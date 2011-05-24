@@ -37,6 +37,7 @@ class AttachmentsModelAttachments extends JModelList
 			$config['filter_fields'] = array(
 				'id', 
 				'a.state',
+				'a.access',
 				'a.filename',
 				'a.description',
 				'a.user_field_1',

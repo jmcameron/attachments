@@ -35,6 +35,8 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							 'a.filename', $listDirn, $listOrder ) ?></th>
 	 <th class="at_description"><?php echo JHTML::_('grid.sort', JText::_('DESCRIPTION'),
 							 'a.description', $listDirn, $listOrder ) ?></th>
+	 <th class="at_access" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('JFIELD_ACCESS_LABEL'),
+							 'a.access', $listDirn, $listOrder ) ?></th>
 	 <?php if ($params->get('user_field_1_name')): ?>
 	   <th class="at_user_field"><?php echo JHTML::_('grid.sort', $params->get('user_field_1_name', ''),
 													 'a.user_field_1', $listDirn, $listOrder ) ?></th>

@@ -48,6 +48,19 @@ class AttachmentsViewAttachments extends JView
 		$params = JComponentHelper::getParams('com_attachments');
 		$this->params = $params;
 
+		// Get the access level names
+		$db =& JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__viewlevels');
+		$db->setQuery($query);
+		$levels = $db->loadObjectList();
+		// ??? Check for db errro
+		$level_name = Array();
+		foreach ($levels as $level) {
+			$level_name[$level->id] = JText::_($level->title);
+			}
+		$this->level_name = $level_name;
+
 		// Construct the special HTML lists
 		$lists = Array();
 
@@ -98,7 +111,7 @@ class AttachmentsViewAttachments extends JView
 		$this->lists = $lists;
 
 		// Figure out how many columns
-		$num_columns = 9;
+		$num_columns = 10;
 		if ( $params->get('user_field_1_name') ) {
 			$num_columns++;
 			}
