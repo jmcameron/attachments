@@ -19,7 +19,7 @@
       <option value="logged_in">ANY_LOGGED_IN_USER</option>
       <option value="no_one">NO_ONE</option>
     </field>
-    <field name="default_access_level" type="accesslevels" default="1"
+    <field name="default_access_level" type="accesslevels" default="2"
 	   label="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL"
 	   description="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
 	   />
