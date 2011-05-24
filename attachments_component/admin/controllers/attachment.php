@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * Attachments component attachment controller
  *
@@ -125,10 +125,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$document =&  JFactory::getDocument();
 		JHTML::_('behavior.modal', 'a.modal-button');
 
-		// Add the published selection
-		$lists['published'] = JHTML::_('select.booleanlist', 'state',
-									   'class="inputbox"', false);
-
 		// Set up the "select parent" button
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
@@ -200,6 +196,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		$view->uri_type      = $uri_type;
 		$view->url           = '';
+		$view->state         = 0;
 		$view->parent_id     = $parent_id;
 		$view->parent_type   = $parent_type;
 		$view->parent_entity = $parent_entity;
@@ -209,6 +206,21 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->entity_info   = $entity_info;
 		$view->option        = $this->option;
 		$view->from          = $from;
+
+		$view->display_filename_tooltip = JText::_('DISPLAY_FILENAME') . '::' . JText::_('DISPLAY_FILENAME_TOOLTIP');
+		$view->display_url_tooltip = JText::_('DISPLAY_URL') . '::' . JText::_('DISPLAY_URL_TOOLTIP');
+
+		// Add the published selection
+		$lists = Array();
+		$lists['published'] = JHTML::_('select.booleanlist', 'state',
+									   'class="inputbox"', $view->state);
+
+		$view->lists = $lists;
+
+		// Set up the access field
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
 
 		// Handle user field 1
 		$show_user_field_1 = false;
@@ -714,7 +726,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Set up the access field
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
 		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
-		$view->access_level = JFormFieldAccessLevels::getAccessLevels($attachment->access, 'access', 'access');
+		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 
 		// Set up view info
 		$view->update            = $update;

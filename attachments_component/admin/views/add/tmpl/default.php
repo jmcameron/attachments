@@ -14,6 +14,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+// Load the tooltip behavior.
+JHtml::_('behavior.tooltip');
+
 // Add the plugins stylesheet to style the list of attachments
 $document =&  JFactory::getDocument();
 $uri = JFactory::getURI();
@@ -55,6 +58,14 @@ if ( $this->parent_title ) {
     </td>
   </tr>
 <?php endif; ?>
+  <tr>
+    <td class="key"><label><?php echo JText::_('PUBLISHED'); ?></label></td>
+	<td><?php echo $this->lists['published']; ?></td>
+  </tr>
+  <tr>
+	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+	<td><?php echo $this->access_level; ?></td>
+  </tr>
 <?php if ( $this->uri_type == 'file' ): ?>
   <tr>
 	<td class="key"><label for="upload" id="upload_file_label"><?php echo JText::_('ATTACH_FILE_COLON') ?></label></td>
@@ -67,12 +78,11 @@ if ( $this->parent_title ) {
 	</td>
   </tr>
   <tr>
-	<td class="key"><label for="display_name"
-			  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
+	<td class="key"><label for="display_name" class="hasTip" title="<?php echo $this->display_filename_tooltip; ?>"
 			  ><?php echo JText::_('DISPLAY_FILENAME'); ?></label></td>
 	<td>		  
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
-			  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
+			  title="<?php echo $this->display_filename_tooltip; ?>" class="hasTip"
 			  value="" /><span class="optional"><?php echo JText::_('OPTIONAL'); ?></span.
    </td>
 <?php else: ?>
@@ -96,12 +106,11 @@ if ( $this->parent_title ) {
     </td>
  </tr>
  <tr>
-	<td class="key"><label for="display_name"
-			  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
+	<td class="key"><label for="display_name" title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
 			  ><?php echo JText::_('DISPLAY_URL'); ?></label></td>
     <td>
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
-			  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
+			  title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
 			  value="" />&nbsp;<?php echo JText::_('OPTIONAL'); ?>
     </td>
  </tr>
