@@ -139,7 +139,6 @@ else
   <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
       <td colspan="5"><?php echo $this->access_level; ?></td>
   </tr>
-  </tr>
   <tr><td class="key"><label><?php echo JText::_('ATTACHMENT_TYPE'); ?></label></td>
   <td colspan="5"><?php echo JText::_(JString::strtoupper($uri_type));?>
   <?php if ( $uri_type == 'file' AND ( $update != 'url' ) ): ?>
