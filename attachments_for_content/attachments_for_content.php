@@ -335,7 +335,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		default:
 
-			// ??? Convert to use some com_content function
+			// Check for articles
 			$query = $db->getQuery(true);
 			$query->select('state, publish_up, publish_down')->from('#__content');
 			$query->where('id = ' . (int)$parent_id);
@@ -347,22 +347,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				JError::raiseError(500, $errmsg);
 				}
 			else {
-				// Do this in two steps to keep from upsetting PHP 4
-				$now = JFactory::getDate();
-				$now = $now->toUnix();
-
-				// Do this in two steps to keep from upsetting PHP 4
-				$nullDate = JFactory::getDate($db->getNullDate());
-				$nullDate = $nullDate->toUnix();
+				$now = JFactory::getDate()->toUnix();
+				$nullDate = JFactory::getDate($db->getNullDate())->toUnix();
 
 				if ( $article ) {
-					// Do this in two steps to keep from upsetting PHP 4
-					$publish_up	  = JFactory::getDate($article->publish_up);
-					$publish_up	  = $publish_up->toUnix();
-
-					// Do this in two steps to keep from upsetting PHP 4
-					$publish_down = JFactory::getDate($article->publish_down);
-					$publish_down = $publish_down->toUnix();
+					$publish_up	  = JFactory::getDate($article->publish_up)->toUnix();
+					$publish_down = JFactory::getDate($article->publish_down)->toUnix();
 
 					$published = ( ($article->state == 1) AND
 								   ( $now >= $publish_up ) AND
@@ -446,7 +436,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$where = Array();
 
 		if ( $parent_state == 'PUBLISHED' ) {
-			// These where clauses will be combined by OR
+			// These WHERE clauses will be combined by OR
+			// ?? Should add checks for publish_up, publish_down?
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE') {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=1))";
@@ -457,7 +448,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 			}
 		elseif ( $parent_state == 'UNPUBLISHED' ) {
-			// These where clauses will be combined by OR
+			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=0))";
@@ -468,7 +459,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 			}
 		elseif ( $parent_state == 'ARCHIVED' ) {
-			// These where clauses will be combined by OR
+			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=2))";
@@ -479,7 +470,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 			}
 		elseif ( $parent_state == 'TRASHED' ) {
-			// These where clauses will be combined by OR
+			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=-2))";
@@ -519,7 +510,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( parent::userMayViewParent($parent_id, $parent_entity) == false ) {
 			return false;
 			}
-
 
 		$access = 0;
 		$table = null;
@@ -614,7 +604,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		if ( $parent_entity == 'category' ) {
 
-			// ??? This code is apparently never invoked because categories don't invoke content plugins
+			// NOTE: This code is apparently never invoked because categories don't invoke content plugins
 			$errmsg = 'ERROR in attachment_for_content for categories!';
 			JError::raiseError(500, $errmsg);
 
@@ -693,9 +683,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		// ??? TEMPORARY WORK-AROUND
-		return true;
-
 		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
 
 		$user =& JFactory::getUser();
@@ -713,44 +700,20 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// Finally, see if the user has permissions to create attachments
-			if ($user->authorise('core.create', 'com_attachments')) {
-				return true;
-				}
+			return $user->authorise('core.create', 'com_attachments');
 
 			break;
 
 		default:
 			// For articles
 
-			// If all logged in should be able to add articles, let them
-			if ( $who_can_add == 'logged_in' ) {
-				// Anyone who is logged in can add attachments
-				// (Can't get here unless the user is logged in)
-				return true;
-				}
-
-			// Editors can add attachments to any article
-			if ( ( $who_can_add == 'editor' ) AND ( $user_type == 'Editor' ) ) {
-				return true;
-				}
-
-			// Get the creator
-			$db =& JFactory::getDBO();
-			$query = $db->getQuery(true);
-			$query->select('created_by')->from('#__content')->where('id = ' . (int)$parent_id);
-			$db->setQuery($query);
-			$rows = $db->loadObjectList();
-			if ( count($rows) == 0 ) {
+			// First, determine if the user can edit this article
+			if ( !AttachmentsPermissions::userMayEditArticle($parent_id) ) {
 				return false;
 				}
-			$created_by = $rows[0]->created_by;
 
-			// Verify that this user can upload and attach to this parent
-			if ( ($who_can_add == 'author') AND ( $user->get('id') == $created_by ) ) {
-				// The author of the parent can add attachments.  (In this mode,
-				// authors may not add attachments to parents they do not own)
-				return true;
-				}
+			// Finally, see if the user has permissions to create attachments
+			return $user->authorise('core.create', 'com_attachments');
 			}
 
 		// No one else is allowed to add attachments
@@ -779,54 +742,120 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
+
 		// Handle each entity type
 
 		switch ( $attachment->parent_entity ) {
 
 		case 'category':
-			// Assume only admins can edit attachments to categories
-			$user_type = $user->get('usertype', false);
-			return ($user_type == 'Super Administrator') OR ($user_type == 'Administrator');
+
+			// First, determine if the user can edit this category
+			if ( !AttachmentsPermissions::userMayEditCategory($parent_id) ) {
+				return false;
+				}
+
+			// Ok if the user can edit any attachment 
+			if ( $user->authorise('core.edit', 'com_attachments') ) {
+				return true;
+				}
+
+			// Finally, see if the user has permissions to edit attachments
+			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
+				return (int)$user->id == (int)$attachment->created_by;
+				}
+
 			break;
 
 		default:
-			// Check permissions for non-special users
-			$user_id = $user->get('id');
-			$who_can_add = $params->get('who_can_add','author');
-			$attachment_id = $attachment->id;
+			// Articles
 
-			if ( $parent_id == 0 ) {
-				// Parent is being created, it is not in the content table yet!
-				// (So verify that the current user is the one that uploaded the attachment)
-				$created_by = $attachment->created_by;
+			// ?? Deal with parents being created (parent_id == 0)
+
+			// First, determine if the user can edit this article
+			if ( !AttachmentsPermissions::userMayEditArticle($parent_id) ) {
+				return false;
 				}
-			else {
-				// Load info about the parent
-				$db =& JFactory::getDBO();
-				$query = $db->getQuery(true);
-				$query->select('created_by')->from('#__content')->where('id = ' . (int)$parent_id);
-				$db->setQuery($query);
-				$rows = $db->loadObjectList();
-				if ( count($rows) == 0 ) {
-					return false;
-					}
-				$created_by = $rows[0]->created_by;
+
+			// Ok if the user can edit any attachment 
+			if ( $user->authorise('core.edit', 'com_attachments') ) {
+				return true;
 				}
-				
-			// Verify that this user can edit/delete this attachment for this parent
-			if ( $who_can_add == 'logged_in' ) {
-				if ( ($user_id == $attachment->created_by) OR
-					 ($user_id == $created_by) ) {
-					// Registered users and authors can only edit attachments if
-					//	 they added the attachment or they own the parent
-					return true;
-					}
+
+			// Finally, see if the user has permissions to edit their own attachments
+			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
+				return (int)$user->id == (int)$attachment->created_by;
 				}
-			elseif ( $who_can_add == 'author' ) {
-				if ( $user_id == $created_by ) {
-					// Authors can edit ANY attachments that belong to their parent
-					return true;
-					}
+			}
+
+		return false;
+	}
+
+
+	/**
+	 * Return true if this user may delete this attachment for this parent
+	 *
+	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *
+	 * @param &record &$attachment database record for the attachment
+	 * @param int $parent_id The ID of the parent the attachment is attached to
+	 * @param &object &$params The Attachments component parameters object
+	 *
+	 * @return true if this user may delete this attachment
+	 */
+	public function userMayDeleteAttachment(&$attachment, $parent_id, &$params)
+	{
+		// If the user generally has permissions to edit all content, they
+		// may edit this attachment (editor, publisher, admin, etc)
+		$user =& JFactory::getUser();
+		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
+			return true;
+			}
+
+		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
+
+		// Handle each entity type
+
+		switch ( $attachment->parent_entity ) {
+
+		case 'category':
+
+			// First, determine if the user can edit this category
+			if ( !AttachmentsPermissions::userMayEditCategory($parent_id) ) {
+				return false;
+				}
+
+			// Ok if the user can delete any attachment 
+			if ( $user->authorise('core.delete', 'com_attachments') ) {
+				return true;
+				}
+
+			// Finally, see if the user has edit.own and created it
+			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
+				return (int)$user->id == (int)$attachment->created_by;
+				}
+
+			break;
+
+		default:
+			// Articles
+
+			// ?? Deal with parents being created (parent_id == 0)
+
+			// First, determine if the user can edit this article
+			if ( !AttachmentsPermissions::userMayEditArticle($parent_id) ) {
+				return false;
+				}
+
+			// Ok if the user can delete any attachment 
+			if ( $user->authorise('core.delete', 'com_attachments') ) {
+				return true;
+				}
+
+			// Finally, see if the user has edit.own and created it
+			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
+				return (int)$user->id == (int)$attachment->created_by;
 				}
 			}
 
@@ -843,33 +872,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	public function userMayAccessAttachment( &$attachment )
 	{
 		$user =& JFactory::getUser();
-
-		// Admins can always see everything!
-		$user_type = $user->get('usertype', false);
-		if ( ($user_type == 'Super Administrator') OR ($user_type == 'Administrator') ) {
-			return true;
-			}
-
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$who_can_see = $params->get('who_can_see', 'logged_in');
-
-		// Check the various options
-		if ( $who_can_see == 'no_one' ) {
-			return false;
-			}
-
-		if ( $who_can_see == 'anyone' ) {
-			return true;
-			}
-
-		$logged_in = $user->get('username') <> '';
-		if ( ($who_can_see == 'logged_in') AND $logged_in ) {
-			return true;
-			}
-
-		return false;
+		return in_array($attachment->access, $user->authorisedLevels());
 	}
 
 }

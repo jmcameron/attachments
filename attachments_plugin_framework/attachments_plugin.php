@@ -712,6 +712,25 @@ class AttachmentsPlugin extends JPlugin
 
 
 
+	/**
+	 * Return true if this user may delete this attachment for this parent
+	 *
+	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *
+	 * @param &record &$attachment database record for the attachment
+	 * @param int $parent_id The ID of the parent the attachment is attached to
+	 * @param &object &$params The Attachments component parameters object
+	 *
+	 * @return true if this user may delete this attachment
+	 */
+	public function userMayDeleteAttachment(&$attachment, $parent_id, &$params)
+	{
+		return false;
+	}
+	
+
+
 	/** Check to see if the user may access (see/download) the attachments
 	 *
 	 * @param &record &$attachment database record for the attachment
