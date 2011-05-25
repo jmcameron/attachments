@@ -192,7 +192,6 @@ class AttachmentsController extends JController
 		// ??? $view->upload_toggle_button_text = $upload_toggle_button_text;
 		// ??? $view->upload_button_text = $upload_button_text;
 
-
 		// Display the view
 		$view->display(null, false, false);
 	}
@@ -493,11 +492,6 @@ class AttachmentsController extends JController
 	 */
 	public function delete()
 	{
-		// Access check.
-		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-			}
-
 		$db =& JFactory::getDBO();
 
 		// Verify the user is logged in
@@ -519,7 +513,7 @@ class AttachmentsController extends JController
 		$query = $db->getQuery(true);
 		// ??? SQL could be improved
 		$query->select('*')->from('#__attachments')->where('id = '.(int)$id);
-		$db->setQuery($query);
+		$db->setQuery($query, 0, 1);
 		// ??? Convert to use model
 		$rows = $db->loadObjectList();
 		if (count($rows) != 1) {
@@ -542,6 +536,15 @@ class AttachmentsController extends JController
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity_name = JText::_($parent_entity);
+
+		// Get the component parameters
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
+
+		// Check to make sure we can edit it
+		if ( !$parent->userMayDeleteAttachment($rows[0], $parent_id, &$params) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
 
 		// Make sure the parent exists
 		// NOTE: $parent_id===null means the parent is being created
@@ -624,11 +627,6 @@ class AttachmentsController extends JController
 	 */
 	public function delete_warning()
 	{
-		// Access check.
-		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-			}
-
 		// Make sure we have a valid attachment ID
 		$attachment_id = JRequest::getInt('id');
 		if ( is_numeric($attachment_id) ) {
@@ -647,10 +645,30 @@ class AttachmentsController extends JController
 			JError::raiseError(500, $errmsg);
 			}
 
+		// Get the parent object
+		$parent_type = $attachment->parent_type;
+		JPluginHelper::importPlugin('attachments');
+		$apm =& getAttachmentsPluginManager();
+		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 76)';
+			JError::raiseError(500, $errmsg);
+			}
+		$parent =& $apm->getAttachmentsPlugin($parent_type);
+
+		// Get the component parameters
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
+
+		// Check to make sure we can edit it
+		$parent_id = $attachment->parent_id;
+		if ( !$parent->userMayDeleteAttachment(&$attachment, $parent_id, &$params) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			}
+
 		// Set up the view
 		require_once(JPATH_COMPONENT.DS.'views'.DS.'warning'.DS.'view.html.php');
 		$view = new AttachmentsViewWarning( );
-		$view->parent_id = $attachment_id;
+		$view->parent_id = $parent_id;
 		$view->option = JRequest::getCmd('option');
 		$view->from = JRequest::getWord('from', 'closeme');
 		$view->tmpl = JRequest::getWord('tmpl');
@@ -680,11 +698,6 @@ class AttachmentsController extends JController
 	 */
 	public function update()
 	{
-		// Access check.
-		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-			}
-
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 		// Call with: index.php?option=com_attachments&task=update&id=1&tmpl=component
 		//		  or: component/attachments/update/id/1/tmpl/component
@@ -714,6 +727,7 @@ class AttachmentsController extends JController
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Get the article/parent handler
+		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
 		JPluginHelper::importPlugin('attachments');
@@ -724,12 +738,16 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
+		// Check to make sure we can edit it
+		if ( !$parent->userMayEditAttachment(&$attachment, $parent_id, &$params) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
 		// Set up the entity name for display
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Verify that this user may add attachments to this parent
 		$user =& JFactory::getUser();
-		$parent_id = $attachment->parent_id;
 		$new_parent = false;
 		if ( $parent_id === null ) {
 			$parent_id = 0;
