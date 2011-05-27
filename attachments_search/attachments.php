@@ -164,11 +164,13 @@ class plgSearchAttachments extends JPlugin
 
 		// Load the permissions functions
 		$user =& JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Construct and execute the query
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments AS a');
 		$query->where("('. $where .')' AND a.state = 1'");
+		$query->where('a.access in ('.$user_levels.')');
 		$query->order($order);
 		$db->setQuery( $query, 0, $limit );
 		$rows = $db->loadObjectList();

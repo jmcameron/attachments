@@ -144,7 +144,6 @@ class AttachmentsViewAttachments extends JView
 		$this->list = $list;
 
 		$this->secure = $params->get('secure', false);
-		$this->who_can_see = $params->get('who_can_see', 'logged_in');
 
 		// Get the display options
 		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);

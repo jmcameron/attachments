@@ -419,10 +419,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 
 	/**
-	 * Return a string of the where clause for filter
+	 * Return a string of the where clause for filtering the the backend list of attachments
 	 *
 	 * @param $parent_state string the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
-	 * @param $filter_entity string the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
+	 * @param $filter_entity string the entity filter ('ALL', 'ARTICLE', 'CATEGORY')
 	 *
 	 * @return an array of where clauses
 	 */
@@ -434,6 +434,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		$where = Array();
+
+		// ??? see code for example of how to set up query for publish_up, publish_down
+		// ??? in: modules/mod_related_items/helper.php:82
 
 		if ( $parent_state == 'PUBLISHED' ) {
 			// These WHERE clauses will be combined by OR
@@ -506,35 +509,31 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
-		// Check general attachments permissions first
-		if ( parent::userMayViewParent($parent_id, $parent_entity) == false ) {
-			return false;
-			}
-
-		$access = 0;
-		$table = null;
-
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Return the right thing for each entity
+		$table = null;
 		switch ( $parent_entity ) {
 
 		case 'category':
 			$table = 'categories';
 			break;
 
-		default:  // article
+		default:
+			// article
 			$table = 'content';
 			break;
 			}
 
-		// ??? REWORK for new ACL
-		return true;
+		// Get the user's permitted access levels
+		$user   = JFactory::getUser();
+		$user_levels = array_unique($user->authorisedLevels());
 
-		// Get the item's access level
+		// See if the parent's access level is permitted for the user
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('access')->from('#__$table')->where('id = ' . (int)$parent_id);
+		$query->select('id')->from('#__$table');
+		$query->where('id = ' . (int)$parent_id . ' AND access in ('.implode(',', $user_levels).')');
 		$db->setQuery($query, 0, 1);
 		$obj = $db->loadObject();
 		if ( $db->getErrorNum() ) {
@@ -543,17 +542,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 									 $parent_entity_name, $parent_id) . ' (ERR 403)';
 			JError::raiseError(500, $errmsg);
 			}
-		if ( is_object( $obj ) ) {
-			$access = (int)$obj->access;
-			}
-		// Assume access is 0 (public) unless specified
 
-		$user =& JFactory::getUser();
-		$aid  = $user->get('aid');
-
-		// ??? Do ACL checking here?
-
-		return $access <= $aid;
+		return !empty($obj);
 	}
 
 

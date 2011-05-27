@@ -1341,12 +1341,15 @@ class AttachmentsHelper
 	 */
 	public function download_attachment($id)
 	{
+		$user   = JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+
 		// Get the info about the attachment
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// ??? Use model here?
 		$query->select('*')->from('#__attachments')->where('id = ' .(int)$id);
-		// ??? SQL could probably be improved
+		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query, 0, 1);
 		$rows = $db->loadObjectList();
 		if ( count($rows) != 1 ) {
@@ -1385,8 +1388,6 @@ class AttachmentsHelper
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
-
-		$who_can_see = $params->get('who_can_see', 'logged_in'); // ??? Update later with ACL?
 
 		// Get the other info about the attachment
 		$download_mode = $params->get('download_mode', 'attachment');
@@ -1547,6 +1548,9 @@ class AttachmentsHelper
 	{
 		$app = JFactory::getApplication();
 
+		$user   = JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
 		$db =& JFactory::getDBO();
@@ -1554,6 +1558,7 @@ class AttachmentsHelper
 		// ??? SQL could be improved
 		$query->select('count(*)')->from('#__attachments');
 		$query->where('parent_id='.(int)$parent_id." AND state='1' AND parent_type='$parent_type'");
+		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query);
 		$total = $db->loadResult();
 

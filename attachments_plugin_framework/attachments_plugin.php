@@ -147,7 +147,7 @@ class AttachmentsPlugin extends JPlugin
 
 
 	/**
-	 * Return a string of the where clause for filter
+	 * Return a string of the where clause for filtering the the backend list of attachments
 	 *
 	 * @param $parent_state string the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
 	 * @param $filter_entity string the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
@@ -609,34 +609,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
-		$user =& JFactory::getUser();
-
-		// Admins can always see everything!
-		$user_type = $user->get('usertype', false);
-		if ( ($user_type == 'Super Administrator') OR ($user_type == 'Administrator') ) {
-			return true;
-			}
-
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$who_can_see = $params->get('who_can_see', 'logged_in');
-
-		// Check the various options
-		if ( $who_can_see == 'no_one' ) {
-			return false;
-			}
-
-		if ( $who_can_see == 'anyone' ) {
-			return true;
-			}
-
-		$logged_in = $user->get('username') <> '';
-		if ( ($who_can_see == 'logged_in') AND $logged_in ) {
-			return true;
-			}
-
-		return false;
+		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -688,7 +661,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		return false;
+		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -707,7 +680,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayEditAttachment(&$attachment, $parent_id, &$params)
 	{
-		return false;
+		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -726,7 +699,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayDeleteAttachment(&$attachment, $parent_id, &$params)
 	{
-		return false;
+		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
 	
 
@@ -739,7 +712,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAccessAttachment( &$attachment )
 	{
-		return false;
+		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -752,8 +725,11 @@ class AttachmentsPlugin extends JPlugin
 	 * @return true if some attachments should be visible, false if none should be visible
 	 *
 	 * This function adds the following boolean fields to each attachment row:
-	 *	   - 'user_may_see'
 	 *	   - 'user_may_edit'
+	 *     - 'user_may_delete'
+	 *
+	 * NOTE: Callers must do filtering in the query that constructed the attachments
+	 *       list that restricts the attachments to the ones that the usre can access.
 	 */
 	public function addPermissions( &$attachments, $parent_id )
 	{
@@ -776,40 +752,26 @@ class AttachmentsPlugin extends JPlugin
 		// Process each attachment
 		$user =& JFactory::getUser();
 		$logged_in = $user->get('username') <> '';
+		$secure = $params->get('secure', false);
+		$secure_list_attachments = $params->get('secure_list_attachments', false);
 		$some_visible = false;
+
 		for ($i=0, $n=count($attachments); $i < $n; $i++) {
+
 			$attach =& $attachments[$i];
 
-			$attach->user_may_see = false;
-			$attach->user_may_edit = false;
+			// ??? should we move these flags into the model code?
 
-			// Determine if the user may edit this attachment
-			//	(Nobody may edit attachments without being logged in)
-			if ( $logged_in ) {
-				if ( $parent_id === 0 ) {
-					$attach->user_may_see = true;
-					$attach->user_may_edit = true;
-					}
-				else {
-					$attach->user_may_edit =
-						$this->userMayEditAttachment($attach, $parent_id, $params);
-					}
-				}
+			// Editability
+			$attach->user_may_edit = $this->userMayEditAttachment($attach, $parent_id, $params);
 
-			// Determine if the user may see the attachment
-			$who_can_see = $params->get('who_can_see', 'logged_in');
-			$secure = $params->get('secure', false);
-
-			if ( ( $who_can_see == 'anyone' ) OR
-				 ( ($who_can_see == 'logged_in') AND $logged_in ) OR
-				 ( $secure AND ($who_can_see == 'logged_in') AND
-				   $params->get('secure_list_attachments', false) ) ) {
-				$attach->user_may_see = true;
-				$some_visible = true;
-				}
+			// Deleteabiltiy
+			$attach->user_may_delete = $this->userMayDeleteAttachment($attach, $parent_id, $params);
 			}
 
-		return $some_visible;
+		// ??? No longer any need for the return value (since we never list attachments the
+		//     user may not access due to the new access approach).
+		return true;
 	}
 
 }

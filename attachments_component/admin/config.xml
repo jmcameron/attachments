@@ -4,21 +4,6 @@
 	    label="COM_ATTACHMENTS_CONFIG_BASIC_SETTINGS_LABEL"
 	    addfieldpath="/administrator/components/com_attachments/models/fields"
 	    >
-    <field name="who_can_see" type="list" default="logged_in"
-           label="WHO_CAN_SEE_ATTACHMENTS"
-           description="WHO_CAN_SEE_ATTACHMENTS_DESCRIPTION">
-      <option value="logged_in">ANY_LOGGED_IN_USER</option>
-      <option value="anyone">ANYONE</option>
-      <option value="no_one">NO_ONE</option>
-    </field>
-    <field name="who_can_add" type="list" default="author"
-           label="WHO_CAN_ADD_ATTACHMENTS"
-           description="WHO_CAN_ADD_ATTACHMENTS_DESCRIPTION">
-      <option value="author">ARTICLE_AUTHOR_ONLY</option>
-      <option value="editor">EDITOR_AND_ABOVE</option>
-      <option value="logged_in">ANY_LOGGED_IN_USER</option>
-      <option value="no_one">NO_ONE</option>
-    </field>
     <field name="default_access_level" type="accesslevels" default="2"
 	   label="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL"
 	   description="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
@@ -211,12 +196,6 @@
     <field name="secure" type="radio" default="0"
            label="SECURE_ATTACHMENT_DOWNLOADS"
            description="SECURE_ATTACHMENT_DOWNLOADS_DESCRIPTION">
-      <option value="1">JYES</option>
-      <option value="0">JNO</option>
-    </field>
-    <field name="secure_list_attachments" type="radio" default="0"
-           label="LIST_ATTACHMENTS_IN_SECURE_MODE"
-           description="LIST_ATTACHMENTS_IN_SECURE_MODE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>

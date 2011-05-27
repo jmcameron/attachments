@@ -82,6 +82,9 @@ class AttachmentsModelAttachment extends JModel
 		
 		if ( empty($this->_attachment) ) {
 				
+			$user   = JFactory::getUser();
+			$user_levels = implode(',', array_unique($user->authorisedLevels()));
+
 			$db		= $this->getDbo();
 			$query  = $db->getQuery(true);
 
@@ -95,6 +98,9 @@ class AttachmentsModelAttachment extends JModel
 			$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
 			
 			$query->where('a.id = '.(int)$this->_id);
+
+			$query->where('a.access in ('.$user_levels.')');
+
 			/* ???
 			$query = "SELECT a.*, a.id as id, u1.name as creator_name, u2.name as modifier_name " 
 				. "FROM #__attachments as a "

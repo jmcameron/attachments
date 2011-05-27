@@ -345,32 +345,31 @@ class AttachmentsModelAttachments extends JModel
 			$this->_sort_order = 'filename';
 			}
 
-		// Do the query
+		// Construct the query
 		$db =& JFactory::getDBO();
+		$user =& JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+
+		$query = $db->getQuery(true);
+		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
+		$query->leftJoin('#__users AS u ON u.id = a.created_by');
+
 		if ( $parent_id == 0 ) {
 			// If the parent ID is zero, the parent is being created so we have
 			// do the query differently
-			$user =& JFactory::getUser();
 			$user_id = $user->get('id');
-
-			$query = $db->getQuery(true);
-            $query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
-			$query->leftJoin('#__users AS u ON u.id = a.created_by');
-			$query->where("a.parent_id IS NULL AND u.id=" . (int)$user_id .
-						  " AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
-			$query->order($this->_sort_order);
-			// ??? NEED TO REWORK with 2 wheres (one for main query, one for join)
+			$query->where('a.parent_id IS NULL AND u.id=' . (int)$user_id);
 			}
 		else {
-
-			$query = $db->getQuery(true);
-			$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
-			$query->leftJoin('#__users AS u ON u.id = a.created_by');
-			$query->where('a.parent_id='.(int)$parent_id." AND a.state='1' " .
-						  "AND a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
-			$query->order($this->_sort_order);
-			// ??? NEED TO REWORK with 2 wheres (one for main query, one for join)
+			$query->where('a.parent_id='.(int)$parent_id);
+			$query->where('a.state = 1');
 			}
+
+		$query->where("a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
+		$query->where('a.access IN ('.$user_levels.')');
+		$query->order($this->_sort_order);
+
+		// Do the query
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
@@ -443,18 +442,6 @@ class AttachmentsModelAttachments extends JModel
 
 			// Since the attachments have not been loaded, load them now
 			$this->getAttachmentsList();
-			}
-
-		// Check for the special case in secure mode with "always list attachments" true
-		// NOTE: This only affects displaying the attachments list, not downloading them!
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$who_can_see = $params->get('who_can_see', 'logged_in');
-		$secure = $params->get('secure', false);
-		if ( $secure AND ($who_can_see == 'logged_in') ) {
-			if ( $params->get('secure_list_attachments', false) ) {
-				return true;
-				}
 			}
 
 		return $this->_some_visible;

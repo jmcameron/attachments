@@ -161,30 +161,18 @@ class plgContentAttachments extends JPlugin
 				}
 			}
 
-		// get viewing permission info
-		$who_can_see = $attachParams->get('who_can_see', 'logged_in');
-		$secure = $attachParams->get('secure', false);
-		if ( $secure AND ($who_can_see == 'logged_in') ) {
-			if ( $attachParams->get('secure_list_attachments', false) ) {
-				$who_can_see = 'anyone';
-				}
-			}
-
 		// Construct the attachment list (if appropriate)
 		$html = '';
 		$attachments_list = false;
 		$add_attachement_btn = false;
-		if ( ( $who_can_see == 'anyone' ) OR
-			 ( ($who_can_see == 'logged_in') AND $logged_in ) ) {
-			$attachments_list =
-				$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+		$attachments_list =
+			$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
 
-			// If the attachments list is empty, insert an empty div for it
-			if ( $attachments_list == '' ) {
-				$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
-				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
-				$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
-				}
+		// If the attachments list is empty, insert an empty div for it
+		if ( $attachments_list == '' ) {
+			$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
+			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
+			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 			}
 
 		$html .= $attachments_list;
@@ -303,6 +291,7 @@ class plgContentAttachments extends JPlugin
 		//		 and are created by the current user are for this article.
 		$user =& JFactory::getUser();
 		$user_id = $user->get('id');
+
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
@@ -393,12 +382,17 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
 	{
+		$user   = JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
+		// ??? Probably should just use the model (and do published right)
 		$query->select('count(*)')->from('#__attachments');
 		$query->where('parent_id='.(int)$parent_id." AND state=1 AND parent_type='$parent_type'");
+		$query->where('access IN ('.$user_levels.')');
 		$db->setQuery($query);
 		$total = $db->loadResult();
 

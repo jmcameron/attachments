@@ -134,6 +134,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	public function delete()
 	{
 		// Access check.
+		// ??? Need to do a more granular check (eg, can delete if edit.own)
 		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
@@ -166,7 +167,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					}
 				}
 
-			// ?? ADD CHECK HERE THAT USER HAS PERMISSIONS TO DELETE...
+			// ??? Add check here that user has permissions to delete this attachment
 
 			// Delete the entries in the attachments table
 			$query = $db->getQuery(true);

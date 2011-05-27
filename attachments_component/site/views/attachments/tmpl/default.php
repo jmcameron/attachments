@@ -104,10 +104,6 @@ $row_num = 0;
 for ($i=0, $n=count($rows); $i < $n; $i++) {
 	$row =& $rows[$i];
 
-	// Skip this one if it should not be visible
-	if ( !$row->user_may_see )
-		continue;
-
 	$row_num++;
 	if ( $row_num & 1 == 1)
 		$html .= '<tr class="odd">';
@@ -163,13 +159,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
-			$user =& JFactory::getUser();
-			if ( $this->secure AND ($this->who_can_see != 'anyone') AND ($user->get('username') == '') ) {
-				$url = JRoute::_('index.php?option=com_attachments&task=request_login');
-				}
-			else {
-				$url = $row->url;
-				}
+			$url = $row->url;
 			$tooltip = JText::sprintf('ACCESS_THIS_URL_S', $row->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
@@ -269,6 +259,10 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 580}}\"";
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
+
+		}
+
+	if ( $this->some_attachments_modifiable AND $row->user_may_delete AND $this->allow_edit ) {
 
 		// Create the delete link	
 		$delete_url = sprintf($this->delete_url, (int)$row->id);

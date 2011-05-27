@@ -66,6 +66,7 @@ class AttachmentsModelAttachments extends JModelList
 	 */
 	protected function getListQuery()
 	{
+
 		// Create a new query object.         
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -173,6 +174,11 @@ class AttachmentsModelAttachments extends JModelList
 				$where[] = $fps_wheres;
 				}
 			}
+
+		// Make sure the user can only see the attachments they may access
+		$user   = JFactory::getUser();
+		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$where[] = 'a.access in ('.$user_levels.')';
 
 		// Construct the WHERE clause
 		$where = (count($where) ? implode(' AND ', $where) : '');
