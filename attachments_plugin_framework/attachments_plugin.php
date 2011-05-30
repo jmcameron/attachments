@@ -671,12 +671,10 @@ class AttachmentsPlugin extends JPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
-	 * @param int $parent_id The ID of the parent the attachment is attached to
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	public function userMayEditAttachment(&$attachment, $parent_id, &$params)
+	public function userMayEditAttachment(&$attachment)
 	{
 		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
@@ -690,12 +688,10 @@ class AttachmentsPlugin extends JPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
-	 * @param int $parent_id The ID of the parent the attachment is attached to
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * @return true if this user may delete this attachment
 	 */
-	public function userMayDeleteAttachment(&$attachment, $parent_id, &$params)
+	public function userMayDeleteAttachment(&$attachment)
 	{
 		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
 	}
@@ -720,8 +716,6 @@ class AttachmentsPlugin extends JPlugin
 	 * @param &array &$attachments An array of attachments for an parent from a DB query.
 	 * @param int $parent_id the id of the parent
 	 *
-	 * @return true if some attachments should be visible, false if none should be visible
-	 *
 	 * This function adds the following boolean fields to each attachment row:
 	 *	   - 'user_may_edit'
 	 *     - 'user_may_delete'
@@ -740,20 +734,10 @@ class AttachmentsPlugin extends JPlugin
 
 		// If there are no attachments, don't do anything
 		if ( count($attachments) == 0 ) {
-			return false;
+			return;
 			}
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-
 		// Process each attachment
-		$user =& JFactory::getUser();
-		$logged_in = $user->get('username') <> '';
-		$secure = $params->get('secure', false);
-		$secure_list_attachments = $params->get('secure_list_attachments', false);
-		$some_visible = false;
-
 		for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 			$attach =& $attachments[$i];
@@ -761,15 +745,11 @@ class AttachmentsPlugin extends JPlugin
 			// ??? should we move these flags into the model code?
 
 			// Editability
-			$attach->user_may_edit = $this->userMayEditAttachment($attach, $parent_id, $params);
+			$attach->user_may_edit = $this->userMayEditAttachment($attach);
 
 			// Deleteabiltiy
-			$attach->user_may_delete = $this->userMayDeleteAttachment($attach, $parent_id, $params);
+			$attach->user_may_delete = $this->userMayDeleteAttachment($attach);
 			}
-
-		// ??? No longer any need for the return value (since we never list attachments the
-		//     user may not access due to the new access approach).
-		return true;
 	}
 
 }

@@ -719,12 +719,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *	It is up to the caller to validate these objects before calling this function.)
 	 *
 	 * @param &record &$attachment database reocrd for the attachment
-	 * @param int $parent_id The ID of the parent the attachment is attached to
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	public function userMayEditAttachment(&$attachment, $parent_id, &$params)
+	public function userMayEditAttachment(&$attachment)
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
@@ -742,7 +740,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		case 'category':
 
 			// First, determine if the user can edit this category
-			if ( !AttachmentsPermissions::userMayEditCategory($parent_id) ) {
+			if ( !AttachmentsPermissions::userMayEditCategory($attachment->parent_id) ) {
 				return false;
 				}
 
@@ -764,7 +762,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			// ?? Deal with parents being created (parent_id == 0)
 
 			// First, determine if the user can edit this article
-			if ( !AttachmentsPermissions::userMayEditArticle($parent_id) ) {
+			if ( !AttachmentsPermissions::userMayEditArticle($attachment->parent_id) ) {
 				return false;
 				}
 
@@ -790,12 +788,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
-	 * @param int $parent_id The ID of the parent the attachment is attached to
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * @return true if this user may delete this attachment
 	 */
-	public function userMayDeleteAttachment(&$attachment, $parent_id, &$params)
+	public function userMayDeleteAttachment(&$attachment)
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
@@ -813,7 +809,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		case 'category':
 
 			// First, determine if the user can edit this category
-			if ( !AttachmentsPermissions::userMayEditCategory($parent_id) ) {
+			if ( !AttachmentsPermissions::userMayEditCategory($attachment->parent_id) ) {
 				return false;
 				}
 
@@ -835,7 +831,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			// ?? Deal with parents being created (parent_id == 0)
 
 			// First, determine if the user can edit this article
-			if ( !AttachmentsPermissions::userMayEditArticle($parent_id) ) {
+			if ( !AttachmentsPermissions::userMayEditArticle($attachment->parent_id) ) {
 				return false;
 				}
 
