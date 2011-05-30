@@ -537,12 +537,8 @@ class AttachmentsController extends JController
 
 		$parent_entity_name = JText::_($parent_entity);
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-
 		// Check to make sure we can edit it
-		if ( !$parent->userMayDeleteAttachment($rows[0], $parent_id, &$params) ) {
+		if ( !$parent->userMayDeleteAttachment($rows[0]) ) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
@@ -554,12 +550,8 @@ class AttachmentsController extends JController
 			JError::raiseError(500, $errmsg);
 			}
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-
 		// See if this user can edit (or delete) the attachment
-		if ( !$parent->userMayEditAttachment($rows[0], $parent_id, $params) ) {
+		if ( !$parent->userMayDeleteAttachment($rows[0]) ) {
 			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERR 70)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -655,13 +647,10 @@ class AttachmentsController extends JController
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-
 		// Check to make sure we can edit it
 		$parent_id = $attachment->parent_id;
-		if ( !$parent->userMayDeleteAttachment(&$attachment, $parent_id, &$params) ) {
+		if ( !$parent->userMayDeleteAttachment(&$attachment) ) {
+			// ??? improve error message
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
@@ -739,8 +728,8 @@ class AttachmentsController extends JController
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
 
 		// Check to make sure we can edit it
-		if ( !$parent->userMayEditAttachment(&$attachment, $parent_id, &$params) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		if ( !$parent->userMayEditAttachment(&$attachment) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		// Set up the entity name for display
@@ -754,10 +743,6 @@ class AttachmentsController extends JController
 			$new_parent = true;
 			}
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
-		if ( !$parent->userMayEditAttachment($attachment, $parent_id, $params ) ) {
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 77)';
-			JError::raiseError(500, $errmsg);
-			}
 
 		// Make sure the attachments directory exists
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');

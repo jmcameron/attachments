@@ -155,7 +155,10 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
-			// ??? check for db errors?
+			if ( $db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
 
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 

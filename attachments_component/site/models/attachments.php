@@ -379,6 +379,10 @@ class AttachmentsModelAttachments extends JModel
 		// Install the list of attachments in this object
 		$this->_num_attachments = count($rows);
 
+		// The query only returns items that are visible/accessible for
+		// the user, so if it contains anything, they will be visible
+		$this->_some_visible = $this->_num_attachments > 0;
+
 		// Add permissions for each attachment in the list
 		if ( $this->_num_attachments > 0 ) {
 			$this->_list =& $rows;
@@ -386,8 +390,8 @@ class AttachmentsModelAttachments extends JModel
 			// Add the permissions to each row
 			$parent = $this->getParentClass();
 
-			// Add permissions (returns a flag indicating if any attachments should be visible)
-			$this->_some_visible = $parent->addPermissions($rows, $parent_id);
+			// Add permissions
+			$parent->addPermissions($rows, $parent_id);
 
 			// Fix relative URLs
 			foreach ( $rows as $row ) {

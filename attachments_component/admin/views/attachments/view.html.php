@@ -54,7 +54,10 @@ class AttachmentsViewAttachments extends JView
 		$query->select('*')->from('#__viewlevels');
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
-		// ??? Check for db errro
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		$level_name = Array();
 		foreach ($levels as $level) {
 			$level_name[$level->id] = JText::_($level->title);

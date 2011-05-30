@@ -60,9 +60,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 
 	/**
-	 * Add - create a new attachment
+	 * Add - Display the form to create a new attachment
 	 *
-	 * ??? MORE
 	 */
 	public function add()
 	{
@@ -519,8 +518,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 
 	/**
-	 * ??? DOCS
-	 * 
+	 * Edit - display the form for the user to edit an attachment
 	 */
 	public function edit()
 	{
@@ -1145,11 +1143,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function download()
 	{
 		$app = JFactory::getApplication();
-		// ??? Rework this wit new ACL
-		if ( ! $app->isAdmin() ) {
-			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_AS_ADMIN') . ' (ERR 26)';
-			JError::raiseError(500, $errmsg);
-			}
 
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
@@ -1159,6 +1152,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+
+		// NOTE: AttachmentsHelper::download_attachment($id) checks access permission
 
 		AttachmentsHelper::download_attachment($id);
 	}
