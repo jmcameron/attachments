@@ -246,11 +246,6 @@ class plgContentAttachments extends JPlugin
 			break;
 			}
 
-		// Correct the order of the Javascript files
-		if ( $attachments_placement != 'disabled_filter' ) {
-			$this->_fixScripts();
-			}
-
 		return;
 	}
 
@@ -336,37 +331,6 @@ class plgContentAttachments extends JPlugin
 		return true;
 	}
 	
-
-    /**
-	 * Fix the Javascript order problem that occurs occasionally
-	 */
-	private function _fixScripts()
-	{
-// ??? NECESSARY?
-		
-// 		// Fix the document's list of scripts to remove modal.js and
-// 		// then re-add it in order to force it to be after mootools.js
-// 		//
-// 		// NOTE: Not sure why this hack is necessary, but with some other
-// 		//		 extensions, mootools.js seems to pop up after modal.js
-// 		//		 which does not work since modal.js depends on mootools.js.
-// 
-// 		$document =&  JFactory::getDocument();
-// 
-// 		$modal_url = false;
-// 		foreach ($document->_scripts as $url => $type) {
-// 			if ( JString::strpos($url, '/media/system/js/modal.js') ) {
-// 				$modal_url = $url;
-// 				}
-// 			}
-// 		if ( $modal_url ) {
-// 			unset($document->_scripts[$modal_url]);
-// 			}
-// 
-// 		$uri = JFactory::getURI();
-// 		$document->addScript( $uri->root(true) . '/media/system/js/modal.js' );
-	}
-
 
 	/**
 	 * Return a list of attachments as HTML code.
