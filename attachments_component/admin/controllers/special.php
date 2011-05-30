@@ -72,8 +72,6 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	public function listAttachmentIDs()
 	{
-		// ??? Add test to make sure only admin can access this
-
 		// Get the article IDs
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);

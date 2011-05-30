@@ -62,9 +62,6 @@ class plgButtonAdd_attachment extends JPlugin
 			$editor = 'category';
 			}
 
-		// Make sure we have permissions to add attachments to this article or category
-		// ??? ACL check
-
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
@@ -95,6 +92,11 @@ class plgButtonAdd_attachment extends JPlugin
 			if ( !is_null($nid) ) {
 				$id = (int)$nid;
 				}
+			}
+
+		// Make sure we have permissions to add attachments to this article or category
+		if ( !$parent->userMayAddAttachment($id, $parent_entity, $id == 0) ) {
+			return;
 			}
 
 		// Figure out where we are and construct the right link and set
