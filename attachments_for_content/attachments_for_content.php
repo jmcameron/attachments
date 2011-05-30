@@ -492,7 +492,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				"WHERE a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id ))";
 			}
 		else {
-			// ??? Add Error message here!
+			$errmsg = JText::sprintf('ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
 			}
 
 		return $where;
