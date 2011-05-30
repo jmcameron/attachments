@@ -67,9 +67,6 @@ class plgButtonInsert_attachments_token extends JPlugin
 			$parent_type = 'com_content';
 			}
 
-		// Make sure we have access (to show attachments)
-		// ??? ACL check
-
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();

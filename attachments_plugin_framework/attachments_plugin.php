@@ -554,9 +554,7 @@ class AttachmentsPlugin extends JPlugin
 			$this->_parent_exists_cache[$cache_key] = false;
 			}
 		else {
-			// ??? Is this test necessary?
-			$this->_parent_exists_cache[$cache_key] =
-				(int)$parent_id == (int)$result;
+			$this->_parent_exists_cache[$cache_key] = (int)$parent_id == (int)$result;
 			}
 
 		return $this->_parent_exists_cache[$cache_key];
