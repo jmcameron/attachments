@@ -135,8 +135,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -163,8 +163,10 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+
+			// Close this window and refesh the parent window
 			echo $this->_close_script;
 			}
 		else {
@@ -189,8 +191,10 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+
+			// Close this window and refesh the parent window
 			echo $this->_close_script;
 			}
 		else {
@@ -215,8 +219,10 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::update_file_sizes();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+
+			// Close this window and refesh the parent window
 			echo $this->_close_script;
 			}
 		else {
@@ -241,8 +247,10 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::check_files_existance();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+
+			// Close this window and refesh the parent window
 			echo $this->_close_script;
 			}
 		else {
@@ -266,8 +274,10 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::validate_urls();
 
 		if ( JRequest::getBool('close') ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			AttachmentsHelper::enqueueSystemMessage($msg);
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($msg);
+
+			// Close this window and refesh the parent window
 			echo $this->_close_script;
 			}
 		else {

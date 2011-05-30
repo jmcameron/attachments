@@ -38,6 +38,7 @@ class AttachmentsHelper
 
 		// See if we are caching
 		$cache =& JFactory::getCache();
+		// ??? Do we need to handle caching?
 		// ??? $caching = $config->get('cache') OR $cache->_options['caching'];
 		$caching = false;
 
@@ -48,7 +49,6 @@ class AttachmentsHelper
 		elseif ( $caching ) {
 			// If caching, load the Javascript function that allows dynamic insertion of stylesheets
 			if ( !$added_js ) {
-				// ??? JHTML::_('behavior.mootools');
 	            $uri = JFactory::getURI();
 				$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_caching.js';
 				echo "<script type=\"text/javascript\" src=\"$js_path\"></script>\n";
@@ -337,10 +337,6 @@ class AttachmentsHelper
 
 		// Handle the main save URL
 		$save_url = $url_base . "&task=" . $save_task . $template;
-		if ( $from == 'closeme') {
-			// Keep track of what are supposed to do after saving
-			// ??? $save_url .= "&from=closeme";
-			}
 		$save_url .= "&from=$from";
 		$view->save_url = JRoute::_($save_url);
 
@@ -348,12 +344,6 @@ class AttachmentsHelper
 		if ( $save_type == 'upload' ) {
 			$upload_file_url = $url_base . "&task=$upload_task&uri=file" . $parentinfo . $template;
 			$upload_url_url	 = $url_base . "&task=$upload_task&uri=url" . $parentinfo . $template;
-
-			// Keep track of what are supposed to do after saving
-			if ( $from == 'closeme') {
-				// ??? $upload_file_url .= "&from=closeme";
-				// ??? $upload_url_url .= "&from=closeme";
-				}
 
 			$upload_file_url .= "&from=$from";
 			$upload_url_url .= "&from=$from";
@@ -368,13 +358,6 @@ class AttachmentsHelper
 			$change_file_url =	$change_url . "&amp;update=file" . $template;
 			$change_url_url =  $change_url . "&amp;update=url" . $template;
 			$normal_update_url =  $change_url . $template;
-
-			// Keep track of what are supposed to do after saving
-			if ( $from == 'closeme') {
-				// ??? $change_file_url .= "&from=closeme";
-				// ??? $change_url_url .= "&from=closeme";
-				// ??? $normal_update_url .= "&from=closeme";
-				}
 
 			$change_file_url .= "&from=$from";
 			$change_url_url .= "&from=$from";
@@ -532,8 +515,11 @@ class AttachmentsHelper
 			$view->from = $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 
+			$view->error = $error;
+			$view->error_msg = $error_msg;
+
 			// Display the view
-			$view->display(null, $error, $error_msg);
+			$view->display();
 			exit();
 			}
 
@@ -626,15 +612,18 @@ class AttachmentsHelper
 			$view->parent_title = 	 $parent->title;
 			$view->new_parent = $parent->new;
 
-			$view->display_name = 	 $display_name;
+			$view->display_name = $display_name;
 
-			$view->params = 			 $params;
+			$view->params = $params;
 
-			$view->from = 			 $from;
-			$view->Itemid = 			 JRequest::getInt('Itemid', 1);
+			$view->from = $from;
+			$view->Itemid = JRequest::getInt('Itemid', 1);
+
+			$view->error = $error;
+			$view->error_msg = $error_msg;
 
 			// Display the view
-			$view->display(null, $error, $error_msg);
+			$view->display();
 			exit();
 			}
 
@@ -717,8 +706,11 @@ class AttachmentsHelper
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 			$view->params = 			 $params;
 
+			$view->error = $error;
+			$view->error_msg = $error_msg;
+
 			// Display the view
-			$view->display(null, $error, $error_msg);
+			$view->display();
 			exit();
 			}
 
@@ -1253,8 +1245,11 @@ class AttachmentsHelper
 			$view->from = 	$from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 
+			$view->error = $result->error;
+			$view->error_msg = $result->error_msg;
+
 			// Display the view
-			$view->display(null, $result->error, $result->error_msg);
+			$view->display();
 			exit();
 			}
 
@@ -1555,7 +1550,6 @@ class AttachmentsHelper
 		$alist = '';
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
-		// ??? SQL could be improved
 		$query->select('count(*)')->from('#__attachments');
 		$query->where('parent_id='.(int)$parent_id." AND state='1' AND parent_type='$parent_type'");
 		$query->where('access in ('.$user_levels.')');
@@ -1602,43 +1596,6 @@ class AttachmentsHelper
 			}
 
 		return $alist;
-	}
-
-
-	/**
-	 * Save a warning message for display later by the main attachment warning function.
-	 *
-	 * Note that the message is saved in the dom so it will be lost after any refreshes/redirects
-	 *
-	 * ??? Is this obsolete?
-	 *
-	 * @param string $msg the message to be saved
-	 */
-	public function save_warning_message($msg)
-	{
-		$doc =& JFactory::getDocument();
-		$doc->addScriptDeclaration(
-			"function save_warning_msg(str) { document.warning_msg = str; };");
-		echo "<script>save_warning_msg('$msg');</script>";
-	}
-
-	/**
-	 * Save a system message in the session to be displayed in the next redirect
-	 *
-	 * ??? Is this needed?  If not, get rid of it and convert to $app->enqueueMessage()
-	 *
-	 * @param string $msg the message to be saved
-	 * @param string $msgType the type of message
-	 */
-	public function enqueueSystemMessage($msg, $msgType='message')
-	{
-		$app = JFactory::getApplication();
-		$app->enqueueMessage($msg, $msgType);
-
-		// Persist the message, borrowed from redirect() function in:
-		//	 libraries/joomla/application/application.php
-		$session =& JFactory::getSession();
-		$session->set('application.queue', $app->getMessageQueue());
 	}
 
 }

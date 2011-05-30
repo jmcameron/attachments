@@ -188,12 +188,11 @@ class AttachmentsController extends JController
 
 		$view->params = $params;
 
-		// ??? $view->upload_toggle_url = $upload_toggle_url;
-		// ??? $view->upload_toggle_button_text = $upload_toggle_button_text;
-		// ??? $view->upload_button_text = $upload_button_text;
+		$view->error = false;
+		$view->error_msg = false;
 
 		// Display the view
-		$view->display(null, false, false);
+		$view->display();
 	}
 
 
@@ -427,7 +426,7 @@ class AttachmentsController extends JController
 	 */
 	public function download()
 	{
-		// ??? NEED ACCESS CHECK
+		// NOTE: The helper download_attachment($id) function does the access check
 
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
@@ -487,19 +486,10 @@ class AttachmentsController extends JController
 
 	/**
 	 * Delete an attachment
-	 *
-	 * ??? Should this be protected?
 	 */
 	public function delete()
 	{
 		$db =& JFactory::getDBO();
-
-		// Verify the user is logged in
-		$user =& JFactory::getUser();
-		if ( $user->get('username') == '' ) {
-			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_TO_DELETE_ATTACHMENT') . ' (ERR 64)';
-			JError::raiseError(500, $errmsg);
-			}
 
 		// Make sure we have a valid attachment ID
 		$id = JRequest::getInt( 'id');
@@ -510,11 +500,10 @@ class AttachmentsController extends JController
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
+		// ??? Convert to use model
 		$query = $db->getQuery(true);
-		// ??? SQL could be improved
 		$query->select('*')->from('#__attachments')->where('id = '.(int)$id);
 		$db->setQuery($query, 0, 1);
-		// ??? Convert to use model
 		$rows = $db->loadObjectList();
 		if (count($rows) != 1) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 66)';
@@ -650,8 +639,8 @@ class AttachmentsController extends JController
 		// Check to make sure we can edit it
 		$parent_id = $attachment->parent_id;
 		if ( !$parent->userMayDeleteAttachment(&$attachment) ) {
-			// ??? improve error message
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			$errmsg = JText::_('ERROR_NO_PERMISSION_TO_DELETE_ATTACHMENT') . ' (ERRN)';
+			JError::raiseWarning(403, $errmsg);
 			}
 
 		// Set up the view
@@ -792,7 +781,10 @@ class AttachmentsController extends JController
 		$view->from       = $from;
 		$view->Itemid     = JRequest::getInt('Itemid', 1);
 
-		$view->display(null, false, false);
+		$view->error = false;
+		$view->error_msg = false;
+
+		$view->display();
 	}
 
 
@@ -820,39 +812,6 @@ class AttachmentsController extends JController
 		$response = $controller->display($parent_id, $parent_type, $parent_entity,
 										 $title, $show_links, $allow_edit, false, $from);
 		echo $response;
-	}
-
-
-	/**
-	 * Show a warning (that has previously been saved via the
-	 * AttachmentsHelper::save_warning_message() function.
-	 *
-	 * ??? Is this obsolete?
-	 */
-	public function warning()
-	{
-		$document =&  JFactory::getDocument();
-	    $uri = JFactory::getURI();
-
-		// Add the stylesheet
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
-
-		// Handle the RTL styling
-		$lang =& JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
-			}
-
-		// ??? Not sure if this is still necessary
-		$document->addStyleDeclaration(
-			'div.componentheading { display: none; } * { overflow: hidden; };');
-
-		// Issue the warning
-		echo '<div class="warning"><h1>' . JText::_('WARNING') . '</h1>';
-		echo '<h2 id="warning_msg">';
-		echo '<script>document.write(parent.document.warning_msg);</script>';
-		echo '</h2></div>';
 	}
 
 }
