@@ -13,7 +13,11 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-// ??? Add access check to make sure only Admins can run these commands
+// Access check.
+if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	}
+
 
 /**
  * The controller for utils requests
