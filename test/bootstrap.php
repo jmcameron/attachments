@@ -23,10 +23,6 @@ define('_JEXEC',		1);
 
 if (!defined('JPATH_BASE'))
 {
-	// JPATH_BASE can be defined in init.php
-	// This gets around problems with soft linking the unittest folder into a Joomla tree,
-	// or using the unittest framework from a central location.
-	// ??? define('JPATH_BASE', dirname(dirname(dirname(__FILE__))));
 	define('JPATH_BASE', '/var/www/test/joomla16');
 }
 
