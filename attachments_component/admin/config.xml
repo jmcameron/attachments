@@ -4,10 +4,6 @@
 	    label="COM_ATTACHMENTS_CONFIG_BASIC_SETTINGS_LABEL"
 	    addfieldpath="/administrator/components/com_attachments/models/fields"
 	    >
-    <field name="default_access_level" type="accesslevels" default="2"
-	   label="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL"
-	   description="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
-	   />
     <field name="publish_default" type="radio" default="0"
            label="ATTACHMENTS_PUBLISHED_BY_DEFAULT"
            description="ATTACHMENTS_PUBLISHED_BY_DEFAULT_DESCRIPTION">
@@ -43,6 +39,16 @@
       <option value="disabled_filter">DISABLED_FILTER</option>
       <option value="disabled_nofilter">DISABLED_NOFILTER</option>
     </field>
+    <field name="default_access_level" type="accesslevels" default="2"
+	   label="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL"
+	   description="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
+	   />
+    <field name="allow_frontend_access_editing" type="radio" default="0"
+           label="ALLOW_FRONTEND_ACCESS_LEVEL_EDITING"
+           description="ALLOW_FRONTEND_ACCESS_LEVEL_EDITING_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
   </fieldset>
 
   <fieldset name="formatting"
@@ -62,6 +68,12 @@
     <field name="show_creator" type="radio" default="0"
            label="SHOW_ATTACHMENT_CREATOR"
            description="SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
+    <field name="show_access_level" type="radio" default="0"
+           label="SHOW_ATTACHMENT_ACCESS_LEVEL"
+           description="SHOW_ATTACHMENT_ACCESS_LEVEL_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
@@ -157,11 +169,6 @@
     <field name="attachments_table_style" type="text" default="attachmentsList"
            label="CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
            description="CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
-    </field>
-    <field name="register_url" type="text"
-           default="index.php?option=com_user&amp;view=registration"
-           label="URL_TO_REGISTER" size="80" maxwidth="255"
-           description="URL_TO_REGISTER_DESCRIPTION">
     </field>
     <field name="file_link_open_mode" type="radio" default="in_same_window"
            label="FILE_LINK_OPEN_MODE"
