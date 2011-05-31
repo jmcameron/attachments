@@ -10,6 +10,10 @@ div#uploadAttachmentsPage p {
     margin: 0;
 }
 
+div#uploadAttachmentsPage p label {
+    font-weight: bold;
+}
+
 div#uploadAttachmentsPage fieldset {
     padding-bottom: 0px;
 }
