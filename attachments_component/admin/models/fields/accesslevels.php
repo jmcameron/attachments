@@ -75,7 +75,7 @@ class JFormFieldAccessLevels extends JFormField
 
 		// Make sure the $level_value is in the user's authorised levels
 		if ( !in_array($level_value, $user_levels) ) {
-			// If not, set $level_value to the lowest legal non-public value
+			// If not, set $level_value to the lowest legal value
 			$registered = 2;
 			if ( in_array($registered, $user_levels) ) {
 				$level_value = $registered;
