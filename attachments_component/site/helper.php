@@ -1367,15 +1367,6 @@ class AttachmentsHelper
 
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
-
-			// If not logged in, encourage them to log in
-			$user =& JFactory::getUser();
-			if ( $user->get('username') == '' ) {
-				$redirect_to = JRoute::_('index.php?option=com_attachments&task=request_login');
-				$this->setRedirect( $redirect_to );
-				$this->redirect();
-				}
-
 			$errmsg = JText::_('ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 46)';
 			JError::raiseError(500, $errmsg);
 			}

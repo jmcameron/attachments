@@ -169,6 +169,13 @@ class AttachmentsController extends JController
 		// Set up the view
 		AttachmentsHelper::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 
+		// Set up for editing the access level
+		if ( $params->get('allow_frontend_access_editing', false) ) {
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+			}
+
 		$view->uri_type = 	  $uri_type;
 		$view->url = 			  '';
 		$view->parent_id = 		 $parent_id;
@@ -206,10 +213,6 @@ class AttachmentsController extends JController
 
 		// Make sure that the user is logged in
 		$user =& JFactory::getUser();
-		if ( $user->get('username') == '' ) {
-			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 55)';
-			JError::raiseError(500, $errmsg);
-			}
 
 		// Get the article/parent handler
 		$new_parent = JRequest::getBool('new_parent', false);
@@ -312,6 +315,7 @@ class AttachmentsController extends JController
 			}
 
 		elseif ( $save_type == 'update' ) {
+
 			// See if we are updating a file or URL
 			$new_uri_type = JRequest::getWord('update');
 			if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
@@ -438,49 +442,6 @@ class AttachmentsController extends JController
 		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
 		AttachmentsHelper::download_attachment($id);
-	}
-
-
-	/**
-	 * Display a page requesting that the user log in.
-	 *
-	 * This function is invoked if the user tries to access an attachment in
-	 * secure mode and they are not logged in (and 'who can see' is not set to
-	 * 'anyone').
-	 */
-	public function request_login()
-	{
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		$uri = JFactory::getURI();
-
-		// Add CSS for styling
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
-
-		// Get the component parameters for the registration URL
-		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
-		$url = $params->get('register_url', "index.php?option=com_user&view=registration");
-		$url = JRoute::_($url);
-
-		// Deal with RTL styling
-		$lang =& JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
-			}
-
-		// Get a phrase from the login module
-		$lang->load('mod_login');
-		$register = JText::_('CREATE_AN_ACCOUNT');
-
-		// Set up the phrases/refs
-		$must_be_logged_in = JText::_('ERROR_MUST_BE_LOGGED_IN_TO_DOWNLOAD_ATTACHMENT');
-		$ref = "<a href=\"$url\">$register</a>";
-
-		// Output the HTML
-		echo '<div class="requestLogin">';
-		echo "<h1>$must_be_logged_in</h1>";
-		echo "<h2>".JText::sprintf('REGISTER_HERE', $ref)."</h2>";
-		echo '</div>';
 	}
 
 
@@ -766,6 +727,13 @@ class AttachmentsController extends JController
 		$from = JRequest::getWord('from', 'closeme');
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
 										 $attachment->parent_type, $id, $from);
+
+		// Set up for editing the access level
+		if ( $params->get('allow_frontend_access_editing', false) ) {
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+			}
 
 		$view->update = 			$update;
 		$view->new_parent = 		$new_parent;
