@@ -607,7 +607,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
-		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -659,7 +659,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -676,7 +676,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayEditAttachment(&$attachment)
 	{
-		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
 
 
@@ -693,7 +693,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayDeleteAttachment(&$attachment)
 	{
-		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
 	
 
@@ -706,50 +706,8 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAccessAttachment( &$attachment )
 	{
-		JError::raiseError(500, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
 
-
-	/**
-	 * Add the permissions to the array of attachments data
-	 *
-	 * @param &array &$attachments An array of attachments for an parent from a DB query.
-	 * @param int $parent_id the id of the parent
-	 *
-	 * This function adds the following boolean fields to each attachment row:
-	 *	   - 'user_may_edit'
-	 *     - 'user_may_delete'
-	 *
-	 * NOTE: Callers must do filtering in the query that constructed the attachments
-	 *       list that restricts the attachments to the ones that the usre can access.
-	 */
-	public function addPermissions( &$attachments, $parent_id )
-	{
-		// Make sure we have a valid parent ID
-		if ( $parent_id === null OR $parent_id === '' OR !is_numeric($parent_id) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-									 $this->_parent_type, $parent_id) . ' (ERR 303)';
-			JError::raiseError(500, $errmsg);
-			}
-
-		// If there are no attachments, don't do anything
-		if ( count($attachments) == 0 ) {
-			return;
-			}
-
-		// Process each attachment
-		for ($i=0, $n=count($attachments); $i < $n; $i++) {
-
-			$attach =& $attachments[$i];
-
-			// ??? should we move these flags into the model code?
-
-			// Editability
-			$attach->user_may_edit = $this->userMayEditAttachment($attach);
-
-			// Deleteabiltiy
-			$attach->user_may_delete = $this->userMayDeleteAttachment($attach);
-			}
-	}
 
 }

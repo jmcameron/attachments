@@ -33,9 +33,9 @@ class AttachmentsViewAttachments extends JView
 	 */
 	public function display($tpl = null)
 	{
-		$this->pagination = $this->get('Pagination');
-		$this->state = $this->get('State');
 		$this->items = $this->get('Items');
+		$this->state = $this->get('State');
+		$this->pagination = $this->get('Pagination');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -48,7 +48,7 @@ class AttachmentsViewAttachments extends JView
 		$params = JComponentHelper::getParams('com_attachments');
 		$this->params = $params;
 
-		// Get the access level names
+		// Get the access level names for the display
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__viewlevels');

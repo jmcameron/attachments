@@ -385,13 +385,20 @@ class AttachmentsModelAttachments extends JModel
 
 		// Add permissions for each attachment in the list
 		if ( $this->_num_attachments > 0 ) {
+
 			$this->_list =& $rows;
 
 			// Add the permissions to each row
 			$parent = $this->getParentClass();
 
 			// Add permissions
-			$parent->addPermissions($rows, $parent_id);
+			foreach ( $rows as $row ) {
+				$row->user_may_delete = $parent->userMayDeleteAttachment($attach);
+				$row->user_may_edit = $parent->userMayEditAttachment($attach);
+				if ( $row->user_may_edit ) {
+					$this->_some_modifiable = true;
+					}
+				}
 
 			// Fix relative URLs
 			foreach ( $rows as $row ) {
@@ -404,13 +411,6 @@ class AttachmentsModelAttachments extends JModel
 					}
 				}
 
-			// See if any of the attachments can be modified by this user
-			foreach ( $rows as $row ) {
-				if ( $row->user_may_edit ) {
-					$this->_some_modifiable = true;
-					break;
-					}
-				}
 			}
 
 		// Finally, return the list!
