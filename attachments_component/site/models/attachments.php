@@ -393,8 +393,8 @@ class AttachmentsModelAttachments extends JModel
 
 			// Add permissions
 			foreach ( $rows as $row ) {
-				$row->user_may_delete = $parent->userMayDeleteAttachment($attach);
-				$row->user_may_edit = $parent->userMayEditAttachment($attach);
+				$row->user_may_delete = $parent->userMayDeleteAttachment($row);
+				$row->user_may_edit = $parent->userMayEditAttachment($row);
 				if ( $row->user_may_edit ) {
 					$this->_some_modifiable = true;
 					}
