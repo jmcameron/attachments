@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `filename_sys` VARCHAR(255) NOT NULL,
     `file_type` VARCHAR(128) NOT NULL,
     `file_size` INT(11) UNSIGNED NOT NULL,
-    `url` TEXT NOT NULL DEFAULT '',
+    `url` VARCHAR(1024) NOT NULL DEFAULT '',
     `uri_type` ENUM('file', 'url') DEFAULT 'file',
     `url_valid` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
     `url_relative` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
