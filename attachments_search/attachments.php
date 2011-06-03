@@ -38,6 +38,7 @@ class plgSearchAttachments extends JPlugin
 		$this->loadLanguage();
 	}
 
+
 	/**
 	 * @return array An array of search areas
 	 */
@@ -169,7 +170,7 @@ class plgSearchAttachments extends JPlugin
 		// Construct and execute the query
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments AS a');
-		$query->where("('. $where .')' AND a.state = 1'");
+		$query->where("( $where ) AND a.state = 1");
 		$query->where('a.access in ('.$user_levels.')');
 		$query->order($order);
 		$db->setQuery( $query, 0, $limit );

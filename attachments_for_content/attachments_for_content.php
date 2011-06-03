@@ -543,7 +543,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// See if the parent's access level is permitted for the user
 		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__$table');
+		$query->select('id')->from("#__$table");
 		$query->where('id = ' . (int)$parent_id . ' AND access in ('.implode(',', $user_levels).')');
 		$db->setQuery($query, 0, 1);
 		$obj = $db->loadObject();
