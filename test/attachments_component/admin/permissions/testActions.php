@@ -75,12 +75,34 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	public function testActions($user_id,$username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own)
 	{
 		$canDo = AttachmentsPermissions::getActions((int)$user_id);
+
 		$errmsg = "----> Failed test for $username core.admin for com_attachments, " .
 			" expected $admin, got ".$canDo->get('core.admin');
-
 		$this->assertEquals($canDo->get('core.admin'), (bool)$admin, $errmsg);
 
-		// @TODO ADD THE REST OF THE TESTS ???
+		$errmsg = "----> Failed test for $username core.manage for com_attachments, " .
+			" expected $manage, got ".$canDo->get('core.manage');
+		$this->assertEquals($canDo->get('core.manage'), (bool)$manage, $errmsg);
+
+		$errmsg = "----> Failed test for $username core.create for com_attachments, " .
+			" expected $create, got ".$canDo->get('core.create');
+		$this->assertEquals($canDo->get('core.create'), (bool)$create, $errmsg);
+
+		$errmsg = "----> Failed test for $username core.delete for com_attachments, " .
+			" expected $delete, got ".$canDo->get('core.delete');
+		$this->assertEquals($canDo->get('core.delete'), (bool)$delete, $errmsg);
+
+		$errmsg = "----> Failed test for $username core.edit.state for com_attachments, " .
+			" expected $edit_state, got ".$canDo->get('core.edit.state');
+		$this->assertEquals($canDo->get('core.edit.state'), (bool)$edit_state, $errmsg);
+
+		$errmsg = "----> Failed test for $username core.edit for com_attachments, " .
+			" expected $edit, got ".$canDo->get('core.edit');
+		$this->assertEquals($canDo->get('core.edit'), (bool)$edit, $errmsg);
+
+		$errmsg = "----> Failed test for $username core.edit.own for com_attachments, " .
+			" expected $edit_own, got ".$canDo->get('core.edit.own');
+		$this->assertEquals($canDo->get('core.edit.own'), (bool)$edit_own, $errmsg);
 	}
 	
 
