@@ -19,7 +19,7 @@ $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
 // Set a few variables for convenience
-$rows =& $this->list;
+$attachments =& $this->list;
 $parent_id = $this->parent_id;
 $parent_type = $this->parent_type;
 $parent_entity = $this->parent_entity;
@@ -101,8 +101,8 @@ $html .= "<tbody>\n";
 
 // Construct the lines for the attachments
 $row_num = 0;
-for ($i=0, $n=count($rows); $i < $n; $i++) {
-	$row =& $rows[$i];
+for ($i=0, $n=count($attachments); $i < $n; $i++) {
+	$attachment =& $attachments[$i];
 
 	$row_num++;
 	if ( $row_num & 1 == 1)
@@ -111,24 +111,24 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		$html .= '<tr class="even">';
 
 	// Construct some display items
-	if ( JString::strlen($row->icon_filename) > 0 )
-		$icon_url = $this->icon_url_base . $row->icon_filename;
+	if ( JString::strlen($attachment->icon_filename) > 0 )
+		$icon_url = $this->icon_url_base . $attachment->icon_filename;
 	else
 		$icon_url = $this->icon_url_base . 'generic.gif';
 	$link_icon_url = $this->icon_url_base . 'link_arrow.png';
 	$link_broken_icon_url = $this->icon_url_base . 'link_broken.png';
 
 	if ( $this->show_file_size) {
-		$file_size = (int)( $row->file_size / 1024.0 );
+		$file_size = (int)( $attachment->file_size / 1024.0 );
 		if ( $file_size == 0 ) {
 			// For files less than 1K, show the fractional amount (in 1/10 KB)
-			$file_size = ( (int)( 10.0 * $row->file_size / 1024.0 ) / 10.0 );
+			$file_size = ( (int)( 10.0 * $attachment->file_size / 1024.0 ) / 10.0 );
 			}
 		}
 
 	if ( $this->show_mod_date ) {
 		jimport( 'joomla.utilities.date' );
-		$date = new JDate($row->modified, -$app->getCfg('offset'));
+		$date = new JDate($attachment->modified, -$app->getCfg('offset'));
 		$last_modified = $date->toFormat($this->mod_date_format);
 		}
 
@@ -137,21 +137,21 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 	if ( $this->file_link_open_mode == 'new_window')
 		$target = ' target="_blank"';
 	$html .= '<td class="at_filename">';
-	if ( JString::strlen($row->display_name) == 0 )
-		$filename = $row->filename;
+	if ( JString::strlen($attachment->display_name) == 0 )
+		$filename = $attachment->filename;
 	else
-		$filename = $row->display_name;
-	$actual_filename = $row->filename;
+		$filename = $attachment->display_name;
+	$actual_filename = $attachment->filename;
 	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
 	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
 	// $filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
 	if ( $this->show_file_links ) {
-		if ( $row->uri_type == 'file' ) {
+		if ( $attachment->uri_type == 'file' ) {
 			if ( $this->secure ) {
-				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$row->id);
+				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
-				$url = $base_url . $row->url;
+				$url = $base_url . $attachment->url;
 				if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
 				   $url = utf8_encode($url);
 				   }
@@ -159,12 +159,12 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
-			$url = $row->url;
-			$tooltip = JText::sprintf('ACCESS_THIS_URL_S', $row->url);
+			$url = $attachment->url;
+			$tooltip = JText::sprintf('ACCESS_THIS_URL_S', $attachment->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
-		if ( $row->uri_type == 'url' AND $this->superimpose_link_icons ) {
-			if ( $row->url_valid ) {
+		if ( $attachment->uri_type == 'url' AND $this->superimpose_link_icons ) {
+			if ( $attachment->url_valid ) {
 				$html .= "<img id=\"link\" src=\"$link_icon_url\" />";
 				}
 			else {
@@ -183,7 +183,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	// Add description (maybe)
 	if ( $this->show_description ) {
-		$description = $row->description;
+		$description = $attachment->description;
 		if ( JString::strlen($description) == 0)
 			$description = '&nbsp;';
 		if ( $this->show_column_titles )
@@ -194,7 +194,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	// Show the USER DEFINED FIELDs (maybe)
 	if ( $this->show_user_field_1 ) {
-		$user_field = $row->user_field_1;
+		$user_field = $attachment->user_field_1;
 		if ( JString::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
@@ -203,7 +203,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
 		}
 	if ( $this->show_user_field_2 ) {
-		$user_field = $row->user_field_2;
+		$user_field = $attachment->user_field_2;
 		if ( JString::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
@@ -212,7 +212,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
 		}
 	if ( $this->show_user_field_3 ) {
-		$user_field = $row->user_field_3;
+		$user_field = $attachment->user_field_3;
 		if ( JString::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
@@ -223,7 +223,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	// Add the creator's username (if requested)
 	if ( $this->show_creator ) {
-		$html .= "<td class=\"at_creator_name\">{$row->creator_name}</td>";
+		$html .= "<td class=\"at_creator_name\">{$attachment->creator_name}</td>";
 		}
 
 	// Add file size (maybe)
@@ -233,7 +233,7 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 	// Show number of downloads (maybe)
 	if ( $this->secure AND $this->show_downloads ) {
-		$num_downloads = (int)$row->download_count;
+		$num_downloads = (int)$attachment->download_count;
 		$label = '';
 		if ( ! $this->show_column_titles ) {
 			if ( $num_downloads == 1 )
@@ -250,10 +250,10 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 		}
 
 	// Add the link to delete the parent, if requested
-	if ( $this->some_attachments_modifiable AND $row->user_may_edit AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable AND $attachment->user_may_edit AND $this->allow_edit ) {
 
 		// Create the edit link
-		$update_url = sprintf($this->update_url, (int)$row->id);
+		$update_url = sprintf($this->update_url, (int)$attachment->id);
 		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
 		$tooltip = JText::_('UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
@@ -262,10 +262,10 @@ for ($i=0, $n=count($rows); $i < $n; $i++) {
 
 		}
 
-	if ( $this->some_attachments_modifiable AND $row->user_may_delete AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable AND $attachment->user_may_delete AND $this->allow_edit ) {
 
 		// Create the delete link	
-		$delete_url = sprintf($this->delete_url, (int)$row->id);
+		$delete_url = sprintf($this->delete_url, (int)$attachment->id);
 		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
 		$tooltip = JText::_('DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$del_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';

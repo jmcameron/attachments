@@ -153,7 +153,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$query = $db->getQuery(true);
 			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();
+			$attachments = $db->loadObjectList();
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
@@ -162,10 +162,10 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 
 			// First delete the actual attachment files
-			foreach ($rows as $row) {
-				if ( JFile::exists($row->filename_sys) ) {
-					JFile::delete($row->filename_sys);
-					AttachmentsHelper::clean_directory($row->filename_sys);
+			foreach ($attachments as $attachment) {
+				if ( JFile::exists($attachment->filename_sys) ) {
+					JFile::delete($attachment->filename_sys);
+					AttachmentsHelper::clean_directory($attachment->filename_sys);
 					}
 				}
 
@@ -186,9 +186,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			if ( in_array( $from, $known_froms ) ) {
 
 				// Get the parent info from the first attachment
-				$parent_id	   = $rows[0]->parent_id;
-				$parent_type   = $rows[0]->parent_type;
-				$parent_entity = $rows[0]->parent_entity;
+				$parent_id	   = $attachments[0]->parent_id;
+				$parent_type   = $attachments[0]->parent_type;
+				$parent_entity = $attachments[0]->parent_entity;
 
 				// Get the article/parent handler
 				JPluginHelper::importPlugin('attachments');

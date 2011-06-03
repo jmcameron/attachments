@@ -81,7 +81,7 @@ class AttachmentsControllerSpecial extends JController
 		$query->where("att.parent_entity='article'");
 		$query->order('art.id');
 		$db->setQuery($query);
-		$arows = $db->loadObjectList();
+		$attachments = $db->loadObjectList();
 
 		// Get the category IDs
 		$query = $db->getQuery(true);
@@ -98,24 +98,24 @@ class AttachmentsControllerSpecial extends JController
 		echo 'Attachment IDs:<br/>';
 
 		// Do the article attachments
-		foreach ($arows as $row) {
-			if ( empty($row->id) ) {
-				$row->id = '0';
+		foreach ($attachments as $attachment) {
+			if ( empty($attachment->id) ) {
+				$attachment->id = '0';
 				}
-			if ( empty($row->catid) ) {
-				$row->catid = '0';
+			if ( empty($attachment->catid) ) {
+				$attachment->catid = '0';
 				}
-			$parent_entity = JString::strtolower($row->parent_entity);
-			echo ' ' . $row->id . '/' . $row->parent_id . '/' .
-				$row->parent_type . '/' . $parent_entity . '/' . $row->catid . '<br/>';
+			$parent_entity = JString::strtolower($attachment->parent_entity);
+			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
+				$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->catid . '<br/>';
 			}
-		foreach ($crows as $row) {
-			if ( empty($row->id) ) {
-				$row->id = '0';
+		foreach ($crows as $attachment) {
+			if ( empty($attachment->id) ) {
+				$attachment->id = '0';
 				}
-			$parent_entity = JString::strtolower($row->parent_entity);
-			echo ' ' . $row->id . '/' . $row->parent_id . '/' .
-					$row->parent_type . '/' . $parent_entity . '/' . $row->parent_id . '<br/>';
+			$parent_entity = JString::strtolower($attachment->parent_entity);
+			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
+					$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->parent_id . '<br/>';
 			}
 		echo '</body></html>';
 		exit();

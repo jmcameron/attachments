@@ -639,8 +639,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$query = $db->getQuery(true);
 			$query->select('created_by, catid')->from('#__content')->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();
-			if ( count($rows) == 0 ) {
+			$attachments = $db->loadObjectList();
+			if ( count($attachments) == 0 ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 405)';
 				JError::raiseError(500, $errmsg);
@@ -655,8 +655,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the options apply to this article
-			$created_by = (int)$rows[0]->created_by;
-			$catid = (int)$rows[0]->catid;
+			$created_by = (int)$attachments[0]->created_by;
+			$catid = (int)$attachments[0]->catid;
 
 			// First, check to see whether the attachments should be hidden for this parent
 			$hide_attachments_for_categories = $params->get('hide_attachments_for_categories',Array());

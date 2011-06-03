@@ -123,13 +123,13 @@ class AttachmentsPlugin extends JPlugin
 	 * Return the parent entity / row ID
 	 *
 	 * This will only be called by the main attachments 'onPrepareContent'
-	 * plugin if $row does not have an id
+	 * plugin if $attachment does not have an id
 	 *
 	 * @param object &row the article or content item (potential attachment parent)
 	 *
 	 * @return id if found, false if this is not a valid parent
 	 */
-	public function getParentId(&$row)
+	public function getParentId(&$attachment)
 	{
 		return JRequest::getInt('id', false);
 	}

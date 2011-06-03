@@ -173,9 +173,9 @@ class plgSearchAttachments extends JPlugin
 		$query->where('a.access in ('.$user_levels.')');
 		$query->order($order);
 		$db->setQuery( $query, 0, $limit );
-		$rows = $db->loadObjectList();
+		$attachments = $db->loadObjectList();
 
-		$count = count( $rows );
+		$count = count( $attachments );
 
 		// See if we are done
 		$results = Array();
@@ -191,11 +191,11 @@ class plgSearchAttachments extends JPlugin
 		$k = 0;
 		for ( $i = 0; $i < $count; $i++ ) {
 
-			$row =& $rows[$i];
+			$attachment =& $attachments[$i];
 
 			// Get the parent handler
-			$parent_type = $row->parent_type;
-			$parent_entity = $row->parent_entity;
+			$parent_type = $attachment->parent_type;
+			$parent_entity = $attachment->parent_entity;
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				// Exit if there is no Attachments plugin to handle this parent_type, ignore it
 				continue;
@@ -203,76 +203,76 @@ class plgSearchAttachments extends JPlugin
 			$parent =& $apm->getAttachmentsPlugin($parent_type);
 
 			// Ignore the attachment if the user may not see the parent
-			if ( ! $parent->userMayViewParent($row->parent_id, $parent_entity) ) {
+			if ( ! $parent->userMayViewParent($attachment->parent_id, $parent_entity) ) {
 				continue;
 				}
 
 			// Ignore the attachment if the parent is not published
-			if ( ! $parent->isParentPublished($row->parent_id, $parent_entity) ) {
+			if ( ! $parent->isParentPublished($attachment->parent_id, $parent_entity) ) {
 				continue;
 				}
 
 			// Do not add the attachment if the user may not access it
-			if ( !$parent->userMayAccessAttachment($row)) {
+			if ( !$parent->userMayAccessAttachment($attachment)) {
 				continue;
 				}
 
 			// Add the parent title
-			$row->parent_title = $parent->getTitle( $row->parent_id, $parent_entity );
+			$attachment->parent_title = $parent->getTitle( $attachment->parent_id, $parent_entity );
 
 			// Construct the download URL if necessary
-			if ( $secure AND $row->uri_type == 'file' ) {
-				$row->href =
-					JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$row->id);
+			if ( $secure AND $attachment->uri_type == 'file' ) {
+				$attachment->href =
+					JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
-				$row->href = $row->url;
+				$attachment->href = $attachment->url;
 				}
-			if ( $row->display_name AND (JString::strlen($row->display_name) > 0) ) {
-				$row->title = JString::str_ireplace('&#183;', '.', $row->display_name);
+			if ( $attachment->display_name AND (JString::strlen($attachment->display_name) > 0) ) {
+				$attachment->title = JString::str_ireplace('&#183;', '.', $attachment->display_name);
 				}
 			else {
-				if ( $row->uri_type == 'file' ) {
-					$row->title = $row->filename;
+				if ( $attachment->uri_type == 'file' ) {
+					$attachment->title = $attachment->filename;
 					}
 				else {
-					$row->title = $row->url;
+					$attachment->title = $attachment->url;
 					}
 				}
 
 			// Set the text to the string containing the search target
-			if ( JString::strlen($row->display_name) > 0 ) {
-				$text = $row->display_name .
-					" (" . JText::_('FILENAME_COLON') . " " . $row->filename . ") ";
+			if ( JString::strlen($attachment->display_name) > 0 ) {
+				$text = $attachment->display_name .
+					" (" . JText::_('FILENAME_COLON') . " " . $attachment->filename . ") ";
 				}
 			else {
-				$text = JText::_('FILENAME_COLON') . " " . $row->filename;
+				$text = JText::_('FILENAME_COLON') . " " . $attachment->filename;
 				}
 
-			if ( JString::strlen($row->description) > 0 ) {
-				$text .= " | " . JText::_('DESCRIPTION_COLON') . $row->description;
+			if ( JString::strlen($attachment->description) > 0 ) {
+				$text .= " | " . JText::_('DESCRIPTION_COLON') . $attachment->description;
 				}
 
-			if ( $user_field_1 AND (JString::strlen($row->user_field_1) > 0) ) {
-				$text .= " | " . $user_field_1_name	 . ": " . $row->user_field_1;
+			if ( $user_field_1 AND (JString::strlen($attachment->user_field_1) > 0) ) {
+				$text .= " | " . $user_field_1_name	 . ": " . $attachment->user_field_1;
 				}
-			if ( $user_field_2 AND (JString::strlen($row->user_field_2) > 0) ) {
-				$text .= " | " . $user_field_2_name	 . ": " . $row->user_field_2;
+			if ( $user_field_2 AND (JString::strlen($attachment->user_field_2) > 0) ) {
+				$text .= " | " . $user_field_2_name	 . ": " . $attachment->user_field_2;
 				}
-			if ( $user_field_3 AND (JString::strlen($row->user_field_3) > 0) ) {
-				$text .= " | " . $user_field_3_name	 . ": " . $row->user_field_3;
+			if ( $user_field_3 AND (JString::strlen($attachment->user_field_3) > 0) ) {
+				$text .= " | " . $user_field_3_name	 . ": " . $attachment->user_field_3;
 				}
-			$row->text = $text;
-			$row->created = $row->created;
-			$row->browsernav = 2;
+			$attachment->text = $text;
+			$attachment->created = $attachment->created;
+			$attachment->browsernav = 2;
 
 			$parent_entity_name = JText::_($parent_entity);
-			$parent_title = JText::_($parent->getTitle($row->parent_id, $parent_entity));
+			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
-			$row->section = JText::sprintf('ATTACHED_TO_PARENT_S_TITLE_S',
+			$attachment->section = JText::sprintf('ATTACHED_TO_PARENT_S_TITLE_S',
 										   $parent_entity_name, $parent_title);
 
-			$results[$k] = $row;
+			$results[$k] = $attachment;
 			$k++;
 			}
 

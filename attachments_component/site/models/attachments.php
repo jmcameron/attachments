@@ -371,13 +371,13 @@ class AttachmentsModelAttachments extends JModel
 
 		// Do the query
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
+		$attachments = $db->loadObjectList();
 
 		$this->_some_visible = false;
 		$this->_some_modifiable = false;
 
 		// Install the list of attachments in this object
-		$this->_num_attachments = count($rows);
+		$this->_num_attachments = count($attachments);
 
 		// The query only returns items that are visible/accessible for
 		// the user, so if it contains anything, they will be visible
@@ -386,27 +386,27 @@ class AttachmentsModelAttachments extends JModel
 		// Add permissions for each attachment in the list
 		if ( $this->_num_attachments > 0 ) {
 
-			$this->_list =& $rows;
+			$this->_list =& $attachments;
 
 			// Add the permissions to each row
 			$parent = $this->getParentClass();
 
 			// Add permissions
-			foreach ( $rows as $row ) {
-				$row->user_may_delete = $parent->userMayDeleteAttachment($row);
-				$row->user_may_edit = $parent->userMayEditAttachment($row);
-				if ( $row->user_may_edit ) {
+			foreach ( $attachments as $attachment ) {
+				$attachment->user_may_delete = $parent->userMayDeleteAttachment($attachment);
+				$attachment->user_may_edit = $parent->userMayEditAttachment($attachment);
+				if ( $attachment->user_may_edit ) {
 					$this->_some_modifiable = true;
 					}
 				}
 
 			// Fix relative URLs
-			foreach ( $rows as $row ) {
-				if ( $row->uri_type == 'url' ) {
-					$url = $row->url;
+			foreach ( $attachments as $attachment ) {
+				if ( $attachment->uri_type == 'url' ) {
+					$url = $attachment->url;
 					if ( strpos($url, '://') === false ) {
 	                    $uri = JFactory::getURI();
-						$row->url = $uri->base(true) . '/' . $url;
+						$attachment->url = $uri->base(true) . '/' . $url;
 						}
 					}
 				}

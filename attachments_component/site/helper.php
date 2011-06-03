@@ -374,7 +374,7 @@ class AttachmentsHelper
 	/**
 	 * Upload the file
 	 *
-	 * @param &object &$row the partially constructed attachment object
+	 * @param &object &$attachment the partially constructed attachment object
 	 * @param &object &$parent An object with partial parent info including:
 	 *		$parent->new : True if the parent has not been created yet
 	 *						(like adding attachments to an article before it has been saved)
@@ -947,13 +947,13 @@ class AttachmentsHelper
 	 * Get the info about this URL
 	 *
 	 * @param string $raw_url the raw url to parse
-	 * @param &object &$row the attachment object
+	 * @param &object &$attachment the attachment object
 	 * @param bool $verify whether the existance of the URL should be checked
 	 * @param bool $relative_url allow relative URLs
 	 *
 	 * @return true if the URL is okay, or an error object if not
 	 */
-	public function get_url_info($raw_url, &$row, $verify, $relative_url)
+	public function get_url_info($raw_url, &$attachment, $verify, $relative_url)
 	{
 		// Check the URL for existence
 		// * Get 'size' (null if the there were errors accessing the link,
@@ -977,9 +977,9 @@ class AttachmentsHelper
 		$found = false;
 
 		// Set the defaults
-		$row->filename = JString::trim($filename);
-		$row->file_size = $file_size;
-		$row->url_valid = false;
+		$attachment->filename = JString::trim($filename);
+		$attachment->file_size = $file_size;
+		$attachment->url_valid = false;
 
 		// Get parameters
 		jimport('joomla.application.component.helper');
@@ -1097,9 +1097,9 @@ class AttachmentsHelper
 
 
 		// Update the record
-		$row->filename = JString::trim($filename);
-		$row->file_size = $file_size;
-		$row->url_valid = $found;
+		$attachment->filename = JString::trim($filename);
+		$attachment->file_size = $file_size;
+		$attachment->url_valid = $found;
 
 		// Deal with the file type
 		if ( !$mime_type ) {
@@ -1107,16 +1107,16 @@ class AttachmentsHelper
 			$mime_type = AttachmentsFileTypes::mime_type($filename);
 			}
 		if ( $mime_type ) {
-			$row->file_type = JString::trim($mime_type);
+			$attachment->file_type = JString::trim($mime_type);
 			}
 		else {
 			if ( $overlay ) {
 				$mime_type = 'link/generic';
-				$row->file_type = 'link/generic';
+				$attachment->file_type = 'link/generic';
 				}
 			else {
 				$mime_type = 'link/unknown';
-				$row->file_type = 'link/unknown';
+				$attachment->file_type = 'link/unknown';
 				}
 			}
 
@@ -1124,17 +1124,17 @@ class AttachmentsHelper
 		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
 		$icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
 		if ( $icon_filename ) {
-			$row->icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
+			$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
 			}
 		else {
 			if ( $mime_type == 'link/unknown' ) {
-				$row->icon_filename = 'link.gif';
+				$attachment->icon_filename = 'link.gif';
 				}
 			elseif ( $mime_type == 'link/broken' ) {
-				$row->icon_filename = 'link_broken.gif';
+				$attachment->icon_filename = 'link_broken.gif';
 				}
 			else {
-				$row->icon_filename = 'link.gif';
+				$attachment->icon_filename = 'link.gif';
 				}
 			}
 
@@ -1145,7 +1145,7 @@ class AttachmentsHelper
 	/**
 	 * Add the infomation about the URL to the attaachment record and then save it
 	 *
-	 * @param &object &$row the attachment object
+	 * @param &object &$attachment the attachment object
 	 * @param &object &$parent the attachments parent object
 	 * @param bool $verify whether the existance of the URL should be checked
 	 * @param bool $relative_url allow relative URLs
@@ -1154,7 +1154,7 @@ class AttachmentsHelper
 	 *
 	 * @return an error message if there is a problem
 	 */
-	public function add_url(&$row, &$parent, $verify, $relative_url=false,
+	public function add_url(&$attachment, &$parent, $verify, $relative_url=false,
 							$update=false, $attachment_id=false)
 	{
 		// Get the component parameters
@@ -1169,21 +1169,21 @@ class AttachmentsHelper
 		$old_filename = null;
 		$old_filename_sys = null;
 		if ( $update ) {
-			if ( $row->filename_sys ) {
-				$old_filename = $row->filename;
-				$old_filename_sys = $row->filename_sys;
+			if ( $attachment->filename_sys ) {
+				$old_filename = $attachment->filename;
+				$old_filename_sys = $attachment->filename_sys;
 				}
 			}
 
 		// Set up the entity name for display
-		$parent_entity = $row->parent_entity;
+		$parent_entity = $attachment->parent_entity;
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Check to make sure the URL is valid
 		$from = JRequest::getWord('from');
 
 		// Get the info from the url
-		$result = AttachmentsHelper::get_url_info($row->url, $row, $verify, $relative_url);
+		$result = AttachmentsHelper::get_url_info($attachment->url, $attachment, $verify, $relative_url);
 
 		// If there was an error, bow out
 		if ( $result !== true ) {
@@ -1205,35 +1205,35 @@ class AttachmentsHelper
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
-											   $row->url_valid);
+											   $attachment->url_valid);
 				$view->lists = $lists;
-				$view->attachment = $row;
+				$view->attachment = $attachment;
 
-				AttachmentsHelper::add_view_urls($view, 'update', $row->parent_id, $row->parent_type, $attachment_id, $from);
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type, $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $row->parent_id, $row->parent_type, null, $from);
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
-				$view->uri_type = 		 $row->uri_type;
-				$view->url = 				 $row->url;
-				$view->parent_id = $row->parent_id;
-				$view->parent_type = 		 $row->parent_type;
-				$view->description = 		 $row->description;
-				$view->user_field_1 = 	 $row->user_field_1;
-				$view->user_field_2 = 	 $row->user_field_2;
-				$view->user_field_3 = 	 $row->user_field_3;
+				$view->uri_type = 		 $attachment->uri_type;
+				$view->url = 				 $attachment->url;
+				$view->parent_id = $attachment->parent_id;
+				$view->parent_type = 		 $attachment->parent_type;
+				$view->description = 		 $attachment->description;
+				$view->user_field_1 = 	 $attachment->user_field_1;
+				$view->user_field_2 = 	 $attachment->user_field_2;
+				$view->user_field_3 = 	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
-			$display_name = $row->display_name;
-			if ( $update AND (($update == 'file') OR ($update != $row->uri_type)) ) {
+			$display_name = $attachment->display_name;
+			if ( $update AND (($update == 'file') OR ($update != $attachment->uri_type)) ) {
 				$display_name = '';
 				}
 
 			// Set up the view
-			$view->parent_entity = 	   $row->parent_entity;
+			$view->parent_entity = 	   $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title = 	   $parent->title;
 			$view->new_parent = $parent->new;
@@ -1255,10 +1255,10 @@ class AttachmentsHelper
 
 		// Clear out the display_name if the URL has changed
 		$old_url = JRequest::getString('old_url');
-		if ( $row->display_name AND ( $row->url != $old_url ) ) {
+		if ( $attachment->display_name AND ( $attachment->url != $old_url ) ) {
 			$old_display_name = JRequest::getString('old_display_name');
-			if ( $old_display_name == $row->display_name ) {
-				$row->display_name = '';
+			if ( $old_display_name == $attachment->display_name ) {
+				$attachment->display_name = '';
 				}
 			}
 
@@ -1272,40 +1272,40 @@ class AttachmentsHelper
 			}
 
 		// Create a display filename, if needed (for long URLs)
-		if ( $max_filename_length > 0 AND strlen($row->display_name) == 0 ) {
-			if ( $row->filename ) {
-				$row->display_name =
-					AttachmentsHelper::truncate_filename($row->filename,
+		if ( $max_filename_length > 0 AND strlen($attachment->display_name) == 0 ) {
+			if ( $attachment->filename ) {
+				$attachment->display_name =
+					AttachmentsHelper::truncate_filename($attachment->filename,
 														 $max_filename_length);
 				}
 			else {
-				$row->display_name =
-					AttachmentsHelper::truncate_url($row->url,
+				$attachment->display_name =
+					AttachmentsHelper::truncate_url($attachment->url,
 													$max_filename_length);
 				}
 			}
 
 		// Assume relative URLs are valid
 		if ( $relative_url ) {
-			$row->url_valid = true;
+			$attachment->url_valid = true;
 			}
 
 		// If there is no filename, do something about it
-		if ( !$row->filename AND !$row->display_name ) {
-			$row->display_name = $row->url;
+		if ( !$attachment->filename AND !$attachment->display_name ) {
+			$attachment->display_name = $attachment->url;
 			}
 
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
 		$now = new JDate();
-		$row->created = $now->toMySQL();
-		$row->modified = $row->created;
-		$row->state = $auto_publish;
-		$row->uri_type = 'url';
+		$attachment->created = $now->toMySQL();
+		$attachment->modified = $attachment->created;
+		$attachment->state = $auto_publish;
+		$attachment->uri_type = 'url';
 
 		// Save the updated attachment
-		if (!$row->store()) {
-			$errmsg = JText::_('ERROR_SAVING_URL_ATTACHMENT_RECORD') . $row->getError() . ' (ERR 43)';
+		if (!$attachment->store()) {
+			$errmsg = JText::_('ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1346,12 +1346,12 @@ class AttachmentsHelper
 		$query->select('*')->from('#__attachments')->where('id = ' .(int)$id);
 		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query, 0, 1);
-		$rows = $db->loadObjectList();
-		if ( count($rows) != 1 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) != 1 ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 44)';
 			JError::raiseError(500, $errmsg);
 			}
-		$attachment =& $rows[0];
+		$attachment =& $attachments[0];
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
@@ -1426,7 +1426,7 @@ class AttachmentsHelper
 	/**
 	 * Switch attachment from one parent to another
 	 *
-	 * @param &object &$row the attachment object
+	 * @param &object &$attachment the attachment object
 	 * @param int $old_parent_id the id for the old parent
 	 * @param int $new_parent_id the id for the new parent
 	 * @param string $new_parent_type the new parent type (eg, 'com_content')
@@ -1434,13 +1434,13 @@ class AttachmentsHelper
 	 *
 	 * @return '' if succesful, else an error message
 	 */
-	public function switch_parent(&$row, $old_parent_id, $new_parent_id,
+	public function switch_parent(&$attachment, $old_parent_id, $new_parent_id,
 								  $new_parent_type=null, $new_parent_entity=null)
 	{
 		// Switch the parent as specified, renaming the file as necessary
 		// Return success status
 
-		if ( $row->uri_type == 'url' ) {
+		if ( $attachment->uri_type == 'url' ) {
 			// Do not need to do any file operations if this is a URL
 			return '';
 			}
@@ -1451,8 +1451,8 @@ class AttachmentsHelper
 			$parent_entity = $new_parent_entity;
 			}
 		else {
-			$parent_type = $row->parent_type;
-			$parent_entity = $row->parent_entity;
+			$parent_type = $attachment->parent_type;
+			$parent_entity = $attachment->parent_entity;
 			}
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
@@ -1486,27 +1486,27 @@ class AttachmentsHelper
 			}
 
 		// Construct the new filename and URL
-		$old_filename_sys = $row->filename_sys;
-		$new_filename_sys = $new_fullpath . $row->filename;
-		$new_url = JString::str_ireplace(DS, '/', $upload_url . '/' . $new_path . $row->filename);
+		$old_filename_sys = $attachment->filename_sys;
+		$new_filename_sys = $new_fullpath . $attachment->filename;
+		$new_url = JString::str_ireplace(DS, '/', $upload_url . '/' . $new_path . $attachment->filename);
 
 		// Rename the file
 		jimport('joomla.filesystem.file');
 		if ( JFile::exists($new_filename_sys) ) {
 			return JText::sprintf('ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
-								  $parent_entity_name, $row->filename);
+								  $parent_entity_name, $attachment->filename);
 			}
 		if ( !JFile::move($old_filename_sys, $new_filename_sys) ) {
-			$new_filename = $new_path . $row->filename;
+			$new_filename = $new_path . $attachment->filename;
 			return JText::sprintf('ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
 								  $parent_entity_name, $new_filename);
 			}
 		AttachmentsHelper::write_empty_index_html($new_fullpath);
 
 		// Save the changes to the attachment record immediately
-		$row->parent_id = $new_parent_id;
-		$row->filename_sys = $new_filename_sys;
-		$row->url = $new_url;
+		$attachment->parent_id = $new_parent_id;
+		$attachment->filename_sys = $new_filename_sys;
+		$attachment->url = $new_url;
 
 		// Clean up after ourselves
 		AttachmentsHelper::clean_directory($old_filename_sys);

@@ -40,32 +40,32 @@ class AttachmentsUpdate
 		$query->select('id, filename, file_type, icon_filename')->from('#__attachments');
 		$query->where('file_type IS NULL');
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_FILE_TYPE_FIELDS_NEED_UPDATING');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Update the icon file_types all the attachments (that do not have one already)
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
-		$row =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
 
-			$row->load($id);
+			$attachment->load($id);
 
 			// Only update those attachment records that don't already have an icon_filename
-			if ( JString::strlen( $row->icon_filename ) == 0 ) {
-				$new_icon_filename = AttachmentsFileTypes::icon_filename($row->filename,
-																		 $row->file_type);
+			if ( JString::strlen( $attachment->icon_filename ) == 0 ) {
+				$new_icon_filename = AttachmentsFileTypes::icon_filename($attachment->filename,
+																		 $attachment->file_type);
 				if ( JString::strlen( $new_icon_filename) > 0 ) {
-					$row->icon_filename = $new_icon_filename;
-					if (!$row->store()) {
-						$errmsg = JText::sprintf('ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $row->filename) .
-							' ' . $row->getError() . ' (ERR 0)';
+					$attachment->icon_filename = $new_icon_filename;
+					if (!$attachment->store()) {
+						$errmsg = JText::sprintf('ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
+							' ' . $attachment->getError() . ' (ERR 0)';
 						JError::raiseError(500, $errsmg);
 						}
 					$numUpdated++;
@@ -89,28 +89,28 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return 0;
 			}
 
 		// Update the dates for all the attachments
 		$numUpdated = 0;
-		foreach ($rows as $row) {
+		foreach ($attachments as $attachment) {
 
 			// Update the new create and update dates if they are null
 			$updated = false;
-			$created = $row->created;
+			$created = $attachment->created;
 			if ( is_null($created) OR $created == ''  ) {
 				jimport( 'joomla.utilities.date' );
-				$cdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
+				$cdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
 				$created = $cdate->toMySQL();
 				$updated = true;
 				}
-			$mod_date = $row->modified;
+			$mod_date = $attachment->modified;
 			if ( is_null($mod_date) OR $mod_date == '' ) {
 				jimport( 'joomla.utilities.date' );
-				$mdate = new JDate(filemtime($row->filename_sys), $app->getCfg('offset'));
+				$mdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
 				$mod_date = $mdate->toMySQL();
 				$updated = true;
 				}
@@ -120,11 +120,11 @@ class AttachmentsUpdate
 				$query = $db->getQuery(true);
 				$query->update('#__attachments');
 				$query->set("modified='{$mod_date}', created='{$created}'");
-				$query->where('id = ' . (int)$row->id);
+				$query->where('id = ' . (int)$attachment->id);
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
-											 $row->filename) . " ";
+											 $attachment->filename) . " ";
 					echo $errmsg . $db->stderr();
 					}
 				$numUpdated++;
@@ -167,16 +167,16 @@ class AttachmentsUpdate
 		// Get the existing field names
 		$query = "explain #__attachments";
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
+		$attachments = $db->loadObjectList();
 		$fields = array();
 		$types = array();
 		$nullable = array();
 		$default = array();
-		foreach ($rows as $row) {
-			$fields[] = $row->Field;
-			$types[$row->Field] = $row->Type;
-			$nullable[$row->Field] = $row->Null;
-			$default[$row->Field] = $row->Default;
+		foreach ($attachments as $attachment) {
+			$fields[] = $attachment->Field;
+			$types[$attachment->Field] = $attachment->Type;
+			$nullable[$attachment->Field] = $attachment->Null;
+			$default[$attachment->Field] = $attachment->Default;
 			}
 
 		// Rename fields as necessary
@@ -210,16 +210,16 @@ class AttachmentsUpdate
 		if ( $num_renamed_fields > 0 ) {
 			$query = "explain #__attachments";
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();
+			$attachments = $db->loadObjectList();
 			$fields = array();
 			$types = array();
 			$nullable = array();
 			$default = array();
-			foreach ($rows as $row) {
-				$fields[] = $row->Field;
-				$types[$row->Field] = $row->Type;
-				$nullable[$row->Field] = $row->Null;
-				$default[$row->Field] = $row->Default;
+			foreach ($attachments as $attachment) {
+				$fields[] = $attachment->Field;
+				$types[$attachment->Field] = $attachment->Type;
+				$nullable[$attachment->Field] = $attachment->Null;
+				$default[$attachment->Field] = $attachment->Default;
 				}
 			}
 
@@ -335,10 +335,10 @@ class AttachmentsUpdate
 		// Get the existing indexed column names
 		$query = "show index from #__attachments";
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
+		$attachments = $db->loadObjectList();
 		$indexes = array();
-		foreach ($rows as $row) {
-			$indexes[] = $row->Key_name;
+		foreach ($attachments as $attachment) {
+			$indexes[] = $attachment->Key_name;
 			}
 
 		// Define the indexes that may need to get added
@@ -499,13 +499,13 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Get the parent plugin manager
@@ -644,13 +644,13 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Get ready to rename files
@@ -731,13 +731,13 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Update the system filenames for all the attachments
@@ -781,13 +781,13 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Update the system filenames for all the attachments
@@ -832,13 +832,13 @@ class AttachmentsUpdate
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='url'");
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if ( count($rows) == 0 ) {
+		$attachments = $db->loadObjectList();
+		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_URLS');
 			}
 		$IDs = array();
-		foreach ($rows as $row) {
-			$IDs[] = $row->id;
+		foreach ($attachments as $attachment) {
+			$IDs[] = $attachment->id;
 			}
 
 		// Update the system filenames for all the attachments

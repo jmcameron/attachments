@@ -44,9 +44,9 @@ class CategoryEditTest extends JoomlaDatabaseTestCase
 	public function testCategoryEdit($user_id,$username,$cat_id,$may_edit)
 	{
 		$result = AttachmentsPermissions::userMayEditCategory((int)$cat_id, (int)$user_id);
+		$errmsg = "----> Failed test for $username edit category $cat_id, expected $may_edit, got $result";
 
-		$this->assertEquals($result, (bool)$may_edit,
-							"----> Failed test for $username edit category $cat_id, expected $may_edit, got $result");
+		$this->assertEquals($result, (bool)$may_edit, $errmsg);
 	}
 	
 
