@@ -2,13 +2,13 @@
 /**
  * Prepares a minimalist framework for unit testing.
  *
+ * Adapted from [joomla 1.6]/tests/unit/bootstrap
+ *
+ * @package Attachments_test
+ * @subpackage Attachments_config
+ *
  * Joomla is assumed to include the /unittest/ directory.
  * eg, /path/to/joomla/unittest/
- *
- * @version		$Id: bootstrap.php 20196 2011-01-09 02:40:25Z ian $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- * @link		http://www.phpunit.de/manual/current/en/installation.html
  */
 
 // Load the custom initialisation file if it exists.
