@@ -13,12 +13,13 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+// Access check.
+if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	}
+
 /** Load the Attachments defines */
 require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
-
-// ??? Update with ACL stuff
-$app = JFactory::getApplication();
-$app->isAdmin() or die('Must be admin to execute!');
 
 /**
  * A class for update functions
