@@ -439,9 +439,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		
 		// NOTE: These WHERE clauses will be combined by OR
 
-		// ??? see code for example of how to set up query for publish_up, publish_down
-		// ??? in: modules/mod_related_items/helper.php:82
-
 		if ( $parent_state == 'PUBLISHED' ) {
 
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE') {
@@ -456,7 +453,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=1))";
 				}
-
 
 			}
 		elseif ( $parent_state == 'UNPUBLISHED' ) {

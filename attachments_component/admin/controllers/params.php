@@ -17,10 +17,6 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla controllerform library
 jimport('joomla.application.component.controllerform');
 
-
-// ??? require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
-
-
 /**
  * Attachment Controller
  *

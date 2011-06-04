@@ -145,10 +145,10 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$cid = JRequest::getVar('cid', array(), '', 'array');
 
 		if (count($cid)) {
-			jimport('joomla.filesystem.file');
 
 			$cids = implode(',', $cid);
 
+			// Get all the attachments to be deleted
 			$db =& JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
@@ -159,17 +159,15 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				JError::raiseError(500, $errmsg);
 				}
 
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-
 			// First delete the actual attachment files
+			jimport('joomla.filesystem.file');
+			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
 			foreach ($attachments as $attachment) {
 				if ( JFile::exists($attachment->filename_sys) ) {
 					JFile::delete($attachment->filename_sys);
 					AttachmentsHelper::clean_directory($attachment->filename_sys);
 					}
 				}
-
-			// ??? Add check here that user has permissions to delete this attachment
 
 			// Delete the entries in the attachments table
 			$query = $db->getQuery(true);
