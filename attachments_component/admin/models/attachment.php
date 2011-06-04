@@ -38,6 +38,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
+
 	/**
 	 * Override the getItem() command to get some extra info
 	 *
@@ -52,16 +53,23 @@ class AttachmentsModelAttachment extends JModelAdmin
 		if ( $item->id != 0 ) {
 
 			// If the item exists, get more info
+			$db = $this->getDbo();
 
 			// Get the creator name
-			$db		= $this->getDbo();
 			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->created_by);
 			$db->setQuery($query, 0, 1);
 			$item->creator_name = $db->loadResult();
-			// ??? Should check for error here
+			// ??? Should check for $db error here
 
-			// Get the parent info
+			// Get the modifier name
+			$query = $db->getQuery(true);
+			$query->select('name')->from('#__users')->where('id = ' . (int)$item->modified_by);
+			$db->setQuery($query, 0, 1);
+			$item->modifier_name = $db->loadResult();
+			// ??? Should check for $db error here
+
+			// Get the parent info (??? Do we really need this?)
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
 			JPluginHelper::importPlugin('attachments');
@@ -71,6 +79,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 				JError::raiseError(500, $errmsg);
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);
+
 			}
 		
 		return $item;
