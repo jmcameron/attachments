@@ -60,9 +60,6 @@ require_once JPATH_LIBRARIES.'/joomla/registry/registry.php';
 // Include the Joomla session library.
 require_once JPATH_BASE.'/libraries/joomla/session/session.php';
 
-// Exclude all of the tests from code coverage reports
-// ??? PHPUnit_Util_Filter::addDirectoryToFilter(JPATH_BASE . '/tests');
-
 // Set error handling.
 JError::setErrorHandling(E_NOTICE, 'ignore');
 JError::setErrorHandling(E_WARNING, 'ignore');
