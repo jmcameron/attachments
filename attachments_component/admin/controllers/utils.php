@@ -54,6 +54,25 @@ class AttachmentsControllerUtils extends JController
 		exit();
 	}
 
+	/**
+	 * Enqueue a system message.
+	 *
+	 * @param   string   $msg   The message to enqueue.
+	 * @param   string   $type  The message type. Default is message.
+	 *
+	 * @return  void
+	 */
+	protected function enqueueSystemMessage($msg, $type = 'message')
+	{
+		$app = JFactory::getApplication();
+		$app->enqueueMessage($msg, $type);
+
+		// Not sure why I need the extra saving to the session below,
+		// but it it seems necessary because I'm doing it from an iframe.
+		$session =& JFactory::getSession(); 
+		$session->set('application.queue', $app->getMessageQueue());
+	}
+
 
 	/**
 	 * Add icon filenames for attachments missing an icon
@@ -135,8 +154,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -163,8 +182,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -191,8 +210,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -219,8 +238,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::update_file_sizes();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -247,8 +266,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::check_files_existance();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
@@ -274,8 +293,8 @@ class AttachmentsControllerUtils extends JController
 		$msg = AttachmentsUpdate::validate_urls();
 
 		if ( JRequest::getBool('close') ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($msg);
+
+			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
 			echo $this->_close_script;
