@@ -346,45 +346,26 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from)
 	{
-		$user   = JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		// Get the component parameters
+		jimport('joomla.application.component.helper');
+		$params =& JComponentHelper::getParams('com_attachments');
 
-		// Generate the HTML for the attachments for the specified parent
-		$alist = '';
-		$db =& JFactory::getDBO();
-		$query = $db->getQuery(true);
-		// ??? Probably should just use the model (and do published right)
-		$query->select('count(*)')->from('#__attachments');
-		$query->where('parent_id='.(int)$parent_id." AND state=1 AND parent_type='$parent_type'");
-		$query->where('access IN ('.$user_levels.')');
-		$db->setQuery($query);
-		$total = $db->loadResult();
-
-		if ( $total > 0 ) {
-
-			// Get the component parameters
-			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
-
-			// Check the security status
-			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-			$secure = $params->get('secure', false);
-			$hta_filename = $attach_dir.DS.'.htaccess';
-			if ( ($secure AND !file_exists($hta_filename)) OR
-				 (!$secure AND file_exists($hta_filename)) ) {
-				require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
-				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
-				}
-
-			// Get the html for the attachments list
-			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-						 'controllers'.DS.'attachments.php');
-			$controller = new AttachmentsControllerAttachments();
-			$alist = $controller->display($parent_id, $parent_type, $parent_entity,
-										  null, true, true, false, $from);
+		// Check the security status
+		$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$secure = $params->get('secure', false);
+		$hta_filename = $attach_dir.DS.'.htaccess';
+		if ( ($secure AND !file_exists($hta_filename)) OR
+			 (!$secure AND file_exists($hta_filename)) ) {
+			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 			}
 
-		return $alist;
+		// Get the html for the attachments list
+		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
+					 'controllers'.DS.'attachments.php');
+		$controller = new AttachmentsControllerAttachments();
+		return $controller->display($parent_id, $parent_type, $parent_entity,
+									null, true, true, false, $from);
 	}
 
 
