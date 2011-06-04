@@ -538,7 +538,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$change_parent = ($change == 'parent');
 		$update_file = JRequest::getWord('change') == 'file';
 		$attachment_id = $cid[0];
-		$attachment->load($attachment_id);
+
+		// Get the attachment data
+		$attachment = $model->getItem($attachment_id);
 
 		$from = JRequest::getWord('from');
 		$layout = JRequest::getWord('tmpl');
@@ -565,18 +567,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			JHTML::_('select.genericlist',	 $icon_filenames,
 					 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
 					 $attachment->icon_filename);
-
-		// Get the creators name (??? Fold this into the attachment model?)
-		$query = $db->getQuery(true);
-		$query->select('name')->from('#__users')->where('id='.(int)$attachment->created_by);
-		$db->setQuery($query, 0, 1);
-		$attachment->creator_name = $db->loadResult();
-
-		// Get the modifiers name (??? Fold this into the attachment model?)
-		$query = $db->getQuery(true);
-		$query->select('name')->from('#__users')->where('id='.(int)$attachment->modified_by);
-		$db->setQuery($query, 0, 1);
-		$attachment->modifier_name = $db->loadResult();
 		
 		// Compute the attachment size in KB
 		$attachment->size_kb = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
@@ -585,10 +575,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$attachment->url = $uri->root(true) . '/' . $attachment->url;
 			}
 
-		// Get the parent handler
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
+
+		// Get the parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
