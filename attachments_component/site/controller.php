@@ -461,20 +461,21 @@ class AttachmentsController extends JController
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
-		// ??? Convert to use model
-		$query = $db->getQuery(true);
-		$query->select('*')->from('#__attachments')->where('id = '.(int)$id);
-		$db->setQuery($query, 0, 1);
-		$attachments = $db->loadObjectList();
-		if (count($attachments) != 1) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 66)';
+
+		// Get the attachment info
+		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		$model = new AttachmentsModelAttachment();
+		$model->setId($id);
+		$attachment = $model->getAttachment();
+		if ( !$attachment ) {
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
-		$filename_sys  = $attachments[0]->filename_sys;
-		$filename	   = $attachments[0]->filename;
-		$parent_id	   = $attachments[0]->parent_id;
-		$parent_type   = $attachments[0]->parent_type;
-		$parent_entity = $attachments[0]->parent_entity;
+		$filename_sys  = $attachment->filename_sys;
+		$filename	   = $attachment->filename;
+		$parent_id	   = $attachment->parent_id;
+		$parent_type   = $attachment->parent_type;
+		$parent_entity = $attachment->parent_entity;
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -488,7 +489,7 @@ class AttachmentsController extends JController
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Check to make sure we can edit it
-		if ( !$parent->userMayDeleteAttachment($attachments[0]) ) {
+		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
@@ -501,7 +502,7 @@ class AttachmentsController extends JController
 			}
 
 		// See if this user can edit (or delete) the attachment
-		if ( !$parent->userMayDeleteAttachment($attachments[0]) ) {
+		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERR 70)';
 			JError::raiseError(500, $errmsg);
 			}

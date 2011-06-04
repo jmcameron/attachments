@@ -1340,18 +1340,14 @@ class AttachmentsHelper
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Get the info about the attachment
-		$db =& JFactory::getDBO();
-		$query = $db->getQuery(true);
-		// ??? Use model here?
-		$query->select('*')->from('#__attachments')->where('id = ' .(int)$id);
-		$query->where('access in ('.$user_levels.')');
-		$db->setQuery($query, 0, 1);
-		$attachments = $db->loadObjectList();
-		if ( count($attachments) != 1 ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 44)';
+		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		$model = new AttachmentsModelAttachment();
+		$model->setId($id);
+		$attachment = $model->getAttachment();
+		if ( !$attachment ) {
+			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
-		$attachment =& $attachments[0];
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
@@ -1390,6 +1386,7 @@ class AttachmentsHelper
 		$len = filesize($filename_sys);
 
 		// Update the download count
+		$db =& JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->update('#__attachments')->set('download_count = (download_count + 1)');
 		$query->where('id = ' .(int)$id);
