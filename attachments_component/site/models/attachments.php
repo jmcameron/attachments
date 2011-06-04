@@ -432,6 +432,8 @@ class AttachmentsModelAttachments extends JModel
 	/**
 	 * Should some of the attachments be visible?
 	 *
+	 * ??? Is someVisible() function needed?
+	 *
 	 * @return true if there are attachments and some should be visible
 	 */
 	public function someVisible()
