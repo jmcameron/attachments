@@ -55,19 +55,27 @@ class AttachmentsModelAttachment extends JModelAdmin
 			// If the item exists, get more info
 			$db = $this->getDbo();
 
+			// ??? Should change this to be derived from something else so we provide our own query?
+
 			// Get the creator name
 			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->created_by);
 			$db->setQuery($query, 0, 1);
 			$item->creator_name = $db->loadResult();
-			// ??? Should check for $db error here
+			if ( $db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
 
 			// Get the modifier name
 			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->modified_by);
 			$db->setQuery($query, 0, 1);
 			$item->modifier_name = $db->loadResult();
-			// ??? Should check for $db error here
+			if ( $db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
 
 			// Get the parent info (??? Do we really need this?)
 			$parent_type = $item->parent_type;
