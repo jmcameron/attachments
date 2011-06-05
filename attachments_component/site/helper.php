@@ -651,6 +651,11 @@ class AttachmentsHelper
 		
 		$url = $upload_url . '/' . $path . $filename;
 
+		// If we are on windows, fix the backslashes in the URL
+		if ( DS != '/' ) {
+			$url = str_replace(DS, '/', $url);
+			}
+
 		// Make sure the system filename doesn't already exist
 		$error = false;
 		$duplicate_filename = false;
