@@ -335,10 +335,8 @@ else
 <?php if ( $this->in_popup ): ?>
 <div align="center">
 	<input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" value="<?php echo JText::_('SAVE'); ?>" />
-	<span class="right">
-	   <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
-			  onClick="window.parent.SqueezeBox.close();" />
-	</span>
+	<span class="right"><input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
+			  onClick="window.parent.SqueezeBox.close();" /></span>
 </div>
 <?php endif; ?>
 <?php echo JHTML::_( 'form.token' ); ?>

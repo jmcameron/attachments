@@ -74,7 +74,7 @@ if ( $this->parent_title ) {
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
 		 echo $this->upload_toggle_button_text;?></a><br />
 	  <input type="file" name="upload" id="<?php echo $upload_id; ?>"
-			 size="74" maxlength="512" /></div>
+			 size="74" maxlength="512" />
 	</td>
   </tr>
   <tr>
@@ -83,7 +83,7 @@ if ( $this->parent_title ) {
 	<td>		  
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo $this->display_filename_tooltip; ?>" class="hasTip"
-			  value="" /><span class="optional"><?php echo JText::_('OPTIONAL'); ?></span.
+			  value="" /><span class="optional"><?php echo JText::_('OPTIONAL'); ?></span>
    </td>
 <?php else: ?>
   <tr>
@@ -220,6 +220,6 @@ if ( !in_array($editor, $exceptions) ) {
 	if ( $lang->isRTL() ) {
 		echo '<b>' . JText::_('ADD_ATTACHMENT_TO') . '</b>';
 		}
-	}
 
 	echo '</div>';
+	}
