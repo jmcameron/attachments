@@ -75,27 +75,27 @@ class plgButtonAdd_attachment extends JPlugin
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the parent ID (id or first of cid array)
-		//	   NOTE: $id=0 means no id (usually means creating a new entity)
+		//	   NOTE: $parent_id=0 means no id (usually means creating a new entity)
 		$cid = JRequest::getVar('cid', array(0), '', 'array');
-		$id = 0;
+		$parent_id = 0;
 		if ( count($cid) > 0 ) {
-			$id = (int)$cid[0];
+			$parent_id = (int)$cid[0];
 			}
-		if ( $id == 0) {
+		if ( $parent_id == 0) {
 			$nid = JRequest::getInt('id');
 			if ( !is_null($nid) ) {
-				$id = (int)$nid;
+				$parent_id = (int)$nid;
 				}
 			}
-		if ( $id == 0) {
+		if ( $parent_id == 0) {
 			$nid = JRequest::getInt('a_id');
 			if ( !is_null($nid) ) {
-				$id = (int)$nid;
+				$parent_id = (int)$nid;
 				}
 			}
 
 		// Make sure we have permissions to add attachments to this article or category
-		if ( !$parent->userMayAddAttachment($id, $parent_entity, $id == 0) ) {
+		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
 			return;
 			}
 
@@ -131,7 +131,7 @@ class plgButtonAdd_attachment extends JPlugin
 		// Create the [Add Attachment] button object
 		$button = new JObject();
 
-		$link = $parent->getEntityAddUrl($id, $parent_entity, 'closeme');
+		$link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
 		$link .= '&amp;editor=' . $editor;
 
 		// Finalize the [Add Attachment] button info
