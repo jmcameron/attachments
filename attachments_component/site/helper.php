@@ -420,6 +420,17 @@ class AttachmentsHelper
 
 		$from = JRequest::getWord('from');
 
+		// Check the filename for bad characters
+		$bad_chars = false;
+		$forbidden_chars = $params->get('forbidden_filename_characters', '#=?%&');
+		for ($i=0; $i < strlen($forbidden_chars); $i++) {
+			$char = $forbidden_chars[$i];
+			if ( strpos($filename, $char) !== false ) {
+				$bad_chars = true;
+				break;
+				}
+			}
+
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($attachment->parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
@@ -432,11 +443,21 @@ class AttachmentsHelper
 			}
 
 		// Make sure a file was successfully uploaded
-		if ( ($_FILES['upload']['size'] == 0) AND
-			 ($_FILES['upload']['tmp_name'] == '') ) {
+		if ( (($_FILES['upload']['size'] == 0) AND
+			  ($_FILES['upload']['tmp_name'] == '')) OR $bad_chars ) {
 
 			// Guess the type of error
-			if ( $filename == '' ) {
+			if ( $bad_chars ) {
+				$error = 'bad_chars';
+				$error_msg = JText::sprintf('ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
+				if ( $app->isAdmin() ) {
+					$result = new JObject();
+					$result->error = true;
+					$result->error_msg = $error_msg;
+					return $result;
+					}
+				}
+			elseif ( $filename == '' ) {
 				$error = 'no_file';
 				$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . ' (' . JText::_('YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
@@ -503,13 +524,17 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->parent_entity = 	 $attachment->parent_entity;
+			$view->parent_entity = $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title = 	 $parent->title;
+			$view->parent_title = $parent->title;
 			$view->new_parent = $parent->new;
 
-			$view->display_name = 	 $display_name;
+			$view->display_name = $display_name;
 
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
+			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+			
 			$view->params = $params;
 
 			$view->from = $from;

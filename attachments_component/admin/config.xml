@@ -166,6 +166,10 @@
 
   <fieldset name="advanced"
 	    label="COM_ATTACHMENTS_CONFIG_ADVANCED_SETTINGS_LABEL">
+    <field name="forbidden_filename_characters" type="text" default="#=?%&amp;"
+           label="FORBIDDEN_FILENAME_CHARACTERS" size="40"
+           description="FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION">
+    </field>
     <field name="attachments_table_style" type="text" default="attachmentsList"
            label="CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
            description="CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
