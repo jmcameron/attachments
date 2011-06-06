@@ -118,6 +118,12 @@ class AttachmentsPermissions
 			return true;
 		}
 
+		// Check for article being created.
+		// NOTE: we must presume that the article is being created by this user!
+		if ( (int)$article_id == 0 AND $user->authorise('core.edit.own', 'com_content') ) {
+			return true;
+			}
+
 		// No general permissions, see if 'edit own' is permitted for this article
 		if ( $user->authorise('core.edit.own', 'com_content') ||
 			 $user->authorise('core.edit.own', 'com_content.article.'.$article_id) ) {
