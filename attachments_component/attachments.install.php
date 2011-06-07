@@ -83,11 +83,11 @@ class Com_AttachmentsInstallerScript {
 
 		// Temporarily move the attachments directory out of the way to avoid conflicts
 		jimport('joomla.filesystem.folder');
-		$attachdir = JPATH_ROOT . DS . 'attachments';
+		$attachdir = JPATH_ROOT.'/attachments';
 		if ( JFolder::exists($attachdir) ) {
 
 			// Move the attachments directory out of the way temporarily
-			$this->moved_attachments_dir = JPATH_ROOT. DS . 'temporarily_renamed_attachments_folder';
+			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
 			// ?? SHOULD Catch errors here
 			JFolder::move($attachdir, $this->moved_attachments_dir);
 
@@ -141,7 +141,7 @@ class Com_AttachmentsInstallerScript {
 
 		// Restore the attachments directory (if renamed)
 		if ( $this->moved_attachments_dir AND JFolder::exists($this->moved_attachments_dir) ) {
-			$attachdir = JPATH_ROOT . DS . 'attachments';
+			$attachdir = JPATH_ROOT.'/attachments';
 			JFolder::move($this->moved_attachments_dir, $attachdir);
 			$app->enqueueMessage(JText::sprintf('RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 			$app->enqueueMessage('<br/>', 'message');

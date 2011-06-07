@@ -44,7 +44,7 @@ class JFormFieldIconfilenames extends JFormField
 
 		// Construct the list of legal icon filenames
 		$icon_filenames = array();
-		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
 			$icon_filenames[] = JHTML::_('select.option', $ifname);
 			}

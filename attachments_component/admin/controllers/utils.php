@@ -85,7 +85,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 		$msg = AttachmentsUpdate::add_icon_filenames();
 		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
@@ -102,7 +102,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
 		$msg = JText::sprintf( 'UPDATED_N_ATTACHMENTS', $numUpdated );
@@ -121,7 +121,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo "\n<html><head><title>Updating Attachments Tables</title></head><body>\n";
@@ -149,7 +149,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
@@ -177,7 +177,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
@@ -205,7 +205,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
@@ -233,7 +233,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::update_file_sizes();
 
@@ -261,7 +261,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::check_files_existance();
 
@@ -288,7 +288,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::validate_urls();
 
@@ -315,7 +315,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'update.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		exit();
 	}

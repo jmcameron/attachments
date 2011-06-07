@@ -86,7 +86,7 @@ $echo_css = $this->error;
 JHTML::_('behavior.mootools');
 
 /** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 // Add the stylesheets
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
@@ -207,8 +207,7 @@ if ( $lang->isRTL() ) {
 
 	// Show the existing attachments (if any)
 	if ( $parent_id OR ($parent_id === 0) ) {
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-					 'controllers'.DS.'attachments.php');
+		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
 		$controller->display($parent_id, $parent_type, $parent_entity,
 							 'EXISTING_ATTACHMENTS',

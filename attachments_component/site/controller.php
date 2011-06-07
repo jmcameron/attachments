@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport( 'joomla.application.component.controller' );
 
 /** Load the Attachements defines */
-require_once(JPATH_COMPONENT.DS.'defines.php');
+require_once(JPATH_COMPONENT.'/defines.php');
 
 
 /**
@@ -76,7 +76,7 @@ class AttachmentsController extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Get the parent info
 		$parent_entity = 'default';
@@ -147,7 +147,7 @@ class AttachmentsController extends JController
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
-		$upload_dir = JPATH_BASE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 54)';
@@ -163,7 +163,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up the view to redisplay the form with warnings
-		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 		$view = new AttachmentsViewUpload();
 
 		// Set up the view
@@ -171,7 +171,7 @@ class AttachmentsController extends JController
 
 		// Set up for editing the access level
 		if ( $params->get('allow_frontend_access_editing', false) ) {
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
 			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
 			}
@@ -287,7 +287,7 @@ class AttachmentsController extends JController
 			}
 
 		// Bind the info from the form
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( $attachment_id AND !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 60)';
@@ -367,7 +367,7 @@ class AttachmentsController extends JController
 			$parent->title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Upload new file/url and create/update the attachment
 		if ( $new_uri_type == 'file' ) {
@@ -439,7 +439,7 @@ class AttachmentsController extends JController
 			JError::raiseError(500, $errmsg);
 			}
 
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		AttachmentsHelper::download_attachment($id);
 	}
@@ -463,7 +463,7 @@ class AttachmentsController extends JController
 			}
 
 		// Get the attachment info
-		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
 		$model = new AttachmentsModelAttachment();
 		$model->setId($id);
 		$attachment = $model->getAttachment();
@@ -525,7 +525,7 @@ class AttachmentsController extends JController
 			}
 
 		// Clean up after ourselves
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php'); 
+		require_once(JPATH_COMPONENT_SITE.'/helper.php'); 
 		AttachmentsHelper::clean_directory($filename_sys);
 
 		// Get the Itemid
@@ -581,7 +581,7 @@ class AttachmentsController extends JController
 			}
 
 		// Get the attachment record
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 73)';
@@ -606,7 +606,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT.DS.'views'.DS.'warning'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT.'/views/warning/view.html.php');
 		$view = new AttachmentsViewWarning( );
 		$view->parent_id = $parent_id;
 		$view->option = JRequest::getCmd('option');
@@ -638,7 +638,7 @@ class AttachmentsController extends JController
 	 */
 	public function update()
 	{
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 		// Call with: index.php?option=com_attachments&task=update&id=1&tmpl=component
 		//		  or: component/attachments/update/id/1/tmpl/component
 
@@ -653,7 +653,7 @@ class AttachmentsController extends JController
 			}
 
 		// Get the attachment record
-		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
 		$model = new AttachmentsModelAttachment();
 		$model->setId($id);
 		$attachment = $model->getAttachment();
@@ -696,8 +696,8 @@ class AttachmentsController extends JController
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 
 		// Make sure the attachments directory exists
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-		$upload_dir = JPATH_BASE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
+		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 78)';
@@ -723,7 +723,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 		$view = new AttachmentsViewUpdate();
 		$from = JRequest::getWord('from', 'closeme');
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
@@ -731,7 +731,7 @@ class AttachmentsController extends JController
 
 		// Set up for editing the access level
 		if ( $params->get('allow_frontend_access_editing', false) ) {
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
 			}
@@ -776,7 +776,7 @@ class AttachmentsController extends JController
 			return '';
 			}
 			
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'attachments.php');
+		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
 		$response = $controller->display($parent_id, $parent_type, $parent_entity,
 										 $title, $show_links, $allow_edit, false, $from);

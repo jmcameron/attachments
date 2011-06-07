@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controllerform');
 
 /** Load the Attachments defines */
-require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
  
 
 /**
@@ -190,7 +190,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'add'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/add/view.html.php');
 		$view = new AttachmentsViewAdd();
 
 		$view->uri_type      = $uri_type;
@@ -217,7 +217,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->lists = $lists;
 
 		// Set up the access field
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
 		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
 
@@ -379,7 +379,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Upload the file!
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Handle 'from' clause
 		$from = JRequest::getWord('from');
@@ -486,7 +486,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			     	$errmsg = $msg;
 				if ( DS == "\\" ) {
 				    // Fix filename on Windows system so alert can display it
-				    $errmsg = str_replace("\\", "\\\\", $errmsg);
+				    $errmsg = str_replace(DS, "\\\\", $errmsg);
 				    }
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
@@ -559,7 +559,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Construct the drop-down list for legal icon filenames
 		$icon_filenames = array();
-		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
 			$icon_filenames[] = JHTML::_('select.option', $ifname);
 			}
@@ -665,7 +665,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'edit'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/edit/view.html.php');
 		$view = new AttachmentsViewEdit();
 
 		AttachmentsControllerAttachment::add_view_urls($view, 'update', $parent_id,
@@ -713,7 +713,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->in_popup = $in_popup;
 
 		// Set up the access field
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
 		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 
@@ -830,7 +830,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// If the parent has changed, switch the parent, rename files if necessary
 		if ( $parent_changed ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 			if ( ($new_uri_type == 'url') AND ($old_uri_type == 'file') ) {
 				// If we are changing parents and converting from file to URL, delete the old file
@@ -945,7 +945,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( $new_uri_type == 'file' ) {
 
 			// Upload a new file
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 			$result = AttachmentsHelper::upload_file($attachment, $parent, $attachment_id, 'update');
 			if ( is_object($result) ) {
 				$msg = $result->error_msg . ' (ERR 93)';
@@ -960,7 +960,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		elseif ( $new_uri_type == 'url' ) {
 
 			// Upload/add the new URL
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 			$result = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url,
 												 $old_uri_type, $attachment_id);
 
@@ -1018,7 +1018,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			     	$errmsg = $msg;
 				if ( DS == "\\" ) {
 				    // Fix filename on Windows system so alert can display it
-				    $errmsg = str_replace("\\", "\\\\", $errmsg);
+				    $errmsg = str_replace(DS, "\\\\", $errmsg);
 				    }
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
@@ -1142,7 +1142,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			JError::raiseError(500, $errmsg);
 			}
 
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// NOTE: AttachmentsHelper::download_attachment($id) checks access permission
 
@@ -1184,7 +1184,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'warning'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/warning/view.html.php');
 		$view = new AttachmentsViewWarning( );
 		$view->parent_id = $attachment_id;
 		$view->option = JRequest::getCmd('option');

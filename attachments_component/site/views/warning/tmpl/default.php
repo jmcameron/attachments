@@ -26,7 +26,7 @@ $document =& JFactory::getDocument();
 JHTML::_('behavior.mootools');
 
 /** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 // Add the regular css file
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );

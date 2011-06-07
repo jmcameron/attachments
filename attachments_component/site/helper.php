@@ -14,7 +14,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines */
-require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 
 /**
@@ -158,7 +158,7 @@ class AttachmentsHelper
 	{
 		jimport('joomla.filesystem.file');
 
-		$index_fname = $dir.DS.'index.html';
+		$index_fname = $dir.'/index.html';
 		if ( JFile::exists($index_fname) ) {
 			return true;
 			}
@@ -171,7 +171,7 @@ class AttachmentsHelper
 
 	/**
 	 * Check the directory corresponding to this path.	If it is empty, delete it.
-	 * (Assume anything with a trailing DS is a directory)
+	 * (Assume anything with a trailing DS or '/' is a directory)
 	 *
 	 * @param string $filename path of the file to have its containing directory cleaned.
 	 */
@@ -179,9 +179,9 @@ class AttachmentsHelper
 	{
 		jimport('joomla.filesystem.folder');
 
-		if ( $filename[strlen($filename)-1] == DS ) {
+		// Assume anything with a trailing DS or '/' is a directory
+		if ( ($filename[strlen($filename)-1] == DS) OR ($filename[strlen($filename)-1] == '/') ) {
 
-			// Assume anything with a trailing DS is a directory
 			if ( !JFolder::exists($filename) ) {
 				return;
 				}
@@ -198,7 +198,7 @@ class AttachmentsHelper
 			else {
 				// Get the directory name
 				$filename_info = pathinfo($filename);
-				$dirname = $filename_info['dirname'] . DS;
+				$dirname = $filename_info['dirname'] . '/';
 				}
 			}
 
@@ -211,8 +211,9 @@ class AttachmentsHelper
 		// (This can occur when upgrading pre-2.0 attachments (with prefixes) since
 		// they were all saved in the top-level directory.)
 		jimport('joomla.application.component.helper');
-		$upload_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		if ( realpath(rtrim($upload_dir,DS)) == realpath(rtrim($dirname,DS)) ) {
+		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$dirend_chars = DS.'/';
+		if ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(rtrim($dirname,$dirend_chars)) ) {
 			return;
 			}
 
@@ -239,8 +240,9 @@ class AttachmentsHelper
 		$subdir_ok = false;
 
 		// Do not allow the main site directory to be set up as the upload directory
-		if ( ( realpath(rtrim($upload_dir,DS)) == realpath(JPATH_SITE) ) OR
-			 ( realpath(rtrim($upload_dir,DS)) == realpath(JPATH_ADMINISTRATOR) ) ) {
+		$dirend_chars = DS.'/';
+		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) OR
+			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 92)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -266,14 +268,14 @@ class AttachmentsHelper
 
 		// Add a simple index.html file to the upload directory to prevent browsing
 		$index_ok = false;
-		$index_fname = $upload_dir.DS.'index.html';
+		$index_fname = $upload_dir.'/index.html';
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
 			$errmsg = JText::sprintf('ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 38)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// If this is secure, create the .htindex file, if necessary
-		$hta_fname = $upload_dir.DS.'.htaccess';
+		$hta_fname = $upload_dir.'/.htaccess';
 		jimport('joomla.filesystem.file');
 		if ( $secure ) {
 			$hta_ok = false;
@@ -396,7 +398,7 @@ class AttachmentsHelper
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
-		$upload_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 40)';
@@ -483,7 +485,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = JRequest::getWord('update');
 
@@ -499,7 +501,7 @@ class AttachmentsHelper
 												 $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type,
 												 $attachment_id, null, $from);
@@ -531,7 +533,7 @@ class AttachmentsHelper
 
 			$view->display_name = $display_name;
 
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'fields'.DS.'accesslevels.php');
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 			$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
 			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 			
@@ -592,7 +594,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = JRequest::getWord('update');
 
@@ -608,7 +610,7 @@ class AttachmentsHelper
 												 $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
@@ -654,12 +656,12 @@ class AttachmentsHelper
 
 		// Define where the attachments go
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE.'/'.$upload_url;
 
 		// Figure out the system filename
 		$path = $parent->getAttachmentPath($attachment->parent_entity,
 										   $attachment->parent_id, null);
-		$fullpath = $upload_dir . DS . $path;
+		$fullpath = $upload_dir.'/'.$path;
 
 		// Make sure the directory exists
 		if ( !JFile::exists($fullpath) ) {
@@ -676,8 +678,9 @@ class AttachmentsHelper
 		
 		$url = $upload_url . '/' . $path . $filename;
 
-		// If we are on windows, fix the backslashes in the URL
+		// If we are on windows, fix the filename and URL
 		if ( DS != '/' ) {
+			$filename_sys = str_replace('/', DS, $filename_sys);
 			$url = str_replace(DS, '/', $url);
 			}
 
@@ -714,7 +717,7 @@ class AttachmentsHelper
 			$save_url = JRoute::_("index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
-			require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
+			require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 			$view = new AttachmentsViewUpload();
 			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
@@ -762,8 +765,7 @@ class AttachmentsHelper
 		if ( ($max_filename_length > 0) and
 			 ( JString::strlen($attachment->display_name) == 0 ) and
 			 ( JString::strlen($filename) > $max_filename_length ) ) {
-			$attachment->display_name = AttachmentsHelper::truncate_filename($filename,
-																			 $max_filename_length);
+			$attachment->display_name = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			}
 
 		// Copy the info about the uploaded file into the new record
@@ -797,7 +799,7 @@ class AttachmentsHelper
 		$attachment->modified = $now;
 
 		// Add the icon file type
-		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
 
 		// Save the updated attachment
@@ -1133,7 +1135,7 @@ class AttachmentsHelper
 
 		// Deal with the file type
 		if ( !$mime_type ) {
-			require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+			require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 			$mime_type = AttachmentsFileTypes::mime_type($filename);
 			}
 		if ( $mime_type ) {
@@ -1151,7 +1153,7 @@ class AttachmentsHelper
 			}
 
 		// See if we can figure out the icon
-		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		$icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
 		if ( $icon_filename ) {
 			$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
@@ -1227,7 +1229,7 @@ class AttachmentsHelper
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'update'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
 				$view->update = $update_form;
 
@@ -1242,7 +1244,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type, $attachment_id, $from);
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'upload'.DS.'view.html.php');
+				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
@@ -1370,7 +1372,7 @@ class AttachmentsHelper
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Get the info about the attachment
-		require_once(JPATH_COMPONENT_SITE.DS.'models'.DS.'attachment.php');
+		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
 		$model = new AttachmentsModelAttachment();
 		$model->setId($id);
 		$attachment = $model->getAttachment();
@@ -1499,11 +1501,11 @@ class AttachmentsHelper
 
 		// Define where the attachments move to
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE.'/'.$upload_url;
 
 		// Figure out the new system filename
 		$new_path = $parent->getAttachmentPath($parent_entity, $new_parent_id, null);
-		$new_fullpath = $upload_dir . DS . $new_path;
+		$new_fullpath = $upload_dir.'/'.$new_path;
 
 		// Make sure the new directory exists
 		jimport('joomla.filesystem.folder');
@@ -1581,19 +1583,18 @@ class AttachmentsHelper
 			$params =& JComponentHelper::getParams('com_attachments');
 
 			// Check the security status
-			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			$secure = $params->get('secure', false);
-			$hta_filename = $attach_dir.DS.'.htaccess';
+			$hta_filename = $attach_dir.'/.htaccess';
 			if ( ($secure AND !file_exists($hta_filename)) OR
 				 (!$secure AND file_exists($hta_filename)) ) {
-				require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+				require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}
 
 			if ( $app->isAdmin() ) {
 				// Get the html for the attachments list
-				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.
-							 'controllers'.DS.'list.php');
+				require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 
 				$controller = new AttachmentsControllerList();
 
@@ -1602,8 +1603,7 @@ class AttachmentsHelper
 				}
 			else {
 				// Get the html for the attachments list
-				require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-							 'controllers'.DS.'attachments.php');
+				require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 
 				$controller = new AttachmentsControllerAttachments();
 

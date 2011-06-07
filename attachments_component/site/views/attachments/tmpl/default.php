@@ -38,7 +38,7 @@ if ( $format != 'raw' ) {
 		}
 
 	/** Load the attachments helper to add the stylesheet */
-	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+	require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 	// Handle RTL styling (if necessary)

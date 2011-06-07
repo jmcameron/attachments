@@ -24,7 +24,7 @@ function &getAttachmentsPluginManager()
 	static $instance;
 
 	if ( !is_object($instance) ) {
-		require_once(dirname(__FILE__).DS.'attachments_plugin_manager.php');
+		require_once(dirname(__FILE__).'/attachments_plugin_manager.php');
 		$instance = new AttachmentsPluginManager();
 		}
 
@@ -33,4 +33,4 @@ function &getAttachmentsPluginManager()
 
 
 /** Make sure the plugin class is loaded for derived classes */
-require_once(dirname(__FILE__).DS.'attachments_plugin.php');
+require_once(dirname(__FILE__).'/attachments_plugin.php');

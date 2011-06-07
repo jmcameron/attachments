@@ -346,7 +346,7 @@ else
 // Show the existing attachments (if any)
 if ( $attachment->parent_id ) {
 	/** Get the attachments controller class */
-	require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
 	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);

@@ -14,13 +14,13 @@
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the default controller */
-require_once( JPATH_COMPONENT.DS.'controller.php' );
+require_once( JPATH_COMPONENT.'/controller.php' );
 
 // Check for requests for named controller
 $controller = JRequest::getWord('controller', False);
 if ( $controller ) {
 	// Invoke the named controller, if it exists
-	$path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
+	$path = JPATH_COMPONENT.'/controllers/'.$controller.'.php';
 	$controller = JString::ucfirst($controller);
 	jimport('joomla.filesystem.file');
 	if ( JFile::exists($path) ) {

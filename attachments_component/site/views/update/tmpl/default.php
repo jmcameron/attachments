@@ -73,7 +73,7 @@ $echo_css = $this->error;
 JHTML::_('behavior.mootools');
 
 /** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 // Add the stylesheets
 $uri = JFactory::getURI();
@@ -239,8 +239,7 @@ else {
 
 // Generate the list of existing attachments
 if ( $update == 'file' OR $uri_type == 'file' ) {
-	require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-				 'controllers'.DS.'attachments.php');
+	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 	$controller = new AttachmentsControllerAttachments();
 	$controller->display($parent_id, $attachment->parent_type, $this->parent_entity,
 						 'EXISTING_ATTACHMENTS',

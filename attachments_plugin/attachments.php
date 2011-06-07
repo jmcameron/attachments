@@ -14,7 +14,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines */
-require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 
 /**
@@ -74,7 +74,7 @@ class plgContentAttachments extends JPlugin
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
 
 		$doc =& JFactory::getDocument();
@@ -300,11 +300,11 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Change the attachment to the new article!
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$atrow =& JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		/// Load the Attachments helper
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 		foreach ($attachments as $attachment) {
 
@@ -351,18 +351,17 @@ class plgContentAttachments extends JPlugin
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Check the security status
-		$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
-		$hta_filename = $attach_dir.DS.'.htaccess';
+		$hta_filename = $attach_dir.'/.htaccess';
 		if ( ($secure AND !file_exists($hta_filename)) OR
 			 (!$secure AND file_exists($hta_filename)) ) {
-			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 			}
 
 		// Get the html for the attachments list
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-					 'controllers'.DS.'attachments.php');
+		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
 		return $controller->display($parent_id, $parent_type, $parent_entity,
 									null, true, true, false, $from);

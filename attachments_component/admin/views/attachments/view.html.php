@@ -130,7 +130,7 @@ class AttachmentsViewAttachments extends JView
 		$this->num_columns = $num_columns;
 
 		// get the version number
-		require_once(JPATH_COMPONENT_SITE.DS.'defines.php');
+		require_once(JPATH_COMPONENT_SITE.'/defines.php');
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
 		$this->project_url = AttachmentsDefines::$PROJECT_URL;
 
@@ -147,7 +147,7 @@ class AttachmentsViewAttachments extends JView
 	 */
 	protected function addToolBar() 
 	{
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'permissions.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/permissions.php');
 		$canDo = AttachmentsPermissions::getActions();		
 
 		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');

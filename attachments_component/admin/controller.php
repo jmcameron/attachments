@@ -92,7 +92,7 @@ class AttachmentsController extends JController
 		$items = $parent->getEntityItems($parent_entity, $search_filter);
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'entity'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/entity/view.html.php');
 		$view = new AttachmentsViewEntity( );
 		$view->option = JRequest::getCmd('option');
 		$view->from = 'closeme';
@@ -187,7 +187,7 @@ class AttachmentsController extends JController
 		// $entries[] = JHTML::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
 
 		// Get the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'utils'.DS.'view.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/utils/view.php');
 		$view = new AttachmentsViewAdminUtils( );
 		$view->entries = $entries;
 		$view->display();
@@ -213,7 +213,7 @@ class AttachmentsController extends JController
 			return '';
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 		$controller = new AttachmentsControllerList();
 		$response = $controller->display($parent_id, $parent_type, $parent_entity,
 										 $title, $show_links, $allow_edit, false, $from);

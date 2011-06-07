@@ -19,7 +19,7 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	}
 
 /** Load the Attachments defines */
-require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * A class for update functions
@@ -33,7 +33,7 @@ class AttachmentsUpdate
 	 */
 	public function add_icon_filenames()
 	{
-		require_once(JPATH_COMPONENT_SITE.DS.'file_types.php');
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -51,7 +51,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the icon file_types all the attachments (that do not have one already)
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
@@ -385,7 +385,8 @@ class AttachmentsUpdate
 		jimport('joomla.filesystem.file');
 
 		// Construct the filenames
-		$filename = JPATH_COMPONENT_ADMINISTRATOR.DS.'sql'.DS."uninstall.$dbtype.sql";
+		// ??? Fix so it works with mysqli
+		$filename = JPATH_COMPONENT_ADMINISTRATOR."/sql/uninstall.$dbtype.sql";
 		$tempfilename = $filename.'.tmp';
 		$msg = '';
 
@@ -457,7 +458,7 @@ class AttachmentsUpdate
 		for ($i = $start; $i < count($parts); $i++) {
 			$relfile .= $parts[$i];
 			if ( $i < count($parts) - 1 ) {
-				$relfile .= DS;
+				$relfile .= '/';
 				}
 			}
 		$finfo->relfile = $relfile;
@@ -485,7 +486,7 @@ class AttachmentsUpdate
 	 */
 	public function regenerate_system_filenames()
 	{
-		require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -493,7 +494,7 @@ class AttachmentsUpdate
 
 		// Define where the attachments go
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$upload_dir = JPATH_SITE . DS . $upload_url;
+		$upload_dir = JPATH_SITE . '/' . $upload_url;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -517,7 +518,7 @@ class AttachmentsUpdate
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		$msg = '';
@@ -548,7 +549,7 @@ class AttachmentsUpdate
 			$basename = $finfo->basename;
 
 			// Reconstruct the current system filename (in case of migrations)
-			$current_filename_sys = JPATH_SITE.DS.$finfo->relfile;
+			$current_filename_sys = JPATH_SITE.'/'.$finfo->relfile;
 
 			// Get the parent object
 			$parent = $apm->getAttachmentsPlugin($attachment->parent_type);
@@ -567,9 +568,8 @@ class AttachmentsUpdate
 			else {
 
 				// Construct the new system filename and url (based on entities, etc)
-				$newdir = $parent->getAttachmentPath($attachment->parent_entity,
-													 $attachment->parent_id, null);
-				$new_path = $upload_dir.DS.$newdir;
+				$newdir = $parent->getAttachmentPath($attachment->parent_entity, $attachment->parent_id, null);
+				$new_path = $upload_dir.'/'.$newdir;
 
 				if ( $finfo->oldstyle AND $finfo->prefix ) {
 					$new_filename_sys = $new_path . $finfo->basename_no_prefix;
@@ -579,6 +579,13 @@ class AttachmentsUpdate
 				else {
 					$new_filename_sys = $new_path . $basename;
 					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $basename);
+					}
+					
+
+				// If we are on windows, fix the filename and URL
+				if ( DS != '/' ) {
+					$new_filename_sys = str_replace('/', DS, $new_filename_sys);
+					$new_url = str_replace(DS, '/', $new_url);
 					}
 
 				// Make sure the target directory exists
@@ -638,7 +645,7 @@ class AttachmentsUpdate
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -658,7 +665,7 @@ class AttachmentsUpdate
 		jimport( 'joomla.filesystem.file' );
 
 		// Update the system filenames for all the attachments
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 
@@ -676,9 +683,9 @@ class AttachmentsUpdate
 			// Construct the new system filename
 			$filename_info = pathinfo($old_filename_sys);
 			$basename = $filename_info['basename'];
-			$filename_sys = $upload_dir.DS.$basename;
+			$filename_sys = $upload_dir.'/'.$basename;
 			$new_basename = str_replace(' ', '_', $basename);
-			$new_filename_sys = $filename_info['dirname'].DS.$new_basename;
+			$new_filename_sys = $filename_info['dirname'].'/'.$new_basename;
 
 			// If the filename has not changed, do not change anything
 			if ( $new_filename_sys == $old_filename_sys ) {
@@ -694,7 +701,8 @@ class AttachmentsUpdate
 
 			// Construct the new URL (figuire it out from the system filename)
 			$attachments_dir = str_replace(JPATH_SITE, '', $filename_info['dirname']);
-			$attachments_dir = JString::trim($attachments_dir, DS);
+			$dirend_chars = DS.'/';
+			$attachments_dir = JString::trim($attachments_dir, $dirend_chars);
 			$attachments_dir = str_replace(DS, '/', $attachments_dir);
 			$new_url = $attachments_dir . '/' . $new_basename;
 
@@ -725,7 +733,7 @@ class AttachmentsUpdate
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
-		$upload_dir = JPATH_SITE . DS . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
 		$db =& JFactory::getDBO();
@@ -742,7 +750,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
@@ -792,7 +800,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numMissing = 0;
 		$numChecked = 0;
@@ -843,13 +851,13 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {
 
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 			$attachment->load($id);
 

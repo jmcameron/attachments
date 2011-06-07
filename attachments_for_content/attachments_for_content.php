@@ -680,7 +680,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
 
 		$user =& JFactory::getUser();
 
@@ -737,7 +737,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
 
 		// Handle each entity type
 
@@ -806,7 +806,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			return true;
 			}
 
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'permissions.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
 
 		// Handle each entity type
 

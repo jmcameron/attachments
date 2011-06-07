@@ -176,7 +176,7 @@ if ( $this->parent_title ) {
 // Show the existing attachments
 if ( $this->uri_type == 'file' AND $this->parent_id ) {
 	/** Get the Attachments controller class */
-	require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments'.DS.'controllers'.DS.'list.php');
+	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
 	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
 						 'EXISTING_ATTACHMENTS', false, false, true, $this->from);

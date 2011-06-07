@@ -62,7 +62,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$document =& JFactory::getDocument();
 
 		// Get an instance of the model
-		$this->addModelPath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'models');
+		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
 		$model =& $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 108)';
@@ -85,7 +85,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			}
 
 		// Get the view
-		$this->addViewPath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'views');
+		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
 		$viewType = $document->getType();
 		$view =& $this->getView('Attachments', $viewType);
 		if ( !$view ) {
@@ -161,7 +161,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 			// First delete the actual attachment files
 			jimport('joomla.filesystem.file');
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 			foreach ($attachments as $attachment) {
 				if ( JFile::exists($attachment->filename_sys) ) {
 					JFile::delete($attachment->filename_sys);

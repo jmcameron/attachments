@@ -243,13 +243,13 @@ class AttachmentsPlugin extends JPlugin
 	 * @param int $parent_id the ID for the parent object
 	 * @param int $attachment_id the ID for the attachment
 	 *
-	 * @return string the directory name for this entity (with trailing DS!)
+	 * @return string the directory name for this entity (with trailing '/'!)
 	 */
 	public function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$path = sprintf("%s%s%d%s", $parent_entity, DS, $parent_id, DS);
+		$path = sprintf("%s/%d/", $parent_entity, $parent_id);
 
 		return $path;
 	}

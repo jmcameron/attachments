@@ -15,4 +15,4 @@
 defined('_JEXEC') or die('Restricted Access');
 
 /** The normal html view does exactly what we want so just use it */
-require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'attachments'.DS.'view.html.php');
+require_once(JPATH_COMPONENT_SITE.'/views/attachments/view.html.php');

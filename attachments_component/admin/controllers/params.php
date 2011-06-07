@@ -54,10 +54,10 @@ class AttachmentsControllerParams extends JControllerForm
 		$params =& JComponentHelper::getParams('com_attachments');
 
 		// Get the component model/table
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_config'.DS.'models'.DS.'component.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 		$model = new ConfigModelComponent();
 		$model->setState('component.option', 'com_attachments');
-		$model->setState('component.path', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_attachments');
+		$model->setState('component.path', JPATH_ADMINISTRATOR.'/components/com_attachments');
 
 		$form = $model->getForm();
 		$component = JComponentHelper::getComponent('com_attachments');
@@ -74,7 +74,7 @@ class AttachmentsControllerParams extends JControllerForm
 		}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'params'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/params/view.html.php');
 		$view = new AttachmentsViewParams( );
 		$view->setModel($model);
 		$view->params = $params;
@@ -107,7 +107,7 @@ class AttachmentsControllerParams extends JControllerForm
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
-		require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_config'.DS.'models'.DS.'component.php');
+		require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 		$model = new ConfigModelComponent();
 		$form	= $model->getForm();
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
@@ -176,8 +176,8 @@ class AttachmentsControllerParams extends JControllerForm
 		if ( $new_secure != $old_secure ) {
 
 			// Check/update the security status
-			require_once(JPATH_COMPONENT_SITE.DS.'helper.php');
-			$attach_dir = JPATH_SITE.DS.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
+			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 
 			$msg = JText::_('UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');

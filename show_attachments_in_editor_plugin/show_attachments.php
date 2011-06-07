@@ -170,7 +170,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			// Load the code from the attachments plugin to create the list
-			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 			// Add the refresh Javascript
 			$app = JFactory::getApplication();
@@ -233,7 +233,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			// Load the code from the attachments plugin to create the list
-			require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 			// Add the refresh Javascript
 	        $uri = JFactory::getURI();

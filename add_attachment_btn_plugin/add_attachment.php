@@ -114,7 +114,7 @@ class plgButtonAdd_attachment extends JPlugin
 		$doc->addScript( $js_path );
 
 		// Add the regular css file
-		require_once(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.'helper.php');
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css' );
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment.css' );
 

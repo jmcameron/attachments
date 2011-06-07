@@ -62,19 +62,17 @@ class AttachmentsViewAttachments extends JView
 			}
 
 		// Add the default path
-		$this->addTemplatePath(JPATH_SITE.DS.'components'.DS.'com_attachments'.DS.
-							   'views'.DS.'attachments'.DS.'tmpl');
+		$this->addTemplatePath(JPATH_SITE.'/components/com_attachments/views/attachments/tmpl');
 
 		// Set up the correct path for template overloads
 		// (Do this after previous addTemplatePath so that template overrides actually override)
 		$app =& JFactory::getApplication();
-		$templateDir = JPATH_SITE . DS. 'templates' . DS . $app->getTemplate() . DS .
-					   'html' . DS . 'com_attachments' . DS . 'attachments';
+		$templateDir = JPATH_SITE.'/templates/'.$app->getTemplate().'/html/com_attachments/attachments';
 		$this->addTemplatePath($templateDir);
 
 		// Load the language files from the attachments plugin
 		$lang =&  JFactory::getLanguage();
-		$lang->load('plg_content_attachments', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'attachments');
+		$lang->load('plg_content_attachments', JPATH_SITE.'/plugins/content/attachments');
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
