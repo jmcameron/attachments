@@ -123,7 +123,7 @@ class AttachmentsModelAttachments extends JModel
 			if ( $parent_id == null ) {
 				$parent_id = JRequest::getInt('parent_id', null);
 				if ( $parent_id == null ) {
-					$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 84)';
+					$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 				}
@@ -156,7 +156,7 @@ class AttachmentsModelAttachments extends JModel
 	public function getParentId()
 	{
 		if ( $this->_parent_id === null ) {
-			$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 85)';
+			$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		return $this->_parent_id;
@@ -171,7 +171,7 @@ class AttachmentsModelAttachments extends JModel
 	public function getParentType()
 	{
 		if ( $this->_parent_type == null ) {
-			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 86)';
+			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		return $this->_parent_type;
@@ -186,7 +186,7 @@ class AttachmentsModelAttachments extends JModel
 	public function getParentEntity()
 	{
 		if ( $this->_parent_entity == null ) {
-			$errmsg = JText::_('ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERR 87)';
+			$errmsg = JText::_('ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -208,7 +208,7 @@ class AttachmentsModelAttachments extends JModel
 	public function &getParentClass()
 	{
 		if ( $this->_parent_type == null ) {
-			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 88)';
+			$errmsg = JText::_('ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -218,7 +218,7 @@ class AttachmentsModelAttachments extends JModel
 			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 89)';
+				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			$this->_parent_class =& $apm->getAttachmentsPlugin($this->_parent_type);
@@ -242,7 +242,7 @@ class AttachmentsModelAttachments extends JModel
 
 			// Make sure we have an article ID
 			if ( $this->_parent_id === null ) {
-				$errmsg = JText::_('ERROR_UNKNOWN_PARENT_ID') . ' (ERR 90)';
+				$errmsg = JText::_('ERROR_UNKNOWN_PARENT_ID') . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -265,7 +265,7 @@ class AttachmentsModelAttachments extends JModel
 
 			// Make sure we have an article ID
 			if ( $this->_parent_id === null ) {
-				$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 91)';
+				$errmsg = JText::_('ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -372,6 +372,10 @@ class AttachmentsModelAttachments extends JModel
 		// Do the query
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 
 		$this->_some_visible = false;
 		$this->_some_modifiable = false;

@@ -46,7 +46,7 @@ class AttachmentsController extends JController
 	 */
 	public function noop()
 	{
-		$errmsg = JText::_('ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 51)';
+		$errmsg = JText::_('ERROR_NO_FUNCTION_SPECIFIED') . ' (ERRN)';
 		JError::raiseError(500, $errmsg);
 	}
 
@@ -114,7 +114,7 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 52)';
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -125,7 +125,7 @@ class AttachmentsController extends JController
 		// Make sure this user can add attachments to this parent
 		$user =& JFactory::getUser();
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 53)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -150,7 +150,7 @@ class AttachmentsController extends JController
 		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 54)';
+			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -221,7 +221,7 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 56)';
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -235,13 +235,13 @@ class AttachmentsController extends JController
 							   ($parent_id == -1) or
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-									 $parent_entity_name , $parent_id) . ' (ERR 57)';
+									 $parent_entity_name , $parent_id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// Verify that this user may add attachments to this parent
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 58)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -276,7 +276,7 @@ class AttachmentsController extends JController
 		// Figure out if we are uploading or updating
 		$save_type = JString::strtolower(JRequest::getWord('save_type'));
 		if ( !in_array($save_type, AttachmentsDefines::$LEGAL_SAVE_TYPES) ) {
-			$errmsg = JText::_('ERROR_INVALID_SAVE_PARAMETERS') . ' (ERR 59)';
+			$errmsg = JText::_('ERROR_INVALID_SAVE_PARAMETERS') . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -290,11 +290,11 @@ class AttachmentsController extends JController
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( $attachment_id AND !$attachment->load($attachment_id) ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 60)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		if (!$attachment->bind(JRequest::get('post'))) {
-			$errmsg = $attachment->getError() . ' (ERR 61)';
+			$errmsg = $attachment->getError() . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -389,7 +389,7 @@ class AttachmentsController extends JController
 
 			// Save the updated attachment info
 			if (!$attachment->store()) {
-				$errmsg = $attachment->getError() . ' (ERR 62)';
+				$errmsg = $attachment->getError() . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -435,7 +435,7 @@ class AttachmentsController extends JController
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
 		if ( !is_numeric($id) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 63)';
+			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -458,7 +458,7 @@ class AttachmentsController extends JController
 			$id = (int)$id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 65)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -481,7 +481,7 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 68)';
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -497,13 +497,13 @@ class AttachmentsController extends JController
 		// NOTE: $parent_id===null means the parent is being created
 		if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-									 $parent_entity_name, $parent_id) . ' (ERR 69)';
+									 $parent_entity_name, $parent_id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
 		// See if this user can edit (or delete) the attachment
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERR 70)';
+			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -520,7 +520,7 @@ class AttachmentsController extends JController
 		$query->delete('#__attachments')->where('id = '.(int)$id);
 		$db->setQuery($query);
 		if (!$db->query()) {
-			$errmsg = $db->getErrorMsg() . ' (ERR 71)';
+			$errmsg = $db->getErrorMsg() . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -576,7 +576,7 @@ class AttachmentsController extends JController
 			$attachment_id = (int)$attachment_id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 72)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -584,7 +584,7 @@ class AttachmentsController extends JController
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( !$attachment->load($attachment_id) ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 73)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -593,7 +593,7 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 76)';
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -648,7 +648,7 @@ class AttachmentsController extends JController
 			$id = (int)$id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 74)';
+			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -658,7 +658,7 @@ class AttachmentsController extends JController
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 75)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -673,7 +673,7 @@ class AttachmentsController extends JController
 		JPluginHelper::importPlugin('attachments');
 		$apm =& getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 76)';
+			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -700,7 +700,7 @@ class AttachmentsController extends JController
 		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 78)';
+			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 

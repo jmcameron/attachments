@@ -82,6 +82,10 @@ class AttachmentsControllerSpecial extends JController
 		$query->order('art.id');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 
 		// Get the category IDs
 		$query = $db->getQuery(true);
@@ -92,6 +96,10 @@ class AttachmentsControllerSpecial extends JController
 		$query->order('c.id');
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo '<html><head><title>Attachment IDs</title></head><body>';

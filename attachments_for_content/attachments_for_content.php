@@ -163,19 +163,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Do the query
 		$db->setQuery($query);
+		$items = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
-									 $parent_entity_name) . ' (ERRN1)';
-			JError::raiseError(500, $errmsg);
-			}
-		else {
-			$items = $db->loadObjectList();
-			}
-
-		// Make sure there were no errors
-		if ( $db->getErrorNum() ) {
-			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
-									 $parent_entity_name) . ' (ERRN2)';
+									 $parent_entity_name) . ' (ERRN) <br/>' . $db->stderr();
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -322,7 +313,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$obj = $db->loadObject();
 			if ( $db->getErrorNum() ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 400)';
+										 $parent_entity_name, $parent_id) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			if ( is_object( $obj ) ) {
@@ -343,7 +334,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name,  $parent_id) . ' (ERR 401)';
+										 $parent_entity_name,  $parent_id) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			else {
@@ -401,7 +392,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			if ( $db->getErrorNum() ) {
 				$parent_entity_name = JText::_($parent_entity);
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name,  $parent_id) . ' (ERR 402)';
+										 $parent_entity_name,  $parent_id) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			else {
@@ -546,7 +537,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-									 $parent_entity_name, $parent_id) . ' (ERR 403)';
+									 $parent_entity_name, $parent_id) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -582,7 +573,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_id !== 0 ) {
 			// parent_id of 0 may be allowed for categories, so don't abort
 			if ( $parent_id == null OR $parent_id == '' OR !is_numeric($parent_id) ) {
-				$errmsg = JText::sprintf('ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 404)';
+				$errmsg = JText::sprintf('ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -636,9 +627,9 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$query->select('created_by, catid')->from('#__content')->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
-			if ( count($attachments) == 0 ) {
+			if ( $db->getErrorNum() OR (count($attachments) == 0) ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 405)';
+										 $parent_entity_name, $parent_id) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 

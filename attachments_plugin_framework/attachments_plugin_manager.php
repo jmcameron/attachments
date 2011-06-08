@@ -179,7 +179,7 @@ class AttachmentsPluginManager extends JObject
 	{
 		// Make sure the parent type is valid
 		if ( !in_array( $parent_type, $this->_parent_types ) ) {
-			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 304)';
+			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
 			JError::raiseError(500, $errmsg);
 			}
 

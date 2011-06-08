@@ -293,6 +293,10 @@ class plgContentAttachments extends JPlugin
 		$query->where('created_by='.(int)$user_id.' AND parent_id IS NULL');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 
 		// Exit if there are no new attachments
 		if ( count($attachments) == 0 ) {
@@ -311,7 +315,7 @@ class plgContentAttachments extends JPlugin
 			// Change the filename/URL as necessary
 			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $article->id);
 			if ( $error_msg != '' ) {
-				$errmsg = JText::_($error_msg) . ' (ERR 200)';
+				$errmsg = JText::_($error_msg) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -323,7 +327,7 @@ class plgContentAttachments extends JPlugin
 			$atrow->url = $attachment->url;
 
 			if ( !$atrow->store() ) {
-				$errmsg = $attachment->getError() . ' (ERR 201)';
+				$errmsg = $attachment->getError() . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			}

@@ -42,6 +42,10 @@ class AttachmentsUpdate
 		$query->where('file_type IS NULL');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_FILE_TYPE_FIELDS_NEED_UPDATING');
 			}
@@ -66,7 +70,7 @@ class AttachmentsUpdate
 					$attachment->icon_filename = $new_icon_filename;
 					if (!$attachment->store()) {
 						$errmsg = JText::sprintf('ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
-							' ' . $attachment->getError() . ' (ERR 0)';
+							' ' . $attachment->getError() . ' (ERRN)';
 						JError::raiseError(500, $errsmg);
 						}
 					$numUpdated++;
@@ -91,6 +95,10 @@ class AttachmentsUpdate
 		$query->select('*')->from('#__attachments');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return 0;
 			}
@@ -125,8 +133,9 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
-											 $attachment->filename) . " ";
-					echo $errmsg . $db->stderr();
+											 $attachment->filename) . ' ';
+					// ??? Echo, raiseError, or enqueue system message?
+					echo $errmsg . $db->stderr() . ' (ERRN)';
 					}
 				$numUpdated++;
 				}
@@ -155,7 +164,7 @@ class AttachmentsUpdate
 			. "CONVERT TO CHARACTER SET `utf8` COLLATE `utf8_general_ci`";
 		$db->setQuery($query);
 		if (!$db->query()) {
-			$errmsg = JText::_('ERROR_CHANGING_TABLE_TO_UTF8_UNICODE') . ' ' . $db->stderr() . ' (ERR 1)';
+			$errmsg = JText::_('ERROR_CHANGING_TABLE_TO_UTF8_UNICODE') . ' ' . $db->stderr() . ' (ERRN)';
 			JError::raiseError( 500, $errmsg );
 			return false;
 			}
@@ -169,6 +178,10 @@ class AttachmentsUpdate
 		$query = "explain #__attachments";
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		$fields = array();
 		$types = array();
 		$nullable = array();
@@ -200,7 +213,7 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_RENAMING_FIELD_S_TO_S',
-											 $old_name, $arr['new_name'] ) . ' ' . $db->stderr() . ' (ERR 2)';
+											 $old_name, $arr['new_name'] ) . ' ' . $db->stderr() . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 				$num_renamed_fields++;
@@ -212,6 +225,10 @@ class AttachmentsUpdate
 			$query = "explain #__attachments";
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
+			if ( $db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
 			$fields = array();
 			$types = array();
 			$nullable = array();
@@ -258,9 +275,8 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_INSTALLING_FIELD_S', $field) .
-						' ' . $db->stderr() . ' (ERR 3)';
+						' ' . $db->stderr() . ' (ERRN)';
 					JError::raiseError( 500, $errmsg );
-					return false;
 					}
 				if ( $field == 'created' )
 					$dates_added = true;
@@ -296,9 +312,8 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_MODIFYING_FIELD_S', 'description') .
-						' ' . $db->stderr() . ' (ERR 4)';
+						' ' . $db->stderr() . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
-					return false;
 					}
 				}
 			}
@@ -313,9 +328,8 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = Text::sprintf('ERROR MODIFYING FIELD S', $field) .
-						' ' . $db->stderr() . ' (ERR 5)';
+						' ' . $db->stderr() . ' (ERRN)';
 					JError::raiseError( 500, $errmsg );
-					return false;
 					}
 				}
 			}
@@ -328,15 +342,18 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$errmsg = JText::sprintf('ERROR_UPDATING_EXISTING_ATTACHMENTS')	 .
-				' ' . $db->stderr() . ' (ERR 6)';
+				' ' . $db->stderr() . ' (ERRN)';
 			JError::raiseError( 500, $errmsg );
-			return false;
 			}
 
 		// Get the existing indexed column names
 		$query = "show index from #__attachments";
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		$indexes = array();
 		foreach ($attachments as $attachment) {
 			$indexes[] = $attachment->Key_name;
@@ -360,9 +377,8 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ERROR_INSTALLING_INDEX_S', $index) .
-						' ' . $db->stderr() . ' (ERR 7)';
+						' ' . $db->stderr() . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
-					return false;
 					}
 				$num_indexes_added++;
 				}
@@ -502,6 +518,10 @@ class AttachmentsUpdate
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
@@ -537,7 +557,7 @@ class AttachmentsUpdate
 			$parent_id = $db->loadResult();
 			if ( $db->getErrorNum() ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
-										 $attachment->parent_entity,  $parent_id) . ' (ERR 114)';
+										 $attachment->parent_entity,  $parent_id) . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -591,7 +611,7 @@ class AttachmentsUpdate
 				// Make sure the target directory exists
 				if ( !JFile::exists($new_path) ) {
 					if ( !JFolder::create($new_path) ) {
-						$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 100)';
+						$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERRN)';
 						JError::raiseError(500, $errmsg);
 						}
 					AttachmentsHelper::write_empty_index_html($new_path);
@@ -600,14 +620,14 @@ class AttachmentsUpdate
 				// Move the file!
 				if ( !JFile::move($current_filename_sys, $new_filename_sys) ) {
 					$errmsg = JText::sprintf('ERROR_RENAMING_FILE_S_TO_S',
-											 $old_filename_sys, $new_filename_sys) . ' (ERR 101)';
+											 $old_filename_sys, $new_filename_sys) . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 
 				// Verify the new system filename exists!
 				if ( !JFile::exists($new_filename_sys) ) {
 					$errmsg = JText::sprintf('ERROR_NEW_SYSTEM_FILENAME_S_NOT_FOUND',
-											 $new_filename_sys) . ' (ERR 111)';
+											 $new_filename_sys) . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 
@@ -615,7 +635,7 @@ class AttachmentsUpdate
 				$attachment->filename_sys = $new_filename_sys;
 				$attachment->url = $new_url;
 				if (!$attachment->store()) {
-					$errmsg = $attachment->getError() . ' (ERR 112)';
+					$errmsg = $attachment->getError() . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 
@@ -653,6 +673,10 @@ class AttachmentsUpdate
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
@@ -712,7 +736,7 @@ class AttachmentsUpdate
 			$attachment->url = $new_url;
 
 			if (!$attachment->store()) {
-				$errmsg = $attachment->getError() . ' (ERR 9)';
+				$errmsg = $attachment->getError() . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -741,6 +765,10 @@ class AttachmentsUpdate
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
@@ -762,7 +790,7 @@ class AttachmentsUpdate
 
 			// Update the record
 			if (!$attachment->store()) {
-				$errmsg = $attachment->getError() . ' (ERR 10)';
+				$errmsg = $attachment->getError() . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -791,6 +819,10 @@ class AttachmentsUpdate
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_FILES');
 			}
@@ -842,6 +874,10 @@ class AttachmentsUpdate
 		$query->select('id')->from('#__attachments')->where("uri_type='url'");
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
+		if ( $db->getErrorNum() ) {
+			$errmsg = $db->stderr() . ' (ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
 		if ( count($attachments) == 0 ) {
 			return JText::_('NO_ATTACHMENTS_WITH_URLS');
 			}
@@ -876,7 +912,7 @@ class AttachmentsUpdate
 
 				// Update the record
 				if (!$attachment->store()) {
-					$errmsg = $attachment->getError() . ' (ERR 11)';
+					$errmsg = $attachment->getError() . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
 				$numUpdated++;
