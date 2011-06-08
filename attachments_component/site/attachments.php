@@ -28,8 +28,8 @@ if ( $controller ) {
 		$classname	= 'AttachmentsController' . $controller;
 		}
 	else {
-	$errmsg = JText::_('UNKNOWN_CONTROLLER') . ' (ERR 108)';
-	JError::raiseError(500, $errmsg);
+		$errmsg = JText::_('UNKNOWN_CONTROLLER') . ' (ERR 108)';
+		JError::raiseError(500, $errmsg);
 		}
 	}
 else {

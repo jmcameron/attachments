@@ -31,18 +31,18 @@ class AttachmentsPermissions
 	{
 		$user	= JFactory::getUser($user_id);
 		$result	= new JObject;
- 
+
 		$assetName = 'com_attachments';
- 
+
 		$actions = array( 'core.admin', 'core.manage',
 						  'core.create', 'core.delete', 'core.edit.state',
 						  'core.edit', 'core.edit.own'
 						 );
- 
+
 		foreach ($actions as $action) {
 			$result->set($action,	$user->authorise($action, $assetName));
 			}
- 
+
 		return $result;
 	}
 
@@ -81,7 +81,7 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			$results = $db->loadObject();
 			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_OWNERSHIP');
+				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 123)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -95,7 +95,7 @@ class AttachmentsPermissions
 	}
 
 
-	
+
 	/**
 	 * Determine if a user can edit a specified article
 	 *
@@ -136,7 +136,7 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			$results = $db->loadObject();
 			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ERROR_CHECKING_ARTICLE_OWNERSHIP');
+				$errmsg = JText::_('ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 124)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -148,4 +148,4 @@ class AttachmentsPermissions
 
 		return false;
 	}
-}	
+}
