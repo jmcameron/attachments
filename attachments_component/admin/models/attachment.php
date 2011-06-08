@@ -13,10 +13,10 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
- 
+
 // import Joomla modelform library
 jimport('joomla.application.component.modeladmin');
- 
+
 /**
  * Attachment Model
  *
@@ -33,7 +33,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 	 * @return      JTable  A database object
 	 * @since       1.6
 	 */
-	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array()) 
+	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -63,7 +63,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$db->setQuery($query, 0, 1);
 			$item->creator_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERRN)';
+				$errmsg = $db->stderr() . ' (ERR 59)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -73,7 +73,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$db->setQuery($query, 0, 1);
 			$item->modifier_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERRN)';
+				$errmsg = $db->stderr() . ' (ERR 60)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -83,13 +83,13 @@ class AttachmentsModelAttachment extends JModelAdmin
 			JPluginHelper::importPlugin('attachments');
 			$apm =& getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 61)';
 				JError::raiseError(500, $errmsg);
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);
 
 			}
-		
+
 		return $item;
 	}
 
@@ -101,12 +101,12 @@ class AttachmentsModelAttachment extends JModelAdmin
 	 * @return      mixed   A JForm object on success, false on failure
 	 * @since       1.6
 	 */
-	public function getForm($data = array(), $loadData = true) 
+	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
 		$form = $this->loadForm('com_attachments.attachment', 'attachment',
 								array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) 
+		if (empty($form))
 		{
 			return false;
 		}
@@ -120,11 +120,11 @@ class AttachmentsModelAttachment extends JModelAdmin
 	 * @return      mixed   The data for the form.
 	 * @since       1.6
 	 */
-	protected function loadFormData() 
+	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_attachments.edit.attachment.data', array());
-		if (empty($data)) 
+		if (empty($data))
 		{
 			$data = $this->getItem();
 		}

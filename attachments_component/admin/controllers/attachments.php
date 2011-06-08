@@ -13,10 +13,10 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
- 
+
 // import Joomla controlleradmin library
 jimport('joomla.application.component.controlleradmin');
- 
+
 /**
  * Attachments Controller
  *
@@ -34,7 +34,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 *
 	 * @return	object	The model.
 	 */
-	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel') 
+	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -65,7 +65,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
 		$model =& $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERRN)';
+			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 52)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -89,7 +89,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$viewType = $document->getType();
 		$view =& $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_VIEW') . ' (ERRN)';
+			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 53)';
 			JError::raiseError(500, $errmsg);
 			}
 		$view->setModel($model);
@@ -155,7 +155,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERRN)';
+				$errmsg = $db->stderr() . ' (ERR 54)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -174,7 +174,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$query->delete('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
 			if (!$db->query()) {
-				$errmsg = $db->getErrorMsg() . ' (ERRN)';
+				$errmsg = $db->getErrorMsg() . ' (ERR 55)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -192,7 +192,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				JPluginHelper::importPlugin('attachments');
 				$apm =& getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-					$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+					$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 56)';
 					JError::raiseError(500, $errmsg);
 					}
 				$parent =& $apm->getAttachmentsPlugin($parent_type);
@@ -203,7 +203,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
 					$parent_entity_name = JText::_($parent_entity);
 					$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-											 $parent_entity_name, $parent_id) . ' (ERRN)';
+											 $parent_entity_name, $parent_id) . ' (ERR 57)';
 					JError::raiseError(500, $errmsg);
 					}
 
@@ -230,6 +230,6 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$this->setRedirect( 'index.php?option=' . $this->option);
 	}
 
-	
+
 
 }

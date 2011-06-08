@@ -47,7 +47,7 @@ class AttachmentsController extends JController
 		$parent_type = JRequest::getCmd('parent_type');
 		if ( !$parent_type ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
-				$db->getErrorMsg() . ' (ERRN)';
+				$db->getErrorMsg() . ' (ERR 27)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -117,7 +117,7 @@ class AttachmentsController extends JController
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
-		
+
 		// Set up the tooltip behavior
 		$opts = Array( 'hideDelay' => 0, 'showDelay' => 0 );
 		JHTML::_('behavior.tooltip', '.hasTip', $opts);
@@ -192,7 +192,7 @@ class AttachmentsController extends JController
 		$view->entries = $entries;
 		$view->display();
 	}
-	
+
 
 	/**
 	 * Return the attachments list as HTML (for use by Ajax)

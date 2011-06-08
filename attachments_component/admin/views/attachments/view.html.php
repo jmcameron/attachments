@@ -18,7 +18,7 @@ jimport( 'joomla.application.component.view' );
 
 /**
  * View for the special controller
- * (adapted from administrator/components/com_config/views/component/view.php) 
+ * (adapted from administrator/components/com_config/views/component/view.php)
  *
  * @package Attachments
  */
@@ -55,7 +55,7 @@ class AttachmentsViewAttachments extends JView
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERRN)';
+			$errmsg = $db->stderr() . ' (ERR 58)';
 			JError::raiseError(500, $errmsg);
 			}
 		$level_name = Array();
@@ -136,7 +136,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Set the toolbar
 		$this->addToolBar();
- 
+
 		// Display the attachments
 		parent::display($tpl);
 	}
@@ -145,10 +145,10 @@ class AttachmentsViewAttachments extends JView
 	/**
 	 * Setting the toolbar
 	 */
-	protected function addToolBar() 
+	protected function addToolBar()
 	{
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/permissions.php');
-		$canDo = AttachmentsPermissions::getActions();		
+		$canDo = AttachmentsPermissions::getActions();
 
 		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');
 
@@ -178,11 +178,11 @@ class AttachmentsViewAttachments extends JView
 			// Add a button for extra admin commands
 			$bar =&  JToolBar::getInstance('toolbar');
 			$bar->appendButton( 'Popup', 'adminUtils', $alt='UTILITIES',
-								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',	
+								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
 								$width='600', $height='400' );
 
 			}
-		
+
 		JToolBarHelper::divider();
 		JToolBarHelper::help('help', true);
 	}

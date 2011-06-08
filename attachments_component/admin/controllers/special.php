@@ -83,7 +83,7 @@ class AttachmentsControllerSpecial extends JController
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERRN)';
+			$errmsg = $db->stderr() . ' (ERR 28)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -97,7 +97,7 @@ class AttachmentsControllerSpecial extends JController
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERRN)';
+			$errmsg = $db->stderr() . ' (ERR 29)';
 			JError::raiseError(500, $errmsg);
 			}
 

@@ -228,7 +228,7 @@ class AttachmentsPlugin extends JPlugin
 			$lang =& JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = JText::sprintf('ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
-									 $parent_entity, $parent_type) . ' (ERRN)';
+									 $parent_entity, $parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);
 			}
 	}
@@ -302,7 +302,7 @@ class AttachmentsPlugin extends JPlugin
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
-									 $parent_entity_name, $parent_id) . ' (ERRN)';
+									 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -363,7 +363,7 @@ class AttachmentsPlugin extends JPlugin
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_($parent_entity);
 			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
-									 $parent_entity_name) . ' (ERRN)';
+									 $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
 			}
 		else {
@@ -694,7 +694,7 @@ class AttachmentsPlugin extends JPlugin
 	{
 		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
 	}
-	
+
 
 
 	/** Check to see if the user may access (see/download) the attachments

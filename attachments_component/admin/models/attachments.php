@@ -35,7 +35,7 @@ class AttachmentsModelAttachments extends JModelList
 	{
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
-				'id', 
+				'id',
 				'a.state',
 				'a.access',
 				'a.filename',
@@ -67,7 +67,7 @@ class AttachmentsModelAttachments extends JModelList
 	protected function getListQuery()
 	{
 
-		// Create a new query object.         
+		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
@@ -135,7 +135,7 @@ class AttachmentsModelAttachments extends JModelList
 		// Get the parent_state filter
 		jimport('joomla.application.component.helper');
 		$params =& JComponentHelper::getParams('com_attachments');
-		
+
 		// Get the desired state
 		$filter_parent_state_default = 'ALL';
 		$suppress_obsolete_attachments = $params->get('suppress_obsolete_attachments', false);
@@ -185,7 +185,7 @@ class AttachmentsModelAttachments extends JModelList
 
 		return $where;
 	}
-	
+
 
 	/**
 	 * Method to build the orderby clause of the query for the Items
@@ -242,7 +242,7 @@ class AttachmentsModelAttachments extends JModelList
 		// List state information.
 		parent::populateState('', 'asc');
 	}
-	
+
 
 	/**
 	 * Method to get an array of data items.
@@ -262,7 +262,7 @@ class AttachmentsModelAttachments extends JModelList
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 62)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -310,7 +310,7 @@ class AttachmentsModelAttachments extends JModelList
 	 * @return      JTable  A database object
 	 * @since       1.6
 	 */
-	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array()) 
+	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -329,5 +329,5 @@ class AttachmentsModelAttachments extends JModelList
 
 		return $attachmentTable->publish($cid, $value);
 	}
-	
+
 }

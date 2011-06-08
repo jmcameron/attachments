@@ -294,7 +294,7 @@ class plgContentAttachments extends JPlugin
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERRN)';
+			$errmsg = $db->stderr() . ' (ERR 200)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -315,7 +315,7 @@ class plgContentAttachments extends JPlugin
 			// Change the filename/URL as necessary
 			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $article->id);
 			if ( $error_msg != '' ) {
-				$errmsg = JText::_($error_msg) . ' (ERRN)';
+				$errmsg = JText::_($error_msg) . ' (ERR 201)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -327,14 +327,14 @@ class plgContentAttachments extends JPlugin
 			$atrow->url = $attachment->url;
 
 			if ( !$atrow->store() ) {
-				$errmsg = $attachment->getError() . ' (ERRN)';
+				$errmsg = $attachment->getError() . ' (ERR 202)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
 
 		return true;
 	}
-	
+
 
 	/**
 	 * Return a list of attachments as HTML code.

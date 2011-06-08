@@ -51,7 +51,7 @@ class AttachmentsViewAttachments extends JView
 		// Get the model
 		$model =& $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERRN)';
+			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 112)';
 			JError::raiseError( 500, $errmsg);
 			}
 
@@ -119,7 +119,7 @@ class AttachmentsViewAttachments extends JView
 				}
 			}
 		$this->show_user_field_3 = $show_user_field_3;
-		
+
 		// Set up for the template
 		$parent_id = $model->getParentId();
 		$parent_type = $model->getParentType();
