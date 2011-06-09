@@ -14,11 +14,31 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <pre>
-Attachments Extension for Joomla 1.5
+Attachments Extension for Joomla 1.6+
+
+2011-06-08: Release 3.0 Beta
+   - Derived from unreleased 2.2.1
+   - Significant refactoring, reimplementing, cleanups, etc.
+   - Testing version (tested on Windows Vista and Kubuntu 10.10)
 
 2011-??: Release 2.2.1
-   - Fixed backend so download links on they open in a new window/tab instead
-     of replacing the current admin session.
+   - Fixed backend so download links and links to parents open in a new
+     window/tab instead of replacing the current admin session.
+   - Fixes to get Eventlist pluging working correctly.
+   - Fixes to enable hiding attachments before 'Read more' breaks. 
+   - Added file type support for 'rar' compressed archive files.
+   - Added check in download function (for secure mode) to make sure that the
+     user has permissions to view the parent article.  Should generalize.
+   - Changed version display in backend to link to project page.
+   - Reworked handling of parent_entity to simplify things and make handling
+     attachments for other components easier and more robust.
+   - Now show hidden user-defined fields when editing articles, editing
+     attachments, or adding attachments from the front end.
+   - Fixed obscure bug for updating files for file attachments.
+   - Fixed issue with Mootools Upgrade plugin in backend.
+   - Adjustments to formatting of admin edit view.
+   - Fixes to includes of system mootools Javascript for compatibiity with the
+     Mootools upgrade plugin.
 
 2011-02-06: Release 2.2
    - Fixed regular expression syntax for named groups to be compatible with
