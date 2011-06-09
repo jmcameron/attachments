@@ -54,7 +54,7 @@ class JFormFieldAccessLevels extends JFormField
 	 * @param string $fieldname the name of the field
 	 * @param int $level_value the value of the level to be initially selected
 	 */
-	public function getAccessLevels($for_id, $fieldname, $level_value=null)
+	public static function getAccessLevels($for_id, $fieldname, $level_value=null)
 	{
 		$user   = JFactory::getUser();
 		$user_levels = array_unique($user->authorisedLevels());

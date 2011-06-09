@@ -208,7 +208,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return the icon filename (or '' if none is found)
 	 */
-	public function icon_filename($filename, $mime_type)
+	public static function icon_filename($filename, $mime_type)
 	{
 		// Recognize some special cases first
 		if ( $mime_type == 'link/unknown' ) {
@@ -252,7 +252,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return an array of unique icon filenames
 	 */
-	public function unique_icon_filenames()
+	public static function unique_icon_filenames()
 	{
 		$vals = array_unique(array_values(AttachmentsFileTypes::$attachments_icon_from_file_extension));
 		sort($vals);
@@ -268,7 +268,7 @@ class AttachmentsFileTypes {
 	 *
 	 * @return the mime type string
 	 */
-	public function mime_type($filename)
+	public static function mime_type($filename)
 	{
 		$path_info = pathinfo($filename);
 				

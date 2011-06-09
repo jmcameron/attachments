@@ -519,8 +519,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 	/**
 	 * Edit - display the form for the user to edit an attachment
+	 *
+	 * @param   string  $key     The name of the primary key of the URL variable (??? IGNORED)
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (??? IGNORED)
 	 */
-	public function edit()
+	public function edit($key = null, $urlVar = null)
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
