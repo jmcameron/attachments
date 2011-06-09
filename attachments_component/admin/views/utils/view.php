@@ -34,7 +34,7 @@ class AttachmentsViewAdminUtils extends JView
 	 */
 	public function display()
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 		$app = JFactory::getApplication();
 		$uri = JFactory::getURI();
 

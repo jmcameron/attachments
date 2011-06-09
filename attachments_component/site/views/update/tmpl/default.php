@@ -15,14 +15,14 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Add the plugins stylesheet to style the list of attachments
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
 $lang = JFactory::getLanguage();
 
-$attachment =& $this->attachment;
-$params =& $this->params;
+$attachment = $this->attachment;
+$params = $this->params;
 
 $update = $this->update;
 $uri_type = $attachment->uri_type;

@@ -333,7 +333,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 33)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
 
@@ -528,7 +528,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
         $uri = JFactory::getURI();
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
@@ -546,7 +546,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$layout = JRequest::getWord('tmpl');
 
 		// Set up mootools/modal
-		$document =&  JFactory::getDocument();
+		$document = JFactory::getDocument();
 		JHTML::_('behavior.modal', 'a.modal-button');
 
 		// set up lists for form controls
@@ -581,14 +581,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Get the parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 39)';
 			JError::raiseError(500, $errmsg);
 			}
-		$entity_info =& $apm->getInstalledEntityInfo();
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$entity_info = $apm->getInstalledEntityInfo();
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Get the parent info
 		$attachment->parent_entity_name = JText::_($parent_entity);
@@ -629,7 +629,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 					$new_parent_entity = $parts[1];
 					}
 
-				$new_parent =& $apm->getAttachmentsPlugin($new_parent_type);
+				$new_parent = $apm->getAttachmentsPlugin($new_parent_type);
 				$new_parent_entity = $new_parent->getCanonicalEntityId($new_parent_entity);
 				$new_parent_entity_name = JText::_($new_parent_entity);
 
@@ -662,7 +662,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Set up the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/edit/view.html.php');
@@ -837,7 +837,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 				jimport('joomla.filesystem.file');
 
 				// Load the attachment so we can get its filename_sys
-				$db =& JFactory::getDBO();
+				$db = JFactory::getDBO();
 				$query = $db->getQuery(true);
 				$query->select('filename_sys, id')->from('#__attachments')->where('id='.(int)$attachment->id);
 				$db->setQuery($query, 0, 1);
@@ -891,12 +891,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$parent_entity = JRequest::getCmd('parent_entity', 'default');
 			}
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the title of the article/parent
@@ -935,7 +935,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$now = new JDate();
 
 		// Update create/modify info
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$attachment->modified_by = $user->get('id');
 		$attachment->modified = $now->toMySQL();
 

@@ -126,11 +126,11 @@ class AttachmentsPluginManager extends JObject
 
 			// Add an option for each entity
 			JPluginHelper::importPlugin('attachments');
-			$apm =& getAttachmentsPluginManager();
+			$apm = getAttachmentsPluginManager();
 
 			// process all the parent types
 			foreach ($this->_parent_types as $parent_type) {
-				$parent =& $apm->getAttachmentsPlugin($parent_type);
+				$parent = $apm->getAttachmentsPlugin($parent_type);
 				$entities = $parent->getEntities();
 
 				// Process each entity for this parent type

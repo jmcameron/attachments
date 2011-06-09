@@ -20,7 +20,7 @@ $template = JFactory::getApplication()->getTemplate();
 JHtml::_('behavior.tooltip');
 
 $uri = JFactory::getURI();
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 
 // Hide the vertical scrollbar using javascript
 $hide_scrollbar = "window.addEvent('domready', function() {

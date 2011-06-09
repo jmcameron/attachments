@@ -216,12 +216,12 @@ class AttachmentsModelAttachments extends JModel
 
 			// Get the parent handler
 			JPluginHelper::importPlugin('attachments');
-			$apm =& getAttachmentsPluginManager();
+			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 118)';
 				JError::raiseError(500, $errmsg);
 				}
-			$this->_parent_class =& $apm->getAttachmentsPlugin($this->_parent_type);
+			$this->_parent_class = $apm->getAttachmentsPlugin($this->_parent_type);
 			}
 
 		return $this->_parent_class;
@@ -346,8 +346,8 @@ class AttachmentsModelAttachments extends JModel
 			}
 
 		// Construct the query
-		$db =& JFactory::getDBO();
-		$user =& JFactory::getUser();
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		$query = $db->getQuery(true);
@@ -390,7 +390,7 @@ class AttachmentsModelAttachments extends JModel
 		// Add permissions for each attachment in the list
 		if ( $this->_num_attachments > 0 ) {
 
-			$this->_list =& $attachments;
+			$this->_list = $attachments;
 
 			// Add the permissions to each row
 			$parent = $this->getParentClass();

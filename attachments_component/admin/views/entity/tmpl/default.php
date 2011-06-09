@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Add the plugins stylesheet to style the list of attachments
-$document =&  JFactory::getDocument();
+$document = JFactory::getDocument();
 $uri = JFactory::getURI();
 $document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
 						  'text/css', null, array() );
@@ -63,7 +63,7 @@ $lists = $this->lists;
 <?php
 	$k = 0;
 	for ($i=0, $n=count( $this->items ); $i < $n; $i++) {
-		$item =& $this->items[$i];
+		$item = $this->items[$i];
 		?>
 		<tr class="<?php echo "row$k" ?>">
 		   <td><?php echo $i ?></td>

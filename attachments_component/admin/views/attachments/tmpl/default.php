@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Add the attachments admin CSS files
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 $uri = JFactory::getURI();
 $document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css', 
 						  'text/css', null, array() );

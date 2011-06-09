@@ -47,7 +47,7 @@ class plgSystemShow_attachments extends JPlugin
 				return;
 				}
 
-			$doc =& JFactory::getDocument();
+			$doc = JFactory::getDocument();
 	        $uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 
@@ -98,13 +98,13 @@ class plgSystemShow_attachments extends JPlugin
 			// Exit if the function does not exist (eg, during uninstallaton)
 			return false;
 			}
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return false;
 			}
 
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the article ID (strip off any SEF name appended with a colon)
@@ -176,7 +176,7 @@ class plgSystemShow_attachments extends JPlugin
 			$app = JFactory::getApplication();
 	        $uri = JFactory::getURI();
 			$base_url = $uri->root(true);
-			$doc =& JFactory::getDocument();
+			$doc = JFactory::getDocument();
 			JHTML::_('behavior.mootools');
 			if ( $app->isAdmin() ) {
 				// ??? This should not be necessary
@@ -206,7 +206,7 @@ class plgSystemShow_attachments extends JPlugin
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
 				jimport('joomla.application.component.helper');
-				$params =& JComponentHelper::getParams('com_attachments');
+				$params = JComponentHelper::getParams('com_attachments');
 				$class_name = $params->get('attachments_table_style', 'attachmentsList');
 				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
 				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
@@ -238,15 +238,15 @@ class plgSystemShow_attachments extends JPlugin
 			// Add the refresh Javascript
 	        $uri = JFactory::getURI();
 			$base_url = $uri->root(true);
-			$doc =& JFactory::getDocument();
+			$doc = JFactory::getDocument();
 
 
 			// Get the article/parent handler
-			$parent =& $apm->getAttachmentsPlugin($parent_type);
+			$parent = $apm->getAttachmentsPlugin($parent_type);
 
 			// Figure out if the attachments list should be visible for this category
 			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
+			$params = JComponentHelper::getParams('com_attachments');
 
 			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
 			$all_but_article_views = $params->get('hide_except_article_views', false);
@@ -265,7 +265,7 @@ class plgSystemShow_attachments extends JPlugin
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
 				jimport('joomla.application.component.helper');
-				$params =& JComponentHelper::getParams('com_attachments');
+				$params = JComponentHelper::getParams('com_attachments');
 				$class_name = $params->get('attachments_table_style', 'attachmentsList');
 				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
 				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";

@@ -37,7 +37,7 @@ class AttachmentsViewAttachments extends JView
 	 */
 	public function display($tpl = null)
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 		if ( JRequest::getWord('format', '') == 'raw' ) {
 			// Choose raw text even though it is actually html
 			$document->setMimeEncoding('text/plain');
@@ -49,7 +49,7 @@ class AttachmentsViewAttachments extends JView
 		$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 		// Get the model
-		$model =& $this->getModel('Attachments');
+		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 112)';
 			JError::raiseError( 500, $errmsg);
@@ -66,7 +66,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Set up the correct path for template overloads
 		// (Do this after previous addTemplatePath so that template overrides actually override)
-		$app =& JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$templateDir = JPATH_SITE.'/templates/'.$app->getTemplate().'/html/com_attachments/attachments';
 		$this->addTemplatePath($templateDir);
 
@@ -76,7 +76,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// See whether the user-defined fields should be shown
 		$from = JRequest::getWord('from', 'closeme');
@@ -163,7 +163,7 @@ class AttachmentsViewAttachments extends JView
 		if ( !$title OR (JString::strlen($title) == 0) ) {
 			$title = 'ATTACHMENTS_TITLE';
 			}
-		$parent =& $model->getParentClass();
+		$parent = $model->getParentClass();
 		$title = $parent->attachmentsListTitle($title, $params, $parent_id, $parent_entity);
 		$this->title = $title; // Note: assume it is translated
 

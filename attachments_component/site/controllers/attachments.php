@@ -63,7 +63,7 @@ class AttachmentsControllerAttachments extends JController
 							$title=null, $show_file_links=true, $allow_edit=true,
 							$echo=true, $from=null)
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 
 		// Get an instance of the model
 		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
@@ -77,7 +77,7 @@ class AttachmentsControllerAttachments extends JController
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Set up to list the attachments for this artticle
 		$sort_order = $params->get('sort_order', 'filename');
@@ -91,7 +91,7 @@ class AttachmentsControllerAttachments extends JController
 		// Get the view
 		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
 		$viewType = $document->getType();
-		$view =& $this->getView('Attachments', $viewType);
+		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 111)';
 			JError::raiseError(500, $errmsg);

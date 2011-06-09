@@ -112,12 +112,12 @@ class AttachmentsModelAttachment extends JModel
 			$parent_type = $this->_attachment->parent_type;
 			$parent_entity = $this->_attachment->parent_entity;
 			JPluginHelper::importPlugin('attachments');
-			$apm =& getAttachmentsPluginManager();
+			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$this->_attachment->parent_type = false;
 				return false;
 				}
-			$parent =& $apm->getAttachmentsPlugin($parent_type);
+			$parent = $apm->getAttachmentsPlugin($parent_type);
 
 			// Set up the parent info
 			$parent_id = $this->_attachment->parent_id;
@@ -166,7 +166,7 @@ class AttachmentsModelAttachment extends JModel
 	public function save($data)
 	{
 		// Get the table
-		$table =& $this->getTable('Attachments');
+		$table = $this->getTable('Attachments');
 		
 		// Save the data
 		if ( !$table->save($data) ) {

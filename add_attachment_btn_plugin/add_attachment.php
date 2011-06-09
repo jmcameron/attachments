@@ -64,14 +64,14 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return new JObject();
 			}
 
 		// Get the parent handler
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the parent ID (id or first of cid array)
@@ -108,7 +108,7 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// up the style sheet (to get the visual for the button working)
-		$doc =& JFactory::getDocument();
+		$doc = JFactory::getDocument();
 		JHTML::_('behavior.mootools');
 		$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
 		$doc->addScript( $js_path );

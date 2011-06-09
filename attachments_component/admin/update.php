@@ -36,7 +36,7 @@ class AttachmentsUpdate
 		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id, filename, file_type, icon_filename')->from('#__attachments');
 		$query->where('file_type IS NULL');
@@ -56,7 +56,7 @@ class AttachmentsUpdate
 
 		// Update the icon file_types all the attachments (that do not have one already)
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
 
@@ -90,7 +90,7 @@ class AttachmentsUpdate
 		$app = JFactory::getApplication();
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
 		$db->setQuery($query);
@@ -156,7 +156,7 @@ class AttachmentsUpdate
 	{
 		// NOTE: It should be harmless to run this function multiple times
 
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$indent = "&nbsp;&nbsp;&nbsp;";
 
 		// Make sure the table is unicode compatible
@@ -506,14 +506,14 @@ class AttachmentsUpdate
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$upload_dir = JPATH_SITE . '/' . $upload_url;
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -532,14 +532,14 @@ class AttachmentsUpdate
 
 		// Get the parent plugin manager
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 
 		// Update the system filenames for all the attachments
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		$msg = '';
 
@@ -565,7 +565,7 @@ class AttachmentsUpdate
 			$old_filename_sys = $attachment->filename_sys;
 
 			// Get info about the system filename
-			$finfo =& AttachmentsUpdate::checkFilename($old_filename_sys);
+			$finfo = AttachmentsUpdate::checkFilename($old_filename_sys);
 			$basename = $finfo->basename;
 
 			// Reconstruct the current system filename (in case of migrations)
@@ -668,7 +668,7 @@ class AttachmentsUpdate
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -690,7 +690,7 @@ class AttachmentsUpdate
 
 		// Update the system filenames for all the attachments
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 
 		foreach ($IDs as $id) {
@@ -754,13 +754,13 @@ class AttachmentsUpdate
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments go
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -779,7 +779,7 @@ class AttachmentsUpdate
 
 		// Update the system filenames for all the attachments
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
 
@@ -814,7 +814,7 @@ class AttachmentsUpdate
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='file'");
 		$db->setQuery($query);
@@ -833,7 +833,7 @@ class AttachmentsUpdate
 
 		// Update the system filenames for all the attachments
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numMissing = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {
@@ -869,7 +869,7 @@ class AttachmentsUpdate
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get all the attachment IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where("uri_type='url'");
 		$db->setQuery($query);
@@ -888,7 +888,7 @@ class AttachmentsUpdate
 
 		// Update the system filenames for all the attachments
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {

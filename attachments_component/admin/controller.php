@@ -63,8 +63,8 @@ class AttachmentsController extends JController
 
 		// Get the content parent object
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$apm = getAttachmentsPluginManager();
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
 

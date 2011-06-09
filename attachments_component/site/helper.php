@@ -33,11 +33,11 @@ class AttachmentsHelper
 	{
 		static $added_js = false;
 
-		$document =&  JFactory::getDocument();
-		$config	  =&  JFactory::getConfig();
+		$document = JFactory::getDocument();
+		$config	 = JFactory::getConfig();
 
 		// See if we are caching
-		$cache =& JFactory::getCache();
+		$cache = JFactory::getCache();
 		// ??? Do we need to handle caching?
 		// ??? $caching = $config->get('cache') OR $cache->_options['caching'];
 		$caching = false;
@@ -391,11 +391,11 @@ class AttachmentsHelper
 	 */
 	public function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
 	{
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -551,7 +551,7 @@ class AttachmentsHelper
 			}
 
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
-		$cmparams =& JComponentHelper::getParams('com_media');
+		$cmparams = JComponentHelper::getParams('com_media');
 
 		// First check to make sure the extension is allowed
 		jimport('joomla.filesystem.file');
@@ -1019,7 +1019,7 @@ class AttachmentsHelper
 
 		// Get parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 		$overlay = $params->get('superimpose_url_link_icons', true);
 
 		// Get the timeout
@@ -1195,7 +1195,7 @@ class AttachmentsHelper
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the auto-publish setting
 		$auto_publish = $params->get('publish_default', false);
@@ -1390,12 +1390,12 @@ class AttachmentsHelper
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 74)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
@@ -1405,7 +1405,7 @@ class AttachmentsHelper
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the other info about the attachment
 		$download_mode = $params->get('download_mode', 'attachment');
@@ -1422,7 +1422,7 @@ class AttachmentsHelper
 		$len = filesize($filename_sys);
 
 		// Update the download count
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->update('#__attachments')->set('download_count = (download_count + 1)');
 		$query->where('id = ' .(int)$id);
@@ -1488,12 +1488,12 @@ class AttachmentsHelper
 			$parent_entity = $attachment->parent_entity;
 			}
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 78)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -1501,7 +1501,7 @@ class AttachmentsHelper
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments move to
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -1572,7 +1572,7 @@ class AttachmentsHelper
 
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('count(*)')->from('#__attachments');
 		$query->where('parent_id='.(int)$parent_id." AND state='1' AND parent_type='$parent_type'");
@@ -1588,7 +1588,7 @@ class AttachmentsHelper
 
 			// Get the component parameters
 			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
+			$params = JComponentHelper::getParams('com_attachments');
 
 			// Check the security status
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;

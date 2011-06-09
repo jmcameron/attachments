@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 

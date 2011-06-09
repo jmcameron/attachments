@@ -108,7 +108,7 @@ class Com_AttachmentsInstallerScript {
 	public function postflight($type, $parent) 
 	{
 		$app = JFactory::getApplication('administrator');
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		// Make sure the translations are available
 		$lang =  JFactory::getLanguage();

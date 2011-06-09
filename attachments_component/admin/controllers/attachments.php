@@ -59,11 +59,11 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 							$title=null, $show_file_links=true, $allow_edit=true,
 							$echo=true, $from=null)
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 
 		// Get an instance of the model
 		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
-		$model =& $this->getModel('Attachments');
+		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 52)';
 			JError::raiseError(500, $errmsg);
@@ -73,7 +73,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Set up to list the attachments for this artticle
 		$sort_order = $params->get('sort_order', 'filename');
@@ -87,7 +87,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		// Get the view
 		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
 		$viewType = $document->getType();
-		$view =& $this->getView('Attachments', $viewType);
+		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 53)';
 			JError::raiseError(500, $errmsg);
@@ -149,7 +149,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$cids = implode(',', $cid);
 
 			// Get all the attachments to be deleted
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
@@ -190,12 +190,12 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 				// Get the article/parent handler
 				JPluginHelper::importPlugin('attachments');
-				$apm =& getAttachmentsPluginManager();
+				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 56)';
 					JError::raiseError(500, $errmsg);
 					}
-				$parent =& $apm->getAttachmentsPlugin($parent_type);
+				$parent = $apm->getAttachmentsPlugin($parent_type);
 				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 				// Make sure the parent exists

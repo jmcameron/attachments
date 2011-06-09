@@ -116,7 +116,7 @@ class AttachmentsModelAttachments extends JModelList
 				$where[] = 'a.id = ' . (int) $search . '';
 				}
 			else {
-				$db =& $this->getDBO();
+				$db = $this->getDBO();
 				$where[] = '(LOWER( a.filename ) LIKE ' .
 					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
 					' OR LOWER( a.description ) LIKE ' .
@@ -149,7 +149,7 @@ class AttachmentsModelAttachments extends JModelList
 
 			// Get the contributions for all the known content types
 			JPluginHelper::importPlugin('attachments');
-			$apm =& getAttachmentsPluginManager();
+			$apm = getAttachmentsPluginManager();
 			$known_parent_types = $apm->getInstalledParentTypes();
 			foreach ($known_parent_types as $parent_type) {
 				$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -256,7 +256,7 @@ class AttachmentsModelAttachments extends JModelList
 
 		// Update the attachments with information about thier parents
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		foreach ($items as $item) {
 			$parent_id = $item->parent_id;
 			$parent_type = $item->parent_type;

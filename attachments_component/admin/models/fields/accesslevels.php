@@ -78,7 +78,7 @@ class JFormFieldAccessLevels extends JFormField
 		// Make sure there is a $level_value
 		if ( $level_value === null ) {
 			jimport('joomla.application.component.helper');
-			$params =& JComponentHelper::getParams('com_attachments');
+			$params = JComponentHelper::getParams('com_attachments');
 			$level_value = $params->get('default_access_level', 2);
 			}
 

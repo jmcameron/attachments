@@ -31,7 +31,7 @@ $last_parent_entity = null;
 
 for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 {
-	$item =& $this->items[$i];
+	$item = $this->items[$i];
 
 	if ( $item->uri_type == 'file' ) {
 		if ( $secure ) {

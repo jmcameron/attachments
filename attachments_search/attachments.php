@@ -64,7 +64,7 @@ class plgSearchAttachments extends JPlugin
 	 */
 	public function onContentSearch($text, $phrase='', $ordering='', $areas=null)
 	{
-		$user	=& JFactory::getUser();
+		$user	 = JFactory::getUser();
 
 		// Exit if the search does not include attachments
 		if (is_array($areas)) {
@@ -84,7 +84,7 @@ class plgSearchAttachments extends JPlugin
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$attachParams =& JComponentHelper::getParams('com_attachments');
+		$attachParams = JComponentHelper::getParams('com_attachments');
 		$secure = $attachParams->get('secure', false);
 		$user_field_1 = false;
 		if ( JString::strlen($attachParams->get('user_field_1_name', '')) > 0 ) {
@@ -105,7 +105,7 @@ class plgSearchAttachments extends JPlugin
 		$wheres = array();
 
 		// Create the search query
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		switch ($phrase)  {
 
@@ -164,7 +164,7 @@ class plgSearchAttachments extends JPlugin
 		}
 
 		// Load the permissions functions
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Construct and execute the query
@@ -186,13 +186,13 @@ class plgSearchAttachments extends JPlugin
 
 		// Prepare to get parent info
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 
 		// Add the result data to the results of the search
 		$k = 0;
 		for ( $i = 0; $i < $count; $i++ ) {
 
-			$attachment =& $attachments[$i];
+			$attachment = $attachments[$i];
 
 			// Get the parent handler
 			$parent_type = $attachment->parent_type;
@@ -201,7 +201,7 @@ class plgSearchAttachments extends JPlugin
 				// Exit if there is no Attachments plugin to handle this parent_type, ignore it
 				continue;
 				}
-			$parent =& $apm->getAttachmentsPlugin($parent_type);
+			$parent = $apm->getAttachmentsPlugin($parent_type);
 
 			// Ignore the attachment if the user may not see the parent
 			if ( ! $parent->userMayViewParent($attachment->parent_id, $parent_entity) ) {

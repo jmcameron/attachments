@@ -77,19 +77,19 @@ class plgContentAttachments extends JPlugin
 		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
 
-		$doc =& JFactory::getDocument();
+		$doc = JFactory::getDocument();
 		JHTML::_('behavior.mootools');
 		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
 		$doc->addScript( $js_path );
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit quietly if there is no Attachments plugin to handle this parent_type
 			return false;
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// If this attachments plugin is disabled, skip it
 		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
@@ -104,7 +104,7 @@ class plgContentAttachments extends JPlugin
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$attachParams =& JComponentHelper::getParams('com_attachments');
+		$attachParams = JComponentHelper::getParams('com_attachments');
 
 		// Get the desired placement
 		$attachments_placement = $attachParams->get('attachments_placement', 'end');
@@ -113,7 +113,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Get some of the options
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$logged_in = $user->get('username') <> '';
 		$user_type = $user->get('usertype', false);
 		$parent_id = null;
@@ -284,10 +284,10 @@ class plgContentAttachments extends JPlugin
 		// Get the attachments associated with this newly created object
 		// NOTE: We assume that all attachments that have parent_id=null
 		//		 and are created by the current user are for this article.
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$user_id = $user->get('id');
 
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
 		$query->where('created_by='.(int)$user_id.' AND parent_id IS NULL');
@@ -305,7 +305,7 @@ class plgContentAttachments extends JPlugin
 
 		// Change the attachment to the new article!
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$atrow =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$atrow = JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		/// Load the Attachments helper
 		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
@@ -352,7 +352,7 @@ class plgContentAttachments extends JPlugin
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Check the security status
 		$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -384,7 +384,7 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 
 		JHTML::_('behavior.modal', 'a.modal-button');
 

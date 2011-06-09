@@ -20,7 +20,7 @@ $template = JFactory::getApplication()->getTemplate();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 $uri = JFactory::getURI();
 
 $document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',

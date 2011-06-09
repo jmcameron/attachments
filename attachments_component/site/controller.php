@@ -112,18 +112,18 @@ class AttachmentsController extends JController
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 82)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Make sure this user can add attachments to this parent
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 83)';
 			JError::raiseError(500, $errmsg);
@@ -144,7 +144,7 @@ class AttachmentsController extends JController
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
 		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -212,19 +212,19 @@ class AttachmentsController extends JController
 		JRequest::checkToken() or die( 'Invalid Token');
 
 		// Make sure that the user is logged in
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 
 		// Get the article/parent handler
 		$new_parent = JRequest::getBool('new_parent', false);
 		$parent_type = JRequest::getCmd('parent_type', 'com_content');
 		$parent_entity = JRequest::getCmd('parent_entity', 'default');
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 85)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
@@ -288,7 +288,7 @@ class AttachmentsController extends JController
 
 		// Bind the info from the form
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( $attachment_id AND !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 89)';
 			JError::raiseError(500, $errmsg);
@@ -450,7 +450,7 @@ class AttachmentsController extends JController
 	 */
 	public function delete()
 	{
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		// Make sure we have a valid attachment ID
 		$id = JRequest::getInt( 'id');
@@ -479,12 +479,12 @@ class AttachmentsController extends JController
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 95)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity_name = JText::_($parent_entity);
 
@@ -582,7 +582,7 @@ class AttachmentsController extends JController
 
 		// Get the attachment record
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment =& JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 100)';
 			JError::raiseError(500, $errmsg);
@@ -591,12 +591,12 @@ class AttachmentsController extends JController
 		// Get the parent object
 		$parent_type = $attachment->parent_type;
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 101)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Check to make sure we can edit it
 		$parent_id = $attachment->parent_id;
@@ -664,19 +664,19 @@ class AttachmentsController extends JController
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the article/parent handler
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 105)';
 			JError::raiseError(500, $errmsg);
 			}
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Check to make sure we can edit it
 		if ( !$parent->userMayEditAttachment(&$attachment) ) {
@@ -687,7 +687,7 @@ class AttachmentsController extends JController
 		$parent_entity_name = JText::_($parent_entity);
 
 		// Verify that this user may add attachments to this parent
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$new_parent = false;
 		if ( $parent_id === null ) {
 			$parent_id = 0;

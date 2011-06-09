@@ -49,7 +49,7 @@ class AttachmentsViewAttachments extends JView
 		$this->params = $params;
 
 		// Get the access level names for the display
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__viewlevels');
 		$db->setQuery($query);
@@ -100,8 +100,8 @@ class AttachmentsViewAttachments extends JView
 		$filter_entity_options = array();
 		$filter_entity_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ALL_TYPES' ) );
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
-		$entity_info =& $apm->getInstalledEntityInfo();
+		$apm = getAttachmentsPluginManager();
+		$entity_info = $apm->getInstalledEntityInfo();
 		foreach ($entity_info as $einfo) {
 			$filter_entity_options[] = JHTML::_('select.option', $einfo['id'], $einfo['name_plural']);
 			}
@@ -176,7 +176,7 @@ class AttachmentsViewAttachments extends JView
 			JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
 			// Add a button for extra admin commands
-			$bar =&  JToolBar::getInstance('toolbar');
+			$bar = JToolBar::getInstance('toolbar');
 			$bar->appendButton( 'Popup', 'adminUtils', $alt='UTILITIES',
 								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
 								$width='600', $height='400' );

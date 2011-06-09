@@ -124,7 +124,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function getEntityItems($parent_entity='default', $filter='')
 	{
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
@@ -295,7 +295,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function isParentPublished($parent_id, $parent_entity='default')
 	{
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$published = false;
 
@@ -384,7 +384,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		default:
 			// Articles
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('state')->from('#__content')->where(' id = ' . (int)$parent_id);
 			$db->setQuery($query, 0, 1);
@@ -528,7 +528,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$user_levels = array_unique($user->authorisedLevels());
 
 		// See if the parent's access level is permitted for the user
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from("#__$table");
 		$query->where('id = ' . (int)$parent_id . ' AND access in ('.implode(',', $user_levels).')');
@@ -588,7 +588,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$all_but_article_views = $params->get('hide_except_article_views', false);
 
 		// Make sure the parent is valid and get info about it
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		if ( $parent_entity == 'category' ) {
 
@@ -673,7 +673,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	{
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
 
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 
 		// Handle each entity type
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
@@ -723,7 +723,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
@@ -792,7 +792,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
@@ -855,12 +855,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function userMayAccessAttachment( &$attachment )
 	{
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		return in_array($attachment->access, $user->authorisedLevels());
 	}
 
 }
 
 /** Register this attachments type */
-$apm =& getAttachmentsPluginManager();
+$apm = getAttachmentsPluginManager();
 $apm->addParentType('com_content');

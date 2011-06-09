@@ -51,7 +51,7 @@ class AttachmentsControllerParams extends JControllerForm
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the component model/table
 		require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
@@ -98,7 +98,7 @@ class AttachmentsControllerParams extends JControllerForm
 
 		// Get the old component parameters
 		jimport('joomla.application.component.helper');
-		$old_params =& JComponentHelper::getParams('com_attachments');
+		$old_params = JComponentHelper::getParams('com_attachments');
 		$old_secure = JRequest::getInt('old_secure');
 		$old_upload_dir = JRequest::getString('old_upload_dir');
 

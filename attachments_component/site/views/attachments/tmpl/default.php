@@ -19,12 +19,12 @@ $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
 // Set a few variables for convenience
-$attachments =& $this->list;
+$attachments = $this->list;
 $parent_id = $this->parent_id;
 $parent_type = $this->parent_type;
 $parent_entity = $this->parent_entity;
 
-$base_url =& $this->base_url;
+$base_url = $this->base_url;
 
 $format = JRequest::getWord('format', '');
 
@@ -50,7 +50,7 @@ if ( $format != 'raw' ) {
 	// Construct the empty div for the attachments
 	if ( $parent_id === null ) {
 		// If there is no parent_id, the parent is being created, use the username instead
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		$pid = $user->get('username');
 		}
 	else {
@@ -102,7 +102,7 @@ $html .= "<tbody>\n";
 // Construct the lines for the attachments
 $row_num = 0;
 for ($i=0, $n=count($attachments); $i < $n; $i++) {
-	$attachment =& $attachments[$i];
+	$attachment = $attachments[$i];
 
 	$row_num++;
 	if ( $row_num & 1 == 1)

@@ -50,7 +50,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 		
 		// This button should only be displayed in 'custom placement' mode.
 		// Check to make sure that is the case
@@ -69,7 +69,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return new JObject();
@@ -97,8 +97,8 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 			";
 
-        $app =& JFactory::getApplication();
-		$doc =& JFactory::getDocument();
+        $app = JFactory::getApplication();
+		$doc = JFactory::getDocument();
 		$uri = JFactory::getURI();
 
 		$doc->addScriptDeclaration($js);

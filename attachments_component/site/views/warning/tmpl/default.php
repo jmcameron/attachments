@@ -20,7 +20,7 @@ $template = JFactory::getApplication()->getTemplate();
 JHtml::_('behavior.tooltip');
 
 $uri = JFactory::getURI();
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 
 // Meant to be shown in the iframe popup
 JHTML::_('behavior.mootools');

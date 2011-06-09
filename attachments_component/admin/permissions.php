@@ -57,7 +57,7 @@ class AttachmentsPermissions
 	 */
 	public function userMayEditCategory($category_id, $user_id = null)
 	{
-		$user =& JFactory::getUser($user_id);
+		$user = JFactory::getUser($user_id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
@@ -74,7 +74,7 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.category.'.$category_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the category
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
 			$query->where('id = '.(int)$category_id.' AND created_user_id = '.(int)$user->id);
@@ -106,7 +106,7 @@ class AttachmentsPermissions
 	 */
 	public function userMayEditArticle($article_id, $user_id = null)
 	{
-		$user =& JFactory::getUser($user_id);
+		$user = JFactory::getUser($user_id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
@@ -129,7 +129,7 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.article.'.$article_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the article
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__content');
 			$query->where('id = '.(int)$article_id.' AND created_by = '.(int)$user->id);
