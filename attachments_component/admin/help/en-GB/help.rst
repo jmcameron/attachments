@@ -8,6 +8,10 @@
 
 **Version 3.0 pre-Alpha - April 20, 2011**
 
+**This version is for Joomla 1.6+**
+
+**NOTE: This help file has not been updated!**
+
 .. contents::
     :depth: 1
 
