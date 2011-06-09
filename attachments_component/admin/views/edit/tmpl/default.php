@@ -61,8 +61,11 @@ $uri_type = $attachment->uri_type;
 
 $show_download_count = $secure && ($uri_type == 'file');
 if ( $show_download_count ) {
-	$download_count_tooltip = JText::_('NUMBER_OF_DOWNLOADS_TOOLTIP');
+	$download_count_tooltip = JText::_('NUMBER_OF_DOWNLOADS') . '::' . JText::_('NUMBER_OF_DOWNLOADS_TOOLTIP');
 	}
+
+$change_entity_tooltip = JText::sprintf('CHANGE_ENTITY_S_TOOLTIP',$attachment->parent_entity_name) . '::' .
+	JText::_('CHANGE_ENTITY_TOOLTIP2');
 
 if ( $this->update == 'file' )
 	$enctype = "enctype=\"multipart/form-data\"";
@@ -104,7 +107,7 @@ else
        </td>
 	   <td class="switch">
  	    <a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
-	       title="<?php echo JText::sprintf('CHANGE_ENTITY_S_TOOLTIP',$attachment->parent_entity_name); ?>"
+	       title="<?php echo $change_entity_tooltip; ?>"
 		   ><?php echo JText::sprintf('CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a>
        </td>
 	   <td class="switch" colspan="3"> <?php echo JText::_('SWITCH_TO_COLON') ?>
@@ -116,7 +119,8 @@ else
 		$cename = $einfo['name'];
 		if ( ($parent_type != $attachment->parent_type) OR ($centity != $attachment->parent_entity) ) {
 			$url = $this->change_parent_url . "&amp;new_parent_type=" . $parent_type;
-			$tooltip = JText::sprintf('SWITCH_ATTACHMENT_TO_S_TOOLTIP', $cename);
+			$tooltip = JText::sprintf('SWITCH_ATTACHMENT_TO_S_TOOLTIP', $cename) . '::' .
+				JText::_('SWITCH_ATTACHMENT_TO_TOOLTIP2');
 			if ( $centity != 'default' ) {
 				$url .= '.' . $centity;
 				}
@@ -143,16 +147,16 @@ else
   <td colspan="5"><?php echo JText::_(JString::strtoupper($uri_type));?>
   <?php if ( $uri_type == 'file' AND ( $update != 'url' ) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_url_url ?>"
-		 title="<?php echo JText::_('CHANGE_TO_URL_TOOLTIP'); ?>"
+		 title="<?php echo JText::_('CHANGE_TO_URL') . '::' . JText::_('CHANGE_TO_URL_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_TO_URL') ?></a>
   <?php elseif ( $uri_type == 'url' AND $update != 'file' ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
-		 title="<?php echo JText::_('CHANGE_TO_FILE_TOOLTIP'); ?>"
+		 title="<?php echo JText::_('CHANGE_TO_FILE') . '::' . JText::_('CHANGE_TO_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_TO_FILE') ?></a>
   <?php elseif ( ($uri_type == 'file' AND $update != 'file') OR
 				 ($uri_type == 'url' AND $update != 'url') ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->normal_update_url ?>"
-		 title="<?php echo JText::_('NORMAL_UPDATE_TOOLTIP'); ?>"
+		 title="<?php echo JText::_('NORMAL_UPDATE') . '::' . JText::_('NORMAL_UPDATE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('NORMAL_UPDATE') ?></a>
   <?php endif; ?>
   </td>
@@ -190,7 +194,7 @@ else
 	  <td class="key"><label><?php echo JText::_('FILENAME'); ?></label></td>
 	  <td colspan="5"><?php echo $attachment->filename; ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
-		 title="<?php echo JText::_('CHANGE_FILE_TOOLTIP'); ?>"
+		 title="<?php echo JText::_('CHANGE_FILE') . '::' . JText::_('CHANGE_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('CHANGE_FILE') ?></a>
 	  </td>
   </tr>
@@ -259,7 +263,7 @@ else
 <?php endif; ?>
 
   <tr><td class="key"><label class="hasTip" for="description"
-				 title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"><?php
+				 title="<?php echo JText::_('DESCRIPTION') . '::' . JText::_('DESCRIPTION_DESCRIPTION'); ?>"><?php
 				 echo JText::_('DESCRIPTION'); ?></label></td>
 	  <td colspan="5"><input class="text hasTip" type="text" name="description"
 			 title="<?php echo JText::_('DESCRIPTION_DESCRIPTION'); ?>"
