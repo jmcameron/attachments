@@ -42,7 +42,7 @@ if ( $format != 'raw' ) {
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 	// Handle RTL styling (if necessary)
-	$lang =& JFactory::getLanguage();
+	$lang = JFactory::getLanguage();
 	if ( $lang->isRTL() ) {
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
 		}

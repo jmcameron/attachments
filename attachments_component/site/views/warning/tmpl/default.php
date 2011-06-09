@@ -32,7 +32,7 @@ require_once(JPATH_COMPONENT_SITE.'/helper.php');
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );
 
 // Handle the RTL styling
-$lang =& JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 if ( $lang->isRTL() ) {
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2_rtl.css' );
 	}

@@ -19,7 +19,7 @@ $document =& JFactory::getDocument();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
-$lang =& JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 
 $attachment =& $this->attachment;
 $params =& $this->params;

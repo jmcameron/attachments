@@ -121,14 +121,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Set up mootools/modal
-		$document =&  JFactory::getDocument();
+		$document = JFactory::getDocument();
 		JHTML::_('behavior.modal', 'a.modal-button');
 
 		// Set up the "select parent" button
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
-		$entity_info =& $apm->getInstalledEntityInfo();
-		$parent =& $apm->getAttachmentsPlugin($parent_type);
+		$apm = getAttachmentsPluginManager();
+		$entity_info = $apm->getInstalledEntityInfo();
+		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_($parent_entity);
@@ -168,13 +168,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( !$new_parent ) {
 
 			JPluginHelper::importPlugin('attachments');
-			$apm =& getAttachmentsPluginManager();
+			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				// Exit if there is no Attachments plugin to handle this parent_type
 				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 31)';
 				JError::raiseError(500, $errmsg);
 				}
-			$parent =& $apm->getAttachmentsPlugin($parent_type);
+			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
@@ -187,7 +187,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Set up the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/add/view.html.php');
@@ -310,7 +310,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		JRequest::checkToken() or die( 'Invalid Token');
 
 		// Make sure we have a user
-		$user =& JFactory::getUser();
+		$user = JFactory::getUser();
 		if ( $user->get('username') == '' ) {
 			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 32)';
 			JError::raiseError(500, $errmsg);
@@ -328,7 +328,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Exit if there is no Attachments plugin to handle this parent_type
 		JPluginHelper::importPlugin('attachments');
-		$apm =& getAttachmentsPluginManager();
+		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 33)';
 			JError::raiseError(500, $errmsg);

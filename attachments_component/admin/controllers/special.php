@@ -73,7 +73,7 @@ class AttachmentsControllerSpecial extends JController
 	public function listAttachmentIDs()
 	{
 		// Get the article IDs
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('att.id,parent_id,parent_type,parent_entity,art.catid');
 		$query->from('#__attachments as att');

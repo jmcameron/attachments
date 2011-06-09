@@ -78,7 +78,7 @@ class Com_AttachmentsInstallerScript {
 	public function preflight($type, $parent)
 	{
 		// Load the installation language
-		$lang =&  JFactory::getLanguage();
+		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
 
 		// Temporarily move the attachments directory out of the way to avoid conflicts
@@ -111,7 +111,7 @@ class Com_AttachmentsInstallerScript {
 		$db =& JFactory::getDBO();
 
 		// Make sure the translations are available
-		$lang =&  JFactory::getLanguage();
+		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments', JPATH_ADMINISTRATOR);
 
 		// Enable all the plugins

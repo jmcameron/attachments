@@ -70,7 +70,7 @@ class plgContentAttachments extends JPlugin
 			return false;
 			}
 
-		$lang =& JFactory::getLanguage();
+		$lang = JFactory::getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
@@ -128,7 +128,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Load the language files from the backend
-		$lang =&  JFactory::getLanguage();
+		$lang =  JFactory::getLanguage();
 		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
 
 		// exit if we should not display attachments for this parent

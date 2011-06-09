@@ -119,7 +119,7 @@ class plgButtonAdd_attachment extends JPlugin
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment.css' );
 
 		// Handle RTL styling (if necessary)
-		$lang =&  JFactory::getLanguage();
+		$lang = JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments_rtl.css' );
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment_rtl.css' );

@@ -32,7 +32,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * code after the class definition to register the derived class with the
  * Attachments plugin manager:
  *
- *   $apm =& getAttachmentsPluginManager();
+ *   $apm = getAttachmentsPluginManager();
  *   $apm->addParentType('com_content');
  *
  * where 'com_content' should be replaced by the name of the appropriate
@@ -225,7 +225,7 @@ class AttachmentsPlugin extends JPlugin
 			return $this->_entity_name[$parent_entity];
 			}
 		else {
-			$lang =& JFactory::getLanguage();
+			$lang = JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = JText::sprintf('ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
 									 $parent_entity, $parent_type) . ' (ERR 300)';
@@ -293,7 +293,7 @@ class AttachmentsPlugin extends JPlugin
 			}
 
 		// Look up the title
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=".(int)$parent_id);
@@ -336,7 +336,7 @@ class AttachmentsPlugin extends JPlugin
 												   'filter_order_Dir',	'', 'word');
 
 		// Get all the items
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from('#__$entity_table');
@@ -543,7 +543,7 @@ class AttachmentsPlugin extends JPlugin
 		// First time, so look up the parent
 		$entity_table = $this->_entity_table[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=".(int)$parent_id);

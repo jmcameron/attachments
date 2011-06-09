@@ -93,7 +93,7 @@ AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachmen
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
 
 // Handle RTL styling
-$lang =& JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 if ( $lang->isRTL() ) {
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', $echo_css );
 	}

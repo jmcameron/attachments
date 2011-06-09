@@ -134,7 +134,7 @@ class AttachmentsModelAttachments extends JModelList
 
 		// Get the parent_state filter
 		jimport('joomla.application.component.helper');
-		$params =& JComponentHelper::getParams('com_attachments');
+		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the desired state
 		$filter_parent_state_default = 'ALL';

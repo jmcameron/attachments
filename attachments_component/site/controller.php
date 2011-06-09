@@ -393,7 +393,7 @@ class AttachmentsController extends JController
 				JError::raiseError(500, $errmsg);
 				}
 
-			$lang =&  JFactory::getLanguage();
+			$lang =  JFactory::getLanguage();
 			$lang->load('com_attachments', JPATH_SITE);
 
 			$msg = JText::_('ATTACHMENT_UPDATED');

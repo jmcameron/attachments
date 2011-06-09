@@ -71,7 +71,7 @@ class AttachmentsViewAttachments extends JView
 		$this->addTemplatePath($templateDir);
 
 		// Load the language files from the attachments plugin
-		$lang =&  JFactory::getLanguage();
+		$lang =  JFactory::getLanguage();
 		$lang->load('plg_content_attachments', JPATH_SITE.'/plugins/content/attachments');
 
 		// Get the component parameters

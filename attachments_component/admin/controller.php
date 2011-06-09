@@ -23,9 +23,11 @@ class AttachmentsController extends JController
 
 	/** List the attachments
 	 *
+	 * @param   bool   $cachable   If true, the view output will be cached
+	 * @param   array  $urlparams  (ignored)
 	 * @return void
 	 */
-	public function display($cachable = false)
+	public function display($cachable = false, $urlparams = false)
 	{
 		// Set the default view (if not specified)
 		JRequest::setVar('view', JRequest::getCmd('view', 'Attachments'));

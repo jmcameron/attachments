@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>Attachments Documentation</title>
 <link rel="stylesheet" href="help.css" type="text/css" />
 </head>
@@ -15,7 +15,9 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 2.2 - February 6, 2011</strong></p>
+<p class="version"><strong>Version 3.0 pre-Alpha - April 20, 2011</strong></p>
+<p><strong>This version is for Joomla 1.6+</strong></p>
+<p><strong>NOTE: This help file has not been updated!</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -90,7 +92,7 @@ mean that any one content item cannot have duplicate file names.  This
 is not much of a limitation in practice.</p>
 </li>
 <li><p class="first">Refactored the code to add &quot;Attachments plugins&quot;.  These plugins allow
-attaching files to any content item that invokes the <tt class="docutils literal"><span class="pre">onPrepareContent</span></tt>
+attaching files to any content item that invokes the <tt class="docutils literal">onPrepareContent</tt>
 plugin.  For example, you can now attach files to Section and Category
 descriptions.  With a bit of work, an extension developer can create a
 new 'Attachments' plugin to support adding attachments to things like CB
@@ -538,7 +540,7 @@ and Categories (see below).  If appropriate 'Attachments' plugins are
 installed, it may be possible to attach files or URLs to a wide variety
 of content items such as user profiles, shopping cart product
 descriptions, etc.  Basically any content item that is displayed on the
-front end and uses the content event <tt class="docutils literal"><span class="pre">'onPrepareContent'</span></tt> can host
+front end and uses the content event <tt class="docutils literal">'onPrepareContent'</tt> can host
 attachments (if a suitable 'Attachments' plugin is installed).  Content
 items that invoke content events are typically items that have content
 to be displayed (such as articles) or have descriptions that will be
@@ -698,12 +700,12 @@ upload file size.</p>
 </li>
 <li><p class="first">'Attachments' now supports &quot;attaching&quot; URLs to content items.  If your server
 is Windows Vista and you encounter problems attaching URLs that involve
-<tt class="docutils literal"><span class="pre">localhost</span></tt>, this is a known problem related to IPv4 and IPv6 conflicts.
+<tt class="docutils literal">localhost</tt>, this is a known problem related to IPv4 and IPv6 conflicts.
 To fix it, edit the file:</p>
 <pre class="literal-block">
 C:\Windows\System32\drivers\etc\hosts
 </pre>
-<p>Comment out the line that has <tt class="docutils literal"><span class="pre">::1</span></tt> on it.  Note that <tt class="docutils literal"><span class="pre">hosts</span></tt> is a
+<p>Comment out the line that has <tt class="docutils literal">::1</tt> on it.  Note that <tt class="docutils literal">hosts</tt> is a
 hidden system file and you may need to modify your folder options to show
 hidden files to see and edit it.</p>
 </li>
@@ -831,7 +833,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: February 07, 2011 at 04:06 UTC.
+Generated on: June 08, 2011 at 02:43 UTC.
 
 </div>
 </body>

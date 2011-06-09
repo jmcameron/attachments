@@ -19,7 +19,7 @@ $document =& JFactory::getDocument();
 $uri = JFactory::getURI();
 $document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css', 
 						  'text/css', null, array() );
-$lang =& JFactory::getLanguage(); 
+$lang = JFactory::getLanguage(); 
 if ( $lang->isRTL() ) {
 	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css', 
 							  'text/css', null, array() );

@@ -69,7 +69,7 @@ class AttachmentsControllerUtils extends JController
 
 		// Not sure why I need the extra saving to the session below,
 		// but it it seems necessary because I'm doing it from an iframe.
-		$session =& JFactory::getSession(); 
+		$session = JFactory::getSession(); 
 		$session->set('application.queue', $app->getMessageQueue());
 	}
 
