@@ -29,7 +29,7 @@ class AttachmentsHelper
 	 *
 	 * @param string $css_path the URL/path to the CSS file to add to the document
 	 */
-	public function addStyleSheet($css_path, $echo=false)
+	public static function addStyleSheet($css_path, $echo=false)
 	{
 		static $added_js = false;
 

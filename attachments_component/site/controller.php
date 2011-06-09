@@ -600,7 +600,7 @@ class AttachmentsController extends JController
 
 		// Check to make sure we can edit it
 		$parent_id = $attachment->parent_id;
-		if ( !$parent->userMayDeleteAttachment(&$attachment) ) {
+		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			$errmsg = JText::_('ERROR_NO_PERMISSION_TO_DELETE_ATTACHMENT') . ' (ERR 102)';
 			JError::raiseWarning(403, $errmsg);
 			}
@@ -679,7 +679,7 @@ class AttachmentsController extends JController
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Check to make sure we can edit it
-		if ( !$parent->userMayEditAttachment(&$attachment) ) {
+		if ( !$parent->userMayEditAttachment($attachment) ) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 106)');
 			}
 

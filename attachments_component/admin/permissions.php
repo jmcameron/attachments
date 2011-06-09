@@ -55,7 +55,7 @@ class AttachmentsPermissions
 	 * @param  integer $category_id the ID for the category to be tested
 	 * @param  integer $id	The id of the user to load (defaults to null)
 	 */
-	public function userMayEditCategory($category_id, $user_id = null)
+	public static function userMayEditCategory($category_id, $user_id = null)
 	{
 		$user = JFactory::getUser($user_id);
 
@@ -104,7 +104,7 @@ class AttachmentsPermissions
 	 * @param  integer $article_id the ID for the article to be tested
 	 * @param  integer $id	The id of the user to load (defaults to null)
 	 */
-	public function userMayEditArticle($article_id, $user_id = null)
+	public static function userMayEditArticle($article_id, $user_id = null)
 	{
 		$user = JFactory::getUser($user_id);
 
