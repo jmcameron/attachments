@@ -195,7 +195,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		$view->uri_type      = $uri_type;
 		$view->url           = '';
-		$view->state         = 0;
+		$view->state         = $params->get('publish_default', false);
+
 		$view->parent_id     = $parent_id;
 		$view->parent_type   = $parent_type;
 		$view->parent_entity = $parent_entity;
