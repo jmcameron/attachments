@@ -776,14 +776,28 @@ class AttachmentsHelper
 		$attachment->file_type = $ftype;
 		$attachment->file_size = $_FILES['upload']['size'];
 
-		// If we are creating the attachment, set its initial state
-		if ( $save_type == 'upload' ) {
-			$auto_publish = $params->get('publish_default', false);
-			if ( $auto_publish ) {
-				$attachment->state = 1;
+		// If the user is not authorised to change the state (eg, publish/unpublish),
+		// ignore the form data and make sure the publish state is is set correctly.
+		$user = JFactory::getUser();
+		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
+			if ( $save_type == 'upload' ) {
+				// Use the default publish state (ignore form info)
+				jimport('joomla.application.component.helper');
+				$params = JComponentHelper::getParams('com_attachments');
+				$attachment->state = $params->get('publish_default', false);
 				}
 			else {
-				$attachment->state = 0;
+				// Restore the old state (ignore form info)
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
+				$db->setQuery($query, 0, 1);
+				$old_state = $db->loadResult();
+				if ( $db->getErrorNum() ) {
+					$errmsg = $db->stderr() . ' (ERRN)';
+					JError::raiseError(500, $errmsg);
+					}
+				$attachment->state = $old_state;
 				}
 			}
 
@@ -1331,12 +1345,36 @@ class AttachmentsHelper
 			$attachment->display_name = $attachment->url;
 			}
 
+		// If the user is not authorised to change the state (eg, publish/unpublish),
+		// ignore the form data and make sure the publish state is is set correctly.
+		$user = JFactory::getUser();
+		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
+			if ( $save_type == 'upload' ) {
+				// Use the default publish state
+				jimport('joomla.application.component.helper');
+				$params = JComponentHelper::getParams('com_attachments');
+				$attachment->state = $params->get('publish_default', false);
+				}
+			else {
+				// Restore the old state
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
+				$db->setQuery($query, 0, 1);
+				$old_state = $db->loadResult();
+				if ( $db->getErrorNum() ) {
+					$errmsg = $db->stderr() . ' (ERRN)';
+					JError::raiseError(500, $errmsg);
+					}
+				$attachment->state = $old_state;
+				}
+			}
+
 		// Set the create/modify dates
 		jimport('joomla.utilities.date');
 		$now = new JDate();
 		$attachment->created = $now->toMySQL();
 		$attachment->modified = $attachment->created;
-		$attachment->state = $auto_publish;
 		$attachment->uri_type = 'url';
 
 		// Save the updated attachment

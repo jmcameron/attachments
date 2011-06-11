@@ -109,6 +109,9 @@ if ( $lang->isRTL() ) {
 			<?php if ( $this->error_msg ): ?>
 			<div class="formWarning" id="formWarning"><?php echo $this->error_msg; ?></div>
 			<?php endif; ?>
+<?php if ( $this->may_publish ): ?>
+<p><label><?php echo JText::_('PUBLISHED'); ?></label><?php echo $this->publish; ?></p>
+<?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
 		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ACCESS_COLON'); ?></label><?php echo $this->access_level; ?></p>
 <?php endif; ?>		
@@ -196,7 +199,7 @@ if ( $lang->isRTL() ) {
 	<?php
 
 	// Display the auto-publish warning, if appropriate
-	if ( ! $params->get('publish_default', false) ) {
+	if ( !$params->get('publish_default', false) AND !$this->may_publish ) {
 		$msg = $params->get('auto_publish_warning', '');
 		if ( JString::strlen($msg) == 0 ) {
 			$msg = 'WARNING_ADMIN_MUST_PUBLISH';

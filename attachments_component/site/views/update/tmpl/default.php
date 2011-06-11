@@ -106,9 +106,12 @@ else {
 		<?php if ( $this->error_msg ): ?>
 		<div class="formWarning" id="formWarning"><?php echo $this->error_msg; ?></div>
 		<?php endif; ?>
+<?php if ( $this->may_publish ): ?>
+<p><label><?php echo JText::_('PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></p>
+<?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
 		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ACCESS_COLON'); ?></label><?php echo $this->access_level; ?> </p>
-<?php endif; ?>		
+<?php endif; ?>
 <?php if ( $update == 'file' ): ?>
 <p><label for="<?php echo $update_id; ?>"><?php
    echo JText::_('SELECT_NEW_FILE_IF_YOU_WANT_TO_UPDATE_ATTACHMENT_FILE') ?></label>

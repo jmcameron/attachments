@@ -176,8 +176,15 @@ class AttachmentsController extends JController
 			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
 			}
 
-		$view->uri_type = 	  $uri_type;
-		$view->url = 			  '';
+		// Set up publishing info
+		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+		if ( $view->may_publish ) {
+			$default_state = $params->get('publish_default', false);
+			$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+			}
+
+		$view->uri_type = $uri_type;
+		$view->url = '';
 		$view->parent_id = 		 $parent_id;
 		$view->parent_type = 		 $parent_type;
 		$view->parent_entity = 	 $parent_entity;
@@ -712,6 +719,8 @@ class AttachmentsController extends JController
 
 		// Set up the selection lists
 		$lists = array();
+		$lists['published'] = JHTML::_('select.booleanlist', 'state',
+									   'class="inputbox"', $attachment->state);
 		$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 									   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 									   $attachment->url_valid);
@@ -735,6 +744,9 @@ class AttachmentsController extends JController
 			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 			$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
 			}
+
+		// Set up for the user editing
+		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 
 		$view->update = 			$update;
 		$view->new_parent = 		$new_parent;
