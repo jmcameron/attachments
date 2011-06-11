@@ -391,6 +391,7 @@ class AttachmentsHelper
 	 */
 	public function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
 	{
+		$user = JFactory::getUser();
 		$db = JFactory::getDBO();
 
 		// Get the component parameters
@@ -487,6 +488,9 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
+												 $attachment->parent_type, $attachment_id, $from);
+
 				$view->update = JRequest::getWord('update');
 
 				// Set up the selection lists
@@ -494,17 +498,43 @@ class AttachmentsHelper
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
+
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
+
 				$view->lists = $lists;
 				$view->attachment = $attachment;
-
-				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type,
-												 $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type,
-												 $attachment_id, null, $from);
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
+												 $attachment->parent_type, $attachment_id, null, $from);
+			
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
 
 				$view->uri_type     = $attachment->uri_type;
 				$view->url          = $attachment->url;
@@ -532,10 +562,6 @@ class AttachmentsHelper
 			$view->new_parent = $parent->new;
 
 			$view->display_name = $display_name;
-
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-			$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
-			$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 
 			$view->params = $params;
 
@@ -596,6 +622,9 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
+												 $attachment->parent_type, $attachment_id, $from);
+
 				$view->update = JRequest::getWord('update');
 
 				// Set up the selection lists
@@ -603,16 +632,43 @@ class AttachmentsHelper
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
+
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
+
 				$view->lists = $lists;
 				$view->attachment = $attachment;
-
-				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type,
-												 $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
+												 $attachment->parent_type, null, $from);
+			
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
 
 				$view->uri_type = 		 $attachment->uri_type;
 				$view->url = 				 $attachment->url;
@@ -642,6 +698,20 @@ class AttachmentsHelper
 			$view->display_name = $display_name;
 
 			$view->params = $params;
+			
+			// Set up publishing info
+			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+			if ( $view->may_publish ) {
+				$default_state = $params->get('publish_default', false);
+				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+				}
+
+			// Set up the access levels
+			if ( $params->get('allow_frontend_access_editing', false) ) {
+				require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+				$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
+				$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+				}
 
 			$view->from = $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
@@ -719,7 +789,8 @@ class AttachmentsHelper
 			// Set up the view to redisplay the form with warnings
 			require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 			$view = new AttachmentsViewUpload();
-			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
+			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
+											 $attachment->parent_type, null, $from);
 
 			// Set up the view
 			$view->uri_type = 		 $attachment->uri_type;
@@ -738,7 +809,21 @@ class AttachmentsHelper
 			$view->from = 			 $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 			$view->params = 			 $params;
+			
+			// Set up publishing info
+			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+			if ( $view->may_publish ) {
+				$default_state = $params->get('publish_default', false);
+				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+				}
 
+			// Set up the access levels
+			if ( $params->get('allow_frontend_access_editing', false) ) {
+				require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+				$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
+				$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+				}
+				
 			$view->error = $error;
 			$view->error_msg = $error_msg;
 
@@ -778,7 +863,6 @@ class AttachmentsHelper
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		$user = JFactory::getUser();
 		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state (ignore form info)
@@ -1207,6 +1291,8 @@ class AttachmentsHelper
 	public function add_url(&$attachment, &$parent, $verify, $relative_url=false,
 							$update=false, $attachment_id=false)
 	{
+		$user = JFactory::getUser();
+
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
@@ -1249,6 +1335,8 @@ class AttachmentsHelper
 			if ( $update ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type, $attachment_id, $from);
+
 				$view->update = $update_form;
 
 				// Set up the selection lists
@@ -1256,15 +1344,42 @@ class AttachmentsHelper
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
+
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
+
 				$view->lists = $lists;
 				$view->attachment = $attachment;
-
-				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type, $attachment_id, $from);
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
+			
+				// Set up publishing info
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				if ( $view->may_publish ) {
+					$default_state = $params->get('publish_default', false);
+					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					}
+
+				// Set up for editing the access level
+				if ( $params->get('allow_frontend_access_editing', false) ) {
+					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					}
 
 				$view->uri_type = 		 $attachment->uri_type;
 				$view->url = 				 $attachment->url;
@@ -1347,7 +1462,6 @@ class AttachmentsHelper
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		$user = JFactory::getUser();
 		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
