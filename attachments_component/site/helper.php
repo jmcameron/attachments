@@ -521,7 +521,7 @@ class AttachmentsHelper
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, null, $from);
-			
+
 				// Set up publishing info
 				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 				if ( $view->may_publish ) {
@@ -655,7 +655,7 @@ class AttachmentsHelper
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
-			
+
 				// Set up publishing info
 				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 				if ( $view->may_publish ) {
@@ -698,7 +698,7 @@ class AttachmentsHelper
 			$view->display_name = $display_name;
 
 			$view->params = $params;
-			
+
 			// Set up publishing info
 			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 			if ( $view->may_publish ) {
@@ -809,7 +809,7 @@ class AttachmentsHelper
 			$view->from = 			 $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 			$view->params = 			 $params;
-			
+
 			// Set up publishing info
 			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 			if ( $view->may_publish ) {
@@ -823,7 +823,7 @@ class AttachmentsHelper
 				$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
 				$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 				}
-				
+
 			$view->error = $error;
 			$view->error_msg = $error_msg;
 
@@ -878,7 +878,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERRN)';
+					$errmsg = $db->stderr() . ' (ERR 125)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
@@ -1366,7 +1366,7 @@ class AttachmentsHelper
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
-			
+
 				// Set up publishing info
 				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
 				if ( $view->may_publish ) {
@@ -1477,7 +1477,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERRN)';
+					$errmsg = $db->stderr() . ' (ERR 126)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
