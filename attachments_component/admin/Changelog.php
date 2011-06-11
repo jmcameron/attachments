@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments Extension for Joomla 1.6+
 
-2011-06-08: Release 3.0 Beta
+2011-06-10: Release 3.0 Beta
    - Derived from unreleased 2.2.1
    - Significant refactoring, reimplementing, cleanups, etc.
    - Testing version (tested on Windows Vista and Kubuntu 10.10)
