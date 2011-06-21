@@ -77,31 +77,31 @@ class ActionsTest extends JoomlaDatabaseTestCase
 		$canDo = AttachmentsPermissions::getActions((int)$user_id);
 
 		$errmsg = "----> Failed test for $username core.admin for com_attachments, " .
-			" expected $admin, got ".$canDo->get('core.admin');
+			" expected $admin, got ".$canDo->get('core.admin')." for ".$username;
 		$this->assertEquals($canDo->get('core.admin'), (bool)$admin, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.manage for com_attachments, " .
-			" expected $manage, got ".$canDo->get('core.manage');
+			" expected $manage, got ".$canDo->get('core.manage')." for ".$username;
 		$this->assertEquals($canDo->get('core.manage'), (bool)$manage, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.create for com_attachments, " .
-			" expected $create, got ".$canDo->get('core.create');
+			" expected $create, got ".$canDo->get('core.create')." for ".$username;
 		$this->assertEquals($canDo->get('core.create'), (bool)$create, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.delete for com_attachments, " .
-			" expected $delete, got ".$canDo->get('core.delete');
+			" expected $delete, got ".$canDo->get('core.delete')." for ".$username;
 		$this->assertEquals($canDo->get('core.delete'), (bool)$delete, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.edit.state for com_attachments, " .
-			" expected $edit_state, got ".$canDo->get('core.edit.state');
+			" expected $edit_state, got ".$canDo->get('core.edit.state')." for ".$username;
 		$this->assertEquals($canDo->get('core.edit.state'), (bool)$edit_state, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.edit for com_attachments, " .
-			" expected $edit, got ".$canDo->get('core.edit');
+			" expected $edit, got ".$canDo->get('core.edit')." for ".$username;
 		$this->assertEquals($canDo->get('core.edit'), (bool)$edit, $errmsg);
 
 		$errmsg = "----> Failed test for $username core.edit.own for com_attachments, " .
-			" expected $edit_own, got ".$canDo->get('core.edit.own');
+			" expected $edit_own, got ".$canDo->get('core.edit.own')." for ".$username;
 		$this->assertEquals($canDo->get('core.edit.own'), (bool)$edit_own, $errmsg);
 	}
 	
