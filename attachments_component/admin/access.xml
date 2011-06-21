@@ -8,18 +8,27 @@
 			description="COM_ATTACHMENTS_MANAGE_COMPONENT_DESC" />
 
 		<action name="core.create" title="COM_ATTACHMENTS_CREATE" 
-			description="COM_ATTACHMENTS_CREATE_COMPONENT_DESC" />
+			description="COM_ATTACHMENTS_CREATE_DESC" />
 
 		<action name="core.delete" title="COM_ATTACHMENTS_DELETE" 
-			description="COM_ATTACHMENTS_DELETE_COMPONENT_DESC" />
+			description="COM_ATTACHMENTS_DELETE_DESC" />
 
 		<action name="core.edit" title="COM_ATTACHMENTS_EDIT" 
-			description="COM_ATTACHMENTS_EDIT_COMPONENT_DESC" />
+			description="COM_ATTACHMENTS_EDIT_DESC" />
 
 		<action name="core.edit.state" title="COM_ATTACHMENTS_EDITSTATE" 
-			description="COM_ATTACHMENTS_EDITSTATE_COMPONENT_DESC" />
+			description="COM_ATTACHMENTS_EDITSTATE_DESC" />
 
 		<action name="core.edit.own" title="COM_ATTACHMENTS_EDITOWN" 
-			description="COM_ATTACHMENTS_EDITOWN_COMPONENT_DESC" />
+			description="COM_ATTACHMENTS_EDITOWN_DESC" />
+
+		<action name="attachments.delete.own" title="COM_ATTACHMENTS_DELETEOWN" 
+			description="COM_ATTACHMENTS_DELETEOWN_DESC" />
+
+		<action name="attachments.edit.ownparent" title="COM_ATTACHMENTS_EDIT_OWNPARENT" 
+			description="COM_ATTACHMENTS_EDIT_OWNPARENT_DESC" />
+
+		<action name="attachments.delete.ownparent" title="COM_ATTACHMENTS_DELETE_OWNPARENT" 
+			description="COM_ATTACHMENTS_DELETE_OWNPARENT_DESC" />
 	</section>
 </access>
