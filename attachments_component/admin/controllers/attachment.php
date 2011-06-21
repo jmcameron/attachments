@@ -1137,8 +1137,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	public function download()
 	{
-		$app = JFactory::getApplication();
-
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
 		if ( !is_numeric($id) ) {
