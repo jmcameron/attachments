@@ -1,0 +1,5 @@
+"testfiles/fieldnames_good.csv", ""
+"testfiles/fieldnames_reordered.csv", ""
+"testfiles/fieldnames_badfieldname.csv", "Error in attachments CSV import file, unrecognized field: qqq"
+"testfiles/fieldnames_noid.csv", "Error in attachments CSV import file, missing field(s): id"
+"testfiles/fieldnames_missing.csv", "Error in attachments CSV import file, missing field(s): parent_title,created_by_name,modified_by_name"
