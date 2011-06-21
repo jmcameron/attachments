@@ -1,0 +1,8 @@
+"testfiles/import_good.csv", 2
+"testfiles/import_nofile.csv", "ERROR: Unable to open attachments CSV file '/home/jmcameron/src/attachments/work-j1.6/test/attachments_component/admin/import/testfiles/import_nofile.csv'!"
+"testfiles/import_badparentid.csv", "Error importing attachments CSV file; unknown article/parent ID=-23!"
+"testfiles/import_badtitle.csv", "Error importing attachments CSV file; title for article/parent ID=1 is 'Welcome' not '-BAD TITLE-' as specified in the CSV file!"
+"testfiles/import_badcreatorid.csv", "Error importing attachments CSV file; unable to find creator with ID=-10 (name='Super User')!"
+"testfiles/import_badcreatorname.csv", "Error importing attachments CSV file; attachment creator user with id=42 has name 'QQQ', but CSV file expected 'Super User'!"
+"testfiles/import_badmodifierid.csv", "Error importing attachments CSV file; unable to find modifier with ID=-10 (name='Super User')!"
+"testfiles/import_badmodifiername.csv", "Error importing attachments CSV file; attachment modifier user with id=42 has name 'QQQ', but CSV file expected 'Super User'!"
