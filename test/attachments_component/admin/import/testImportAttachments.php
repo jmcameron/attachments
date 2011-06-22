@@ -69,20 +69,37 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
      * @dataProvider provider
 	 *
      */
-	public function testImportAttachmentsFromCSVFile($test_filename, $expected_result, $dry_run)
+	public function testImportAttachmentsFromCSVFile($test_filename, $expected_result, $update, $dry_run)
 	{
 		$path = dirname(__FILE__).'/'.$test_filename;
 
 		// Open the CSV file
-		$result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent=true, $dry_run);
+		$result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent=true, $update, $dry_run);
 		if ( is_numeric($expected_result) AND is_numeric($result) ) {
 			$this->assertEquals((int)$expected_result, (int)$result);
+			}
+		elseif ( is_array($result) ) {
+			$this->assertEquals((int)$expected_result, count($result));
 			}
 		else {
 			// Cut off the error number for comparison
 			$errmsg = substr($result, 0, strpos($result, ' (ERR'));
 
 			$this->assertEquals($expected_result, $errmsg);
+			}
+
+		// Delete the attachments
+		if ( !$update OR $attachment_id == 0 ) {
+			$db = JFactory::getDBO();
+			if (is_array($result)) {
+				$query = $db->getQuery(true);
+				$ids = implode(',', $result);
+				$query->delete('#__attachments')->where("id IN ( $ids )");
+				$db->setQuery($query);
+				if ( !$db->query() ) {
+					$this->assertTrue(false, 'ERROR deleting new test attachments' . $db->getErrorMsg());
+					}
+				}
 			}
 	}
 	
