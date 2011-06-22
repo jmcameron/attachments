@@ -69,12 +69,12 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
      * @dataProvider provider
 	 *
      */
-	public function testImportAttachmentsFromCSVFile($test_filename, $expected_result )
+	public function testImportAttachmentsFromCSVFile($test_filename, $expected_result, $dry_run)
 	{
 		$path = dirname(__FILE__).'/'.$test_filename;
 
 		// Open the CSV file
-		$result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent=true, $dry_run=true);
+		$result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent=true, $dry_run);
 		if ( is_numeric($expected_result) AND is_numeric($result) ) {
 			$this->assertEquals((int)$expected_result, (int)$result);
 			}
