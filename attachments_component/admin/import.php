@@ -64,11 +64,15 @@ class AttachmentsImport
 	 * 
 	 * @param string $filename the filename of the CSV file
 	 * @param bool $verify_parent if true, each attachments parent must exist
+	 * @param bool $update if true, if the attachment exists, update it (or create a new one)
 	 * @param bool $dry_run do everything except actually add entries to attachment table in the database
 	 *
 	 * @return array of IDs of the imported attachemnts (if $dry_run, number that would have been imported), or error message
 	 */
-	public static function importAttachmentsFromCSVFile($filename, $verify_parent=true, $dry_run=false)
+	public static function importAttachmentsFromCSVFile($filename,
+														$verify_parent=true,
+														$update=false,
+														$dry_run=false)
 	{
 		$db = JFactory::getDBO();
 
@@ -89,7 +93,13 @@ class AttachmentsImport
 		$apm = getAttachmentsPluginManager();
 
 		// Process the CSV data
-		$num_ok = 0;
+		if ( $dry_run ) {
+			$ids_ok = 0;
+			}
+		else {
+			$ids_ok = Array();
+			}
+
 		while ( !feof($f) ) {
 
 			// Read the next line
@@ -99,6 +109,13 @@ class AttachmentsImport
 			if ( !$adata ) {
 				continue;
 				}
+
+			// get the attachment ID
+			$attachment_id = $adata[$field['id']];
+			if ( !is_numeric($attachment_id) ) {
+				return JText::sprintf('ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . ' (ERRN)';
+				}
+			$attachment_id = (int)$attachment_id;
 
 			$parent_type = $adata[$field['parent_type']];
 			$parent_entity = strtolower($adata[$field['parent_entity']]);
@@ -167,18 +184,51 @@ class AttachmentsImport
 									  $modifier_id, $attachment_modifier_name, $modifier_name) . ' (ERRN)';
 				}
 
-			$num_ok++;
-
 			// Construct an attachments entry
 			JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 			$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
-			
 
+			if ( $update ) {
+
+				// The attachment ID cannot be 0 for updating!
+				if ( $attachment_id == 0 ) {
+					return JText::_('ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . ' (ERRN)';
+					}
+
+				// Load the data from the attachment to be updated (or create new one)
+				if ( !$attachment->load($attachment_id) ) {
+					$attachment->reset();
+					}
+				}
+			else {
+				// Create new attachment
+				$attachment->reset();
+				}
+
+			// Copy in the data from the CSV file
+			foreach (AttachmentsImport::$field_names as $fname) {
+				if ( $fname != 'id' AND !in_array($fname, AttachmentsImport::$extra_field_names) ) {
+					$attachment->$fname = $adata[$field[$fname]];
+					}
+				}
+
+			if ( $dry_run ) {
+				$ids_ok++;
+				}
+			else {
+				// Store the new/updated attachment
+				if ( $attachment->store() ) {
+					$ids_ok[] = $attachment->getDbo()->insertid();
+					}
+				else {
+					return JText::sprintf('ERROR_STORING_ATTACHMENT_S', $attachment->getError()) . ' (ERRN)';
+					}
+				}
 			}
 
 		fclose($f);
 
-		return $num_ok;
+		return $ids_ok;
 	}
 
 
