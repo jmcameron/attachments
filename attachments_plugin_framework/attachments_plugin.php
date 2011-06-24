@@ -412,6 +412,20 @@ class AttachmentsPlugin extends JPlugin
 
 
 	/**
+	 * Return the ID of the creator/owner of the parent entity
+	 *
+	 * @param int $parent_id the ID for the parent object
+	 * @param string $parent_entity the type of entity for this parent type
+	 *
+	 * @return creators id if found, 0 otherwise
+	 */
+	public function getParentCreatorId($parent_id, $parent_entity='default')
+	{
+		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+	}
+
+
+	/**
 	 * Get a URL to view the entity
 	 *
 	 * @param int $parent_id the ID for this parent object
