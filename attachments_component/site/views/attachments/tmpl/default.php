@@ -249,6 +249,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$html .= "<td class=\"at_mod_date\">$last_modified</td>";
 		}
 
+	$update_link = '';
+	$delete_link = '';
+
 	// Add the link to delete the parent, if requested
 	if ( $this->some_attachments_modifiable AND $attachment->user_may_edit AND $this->allow_edit ) {
 
@@ -259,7 +262,6 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 580}}\"";
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
-
 		}
 
 	if ( $this->some_attachments_modifiable AND $attachment->user_may_delete AND $this->allow_edit ) {
@@ -268,10 +270,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$delete_url = sprintf($this->delete_url, (int)$attachment->id);
 		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
 		$tooltip = JText::_('DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
-		$del_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
-		$del_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\"";
-		$del_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";
-		$html .= "<td class=\"at_edit\">$update_link $del_link</td>";
+		$delete_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
+		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\"";
+		$delete_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";
+		}
+
+	if ( $this->some_attachments_modifiable AND $this->allow_edit ) {
+		$html .= "<td class=\"at_edit\">$update_link $delete_link</td>";
 		}
 
 	$html .= "</tr>\n";
