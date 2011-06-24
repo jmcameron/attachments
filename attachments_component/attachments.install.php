@@ -139,6 +139,19 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage(JText::_('ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
+		// Set up the default ACL rules for the unique privileges in the root rule
+		jimport('joomla.access.rules');
+		$root	= JTable::getInstance('asset');
+		$root->loadByName('root.1');
+		$root_rules = new JRules($root->rules);
+		$new_rules = new JRules('{"attachments.delete.own":{"6":1,"3":1},' .
+								 '"attachments.edit.ownparent":{"6":1,"3":1},' .
+								 '"attachments.delete.ownparent":{"6":1,"3":1}' .
+								'}');
+		$root_rules->merge($new_rules);
+		$root->rules = (string)$root_rules;
+		$root->store();
+
 		// Restore the attachments directory (if renamed)
 		if ( $this->moved_attachments_dir AND JFolder::exists($this->moved_attachments_dir) ) {
 			$attachdir = JPATH_ROOT.'/attachments';
