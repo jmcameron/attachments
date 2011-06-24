@@ -184,6 +184,54 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	}
 
 
+	/**
+	 * Return the ID of the creator/owner of the parent entity
+	 *
+	 * @param int $parent_id the ID for the parent object
+	 * @param string $parent_entity the type of entity for this parent type
+	 *
+	 * @return creators id if found, 0 otherwise
+	 */
+	public function getParentCreatorId($parent_id, $parent_entity='default')
+	{
+		$parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+
+		$result = 0;
+
+		// Return the right thing for each entity
+		switch ( $parent_entity ) {
+
+		case 'category':
+			$query->select('created_user_id')->from('#__categories')->where('id = '.(int)$parent_id);
+			$db->setQuery($query, 0, 1);
+			$result = $db->loadResult();
+			if ( $db->getErrorNum() ) {
+				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
+			break;
+
+		default: // Article
+			$query->select('created_by')->from('#__content')->where('id = '.(int)$parent_id);
+			$db->setQuery($query, 0, 1);
+			$result = $db->loadResult();
+			if ( $db->getErrorNum() ) {
+				$errmsg = JText::_('ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
+			}
+
+		if ( is_numeric($result) ) {
+			return (int)$result;
+			}
+
+		return 0;
+	}
+
+
 
 	/**
 	 * Get a URL to view the content article
@@ -735,20 +783,29 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		switch ( $attachment->parent_entity ) {
 
 		case 'category':
+			
+			// ?? Deal with parents being created (parent_id == 0)
 
 			// First, determine if the user can edit this category
 			if ( !AttachmentsPermissions::userMayEditCategory($attachment->parent_id) ) {
 				return false;
 				}
 
-			// Ok if the user can edit any attachment
+			// See if the user can edit any attachment
 			if ( $user->authorise('core.edit', 'com_attachments') ) {
 				return true;
 				}
 
-			// Finally, see if the user has permissions to edit attachments
-			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
-				return (int)$user->id == (int)$attachment->created_by;
+			// See if the user has permissions to edit their own attachments
+			if ( $user->authorise('core.edit.own', 'com_attachments') AND
+				 (int)$user->id == (int)$attachment->created_by ) {
+				return true;
+				}
+
+			// See if the user has permission to edit attachments on their own cateogory
+			if ( $user->authorize('attachments.edit.ownparent', 'com_attachments') ) {
+				$category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
+				return (int)$user->id == (int)$category_creator_id;
 				}
 
 			break;
@@ -763,15 +820,23 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				return false;
 				}
 
-			// Ok if the user can edit any attachment
+			// See if the user can edit any attachment
 			if ( $user->authorise('core.edit', 'com_attachments') ) {
 				return true;
 				}
 
-			// Finally, see if the user has permissions to edit their own attachments
-			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
-				return (int)$user->id == (int)$attachment->created_by;
+			// See if the user has permissions to edit their own attachments
+			if ( $user->authorise('core.edit.own', 'com_attachments') AND
+				 (int)$user->id == (int)$attachment->created_by ) {
+				return true;
 				}
+
+			// See if the user has permission to edit attachments on their own article
+			if ( $user->authorize('attachments.edit.ownparent', 'com_attachments') ) {
+				$article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
+				return (int)$user->id == (int)$article_creator_id;
+				}
+
 			}
 
 		return false;
@@ -815,15 +880,21 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				return true;
 				}
 
-			// Finally, see if the user has edit.own and created it
-			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
-				return (int)$user->id == (int)$attachment->created_by;
+			// See if the user has edit.own and created it
+			if ( $user->authorise('attachments.delete.own', 'com_attachments') AND
+				 (int)$user->id == (int)$attachment->created_by ) {
+				return true;
+				}
+
+			// See if the user has permission to delete any attachments for categories they created
+			if ( $user->authorise('attachments.delete.ownparent', 'com_attachments') ) {
+				$category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
+				return (int)$user->id == (int)$category_creator_id;
 				}
 
 			break;
 
-		default:
-			// Articles
+		default:  // Articles
 
 			// ?? Deal with parents being created (parent_id == 0)
 
@@ -837,9 +908,16 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				return true;
 				}
 
-			// Finally, see if the user has edit.own and created it
-			if ( $user->authorise('core.edit.own', 'com_attachments') ) {
-				return (int)$user->id == (int)$attachment->created_by;
+			// See if the user has permissions to delete their own attachments
+			if ( $user->authorise('attachments.delete.own', 'com_attachments') AND
+				 (int)$user->id == (int)$attachment->created_by ) {
+				return true;
+				}
+			
+			// See if the user has permission to delete any attachments for articles they created
+			if ( $user->authorise('attachments.delete.ownparent', 'com_attachments') ) {
+				$article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
+				return (int)$user->id == (int)$article_creator_id;
 				}
 			}
 
