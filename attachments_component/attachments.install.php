@@ -57,20 +57,6 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function uninstall($parent)
 	{
-		jimport( 'joomla.filesystem.folder' );
-
-		// Determine the upload directory
-		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
-		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		if ( !JFolder::exists( JPATH_SITE . DS . $upload_dir ) ) {
-			$upload_dir = null;
-			}
-		if ( $upload_dir ) {
-			$msg = JText::sprintf('WARNING_YOU_MUST_MANUALLY_DELETE_ATTACHMENTS_DIRECTORY_S',
-								  $upload_dir);
-			$app->enqueueMessage($msg, 'message');
-			$app->enqueueMessage('<br/>', 'message');
-			}
 	}
 
 
