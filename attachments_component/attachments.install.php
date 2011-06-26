@@ -48,6 +48,21 @@ class Com_AttachmentsInstallerScript {
 		$app = JFactory::getApplication('administrator');
 		$app->enqueueMessage(JText::sprintf('ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
+
+		// Set up the default ACL rules for the unique privileges in the root rule
+		jimport('joomla.access.rules');
+		$root = JTable::getInstance('asset');
+		$root->loadByName('root.1');
+		$root_rules = new JRules($root->rules);
+		$new_rules = new JRules('{"attachments.delete.own":{"6":1,"3":1},' .
+								 '"attachments.edit.ownparent":{"6":1,"3":1},' .
+								 '"attachments.delete.ownparent":{"6":1,"3":1}' .
+								'}');
+		$root_rules->merge($new_rules);
+		$root->rules = (string)$root_rules;
+		$root->store();
+		$app->enqueueMessage(JText::_('INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+		$app->enqueueMessage('<br/>', 'message');
 	}
 
 	/**
@@ -147,21 +162,6 @@ class Com_AttachmentsInstallerScript {
 		}
 		$app->enqueueMessage('<br/>', 'message');
 		$app->enqueueMessage(JText::_('ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
-		$app->enqueueMessage('<br/>', 'message');
-
-		// Set up the default ACL rules for the unique privileges in the root rule
-		jimport('joomla.access.rules');
-		$root = JTable::getInstance('asset');
-		$root->loadByName('root.1');
-		$root_rules = new JRules($root->rules);
-		$new_rules = new JRules('{"attachments.delete.own":{"6":1,"3":1},' .
-								 '"attachments.edit.ownparent":{"6":1,"3":1},' .
-								 '"attachments.delete.ownparent":{"6":1,"3":1}' .
-								'}');
-		$root_rules->merge($new_rules);
-		$root->rules = (string)$root_rules;
-		$root->store();
-		$app->enqueueMessage(JText::_('INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Restore the attachments directory (if renamed)
