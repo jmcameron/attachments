@@ -219,7 +219,7 @@
            component="com_attachments"
            filter="rules"
            validate="rules"
-           label="JCONFIG_PERMISSIONS_LABEL3"
+           label="JCONFIG_PERMISSIONS_LABEL"
            section="component" />
   </fieldset>
 

@@ -110,33 +110,6 @@ class AttachmentsControllerUtils extends JController
 	}
 
 
-	/**
-	 * Update the attachments table
-	 * (See AttachmentsUpdate::update_attachments_table() in update.php for details )
-	 */
-	public function update_attachments_table()
-	{
-		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-
-		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
-		echo "\n<html><head><title>Updating Attachments Tables</title></head><body>\n";
-		echo "<h2>Updating Attachments Tables</h2>\n";
-
-		AttachmentsUpdate::update_attachments_table();
-
-		$uri = JFactory::getURI();
-		$return_url = $uri->base(true);
-		echo "<br />&nbsp;<br /><a href=\"$return_url\">Return to Admin page</a>\n";
-		echo "</body>\n</html>";
-
-		exit();
-	}
-
 
 	/**
 	 * Disalbe SQL uninstall of existing attachments (when Attachments is uninstalled)

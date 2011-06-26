@@ -49,7 +49,7 @@ $lists = $this->lists;
 	<table class="adminlist" cellspacing="1">
 	<thead>
 	   <tr>
-		 <th width="5"><?php echo JText::_( 'Num' ); ?></th>
+		 <th width="5"><?php echo JText::_( 'JGRID_HEADING_ROW_NUMBER' ); ?></th>
 		 <th class="title">
 			<?php echo JHTML::_('grid.sort', 'Title', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>

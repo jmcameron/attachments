@@ -475,7 +475,7 @@ class AttachmentsController extends JController
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 94)';
+			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 94)';
 			JError::raiseError(500, $errmsg);
 			}
 		$filename_sys  = $attachment->filename_sys;

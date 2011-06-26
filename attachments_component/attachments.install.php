@@ -57,7 +57,22 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function uninstall($parent)
 	{
+		jimport( 'joomla.filesystem.folder' );
+
+		// Determine the upload directory
+		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		if ( !JFolder::exists( JPATH_SITE . DS . $upload_dir ) ) {
+			$upload_dir = null;
+			}
+		if ( $upload_dir ) {
+			$msg = JText::sprintf('WARNING_YOU_MUST_MANUALLY_DELETE_ATTACHMENTS_DIRECTORY_S',
+								  $upload_dir);
+			$app->enqueueMessage($msg, 'message');
+			$app->enqueueMessage('<br/>', 'message');
+			}
 	}
+
 
 	/**
 	 * Attachments component update function
@@ -80,6 +95,15 @@ class Com_AttachmentsInstallerScript {
 		// Load the installation language
 		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
+
+		// First make sure that this version of Joomla is 1.6 or greater
+		$version = new JVersion();
+		if ( (real)$version->RELEASE < 1.6 ) {
+			$msg = JText::_('ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
+			$app = JFactory::getApplication('administrator');
+			$app->enqueueMessage($msg, 'warning');
+			return false;
+			}
 
 		// Temporarily move the attachments directory out of the way to avoid conflicts
 		jimport('joomla.filesystem.folder');
@@ -161,5 +185,11 @@ class Com_AttachmentsInstallerScript {
 			$app->enqueueMessage(JText::sprintf('RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 			$app->enqueueMessage('<br/>', 'message');
 			}
+
+		$app->enqueueMessage(JText::sprintf('PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+											'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
+											), 'message');
+		$app->enqueueMessage('<br/>', 'message');
+
 	}
 }

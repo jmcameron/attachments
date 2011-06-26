@@ -308,9 +308,9 @@ else
   <tr>
 	  <td class="key"><label><?php echo JText::_('ATTACHMENT_ID'); ?></label></td>
 	  <td><?php echo $attachment->id; ?></td>
-	  <td class="key2"><label><?php echo JText::_('CREATED_BY'); ?></label></td>
+	  <td class="key2"><label><?php echo JText::_('JGLOBAL_FIELD_CREATED_BY_LABEL'); ?></label></td>
 	  <td><?php echo $attachment->creator_name;?></td>
-	  <td class="key2"><label><?php echo JText::_('MODIFIED_BY'); ?></label></td>
+	  <td class="key2"><label><?php echo JText::_('JGLOBAL_FIELD_MODIFIED_BY_LABEL'); ?></label></td>
 	  <td><?php echo $attachment->modifier_name;?></td>
   </tr>
 <?php if ( $show_download_count ): ?>

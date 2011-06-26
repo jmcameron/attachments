@@ -484,13 +484,13 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				$now = JFactory::getDate()->toMySQL();
 				$nullDate = $db->getNullDate();
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
-					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=1 AND ".
+					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND ".
 					'(c1.publish_up = '.$db->Quote($nullDate).' OR c1.publish_up <= '.$db->Quote($now).') AND '.
 					'(c1.publish_down = '.$db->Quote($nullDate).' OR c1.publish_down >= '.$db->Quote($now).')))';
 				}
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY') {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
-					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=1))";
+					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=1))";
 				}
 
 			}
@@ -498,43 +498,43 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
-					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=0))";
+					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=0))";
 				// ??? Add clauses here to get articles that are unpublished because of publish_up/publish_down
 				}
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
-					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=0))";
+					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=0))";
 				}
 			}
 		elseif ( $parent_state == 'ARCHIVED' ) {
 			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
-					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=2))";
+					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=2))";
 				}
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
-					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=2))";
+					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=2))";
 				}
 			}
 		elseif ( $parent_state == 'TRASHED' ) {
 			// These WHERE clauses will be combined by OR
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
-					"WHERE (a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id AND c1.state=-2))";
+					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=-2))";
 				}
 			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
-					"WHERE (a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id AND c2.published=-2))";
+					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=-2))";
 				}
 			}
 		elseif ( $parent_state == 'NONE' ) {
 			// NOTE: The 'NONE' clauses will be combined with AND (with other tests for a.parent_id)
 			$where[] = "(NOT EXISTS( SELECT * FROM #__content as c1 " .
-				"WHERE a.parent_entity = 'ARTICLE' AND c1.id = a.parent_id ))";
+				"WHERE a.parent_entity = 'article' AND c1.id = a.parent_id ))";
 
 			$where[] = "(NOT EXISTS( SELECT * FROM #__categories as c2 " .
-				"WHERE a.parent_entity = 'CATEGORY' AND c2.id = a.parent_id ))";
+				"WHERE a.parent_entity = 'category' AND c2.id = a.parent_id ))";
 			}
 		else {
 			$errmsg = JText::sprintf('ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 405)';
