@@ -45,7 +45,7 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function install($parent)
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
@@ -82,7 +82,7 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function update($parent)
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_UPGRADED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
@@ -119,7 +119,7 @@ class Com_AttachmentsInstallerScript {
 		$version = new JVersion();
 		if ( (real)$version->RELEASE < 1.6 ) {
 			$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
-			$app = JFactory::getApplication('administrator');
+			$app = JFactory::getApplication();
 			$app->enqueueMessage($msg, 'warning');
 			return false;
 			}
@@ -134,7 +134,7 @@ class Com_AttachmentsInstallerScript {
 			// ?? SHOULD Catch errors here
 			JFolder::move($attachdir, $this->moved_attachments_dir);
 
-			$app = JFactory::getApplication('administrator');
+			$app = JFactory::getApplication();
 			$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 			$app->enqueueMessage($msg, 'message');
 			$app->enqueueMessage('<br/>', 'message');
@@ -150,7 +150,7 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function postflight($type, $parent)
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = JFactory::getApplication();
 		$db = JFactory::getDBO();
 
 		// Make sure the translations are available
