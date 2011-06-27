@@ -66,9 +66,9 @@ $html .= "<caption>{$this->title}</caption>\n";
 // Add the column titles, if requested
 if ( $this->show_column_titles ) {
 	$html .= "<thead>\n<tr>";
-	$html .= "<th class=\"at_filename\">" . JText::_('FILE_URL') . "</th>";
+	$html .= "<th class=\"at_filename\">" . JText::_('ATTACH_FILE_URL') . "</th>";
 	if ( $this->show_description ) {
-		$html .= "<th class=\"at_description\">" . JText::_('DESCRIPTION') . "</th>";
+		$html .= "<th class=\"at_description\">" . JText::_('ATTACH_DESCRIPTION') . "</th>";
 		}
 	if ( $this->show_user_field_1 ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_1_name . "</th>";
@@ -80,16 +80,16 @@ if ( $this->show_column_titles ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_3_name . "</th>";
 		}
 	if ( $this->show_creator ) {
-		$html .= "<th class=\"at_creator_name\">" . JText::_('CREATOR') . "</th>";
+		$html .= "<th class=\"at_creator_name\">" . JText::_('ATTACH_CREATOR') . "</th>";
 		}
 	if ( $this->show_file_size ) {
-		$html .= "<th class=\"at_file_size\">" . JText::_('FILE_SIZE') . "</th>";
+		$html .= "<th class=\"at_file_size\">" . JText::_('ATTACH_FILE_SIZE') . "</th>";
 		}
 	if ( $this->secure AND $this->show_downloads ) {
-		$html .= "<th class=\"at_downloads\">" . JText::_('DOWNLOADS') . "</th>";
+		$html .= "<th class=\"at_downloads\">" . JText::_('ATTACH_DOWNLOADS') . "</th>";
 		}
 	if ( $this->show_mod_date ) {
-		$html .= "<th class=\"at_mod_date\">" . JText::_('LAST_MODIFIED') . "</th>";
+		$html .= "<th class=\"at_mod_date\">" . JText::_('ATTACH_LAST_MODIFIED') . "</th>";
 		}
 	if ( $this->some_attachments_modifiable AND $this->allow_edit ) {
 		$html .= "<th class=\"at_edit\">&nbsp;</th>";
@@ -156,11 +156,11 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				   $url = utf8_encode($url);
 				   }
 				}
-			$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
+			$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
 			$url = $attachment->url;
-			$tooltip = JText::sprintf('ACCESS_THIS_URL_S', $attachment->url);
+			$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
 		if ( $attachment->uri_type == 'url' AND $this->superimpose_link_icons ) {
@@ -175,7 +175,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$html .= "<a class=\"at_url\" href=\"$url\"$target target=\"_blank\" title=\"$tooltip\">$filename</a>";
 		}
 	else {
-		$tooltip = JText::sprintf('DOWNLOAD_THIS_FILE_S', $actual_filename);
+		$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 		$html .= "<img src=\"$icon_url\" alt=\"$tooltip\" />&nbsp;";
 		$html .= $filename;
 		}
@@ -237,9 +237,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$label = '';
 		if ( ! $this->show_column_titles ) {
 			if ( $num_downloads == 1 )
-				$label = '&nbsp;' . JText::_('DOWNLOAD_NOUN');
+				$label = '&nbsp;' . JText::_('ATTACH_DOWNLOAD_NOUN');
 			else
-				$label = '&nbsp;' . JText::_('DOWNLOADS');
+				$label = '&nbsp;' . JText::_('ATTACH_DOWNLOADS');
 			}
 		$html .= '<td class="at_downloads">'. $num_downloads.$label.'</td>';
 		}
@@ -258,7 +258,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		// Create the edit link
 		$update_url = sprintf($this->update_url, (int)$attachment->id);
 		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
-		$tooltip = JText::_('UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
+		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 580}}\"";
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
@@ -266,10 +266,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	if ( $this->some_attachments_modifiable AND $attachment->user_may_delete AND $this->allow_edit ) {
 
-		// Create the delete link	
+		// Create the delete link
 		$delete_url = sprintf($this->delete_url, (int)$attachment->id);
 		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
-		$tooltip = JText::_('DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
+		$tooltip = JText::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$delete_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
 		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\"";
 		$delete_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";

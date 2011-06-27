@@ -29,10 +29,10 @@ $lists = $this->lists;
 	<button class="filter_button" onclick="document.id('filter_search').value='';this.form.submit();">
 	   <?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
 	<button class="filter_button" id="reset_order" onclick="javascript:tableOrdering('','asc','');">
-	   <?php echo JText::_( 'RESET_ORDER' ); ?></button>
+	   <?php echo JText::_( 'ATTACH_RESET_ORDER' ); ?></button>
 	</td>
 	<td nowrap="nowrap">
-	<?php echo JText::_('LIST_ATTACHMENTS_FOR_COLON') ?>
+	<?php echo JText::_('ATTACH_LIST_ATTACHMENTS_FOR_COLON') ?>
 	<?php echo $lists['filter_parent_state_menu'] ?> &nbsp; <?php echo $lists['filter_entity_menu'] ?>
 	</tr>
 	</tbody>

@@ -1,220 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
   <fieldset name="basic" id="attachments-fieldset"
-	    label="COM_ATTACHMENTS_CONFIG_BASIC_SETTINGS_LABEL"
+	    label="ATTACH_CONFIG_BASIC_SETTINGS_LABEL"
 	    addfieldpath="/administrator/components/com_attachments/models/fields"
 	    >
     <field name="publish_default" type="radio" default="0"
-           label="ATTACHMENTS_PUBLISHED_BY_DEFAULT"
-           description="ATTACHMENTS_PUBLISHED_BY_DEFAULT_DESCRIPTION">
+           label="ATTACH_ATTACHMENTS_PUBLISHED_BY_DEFAULT"
+           description="ATTACH_ATTACHMENTS_PUBLISHED_BY_DEFAULT_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="auto_publish_warning" type="textarea" default=""
-           label="AUTO_PUBLISH_WARNING" rows="2" cols="60"
-           description="AUTO_PUBLISH_WARNING_DESCRIPTION">
+           label="ATTACH_AUTO_PUBLISH_WARNING" rows="2" cols="60"
+           description="ATTACH_AUTO_PUBLISH_WARNING_DESCRIPTION">
     </field>
     <field name="default_access_level" type="accesslevels" default="2"
-	   label="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL"
-	   description="COM_ATTACHMENTS_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
+	   label="ATTACH_DEFAULT_ACCESS_LEVEL"
+	   description="ATTACH_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
 	   />
     <field name="user_field_1_name" type="text" default=""
-           label="USER_DEFINED_FIELD_1_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+           label="ATTACH_USER_DEFINED_FIELD_1_NAME" size="40"
+           description="ATTACH_USER_DEFINED_FIELD_NAME_DESCRIPTION">
     </field>
     <field name="user_field_2_name" type="text" default=""
-           label="USER_DEFINED_FIELD_2_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+           label="ATTACH_USER_DEFINED_FIELD_2_NAME" size="40"
+           description="ATTACH_USER_DEFINED_FIELD_NAME_DESCRIPTION">
     </field>
     <field name="user_field_3_name" type="text" default=""
-           label="USER_DEFINED_FIELD_3_NAME" size="40"
-           description="USER_DEFINED_FIELD_NAME_DESCRIPTION">
+           label="ATTACH_USER_DEFINED_FIELD_3_NAME" size="40"
+           description="ATTACH_USER_DEFINED_FIELD_NAME_DESCRIPTION">
     </field>
     <field name="max_filename_length" type="text" default="0"
-           label="MAX_FILENAME_URL_LENGTH" size="2" filter="integer"
-           description="MAX_FILENAME_URL_LENGTH_DESCRIPTION">
+           label="ATTACH_MAX_FILENAME_URL_LENGTH" size="2" filter="integer"
+           description="ATTACH_MAX_FILENAME_URL_LENGTH_DESCRIPTION">
     </field>
     <field name="attachments_placement" type="list" default="end"
-           label="WHERE_SHOULD_ATTACHMENTS_BE_PLACED"
-           description="WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION">
-      <option value="beginning">AT_THE_BEGINNING</option>
-      <option value="end">AT_THE_END</option>
-      <option value="custom">CUSTOM_PLACEMENT</option>
-      <option value="disabled_filter">DISABLED_FILTER</option>
-      <option value="disabled_nofilter">DISABLED_NOFILTER</option>
+           label="ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED"
+           description="ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION">
+      <option value="beginning">ATTACH_AT_THE_BEGINNING</option>
+      <option value="end">ATTACH_AT_THE_END</option>
+      <option value="custom">ATTACH_CUSTOM_PLACEMENT</option>
+      <option value="disabled_filter">ATTACH_DISABLED_FILTER</option>
+      <option value="disabled_nofilter">ATTACH_DISABLED_NOFILTER</option>
     </field>
     <field name="allow_frontend_access_editing" type="radio" default="0"
-           label="ALLOW_FRONTEND_ACCESS_LEVEL_EDITING"
-           description="ALLOW_FRONTEND_ACCESS_LEVEL_EDITING_DESCRIPTION">
+           label="ATTACH_ALLOW_FRONTEND_ACCESS_LEVEL_EDITING"
+           description="ATTACH_ALLOW_FRONTEND_ACCESS_LEVEL_EDITING_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
   </fieldset>
 
   <fieldset name="formatting"
-	    label="COM_ATTACHMENTS_CONFIG_FORMATTING_SETTINGS_LABEL">
+	    label="ATTACH_CONFIG_FORMATTING_SETTINGS_LABEL">
     <field name="show_column_titles" type="radio" default="0"
-           label="SHOW_COLUMN_TITLES"
-           description="SHOW_COLUMN_TITLES_DESCRIPTION">
+           label="ATTACH_SHOW_COLUMN_TITLES"
+           description="ATTACH_SHOW_COLUMN_TITLES_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="show_description" type="radio" default="1"
-           label="SHOW_ATTACHMENT_DESCRIPTION"
-           description="SHOW_ATTACHMENT_DESCRIPTION_DESCRIPTION">
+           label="ATTACH_SHOW_ATTACHMENT_DESCRIPTION"
+           description="ATTACH_SHOW_ATTACHMENT_DESCRIPTION_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="show_creator" type="radio" default="0"
-           label="SHOW_ATTACHMENT_CREATOR"
-           description="SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
+           label="ATTACH_SHOW_ATTACHMENT_CREATOR"
+           description="ATTACH_SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="show_file_size" type="radio" default="1"
-           label="SHOW_ATTACHMENT_FILE_SIZE"
-           description="SHOW_ATTACHMENT_FILE_SIZE_DESCRIPTION">
+           label="ATTACH_SHOW_ATTACHMENT_FILE_SIZE"
+           description="ATTACH_SHOW_ATTACHMENT_FILE_SIZE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="show_downloads" type="radio" default="0"
-           label="SHOW_NUMBER_OF_DOWNLOADS"
-           description="SHOW_NUMBER_OF_DOWNLOADS_DESCRIPTION">
+           label="ATTACH_SHOW_NUMBER_OF_DOWNLOADS"
+           description="ATTACH_SHOW_NUMBER_OF_DOWNLOADS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="show_modified_date" type="radio" default="0"
-           label="SHOW_MODIFICATION_DATE"
-           description="SHOW_MODIFICATION_DATE_DESCRIPTION">
+           label="ATTACH_SHOW_MODIFICATION_DATE"
+           description="ATTACH_SHOW_MODIFICATION_DATE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="mod_date_format" type="text" default="%x %H:%M"
-           label="FORMAT_STRING_FOR_MODIFICATION_DATE" size="30"
-           description="FORMAT_STRING_FOR_MODIFICATION_DATE_DESCRIPTION">
+           label="ATTACH_FORMAT_STRING_FOR_MODIFICATION_DATE" size="30"
+           description="ATTACH_FORMAT_STRING_FOR_MODIFICATION_DATE_DESCRIPTION">
     </field>
     <field name="sort_order" type="list" default="filename"
-           label="ATTACHMENTS_LIST_ORDER"
-           description="ATTACHMENTS_LIST_ORDER_DESCRIPTION">
-      <option value="filename">SORT_FILENAME</option>
-      <option value="file_size">SORT_FILE_SIZE</option>
-      <option value="file_size_desc">SORT_FILE_SIZE_DESCENDING</option>
-      <option value="description">SORT_DESCRIPTION</option>
-      <option value="display_name">DISPLAY_FILENAME_OR_URL</option>
-      <option value="creator">CREATOR</option>
-      <option value="created">SORT_CREATED_DATE</option>
-      <option value="created_desc">SORT_CREATED_DATE_DESCENDING</option>
-      <option value="modified">SORT_MODIFICATION_DATE</option>
-      <option value="modified_desc">SORT_MODIFICATION_DATE_DESCENDING</option>
-      <option value="id">SORT_ATTACHMENT_ID</option>
-      <option value="user_field_1">USER_DEFINED_FIELD_1</option>
-      <option value="user_field_2">USER_DEFINED_FIELD_2</option>
-      <option value="user_field_3">USER_DEFINED_FIELD_3</option>
+           label="ATTACH_ATTACHMENTS_LIST_ORDER"
+           description="ATTACH_ATTACHMENTS_LIST_ORDER_DESCRIPTION">
+      <option value="filename">ATTACH_SORT_FILENAME</option>
+      <option value="file_size">ATTACH_SORT_FILE_SIZE</option>
+      <option value="file_size_desc">ATTACH_SORT_FILE_SIZE_DESCENDING</option>
+      <option value="description">ATTACH_SORT_DESCRIPTION</option>
+      <option value="display_name">ATTACH_DISPLAY_FILENAME_OR_URL</option>
+      <option value="creator">ATTACH_CREATOR</option>
+      <option value="created">ATTACH_SORT_CREATED_DATE</option>
+      <option value="created_desc">ATTACH_SORT_CREATED_DATE_DESCENDING</option>
+      <option value="modified">ATTACH_SORT_MODIFICATION_DATE</option>
+      <option value="modified_desc">ATTACH_SORT_MODIFICATION_DATE_DESCENDING</option>
+      <option value="id">ATTACH_SORT_ATTACHMENT_ID</option>
+      <option value="user_field_1">ATTACH_USER_DEFINED_FIELD_1</option>
+      <option value="user_field_2">ATTACH_USER_DEFINED_FIELD_2</option>
+      <option value="user_field_3">ATTACH_USER_DEFINED_FIELD_3</option>
     </field>
   </fieldset>
 
   <fieldset name="visibility"
-	    label="COM_ATTACHMENTS_CONFIG_VISIBILITY_SETTINGS_LABEL">
+	    label="ATTACH_CONFIG_VISIBILITY_SETTINGS_LABEL">
     <field name="hide_on_frontpage" type="radio" default="0"
-           label="HIDE_ATTACHMENTS_ON_FRONTPAGE"
-           description="HIDE_ATTACHMENTS_ON_FRONTPAGE_DESCRIPTION">
+           label="ATTACH_HIDE_ATTACHMENTS_ON_FRONTPAGE"
+           description="ATTACH_HIDE_ATTACHMENTS_ON_FRONTPAGE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="hide_with_readmore" type="radio" default="0"
-           label="HIDE_ATTACHMENTS_WITH_READMORE"
-           description="HIDE_ATTACHMENTS_WITH_READMORE_DESCRIPTION">
+           label="ATTACH_HIDE_ATTACHMENTS_WITH_READMORE"
+           description="ATTACH_HIDE_ATTACHMENTS_WITH_READMORE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="hide_on_blogs" type="radio" default="0"
-           label="HIDE_ATTACHMENTS_ON_BLOGS"
-           description="HIDE_ATTACHMENTS_ON_BLOGS_DESCRIPTION">
+           label="ATTACH_HIDE_ATTACHMENTS_ON_BLOGS"
+           description="ATTACH_HIDE_ATTACHMENTS_ON_BLOGS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="hide_except_article_views" type="radio" default="0"
-           label="HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS"
-           description="HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS_DESCRIPTION">
+           label="ATTACH_HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS"
+           description="ATTACH_HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="always_show_category_attachments" type="radio" default="0"
-           label="ALWAYS_SHOW_CATEGORY_ATTACHMENTS"
-           description="ALWAYS_SHOW_CATEGORY_ATTACHMENTS_DESCRIPTION">
+           label="ATTACH_ALWAYS_SHOW_CATEGORY_ATTACHMENTS"
+           description="ATTACH_ALWAYS_SHOW_CATEGORY_ATTACHMENTS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="hide_attachments_for_categories" type="category" default=""
-           label="HIDE_ATTACHMENTS_FOR_CATEGORIES" size="8"
+           label="ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES" size="8"
            extension="com_content" multiple="multiple"
-           description="HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
+           description="ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
     <field name="hide_add_attachments_link" type="radio" default="0"
-           label="HIDE_ADD_ATTACHMENTS_LINK"
-           description="HIDE_ADD_ATTACHMENTS_LINK_DESCRIPTION">
+           label="ATTACH_HIDE_ADD_ATTACHMENTS_LINK"
+           description="ATTACH_HIDE_ADD_ATTACHMENTS_LINK_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
   </fieldset>
 
   <fieldset name="advanced"
-	    label="COM_ATTACHMENTS_CONFIG_ADVANCED_SETTINGS_LABEL">
+	    label="ATTACH_CONFIG_ADVANCED_SETTINGS_LABEL">
     <field name="forbidden_filename_characters" type="text" default="#=?%&amp;"
-           label="FORBIDDEN_FILENAME_CHARACTERS" size="40"
-           description="FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION">
+           label="ATTACH_FORBIDDEN_FILENAME_CHARACTERS" size="40"
+           description="ATTACH_FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION">
     </field>
     <field name="attachments_table_style" type="text" default="attachmentsList"
-           label="CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
-           description="CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
+           label="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
+           description="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
     </field>
     <field name="file_link_open_mode" type="radio" default="in_same_window"
-           label="FILE_LINK_OPEN_MODE"
-           description="FILE_LINK_OPEN_MODE_DESCRIPTION">
-      <option value="in_same_window">IN_SAME_WINDOW</option>
-      <option value="new_window">IN_NEW_WINDOW</option>
+           label="ATTACH_FILE_LINK_OPEN_MODE"
+           description="ATTACH_FILE_LINK_OPEN_MODE_DESCRIPTION">
+      <option value="in_same_window">ATTACH_IN_SAME_WINDOW</option>
+      <option value="new_window">ATTACH_IN_NEW_WINDOW</option>
     </field>
     <field name="attachments_titles" type="textarea" default=""
-           label="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS" rows="3" cols="60"
-           description="CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION">
+           label="ATTACH_CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS" rows="3" cols="60"
+           description="ATTACH_CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION">
     </field>
     <field name="link_check_timeout" type="text" default="10"
-           label="TIMEOUT_FOR_CHECKING_LINKS" size="3"
-           description="TIMEOUT_FOR_CHECKING_LINKS_DESCRIPTION">
+           label="ATTACH_TIMEOUT_FOR_CHECKING_LINKS" size="3"
+           description="ATTACH_TIMEOUT_FOR_CHECKING_LINKS_DESCRIPTION">
     </field>
     <field name="superimpose_url_link_icons" type="radio" default="1"
-           label="SUPERIMPOSE_URL_LINK_ICONS"
-           description="SUPERIMPOSE_URL_LINK_ICONS_DESCRIPTION">
+           label="ATTACH_SUPERIMPOSE_URL_LINK_ICONS"
+           description="ATTACH_SUPERIMPOSE_URL_LINK_ICONS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="suppress_obsolete_attachments" type="radio" default="0"
-           label="SUPPRESS_OBSOLETE_ATTACHMENTS"
-           description="SUPPRESS_OBSOLETE_ATTACHMENTS_DESCRIPTION">
+           label="ATTACH_SUPPRESS_OBSOLETE_ATTACHMENTS"
+           description="ATTACH_SUPPRESS_OBSOLETE_ATTACHMENTS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
   </fieldset>
 
   <fieldset name="security"
-	    label="COM_ATTACHMENTS_CONFIG_SECURITY_SETTINGS_LABEL">
+	    label="ATTACH_CONFIG_SECURITY_SETTINGS_LABEL">
     <field name="secure" type="radio" default="0"
-           label="SECURE_ATTACHMENT_DOWNLOADS"
-           description="SECURE_ATTACHMENT_DOWNLOADS_DESCRIPTION">
+           label="ATTACH_SECURE_ATTACHMENT_DOWNLOADS"
+           description="ATTACH_SECURE_ATTACHMENT_DOWNLOADS_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
     <field name="download_mode" type="radio" default="inline"
-           label="DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS"
-           description="DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS_DESCRIPTION">
-      <option value="inline">INLINE</option>
-      <option value="attachment">ATTACHMENT</option>
+           label="ATTACH_DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS"
+           description="ATTACH_DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS_DESCRIPTION">
+      <option value="inline">ATTACH_INLINE</option>
+      <option value="attachment">ATTACH_ATTACHMENT</option>
     </field>
   </fieldset>
 
-  <fieldset name="permissions" 
+  <fieldset name="permissions"
             label="JCONFIG_PERMISSIONS_LABEL"
-            description="COM_ATTACHMENTS_PERMISSIONS_DESC">
+            description="ATTACH_PERMISSIONS_DESC">
     <field name="rules" type="rules"
            component="com_attachments"
            filter="rules"

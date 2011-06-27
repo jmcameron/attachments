@@ -131,7 +131,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
@@ -149,7 +149,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 		else {
 			if ( !is_numeric($parent_id) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_ID_S', $parent_id) . ' (ERR 30)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_ID_S', $parent_id) . ' (ERR 30)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -171,7 +171,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				// Exit if there is no Attachments plugin to handle this parent_type
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 31)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 31)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -207,8 +207,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->option        = $this->option;
 		$view->from          = $from;
 
-		$view->display_filename_tooltip = JText::_('DISPLAY_FILENAME') . '::' . JText::_('DISPLAY_FILENAME_TOOLTIP');
-		$view->display_url_tooltip = JText::_('DISPLAY_URL') . '::' . JText::_('DISPLAY_URL_TOOLTIP');
+		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+		$view->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
 
 		// Add the published selection
 		$lists = Array();
@@ -252,13 +252,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Set up to toggle between uploading file/urls
 		AttachmentsControllerAttachment::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 		if ( $uri_type == 'file' ) {
-			$upload_toggle_button_text = JText::_('ENTER_URL_INSTEAD');
-			$upload_toggle_tooltip = JText::_('ENTER_URL_INSTEAD_TOOLTIP');
+			$upload_toggle_button_text = JText::_('ATTACH_ENTER_URL_INSTEAD');
+			$upload_toggle_tooltip = JText::_('ATTACH_ENTER_URL_INSTEAD_TOOLTIP');
 			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=url';
 			}
 		else {
-			$upload_toggle_button_text = JText::_('SELECT_FILE_TO_UPLOAD_INSTEAD');
-			$upload_toggle_tooltip = JText::_('SELECT_FILE_TO_UPLOAD_INSTEAD_TOOLTIP');
+			$upload_toggle_button_text = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
+			$upload_toggle_tooltip = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD_TOOLTIP');
 			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=file';
 			}
 		if ( $from == 'closeme' ) {
@@ -292,9 +292,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->upload_toggle_tooltip = 	  $upload_toggle_tooltip;
 
 		// Set up the 'select parent' button
-		$view->selpar_label =  JText::sprintf('SELECT_ENTITY_S_COLON', $parent_entity_name);
-		$view->selpar_btn_text =  '&nbsp;' . JText::sprintf('SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
-		$view->selpar_btn_tooltip =  JText::sprintf('SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
+		$view->selpar_label =  JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
+		$view->selpar_btn_text =  '&nbsp;' . JText::sprintf('ATTACH_SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
+		$view->selpar_btn_tooltip =  JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
 		$view->selpar_btn_url =  $parent->getSelectEntityURL($parent_entity);
 
 		$view->display();
@@ -313,7 +313,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Make sure we have a user
 		$user = JFactory::getUser();
 		if ( $user->get('username') == '' ) {
-			$errmsg = JText::_('ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 32)';
+			$errmsg = JText::_('ATTACH_ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 32)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -331,12 +331,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 33)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 33)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
 		$parent_id = JRequest::getInt('parent_id', null);
@@ -346,14 +346,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
 
 			// Warn the user to select an article/parent in a popup
-			$errmsg = JText::sprintf('ERROR_MUST_SELECT_PARENT_S', $parent_entity_name);
+			$errmsg = JText::sprintf('ATTACH_ERROR_MUST_SELECT_PARENT_S', $parent_entity_name);
 			echo "<script type=\"text/javascript\"> alert('$errmsg'); window.history.go(-1); </script>\n";
 			exit();
 			}
 
 		// Make sure this user has permission to upload (should never fail with admin?)
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
-			$errmsg = JText::sprintf('ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 34)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 34)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -457,7 +457,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 				$errmsg = $attachment->getError() . ' (ERR 38)';
 				JError::raiseError(500, $errmsg);
 				}
-			$msg = JText::_('ATTACHMENT_UPDATED');
+			$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
 			}
 
 		// See where to go to next
@@ -558,7 +558,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$lists['published'] = JHTML::_('select.booleanlist', 'state',
 									   'class="inputbox"', $attachment->state);
 		$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
-									   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
+									   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 									   $attachment->url_valid);
 
 		// Construct the drop-down list for legal icon filenames
@@ -588,17 +588,17 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 39)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 39)';
 			JError::raiseError(500, $errmsg);
 			}
 		$entity_info = $apm->getInstalledEntityInfo();
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Get the parent info
-		$attachment->parent_entity_name = JText::_($parent_entity);
+		$attachment->parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 		if ( !$parent_title ) {
-			$parent_title = JText::sprintf('NO_PARENT_S', $attachment->parent_entity_name);
+			$parent_title = JText::sprintf('ATTACH_NO_PARENT_S', $attachment->parent_entity_name);
 			}
 		$attachment->parent_title = $parent_title;
 		$attachment->parent_published = $parent->isParentPublished($parent_id, $parent_entity);
@@ -638,9 +638,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 				$new_parent_entity_name = JText::_($new_parent_entity);
 
 				// Set up the 'select parent' button
-				$selpar_label = JText::sprintf('SELECT_ENTITY_S_COLON', $new_parent_entity_name);
-				$selpar_btn_text = '&nbsp;' . JText::sprintf('SELECT_ENTITY_S', $new_parent_entity_name) . '&nbsp;';
-				$selpar_btn_tooltip = JText::sprintf('SELECT_ENTITY_S_TOOLTIP', $new_parent_entity_name);
+				$selpar_label = JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $new_parent_entity_name);
+				$selpar_btn_text = '&nbsp;' . JText::sprintf('ATTACH_SELECT_ENTITY_S', $new_parent_entity_name) . '&nbsp;';
+				$selpar_btn_tooltip = JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $new_parent_entity_name);
 
 				$selpar_btn_url = $new_parent->getSelectEntityURL($new_parent_entity);
 				$selpar_parent_title = '';
@@ -648,10 +648,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 			else {
 				// Set up the 'select parent' button
-				$selpar_label = JText::sprintf('SELECT_ENTITY_S_COLON', $attachment->parent_entity_name);
+				$selpar_label = JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $attachment->parent_entity_name);
 				$selpar_btn_text = '&nbsp;' .
-					JText::sprintf('SELECT_ENTITY_S', $attachment->parent_entity_name) . '&nbsp;';
-				$selpar_btn_tooltip = JText::sprintf('SELECT_ENTITY_S_TOOLTIP', $attachment->parent_entity_name);
+					JText::sprintf('ATTACH_SELECT_ENTITY_S', $attachment->parent_entity_name) . '&nbsp;';
+				$selpar_btn_tooltip = JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $attachment->parent_entity_name);
 				$selpar_btn_url = $parent->getSelectEntityURL($parent_entity);
 				$selpar_parent_title = $attachment->parent_title;
 				$selpar_parent_id = $attachment->parent_id;
@@ -730,7 +730,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->display_name      = $display_name;
 		$view->entity_info       = $entity_info;
 
-		$view->display_filename_tooltip = JText::_('DISPLAY_FILENAME') . '::' . JText::_('DISPLAY_FILENAME_TOOLTIP');
+		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
 
 		$view->lists      = $lists;
 		$view->attachment = $attachment;
@@ -767,7 +767,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Make sure the article ID is valid
 		$attachment_id = JRequest::getInt('id');
 		if ( !$attachment->load($attachment_id) ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 40)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 40)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -827,7 +827,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// If the parent has changed, make sure they have selected the new parent
 		if ( $parent_changed AND ( (int)$attachment->parent_id == -1 ) ) {
-			$errmsg = JText::sprintf('ERROR_MUST_SELECT_PARENT');
+			$errmsg = JText::sprintf('ATTACH_ERROR_MUST_SELECT_PARENT');
 			echo "<script type=\"text/javascript\"> alert('$errmsg'); window.history.go(-1); </script>\n";
 			exit();
 			}
@@ -897,7 +897,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 43)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -998,7 +998,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 			case 'apply':
 				if ( !$msg ) {
-					$msg = JText::_('CHANGES_TO_ATTACHMENT_SAVED');
+					$msg = JText::_('ATTACH_CHANGES_TO_ATTACHMENT_SAVED');
 					}
 				$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
 				break;
@@ -1006,7 +1006,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			case 'save':
 			default:
 				if ( !$msg ) {
-					$msg = JText::_('ATTACHMENT_UPDATED');
+					$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
 					}
 			$link = 'index.php?option=com_attachments';
 			break;
@@ -1140,7 +1140,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
 		if ( !is_numeric($id) ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 47)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 47)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1170,7 +1170,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$attachment_id = (int)$attachment_id;
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 48)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 48)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1181,7 +1181,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Make sure the article ID is valid
 		$attachment_id = JRequest::getInt('id');
 		if ( !$attachment->load($attachment_id) ) {
-			$errmsg = JText::sprintf('ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 49)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 49)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1194,15 +1194,15 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->tmpl = JRequest::getWord('tmpl');
 
 		// Prepare for the query
-		$view->warning_title = JText::_('WARNING');
+		$view->warning_title = JText::_('ATTACH_WARNING');
 		if ( $attachment->uri_type == 'file' ) {
 			$msg = "( {$attachment->filename} )";
 			}
 		else {
 			$msg = "( {$attachment->url} )";
 			}
-		$view->warning_question = JText::_('REALLY_DELETE_ATTACHMENT') . '<br/>' . $msg;
-		$view->action_button_label = JText::_('DELETE');
+		$view->warning_question = JText::_('ATTACH_REALLY_DELETE_ATTACHMENT') . '<br/>' . $msg;
+		$view->action_button_label = JText::_('ATTACH_DELETE');
 
 		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id;
 		$view->action_url .= "&ampfrom=" . $view->from;

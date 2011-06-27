@@ -408,7 +408,7 @@ class plgContentAttachments extends JPlugin
 		$uri = JFactory::getURI();
 		$icon_url = $uri->root(true) . '/components/com_attachments/media/add_attachment.gif';
 
-		$add_attachment_txt = JText::_('ADD_ATTACHMENT');
+		$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
 		$ahead .= "rel=\"{handler: 'iframe', size: {x: 900, y: 550}}\">";
 		$links = "$ahead<img src=\"$icon_url\" alt=\"$add_attachment_txt\" /></a>";

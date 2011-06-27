@@ -22,7 +22,7 @@ $uri = JFactory::getURI();
 // Add javascript
 JHTML::_('behavior.mootools');
 $document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
-		
+
 $parent_id = $this->parent_id;
 if ( $parent_id === null ) {
 	$parent_id = 0;
@@ -42,14 +42,14 @@ $params = $this->params;
 
 // Set up to toggle between uploading file/urls
 if ( $uri_type == 'file' ) {
-	$upload_toggle_button_text = JText::_('ENTER_URL_INSTEAD');
+	$upload_toggle_button_text = JText::_('ATTACH_ENTER_URL_INSTEAD');
 	$upload_toggle_url = $this->upload_url_url;
-	$upload_button_text = JText::_('UPLOAD_VERB');
+	$upload_button_text = JText::_('ATTACH_UPLOAD_VERB');
 	}
 else {
-	$upload_toggle_button_text = JText::_('SELECT_FILE_TO_UPLOAD_INSTEAD');
+	$upload_toggle_button_text = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
 	$upload_toggle_url = $this->upload_file_url;
-	$upload_button_text = JText::_('ADD_URL');
+	$upload_button_text = JText::_('ATTACH_ADD_URL');
 	}
 
 // If this is for an existing content item, modify the URL appropriately
@@ -101,60 +101,60 @@ if ( $lang->isRTL() ) {
 // Display the form
 ?>
 <div id="uploadAttachmentsPage">
-<h1><?php echo JText::sprintf('FOR_PARENT_S_COLON_S', $this->parent_entity_name, $this->parent_title) ?></h1>
+<h1><?php echo JText::sprintf('ATTACH_FOR_PARENT_S_COLON_S', $this->parent_entity_name, $this->parent_title) ?></h1>
 	<form class="attachments" enctype="multipart/form-data" name="upload_form"
 		  action="<?php echo $this->save_url; ?>" method="post">
 		<fieldset>
-			<legend><?php echo JText::_('UPLOAD_ATTACHMENT'); ?></legend>
+			<legend><?php echo JText::_('ATTACH_UPLOAD_ATTACHMENT'); ?></legend>
 			<?php if ( $this->error_msg ): ?>
 			<div class="formWarning" id="formWarning"><?php echo $this->error_msg; ?></div>
 			<?php endif; ?>
 <?php if ( $this->may_publish ): ?>
-<p><label><?php echo JText::_('PUBLISHED'); ?></label><?php echo $this->publish; ?></p>
+<p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->publish; ?></p>
 <?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
-		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ACCESS_COLON'); ?></label><?php echo $this->access_level; ?></p>
-<?php endif; ?>		
+		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?></p>
+<?php endif; ?>
 <?php if ( $uri_type == 'file' ): ?>
 			<p><label for="<?php echo $upload_id ?>"><?php
-		  echo JText::_('ATTACH_FILE_COLON') ?></label>
+		  echo JText::_('ATTACH_ATTACH_FILE_COLON') ?></label>
 		   <a class="changeButton" href="<?php echo $upload_toggle_url ?>"><?php
 			  echo $upload_toggle_button_text;?></a></p>
 			<p><input type="file" name="upload" id="<?php echo $upload_id; ?>"
 				  size="60" maxlength="512" /></p>
 			<p class="display_name"><label for="display_name"
-				  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
-				  ><?php echo JText::_('DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>
+				  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
+				  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>
 			   <input type="text" name="display_name" id="display_name"
 				  size="70" maxlength="80"
-				  title="<?php echo JText::_('DISPLAY_FILENAME_TOOLTIP'); ?>"
+				  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
 				  value="<?php echo $this->display_name; ?>" /></p>
 <?php else: ?>
 			<p><label for="<?php echo $upload_id ?>"><?php
-		  echo JText::_('ENTER_URL_COLON') ?></label>
+		  echo JText::_('ATTACH_ENTER_URL_COLON') ?></label>
 		   &nbsp;&nbsp;&nbsp;&nbsp;
-			   <label for="verify_url"><?php echo JText::_('VERIFY_URL_EXISTENCE') ?></label>
+			   <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 	   <input type="checkbox" name="verify_url" value="verify" checked
-					  title="<?php echo JText::_('VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
+					  title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	   &nbsp;&nbsp;&nbsp;&nbsp;
-			   <label for="relative_url"><?php echo JText::_('RELATIVE_URL') ?></label>
+			   <label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 	   <input type="checkbox" name="relative_url" value="relative"
-		  title="<?php echo JText::_('RELATIVE_URL_TOOLTIP'); ?>" />
+		  title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		   <a class="changeButton" href="<?php echo $upload_toggle_url ?>"><?php
 			  echo $upload_toggle_button_text;?></a><br />
 			   <input type="text" name="url" id="<?php echo $upload_id; ?>"
-				  size="80" maxlength="255" title="<?php echo JText::_('ENTER_URL_TOOLTIP'); ?>"
+				  size="80" maxlength="255" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
 				  value="<?php echo $this->url; ?>" /><br /><?php
-				  echo JText::_('NOTE_ENTER_URL_WITH_HTTP'); ?></p>
+				  echo JText::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?></p>
 			<p class="display_name"><label for="display_name"
-				  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
-				  ><?php echo JText::_('DISPLAY_URL_COLON'); ?></label>
+				  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
+				  ><?php echo JText::_('ATTACH_DISPLAY_URL_COLON'); ?></label>
 			   <input type="text" name="display_name" id="display_name"
 				  size="70" maxlength="80"
-				  title="<?php echo JText::_('DISPLAY_URL_TOOLTIP'); ?>"
+				  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
 				  value="<?php echo $this->display_name; ?>" /></p>
 <?php endif; ?>
-			<p><label for="description"><?php echo JText::_('DESCRIPTION_COLON'); ?></label>
+			<p><label for="description"><?php echo JText::_('ATTACH_DESCRIPTION_COLON'); ?></label>
 			   <input type="text" name="description" id="description"
 						  size="70" maxlength="255"
 				  value="<?php echo $this->description; ?>" /></p>
@@ -191,7 +191,7 @@ if ( $lang->isRTL() ) {
 		<br/><div class="form_buttons">
 			<input type="submit" name="submit" value="<?php echo $upload_button_text ?>" />
 			<span class="right">
-			  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
+			  <input type="button" name="cancel" value="<?php echo JText::_('ATTACH_CANCEL'); ?>"
 					 onClick="window.parent.SqueezeBox.close();" />
 			</span>
 		</div>
@@ -202,7 +202,7 @@ if ( $lang->isRTL() ) {
 	if ( !$params->get('publish_default', false) AND !$this->may_publish ) {
 		$msg = $params->get('auto_publish_warning', '');
 		if ( JString::strlen($msg) == 0 ) {
-			$msg = 'WARNING_ADMIN_MUST_PUBLISH';
+			$msg = 'ATTACH_WARNING_ADMIN_MUST_PUBLISH';
 			}
 		$msg = JText::_($msg);
 		echo "<h2>$msg</h2>";
@@ -213,7 +213,7 @@ if ( $lang->isRTL() ) {
 		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
 		$controller->display($parent_id, $parent_type, $parent_entity,
-							 'EXISTING_ATTACHMENTS',
+							 'ATTACH_EXISTING_ATTACHMENTS',
 							 false, false, true, $this->from);
 		}
 

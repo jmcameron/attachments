@@ -51,7 +51,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
-		
+
 		// This button should only be displayed in 'custom placement' mode.
 		// Check to make sure that is the case
 		$placement = $params->get('attachments_placement', 'end');
@@ -84,7 +84,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 
 		// Set up the Javascript to insert the tag
 		$getContent = $this->_subject->getContent($name);
-		$present = JText::_('ATTACHMENTS_TOKEN_ALREADY_PRESENT', true) ;
+		$present = JText::_('ATTACH_ATTACHMENTS_TOKEN_ALREADY_PRESENT', true) ;
 		$js =  "
 			function insertAttachmentsToken(editor) {
 				var content = $getContent
@@ -117,12 +117,12 @@ class plgButtonInsert_attachments_token extends JPlugin
 			AttachmentsHelper::addStyleSheet(
 				$uri->root(true) . '/plugins/editors-xtd/insert_attachments_token/insert_attachments_token_rtl.css' );
 			}
-		
+
 		$button = new JObject();
 		$button->set('modal', false);
 		$button->set('onclick', 'insertAttachmentsToken(\''.$name.'\');return false;');
-		$button->set('text', JText::_('ATTACHMENTS_TOKEN'));
-		$button->set('title', JText::_('ATTACHMENTS_TOKEN_DESCRIPTION'));
+		$button->set('text', JText::_('ATTACH_ATTACHMENTS_TOKEN'));
+		$button->set('title', JText::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION'));
 
 		if ( $app->isAdmin() ) {
 			$button->set('name', 'insert_attachments_token');

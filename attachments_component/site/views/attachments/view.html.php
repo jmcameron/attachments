@@ -51,7 +51,7 @@ class AttachmentsViewAttachments extends JView
 		// Get the model
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 112)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 112)';
 			JError::raiseError( 500, $errmsg);
 			}
 
@@ -161,7 +161,7 @@ class AttachmentsViewAttachments extends JView
 		// Get the attachments list title
 		$title = $this->title;
 		if ( !$title OR (JString::strlen($title) == 0) ) {
-			$title = 'ATTACHMENTS_TITLE';
+			$title = 'ATTACH_ATTACHMENTS_TITLE';
 			}
 		$parent = $model->getParentClass();
 		$title = $parent->attachmentsListTitle($title, $params, $parent_id, $parent_entity);

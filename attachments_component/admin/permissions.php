@@ -81,7 +81,7 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			$results = $db->loadObject();
 			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 123)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 123)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -136,7 +136,7 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			$results = $db->loadObject();
 			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 124)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 124)';
 				JError::raiseError(500, $errmsg);
 				}
 

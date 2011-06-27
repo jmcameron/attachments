@@ -46,13 +46,13 @@ if ( $lang->isRTL() ) {
 	   <span class="left">&nbsp;</span>
 	   <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
 	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo JText::_('CANCEL'); ?>"
+		  <input type="button" name="cancel" value="<?php echo JText::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.SqueezeBox.close();" />
 	   </span>
 	</div>
     <input type="hidden" name="option" value="<?php echo $this->option;?>" />
     <input type="hidden" name="from" value="<?php echo $this->from;?>" />
-	
+
     <?php echo JHTML::_( 'form.token' ); ?>
   </form>
  </div>

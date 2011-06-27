@@ -29,13 +29,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<input type="checkbox" name="toggle" value=""
 		   onclick="checkAll(<?php echo count( $this->items ); ?>);" />
 	 </th>
-	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('PUBLISHED'),
+	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', 'ATTACH_PUBLISHED',
 							 'a.state', $listDirn, $listOrder ) ?></th>
-	 <th class="at_filename"><?php echo JHTML::_('grid.sort', JText::_('ATTACHMENT_FILENAME_URL'),
+	 <th class="at_filename"><?php echo JHTML::_('grid.sort', 'ATTACH_ATTACHMENT_FILENAME_URL',
 							 'a.filename', $listDirn, $listOrder ) ?></th>
-	 <th class="at_description"><?php echo JHTML::_('grid.sort', JText::_('DESCRIPTION'),
+	 <th class="at_description"><?php echo JHTML::_('grid.sort', 'ATTACH_DESCRIPTION',
 							 'a.description', $listDirn, $listOrder ) ?></th>
-	 <th class="at_access" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('JFIELD_ACCESS_LABEL'),
+	 <th class="at_access" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', 'JFIELD_ACCESS_LABEL',
 							 'a.access', $listDirn, $listOrder ) ?></th>
 	 <?php if ($params->get('user_field_1_name')): ?>
 	   <th class="at_user_field"><?php echo JHTML::_('grid.sort', $params->get('user_field_1_name', ''),
@@ -49,20 +49,20 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	   <th class="at_user_field"><?php echo JHTML::_('grid.sort', $params->get('user_field_3_name', ''),
 													 'a.user_field_3', $listDirn, $listOrder ) ?></th>
 	 <?php endif; ?>
-	 <th class="at_file_type"><?php echo JHTML::_('grid.sort', JText::_('FILE_TYPE'),
+	 <th class="at_file_type"><?php echo JHTML::_('grid.sort', 'ATTACH_FILE_TYPE',
 							 'a.file_type', $listDirn, $listOrder ) ?></th>
-	 <th class="at_file_size"><?php echo JHTML::_('grid.sort', JText::_('FILE_SIZE_KB'),
+	 <th class="at_file_size"><?php echo JHTML::_('grid.sort', 'ATTACH_FILE_SIZE_KB',
 							 'a.file_size', $listDirn, $listOrder ) ?></th>
-	 <th class="at_creator_name"><?php echo JHTML::_('grid.sort', JText::_('CREATOR'),
+	 <th class="at_creator_name"><?php echo JHTML::_('grid.sort', 'ATTACH_CREATOR',
 							 'u.name', $listDirn, $listOrder ) ?></th>
-	 <th class="at_created"><?php echo JHTML::_('grid.sort', JText::_('JGLOBAL_CREATED'),
+	 <th class="at_created"><?php echo JHTML::_('grid.sort', 'JGLOBAL_CREATED',
 								'a.created', $listDirn, $listOrder ) ?></th>
-	 <th class="at_mod_date"><?php echo JHTML::_('grid.sort', JText::_('LAST_MODIFIED'),
+	 <th class="at_mod_date"><?php echo JHTML::_('grid.sort', 'ATTACH_LAST_MODIFIED',
 							 'a.modified', $listDirn, $listOrder ) ?></th>
 	 <?php if ( $secure ): ?>
-	   <th class="at_downloads"><?php echo JHTML::_('grid.sort', JText::_('DOWNLOADS'),
+	   <th class="at_downloads"><?php echo JHTML::_('grid.sort', 'ATTACH_DOWNLOADS',
 													'a.download_count', $listDirn, $listOrder ) ?></th>
 	 <?php endif; ?>
 </tr>
 
-   
+

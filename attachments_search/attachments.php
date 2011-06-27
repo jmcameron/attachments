@@ -79,7 +79,7 @@ class plgSearchAttachments extends JPlugin
 			return array();
 			}
 
-		// load search limit from plugin params 
+		// load search limit from plugin params
 		$limit = $this->params->def('search_limit', 50);
 
 		// Get the component parameters
@@ -244,14 +244,14 @@ class plgSearchAttachments extends JPlugin
 			// Set the text to the string containing the search target
 			if ( JString::strlen($attachment->display_name) > 0 ) {
 				$text = $attachment->display_name .
-					" (" . JText::_('FILENAME_COLON') . " " . $attachment->filename . ") ";
+					" (" . JText::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename . ") ";
 				}
 			else {
-				$text = JText::_('FILENAME_COLON') . " " . $attachment->filename;
+				$text = JText::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename;
 				}
 
 			if ( JString::strlen($attachment->description) > 0 ) {
-				$text .= " | " . JText::_('DESCRIPTION_COLON') . $attachment->description;
+				$text .= " | " . JText::_('ATTACH_DESCRIPTION_COLON') . $attachment->description;
 				}
 
 			if ( $user_field_1 AND (JString::strlen($attachment->user_field_1) > 0) ) {
@@ -267,10 +267,10 @@ class plgSearchAttachments extends JPlugin
 			$attachment->created = $attachment->created;
 			$attachment->browsernav = 2;
 
-			$parent_entity_name = JText::_($parent_entity);
+			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
-			$attachment->section = JText::sprintf('ATTACHED_TO_PARENT_S_TITLE_S',
+			$attachment->section = JText::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',
 										   $parent_entity_name, $parent_title);
 
 			$results[$k] = $attachment;

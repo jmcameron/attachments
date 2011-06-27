@@ -38,23 +38,23 @@ $lists = $this->lists;
 	  action="<?php echo $this->post_url ?>" method="post">
 
 	<fieldset class="adminform">
-	<legend><?php echo JText::sprintf('SELECT_ENTITY_S', $this->parent_entity_name) ?></legend>
+	<legend><?php echo JText::sprintf('ATTACH_SELECT_ENTITY_S', $this->parent_entity_name) ?></legend>
 <div class="attachments_filter">
-	<?php echo JText::_( 'FILTER' ); ?>:
+	<?php echo JText::_( 'ATTACH_FILTER' ); ?>:
 	<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>"
 	   class="text_area" onchange="document.adminForm.submit();" />
-	<button onclick="this.form.submit();"><?php echo JText::_( 'GO' ); ?></button>
-	<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('RESET') ?></button>
+	<button onclick="this.form.submit();"><?php echo JText::_( 'ATTACH_GO' ); ?></button>
+	<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('ATTACH_RESET') ?></button>
 </div>
 	<table class="adminlist" cellspacing="1">
 	<thead>
 	   <tr>
 		 <th width="5"><?php echo JText::_( 'JGRID_HEADING_ROW_NUMBER' ); ?></th>
 		 <th class="title">
-			<?php echo JHTML::_('grid.sort', 'Title', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
+			<?php echo JHTML::_('grid.sort', 'ATTACH_TITLE', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>
 		 <th width="2%" class="title">
-			<?php echo JHTML::_('grid.sort', 'ID', 'id', @$lists['order_Dir'], @$lists['order'] ); ?>
+			<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>
 	   </tr>
 	</thead>

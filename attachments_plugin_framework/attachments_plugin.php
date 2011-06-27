@@ -227,7 +227,7 @@ class AttachmentsPlugin extends JPlugin
 		else {
 			$lang = JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
-			$errmsg = JText::sprintf('ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
 									 $parent_entity, $parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -300,8 +300,8 @@ class AttachmentsPlugin extends JPlugin
 		$db->setQuery($query);
 		$title = $db->loadResult();
 		if ( $db->getErrorNum() ) {
-			$parent_entity_name = JText::_($parent_entity);
-			$errmsg = JText::sprintf('ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
+			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -361,8 +361,8 @@ class AttachmentsPlugin extends JPlugin
 		// Do the query
 		$db->setQuery($query);
 		if ( $db->getErrorNum() ) {
-			$parent_entity_name = JText::_($parent_entity);
-			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
 									 $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -421,7 +421,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentCreatorId($parent_id, $parent_entity='default')
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 
@@ -489,7 +489,7 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get the title for the attachments list for this parent
 	 *
-	 * @param string $title The untranslated title token (either 'ATTACHMENTS_TITLE' or 'EXISTING_ATTACHMENTS')
+	 * @param string $title The untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE' or 'ATTACH_EXISTING_ATTACHMENTS')
 	 * @param &object &$params The Attachments component parameters object
 	 * @param int $parent_id the ID for the parent entity object (null if the parent does not exist)
 	 * @param string $parent_entity the type of entity for this parent type
@@ -499,7 +499,7 @@ class AttachmentsPlugin extends JPlugin
 	public function attachmentsListTitle($title, &$params, $parent_id, $parent_entity='default')
 	{
 		$rtitle_str = $params->get('attachments_titles', '');
-		if ( ($title != 'EXISTING_ATTACHMENTS') AND ($rtitle_str != '') ) {
+		if ( ($title != 'ATTACH_EXISTING_ATTACHMENTS') AND ($rtitle_str != '') ) {
 			$rtitle_list = preg_split("[\n|\r]", $rtitle_str);
 			foreach ($rtitle_list as $rtitle) {
 				if ( preg_match('|^([0-9]+)\s*([^$]+)$|', $rtitle, $match) ) {
@@ -620,7 +620,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity='default')
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 
@@ -672,7 +672,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 
@@ -689,7 +689,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayEditAttachment(&$attachment)
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 
@@ -706,7 +706,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayDeleteAttachment(&$attachment)
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 
@@ -719,7 +719,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAccessAttachment( &$attachment )
 	{
-		JError::raiseError(501, JText::_('NOT_IMPLEMENTED'));
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
 

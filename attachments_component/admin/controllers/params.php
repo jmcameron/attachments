@@ -13,7 +13,7 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
- 
+
 // import Joomla controllerform library
 jimport('joomla.application.component.controllerform');
 
@@ -67,7 +67,7 @@ class AttachmentsControllerParams extends JControllerForm
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
-		
+
 		// Bind the form to the data.
 		if ($form && $component->params) {
 			$form->bind($component->params);
@@ -180,10 +180,10 @@ class AttachmentsControllerParams extends JControllerForm
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 
-			$msg = JText::_('UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
+			$msg = JText::_('ATTACH_UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
 			}
 		else {
-			$msg = JText::_( 'UPDATED_ATTACHMENTS_PARAMETERS' );
+			$msg = JText::_( 'ATTACH_UPDATED_ATTACHMENTS_PARAMETERS' );
 			}
 
 		// Set the redirect based on the task.

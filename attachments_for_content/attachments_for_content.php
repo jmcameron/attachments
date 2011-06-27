@@ -127,11 +127,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$db = JFactory::getDBO();
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Note that article is handled separately
 		if ( JString::strtolower($parent_entity) != 'category' ) {
-			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
 									 $parent_entity_name) . ' (ERR 400)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -165,7 +165,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = JText::sprintf('ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
 									 $parent_entity_name) . ' (ERR 401) <br/>' . $db->stderr();
 			JError::raiseError(500, $errmsg);
 			}
@@ -209,7 +209,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$result = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::_('ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERRN)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			break;
@@ -219,7 +219,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$result = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::_('ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERRN)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERRN)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -348,7 +348,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$published = false;
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Return the right thing for each entity
 		switch ( $parent_entity ) {
@@ -360,7 +360,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$obj = $db->loadObject();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 402)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -381,7 +381,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name,  $parent_id) . ' (ERR 403)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -438,8 +438,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
-				$parent_entity_name = JText::_($parent_entity);
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+				$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name,  $parent_id) . ' (ERR 404)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -537,7 +537,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				"WHERE a.parent_entity = 'category' AND c2.id = a.parent_id ))";
 			}
 		else {
-			$errmsg = JText::sprintf('ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 405)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 405)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -583,8 +583,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$db->setQuery($query, 0, 1);
 		$obj = $db->loadObject();
 		if ( $db->getErrorNum() ) {
-			$parent_entity_name = JText::_($parent_entity);
-			$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 406)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -612,7 +612,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$pclass = get_class($parent);
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
 		if ( !$parent_id AND ($parent_entity == 'category') ) {
@@ -621,7 +621,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_id !== 0 ) {
 			// parent_id of 0 may be allowed for categories, so don't abort
 			if ( $parent_id == null OR $parent_id == '' OR !is_numeric($parent_id) ) {
-				$errmsg = JText::sprintf('ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 407)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 407)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -676,7 +676,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
 			if ( $db->getErrorNum() OR (count($attachments) == 0) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 408)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -783,7 +783,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		switch ( $attachment->parent_entity ) {
 
 		case 'category':
-			
+
 			// ?? Deal with parents being created (parent_id == 0)
 
 			// First, determine if the user can edit this category
@@ -913,7 +913,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				 (int)$user->id == (int)$attachment->created_by ) {
 				return true;
 				}
-			
+
 			// See if the user has permission to delete any attachments for articles they created
 			if ( $user->authorise('attachments.delete.ownparent', 'com_attachments') ) {
 				$article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');

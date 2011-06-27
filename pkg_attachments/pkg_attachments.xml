@@ -9,7 +9,7 @@
     <packager>Jonathan M. Cameron</packager>
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
     <creationDate>June 10, 2011</creationDate>
-    <description>PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS</description>
+    <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS</description>
     <update></update>
 
     <files folder="packages">

@@ -137,7 +137,7 @@ class plgButtonAdd_attachment extends JPlugin
 		// Finalize the [Add Attachment] button info
 		$button->set('modal', true);
 		$button->set('class', 'modal');
-		$button->set('text', JText::_('ADD_ATTACHMENT'));
+		$button->set('text', JText::_('ATTACH_ADD_ATTACHMENT'));
 
 		if ( $app->isAdmin() ) {
 			$button->set('name', 'add_attachment');

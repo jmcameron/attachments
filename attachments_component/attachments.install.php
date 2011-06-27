@@ -46,7 +46,7 @@ class Com_AttachmentsInstallerScript {
 	public function install($parent)
 	{
 		$app = JFactory::getApplication('administrator');
-		$app->enqueueMessage(JText::sprintf('ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
+		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Set up the default ACL rules for the unique privileges in the root rule
@@ -61,7 +61,7 @@ class Com_AttachmentsInstallerScript {
 		$root_rules->merge($new_rules);
 		$root->rules = (string)$root_rules;
 		$root->store();
-		$app->enqueueMessage(JText::_('INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+		$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 	}
 
@@ -82,6 +82,24 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function update($parent)
 	{
+		$app = JFactory::getApplication('administrator');
+		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_UPGRADED'), 'message');
+		$app->enqueueMessage('<br/>', 'message');
+
+		// Set up the default ACL rules for the unique privileges in the root rule
+		jimport('joomla.access.rules');
+		$root = JTable::getInstance('asset');
+		$root->loadByName('root.1');
+		$root_rules = new JRules($root->rules);
+		$new_rules = new JRules('{"attachments.delete.own":{"6":1,"3":1},' .
+								 '"attachments.edit.ownparent":{"6":1,"3":1},' .
+								 '"attachments.delete.ownparent":{"6":1,"3":1}' .
+								'}');
+		$root_rules->merge($new_rules);
+		$root->rules = (string)$root_rules;
+		$root->store();
+		$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+		$app->enqueueMessage('<br/>', 'message');
 	}
 
 
@@ -100,7 +118,7 @@ class Com_AttachmentsInstallerScript {
 		// First make sure that this version of Joomla is 1.6 or greater
 		$version = new JVersion();
 		if ( (real)$version->RELEASE < 1.6 ) {
-			$msg = JText::_('ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
+			$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 			$app = JFactory::getApplication('administrator');
 			$app->enqueueMessage($msg, 'warning');
 			return false;
@@ -117,7 +135,7 @@ class Com_AttachmentsInstallerScript {
 			JFolder::move($attachdir, $this->moved_attachments_dir);
 
 			$app = JFactory::getApplication('administrator');
-			$msg = JText::sprintf('TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
+			$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 			$app->enqueueMessage($msg, 'message');
 			$app->enqueueMessage('<br/>', 'message');
 			}
@@ -130,7 +148,7 @@ class Com_AttachmentsInstallerScript {
 	 * @param $type : type of installation
 	 * @param $parent : the installer parent
 	 */
-	public function postflight($type, $parent) 
+	public function postflight($type, $parent)
 	{
 		$app = JFactory::getApplication('administrator');
 		$db = JFactory::getDBO();
@@ -153,26 +171,26 @@ class Com_AttachmentsInstallerScript {
 
 			// Complain if there was an error
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::sprintf('WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
+				$errmsg = JText::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
 				$errmsg .= $db->getErrorMsg();
 				$app->enqueueMessage($errmsg, 'error');
 				return false;
 				}
-			$app->enqueueMessage(JText::sprintf('ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
+			$app->enqueueMessage(JText::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
 		}
 		$app->enqueueMessage('<br/>', 'message');
-		$app->enqueueMessage(JText::_('ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
+		$app->enqueueMessage(JText::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Restore the attachments directory (if renamed)
 		if ( $this->moved_attachments_dir AND JFolder::exists($this->moved_attachments_dir) ) {
 			$attachdir = JPATH_ROOT.'/attachments';
 			JFolder::move($this->moved_attachments_dir, $attachdir);
-			$app->enqueueMessage(JText::sprintf('RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
+			$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 			$app->enqueueMessage('<br/>', 'message');
 			}
 
-		$app->enqueueMessage(JText::sprintf('PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+		$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
 											'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
 											), 'message');
 		$app->enqueueMessage('<br/>', 'message');

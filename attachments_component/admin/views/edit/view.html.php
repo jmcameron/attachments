@@ -10,7 +10,7 @@
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
  */
- 
+
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -18,9 +18,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
- 
+
 jimport( 'joomla.application.component.view');
- 
+
 /**
  * HTML View class for editing new attachments
  *
@@ -42,10 +42,10 @@ class AttachmentsViewEdit extends JView
 	/**
 	 * Setting the toolbar
 	 */
-	protected function addToolBar() 
+	protected function addToolBar()
 	{
 		JRequest::setVar('hidemainmenu', true);
-		JToolBarHelper::title(JText::_('EDIT_ATTACHMENT'));
+		JToolBarHelper::title(JText::_('ATTACH_EDIT_ATTACHMENT'));
 		JToolBarHelper::apply('attachment.apply');
 		JToolBarHelper::save('attachment.save');
 		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CLOSE');

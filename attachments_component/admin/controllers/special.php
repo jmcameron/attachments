@@ -44,7 +44,7 @@ class AttachmentsControllerSpecial extends JController
 	 */
 	public function noop()
 	{
-		echo "<h1>" . JText::_('ERROR_NO_SPECIAL_FUNCTION_SPECIFIED') . "</h1>";
+		echo "<h1>" . JText::_('ATTACH_ERROR_NO_SPECIAL_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
 	}
 

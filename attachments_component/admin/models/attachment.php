@@ -83,7 +83,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			JPluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 61)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 61)';
 				JError::raiseError(500, $errmsg);
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);

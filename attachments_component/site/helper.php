@@ -243,7 +243,7 @@ class AttachmentsHelper
 		$dirend_chars = DS.'/';
 		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) OR
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 64)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 64)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -262,7 +262,7 @@ class AttachmentsHelper
 			}
 
 		if ( !$subdir_ok OR !JFolder::exists($upload_dir) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 65)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -270,7 +270,7 @@ class AttachmentsHelper
 		$index_ok = false;
 		$index_fname = $upload_dir.'/index.html';
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
-			$errmsg = JText::sprintf('ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 66)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 66)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -286,7 +286,7 @@ class AttachmentsHelper
 				$hta_ok = true;
 				}
 			if ( ! $hta_ok ) {
-				$errmsg = JText::sprintf('ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 67)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 67)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -402,7 +402,7 @@ class AttachmentsHelper
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 68)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 68)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -436,7 +436,7 @@ class AttachmentsHelper
 
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($attachment->parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// A little formatting
 		$msgbreak = '<br />';
@@ -452,7 +452,7 @@ class AttachmentsHelper
 			// Guess the type of error
 			if ( $bad_chars ) {
 				$error = 'bad_chars';
-				$error_msg = JText::sprintf('ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
+				$error_msg = JText::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
@@ -462,8 +462,8 @@ class AttachmentsHelper
 				}
 			elseif ( $filename == '' ) {
 				$error = 'no_file';
-				$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
-				$error_msg .= $msgbreak . ' (' . JText::_('YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
+				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= $msgbreak . ' (' . JText::_('ATTACH_YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
@@ -473,8 +473,8 @@ class AttachmentsHelper
 				}
 			else {
 				$error = 'file_too_big';
-				$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
-				$error_msg .= $msgbreak . '(' . JText::_('ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
+				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= $msgbreak . '(' . JText::_('ATTACH_ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
 				$error_msg .= get_cfg_var('upload_max_filesize') . ')';
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
@@ -496,7 +496,7 @@ class AttachmentsHelper
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
+											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
 				// Set up publishing info
@@ -510,7 +510,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->lists = $lists;
@@ -533,7 +533,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->uri_type     = $attachment->uri_type;
@@ -588,9 +588,9 @@ class AttachmentsHelper
 		$error_msg = false;
 		if (!in_array($format, $allowable) AND !in_array($format,$ignored)) {
 			$error = 'illegal_file_extension';
-			$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
-			$error_msg .= "<br />" . JText::_('ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
-			$error_msg .= "<br />" . JText::_('ERROR_CHANGE_IN_MEDIA_MANAGER');
+			$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
+			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 			}
 
 		// Check to make sure the mime type is okay
@@ -601,9 +601,9 @@ class AttachmentsHelper
 				if( JString::strlen($ftype) AND !in_array($ftype, $allowed_mime) AND
 					in_array($ftype, $illegal_mime)) {
 					$error = 'illegal_mime_type';
-					$error_msg = JText::sprintf('ERROR_UPLOADING_FILE_S', $filename);
-					$error_msg .= ', ' . JText::_('ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
-					$error_msg .= "	 <br />" . JText::_('ERROR_CHANGE_IN_MEDIA_MANAGER');
+					$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+					$error_msg .= ', ' . JText::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
+					$error_msg .= "	 <br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 					}
 				}
 			}
@@ -630,7 +630,7 @@ class AttachmentsHelper
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
+											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
 				// Set up publishing info
@@ -644,7 +644,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->lists = $lists;
@@ -667,7 +667,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->uri_type = 		 $attachment->uri_type;
@@ -737,7 +737,7 @@ class AttachmentsHelper
 		if ( !JFile::exists($fullpath) ) {
 			jimport( 'joomla.filesystem.folder' );
 			if ( !JFolder::create($fullpath) ) {
-				$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 69)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 69)';
 				JError::raiseError(500, $errmsg);
 				}
 			AttachmentsHelper::write_empty_index_html($fullpath);
@@ -775,7 +775,7 @@ class AttachmentsHelper
 		// Handle duplicate filename error
 		if ( $duplicate_filename ) {
 			$error = 'file_already_on_server';
-			$error_msg = JText::sprintf('ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
+			$error_msg = JText::sprintf('ATTACH_ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
 			if ( $app->isAdmin() ) {
 				$result = new JObject();
@@ -902,7 +902,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 70)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 70)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -920,9 +920,9 @@ class AttachmentsHelper
 			$size = (int)( $attachment->file_size / 1024.0 );
 			chmod($filename_sys, 0644);
 			if ( $save_type == 'update' )
-				$msg = JText::_('UPDATED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
+				$msg = JText::_('ATTACH_UPDATED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
 			else
-				$msg = JText::_('UPLOADED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
+				$msg = JText::_('ATTACH_UPLOADED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
 			}
 		else {
 			$query = $db->getQuery(true);
@@ -933,7 +933,7 @@ class AttachmentsHelper
 				$errmsg = $db->stderr() . ' (ERR 71)';
 				JError::raiseError(500, $errmsg);
 				}
-			$msg = JText::_('ERROR_MOVING_FILE')
+			$msg = JText::_('ATTACH_ERROR_MOVING_FILE')
 				. " {$_FILES['upload']['tmp_name']} -> {$filename_sys})";
 			}
 
@@ -1013,7 +1013,7 @@ class AttachmentsHelper
 				$result->error = true;
 				$result->error_code = 'url_unknown_protocol';
 				$result->error_msg =
-					JText::sprintf('ERROR_UNKNOWN_PROTCOL_S_IN_URL_S', $protocol, $raw_url);
+					JText::sprintf('ATTACH_ERROR_UNKNOWN_PROTCOL_S_IN_URL_S', $protocol, $raw_url);
 				return $result;
 				}
 			// Override the port if specified
@@ -1054,7 +1054,7 @@ class AttachmentsHelper
 					// Reject bad url syntax
 					$result->error = true;
 					$result->error_code = 'url_no_domain';
-					$result->error_msg = JText::sprintf('ERROR_IN_URL_SYNTAX_S', $raw_url);
+					$result->error_msg = JText::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
 					}
 				}
 
@@ -1070,7 +1070,7 @@ class AttachmentsHelper
 			// Reject bad url syntax
 			$result->error = true;
 			$result->error_code = 'url_bad_syntax';
-			$result->error_msg = JText::sprintf('ERROR_IN_URL_SYNTAX_S', $raw_url);
+			$result->error_msg = JText::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
 			}
 
 		return $result;
@@ -1155,7 +1155,7 @@ class AttachmentsHelper
 				}
 
 			if ( $u->error ) {
-				$error_msg = JText::sprintf('ERROR_CHECKING_URL_S', $raw_url);
+				$error_msg = JText::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
 				$error_msg .= ' <br />(' . $u->err_msg . ' <br />' . $errstr . ')';
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
@@ -1203,7 +1203,7 @@ class AttachmentsHelper
 			if ( !$found AND $verify ) {
 				$u->error = true;
 				$u->error_code = 'url_not_found';
-				$u->error_msg = JText::sprintf('ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
+				$u->error_msg = JText::sprintf('ATTACH_ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
 				return $u;
 				}
 			}
@@ -1212,7 +1212,7 @@ class AttachmentsHelper
 				// Error connecting
 				$u->error = true;
 				$u->error_code = 'url_error_connecting';
-				$error_msg = JText::sprintf('ERROR_CONNECTING_TO_URL_S', $raw_url)
+				$error_msg = JText::sprintf('ATTACH_ERROR_CONNECTING_TO_URL_S', $raw_url)
 					. "<br /> (" . $errstr . ")";
 				$u->error_msg = $error_msg;
 				return $u;
@@ -1313,7 +1313,7 @@ class AttachmentsHelper
 
 		// Set up the entity name for display
 		$parent_entity = $attachment->parent_entity;
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Check to make sure the URL is valid
 		$from = JRequest::getWord('from');
@@ -1342,7 +1342,7 @@ class AttachmentsHelper
 				// Set up the selection lists
 				$lists = array();
 				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('URL_IS_VALID_TOOLTIP') . '"',
+											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
 				// Set up publishing info
@@ -1356,7 +1356,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->lists = $lists;
@@ -1378,7 +1378,7 @@ class AttachmentsHelper
 				if ( $params->get('allow_frontend_access_editing', false) ) {
 					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ACCESS_LEVEL_TOOLTIP');
+					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
 				$view->uri_type = 		 $attachment->uri_type;
@@ -1493,7 +1493,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 72)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 72)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1507,10 +1507,10 @@ class AttachmentsHelper
 			}
 
 		if ( $update ) {
-			$msg = JText::_('ATTACHMENT_UPDATED');
+			$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
 			}
 		else {
-			$msg = JText::_('ATTACHMENT_SAVED');
+			$msg = JText::_('ATTACH_ATTACHMENT_SAVED');
 			}
 
 		return $msg;
@@ -1533,7 +1533,7 @@ class AttachmentsHelper
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 73)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 73)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent_id = $attachment->parent_id;
@@ -1544,14 +1544,14 @@ class AttachmentsHelper
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 74)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 74)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
-			$errmsg = JText::_('ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 75)';
+			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 75)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1568,7 +1568,7 @@ class AttachmentsHelper
 		// Make sure the file exists
 		jimport('joomla.filesystem.file');
 		if ( !JFile::exists($filename_sys) ) {
-			$errmsg = JText::sprintf('ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 76)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 76)';
 			JError::raiseError(500, $errmsg);
 			}
 		$len = filesize($filename_sys);
@@ -1642,14 +1642,14 @@ class AttachmentsHelper
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 78)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 78)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_($parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -1666,7 +1666,7 @@ class AttachmentsHelper
 		// Make sure the new directory exists
 		jimport('joomla.filesystem.folder');
 		if ( !JFolder::create($new_fullpath) ) {
-			$errmsg = JText::sprintf('ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 79)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 79)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1678,12 +1678,12 @@ class AttachmentsHelper
 		// Rename the file
 		jimport('joomla.filesystem.file');
 		if ( JFile::exists($new_filename_sys) ) {
-			return JText::sprintf('ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
+			return JText::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
 								  $parent_entity_name, $attachment->filename);
 			}
 		if ( !JFile::move($old_filename_sys, $new_filename_sys) ) {
 			$new_filename = $new_path . $attachment->filename;
-			return JText::sprintf('ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
+			return JText::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
 								  $parent_entity_name, $new_filename);
 			}
 		AttachmentsHelper::write_empty_index_html($new_fullpath);

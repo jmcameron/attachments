@@ -18,7 +18,7 @@ jimport( 'joomla.application.component.view' );
 
 /**
  * View for editing the component parameters
- * (adapted from administrator/components/com_config/views/component/view.php) 
+ * (adapted from administrator/components/com_config/views/component/view.php)
  *
  * @package Attachments
  */
@@ -37,13 +37,13 @@ class AttachmentsViewParams extends JView
 	/**
 	 * Setting the toolbar
 	 */
-	protected function addToolBar() 
+	protected function addToolBar()
 	{
 		JRequest::setVar('hidemainmenu', true);
-		JToolBarHelper::title(JText::_('COM_ATTACHMENTS_CONFIGURATION'), 'attachments.png');
+		JToolBarHelper::title(JText::_('ATTACH_CONFIGURATION'), 'attachments.png');
 		JToolBarHelper::apply('params.apply');
 		JToolBarHelper::save('params.save');
 		JToolBarHelper::cancel('params.cancel', 'JTOOLBAR_CLOSE');
 	}
-	
+
 }

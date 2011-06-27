@@ -8,7 +8,7 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>3.0 Beta</version>
     <creationDate>June 10, 2011</creationDate>
-    <description>ATTACHMENTS_COMPONENT_DESCRIPTION</description>
+    <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
 
     <scriptfile>attachments.install.php</scriptfile>
 
@@ -20,7 +20,7 @@
 
     <uninstall>
 	<sql>
-	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file> 
+	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
 	</sql>
     </uninstall>
 
@@ -64,9 +64,9 @@
     </files>
 
     <administration>
-	<menu img="components/com_attachments/media/attachments.png">ATTACHMENTS</menu>
+	<menu img="components/com_attachments/media/attachments.png">ATTACH_ATTACHMENTS</menu>
 	<submenu>
-	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ADD_NEW_ATTACHMENT</menu>
+	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
 	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
 	</submenu>
 

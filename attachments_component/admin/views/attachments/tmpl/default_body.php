@@ -50,7 +50,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
 	$link = JFilterOutput::ampReplace( 'index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]='. (int)$item->id );
-	$view_parent_title = JText::_('VIEW_ARTICLE_TITLE');
+	$view_parent_title = JText::_('ATTACH_VIEW_ARTICLE_TITLE');
 	if ( JString::strlen($item->icon_filename) > 0 )
 		$icon_url = $icon_dir . $item->icon_filename;
 	else
@@ -58,9 +58,9 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$link_icon_url = $icon_dir . 'link_arrow.png';
 	$link_broken_icon_url = $icon_dir . 'link_broken.png';
 	$add_attachment_icon = $uri->root(true) . '/components/com_attachments/media/add_attachment.gif';
-	$add_attachment_title = JText::_('ADD_ATTACHMENT_TITLE');
-	$edit_attachment_title = JText::_('EDIT_THIS_ATTACHMENT_TITLE');
-	$access_attachment_title = JText::_('ACCESS_THIS_ATTACHMENT_TITLE');
+	$add_attachment_title = JText::_('ATTACH_ADD_ATTACHMENT_TITLE');
+	$edit_attachment_title = JText::_('ATTACH_EDIT_THIS_ATTACHMENT_TITLE');
+	$access_attachment_title = JText::_('ATTACH_ACCESS_THIS_ATTACHMENT_TITLE');
 
 	// Set up the create/modify dates
 	jimport( 'joomla.utilities.date' );
@@ -69,7 +69,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$mdate = new JDate($item->modified, -$app->getCfg('offset'));
 	$modified = $mdate->toFormat("%x %H:%M");
 
-	$add_attachment_txt = JText::_('ADD_ATTACHMENT');
+	$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 	if ($item->parent_id != $last_parent_id OR $item->parent_type != $last_parent_type
 		OR $item->parent_entity != $last_parent_entity ) {
 		$parent_type = $item->parent_type;
@@ -101,7 +101,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$last_parent_id = $item->parent_id;
 	$last_parent_type = $item->parent_type;
 	$last_parent_entity = $item->parent_entity;
-	$download_verb = JText::_('DOWNLOAD_VERB');
+	$download_verb = JText::_('ATTACH_DOWNLOAD_VERB');
    ?>
 	<tr class="<?php echo "row$k"; ?>">
 	  <td><?php echo $checked; ?></td>

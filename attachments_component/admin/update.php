@@ -47,7 +47,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_FILE_TYPE_FIELDS_NEED_UPDATING');
+			return JText::_('ATTACH_NO_FILE_TYPE_FIELDS_NEED_UPDATING');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -69,7 +69,7 @@ class AttachmentsUpdate
 				if ( JString::strlen( $new_icon_filename) > 0 ) {
 					$attachment->icon_filename = $new_icon_filename;
 					if (!$attachment->store()) {
-						$errmsg = JText::sprintf('ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
+						$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
 							' ' . $attachment->getError() . ' (ERR 1)';
 						JError::raiseError(500, $errsmg);
 						}
@@ -78,7 +78,7 @@ class AttachmentsUpdate
 				}
 			}
 
-		return JText::sprintf( 'ADDED_ICON_FILENAMES_TO_N_ATTACHMENTS', $numUpdated );
+		return JText::sprintf( 'ATTACH_ADDED_ICON_FILENAMES_TO_N_ATTACHMENTS', $numUpdated );
 	}
 
 
@@ -132,7 +132,7 @@ class AttachmentsUpdate
 				$query->where('id = ' . (int)$attachment->id);
 				$db->setQuery($query);
 				if (!$db->query()) {
-					$errmsg = JText::sprintf('ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
+					$errmsg = JText::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename) . ' (ERR 122)';
 					// ??? Echo, raiseError, or enqueue system message?
 					echo $errmsg . $db->stderr() . ' (ERR 3)';
@@ -181,12 +181,12 @@ class AttachmentsUpdate
 		$new_contents = implode("\n", $new_lines) . "\n";
 		JFile::write($tempfilename, $new_contents);
 		if ( ! JFile::copy( $tempfilename, $filename) ) {
-			$msg = JText::_('ERROR_UPDATING_FILE') . ": $filename!";
+			$msg = JText::_('ATTACH_ERROR_UPDATING_FILE') . ": $filename!";
 			}
 
 		// Let the user know what happened
 		if ( $msg == '' ) {
-			$msg = JText::_('DISABLED_UNINSTALLING_MYSQL_ATTACHMENTS_TABLE');
+			$msg = JText::_('ATTACH_DISABLED_UNINSTALLING_MYSQL_ATTACHMENTS_TABLE');
 			}
 
 		return $msg;
@@ -280,7 +280,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_ATTACHMENTS_WITH_FILES');
+			return JText::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -313,7 +313,7 @@ class AttachmentsUpdate
 			$db->setQuery($query, 0, 1);
 			$parent_id = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_S_ID_N',
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $attachment->parent_entity,  $parent_id) . ' (ERR 15)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -332,13 +332,13 @@ class AttachmentsUpdate
 			$parent = $apm->getAttachmentsPlugin($attachment->parent_type);
 
 			if ( !JFile::exists($current_filename_sys) ) {
-				$msg .= JText::sprintf('ERROR_MISSING_ATTACHMENT_FILE_S',
+				$msg .= JText::sprintf('ATTACH_ERROR_MISSING_ATTACHMENT_FILE_S',
 									   $current_filename_sys) . "<br/>";
 				$numMissing++;
 				}
 			elseif ( !is_numeric($parent_id) OR
 					 !$parent->parentExists($attachment->parent_id, $attachment->parent_entity ) ) {
-				$msg .= JText::sprintf('ERROR_MISSING_PARENT_FOR_ATTACHMENT_S',
+				$msg .= JText::sprintf('ATTACH_ERROR_MISSING_PARENT_FOR_ATTACHMENT_S',
 									   $current_filename_sys) . "<br/>";
 				$numMissing++;
 				}
@@ -368,7 +368,7 @@ class AttachmentsUpdate
 				// Make sure the target directory exists
 				if ( !JFile::exists($new_path) ) {
 					if ( !JFolder::create($new_path) ) {
-						$errmsg = JText::sprintf('ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 16)';
+						$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 16)';
 						JError::raiseError(500, $errmsg);
 						}
 					AttachmentsHelper::write_empty_index_html($new_path);
@@ -376,14 +376,14 @@ class AttachmentsUpdate
 
 				// Move the file!
 				if ( !JFile::move($current_filename_sys, $new_filename_sys) ) {
-					$errmsg = JText::sprintf('ERROR_RENAMING_FILE_S_TO_S',
+					$errmsg = JText::sprintf('ATTACH_ERROR_RENAMING_FILE_S_TO_S',
 											 $old_filename_sys, $new_filename_sys) . ' (ERR 17)';
 					JError::raiseError(500, $errmsg);
 					}
 
 				// Verify the new system filename exists!
 				if ( !JFile::exists($new_filename_sys) ) {
-					$errmsg = JText::sprintf('ERROR_NEW_SYSTEM_FILENAME_S_NOT_FOUND',
+					$errmsg = JText::sprintf('ATTACH_ERROR_NEW_SYSTEM_FILENAME_S_NOT_FOUND',
 											 $new_filename_sys) . ' (ERR 18)';
 					JError::raiseError(500, $errmsg);
 					}
@@ -402,10 +402,10 @@ class AttachmentsUpdate
 
 		// Add warning if there are problem files
 		if ( $numMissing > 0 ) {
-			$msg = JText::sprintf('ERROR_N_FILES_MISSING', $numMissing) . "<br/>" . $msg . "&nbsp;<br/>";
+			$msg = JText::sprintf('ATTACH_ERROR_N_FILES_MISSING', $numMissing) . "<br/>" . $msg . "&nbsp;<br/>";
 			}
 
-		return $msg . JText::sprintf( 'REGENERATED_SYSTEM_FILENAMES_FOR_N_ATTACHMENTS',
+		return $msg . JText::sprintf( 'ATTACH_REGENERATED_SYSTEM_FILENAMES_FOR_N_ATTACHMENTS',
 									  $numUpdated );
 	}
 
@@ -435,7 +435,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_ATTACHMENTS_WITH_FILES');
+			return JText::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -457,7 +457,7 @@ class AttachmentsUpdate
 			// Make sure the file exists
 			$old_filename_sys = $attachment->filename_sys;
 			if ( !JFile::exists( $old_filename_sys ) ) {
-				echo JText::sprintf('ERROR_FILE_S_NOT_FOUND_ON_SERVER', $old_filename_sys);
+				echo JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $old_filename_sys);
 				exit();
 				}
 
@@ -475,7 +475,7 @@ class AttachmentsUpdate
 
 			// Rename the file
 			if ( !JFile::move($old_filename_sys, $new_filename_sys) ) {
-				echo JText::sprintf('ERROR_RENAMING_FILE_S_TO_S',
+				echo JText::sprintf('ATTACH_ERROR_RENAMING_FILE_S_TO_S',
 									$old_filename_sys, $new_filename_sys);
 				exit();
 				}
@@ -500,7 +500,7 @@ class AttachmentsUpdate
 			$numUpdated++;
 			}
 
-		return JText::sprintf( 'UPDATED_N_ATTACHMENTS', $numUpdated );
+		return JText::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
 	}
 
 
@@ -527,7 +527,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_ATTACHMENTS_WITH_FILES');
+			return JText::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -554,7 +554,7 @@ class AttachmentsUpdate
 			$numUpdated++;
 			}
 
-		return JText::sprintf( 'UPDATED_FILE_SIZES_FOR_N_ATTACHMENTS', $numUpdated );
+		return JText::sprintf( 'ATTACH_UPDATED_FILE_SIZES_FOR_N_ATTACHMENTS', $numUpdated );
 	}
 
 	/**
@@ -581,7 +581,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_ATTACHMENTS_WITH_FILES');
+			return JText::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -609,7 +609,7 @@ class AttachmentsUpdate
 		if ( $msg ) {
 			$msg = ':<br />' . $msg;
 			}
-		$msg = JText::sprintf( 'CHECKED_N_ATTACHMENT_FILES_M_MISSING', $numChecked, $numMissing ) . $msg;
+		$msg = JText::sprintf( 'ATTACH_CHECKED_N_ATTACHMENT_FILES_M_MISSING', $numChecked, $numMissing ) . $msg;
 
 		return $msg;
 	}
@@ -636,7 +636,7 @@ class AttachmentsUpdate
 			JError::raiseError(500, $errmsg);
 			}
 		if ( count($attachments) == 0 ) {
-			return JText::_('NO_ATTACHMENTS_WITH_URLS');
+			return JText::_('ATTACH_NO_ATTACHMENTS_WITH_URLS');
 			}
 		$IDs = array();
 		foreach ($attachments as $attachment) {
@@ -677,7 +677,7 @@ class AttachmentsUpdate
 			$numChecked++;
 			}
 
-		return JText::sprintf( 'VALIDATED_N_URL_ATTACHMENTS_M_CHANGED', $numChecked, $numUpdated );
+		return JText::sprintf( 'ATTACH_VALIDATED_N_URL_ATTACHMENTS_M_CHANGED', $numChecked, $numUpdated );
 	}
 
 

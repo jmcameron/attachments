@@ -17,11 +17,11 @@ defined('_JEXEC') or die('Restricted access');
 // Add the attachments admin CSS files
 $document = JFactory::getDocument();
 $uri = JFactory::getURI();
-$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css', 
+$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
 						  'text/css', null, array() );
-$lang = JFactory::getLanguage(); 
+$lang = JFactory::getLanguage();
 if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css', 
+	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css',
 							  'text/css', null, array() );
 	}
 
@@ -47,4 +47,4 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
     <?php echo JHtml::_('form.token'); ?>
   </div>
 </form>
-<div id="componentVersion"><a target="_blank" title="<?php echo JText::_('ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>"><?php echo JText::sprintf('ATTACHMENTS_VERSION_S', $this->version); ?></a></div>
+<div id="componentVersion"><a target="_blank" title="<?php echo JText::_('ATTACH_ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>"><?php echo JText::sprintf('ATTACH_ATTACHMENTS_VERSION_S', $this->version); ?></a></div>

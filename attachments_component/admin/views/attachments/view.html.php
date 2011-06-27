@@ -82,13 +82,13 @@ class AttachmentsViewAttachments extends JView
 		// Add the drop-down menu to decide which attachments to show
 		$filter_parent_state = $this->state->get('filter.parent_state', 'ALL');
 		$filter_parent_state_options = array();
-		$filter_parent_state_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ALL_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'PUBLISHED', JText::_( 'PUBLISHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'UNPUBLISHED', JText::_( 'UNPUBLISHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'ARCHIVED', JText::_( 'ARCHIVED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'TRASHED', JText::_( 'TRASHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'NONE', JText::_( 'NO_PARENTS' ) );
-		$filter_parent_state_tooltip = JText::_('SHOW_FOR_PARENTS_TOOLTIP');
+		$filter_parent_state_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'PUBLISHED', JText::_( 'ATTACH_PUBLISHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'UNPUBLISHED', JText::_( 'ATTACH_UNPUBLISHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'ARCHIVED', JText::_( 'ATTACH_ARCHIVED_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'TRASHED', JText::_( 'ATTACH_TRASHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHTML::_('select.option', 'NONE', JText::_( 'ATTACH_NO_PARENTS' ) );
+		$filter_parent_state_tooltip = JText::_('ATTACH_SHOW_FOR_PARENTS_TOOLTIP');
 		$lists['filter_parent_state_menu'] =
 			JHTML::_('select.genericlist', $filter_parent_state_options, 'filter_parent_state',
 					 'class="inputbox" onChange="document.adminForm.submit();" title="' .
@@ -98,14 +98,14 @@ class AttachmentsViewAttachments extends JView
 		// Add the drop-down menu to filter for types of entities
 		$filter_entity = $this->state->get('filter.entity', 'ALL');
 		$filter_entity_options = array();
-		$filter_entity_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ALL_TYPES' ) );
+		$filter_entity_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_TYPES' ) );
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		$entity_info = $apm->getInstalledEntityInfo();
 		foreach ($entity_info as $einfo) {
 			$filter_entity_options[] = JHTML::_('select.option', $einfo['id'], $einfo['name_plural']);
 			}
-		$filter_entity_tooltip = JText::_('FILTER_ENTITY_TOOLTIP');
+		$filter_entity_tooltip = JText::_('ATTACH_FILTER_ENTITY_TOOLTIP');
 		$lists['filter_entity_menu'] =
 			JHTML::_('select.genericlist', $filter_entity_options, 'filter_entity',
 					 'class="inputbox" onChange="this.form.submit();" ' .
@@ -150,7 +150,7 @@ class AttachmentsViewAttachments extends JView
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/permissions.php');
 		$canDo = AttachmentsPermissions::getActions();
 
-		JToolBarHelper::title(JText::_('ATTACHMENTS'), 'attachments.png');
+		JToolBarHelper::title(JText::_('ATTACH_ATTACHMENTS'), 'attachments.png');
 
 		if ($canDo->get('core.create')) {
 			JToolBarHelper::addNewX('attachment.add');
@@ -177,7 +177,7 @@ class AttachmentsViewAttachments extends JView
 
 			// Add a button for extra admin commands
 			$bar = JToolBar::getInstance('toolbar');
-			$bar->appendButton( 'Popup', 'adminUtils', $alt='UTILITIES',
+			$bar->appendButton( 'Popup', 'adminUtils', $alt='ATTACH_UTILITIES',
 								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
 								$width='600', $height='400' );
 

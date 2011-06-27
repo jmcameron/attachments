@@ -27,7 +27,7 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
  */
 class AttachmentsControllerUtils extends JController
 {
-	/** 
+	/**
 	 * Javascript script to close the pop-up window
 	 */
 	var $_close_script = '<script>var myparent = window.parent; window.parent.SqueezeBox.close(); myparent.location.reload();</script>';
@@ -50,7 +50,7 @@ class AttachmentsControllerUtils extends JController
 	 */
 	public function noop()
 	{
-		echo "<h1>" . JText::_('ERROR_NO_UTILS_FUNCTION_SPECIFIED') . "</h1>";
+		echo "<h1>" . JText::_('ATTACH_ERROR_NO_UTILS_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
 	}
 
@@ -69,7 +69,7 @@ class AttachmentsControllerUtils extends JController
 
 		// Not sure why I need the extra saving to the session below,
 		// but it it seems necessary because I'm doing it from an iframe.
-		$session = JFactory::getSession(); 
+		$session = JFactory::getSession();
 		$session->set('application.queue', $app->getMessageQueue());
 	}
 
@@ -105,7 +105,7 @@ class AttachmentsControllerUtils extends JController
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
-		$msg = JText::sprintf( 'UPDATED_N_ATTACHMENTS', $numUpdated );
+		$msg = JText::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
 		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
 

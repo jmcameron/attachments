@@ -262,7 +262,7 @@ class AttachmentsModelAttachments extends JModelList
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 62)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 62)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -270,7 +270,7 @@ class AttachmentsModelAttachments extends JModelList
 			if ( $parent ) {
 
 				// Handle the normal case
-				$item->parent_entity_type = JText::_($parent_entity);
+				$item->parent_entity_type = JText::_('ATTACH_' . $parent_entity);
 				$title = $parent->getTitle($parent_id, $parent_entity);
 				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);
 				if ( $item->parent_exists and $title ) {
@@ -279,7 +279,7 @@ class AttachmentsModelAttachments extends JModelList
 						JFilterOutput::ampReplace( $parent->getEntityViewURL($parent_id, $parent_entity) );
 					}
 				else {
-					$item->parent_title = JText::sprintf('NO_PARENT_S', $item->parent_entity_type);
+					$item->parent_title = JText::sprintf('ATTACH_NO_PARENT_S', $item->parent_entity_type);
 					$item->parent_url = '';
 					}
 				}
@@ -289,7 +289,7 @@ class AttachmentsModelAttachments extends JModelList
 				// (eg, deleted component)
 				$item->parent_exists = false;
 				$item->parent_entity_type = $parent_entity;
-				$item->parent_title = JText::_('UNKNOWN');
+				$item->parent_title = JText::_('ATTACH_UNKNOWN');
 				$item->parent_published = false;
 				$item->parent_archived = false;
 				$item->parent_url = '';
