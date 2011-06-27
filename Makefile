@@ -48,6 +48,8 @@ clean:
 veryclean: clean
 	@rm -f $(ZIPS) pkg_attachments/packages/*.zip
 	@rm -f $(ZIPFILE).zip
+	@rm -rf test/coverage_db
+	@rm -rf test/coverage_result
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
