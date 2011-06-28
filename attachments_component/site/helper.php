@@ -74,7 +74,7 @@ class AttachmentsHelper
 	protected function truncate_filename($raw_filename, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
-		if ( $maxlen == 0 OR strlen($raw_filename) <= $maxlen ) {
+		if ( ($maxlen == 0) || (strlen($raw_filename) <= $maxlen) ) {
 			return $raw_filename;
 			}
 
@@ -114,7 +114,7 @@ class AttachmentsHelper
 	protected function truncate_url($raw_url, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
-		if ( $maxlen == 0 OR strlen($raw_url) <= $maxlen ) {
+		if ( ($maxlen == 0) || (strlen($raw_url) <= $maxlen) ) {
 			return $raw_url;
 			}
 
@@ -180,7 +180,7 @@ class AttachmentsHelper
 		jimport('joomla.filesystem.folder');
 
 		// Assume anything with a trailing DS or '/' is a directory
-		if ( ($filename[strlen($filename)-1] == DS) OR ($filename[strlen($filename)-1] == '/') ) {
+		if ( ($filename[strlen($filename)-1] == DS) || ($filename[strlen($filename)-1] == '/') ) {
 
 			if ( !JFolder::exists($filename) ) {
 				return;
@@ -221,7 +221,7 @@ class AttachmentsHelper
 		$files = JFolder::files($dirname);
 
 		// If there are no files left (or only the index.html file is left), delete the directory
-		if ( (count($files) == 0) OR ( (count($files) == 1) AND ($files[0] == 'index.html') ) ) {
+		if ( (count($files) == 0) || ( (count($files) == 1) && ($files[0] == 'index.html') ) ) {
 			JFolder::delete($dirname);
 			}
 	}
@@ -446,8 +446,8 @@ class AttachmentsHelper
 			}
 
 		// Make sure a file was successfully uploaded
-		if ( (($_FILES['upload']['size'] == 0) AND
-			  ($_FILES['upload']['tmp_name'] == '')) OR $bad_chars ) {
+		if ( (($_FILES['upload']['size'] == 0) &&
+			  ($_FILES['upload']['tmp_name'] == '')) || $bad_chars ) {
 
 			// Guess the type of error
 			if ( $bad_chars ) {
@@ -500,7 +500,9 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+					 ((int)$attachment->created_by == (int)$user->id));
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
@@ -523,7 +525,8 @@ class AttachmentsHelper
 												 $attachment->parent_type, $attachment_id, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					$user->authorise('attachments.edit.state.own', 'com_attachments');
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -550,7 +553,7 @@ class AttachmentsHelper
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
-				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $attachment->uri_type)) ) {
+				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$display_name = '';
 					}
 				}
@@ -586,7 +589,7 @@ class AttachmentsHelper
 		$format = JString::strtolower(JFile::getExt($filename));
 		$error = false;
 		$error_msg = false;
-		if (!in_array($format, $allowable) AND !in_array($format,$ignored)) {
+		if (!in_array($format, $allowable) && !in_array($format,$ignored)) {
 			$error = 'illegal_file_extension';
 			$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
@@ -598,8 +601,8 @@ class AttachmentsHelper
 			if ( $cmparams->get('check_mime', true) ) {
 				$allowed_mime = explode(',', $cmparams->get('upload_mime'));
 				$illegal_mime = explode(',', $cmparams->get('upload_mime_illegal'));
-				if( JString::strlen($ftype) AND !in_array($ftype, $allowed_mime) AND
-					in_array($ftype, $illegal_mime)) {
+				if ( JString::strlen($ftype) && !in_array($ftype, $allowed_mime) &&
+					 in_array($ftype, $illegal_mime) ) {
 					$error = 'illegal_mime_type';
 					$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 					$error_msg .= ', ' . JText::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
@@ -634,7 +637,9 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+					 ((int)$attachment->created_by == (int)$user->id));
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
@@ -657,7 +662,8 @@ class AttachmentsHelper
 												 $attachment->parent_type, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					$user->authorise('attachments.edit.state.own', 'com_attachments');
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -684,7 +690,7 @@ class AttachmentsHelper
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
-				if ( $new_uri_type AND (($new_uri_type == 'file') OR ($new_uri_type != $attachment->uri_type)) ) {
+				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$display_name = '';
 					}
 				}
@@ -700,7 +706,8 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			// Set up publishing info
-			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+				$user->authorise('attachments.edit.state.own', 'com_attachments');
 			if ( $view->may_publish ) {
 				$default_state = $params->get('publish_default', false);
 				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -757,11 +764,11 @@ class AttachmentsHelper
 		// Make sure the system filename doesn't already exist
 		$error = false;
 		$duplicate_filename = false;
-		if ( $save_type == 'upload' AND JFile::exists($filename_sys) ) {
+		if ( ($save_type == 'upload') && JFile::exists($filename_sys) ) {
 			// Cannot overwrite an existing file when creating a new attachment!
 			$duplicate_filename = true;
 			}
-		if ( $save_type == 'update' AND JFile::exists($filename_sys) ) {
+		if ( ($save_type == 'update') && JFile::exists($filename_sys) ) {
 			// If updating, we may replace the existing file but may not overwrite any other existing file
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__attachments');
@@ -811,7 +818,9 @@ class AttachmentsHelper
 			$view->params = 			 $params;
 
 			// Set up publishing info
-			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+				($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+				 ((int)$attachment->created_by == (int)$user->id));
 			if ( $view->may_publish ) {
 				$default_state = $params->get('publish_default', false);
 				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -842,13 +851,13 @@ class AttachmentsHelper
 			}
 
 		// See of the display name needs to change
-		if ( $attachment->display_name AND ($save_type == 'update') AND ( $filename != $old_filename ) ) {
+		if ( $attachment->display_name && ($save_type == 'update') && ( $filename != $old_filename ) ) {
 			$attachment->display_name = '';
 			}
 
 		// Create a display filename, if needed (for long filenames)
-		if ( ($max_filename_length > 0) and
-			 ( JString::strlen($attachment->display_name) == 0 ) and
+		if ( ($max_filename_length > 0) &&
+			 ( JString::strlen($attachment->display_name) == 0 ) &&
 			 ( JString::strlen($filename) > $max_filename_length ) ) {
 			$attachment->display_name = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			}
@@ -863,7 +872,10 @@ class AttachmentsHelper
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
+		$may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+			 ((int)$attachment->created_by == (int)$user->id));
+		if ( !$may_publish ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state (ignore form info)
 				jimport('joomla.application.component.helper');
@@ -939,7 +951,7 @@ class AttachmentsHelper
 
 		// If we are updating, we may need to delete the old file
 		if ( $old_uri_type ) {
-			if ( $filename_sys != $old_filename_sys AND	 JFile::exists($old_filename_sys) ) {
+			if ( ($filename_sys != $old_filename_sys) && JFile::exists($old_filename_sys) ) {
 				JFile::delete($old_filename_sys);
 				AttachmentsHelper::clean_directory($old_filename_sys);
 				}
@@ -984,13 +996,13 @@ class AttachmentsHelper
 
 			// Get the protocol (if any)
 			$protocol = '';
-			if ( isset($match['protocol']) AND $match['protocol'] ) {
+			if ( isset($match['protocol']) && $match['protocol'] ) {
 				$protocol = JString::rtrim($match['protocol'], '/:');
 				}
 
 			// Get the domain (if any)
 			$domain = '';
-			if ( isset($match['domain']) AND $match['domain'] ) {
+			if ( isset($match['domain']) && $match['domain'] ) {
 				$domain = $match['domain'];
 				}
 
@@ -1017,7 +1029,7 @@ class AttachmentsHelper
 				return $result;
 				}
 			// Override the port if specified
-			if ( isset($match['port']) AND $match['port'] ) {
+			if ( isset($match['port']) && $match['port'] ) {
 				$port = (int)$match['port'];
 				}
 			// Default to HTTP if protocol/port is missing
@@ -1026,7 +1038,7 @@ class AttachmentsHelper
 				}
 
 			// Get the path and reconstruct the full path
-			if ( isset($match['path']) AND $match['path'] ) {
+			if ( isset($match['path']) && $match['path'] ) {
 				$path = $match['path'];
 				}
 			else {
@@ -1034,7 +1046,7 @@ class AttachmentsHelper
 				}
 
 			// Get the parameters (if any)
-			if ( isset($match['parameters']) AND $match['parameters'] ) {
+			if ( isset($match['parameters']) && $match['parameters'] ) {
 				$parameters = $match['parameters'];
 				}
 			else {
@@ -1200,7 +1212,7 @@ class AttachmentsHelper
 			fclose($fp);
 
 			// Return error if it was not found (timed out, etc)
-			if ( !$found AND $verify ) {
+			if ( !$found && $verify ) {
 				$u->error = true;
 				$u->error_code = 'url_not_found';
 				$u->error_msg = JText::sprintf('ATTACH_ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
@@ -1208,7 +1220,7 @@ class AttachmentsHelper
 				}
 			}
 		else {
-			if ( $verify AND $timeout > 0 ) {
+			if ( $verify && $timeout > 0 ) {
 				// Error connecting
 				$u->error = true;
 				$u->error_code = 'url_error_connecting';
@@ -1346,7 +1358,9 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+					 ((int)$attachment->created_by == (int)$user->id));
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
@@ -1368,7 +1382,8 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+					$user->authorise('attachments.edit.state.own', 'com_attachments');
 				if ( $view->may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -1393,7 +1408,7 @@ class AttachmentsHelper
 
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
-			if ( $update AND (($update == 'file') OR ($update != $attachment->uri_type)) ) {
+			if ( $update && (($update == 'file') || ($update != $attachment->uri_type)) ) {
 				$display_name = '';
 				}
 
@@ -1420,7 +1435,7 @@ class AttachmentsHelper
 
 		// Clear out the display_name if the URL has changed
 		$old_url = JRequest::getString('old_url');
-		if ( $attachment->display_name AND ( $attachment->url != $old_url ) ) {
+		if ( $attachment->display_name && ( $attachment->url != $old_url ) ) {
 			$old_display_name = JRequest::getString('old_display_name');
 			if ( $old_display_name == $attachment->display_name ) {
 				$attachment->display_name = '';
@@ -1437,7 +1452,7 @@ class AttachmentsHelper
 			}
 
 		// Create a display filename, if needed (for long URLs)
-		if ( $max_filename_length > 0 AND strlen($attachment->display_name) == 0 ) {
+		if ( ($max_filename_length > 0) && (strlen($attachment->display_name) == 0) ) {
 			if ( $attachment->filename ) {
 				$attachment->display_name =
 					AttachmentsHelper::truncate_filename($attachment->filename,
@@ -1456,13 +1471,16 @@ class AttachmentsHelper
 			}
 
 		// If there is no filename, do something about it
-		if ( !$attachment->filename AND !$attachment->display_name ) {
+		if ( !$attachment->filename && !$attachment->display_name ) {
 			$attachment->display_name = $attachment->url;
 			}
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		if ( !$user->authorise('core.edit.state', 'com_attachments') ) {
+		$may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+			 ((int)$attachment->created_by == (int)$user->id));
+		if ( !$may_publish ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
 				jimport('joomla.application.component.helper');
@@ -1746,8 +1764,8 @@ class AttachmentsHelper
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			$secure = $params->get('secure', false);
 			$hta_filename = $attach_dir.'/.htaccess';
-			if ( ($secure AND !file_exists($hta_filename)) OR
-				 (!$secure AND file_exists($hta_filename)) ) {
+			if ( ($secure && !file_exists($hta_filename)) OR
+				 (!$secure && file_exists($hta_filename)) ) {
 				require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}

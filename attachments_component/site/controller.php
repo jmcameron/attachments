@@ -177,7 +177,8 @@ class AttachmentsController extends JController
 			}
 
 		// Set up publishing info
-		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+			$user->authorise('attachments.edit.state.own', 'com_attachments');
 		if ( $view->may_publish ) {
 			$default_state = $params->get('publish_default', false);
 			$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -238,8 +239,8 @@ class AttachmentsController extends JController
 
 		// Make sure we have a valid parent ID
 		$parent_id = JRequest::getInt('parent_id', -1);
-		if ( !$new_parent and (($parent_id == 0) or
-							   ($parent_id == -1) or
+		if ( !$new_parent && (($parent_id == 0) ||
+							   ($parent_id == -1) ||
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 									 $parent_entity_name , $parent_id) . ' (ERR 86)';
@@ -296,7 +297,7 @@ class AttachmentsController extends JController
 		// Bind the info from the form
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
-		if ( $attachment_id AND !$attachment->load($attachment_id) ) {
+		if ( $attachment_id && !$attachment->load($attachment_id) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 89)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -315,7 +316,7 @@ class AttachmentsController extends JController
 		if ( $save_type == 'upload' ) {
 			// See if we are uploading a file or URL
 			$new_uri_type = JRequest::getWord('uri_type');
-			if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
+			if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
 				}
@@ -325,19 +326,19 @@ class AttachmentsController extends JController
 
 			// See if we are updating a file or URL
 			$new_uri_type = JRequest::getWord('update');
-			if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
+			if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
 				}
 
 			// Since URLs can be edited, we always evaluate them from scratch
-			if ( ($new_uri_type == '') AND ($old_uri_type == 'url') ) {
+			if ( ($new_uri_type == '') && ($old_uri_type == 'url') ) {
 				$new_uri_type = 'url';
 				}
 
 			// Double-check to see if the URL changed
 			$old_url = JRequest::getString('old_url');
-			if ( !$new_uri_type AND $old_url AND $old_url != $attachment->url ) {
+			if ( !$new_uri_type && $old_url && ($old_url != $attachment->url) ) {
 				$new_uri_type = 'url';
 				}
 			}
@@ -502,7 +503,7 @@ class AttachmentsController extends JController
 
 		// Make sure the parent exists
 		// NOTE: $parent_id===null means the parent is being created
-		if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
+		if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
 									 $parent_entity_name, $parent_id) . ' (ERR 96)';
 			JError::raiseError(500, $errmsg);
@@ -713,7 +714,7 @@ class AttachmentsController extends JController
 
 		// Make sure the update parameter is legal
 		$update = JRequest::getWord('update');
-		if ( $update AND !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
+		if ( $update && !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
 			$update = false;
 			}
 
@@ -727,7 +728,7 @@ class AttachmentsController extends JController
 
 		// Suppress the display filename if we are switching from file to url
 		$display_name = $attachment->display_name;
-		if ( $update AND (($update == 'file') OR ($update != $attachment->uri_type)) ) {
+		if ( $update && (($update == 'file') || ($update != $attachment->uri_type)) ) {
 			$display_name = '';
 			}
 
@@ -746,7 +747,9 @@ class AttachmentsController extends JController
 			}
 
 		// Set up for the user editing
-		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments');
+		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
+			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
+			 ((int)$attachment->created_by == (int)$user->id));
 
 		$view->update = 			$update;
 		$view->new_parent = 		$new_parent;
@@ -784,7 +787,7 @@ class AttachmentsController extends JController
 
 		$response = '';
 
-		if ( ($parent_id === false) OR ($parent_type == '') ) {
+		if ( ($parent_id === false) || ($parent_type == '') ) {
 			return '';
 			}
 
