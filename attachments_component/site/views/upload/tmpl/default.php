@@ -199,7 +199,7 @@ if ( $lang->isRTL() ) {
 	<?php
 
 	// Display the auto-publish warning, if appropriate
-	if ( !$params->get('publish_default', false) AND !$this->may_publish ) {
+	if ( !$params->get('publish_default', false) && !$this->may_publish ) {
 		$msg = $params->get('auto_publish_warning', '');
 		if ( JString::strlen($msg) == 0 ) {
 			$msg = 'ATTACH_WARNING_ADMIN_MUST_PUBLISH';
@@ -209,7 +209,7 @@ if ( $lang->isRTL() ) {
 		}
 
 	// Show the existing attachments (if any)
-	if ( $parent_id OR ($parent_id === 0) ) {
+	if ( $parent_id || ($parent_id === 0) ) {
 		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
 		$controller->display($parent_id, $parent_type, $parent_entity,
