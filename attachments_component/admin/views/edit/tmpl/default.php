@@ -117,7 +117,7 @@ else
 		$parent_type = $einfo['parent_type'];
 		$centity = $einfo['id'];
 		$cename = $einfo['name'];
-		if ( ($parent_type != $attachment->parent_type) OR ($centity != $attachment->parent_entity) ) {
+		if ( ($parent_type != $attachment->parent_type) || ($centity != $attachment->parent_entity) ) {
 			$url = $this->change_parent_url . "&amp;new_parent_type=" . $parent_type;
 			$tooltip = JText::sprintf('ATTACH_SWITCH_ATTACHMENT_TO_S_TOOLTIP', $cename) . '::' .
 				JText::_('ATTACH_SWITCH_ATTACHMENT_TO_TOOLTIP2');
@@ -145,16 +145,16 @@ else
   </tr>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_ATTACHMENT_TYPE'); ?></label></td>
   <td colspan="5"><?php echo JText::_('ATTACH_' . JString::strtoupper($uri_type));?>
-  <?php if ( $uri_type == 'file' AND ( $update != 'url' ) ): ?>
+  <?php if ( ($uri_type == 'file') && ( $update != 'url' ) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_url_url ?>"
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_URL') . '::' . JText::_('ATTACH_CHANGE_TO_URL_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_CHANGE_TO_URL') ?></a>
-  <?php elseif ( $uri_type == 'url' AND $update != 'file' ): ?>
+  <?php elseif ( ($uri_type == 'url') && ($update != 'file') ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_FILE') . '::' . JText::_('ATTACH_CHANGE_TO_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_CHANGE_TO_FILE') ?></a>
-  <?php elseif ( ($uri_type == 'file' AND $update != 'file') OR
-				 ($uri_type == 'url' AND $update != 'url') ): ?>
+  <?php elseif ( (($uri_type == 'file') && ($update != 'file')) ||
+                 (($uri_type == 'url') && ($update != 'url')) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->normal_update_url ?>"
 		 title="<?php echo JText::_('ATTACH_NORMAL_UPDATE') . '::' . JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a>
@@ -235,7 +235,7 @@ else
    <?php endif; ?>
 <?php endif; ?>
 
-<?php if ( $update == 'file' OR $uri_type == 'file' ): ?>
+<?php if ( ($update == 'file') || ($uri_type == 'file') ): ?>
 
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo $this->display_filename_tooltip; ?>"
@@ -248,7 +248,7 @@ else
 		  <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 	 </td>
   </tr>
-<?php elseif ( $update == 'url' OR $uri_type == 'url' ): ?>
+<?php elseif ( ($update == 'url') || ($uri_type == 'url') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_URL'); ?></label></td>

@@ -499,7 +499,7 @@ class AttachmentsPlugin extends JPlugin
 	public function attachmentsListTitle($title, &$params, $parent_id, $parent_entity='default')
 	{
 		$rtitle_str = $params->get('attachments_titles', '');
-		if ( ($title != 'ATTACH_EXISTING_ATTACHMENTS') AND ($rtitle_str != '') ) {
+		if ( ($title != 'ATTACH_EXISTING_ATTACHMENTS') && ($rtitle_str != '') ) {
 			$rtitle_list = preg_split("[\n|\r]", $rtitle_str);
 			foreach ($rtitle_list as $rtitle) {
 				if ( preg_match('|^([0-9]+)\s*([^$]+)$|', $rtitle, $match) ) {
@@ -508,8 +508,8 @@ class AttachmentsPlugin extends JPlugin
 					if ( (int)$parent_id != (int)$match[1] ) {
 						continue;
 						}
-					if ( ($this->_parent_type == 'com_content') AND
-						 (($parent_entity == 'default') OR ($parent_entity == 'article')) ) {
+					if ( ($this->_parent_type == 'com_content') &&
+						 (($parent_entity == 'default') || ($parent_entity == 'article')) ) {
 						$title = $match[2];
 						}
 					}
@@ -643,13 +643,13 @@ class AttachmentsPlugin extends JPlugin
 
 		// Check to see whether the attachments should be hidden on the front page
 		$hide_on_frontpage = $params->get('hide_on_frontpage', false);
-		if ( $hide_on_frontpage AND (JRequest::getVar('view') == 'featured') ) {
+		if ( $hide_on_frontpage && (JRequest::getVar('view') == 'featured') ) {
 			return true;
 			}
 
 		// Hide on blog pages?
 		$hide_on_blogs = $params->get('hide_on_blogs', false);
-		if ( $hide_on_blogs AND ($layout == 'blog') ) {
+		if ( $hide_on_blogs && ($layout == 'blog') ) {
 			return true;
 			}
 

@@ -77,7 +77,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$view = JRequest::getCmd('view');
 
 		// Handle category calls
-		if ( $view == 'category' AND get_class($parent) == 'JTableContent') {
+		if ( ($view == 'category') && (get_class($parent) == 'JTableContent') ) {
 			return 'category';
 			}
 
@@ -319,13 +319,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
 	{
-		if ( (($parent_entity == 'default') OR ($parent_entity == 'article')) AND
-			 (($rtitle_parent_entity == 'default' ) OR ($rtitle_parent_entity == 'article')) ) {
+		if ( (($parent_entity == 'default') || ($parent_entity == 'article')) &&
+			 (($rtitle_parent_entity == 'default' ) || ($rtitle_parent_entity == 'article')) ) {
 			return true;
 			}
 
-		if ( ($parent_entity == 'category') AND
-			 ( $parent_entity == $rtitle_parent_entity ) ) {
+		if ( ($parent_entity == 'category') && ( $parent_entity == $rtitle_parent_entity ) ) {
 			return true;
 			}
 
@@ -393,10 +392,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 					$publish_up	  = JFactory::getDate($article->publish_up)->toUnix();
 					$publish_down = JFactory::getDate($article->publish_down)->toUnix();
 
-					$published = ( ($article->state == 1) AND
-								   ( $now >= $publish_up ) AND
-								   ( ($publish_down == $nullDate) OR
-									 ($now <= $publish_down ) )
+					$published = ( ($article->state == 1) && ($now >= $publish_up) &&
+								   (($publish_down == $nullDate) || ($now <= $publish_down ))
 								   );
 					}
 				else {
@@ -480,7 +477,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		if ( $parent_state == 'PUBLISHED' ) {
 
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE') {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
 				$now = JFactory::getDate()->toMySQL();
 				$nullDate = $db->getNullDate();
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
@@ -488,7 +485,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 					'(c1.publish_up = '.$db->Quote($nullDate).' OR c1.publish_up <= '.$db->Quote($now).') AND '.
 					'(c1.publish_down = '.$db->Quote($nullDate).' OR c1.publish_down >= '.$db->Quote($now).')))';
 				}
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY') {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY') ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=1))";
 				}
@@ -496,34 +493,34 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 		elseif ( $parent_state == 'UNPUBLISHED' ) {
 			// These WHERE clauses will be combined by OR
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=0))";
 				// ??? Add clauses here to get articles that are unpublished because of publish_up/publish_down
 				}
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY') ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=0))";
 				}
 			}
 		elseif ( $parent_state == 'ARCHIVED' ) {
 			// These WHERE clauses will be combined by OR
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=2))";
 				}
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY') ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=2))";
 				}
 			}
 		elseif ( $parent_state == 'TRASHED' ) {
 			// These WHERE clauses will be combined by OR
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'ARTICLE' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=-2))";
 				}
-			if ( $filter_entity == 'ALL' OR $filter_entity == 'CATEGORY' ) {
+			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY' ) ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=-2))";
 				}
@@ -615,12 +612,12 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
-		if ( !$parent_id AND ($parent_entity == 'category') ) {
+		if ( !$parent_id && ($parent_entity == 'category') ) {
 			$parent_id = JRequest::getInt('id');
 			}
 		if ( $parent_id !== 0 ) {
 			// parent_id of 0 may be allowed for categories, so don't abort
-			if ( $parent_id == null OR $parent_id == '' OR !is_numeric($parent_id) ) {
+			if ( ($parent_id == null) || ($parent_id == '') || !is_numeric($parent_id) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 407)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -675,7 +672,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$query->select('created_by, catid')->from('#__content')->where('id = ' . (int)$parent_id);
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
-			if ( $db->getErrorNum() OR (count($attachments) == 0) ) {
+			if ( $db->getErrorNum() || (count($attachments) == 0) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 408)';
 				JError::raiseError(500, $errmsg);
@@ -797,8 +794,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has permissions to edit their own attachments
-			if ( $user->authorise('core.edit.own', 'com_attachments') AND
-				 (int)$user->id == (int)$attachment->created_by ) {
+			if ( $user->authorise('core.edit.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
 				return true;
 				}
 
@@ -826,8 +823,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has permissions to edit their own attachments
-			if ( $user->authorise('core.edit.own', 'com_attachments') AND
-				 (int)$user->id == (int)$attachment->created_by ) {
+			if ( $user->authorise('core.edit.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
 				return true;
 				}
 
@@ -881,8 +878,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has edit.own and created it
-			if ( $user->authorise('attachments.delete.own', 'com_attachments') AND
-				 (int)$user->id == (int)$attachment->created_by ) {
+			if ( $user->authorise('attachments.delete.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
 				return true;
 				}
 
@@ -909,8 +906,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has permissions to delete their own attachments
-			if ( $user->authorise('attachments.delete.own', 'com_attachments') AND
-				 (int)$user->id == (int)$attachment->created_by ) {
+			if ( $user->authorise('attachments.delete.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
 				return true;
 				}
 

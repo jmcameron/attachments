@@ -85,13 +85,13 @@ if ( $this->show_column_titles ) {
 	if ( $this->show_file_size ) {
 		$html .= "<th class=\"at_file_size\">" . JText::_('ATTACH_FILE_SIZE') . "</th>";
 		}
-	if ( $this->secure AND $this->show_downloads ) {
+	if ( $this->secure && $this->show_downloads ) {
 		$html .= "<th class=\"at_downloads\">" . JText::_('ATTACH_DOWNLOADS') . "</th>";
 		}
 	if ( $this->show_mod_date ) {
 		$html .= "<th class=\"at_mod_date\">" . JText::_('ATTACH_LAST_MODIFIED') . "</th>";
 		}
-	if ( $this->some_attachments_modifiable AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable && $this->allow_edit ) {
 		$html .= "<th class=\"at_edit\">&nbsp;</th>";
 		}
 	$html .= "</tr>\n</thead>\n";
@@ -163,7 +163,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
-		if ( $attachment->uri_type == 'url' AND $this->superimpose_link_icons ) {
+		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
 				$html .= "<img id=\"link\" src=\"$link_icon_url\" />";
 				}
@@ -232,7 +232,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 
 	// Show number of downloads (maybe)
-	if ( $this->secure AND $this->show_downloads ) {
+	if ( $this->secure && $this->show_downloads ) {
 		$num_downloads = (int)$attachment->download_count;
 		$label = '';
 		if ( ! $this->show_column_titles ) {
@@ -253,7 +253,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$delete_link = '';
 
 	// Add the link to delete the parent, if requested
-	if ( $this->some_attachments_modifiable AND $attachment->user_may_edit AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {
 
 		// Create the edit link
 		$update_url = sprintf($this->update_url, (int)$attachment->id);
@@ -264,7 +264,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
 		}
 
-	if ( $this->some_attachments_modifiable AND $attachment->user_may_delete AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable && $attachment->user_may_delete && $this->allow_edit ) {
 
 		// Create the delete link
 		$delete_url = sprintf($this->delete_url, (int)$attachment->id);
@@ -275,7 +275,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$delete_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";
 		}
 
-	if ( $this->some_attachments_modifiable AND $this->allow_edit ) {
+	if ( $this->some_attachments_modifiable && $this->allow_edit ) {
 		$html .= "<td class=\"at_edit\">$update_link $delete_link</td>";
 		}
 

@@ -34,7 +34,7 @@ if ( $parent_id === null ) {
 
 // set up URL redisplay in case of errors
 $old_url = '';
-if ( $this->error_msg AND ( $update == 'url' ) ) {
+if ( $this->error_msg && ($update == 'url') ) {
 	$old_url = $attachment->url;
 	}
 
@@ -174,7 +174,7 @@ else {
 </p>
 <?php endif; ?>
 <?php endif; ?>
-<?php if ( $update == 'file' OR $uri_type == 'file' ): ?>
+<?php if ( ($update == 'file') || ($uri_type == 'file') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>
@@ -184,7 +184,7 @@ else {
 		  value="<?php echo $this->display_name; ?>" />
    <input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
 </p>
-<?php elseif ( $update == 'url' OR $uri_type == 'url' ): ?>
+<?php elseif ( ($update == 'url') || ($uri_type == 'url') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_URL_COLON'); ?></label>
@@ -241,7 +241,7 @@ else {
 <?php
 
 // Generate the list of existing attachments
-if ( $update == 'file' OR $uri_type == 'file' ) {
+if ( ($update == 'file') || ($uri_type == 'file') ) {
 	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 	$controller = new AttachmentsControllerAttachments();
 	$controller->display($parent_id, $attachment->parent_type, $this->parent_entity,

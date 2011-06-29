@@ -157,7 +157,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Restore the attachments directory (if renamed)
-		if ( $this->moved_attachments_dir AND JFolder::exists($this->moved_attachments_dir) ) {
+		if ( $this->moved_attachments_dir && JFolder::exists($this->moved_attachments_dir) ) {
 			$attachdir = JPATH_ROOT.'/attachments';
 			JFolder::move($this->moved_attachments_dir, $attachdir);
 			$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');

@@ -117,7 +117,7 @@ class plgContentAttachments extends JPlugin
 		$logged_in = $user->get('username') <> '';
 		$user_type = $user->get('usertype', false);
 		$parent_id = null;
-		if ( isset( $attachment->id ) AND $attachment->id > 0 ) {
+		if ( isset( $attachment->id ) && ($attachment->id > 0) ) {
 			$parent_id = (int)$attachment->id;
 			}
 		else {
@@ -152,7 +152,7 @@ class plgContentAttachments extends JPlugin
 							$attachment->$text_field_name, $match) ) {
 				$attachments_tag = true;
 				}
-			if ( isset($match[1]) AND $match[1] ) {
+			if ( isset($match[1]) && $match[1] ) {
 				$attachments_tag_args_raw = $match[1];
 				$attachments_tag_args = ltrim($attachments_tag_args_raw, ' :');
 				}
@@ -177,14 +177,14 @@ class plgContentAttachments extends JPlugin
 
 		$html .= $attachments_list;
 
-		if ( $html OR $user_can_add ) {
+		if ( $html || $user_can_add ) {
 			// Add the style sheet
 			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 			}
 
 		// Construct the add-attachments button, if appropriate
 		$hide_add_attachments_link = $attachParams->get('hide_add_attachments_link', 0);
-		if ( $user_can_add AND !$hide_add_attachments_link ) {
+		if ( $user_can_add && !$hide_add_attachments_link ) {
 			$add_attachments_btn =
 				$this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
 			$html .= $add_attachments_btn;
@@ -203,7 +203,7 @@ class plgContentAttachments extends JPlugin
 
 		case 'beginning':
 			// Put the attachments list at the beginning of the article/entity
-			if ( $attachments_list OR $user_can_add ) {
+			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
 					$attachment->$text_field_name = $html . $attachment->$text_field_name;
 					}
@@ -215,7 +215,7 @@ class plgContentAttachments extends JPlugin
 
 		case 'custom':
 			// Insert the attachments at the desired location
-			if ( $attachments_list OR $user_can_add ) {
+			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
 					$attachment->$text_field_name = str_replace($attachments_tag, $html, $attachment->$text_field_name);
 					}
@@ -235,7 +235,7 @@ class plgContentAttachments extends JPlugin
 
 		default:
 			// Add the attachments to the end of the article
-			if ( $attachments_list OR $user_can_add ) {
+			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
 					$attachment->$text_field_name = str_replace($attachments_tag, '', $attachment->$text_field_name) . $html;
 					}
@@ -358,8 +358,8 @@ class plgContentAttachments extends JPlugin
 		$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		$hta_filename = $attach_dir.'/.htaccess';
-		if ( ($secure AND !file_exists($hta_filename)) OR
-			 (!$secure AND file_exists($hta_filename)) ) {
+		if ( ($secure && !file_exists($hta_filename)) ||
+			 (!$secure && file_exists($hta_filename)) ) {
 			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 			}
@@ -389,7 +389,7 @@ class plgContentAttachments extends JPlugin
 		JHTML::_('behavior.modal', 'a.modal-button');
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
-		if ( $parent_type == 'com_content' AND $parent_entity == 'default' ) {
+		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$url = "index.php?option=com_attachments&task=upload&article_id=$parent_id&tmpl=component";
 			}
 		else {

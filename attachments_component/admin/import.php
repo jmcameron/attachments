@@ -155,7 +155,7 @@ class AttachmentsImport
 			$query->select('name')->from('#__users')->where('id = ' . $creator_id);
 			$db->setQuery($query, 0, 1);
 			$creator_name = $db->loadResult();
-			if ( empty($creator_name) OR $db->getErrorNum() ) {
+			if ( empty($creator_name) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
 									  $creator_id, $attachment_creator_name) . ' (ERRN)';
 				}
@@ -175,7 +175,7 @@ class AttachmentsImport
 			$query->select('name')->from('#__users')->where('id = ' . $modifier_id);
 			$db->setQuery($query, 0, 1);
 			$modifier_name = $db->loadResult();
-			if ( empty($modifier_name) OR $db->getErrorNum() ) {
+			if ( empty($modifier_name) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
 									  $modifier_id, $attachment_modifier_name) . ' (ERRN)';
 				}
@@ -207,7 +207,7 @@ class AttachmentsImport
 
 			// Copy in the data from the CSV file
 			foreach (AttachmentsImport::$field_names as $fname) {
-				if ( $fname != 'id' AND !in_array($fname, AttachmentsImport::$extra_field_names) ) {
+				if ( ($fname != 'id') && !in_array($fname, AttachmentsImport::$extra_field_names) ) {
 					$attachment->$fname = $adata[$field[$fname]];
 					}
 				}

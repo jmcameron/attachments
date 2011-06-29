@@ -200,7 +200,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 				// Make sure the parent exists
 				// NOTE: $parent_id===null means the parent is being created
-				if ( $parent_id !== null AND !$parent->parentExists($parent_id, $parent_entity) ) {
+				if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
 					$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
 											 $parent_entity_name, $parent_id) . ' (ERR 57)';

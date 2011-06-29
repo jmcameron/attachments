@@ -113,8 +113,8 @@ class AttachmentsModelAttachments extends JModel
 
 			// Deal with special case of editing from the front end
 			if ( $parent_id == null ) {
-				if ( JRequest::getCmd('view') == 'article' AND
-					 JRequest::getCmd('task') == 'edit' ) {
+				if ( (JRequest::getCmd('view') == 'article') &&
+					 (JRequest::getCmd('task') == 'edit' )) {
 					$parent_id = JRequest::getInt('id', null);
 					}
 				}

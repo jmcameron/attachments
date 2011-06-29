@@ -83,7 +83,7 @@ class AttachmentsViewAttachments extends JView
 		$layout = JRequest::getWord('layout');
 		$tmpl = JRequest::getWord('tmpl');
 		$show_hidden_user_fields = false;
-		if ( $app->isAdmin() OR ($from == 'editor') OR ($layout == 'edit') OR ($tmpl == 'component') ) {
+		if ( $app->isAdmin() || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
 			$show_hidden_user_fields = true;
 			}
 
@@ -91,7 +91,7 @@ class AttachmentsViewAttachments extends JView
 		$show_user_field_1 = false;
 		$user_field_1_name = $params->get('user_field_1_name');
 		if ( $user_field_1_name ) {
-			if ( $show_hidden_user_fields OR $user_field_1_name[JString::strlen($user_field_1_name)-1] != '*' ) {
+			if ( $show_hidden_user_fields || ($user_field_1_name[JString::strlen($user_field_1_name)-1] != '*') ) {
 				$show_user_field_1 = true;
 				$this->user_field_1_name = $user_field_1_name;
 				}
@@ -102,7 +102,7 @@ class AttachmentsViewAttachments extends JView
 		$show_user_field_2 = false;
 		$user_field_2_name = $params->get('user_field_2_name');
 		if ( $user_field_2_name ) {
-			if ( $show_hidden_user_fields OR $user_field_2_name[JString::strlen($user_field_2_name)-1] != '*' ) {
+			if ( $show_hidden_user_fields || ($user_field_2_name[JString::strlen($user_field_2_name)-1] != '*') ) {
 				$show_user_field_2 = true;
 				$this->user_field_2_name = $user_field_2_name;
 				}
@@ -113,7 +113,7 @@ class AttachmentsViewAttachments extends JView
 		$show_user_field_3 = false;
 		$user_field_3_name = $params->get('user_field_3_name');
 		if ( $user_field_3_name ) {
-			if ( $show_hidden_user_fields OR $user_field_3_name[JString::strlen($user_field_3_name)-1] != '*' ) {
+			if ( $show_hidden_user_fields || ($user_field_3_name[JString::strlen($user_field_3_name)-1] != '*') ) {
 				$show_user_field_3 = true;
 				$this->user_field_3_name = $user_field_3_name;
 				}
@@ -125,7 +125,7 @@ class AttachmentsViewAttachments extends JView
 		$parent_type = $model->getParentType();
 		$parent_entity = JString::strtolower($model->getParentEntity());
 		// ?? fix this!
-		if ( ($parent_type == 'com_content') AND ($parent_entity == 'default') ) {
+		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$parent_entity = 'article';
 			}
 		$this->parent_id = $parent_id;
@@ -160,7 +160,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Get the attachments list title
 		$title = $this->title;
-		if ( !$title OR (JString::strlen($title) == 0) ) {
+		if ( !$title || (JString::strlen($title) == 0) ) {
 			$title = 'ATTACH_ATTACHMENTS_TITLE';
 			}
 		$parent = $model->getParentClass();

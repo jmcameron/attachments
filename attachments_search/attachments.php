@@ -222,14 +222,14 @@ class plgSearchAttachments extends JPlugin
 			$attachment->parent_title = $parent->getTitle( $attachment->parent_id, $parent_entity );
 
 			// Construct the download URL if necessary
-			if ( $secure AND $attachment->uri_type == 'file' ) {
+			if ( $secure && $attachment->uri_type == 'file' ) {
 				$attachment->href =
 					JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
 				$attachment->href = $attachment->url;
 				}
-			if ( $attachment->display_name AND (JString::strlen($attachment->display_name) > 0) ) {
+			if ( $attachment->display_name && (JString::strlen($attachment->display_name) > 0) ) {
 				$attachment->title = JString::str_ireplace('&#183;', '.', $attachment->display_name);
 				}
 			else {
@@ -254,13 +254,13 @@ class plgSearchAttachments extends JPlugin
 				$text .= " | " . JText::_('ATTACH_DESCRIPTION_COLON') . $attachment->description;
 				}
 
-			if ( $user_field_1 AND (JString::strlen($attachment->user_field_1) > 0) ) {
+			if ( $user_field_1 && (JString::strlen($attachment->user_field_1) > 0) ) {
 				$text .= " | " . $user_field_1_name	 . ": " . $attachment->user_field_1;
 				}
-			if ( $user_field_2 AND (JString::strlen($attachment->user_field_2) > 0) ) {
+			if ( $user_field_2 && (JString::strlen($attachment->user_field_2) > 0) ) {
 				$text .= " | " . $user_field_2_name	 . ": " . $attachment->user_field_2;
 				}
-			if ( $user_field_3 AND (JString::strlen($attachment->user_field_3) > 0) ) {
+			if ( $user_field_3 && (JString::strlen($attachment->user_field_3) > 0) ) {
 				$text .= " | " . $user_field_3_name	 . ": " . $attachment->user_field_3;
 				}
 			$attachment->text = $text;

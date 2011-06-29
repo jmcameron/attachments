@@ -70,13 +70,13 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$modified = $mdate->toFormat("%x %H:%M");
 
 	$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
-	if ($item->parent_id != $last_parent_id OR $item->parent_type != $last_parent_type
-		OR $item->parent_entity != $last_parent_entity ) {
+	if ( ($item->parent_id != $last_parent_id) || ($item->parent_type != $last_parent_type) 
+		 || ($item->parent_entity != $last_parent_entity) ) {
 		$parent_type = $item->parent_type;
 		if ( $item->parent_entity != 'default' ) {
 			$parent_type .= '.' . $item->parent_entity;
 			}
-		if ( $item->parent_id == null OR !$item->parent_exists ) {
+		if ( ($item->parent_id == null) || !$item->parent_exists ) {
 			$artLine = '<tr><td class="at_parentsep" colspan="'.$this->num_columns.'">';
 			$artLine .= '<b>'.$item->parent_entity_type.':</b> <span class="error">'.$item->parent_title.'</span>';
 			$artLine .= '</td></tr>';
@@ -109,13 +109,13 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	  <td class="at_filename">
 		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
 		 ><img src="<?php echo $icon_url; ?>" alt="<?php echo $download_verb; ?>" /><?php
-		 if ( $item->uri_type == 'url' AND $superimpose_link_icons ) {
+		if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
 			 if ( $item->url_valid ) {
-			 echo "<img id=\"link\" src=\"$link_icon_url\">";
-			 }
-			 else {
-			 echo "<img id=\"link\" src=\"$link_broken_icon_url\">";
-			 }
+					echo "<img id=\"link\" src=\"$link_icon_url\">";
+				 }
+				 else {
+					echo "<img id=\"link\" src=\"$link_broken_icon_url\">";
+				 }
 			 }
 		 ?></a>&nbsp;<a
 		 href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"

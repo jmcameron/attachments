@@ -112,7 +112,7 @@ class AttachmentsModelAttachments extends JModelList
 		$search = $this->getState('filter.search');
 
 		if ( $search ) {
-			if ( ($search != '') AND is_numeric($search) ) {
+			if ( ($search != '') && is_numeric($search) ) {
 				$where[] = 'a.id = ' . (int) $search . '';
 				}
 			else {
@@ -273,7 +273,7 @@ class AttachmentsModelAttachments extends JModelList
 				$item->parent_entity_type = JText::_('ATTACH_' . $parent_entity);
 				$title = $parent->getTitle($parent_id, $parent_entity);
 				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);
-				if ( $item->parent_exists and $title ) {
+				if ( $item->parent_exists && $title ) {
 					$item->parent_title = $title;
 					$item->parent_url =
 						JFilterOutput::ampReplace( $parent->getEntityViewURL($parent_id, $parent_entity) );

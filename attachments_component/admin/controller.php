@@ -211,7 +211,7 @@ class AttachmentsController extends JController
 
 		$response = '';
 
-		if ( ($parent_id === false) OR ($parent_type == '') ) {
+		if ( ($parent_id === false) || ($parent_type == '') ) {
 			return '';
 			}
 

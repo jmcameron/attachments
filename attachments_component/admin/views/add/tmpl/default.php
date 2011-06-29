@@ -47,7 +47,7 @@ if ( $this->parent_title ) {
 	<fieldset class="adminform">
 		<legend><?php echo JText::_('ATTACH_ADD_ATTACHMENT'); ?></legend>
 <table class="admintable">
-<?php if ( !$this->new_parent AND !$this->parent_id ): ?>
+<?php if ( !$this->new_parent && !$this->parent_id ): ?>
   <tr>
 	<td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
 	<td> <input id="parent_title" value="" disabled="disabled" type="text" size="60" />&nbsp;
@@ -174,7 +174,7 @@ if ( $this->parent_title ) {
 <?php
 
 // Show the existing attachments
-if ( $this->uri_type == 'file' AND $this->parent_id ) {
+if ( ($this->uri_type == 'file') && $this->parent_id ) {
 	/** Get the Attachments controller class */
 	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
@@ -202,7 +202,7 @@ if ( !in_array($editor, $exceptions) ) {
 		$parent_type = $einfo['parent_type'];
 		$centity = $einfo['id'];
 		$cename = $einfo['name'];
-		if ( ($parent_type != $this->parent_type) OR ($centity != $this->parent_entity) ) {
+		if ( ($parent_type != $this->parent_type) || ($centity != $this->parent_entity) ) {
 			$url = $base_url . "&amp;parent_type=" . $parent_type;
 			$tooltip = JText::sprintf('ATTACH_ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
 									  $cename, $this->parent_entity_name);

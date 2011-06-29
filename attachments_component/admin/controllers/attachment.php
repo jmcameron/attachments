@@ -110,7 +110,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( is_numeric($pidarr[0]) ) {
 			$parent_id = (int)$pidarr[0];
 			}
-		if ( (count($pidarr) == 1) AND ($pidarr[0] == '') ) {
+		if ( (count($pidarr) == 1) && ($pidarr[0] == '') ) {
 			// Called from the [New] button
 			$parent_id = null;
 			}
@@ -269,7 +269,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Update the toggle URL to not forget if the parent is not simply an article
-		if ( !($parent_type == 'com_content' AND $parent_entity == 'default') ) {
+		if ( !( ($parent_type == 'com_content') && ($parent_entity == 'default')) ) {
 			$upload_toggle_url .= "&amp;parent_type=$parent_type";
 			if ( $parent_entity != 'default' ) {
 				$upload_toggle_url .= ".$parent_entity";
@@ -280,7 +280,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( $new_parent ) {
 			$upload_toggle_url .= "&amp;parent_id=0,new";
 			}
-		elseif ( $parent_id AND ($parent_id != -1) ) {
+		elseif ( $parent_id && ($parent_id != -1) ) {
 			$upload_toggle_url .= "&amp;parent_id=$parent_id";
 			}
 		if ( JRequest::getWord('editor') ) {
@@ -341,9 +341,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Make sure we have a valid parent ID
 		$parent_id = JRequest::getInt('parent_id', null);
 
-		if ( !$new_parent and (($parent_id === 0) or
-							   ($parent_id == null) or
-							   !$parent->parentExists($parent_id, $parent_entity)) ) {
+		if ( !$new_parent && (($parent_id === 0) ||
+							  ($parent_id == null) ||
+							  !$parent->parentExists($parent_id, $parent_entity)) ) {
 
 			// Warn the user to select an article/parent in a popup
 			$errmsg = JText::sprintf('ATTACH_ERROR_MUST_SELECT_PARENT_S', $parent_entity_name);
@@ -387,7 +387,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// See if we are uploading a file or URL
 		$new_uri_type = JRequest::getWord('uri_type');
-		if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
+		if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$new_uri_type = '';
 			}
@@ -603,7 +603,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$attachment->parent_title = $parent_title;
 		$attachment->parent_published = $parent->isParentPublished($parent_id, $parent_entity);
 		$update = JRequest::getWord('update');
-		if ( $update AND !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
+		if ( $update && !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
 			$update = false;
 			}
 
@@ -696,7 +696,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Suppress the display filename if we are switching from file to url
 		$display_name = $attachment->display_name;
-		if ( $update AND (($update == 'file') OR ($update != $attachment->uri_type)) ) {
+		if ( $update && (($update == 'file') || ($update != $attachment->uri_type)) ) {
 			$display_name = '';
 			}
 
@@ -791,25 +791,25 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// parent_id===0 is the same as null for articles
-		if ( $attachment->parent_type == 'com_content' AND
-			 $attachment->parent_entity == 'article' AND
-			 $attachment->parent_id == 0 ) {
+		if ( ($attachment->parent_type == 'com_content') &&
+			 ($attachment->parent_entity == 'article') &&
+			 ($attachment->parent_id == 0) ) {
 			$attachment->parent_id = null;
 			}
 
 		// Deal with updating an orphaned attachment
-		if ( ($old_parent_id == null) AND is_numeric($attachment->parent_id) ) {
+		if ( ($old_parent_id == null) && is_numeric($attachment->parent_id) ) {
 			$parent_changed = true;
 			}
 
 		// Check for normal parent changes
-		if ( $old_parent_id AND ( $attachment->parent_id != $old_parent_id ) ) {
+		if ( $old_parent_id && ( $attachment->parent_id != $old_parent_id ) ) {
 			$parent_changed = true;
 			}
 
 		// See if we are updating a file or URL
 		$new_uri_type = JRequest::getWord('update');
-		if ( $new_uri_type AND !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
+		if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$new_uri_type = '';
 			}
@@ -819,14 +819,14 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$new_parent_entity = JRequest::getCmd('new_parent_entity');
 		$old_parent_type = JRequest::getCmd('old_parent_type');
 		$old_parent_entity = JRequest::getCmd('old_parent_entity');
-		if ( ($new_parent_type AND
-			  (($new_parent_type != $old_parent_type) OR
+		if ( ($new_parent_type &&
+			  (($new_parent_type != $old_parent_type) ||
 			   ($new_parent_entity != $old_parent_entity))) ) {
 			$parent_changed = true;
 			}
 
 		// If the parent has changed, make sure they have selected the new parent
-		if ( $parent_changed AND ( (int)$attachment->parent_id == -1 ) ) {
+		if ( $parent_changed && ( (int)$attachment->parent_id == -1 ) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_MUST_SELECT_PARENT');
 			echo "<script type=\"text/javascript\"> alert('$errmsg'); window.history.go(-1); </script>\n";
 			exit();
@@ -836,7 +836,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( $parent_changed ) {
 			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
-			if ( ($new_uri_type == 'url') AND ($old_uri_type == 'file') ) {
+			if ( ($new_uri_type == 'url') && ($old_uri_type == 'file') ) {
 				// If we are changing parents and converting from file to URL, delete the old file
 				jimport('joomla.filesystem.file');
 
@@ -878,10 +878,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Update parent type/entity, if needed
-		if ( $new_parent_type AND ($new_parent_type != $old_parent_type) ) {
+		if ( $new_parent_type && ($new_parent_type != $old_parent_type) ) {
 			$attachment->parent_type = $new_parent_type;
 			}
-		if ( $new_parent_type AND ($new_parent_entity != $old_parent_entity) ) {
+		if ( $new_parent_type && ($new_parent_entity != $old_parent_entity) ) {
 			$attachment->parent_entity = $new_parent_entity;
 			}
 
@@ -916,7 +916,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Double-check to see if the URL changed
 		$old_url = JRequest::getString('old_url');
-		if ( !$new_uri_type AND $old_url AND $old_url != $attachment->url ) {
+		if ( !$new_uri_type && $old_url && ($old_url != $attachment->url) ) {
 			$new_uri_type = 'url';
 			}
 

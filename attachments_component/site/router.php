@@ -144,7 +144,7 @@ function AttachmentsParseRoute($segments)
 	$i = 1;
 
 	// Handle the the main keyword clause that have an id immediately following them
-	if ( ($task == 'delete') OR ($task == 'delete_warning') OR ($task == 'download') )	{
+	if ( ($task == 'delete') || ($task == 'delete_warning') || ($task == 'download') )	{
 		$vars['id'] = $segments[$i];
 		$i = 2;
 		}
@@ -153,7 +153,7 @@ function AttachmentsParseRoute($segments)
 	while ( $i < count($segments) ) {
 
 		// Look for article IDs
-		if ( ($segments[$i] == 'article') AND ($segments[$i-1] != 'from') ) {
+		if ( ($segments[$i] == 'article') && ($segments[$i-1] != 'from') ) {
 			if ( $i+1 >= count($segments) ) {
 				echo "<br />Error in AttachmentsParseRoute:  Found 'article' without a following article ID!<br />";
 				exit;
@@ -163,7 +163,7 @@ function AttachmentsParseRoute($segments)
 			}
 
 		// Look for parent ID clause
-		if ( (($segments[$i] == 'parent') OR ($segments[$i] == 'parent_id')) AND ($segments[$i-1] != 'from') ) {
+		if ( (($segments[$i] == 'parent') || ($segments[$i] == 'parent_id')) && ($segments[$i-1] != 'from') ) {
 			if ( $i+1 >= count($segments) ) {
 				echo "<br />Error in AttachmentsParseRoute:  Found 'parent' without a following parent ID!<br />";
 				exit;

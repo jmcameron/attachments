@@ -40,7 +40,7 @@ class plgSystemShow_attachments extends JPlugin
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
-		if ( ($view == 'category') AND ($layout == 'blog') ) {
+		if ( ($view == 'category') && ($layout == 'blog') ) {
 			
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
@@ -149,17 +149,17 @@ class plgSystemShow_attachments extends JPlugin
 		//    - Edit existing category: com_categories,view=category,layout=edit,id=#
 		//    - Create new category: same but no id
 
-		if ( ($parent_type == 'com_content') AND ($layout =='edit') AND
-			 ($view == 'form' OR $view == 'article' OR $view == 'category' ) ) {
+		if ( ($parent_type == 'com_content') && ($layout =='edit') &&
+			 (($view == 'form') || ($view == 'article') || ($view == 'category') ) ) {
 
 			// If we cannot determine the article ID
 			if (!$parent_id) {
-				if ( $task == 'add' OR (($view == 'article') AND ( $layout=='edit'))
-					 OR (($view == 'form') AND ( $layout=='edit')) ) {
+				if ( ($task == 'add') || (($view == 'article') && ( $layout=='edit'))
+					 || (($view == 'form') && ( $layout=='edit')) ) {
 					// If we are creating an article, note that
 					$parent_id = 0;
 					}
-				elseif ( ($view == 'category') AND ($layout == 'edit') ) {
+				elseif ( ($view == 'category') && ($layout == 'edit') ) {
 					// If we are creating an category, note that
 					$parent_id = 0;
 					}
@@ -220,7 +220,7 @@ class plgSystemShow_attachments extends JPlugin
 			JResponse::setBody($body);
 			}
 
-		elseif ( $parent_id AND ($view == 'category') AND ($layout == 'blog') ) {
+		elseif ( $parent_id && ($view == 'category') && ($layout == 'blog') ) {
 
 			// Display attachments lists for category descriptions!
 
@@ -250,7 +250,7 @@ class plgSystemShow_attachments extends JPlugin
 
 			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
 			$all_but_article_views = $params->get('hide_except_article_views', false);
-			if ( $all_but_article_views AND !$always_show_category_attachments ) {
+			if ( $all_but_article_views && !$always_show_category_attachments ) {
 				return;
 				}
 

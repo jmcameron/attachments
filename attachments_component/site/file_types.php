@@ -237,7 +237,7 @@ class AttachmentsFileTypes {
 			// Try the mime type
 			if ( array_key_exists( $mime_type, AttachmentsFileTypes::$attachments_icon_from_mime_type ) ) {
 				$iconf = AttachmentsFileTypes::$attachments_icon_from_mime_type[$mime_type];
-				if ( $iconf AND (JString::strlen($iconf) > 0) ) {
+				if ( $iconf && (JString::strlen($iconf) > 0) ) {
 					return $iconf;
 					}
 				}

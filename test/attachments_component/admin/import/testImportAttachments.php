@@ -75,7 +75,7 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 
 		// Open the CSV file
 		$result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent=true, $update, $dry_run);
-		if ( is_numeric($expected_result) AND is_numeric($result) ) {
+		if ( is_numeric($expected_result) && is_numeric($result) ) {
 			$this->assertEquals((int)$expected_result, (int)$result);
 			}
 		elseif ( is_array($result) ) {
@@ -89,7 +89,7 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 			}
 
 		// Delete the attachments
-		if ( !$update OR $attachment_id == 0 ) {
+		if ( !$update || ($attachment_id == 0) ) {
 			$db = JFactory::getDBO();
 			if (is_array($result)) {
 				$query = $db->getQuery(true);

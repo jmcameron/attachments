@@ -39,7 +39,7 @@ class AttachmentsHelper
 		// See if we are caching
 		$cache = JFactory::getCache();
 		// ??? Do we need to handle caching?
-		// ??? $caching = $config->get('cache') OR $cache->_options['caching'];
+		// ??? $caching = $config->get('cache') || $cache->_options['caching'];
 		$caching = false;
 
 		// Add the style sheet
@@ -241,7 +241,7 @@ class AttachmentsHelper
 
 		// Do not allow the main site directory to be set up as the upload directory
 		$dirend_chars = DS.'/';
-		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) OR
+		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) ||
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 64)';
 			JError::raiseError(500, $errmsg);
@@ -261,7 +261,7 @@ class AttachmentsHelper
 				}
 			}
 
-		if ( !$subdir_ok OR !JFolder::exists($upload_dir) ) {
+		if ( !$subdir_ok || !JFolder::exists($upload_dir) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -1764,7 +1764,7 @@ class AttachmentsHelper
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			$secure = $params->get('secure', false);
 			$hta_filename = $attach_dir.'/.htaccess';
-			if ( ($secure && !file_exists($hta_filename)) OR
+			if ( ($secure && !file_exists($hta_filename)) ||
 				 (!$secure && file_exists($hta_filename)) ) {
 				require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);

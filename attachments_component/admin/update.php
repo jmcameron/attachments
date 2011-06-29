@@ -110,14 +110,14 @@ class AttachmentsUpdate
 			// Update the new create and update dates if they are null
 			$updated = false;
 			$created = $attachment->created;
-			if ( is_null($created) OR $created == ''  ) {
+			if ( is_null($created) || ($created == '') ) {
 				jimport( 'joomla.utilities.date' );
 				$cdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
 				$created = $cdate->toMySQL();
 				$updated = true;
 				}
 			$mod_date = $attachment->modified;
-			if ( is_null($mod_date) OR $mod_date == '' ) {
+			if ( is_null($mod_date) || ($mod_date == '') ) {
 				jimport( 'joomla.utilities.date' );
 				$mdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
 				$mod_date = $mdate->toMySQL();
@@ -336,7 +336,7 @@ class AttachmentsUpdate
 									   $current_filename_sys) . "<br/>";
 				$numMissing++;
 				}
-			elseif ( !is_numeric($parent_id) OR
+			elseif ( !is_numeric($parent_id) ||
 					 !$parent->parentExists($attachment->parent_id, $attachment->parent_entity ) ) {
 				$msg .= JText::sprintf('ATTACH_ERROR_MISSING_PARENT_FOR_ATTACHMENT_S',
 									   $current_filename_sys) . "<br/>";
@@ -348,7 +348,7 @@ class AttachmentsUpdate
 				$newdir = $parent->getAttachmentPath($attachment->parent_entity, $attachment->parent_id, null);
 				$new_path = $upload_dir.'/'.$newdir;
 
-				if ( $finfo->oldstyle AND $finfo->prefix ) {
+				if ( $finfo->oldstyle && $finfo->prefix ) {
 					$new_filename_sys = $new_path . $finfo->basename_no_prefix;
 					$attachment->filename = $finfo->basename_no_prefix;
 					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $finfo->basename_no_prefix);
