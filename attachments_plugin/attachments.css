@@ -116,6 +116,9 @@ div.attachmentsList a.at_url:visited  { text-decoration: none; }
 div.attachmentsList a.at_url:hover    { text-decoration: underline; color: #F00; background: transparent; }
 div.attachmentsList a.at_url:active   { text-decoration: none; }
 
+div.attachmentsList th.at_filename,
+div.attachmentsList td.at_filename { text-align: left; }
+
 div.attachmentsList td.at_file_size { text-align: right; }
 
 div.attachmentsList th.at_downloads { text-align: center; }

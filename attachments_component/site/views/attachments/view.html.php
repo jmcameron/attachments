@@ -154,6 +154,20 @@ class AttachmentsViewAttachments extends JView
 		$this->show_mod_date = 	$params->get('show_modified_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 
+		// Set up the file/url title
+		if ( $this->show_column_titles ) {
+			switch ( $model->types() ) {
+			case 'file':
+				$this->file_url_title = JText::_('ATTACH_FILE');
+				break;
+			case 'url':
+				$this->file_url_title = JText::_('ATTACH_URL');
+				break;
+			default:
+				$this->file_url_title = JText::_('ATTACH_FILE_URL');
+				}
+			}
+
 		if ( $this->show_mod_date ) {
 			$this->mod_date_format = $params->get('mod_date_format', '%Y-%m-%d %I:%M%P');
 			}

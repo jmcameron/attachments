@@ -480,4 +480,41 @@ class AttachmentsModelAttachments extends JModel
 		return $this->_some_modifiable;
 	}
 
+
+
+	/**
+	 * Returns the types of attachments
+	 *
+	 * @return 'file', 'url', 'both', or false (if no attachments)
+	 */
+	public function types()
+	{
+		// Make sure the attachments are loaded
+		if ( $this->_list == null ) {
+
+			// See if we have already loaded the attachements list
+			if ( $this->_num_attachments === 0 ) {
+				return false;
+				}
+
+			// Since the attachments have not been loaded, load them now
+			$this->getAttachmentsList();
+			}
+
+		// Scan the attachments
+		$types = false;
+		foreach ( $this->_list as $attachment ) {
+			if ( $types ) {
+				if ( $attachment->uri_type != $types ) {
+					return 'both';
+					}
+				}
+			else {
+				$types = $attachment->uri_type;
+				}
+			}
+
+		return $types;
+	}
+
 }
