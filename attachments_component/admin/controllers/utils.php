@@ -288,7 +288,7 @@ class AttachmentsControllerUtils extends JController
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
+		echo "Test!";
 
 		exit();
 	}

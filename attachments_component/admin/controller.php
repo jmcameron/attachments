@@ -184,7 +184,7 @@ class AttachmentsController extends JController
 							  JText::_('ATTACH_VALIDATE_URLS'), $validate_urls_url);
 
 		// Test ???
-		// $utils_test_url = "$url_top&amp;controller=special&amp;task=test" . $closeme;
+		// $utils_test_url = "$url_top&amp;task=utils.test" . $closeme;
 		// $utils_test_tooltip = 'Test';
 		// $entries[] = JHTML::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
 
