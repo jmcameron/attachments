@@ -82,9 +82,14 @@ class AttachmentsViewAttachments extends JView
 		$from = JRequest::getWord('from', 'closeme');
 		$layout = JRequest::getWord('layout');
 		$tmpl = JRequest::getWord('tmpl');
+		$task = JRequest::getWord('task');
 		$show_hidden_user_fields = false;
 		if ( $app->isAdmin() || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
 			$show_hidden_user_fields = true;
+			}
+		if ( $task == 'attachmentsList' ) {
+			// Always hide the hidden user fields on Ajax requests
+			$show_hidden_user_fields = false;
 			}
 
 		// User field 1
