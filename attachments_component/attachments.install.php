@@ -102,13 +102,16 @@ class Com_AttachmentsInstallerScript {
 		jimport('joomla.filesystem.folder');
 		$attachdir = JPATH_ROOT.'/attachments';
 		if ( JFolder::exists($attachdir) ) {
+			$app = JFactory::getApplication();
 
 			// Move the attachments directory out of the way temporarily
 			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
-			// ?? SHOULD Catch errors here
-			JFolder::move($attachdir, $this->moved_attachments_dir);
+			if ( JFolder::move($attachdir, $this->moved_attachments_dir) !== true ) {
+				$msg = JText::sprintf('ATTACH_ERROR_MOVING_ATTACHMENTS_DIR');
+				$app->enqueueMessage($msg, 'warning');
+				return false;
+				}
 
-			$app = JFactory::getApplication();
 			$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 			$app->enqueueMessage($msg, 'message');
 			$app->enqueueMessage('<br/>', 'message');
@@ -157,13 +160,24 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Restore the attachments directory (if renamed)
+		$attachdir = JPATH_ROOT.'/attachments';
 		if ( $this->moved_attachments_dir && JFolder::exists($this->moved_attachments_dir) ) {
-			$attachdir = JPATH_ROOT.'/attachments';
 			JFolder::move($this->moved_attachments_dir, $attachdir);
 			$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 			$app->enqueueMessage('<br/>', 'message');
 			}
 
+		// Check to see if we should be in secure mode
+		jimport('joomla.filesystem.file');
+		$htaccess_file = $attachdir . '/.htaccess';
+		if ( JFile::exists($htaccess_file) ) {
+			if ( Com_AttachmentsInstallerScript::setSecureMode() ) {
+				$app->enqueueMessage(JText::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
+				$app->enqueueMessage('<br/>', 'message');
+				}
+			}
+		
+		// Ask the user for feedback
 		$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
 											'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
 											), 'message');
@@ -202,4 +216,36 @@ class Com_AttachmentsInstallerScript {
 			$app->enqueueMessage('<br/>', 'warning');
 			}
 	}
+
+
+	/**
+	 * Enforce secure mode if attachments/.htaccess file exists and it is a fresh install
+	 *
+	 * @return true if the secure mode was updated
+	 */
+	protected function setSecureMode()
+	{
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('*')->from('#__extensions')->where("type = 'component' AND name = 'com_attachments'");
+		$db->setQuery($query, 0, 1);
+		$component = $db->loadObject();
+		if ( $db->getErrorNum() ) {
+			return false;
+			}
+		if ( $component->params == '{}' ) {
+			// Fresh install, update the DB directly (otherwise, this should not be necessary)
+			$query = $db->getQuery(true);
+			$query->update('#__extensions');
+			$query->set("params = '{\"secure\":\"1\"}'");
+			$query->where("type = 'component' AND name = 'com_attachments'");
+			$db->setQuery($query);
+			$db->query();
+			if ( $db->getErrorNum() ) {
+				return false;
+				}
+			return true;
+			}
+	}
+
 }
