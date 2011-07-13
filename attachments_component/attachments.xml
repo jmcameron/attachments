@@ -152,4 +152,9 @@
 	</files>
     </administration>
 
+    <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
+    <languages folder="site">
+	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
+    </languages>
+
 </extension>
