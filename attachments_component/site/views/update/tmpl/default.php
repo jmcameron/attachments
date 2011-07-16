@@ -106,12 +106,6 @@ else {
 		<?php if ( $this->error_msg ): ?>
 		<div class="formWarning" id="formWarning"><?php echo $this->error_msg; ?></div>
 		<?php endif; ?>
-<?php if ( $this->may_publish ): ?>
-<p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></p>
-<?php endif; ?>
-<?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
-		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?> </p>
-<?php endif; ?>
 <?php if ( $update == 'file' ): ?>
 <p><label for="<?php echo $update_id; ?>"><?php
    echo JText::_('ATTACH_SELECT_NEW_FILE_IF_YOU_WANT_TO_UPDATE_ATTACHMENT_FILE') ?></label>
@@ -198,6 +192,12 @@ else {
 		<p><label for="description"><?php echo JText::_('ATTACH_DESCRIPTION_COLON'); ?></label>
 		   <input type="text" name="description" id="description"
 				  size="70" maxlength="255" value="<?php echo $attachment->description; ?>" /></p>
+<?php if ( $this->may_publish ): ?>
+        <p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></p>
+<?php endif; ?>
+<?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
+		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?> </p>
+<?php endif; ?>
 		<?php if ( $params->get('user_field_1_name') ): ?>
 		<p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
 		   <input type="text" name="user_field_1" id="user_field_1" size="70" maxlength="100"

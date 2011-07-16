@@ -137,12 +137,6 @@ else
 	  </td>
 
 <?php endif; ?>
-  <tr><td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
-	  <td colspan="5"><?php echo $this->lists['published']; ?></td>
-  </tr>
-  <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
-      <td colspan="5"><?php echo $this->access_level; ?></td>
-  </tr>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_ATTACHMENT_TYPE'); ?></label></td>
   <td colspan="5"><?php echo JText::_('ATTACH_' . JString::strtoupper($uri_type));?>
   <?php if ( ($uri_type == 'file') && ( $update != 'url' ) ): ?>
@@ -236,7 +230,6 @@ else
 <?php endif; ?>
 
 <?php if ( ($update == 'file') || ($uri_type == 'file') ): ?>
-
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo $this->display_filename_tooltip; ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
@@ -269,6 +262,12 @@ else
 			 title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 				 id="description" size="80" maxlength="255"
 				 value="<?php echo $attachment->description;?>" /></td>
+  </tr>
+  <tr><td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
+	  <td colspan="5"><?php echo $this->lists['published']; ?></td>
+  </tr>
+  <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+      <td colspan="5"><?php echo $this->access_level; ?></td>
   </tr>
   <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
   <tr><td class="key"><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?></label></td>

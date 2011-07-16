@@ -58,14 +58,6 @@ if ( $this->parent_title ) {
     </td>
   </tr>
 <?php endif; ?>
-  <tr>
-    <td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
-	<td><?php echo $this->lists['published']; ?></td>
-  </tr>
-  <tr>
-	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
-	<td><?php echo $this->access_level; ?></td>
-  </tr>
 <?php if ( $this->uri_type == 'file' ): ?>
   <tr>
 	<td class="key"><label for="upload" id="upload_file_label"><?php echo JText::_('ATTACH_ATTACH_FILE_COLON') ?></label></td>
@@ -124,24 +116,32 @@ if ( $this->parent_title ) {
 		  title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 		  size="75" maxlength="255" value="" />
     </td>
- </tr>
+  </tr>
+  <tr>
+    <td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
+	<td><?php echo $this->lists['published']; ?></td>
+  </tr>
+  <tr>
+	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+	<td><?php echo $this->access_level; ?></td>
+  </tr>
 <?php if ( $this->show_user_field_1 ): ?>
- <tr>
+  <tr>
 	<td class="key"><label for="user_field_1"><?php echo $this->user_field_1_name; ?></label></td>
 	<td><input type="text" name="user_field_1" id="user_field_1" size="75" maxlength="100" value="" /></td>
- </tr>
+  </tr>
 <?php endif; ?>
 <?php if ( $this->show_user_field_2 ): ?>
- <tr>
+  <tr>
 	<td class="key"><label for="user_field_2"><?php echo $this->user_field_2_name; ?></label></td>
 	<td><input type="text" name="user_field_2" id="user_field_2" size="75" maxlength="100" value="" /></td>
- </tr>
+  </tr>
 <?php endif; ?>
 <?php if ( $this->show_user_field_3 ): ?>
- <tr>
+  <tr>
 	<td class="key"><label for="user_field_3"><?php echo $this->user_field_3_name; ?></label></td>
 	<td><input type="text" name="user_field_3" id="user_field_3" size="75" maxlength="100" value="" /></td>
- <tr>
+  <tr>
 <?php endif; ?>
 </table>
 	</fieldset>
