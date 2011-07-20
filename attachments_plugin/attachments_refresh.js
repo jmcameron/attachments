@@ -21,26 +21,29 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
     id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid;
     var alist = document.getElementById(id);
     if ( !alist ) {
-	alist = window.parent.document.getElementById(id);
-	}
+        alist = window.parent.document.getElementById(id);
+        }
     if ( !alist ) {
-	// ??? This should not be necessary...
-	id = "attachmentsList_" + ptype + "_default_" + pid;
-	alist = window.parent.document.getElementById(id);
-	}
+        // ??? This should not be necessary...
+        id = "attachmentsList_" + ptype + "_default_" + pid;
+        alist = window.parent.document.getElementById(id);
+        }
     var a = new Request({ 
-                url: url,
-                method: 'get', 
-		onComplete: function( response ) {  
+        url: url,
+        method: 'get', 
+        onComplete: function( response ) {  
+            
+            // Refresh the attachments list
+            alist.innerHTML = response;
+            
+	    // Remove any old click events (since they are for a deleted/updated SqueezeBox)
+            $$('a.modal-button').removeEvents('click');
 
-		   // Refresh the attachments list
-                   alist.innerHTML = response;
+            // Since the html has been replaced, we need to reconnect the modal button events
+            SqueezeBox.initialize({});
+            SqueezeBox.assign($$('a.modal-button'), {
+                parse: 'rel'
+            });
 
-		   // Since the html has been replaced, we need to reconnect the modal button events
-		   SqueezeBox.initialize({});
-		   SqueezeBox.assign($$('a.modal-button'), {
-		        parse: 'rel'
-			});
-
-	    }}).send();
+        }}).send();
 };
