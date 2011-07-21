@@ -79,7 +79,8 @@ if ( $this->parent_title ) {
    </td>
 <?php else: ?>
   <tr>
-    <td class="key"><label for="upload"><?php echo JText::_('ATTACH_ENTER_URL_COLON') ?></label></td>
+    <td class="key"><label for="upload" class="hasTip"
+	    title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
     <td>
 	  <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
  	  <input type="checkbox" name="verify_url" value="verify" checked

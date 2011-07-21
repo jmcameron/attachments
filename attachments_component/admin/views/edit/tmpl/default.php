@@ -51,10 +51,11 @@ else {
 
 // Set up the create/modify dates
 jimport( 'joomla.utilities.date' );
-$cdate = new JDate($attachment->created, -$app->getCfg('offset'));
-$created = $cdate->toFormat("%x %H:%M");
-$mdate = new JDate($attachment->modified, -$app->getCfg('offset'));
-$modified = $mdate->toFormat("%x %H:%M");
+$tz	= new DateTimeZone($app->getCfg('offset'));
+$cdate = JFactory::getDate($attachment->created)->setTimezone($tz);
+$created = $cdate->toFormat("%x %H:%M", true);
+$mdate = JFactory::getDate($attachment->modified)->setTimezone($tz);
+$modified = $mdate->toFormat("%x %H:%M", true);
 
 $update = $this->update;
 $uri_type = $attachment->uri_type;
@@ -165,10 +166,11 @@ else
   </tr>
 <?php elseif ( $update == 'url' ): ?>
   <tr>
-	  <td class="key"><label for="upload"><?php echo JText::_('ATTACH_ENTER_URL_COLON') ?></label></td>
+	  <td class="key"><label for="upload" class="hasTip"
+	      title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
 	  <td colspan="5">
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-		 <input type="checkbox" name="verify_url" value="verify" checked align="middle"
+		 <input type="checkbox" name="verify_url" value="verify" checked 
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 	 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
