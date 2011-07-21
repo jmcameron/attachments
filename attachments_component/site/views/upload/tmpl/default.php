@@ -125,7 +125,7 @@ if ( $lang->isRTL() ) {
 				  value="<?php echo $this->display_name; ?>" /></p>
 <?php else: ?>
 			<p><label for="<?php echo $upload_id ?>"><?php
-		  echo JText::_('ATTACH_ENTER_URL_COLON') ?></label>
+		  echo JText::_('ATTACH_ENTER_URL') ?></label>
 		   &nbsp;&nbsp;&nbsp;&nbsp;
 			   <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 	   <input type="checkbox" name="verify_url" value="verify" checked

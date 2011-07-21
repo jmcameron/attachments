@@ -898,8 +898,7 @@ class AttachmentsHelper
 			}
 
 		// Set the create/modify dates
-		jimport('joomla.utilities.date');
-		$now = new JDate();
+		$now = JFactory::getDate();
 		$now = $now->toMySQL();
 
 		// Update the create/modify info
@@ -1503,8 +1502,7 @@ class AttachmentsHelper
 			}
 
 		// Set the create/modify dates
-		jimport('joomla.utilities.date');
-		$now = new JDate();
+		$now = JFactory::getDate();
 		$attachment->created = $now->toMySQL();
 		$attachment->modified = $attachment->created;
 		$attachment->uri_type = 'url';

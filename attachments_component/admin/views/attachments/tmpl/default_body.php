@@ -64,10 +64,11 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	// Set up the create/modify dates
 	jimport( 'joomla.utilities.date' );
-	$cdate = new JDate($item->created, -$app->getCfg('offset'));
-	$created = $cdate->toFormat("%x %H:%M");
-	$mdate = new JDate($item->modified, -$app->getCfg('offset'));
-	$modified = $mdate->toFormat("%x %H:%M");
+	$tz	= new DateTimeZone($app->getCfg('offset'));
+	$cdate = JFactory::getDate($item->created)->setTimezone($tz);
+	$created = $cdate->toFormat("%x %H:%M", true);
+	$mdate = JFactory::getDate($item->modified)->setTimezone($tz);
+	$modified = $mdate->toFormat("%x %H:%M", true);
 
 	$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 	if ( ($item->parent_id != $last_parent_id) || ($item->parent_type != $last_parent_type) 

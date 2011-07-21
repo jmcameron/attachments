@@ -116,7 +116,7 @@ else {
 			   size="60" maxlength="512" />
 		</p>
 <?php elseif ( $update == 'url' ): ?>
-		<p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_URL_COLON') ?></label>
+		<p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 		<input type="checkbox" name="verify_url" value="verify" checked

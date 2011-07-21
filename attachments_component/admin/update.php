@@ -111,15 +111,13 @@ class AttachmentsUpdate
 			$updated = false;
 			$created = $attachment->created;
 			if ( is_null($created) || ($created == '') ) {
-				jimport( 'joomla.utilities.date' );
-				$cdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
+				$cdate = JFactory::getDate(filemtime($attachment->filename_sys));
 				$created = $cdate->toMySQL();
 				$updated = true;
 				}
 			$mod_date = $attachment->modified;
 			if ( is_null($mod_date) || ($mod_date == '') ) {
-				jimport( 'joomla.utilities.date' );
-				$mdate = new JDate(filemtime($attachment->filename_sys), $app->getCfg('offset'));
+				$mdate = JFactory::getDate(filemtime($attachment->filename_sys));
 				$mod_date = $mdate->toMySQL();
 				$updated = true;
 				}

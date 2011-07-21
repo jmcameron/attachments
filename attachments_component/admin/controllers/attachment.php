@@ -207,6 +207,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->option        = $this->option;
 		$view->from          = $from;
 
+		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
 		$view->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
 
@@ -730,6 +731,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->display_name      = $display_name;
 		$view->entity_info       = $entity_info;
 
+		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
 
 		$view->lists      = $lists;
@@ -935,8 +937,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Compute the update time
-		jimport( 'joomla.utilities.date' );
-		$now = new JDate();
+		$now = JFactory::getDate();
 
 		// Update create/modify info
 		$user = JFactory::getUser();
