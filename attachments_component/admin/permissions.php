@@ -36,7 +36,8 @@ class AttachmentsPermissions
 
 		$actions = array( 'core.admin', 'core.manage',
 						  'core.create', 'core.delete', 'core.edit.state',
-						  'core.edit', 'core.edit.own'
+						  'core.edit', 'core.edit.own',
+						  'attachments.delete.own'
 						 );
 
 		foreach ($actions as $action) {
