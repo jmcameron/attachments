@@ -547,10 +547,11 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @param int $parent_id the ID for this parent object
 	 * @param string $parent_entity the type of entity for this parent type
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
-	public function userMayViewParent($parent_id, $parent_entity='default')
+	public function userMayViewParent($parent_id, $parent_entity='default', $user_id=null)
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -569,7 +570,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		// Get the user's permitted access levels
-		$user   = JFactory::getUser();
+		$user   = JFactory::getUser($user_id);
 		$user_levels = array_unique($user->authorisedLevels());
 
 		// See if the parent's access level is permitted for the user
@@ -711,14 +712,15 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 * @param int $parent_id The ID of the parent the attachment is attached to
 	 * @param string $parent_entity the type of entity for this parent type
 	 * @param bool $new_parent If true, the parent is being created and does not exist yet
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
-	 * @return true if this user add attachments to this parent
+	 * @return true if this user may add attachments to this parent
 	 */
-	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
+	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false, $user_id=null)
 	{
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
 
-		$user = JFactory::getUser();
+		$user = JFactory::getUser($user_id);
 
 		// Handle each entity type
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
@@ -761,14 +763,15 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *	It is up to the caller to validate these objects before calling this function.)
 	 *
 	 * @param &record &$attachment database reocrd for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	public function userMayEditAttachment(&$attachment)
+	public function userMayEditAttachment(&$attachment, $user_id=null)
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = JFactory::getUser();
+		$user = JFactory::getUser($user_id);
 		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
@@ -847,14 +850,15 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may delete this attachment
 	 */
-	public function userMayDeleteAttachment(&$attachment)
+	public function userMayDeleteAttachment(&$attachment, $user_id=null)
 	{
-		// If the user generally has permissions to edit all content, they
+		// If the user generally has permissions to edit ALL content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = JFactory::getUser();
+		$user = JFactory::getUser($user_id);
 		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
@@ -925,12 +929,13 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	/** Check to see if the user may access (see/download) the attachments
 	 *
 	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if access is okay (false if not)
 	 */
-	public function userMayAccessAttachment( &$attachment )
+	public function userMayAccessAttachment(&$attachment, $user_id=null)
 	{
-		$user = JFactory::getUser();
+		$user = JFactory::getUser($user_id);
 		return in_array($attachment->access, $user->authorisedLevels());
 	}
 

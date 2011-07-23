@@ -615,10 +615,11 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @param int $parent_id the ID for this parent object
 	 * @param string $parent_entity the type of entity for this parent type
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
-	public function userMayViewParent($parent_id, $parent_entity='default')
+	public function userMayViewParent($parent_id, $parent_entity='default', $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -667,10 +668,11 @@ class AttachmentsPlugin extends JPlugin
 	 * @param int $parent_id The ID of the parent the attachment is attached to
 	 * @param string $parent_entity the type of entity for this parent type
 	 * @param bool $new_parent If true, the parent is being created and does not exist yet
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user add attachments to this parent
 	 */
-	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
+	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false, $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -684,10 +686,11 @@ class AttachmentsPlugin extends JPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	public function userMayEditAttachment(&$attachment)
+	public function userMayEditAttachment(&$attachment, $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -701,10 +704,11 @@ class AttachmentsPlugin extends JPlugin
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may delete this attachment
 	 */
-	public function userMayDeleteAttachment(&$attachment)
+	public function userMayDeleteAttachment(&$attachment, $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -714,10 +718,11 @@ class AttachmentsPlugin extends JPlugin
 	/** Check to see if the user may access (see/download) the attachments
 	 *
 	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if access is okay (false if not)
 	 */
-	public function userMayAccessAttachment( &$attachment )
+	public function userMayAccessAttachment( &$attachment, $user_id=null )
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
