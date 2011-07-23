@@ -926,6 +926,92 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	}
 
 
+	/**
+	 * Return true if this user may change the state of this attachment
+	 *
+	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *
+	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
+	 *
+	 * @return true if this user may change the state of this attachment
+	 */
+	public function userMayChangeAttachmentState(&$attachment, $user_id=null)
+	{
+		// If the user generally has permissions to edit all content, they
+		// may change this attachment state (editor, publisher, admin, etc)
+		$user = JFactory::getUser($user_id);
+		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
+			return true;
+			}
+
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/permissions.php');
+
+		// Handle each entity type
+
+		switch ( $attachment->parent_entity ) {
+
+		case 'category':
+
+			// ?? Deal with parents being created (parent_id == 0)
+
+			// First, determine if the user can edit this category
+			if ( !AttachmentsPermissions::userMayEditCategory($attachment->parent_id) ) {
+				return false;
+				}
+
+			// See if the user can change the state of any attachment
+			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
+				return true;
+				}
+
+			// See if the user has permissions to change the state of their own attachments
+			if ( $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
+				return true;
+				}
+
+			// See if the user has permission to change the state of any attachments for categories they created
+			if ( $user->authorise('attachments.edit.state.ownparent', 'com_attachments') ) {
+				$category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
+				return (int)$user->id == (int)$category_creator_id;
+				}
+
+			break;
+
+		default:
+			// Articles
+
+			// ?? Deal with parents being created (parent_id == 0)
+
+			// First, determine if the user can edit this article
+			if ( !AttachmentsPermissions::userMayEditArticle($attachment->parent_id) ) {
+				return false;
+				}
+
+			// See if the user can change the state of any attachment
+			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
+				return true;
+				}
+
+			// See if the user has permissions to change the state of their own attachments
+			if ( $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+				 ((int)$user->id == (int)$attachment->created_by) ) {
+				return true;
+				}
+
+			// See if the user has permission to edit the state of any attachments for articles they created
+			if ( $user->authorise('attachments.edit.state.ownparent', 'com_attachments') ) {
+				$article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
+				return (int)$user->id == (int)$article_creator_id;
+				}
+
+			}
+
+		return false;
+	}
+
 	/** Check to see if the user may access (see/download) the attachments
 	 *
 	 * @param &record &$attachment database record for the attachment

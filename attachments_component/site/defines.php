@@ -45,11 +45,13 @@ class AttachmentsDefines
 	 * 
 	 * Be careul if you edit this to conform to the proper json syntax!
 	 *
-	 * NB: The syntax for setting a static variable does not allow breaking
-	 *     the string up with dots to join the parts.
+	 * NB: Unfortunately, the syntax for setting a static variable does not
+	 *     allow breaking the string up with dots to join the parts to make
+	 *     this easier to read.
 	 */
-	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS =
-		'{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
+	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS = '{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.state.own":{"6":1,"3":1},"attachments.edit.state.ownparent":{"6":1,"3":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
+
+
 
 
 	/** Attachments subdirectory

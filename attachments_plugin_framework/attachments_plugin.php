@@ -715,6 +715,23 @@ class AttachmentsPlugin extends JPlugin
 
 
 
+	/**
+	 * Return true if this user may change the state of this attachment
+	 *
+	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *
+	 * @param &record &$attachment database record for the attachment
+	 * @param object $user_id the user_id to check (optional, primarily for testing)
+	 *
+	 * @return true if this user may change the state of this attachment
+	 */
+	public function userMayChangeAttachmentState(&$attachment, $user_id=null)
+	{
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+	}
+
+
 	/** Check to see if the user may access (see/download) the attachments
 	 *
 	 * @param &record &$attachment database record for the attachment
