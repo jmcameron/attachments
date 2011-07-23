@@ -71,8 +71,9 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	 * @param int $edit_state correct 'core.edit.state' permission (0/1 interpreted as bool)
 	 * @param int $edit correct 'core.edit' permission (0/1 interpreted as bool)
 	 * @param int $edit_own correct 'core.edit.own' permission (0/1 interpreted as bool)
+	 * @param int $delete_own correct 'attachments.delete.own' permission (0/1 interpreted as bool)
      */
-	public function testActions($user_id,$username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own)
+	public function testActions($user_id,$username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own, $delete_own)
 	{
 		$canDo = AttachmentsPermissions::getActions((int)$user_id);
 
@@ -103,6 +104,10 @@ class ActionsTest extends JoomlaDatabaseTestCase
 		$errmsg = "----> Failed test for $username core.edit.own for com_attachments, " .
 			" expected $edit_own, got ".$canDo->get('core.edit.own')." for ".$username;
 		$this->assertEquals($canDo->get('core.edit.own'), (bool)$edit_own, $errmsg);
+
+		$errmsg = "----> Failed test for $username attachments.delete.own for com_attachments, " .
+			" expected $delete_own, got ".$canDo->get('attachments.delete.own')." for ".$username;
+		$this->assertEquals($canDo->get('attachments.delete.own'), (bool)$delete_own, $errmsg);
 	}
 	
 
