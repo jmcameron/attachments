@@ -50,6 +50,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();
+		$app->enqueueMessage('<br/>', 'warning');
 	}
 
 	/**
@@ -74,6 +75,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();
+		$app->enqueueMessage('<br/>', 'warning');
 	}
 
 
@@ -190,31 +192,9 @@ class Com_AttachmentsInstallerScript {
 	 */
 	protected function installPermissions()
 	{
-		jimport('joomla.access.rules');
-		$app = JFactory::getApplication();
-
-		// Get the root rules
-		$root = JTable::getInstance('asset');
-		$root->loadByName('root.1');
-		$root_rules = new JRules($root->rules);
-
-		// Define the new rules
-		$new_rules = new JRules('{"attachments.delete.own":{"6":1,"3":1},' .
-								 '"attachments.edit.ownparent":{"6":1,"3":1},' .
-								 '"attachments.delete.ownparent":{"6":1,"3":1}' .
-								'}');
-
-		// Merge the rules into default rules and save it
-		$root_rules->merge($new_rules);
-		$root->rules = (string)$root_rules;
-		if ( $root->store() ) {
-			$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
-			$app->enqueueMessage('<br/>', 'message');
-			}
-		else {
-			$app->enqueueMessage(JText::_('ATTACH_INSTALLING_DEFAULT_ATTACHMENTS_ASSET_RULES_FAILED'), 'message');
-			$app->enqueueMessage('<br/>', 'warning');
-			}
+		/** Load the Attachments defines */
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
+		AttachmentsUpdate::installAttachmentsPermissions();
 	}
 
 

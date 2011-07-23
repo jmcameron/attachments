@@ -679,4 +679,34 @@ class AttachmentsUpdate
 	}
 
 
+	/**
+	 * Validate all URLS and update their "valid" status
+	 */
+	static public function installAttachmentsPermissions()
+	{
+		// Load the Attachments defines
+		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+
+		jimport('joomla.access.rules');
+		$app = JFactory::getApplication();
+
+		// Get the root rules
+		$root = JTable::getInstance('asset');
+		$root->loadByName('root.1');
+		$root_rules = new JRules($root->rules);
+
+		// Define the new rules
+		$new_rules = new JRules(AttachmentsDefines::$DEFAULT_ATTACHMENTS_ACL_PERMISSIONS);
+
+		// Merge the rules into default rules and save it
+		$root_rules->merge($new_rules);
+		$root->rules = (string)$root_rules;
+		if ( $root->store() ) {
+			$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+			}
+		else {
+			$app->enqueueMessage(JText::_('ATTACH_INSTALLING_DEFAULT_ATTACHMENTS_ASSET_RULES_FAILED'), 'message');
+			}
+	}
+
 }
