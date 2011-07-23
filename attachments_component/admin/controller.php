@@ -141,6 +141,12 @@ class AttachmentsController extends JController
 							  JText::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION'),
 							  $disable_mysql_uninstall_url );
 
+		// Set up the HTML for the 'Reinstall Attachments Permissions' command
+		$reinstall_permissions_url = "$url_top&amp;task=utils.reinstall_permissions" . $closeme;
+		$reinstall_permissions_tooltip = JText::_('ATTACH_REINSTALL_PERMISSIONS') . '::' . JText::_('ATTACH_REINSTALL_PERMISSIONS_TOOLTIP');
+		$entries[] = JHTML::_('tooltip', $reinstall_permissions_tooltip, null, null,
+							  JText::_('ATTACH_REINSTALL_PERMISSIONS'), $reinstall_permissions_url);
+
 		// Set up the HTML for the 'Regenerate attachment system filenames' command
 		$regenerate_system_filenames_url =
 			"$url_top&amp;task=utils.regenerate_system_filenames" . $closeme;

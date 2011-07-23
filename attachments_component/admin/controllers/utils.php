@@ -279,6 +279,33 @@ class AttachmentsControllerUtils extends JController
 
 
 	/**
+	 * Validate all URLS in any attachments
+	 * (See AttachmentsUpdate::reinstall_permissions() in update.php for details )
+	 */
+	public function reinstall_permissions()
+	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
+
+		$msg = AttachmentsUpdate::installAttachmentsPermissions();
+
+		if ( JRequest::getBool('close') ) {
+
+			$this->enqueueSystemMessage($msg);
+
+			// Close this window and refesh the parent window
+			echo $this->_close_script;
+			}
+		else {
+			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			}
+	}
+
+	/**
 	 * Test function
 	 */
 	public function test()
