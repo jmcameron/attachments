@@ -33,10 +33,24 @@ class AttachmentsDefines
 	 */
 	static $LEGAL_SAVE_TYPES = Array('upload', 'update');
 
-
 	/** Supported URI types for uploading/updating
 	 */
 	static $LEGAL_URI_TYPES = Array('file', 'url');
+
+
+	/** Default permissions for new attachments rules
+	 *
+	 * These are the default settings for the custom ACL permissions for the
+	 * Attachments extension.
+	 * 
+	 * Be careul if you edit this to conform to the proper json syntax!
+	 *
+	 * NB: The syntax for setting a static variable does not allow breaking
+	 *     the string up with dots to join the parts.
+	 */
+	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS =
+		'{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
+
 
 	/** Attachments subdirectory
 	 *
