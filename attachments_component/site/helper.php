@@ -377,7 +377,7 @@ class AttachmentsHelper
 	 * Upload the file
 	 *
 	 * @param &object &$attachment the partially constructed attachment object
-	 * @param &object &$parent An object with partial parent info including:
+	 * @param &object &$parent An Attachments plugin parent object with partial parent info including:
 	 *		$parent->new : True if the parent has not been created yet
 	 *						(like adding attachments to an article before it has been saved)
 	 *		$parent->title : Title/name of the parent object
@@ -393,6 +393,11 @@ class AttachmentsHelper
 	{
 		$user = JFactory::getUser();
 		$db = JFactory::getDBO();
+
+		// Figure out if the user may publish this attachment
+		$may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
+															 $attachment->parent_entity,
+															 $attachment->created_by);
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -500,10 +505,8 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-					 ((int)$attachment->created_by == (int)$user->id));
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
@@ -525,9 +528,8 @@ class AttachmentsHelper
 												 $attachment->parent_type, $attachment_id, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					$user->authorise('attachments.edit.state.own', 'com_attachments');
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
@@ -637,10 +639,8 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-					 ((int)$attachment->created_by == (int)$user->id));
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
@@ -662,9 +662,8 @@ class AttachmentsHelper
 												 $attachment->parent_type, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					$user->authorise('attachments.edit.state.own', 'com_attachments');
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
@@ -706,9 +705,8 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			// Set up publishing info
-			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-				$user->authorise('attachments.edit.state.own', 'com_attachments');
-			if ( $view->may_publish ) {
+			$view->may_publish = $may_publish;
+			if ( $may_publish ) {
 				$default_state = $params->get('publish_default', false);
 				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 				}
@@ -818,10 +816,8 @@ class AttachmentsHelper
 			$view->params = 			 $params;
 
 			// Set up publishing info
-			$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-				($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-				 ((int)$attachment->created_by == (int)$user->id));
-			if ( $view->may_publish ) {
+			$view->may_publish = $may_publish;
+			if ( $may_publish ) {
 				$default_state = $params->get('publish_default', false);
 				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 				}
@@ -872,9 +868,6 @@ class AttachmentsHelper
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		$may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-			 ((int)$attachment->created_by == (int)$user->id));
 		if ( !$may_publish ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state (ignore form info)
@@ -1311,6 +1304,11 @@ class AttachmentsHelper
 		// Get the auto-publish setting
 		$auto_publish = $params->get('publish_default', false);
 
+		// Figure out if the user has permissions to publish
+		$may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
+															 $attachment->parent_entity,
+															 $attachment->created_by);
+
 		// If we are updating, note the name of the old filename (if there was one)
 		// (Needed for switching from a file to a URL)
 		$old_filename = null;
@@ -1357,10 +1355,8 @@ class AttachmentsHelper
 											   $attachment->url_valid);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-					 ((int)$attachment->created_by == (int)$user->id));
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
@@ -1381,9 +1377,8 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
 				// Set up publishing info
-				$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-					$user->authorise('attachments.edit.state.own', 'com_attachments');
-				if ( $view->may_publish ) {
+				$view->may_publish = $may_publish;
+				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
 					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
@@ -1476,9 +1471,6 @@ class AttachmentsHelper
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is is set correctly.
-		$may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-			 ((int)$attachment->created_by == (int)$user->id));
 		if ( !$may_publish ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
@@ -1743,7 +1735,7 @@ class AttachmentsHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('count(*)')->from('#__attachments');
-		$query->where('parent_id='.(int)$parent_id." AND state='1' AND parent_type='$parent_type'");
+		$query->where('parent_id='.(int)$parent_id." AND parent_type='$parent_type'");
 		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query);
 		$total = $db->loadResult();

@@ -177,8 +177,7 @@ class AttachmentsController extends JController
 			}
 
 		// Set up publishing info
-		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-			$user->authorise('attachments.edit.state.own', 'com_attachments');
+		$view->may_publish = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		if ( $view->may_publish ) {
 			$default_state = $params->get('publish_default', false);
 			$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
@@ -747,10 +746,10 @@ class AttachmentsController extends JController
 			}
 
 		// Set up for the user editing
-		$view->may_publish = $user->authorise('core.edit.state', 'com_attachments') ||
-			($user->authorise('attachments.edit.state.own', 'com_attachments') &&
-			 ((int)$attachment->created_by == (int)$user->id));
-
+		$view->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
+																   $attachment->parent_entity,
+																   $attachment->created_by
+																   );
 		$view->update = 			$update;
 		$view->new_parent = 		$new_parent;
 		$view->parent_title = 		$parent_title;
