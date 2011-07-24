@@ -105,11 +105,19 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$attachment = $attachments[$i];
 
 	$row_num++;
-	if ( $row_num & 1 == 1)
-		$html .= '<tr class="odd">';
-	else
-		$html .= '<tr class="even">';
+	if ( $row_num & 1 == 1) {
+		$row_class = 'odd';
+		}
+	else {
+		$row_class = 'even';
+		}
 
+	if ($attachment->state != 1) {
+		$row_class = 'unpublished';
+		}
+
+	$html .= '<tr class="'.$row_class.'">';
+		
 	// Construct some display items
 	if ( JString::strlen($attachment->icon_filename) > 0 )
 		$icon_url = $this->icon_url_base . $attachment->icon_filename;
