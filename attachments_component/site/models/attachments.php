@@ -362,7 +362,29 @@ class AttachmentsModelAttachments extends JModel
 			}
 		else {
 			$query->where('a.parent_id='.(int)$parent_id);
-			$query->where('a.state = 1');
+
+			// Handle the state part of the query
+			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
+				// Do not filter on state since this person can change the state of any attachment
+				}
+			elseif ( $user->authorise('attachments.edit.state.own', 'com_attachments') ) {
+				$query->where('((a.created_by = '.(int)$user->id.') OR (a.state = 1))');
+				}
+			elseif ( $user->authorise('attachments.edit.state.ownparent', 'com_attachments') ) {
+				// The user can edit the state of any attachment if they created the article/parent
+				$parent_creator_id = $parent->getParentCreatorId($parent_id, $parent_entity);
+				if ( (int)$parent_creator_id == (int)$user->get('id') ) {
+					// Do not filter on state since this persion can change the state of any attachment on this article/parent
+					}
+				else {
+					// Since the user is not the creator, they should only see published attachments
+					$query->where('a.state = 1');
+					}
+				}
+			else {
+				// For everyone else only show published attachments
+				$query->where('a.state = 1');
+				}
 			}
 
 		$query->where("a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
