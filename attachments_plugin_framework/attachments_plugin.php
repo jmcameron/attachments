@@ -721,12 +721,15 @@ class AttachmentsPlugin extends JPlugin
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param &record &$attachment database record for the attachment
+	 * @param int $parent_id the ID for the parent object
+	 * @param string $parent_entity the type of entity for this parent type
+	 * @param int $attachment_creator_id the ID of the creator of the attachment
 	 * @param object $user_id the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
-	public function userMayChangeAttachmentState(&$attachment, $user_id=null)
+    public function userMayChangeAttachmentState($parent_id, $parent_entity,
+												 $attachment_creator_id, $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
