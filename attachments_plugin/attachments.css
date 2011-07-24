@@ -29,7 +29,7 @@ div.attachmentsList thead tr {
     background-color: #DADADA;
 }
 
-#mian div.attachmentsList tbody,
+#main div.attachmentsList tbody,
 div.attachmentsList tbody {
     background: transparent;
 }
@@ -39,14 +39,19 @@ div.attachmentsList tbody tr {
     background: transparent;
 }
 
-# div.attachmentsList tbody tr.odd,
+#div.attachmentsList tbody tr.odd,
 div.attachmentsList tbody tr.odd {
     background: transparent;
 }
 
 #main div.attachmentsList tbody tr.even,
 div.attachmentsList tbody tr.even {
-    background-color: #F8F8F8;
+    background-color: #EEE;
+}
+
+#div.attachmentsList  tr.unpublished,
+div.attachmentsList  tr.unpublished {
+    background-color: #AAA;
 }
 
 #main div.attachmentsList table thead th,
@@ -66,6 +71,18 @@ div.attachmentsList table tbody td {
     vertical-align: center;
     padding: 1px 3px 1px 3px;
 }
+
+#main div.attachmentsList table tbody tr.even td,
+div.attachmentsList table tbody tr.even td {
+    background-color: #EEE;
+}
+
+#main div.attachmentsList table tbody tr.unpublished td,
+div.attachmentsList table tbody tr.unpublished td {
+    background-color: #AAA;
+    color: #333;
+}
+
 
 #main div.attachmentsList table a,
 div.attachmentsList table a {
