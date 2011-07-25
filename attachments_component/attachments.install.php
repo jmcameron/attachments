@@ -46,7 +46,7 @@ class Com_AttachmentsInstallerScript {
 	public function install($parent)
 	{
 		$app = JFactory::getApplication();
-		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_INSTALLED'), 'message');
+		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();
@@ -71,7 +71,7 @@ class Com_AttachmentsInstallerScript {
 	public function update($parent)
 	{
 		$app = JFactory::getApplication();
-		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESFULLY_UPGRADED'), 'message');
+		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();

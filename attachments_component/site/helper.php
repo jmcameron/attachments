@@ -152,7 +152,7 @@ class AttachmentsHelper
 	 *
 	 * @param string $dir full path of the directory needing an 'index.html' file
 	 *
-	 * @return true if the file was succesfully written
+	 * @return true if the file was successfully written
 	 */
 	public function write_empty_index_html($dir)
 	{
@@ -233,7 +233,7 @@ class AttachmentsHelper
 	 * @param string $upload_dir the directory to be set up
 	 * @param bool $secure true if the directory should be set up for secure mode (with the necessary .htaccess file)
 	 *
-	 * @return true if succesful
+	 * @return true if successful
 	 */
 	public function setup_upload_directory($upload_dir, $secure)
 	{
@@ -1625,7 +1625,7 @@ class AttachmentsHelper
 	 * @param string $new_parent_type the new parent type (eg, 'com_content')
 	 * @param string $new_parent_entity the new parent entity (eg, 'category')
 	 *
-	 * @return '' if succesful, else an error message
+	 * @return '' if successful, else an error message
 	 */
 	public function switch_parent(&$attachment, $old_parent_id, $new_parent_id,
 								  $new_parent_type=null, $new_parent_entity=null)

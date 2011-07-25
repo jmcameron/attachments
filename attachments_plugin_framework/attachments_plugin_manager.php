@@ -152,7 +152,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Load the langauge for this parent type
 	 *
-	 * @return true of the language was loaded succesfullly
+	 * @return true of the language was loaded successfullly
 	 */
 	public function loadLanguage()
 	{

@@ -72,7 +72,7 @@ class AttachmentsModelAttachment extends JModel
 	/**
 	 * Load the attachment data
 	 *
-	 * @return true if loaded succesfully
+	 * @return true if loaded successfully
 	 */
 	private function _loadAttachment()
 	{
