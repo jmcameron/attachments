@@ -1,4 +1,4 @@
-.. header:: 
+.. header::
 
     .. raw:: html
 
@@ -25,9 +25,9 @@ plugin to display the attachments and a component for uploading and managing
 attachments. There are options to control who can see the attachments and
 who can upload them, along with several other options to increase its
 flexibility and usefulness. Note: all options are controlled through the
-component manager. 
+component manager.
 
-.. warning:: The *Attachments* extension only works for Joomla! 1.5.  
+.. warning:: The *Attachments* extension only works for Joomla! 1.5.
              It has not been ported to version 1.6.**
 
 The 'Attachments' extension has been translated into many different
@@ -71,10 +71,10 @@ New features in Version 2.0
   descriptions.  With a bit of work, an extension developer can create a
   new 'Attachments' plugin to support adding attachments to things like CB
   personal info displays, Virtuemart product descriptions, etc.  See
-  section `What Can Files Be Attached To?`_ for more details.  
+  section `What Can Files Be Attached To?`_ for more details.
 * In the administrative back end:
      - It is now possible to add attachments to articles while they are
-       being created! 
+       being created!
      - There is an option to suppress listing attachments to unpublished
        or trashed articles or content items (although there is an easy
        way to see them if you wish).
@@ -85,7 +85,7 @@ New features in Version 2.0
 * Improved Unicode handling in filenames
 * Added more flexibility to "Who can see" and "Who can update" options.
 * Added code to fix CSS problems when the Joomla! installation is using
-  caching. 
+  caching.
 
 Uploading Restrictions
 ======================
@@ -97,6 +97,61 @@ page and click on the **System** tab.  In the *Media Settings* area, there are
 options for controlling what types of file extensions and mime types are permitted
 for uploads. The 'Attachments' extension respects these limitations.  However, the
 restriction on 'Legal Image Extensions (File Types)' is ignored.
+
+Attachments Permissions
+=======================
+
+The attachments extentension takes full advantage of the new Joomla!
+ACL/permissions system introduced in Joomla! 1.6.  This gives websites that
+use Attachments much more flexibilty to control who can create, edit, delete
+and manage attachments.
+
+Before describing the ACL permissions related to Attachments, it is important
+to understand a key underlying principle:
+
+.. important::
+
+   All attachments are attached to a parent article, category, or other
+   content item.  Creating, editing, deleting, or changing the state of an
+   attachment is considered to be a form of editing the parent content
+   item. So the user must first have permisson to edit the parent content item
+   before any Attachments-specific permissions are checked.
+
+Here are the permissions related to Attachments that are available:
+
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Permission                                         | ACL Action                       | Description / Notes                                                                                               |
++====================================================+==================================+===================================================================================================================+
+| Configure Attachments                              | core.admin                       | Allows users to edit the Attachments options.                                                                     |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Access Attachments                                 | core.manage                      | Allows users to access the Attachments extension in the administrative back end                                   |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Create Attachments                                 | core.create                      | Allows users to create attachments (if they may edit the parent).                                                 |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Delete Attachments                                 | core.delete                      | Allows users to delete attachments (if they may edit the parent).                                                 |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit Attachments                                   | core.edit                        | Allows users to edit attachments (if they may edit the parent).                                                   |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit Attachment State                              | core.edit.state                  | Allows users to change the state of any attachment (if they may edit the parent).                                 |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit Own Attachments                               | core.edit.own                    | Allows users to edit attachments they created (if they may edit the parent).                                      |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit State Of Own Attachments                      | attachments.edit.state.own       | Allows users to change the state of any attachment they created (if they may edit the parent).                    |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Delete Own Attachments                             | attachments.delete.own           | Allows users to delete their own attachments (if they may edit the parent).                                       |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit Attachments For Owned Article/Parent          | attachments.edit.ownparent       | Allows users to edit any attachment for articles/parents they they own (and may edit the parent).                 |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Edit State Of Attachments For Owned Article/Parent | attachments.edit.state.ownparent | Allows users to edit the state of any attachment for articles/parents they they own (and may edit the parent).    |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Delete Attachments For Owned Article/Parent        | attachments.delete.ownparent     | Allows users to delete any attachment for articles/parents they they own (and may edit the parent).               |
++----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
+
+* How to change the attachments permissions 
+
+* Settings for common scenarios (with screenshots)
+
+
 
 Attachments Settings
 ====================
@@ -132,7 +187,7 @@ the following:
   1.  '*Article author only*' - The links to upload and edit attachments will only
       be visible to the author of the parent article/content item (as well as
       other users with higher permissions such as
-      editors/publishers/administrators). 
+      editors/publishers/administrators).
   2.  '*Editor and above*' - The links to upload attachments will only be
       visible to users with Editor permissions and above.
   3.  '*Any logged-in user*' - The links to upload attachments will be
@@ -157,7 +212,7 @@ the following:
   attachments how they can get their attachment published. You can insert an
   appropriate message here.  If this field is empty, a general system message
   will be added suggesting that they contact their system administrator to
-  any newly uploaded attachments published. 
+  any newly uploaded attachments published.
 * **Show titles:** If set to 'Yes', a row of titles will be
   added above the list of attachments describing what is in each column.
 * **Show attachment description:** This setting controls
@@ -194,24 +249,24 @@ the following:
   options are self-explanatory:
 
   1.  '*Filename*' - If this option is selected, the attachments will be
-      sorted alphabetically by the filename. 
-  2.  '*File size(smallest first)*' 
-  3.  '*File size(largest first)*' 
-  4.  '*Description*' 
+      sorted alphabetically by the filename.
+  2.  '*File size(smallest first)*'
+  3.  '*File size(largest first)*'
+  4.  '*Description*'
   5.  '*Display filename or URL*' - All attachments that have blank
       display filenames will appear before the ones with display filenames and
-      will be sorted by their filenames.  
-  6.  '*Uploader*' - Sort by the name of the user who uploaded the attachment. 
-  7.  '*Creation date (oldest first)*' 
-  8.  '*Creation date (newest first)*' 
-  9.  '*Modification date (oldest first)*' 
-  10. '*Modification date (newest first)*' 
+      will be sorted by their filenames.
+  6.  '*Uploader*' - Sort by the name of the user who uploaded the attachment.
+  7.  '*Creation date (oldest first)*'
+  8.  '*Creation date (newest first)*'
+  9.  '*Modification date (oldest first)*'
+  10. '*Modification date (newest first)*'
   11. '*Attachment ID*' - If this option is selected, the
       attachments will be sorted by the attachment ID.  This has the effect of
       ordering the attachments in the order they were created.
-  12. '*User-defined field 1*' 
-  13. '*User-defined field 2*' 
-  14. '*User-defined field 3*' 
+  12. '*User-defined field 1*'
+  13. '*User-defined field 2*'
+  14. '*User-defined field 3*'
 
 * **Name for user-defined field 1-3:** If you have some
   additional information about each attachment that you wish to add, the
@@ -220,7 +275,7 @@ the following:
   entries.  Clear the name to disable the display and editing of this field.
   The user-defined fields will be shown in the order listed here.  The maximum
   length of each user-defined field name is 40 characters.  The data in these
-  fields may be up to 100 characters long. 
+  fields may be up to 100 characters long.
 
   .. hint:: If you add an asterisk to the end of a user-defined field name, it
      will not be displayed on the front end.  It will be visible when an
@@ -244,7 +299,7 @@ the following:
      - '*At the end*'
      - '*Custom placement*' - With this option, the attachments list will
        appear in the article (or content item) where ever the special tag:
-       {attachments} occurs.  
+       {attachments} occurs.
 
        .. warning:: In custom placement mode, any article (or content item)
           that does not include this tag will display its the attachments list
@@ -305,7 +360,7 @@ the following:
   without a numeric ID at the beginning will be applied to all content items.
   So it is good practice to put such global overrides first in the list and
   then override the item-by-item custom titles afterwards.
-   
+
   Note: If you wish to change the titles used for attachments lists globally,
   you may edit the translations file entry 'ATTACHMENTS TITLE' in the translation
   files::
@@ -319,7 +374,7 @@ the following:
 * **Hide Attachments for:**
   Comma-separated list of keywords or Sections/Categories of articles for
   which the attachments list should be hidden. Five special keywords may be
-  used: 
+  used:
 
   - 'frontpage' to suppress displays of attachments on the front page,
 
@@ -327,15 +382,15 @@ the following:
     layout,
 
   - 'all_but_article_views' to allow displays of attachments only in
-    article views, 
+    article views,
 
   - 'always_show_section_attachments' to enable displaying
     section attachments when 'all_but_article_views' is given, and
 
   - 'always_show_category_attachments' to enable displaying category attachments
-    when 'all_but_article_views' is given. 
+    when 'all_but_article_views' is given.
 
-  Omit quotes when entering the keyword options.  
+  Omit quotes when entering the keyword options.
   **The 'frontpage' option should be honored by all content types, but content
   types other than articles, sections, and categories may or may not honor the
   'all_but_article_views' option and the other options.** Article
@@ -364,7 +419,7 @@ the following:
   setting until you log out as administrator.  So changing this parameter may
   not seem to have an effect.  This parameter setting will come into effect
   the next time you log in as administrator.
-* **Secure attachment downloads:** 
+* **Secure attachment downloads:**
   By default, the 'Attachments' extension saves attachment files in a publicly
   accessible subdirectory.  If you choose the *secure* option, the directory
   in which the attachments are saved will be made publicly inaccessible.  The
@@ -390,7 +445,7 @@ the following:
   'Who can see attachments' is set to 'No one'.  The 'Who can see
   attachments' option still controls whether attachments can be downloaded,
   even in secure mode.  This option is only enforced in secure mode.
-* **Download mode for secure downloads:** 
+* **Download mode for secure downloads:**
   This option controls whether files should be downloaded as separate files or
   displayed in the browser (if the browser can handle that type of file).
   There are two options:
@@ -478,7 +533,7 @@ descriptions in the Section or Category editors.
 If you wish to learn more about how to develop a new Attachment plugin, there
 is a manual that is available as part of this 'Attachments' installation:
 
-* `Attachments Plugin Creation Manual 
+* `Attachments Plugin Creation Manual
   <plugin_manual/html/index.html>`_
 
 
@@ -566,7 +621,7 @@ Warnings
 ========
 
 * **If you have attachment files that are sensitive or private, use the
-  *Secure attachment downloads* option!** If you do not use the secure option, 
+  *Secure attachment downloads* option!** If you do not use the secure option,
   the attachment files are saved in a public subdirectory and are accessible
   to anyone that knows the full URL.  The *secure* option prevents access by
   anyone that does not have appropriate permissions (as determined by the
@@ -600,15 +655,15 @@ Warnings
        manager page in the back end.
      - The parent article or content item is not published.
      - The option 'Who can see attachments' is set to 'logged-in' and you are
-       not logged in on the front end. 
+       not logged in on the front end.
      - Or the option 'Who can see attachments' is set to 'no one'. This can be
        changed via the Parameter editor in the component manager.
      - The 'Content - Attachments' plugin is not enabled.  Use the plugin manager
-       to enable it. 
+       to enable it.
      - In the 'Content - Attachments' (via the plugin manager), the access
-       level is not set to 'Public'. 
+       level is not set to 'Public'.
      - If your site uses caching, try clearing the caches and refreshing the
-       page. 
+       page.
 * If you encounter limits on the sizes of files that you attempt to upload,
   try adding the following lines to the .htaccess file in the root of
   your Joomla! website::
@@ -662,7 +717,7 @@ Warnings
   consult the forums:
 
      - `Attachments Forums at
-       http://joomlacode.org/gf/project/attachments/forum/ 
+       http://joomlacode.org/gf/project/attachments/forum/
        <http://joomlacode.org/gf/project/attachments/forum/>`_
 
 
@@ -683,7 +738,7 @@ Upgrading is much easier now.  Simply install the new version of 'Attachments'.
   has been tested with 2.0 and 1.3.4 (but not with earlier versions).
 * If you wish to retain any existing attachments, you do not need to do
   anything.  Simply install the new version and it will update everything
-  appropriately. 
+  appropriately.
 * If you do not wish to keep existing attachments, delete them all first (in
   the administrative back end).
 * The multi-installer will install all necessary components and plugins and
@@ -691,7 +746,7 @@ Upgrading is much easier now.  Simply install the new version of 'Attachments'.
   first and then disable plugins as desired.  If there is a problem with
   the installation, you may need to do a manual piece-by-piece installation.
   See the INSTALL file included within the main installation zip file for
-  directions. 
+  directions.
 
 
 Acknowledgements
