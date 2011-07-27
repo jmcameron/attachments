@@ -93,21 +93,21 @@ a.display {
 div.warning {
     background-color: #ffe4e4;
     border: 1px solid #f66;
-    width: 80%;
+    width: 60%;
     margin: 4px 0px 0px 20px;
     padding: 6px;
 }
 div.important {
     background-color: #e4ffe4;
     border: 1px solid #6f6;
-    width: 80%;
+    width: 60%;
     margin: 4px 0px 0px 20px;
     padding: 6px;
 }
 div.hint {
     background-color: #DDF;
     border: 1px solid #66F;
-    width: 80%;
+    width: 60%;
     margin: 4px 0px 0px 20px;
     padding: 6px;
 }
@@ -193,6 +193,9 @@ blockquote {
     margin-top: 0 !important;
 }
 
+.float-right {
+    float: right;
+}
 
 /* Color the links (including sections) */
 a:link    { color : #003366; text-decoration: underline; }

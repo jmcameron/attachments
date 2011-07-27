@@ -50,6 +50,9 @@ New features in Version 3.0
   attachments.  See the `Attachments Permissions`_ section for more
   information.
 
+* Full support for viewing access levels.  This means you can set some of your
+  attachments to be visible by anyone, and some of them visible only to users
+  in certain groups (defined by the Access Levels).
 
 Major features of Attachments
 =============================
@@ -167,8 +170,110 @@ options grouped under several tabs.
 Basic Options
 -------------
 
+.. image:: images/options-basic.png
+   :class: float-right
+   :alt: Basic Options
+
+* **Attachments published by default:** This 'auto publish' feature controls
+  whether new attachments are published by default when they are added. If
+  'Yes' is selected, when attachments are added, they will published
+  immediately and will be visible to users. If 'No' is selected, new
+  attachments will not be published by default.  An administrator or someone
+  with appropriate permissions will need to publish them from the
+  administrative back end before the attachments will be available.
+
+* **Auto Publish Warning:** If the auto-publish option is
+  disabled (see previous option), you may wish to inform those adding
+  attachments how they can get their attachment published. You can insert an
+  appropriate message here.  If this field is empty, a general system message
+  will be added suggesting that they contact their system administrator to
+  any newly uploaded attachments published.
+
+* **Default Access Level:** The default access level for new attachments.
+  Each attachment has an 'access level' which controls who can see or
+  download that attachment.  When an attachment is created, its access level
+  is set to this default value initially (if the attachment creator is in
+  appropriate groups).  A site administrator or someone with appropriate
+  permissions may change the attachment's access level to control who can
+  see that specific attachments.
+
+* **Name for user-defined field 1-3:** If you have some
+  additional information about each attachment that you wish to add, the
+  'Attachments' extension allows you to defined up to three optional user-defined
+  fields.  To create a new field, insert the name for it in one of the three
+  entries.  Clear the name to disable the display and editing of this field.
+  The user-defined fields will be shown in the order listed here.  The maximum
+  length of each user-defined field name is 40 characters.  The data in these
+  fields may be up to 100 characters long.
+
+  .. hint:: If you add an asterisk to the end of a user-defined field name, it
+     will not be displayed on the front end.  It will be visible when an
+     attachment is edited on the front end and always visible in the back
+     end.  This hidden user-defined field can be used to order attachments in
+     an arbitrary order by puttting integer values in the field.
+
+* **Maximum filename or URL length:**
+  The maximum filename or URL length for attachments list.  Filenames or URLs
+  longer than this will be truncated and put into the display name (for
+  display purposes only, the actual filename or URL will not be changed).  A
+  value of 0 means the filename length is unlimited by this option (the
+  display_name field in the attachments database table is limited to 80
+  characters).  Note: If display filenames or URLs are truncated by this option, 
+  the truncated name will be inserted into the "Display Filename / URL" field.
+  This option only affects attachments added after this option is set.
+
+* **Where should attachments be placed?** This option controls
+  the location in the article (or content item) the list of attachments will be placed.
+  This option applies to all attachments lists:
+
+     - '*At the beginning*'
+     - '*At the end*'
+     - '*Custom placement*' - With this option, the attachments list will
+       appear in the article (or content item) where ever the special tag:
+       {attachments} occurs.
+
+       .. warning:: In custom placement mode, any article (or content item)
+          that does not include this tag will display its the attachments list
+          at its end.
+
+       In this mode, when editing an article, section, or category in the back
+       end, an extra button will be displayed: [Insert {attachments} token].
+       Position the cursor where you want the custom placement token and use
+       this button to insert the token.  This button will add surrounding HTML
+       tags to hide the token when it is not replaced (eg, when the
+       attachments list is not supposed to be visible).  In HTML, the token
+       looks like this with the surrounding tags to hide it::
+
+         <span class="hide">{attachments}</span>
+
+       In the back end editors, you will see the {attachments} tag but not the
+       HTML 'span' tags unless you switch to HTML mode.  In the front end, you
+       will never see the {attachments} tag unless the insert_attachments_tag
+       plugin is disabled.  If you wish to remove the {attachments} token, you
+       may want to use the "HTML" view mode in the editor to make sure that
+       you also delete the surrounding span tags.
+     - '*Disabled (filter)*' - This option will disable the display of
+       attachments lists and suppress the display of any {attachments}
+       tags in articles or content items.
+     - '*Disabled (no filter)*' - This option will disable the display of
+       attachments lists and will not suppress the display of any
+       {attachments} tags in articles (or content items).
+
+* **Allow frontend editing of the access level:**
+  Allow setting the access level for an attachment from the front end when
+  editing an attachment or creating a new attachment.  The 'access level'
+  controls which groups may view (or access) the attachment. Note that the no
+  one editing an attachment will ever be able to set the access level for it
+  to a level for which they are not authorized.
+
+
 Formatting Options
 ------------------
+
+.. image:: images/options-formatting.png
+   :class: float-right
+   :alt: Formatting Options
+
 
 Visibility Options
 ------------------
@@ -183,19 +288,6 @@ Permissions
 -----------
 
 
-* **Attachments published by default:** This 'auto
-  publish' feature controls whether new attachments are published by
-  default when they are added. If 'Yes' is selected, when attachments
-  are added, they will published immediately and will be visible to users. If
-  'No' is selected, new attachments will not be published by default.
-  An administrator will need to publish them from the administrative back end
-  before the attachments will be available.
-* **Auto Publish Warning:** If the auto-publish option is
-  disabled (see previous option), you may wish to inform those adding
-  attachments how they can get their attachment published. You can insert an
-  appropriate message here.  If this field is empty, a general system message
-  will be added suggesting that they contact their system administrator to
-  any newly uploaded attachments published.
 * **Show titles:** If set to 'Yes', a row of titles will be
   added above the list of attachments describing what is in each column.
 * **Show attachment description:** This setting controls
@@ -250,66 +342,6 @@ Permissions
   12. '*User-defined field 1*'
   13. '*User-defined field 2*'
   14. '*User-defined field 3*'
-
-* **Name for user-defined field 1-3:** If you have some
-  additional information about each attachment that you wish to add, the
-  'Attachments' extension allows you to defined up to three optional user-defined
-  fields.  To create a new field, insert the name for it in one of the three
-  entries.  Clear the name to disable the display and editing of this field.
-  The user-defined fields will be shown in the order listed here.  The maximum
-  length of each user-defined field name is 40 characters.  The data in these
-  fields may be up to 100 characters long.
-
-  .. hint:: If you add an asterisk to the end of a user-defined field name, it
-     will not be displayed on the front end.  It will be visible when an
-     attachment is edited on the front end and always visible in the back
-     end.  This hidden user-defined field can be used to order attachments in
-     an arbitrary order by puttting integer values in the field.
-
-* **Maximum filename length:**
-  The maximum filename length for attachments list.  Filenames longer than
-  this will be truncated and put into the display filename (for display purposes
-  only, the actual filename will not be changed).  A value of 0 means the
-  filename length is unlimited by this option (the filename field in the attachments
-  database table is limited to 80 characters).   Note: If display filenames are truncated
-  by this option, the truncated filename will be inserted into the "display filename"
-  field.  This option only affects attachments added after this option is set.
-* **Where should attachments be placed?** This option controls
-  the location in the article (or content item) the list of attachments will be placed.
-  This option applies to all attachments lists:
-
-     - '*At the beginning*'
-     - '*At the end*'
-     - '*Custom placement*' - With this option, the attachments list will
-       appear in the article (or content item) where ever the special tag:
-       {attachments} occurs.
-
-       .. warning:: In custom placement mode, any article (or content item)
-          that does not include this tag will display its the attachments list
-          at its end.
-
-       In this mode, when editing an article, section, or category in the back
-       end, an extra button will be displayed: [Insert {attachments} token].
-       Position the cursor where you want the custom placement token and use
-       this button to insert the token.  This button will add surrounding HTML
-       tags to hide the token when it is not replaced (eg, when the
-       attachments list is not supposed to be visible).  In HTML, the token
-       looks like this with the surrounding tags to hide it::
-
-         <span class="hide">{attachments}</span>
-
-       In the back end editors, you will see the {attachments} tag but not the
-       HTML 'span' tags unless you switch to HTML mode.  In the front end, you
-       will never see the {attachments} tag unless the insert_attachments_tag
-       plugin is disabled.  If you wish to remove the {attachments} token, you
-       may want to use the "HTML" view mode in the editor to make sure that
-       you also delete the surrounding span tags.
-     - '*Disabled (filter)*' - This option will disable the display of
-       attachments lists and suppress the display of any {attachments}
-       tags in articles or content items.
-     - '*Disabled (no filter)*' - This option will disable the display of
-       attachments lists and will not suppress the display of any
-       {attachments} tags in articles (or content items).
 * **CSS style for attachments tables:** To override the CSS
   styling of attachments lists, specify your own style name here.  The default
   style name is 'attachmentsList'.  See  the section `CSS Styling of Attachment Lists`_.
