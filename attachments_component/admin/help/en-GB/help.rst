@@ -6,9 +6,9 @@
 
 .. class:: version
 
-**Version 3.0 pre-Alpha - April 20, 2011**
+**Version 3.0 - August, 2011**
 
-**This version is for Joomla 1.6+**
+**This version is for Joomla 1.6/1.7+**
 
 **NOTE: This help file has not been updated!**
 
@@ -19,21 +19,21 @@
 Introduction
 ============
 
-The 'Attachments' extension for Joomla! allows files to be uploaded
-and attached to articles or other types of content. 'Attachments' includes a
-plugin to display the attachments and a component for uploading and managing
-attachments. There are options to control who can see the attachments and
-who can upload them, along with several other options to increase its
-flexibility and usefulness. Note: all options are controlled through the
-component manager.
+The 'Attachments' extension for Joomla! allows files to be uploaded and
+attached to articles, categories, or other types of content. The 'Attachments'
+extension includes a plugin to display the attachments and a component for
+uploading and managing attachments, as well as other plugins. There are
+options to control who can see the attachments and who can upload them, along
+with several many options to increase its flexibility and usefulness. Note:
+all options are controlled through the component manager.
 
-.. warning:: The *Attachments* extension only works for Joomla! 1.5.
-             It has not been ported to version 1.6.**
+.. warning:: This version of the *Attachments* extension only works for
+             Joomla! 1.6 or greater. 
 
 The 'Attachments' extension has been translated into many different
 languages.  Please see the `Translations`_ section for the list of
 available translations.  Most of these languages packs are in the process
-of being updated for 'Attachments' version 2.0.
+of being updated for 'Attachments' version 3.0.
 
 If you wish to subscribe to an email list for announcements about
 this extension, please subscribe using this web page:
@@ -42,61 +42,58 @@ this extension, please subscribe using this web page:
   <http://jmcameron.net/attachments/email-list.html>`_
 
 
-New features in Version 2.0
+New features in Version 3.0
 ===========================
 
-* You can now manage attachments from the article editor, including adding,
+* Full support for the new ACL/permissions system of Joomla 1.6/1.7+.  This
+  gives you significant flexibility to control who can create, edit, or delete
+  attachments.  See the `Attachments Permissions`_ section for more
+  information.
+
+
+Major features of Attachments
+=============================
+
+* You can manage attachments from the article editor, including adding,
   editing, and deleting attachments.
-* All attachments are updated by Ajax and do not require full page reloads.
+* You can create attachments while an article is being created.
+* All attachments lists are updated by Ajax and do not require full page reloads.
 * You can "attach" URLs as well as files to content items.
 * You can show the attachments list anywhere in an article (or content item).
 * New optional field in attachments lists to display the name of the uploader
-* Implemented a multi-installer so that installation of all parts of the
-  'Attachments' extension only requires one install (and enables the plugins
-  automatically).  This makes it extremely easy to install this extension
-  even though it now has one component and seven plugins.  Note that the
-  Joomla! 'upgrade' method is now the default for all parts of the
-  'Attachments' extension.  This means that you do not need to UN-install old
-  versions of 'Attachments' before installing this version.
-* Converted attachment file storage to use paths like::
-
-        attachments/article/23/file.txt
-
-  This eliminates all file prefixes used in earlier versions.  It does
-  mean that any one content item cannot have duplicate file names.  This
-  is not much of a limitation in practice.
-* Refactored the code to add "Attachments plugins".  These plugins allow
+* The Attachments extension supports "Attachments plugins".  These plugins allow
   attaching files to any content item that invokes the ``onPrepareContent``
-  plugin.  For example, you can now attach files to Section and Category
-  descriptions.  With a bit of work, an extension developer can create a
-  new 'Attachments' plugin to support adding attachments to things like CB
-  personal info displays, Virtuemart product descriptions, etc.  See
-  section `What Can Files Be Attached To?`_ for more details.
+  plugin.  For example, you can attach files to Category descriptions.  
+  With a bit of work, an extension developer can create a new 'Attachments'
+  plugin to support adding attachments to things like CB personal info
+  displays, Virtuemart product descriptions, etc.  See section 
+  `What Can Files Be Attached To?`_ for more details.
 * In the administrative back end:
-     - It is now possible to add attachments to articles while they are
-       being created!
      - There is an option to suppress listing attachments to unpublished
        or trashed articles or content items (although there is an easy
        way to see them if you wish).
-     - Added filtering to the list of articles
-     - Reworked the tabular listing in the back end to allow sorting on
-       various columns
+     - Filtering of the list of articles
+     - Sorting the list of attachments by any of the column headers.
      - Several new administrative utility commands
-* Improved Unicode handling in filenames
-* Added more flexibility to "Who can see" and "Who can update" options.
-* Added code to fix CSS problems when the Joomla! installation is using
-  caching.
 
 Uploading Restrictions
 ======================
 
-Not all types of attachment files can be uploaded.  The 'Attachments' extension
-will not allow uploading of files that are not permitted by the Joomla! Media Manager.
-To see (or change) what file types are allowed, go to the **Global Configuration**
-page and click on the **System** tab.  In the *Media Settings* area, there are
-options for controlling what types of file extensions and mime types are permitted
-for uploads. The 'Attachments' extension respects these limitations.  However, the
-restriction on 'Legal Image Extensions (File Types)' is ignored.
+Not all types of attachment files can be uploaded.  The 'Attachments'
+extension will not allow uploading of files that are not permitted by the
+Joomla! Media Manager.  To see (or change) what file types are allowed, go to
+the **Media manager** item under the **Content** menu.  Click on the
+**Options** button on the toolbar and select the *Component* tab.  There you
+will see the options for controlling what types of file extensions and mime
+types are permitted for uploads. The 'Attachments' extension respects these
+limitations.  However, the restriction on 'Legal Extensions (File
+Types)' is ignored.  Add extensions for any file type that you require in the
+"Legal Extensions (File Types)" field.  You may also add appropriate MIME
+types in the "Legal MIME Types" field.
+
+.. warning::  If you add items to the "Legal Extensions" or "Legal MIME Types"
+              fields, do not add any spaces!
+
 
 Attachments Permissions
 =======================
@@ -147,9 +144,14 @@ Here are the permissions related to Attachments that are available:
 | Delete Attachments For Owned Article/Parent        | attachments.delete.ownparent     | Allows users to delete any attachment for articles/parents they they own (and may edit the parent).               |
 +----------------------------------------------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------+
 
-* How to change the attachments permissions 
+How to change the attachments permissions 
+-----------------------------------------
 
-* Settings for common scenarios (with screenshots)
+
+Permissions Settings for Common Scenarios
+-----------------------------------------
+
+(with screenshots)
 
 
 
@@ -159,46 +161,27 @@ Attachments Settings
 All of the settings for 'Attachments' are controlled via the
 component manager. To access these settings, go to the administrative
 back end and select "Attachments" under the "Component" menu.  Click
-on the "Parameters" button on the right end of the tool bar and you will see
-a series of parameters for this extension. These parameters include
-the following:
+on the "Options" button on the right end of the tool bar and you will see
+options grouped under several tabs.
 
-* **Who can see attachments:** This setting controls
-  who will be able to see the links for the attachments. There are
-  three options:
+Basic Options
+-------------
 
-  1.  '*Any logged-in user*'. - If this option is selected, only
-      users who are logged into the website will be able to see the links
-      to the attachments.
-  2.  '*Anyone*' - If this option is selected, the links to the
-      attachments will be visible to anyone visiting the website, whether
-      they are logged in or not (even in 'secure' mode).
-  3.  '*No one*' - If this option is selected, the attachments list and
-      links to download the attachments will NOT be visible to normal
-      visitors to the website (on the front end), whether they are logged
-      in or not.  In secure mode, this prevents downloading attachments
-      from the front end.  Administrators, however, will still see the
-      attachments list and be able to download the files even if 'no one'
-      is selected.
+Formatting Options
+------------------
 
-* **Who can add attachments:** This setting controls who is able to add
-  attachments to articles or other content elements. There are four options:
+Visibility Options
+------------------
 
-  1.  '*Article author only*' - The links to upload and edit attachments will only
-      be visible to the author of the parent article/content item (as well as
-      other users with higher permissions such as
-      editors/publishers/administrators).
-  2.  '*Editor and above*' - The links to upload attachments will only be
-      visible to users with Editor permissions and above.
-  3.  '*Any logged-in user*' - The links to upload attachments will be
-      visible to any user who is logged in.
-  4.  '*No one*' - If this option is selected, the "Add Attachments" link
-      to upload the attachments will NOT be visible to normal visitors to
-      the website (on the front end), whether they are logged in or not.
-      In secure mode, this prevents uploading attachments from the front
-      end.  Administrators, however, will be able to see the "Add
-      attachments" link and be able to upload files even if 'no one' is
-      selected.
+Advanced Options
+----------------
+
+Security Options
+----------------
+
+Permissions
+-----------
+
 
 * **Attachments published by default:** This 'auto
   publish' feature controls whether new attachments are published by
