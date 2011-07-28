@@ -49,9 +49,7 @@ class AttachmentsDefines
 	 *     allow breaking the string up with dots to join the parts to make
 	 *     this easier to read.
 	 */
-	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS = '{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.state.own":{"6":1,"3":1},"attachments.edit.state.ownparent":{"6":1,"3":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
-
-
+	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS = '{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.state.own":{"6":1,"4":1},"attachments.edit.state.ownparent":{"6":1,"4":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
 
 
 	/** Attachments subdirectory
