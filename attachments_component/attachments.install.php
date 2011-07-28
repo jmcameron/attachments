@@ -50,7 +50,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();
-		$app->enqueueMessage('<br/>', 'warning');
+		$app->enqueueMessage('<br/>', 'message');
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 
 		Com_AttachmentsInstallerScript::installPermissions();
-		$app->enqueueMessage('<br/>', 'warning');
+		$app->enqueueMessage('<br/>', 'message');
 	}
 
 
