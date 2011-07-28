@@ -25,8 +25,8 @@
 <li><a class="reference internal" href="#new-features-in-version-3-0" id="id2">New features in Version 3.0</a></li>
 <li><a class="reference internal" href="#major-features-of-attachments" id="id3">Major features of Attachments</a></li>
 <li><a class="reference internal" href="#uploading-restrictions" id="id4">Uploading Restrictions</a></li>
-<li><a class="reference internal" href="#attachments-permissions" id="id5">Attachments Permissions</a></li>
-<li><a class="reference internal" href="#attachments-settings" id="id6">Attachments Settings</a></li>
+<li><a class="reference internal" href="#attachments-settings" id="id5">Attachments Settings</a></li>
+<li><a class="reference internal" href="#attachments-permissions" id="id6">Attachments Permissions</a></li>
 <li><a class="reference internal" href="#display-filename-or-url" id="id7">Display Filename or URL</a></li>
 <li><a class="reference internal" href="#attaching-urls" id="id8">Attaching URLs</a></li>
 <li><a class="reference internal" href="#what-can-files-be-attached-to" id="id9">What Can Files Be Attached To?</a></li>
@@ -72,7 +72,8 @@ attachments.  See the <a class="reference internal" href="#attachments-permissio
 information.</li>
 <li>Full support for viewing access levels.  This means you can set some of your
 attachments to be visible by anyone, and some of them visible only to users
-in certain groups (defined by the Access Levels).</li>
+in certain groups (as defined by the Access Levels).</li>
+<li>Simplified and improved options for hiding attachments in various contexts.</li>
 </ul>
 </div>
 <div class="section" id="major-features-of-attachments">
@@ -133,96 +134,8 @@ types in the &quot;Legal MIME Types&quot; field.</p>
 fields, do not add any spaces!</p>
 </div>
 </div>
-<div class="section" id="attachments-permissions">
-<h1><a class="toc-backref" href="#id5">Attachments Permissions</a></h1>
-<p>The attachments extentension takes full advantage of the new Joomla!
-ACL/permissions system introduced in Joomla! 1.6.  This gives websites that
-use Attachments much more flexibilty to control who can create, edit, delete
-and manage attachments.</p>
-<p>Before describing the ACL permissions related to Attachments, it is important
-to understand a key underlying principle:</p>
-<div class="important">
-<p class="first admonition-title">Important</p>
-<p class="last">All attachments are attached to a parent article, category, or other
-content item.  Creating, editing, deleting, or changing the state of an
-attachment is considered to be a form of editing the parent content
-item. So the user must first have permisson to edit the parent content item
-before any Attachments-specific permissions are checked.</p>
-</div>
-<p>Here are the permissions related to Attachments that are available:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="26%" />
-<col width="17%" />
-<col width="57%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">Permission</th>
-<th class="head">ACL Action</th>
-<th class="head">Description / Notes</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>Configure Attachments</td>
-<td>core.admin</td>
-<td>Allows users to edit the Attachments options.</td>
-</tr>
-<tr><td>Access Attachments</td>
-<td>core.manage</td>
-<td>Allows users to access the Attachments extension in the administrative back end</td>
-</tr>
-<tr><td>Create Attachments</td>
-<td>core.create</td>
-<td>Allows users to create attachments (if they may edit the parent).</td>
-</tr>
-<tr><td>Delete Attachments</td>
-<td>core.delete</td>
-<td>Allows users to delete attachments (if they may edit the parent).</td>
-</tr>
-<tr><td>Edit Attachments</td>
-<td>core.edit</td>
-<td>Allows users to edit attachments (if they may edit the parent).</td>
-</tr>
-<tr><td>Edit Attachment State</td>
-<td>core.edit.state</td>
-<td>Allows users to change the state of any attachment (if they may edit the parent).</td>
-</tr>
-<tr><td>Edit Own Attachments</td>
-<td>core.edit.own</td>
-<td>Allows users to edit attachments they created (if they may edit the parent).</td>
-</tr>
-<tr><td>Edit State Of Own Attachments</td>
-<td>attachments.edit.state.own</td>
-<td>Allows users to change the state of any attachment they created (if they may edit the parent).</td>
-</tr>
-<tr><td>Delete Own Attachments</td>
-<td>attachments.delete.own</td>
-<td>Allows users to delete their own attachments (if they may edit the parent).</td>
-</tr>
-<tr><td>Edit Attachments For Owned Article/Parent</td>
-<td>attachments.edit.ownparent</td>
-<td>Allows users to edit any attachment for articles/parents they they own (and may edit the parent).</td>
-</tr>
-<tr><td>Edit State Of Attachments For Owned Article/Parent</td>
-<td>attachments.edit.state.ownparent</td>
-<td>Allows users to edit the state of any attachment for articles/parents they they own (and may edit the parent).</td>
-</tr>
-<tr><td>Delete Attachments For Owned Article/Parent</td>
-<td>attachments.delete.ownparent</td>
-<td>Allows users to delete any attachment for articles/parents they they own (and may edit the parent).</td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="how-to-change-the-attachments-permissions">
-<h2>How to change the attachments permissions</h2>
-</div>
-<div class="section" id="permissions-settings-for-common-scenarios">
-<h2>Permissions Settings for Common Scenarios</h2>
-<p>(with screenshots)</p>
-</div>
-</div>
 <div class="section" id="attachments-settings">
-<h1><a class="toc-backref" href="#id6">Attachments Settings</a></h1>
+<h1><a class="toc-backref" href="#id5">Attachments Settings</a></h1>
 <p>All of the settings for 'Attachments' are controlled via the
 component manager. To access these settings, go to the administrative
 back end and select &quot;Attachments&quot; under the &quot;Component&quot; menu.  Click
@@ -340,18 +253,6 @@ to a level for which they are not authorized.</p>
 <div class="section" id="formatting-options">
 <h2>Formatting Options</h2>
 <img alt="Formatting Options" class="float-right" src="images/options-formatting.png" />
-</div>
-<div class="section" id="visibility-options">
-<h2>Visibility Options</h2>
-</div>
-<div class="section" id="advanced-options">
-<h2>Advanced Options</h2>
-</div>
-<div class="section" id="security-options">
-<h2>Security Options</h2>
-</div>
-<div class="section" id="permissions">
-<h2>Permissions</h2>
 <ul>
 <li><p class="first"><strong>Show titles:</strong> If set to 'Yes', a row of titles will be
 added above the list of attachments describing what is in each column.</p>
@@ -359,8 +260,8 @@ added above the list of attachments describing what is in each column.</p>
 <li><p class="first"><strong>Show attachment description:</strong> This setting controls
 whether the attachment description is shown in the list of attachments.</p>
 </li>
-<li><p class="first"><strong>Show attachment uploader:</strong> Show the username of the
-one who uploaded the attachment.</p>
+<li><p class="first"><strong>Show attachment creator:</strong> Show the username of the
+one who created (uploaded) the attachment.</p>
 </li>
 <li><p class="first"><strong>Show file size:</strong> This setting controls
 whether the attachment file size is shown in the list of attachments.</p>
@@ -416,28 +317,64 @@ ordering the attachments in the order they were created.</li>
 <li>'<em>User-defined field 3</em>'</li>
 </ol>
 </li>
+</ul>
+</div>
+<div class="section" id="visibility-options">
+<h2>Visibility Options</h2>
+<p>These options control when attachments will be visible on the front page,
+asssuming the user is in the appropriate groups to see the attachments.</p>
+<img alt="Visibility Options" class="float-right" src="images/options-visibility.png" />
+<ul class="simple">
+<li><strong>Hide attachments on the front page:</strong> Select this option to prevent any
+attachments from being shown on the front page of your website.</li>
+<li><strong>Hide attachments before 'Read More' breaks:</strong> Select this option to
+prevent attachments from being displayed on the the front end if they are
+before 'Read More' breaks in articles.  If you click on the link to read the
+full article, the attachments will be shown.</li>
+<li><strong>Hide attachments on blog pages:</strong> Select this option to prevent
+attachments from being shown on any page with 'blog' layouts.</li>
+<li><strong>Hide attachments except on article views:</strong> Select this option to prevent
+attachments from being shown on any page on the front page except for
+views for single specifc articles.</li>
+<li><strong>Always show attachments on category views:</strong> Select this option to always
+show attachments on category views -- regardless of other options.</li>
+<li><strong>Hide attachments for categories:</strong> Hide attachments on any category views
+for the selected categories.  Note that attachments will be displayed for
+children categories unless they are explicitly selected.</li>
+</ul>
+<div class="small-figure figure">
+<img alt="Hide Categories Selection" src="images/options-hide-categories.png" />
+<p class="caption">To select or deselect categories without affecting other categories, hold
+the Control-key when mouse-clicking on the category.  In the figure, only
+one category is selcted.</p>
+</div>
+<ul class="simple">
+<li><strong>Hide 'Add Attachments' link:</strong> Always hide the 'Add Attachments' link on
+the front page.  This requires attachments to be added to articles, etc,
+by editing them in the front page (where an 'Add Attachments' button will
+be available under the editing area).</li>
+</ul>
+</div>
+<div class="section" id="advanced-options">
+<h2>Advanced Options</h2>
+<img alt="Advanced Options" class="float-right" src="images/options-advanced.png" />
+<ul>
+<li><p class="first"><strong>Characters forbidden in uploaded filenames:</strong> Filenames containing these
+characters will not be allowed to be uploaded.  These characters are
+problematic in the URL presented to the user for file attachments in
+'non-secure' mode so they are forbidden.  These characters are generally not
+an issue when using 'secure' mode since the filename is not used as part of
+the URL presented to the user.</p>
+</li>
 <li><p class="first"><strong>CSS style for attachments tables:</strong> To override the CSS
 styling of attachments lists, specify your own style name here.  The default
 style name is 'attachmentsList'.  See  the section <a class="reference internal" href="#css-styling-of-attachment-lists">CSS Styling of Attachment Lists</a>.</p>
-</li>
-<li><p class="first"><strong>URL to register:</strong> If a special URL is needed to register new users,
-insert that URL here.  This option might be useful if a special login page has been created.</p>
 </li>
 <li><p class="first"><strong>File link open mode:</strong>
 This mode how the links to attachment files will be opened.  'In same window'
 means the file will be opened in the same browser window.  'In new window'
 means the file will be opened in a new window.  In some browsers, using the
 'In new window' option will actually open the attachment in a new tab.</p>
-</li>
-<li><p class="first"><strong>Subdirectory for uploads:</strong> The 'Attachments'
-extension code will put files into this subdirectory under the top
-of the Joomla site.  The default is 'attachments'.
-Note that if this subdirectory is changed, it will only affect future
-uploads.  Previously uploaded files will stay in the old subdirectory
-and records in the attachments database will still point to those files.
-If you wish to move the files from the old subdirectory to the new
-subdirectory, you will need move the files and then update their
-entries in the attachments database table manually.</p>
 </li>
 <li><p class="first"><strong>Custom titles for attachments lists:</strong> By default, the 'Attachments'
 extension inserts the title &quot;Attachments:&quot; above the list of attachments for
@@ -464,30 +401,6 @@ administrator/language/qq-QQ/qq-QQ.plg_frontend_attachments.ini
 has 'ATTACHMENTS TITLE' on left side of the '=' sign.  Edit anything to the
 right of the '=' sign.  Do not change anything to the left of the '=' sign.)</p>
 </li>
-<li><p class="first"><strong>Hide Attachments for:</strong>
-Comma-separated list of keywords or Sections/Categories of articles for
-which the attachments list should be hidden. Five special keywords may be
-used:</p>
-<ul class="simple">
-<li>'frontpage' to suppress displays of attachments on the front page,</li>
-<li>'blog' to suppress displays of attachments on any page using the 'blog'
-layout,</li>
-<li>'all_but_article_views' to allow displays of attachments only in
-article views,</li>
-<li>'always_show_section_attachments' to enable displaying
-section attachments when 'all_but_article_views' is given, and</li>
-<li>'always_show_category_attachments' to enable displaying category attachments
-when 'all_but_article_views' is given.</li>
-</ul>
-<p>Omit quotes when entering the keyword options.
-<strong>The 'frontpage' option should be honored by all content types, but content
-types other than articles, sections, and categories may or may not honor the
-'all_but_article_views' option and the other options.</strong> Article
-Section/Category ids should be entered as numeric section and category IDs
-separated with a slash(/): Section#/CategoryNum, SectionNum/CategoryNum.
-Specify just 'SectionNum' to cover all Categories within the Section.
-Example: 23/10, 23/11, 24</p>
-</li>
 <li><p class="first"><strong>Timeout for checking links:</strong>
 Timeout for checking links (seconds).  Whenever a link is added as an
 attachment, the link is checked directly (you can disable this check in the
@@ -512,6 +425,12 @@ setting until you log out as administrator.  So changing this parameter may
 not seem to have an effect.  This parameter setting will come into effect
 the next time you log in as administrator.</p>
 </li>
+</ul>
+</div>
+<div class="section" id="security-options">
+<h2>Security Options</h2>
+<img alt="Security Options" class="float-right" src="images/options-security.png" />
+<ul>
 <li><p class="first"><strong>Secure attachment downloads:</strong>
 By default, the 'Attachments' extension saves attachment files in a publicly
 accessible subdirectory.  If you choose the <em>secure</em> option, the directory
@@ -532,12 +451,6 @@ subdirectory.  In <em>secure</em> mode, the option &quot;Who can see&quot; can s
 enable the <strong>Secure attachment downloads</strong> option (especially on Windows
 servers).</p>
 </div>
-</li>
-<li><p class="first"><strong>List attachments in secure mode:</strong>
-List attachments in secure mode, even when users are not logged in unless
-'Who can see attachments' is set to 'No one'.  The 'Who can see
-attachments' option still controls whether attachments can be downloaded,
-even in secure mode.  This option is only enforced in secure mode.</p>
 </li>
 <li><p class="first"><strong>Download mode for secure downloads:</strong>
 This option controls whether files should be downloaded as separate files or
@@ -563,6 +476,176 @@ There are two options:</p>
 downloaded as external files.</p>
 </li>
 </ul>
+</div>
+<div class="section" id="permissions-options">
+<h2>Permissions Options</h2>
+<p>The permissions options are explained in the following <a class="reference internal" href="#attachments-permissions">Attachments Permissions</a> section.</p>
+</div>
+</div>
+<div class="section" id="attachments-permissions">
+<h1><a class="toc-backref" href="#id6">Attachments Permissions</a></h1>
+<p>The attachments extentension takes full advantage of the new Joomla!
+ACL/permissions system introduced in Joomla! 1.6.  This gives websites that
+use Attachments much more flexibilty to control who can create, edit, delete
+and manage attachments.</p>
+<p>Before describing the ACL permissions related to Attachments, it is important
+to understand a key underlying principle:</p>
+<div class="important">
+<p class="first admonition-title">Important</p>
+<p class="last">All attachments are attached to a parent article, category, or other
+content item.  Creating, editing, deleting, or changing the state of an
+attachment is considered to be a form of editing the parent content
+item. So the user must first have permisson to edit the parent content item
+before any Attachments-specific permissions are checked.</p>
+</div>
+<p>To change the permissons for various user groups, go to the administrative
+back end and select &quot;Attachments&quot; under the &quot;Component&quot; menu.  Click
+on the &quot;Options&quot; button on the right end of the tool bar and then select the
+permissions tab. You will see this:</p>
+<div class="figure">
+<img alt="Permission Options" src="images/options-permissions.png" />
+<p class="caption">The attachments permissions options.  The permissions for the Public group
+are shown.</p>
+</div>
+<p>Here is a brief description of permissions related to Attachments that are available:</p>
+<table border="1" class="permissions docutils">
+<colgroup>
+<col width="26%" />
+<col width="57%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Permission</th>
+<th class="head">Description / Notes</th>
+<th class="head">ACL Action</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Configure Attachments</td>
+<td>Allows users to edit the Attachments options.</td>
+<td>core.admin</td>
+</tr>
+<tr><td>Access Attachments</td>
+<td>Allows users to access the Attachments extension in the administrative back end</td>
+<td>core.manage</td>
+</tr>
+<tr><td>Create Attachments</td>
+<td>Allows users to create attachments (if they may edit the parent).</td>
+<td>core.create</td>
+</tr>
+<tr><td>Delete Attachments</td>
+<td>Allows users to delete attachments (if they may edit the parent).</td>
+<td>core.delete</td>
+</tr>
+<tr><td>Edit Attachments</td>
+<td>Allows users to edit attachments (if they may edit the parent).</td>
+<td>core.edit</td>
+</tr>
+<tr><td>Edit Attachment State</td>
+<td>Allows users to change the state of any attachment (if they may edit the parent).</td>
+<td>core.edit.state</td>
+</tr>
+<tr><td>Edit Own Attachments</td>
+<td>Allows users to edit attachments they created (if they may edit the parent).</td>
+<td>core.edit.own</td>
+</tr>
+<tr><td>Edit State Of Own Attachments</td>
+<td>Allows users to change the state of any attachment they created (if they may edit the parent).</td>
+<td>attachments.edit.state.own</td>
+</tr>
+<tr><td>Delete Own Attachments</td>
+<td>Allows users to delete their own attachments (if they may edit the parent).</td>
+<td>attachments.delete.own</td>
+</tr>
+<tr><td>Edit Attachments For Owned Article/Parent</td>
+<td>Allows users to edit any attachment for articles/parents they they own (and may edit the parent).</td>
+<td>attachments.edit.ownparent</td>
+</tr>
+<tr><td>Edit State Of Attachments For Owned Article/Parent</td>
+<td>Allows users to edit the state of any attachment for articles/parents they they own (and may edit the parent).</td>
+<td>attachments.edit.state.ownparent</td>
+</tr>
+<tr><td>Delete Attachments For Owned Article/Parent</td>
+<td>Allows users to delete any attachment for articles/parents they they own (and may edit the parent).</td>
+<td>attachments.delete.ownparent</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="default-permissions">
+<h2>Default Permissions</h2>
+<p>When the attachments extension is installed, it installs these basic permissions:</p>
+<div class="hide-title important">
+<p class="first admonition-title">Important</p>
+<p><strong>Basic Behavior Of Default Permissions</strong></p>
+<ul class="last simple">
+<li>Authors (and Managers) or above can add attachments to any article/parent they can edit</li>
+<li>Authors (and Managers) or above can edit or delete any attachments on any
+article/parent they can edit</li>
+<li>Editors (and Managers) or above can publish/unpublish attachments from the
+front end.  Authors cannot publish their own attachments.</li>
+</ul>
+</div>
+<p>If you want different defaults, you will need to edit the permissions using
+the &quot;Permissions&quot; tab on the Attachments options.</p>
+</div>
+<div class="section" id="permissions-settings-for-common-scenarios">
+<h2>Permissions Settings for Common Scenarios</h2>
+<p>Here are some suggestions about how to set the permissions to archieve the
+desired behaviors:</p>
+<blockquote>
+<ul>
+<li><p class="first"><strong>Scenario 1 - Authors can publish their own Attachments</strong></p>
+<blockquote>
+<ul>
+<li><p class="first">In the permissions options, click on the 'Author' entry.  Locate the
+'Edit State of Own Attachments' line and set it to 'Allowed' and click on
+'Save' to verify the changes.</p>
+<div class="figure">
+<img alt="Permissions setting for scenario1" src="images/permissions-scenario1.png" />
+</div>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first"><strong>Scenario 2 - Authors can edit/delete their own attachments but no one elses</strong></p>
+<blockquote>
+<ul>
+<li><p class="first">In the permissions options, click on the 'Author' entry.  Locate the
+'Edit State Of Attachments For Owned Article/Parent' and
+'Delete Attachments For Owned Article/Parent' and set them both to 'Denied'.
+Click on 'Save' to verify the changes</p>
+<div class="figure">
+<img alt="Permissions setting for scenario2" src="images/permissions-scenario2.png" />
+</div>
+<p>Since Author still has permissions to edit/delete their own attachments
+this effectively prevents them from editing/deleting attachments that
+they did not create, even if they can edit the article.</p>
+<p>Note that all user groups derived from Author (eg, Editor, Publisher,
+etc) will also be denied from editing or deleting attachments for
+articles/parents that they did not create (from this permission).
+Fortunately, they generally have the higher level permissions 'Edit
+Attachments' and 'Delete Attachments' which means they can edit or
+delete any attachments on any article that they can edit.</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="other-notes-on-permissions">
+<h2>Other Notes on Permissions</h2>
+<blockquote>
+<ul class="simple">
+<li>If a user has permissions to edit the state of their attachments, they
+will see the 'Publish: Yes/No' options on forms to add or edit
+attachments.   If they select 'No' and save the attachment, the attachment
+will still be visible to them in the front end (while they are logged
+in).  Anyone else will not see the attachments.  If the user wants to
+change the Published state, they can edit the attachment (even though it
+is grayed out) and change the states.</li>
+</ul>
+</blockquote>
 </div>
 </div>
 <div class="section" id="display-filename-or-url">
@@ -918,7 +1001,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: July 27, 2011 at 13:56 UTC.
+Generated on: July 28, 2011 at 06:04 UTC.
 
 </div>
 </body>

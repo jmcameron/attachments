@@ -197,6 +197,51 @@ blockquote {
     float: right;
 }
 
+div.figure {
+    margin-left: 50px;
+}
+
+p.caption {
+    margin-left: 50px;
+    font-size: 95%;
+    font-style: italic;
+}
+
+div.small-figure {
+    margin-left: 70px;
+    width: 50%;
+}
+
+div.small-figure p.caption {
+    margin-left: 10px;
+    width: 70%;
+}
+
+table.permissions {
+    border: 1;
+    cellspacing: 0;
+    cellpadding: 2px;
+    background: transparent;    
+    border-collapse:collapse;
+}
+
+table.permissions th,
+table.permissions td {
+    background: transparent; 
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #000;
+}
+
+table.permissions th {
+    background-color: #DDD;
+    font-size: 105%;
+    font-weight: bold;
+}
+
+div.hide-title p.admonition-title {
+    display: none;
+}
+
 /* Color the links (including sections) */
 a:link    { color : #003366; text-decoration: underline; }
 a:visited { color : #003366; text-decoration: underline; }
