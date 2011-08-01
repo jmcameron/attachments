@@ -23,7 +23,7 @@
 <ul class="simple">
 <li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
 <li><a class="reference internal" href="#new-features-in-version-3-0" id="id2">New features in Version 3.0</a></li>
-<li><a class="reference internal" href="#major-features-of-attachments" id="id3">Major features of Attachments</a></li>
+<li><a class="reference internal" href="#major-features-of-the-attachments-extension" id="id3">Major features of the Attachments Extension</a></li>
 <li><a class="reference internal" href="#uploading-restrictions" id="id4">Uploading Restrictions</a></li>
 <li><a class="reference internal" href="#attachments-settings" id="id5">Attachments Settings</a></li>
 <li><a class="reference internal" href="#attachments-permissions" id="id6">Attachments Permissions</a></li>
@@ -53,6 +53,11 @@ all options are controlled through the component manager.</p>
 <p class="last">This version of the <em>Attachments</em> extension only works for
 Joomla! 1.6 or greater.</p>
 </div>
+<p><strong>NOTE</strong>: In the rest of this document, the term <strong>content item</strong> is used.
+Normally we think of attaching files to articles.  Attachments supports
+attaching files and URLs to articles or categories by default.  But it is
+possible to attach to other types of content types (which requires special
+'Attachments' plugins).  All of these are referred to as <strong>content items</strong>.</p>
 <p>The 'Attachments' extension has been translated into many different
 languages.  Please see the <a class="reference internal" href="#translations">Translations</a> section for the list of
 available translations.  Most of these languages packs are in the process
@@ -76,8 +81,8 @@ in certain groups (as defined by the Access Levels).</li>
 <li>Simplified and improved options for hiding attachments in various contexts.</li>
 </ul>
 </div>
-<div class="section" id="major-features-of-attachments">
-<h1><a class="toc-backref" href="#id3">Major features of Attachments</a></h1>
+<div class="section" id="major-features-of-the-attachments-extension">
+<h1><a class="toc-backref" href="#id3">Major features of the Attachments Extension</a></h1>
 <ul>
 <li><p class="first">You can manage attachments from the article editor, including adding,
 editing, and deleting attachments.</p>
@@ -90,8 +95,6 @@ editing, and deleting attachments.</p>
 </li>
 <li><p class="first">You can show the attachments list anywhere in an article (or content item).</p>
 </li>
-<li><p class="first">New optional field in attachments lists to display the name of the uploader</p>
-</li>
 <li><p class="first">The Attachments extension supports &quot;Attachments plugins&quot;.  These plugins allow
 attaching files to any content item that invokes the <tt class="docutils literal">onPrepareContent</tt>
 plugin.  For example, you can attach files to Category descriptions.
@@ -103,12 +106,11 @@ displays, Virtuemart product descriptions, etc.  See section
 <li><dl class="first docutils">
 <dt>In the administrative back end:</dt>
 <dd><ul class="first last simple">
-<li>There is an option to suppress listing attachments to unpublished
-or trashed articles or content items (although there is an easy
-way to see them if you wish).</li>
+<li>There are options to filter the listed attachments to unpublished
+or trashed articles or content items.</li>
 <li>Filtering of the list of articles</li>
 <li>Sorting the list of attachments by any of the column headers.</li>
-<li>Several new administrative utility commands</li>
+<li>Useful administrative utility commands</li>
 </ul>
 </dd>
 </dl>
@@ -582,7 +584,8 @@ are shown.</p>
 <li>Authors (and Managers) or above can edit or delete any attachments on any
 article/parent they can edit</li>
 <li>Editors (and Managers) or above can publish/unpublish attachments from the
-front end.  Authors cannot publish their own attachments.</li>
+front end.</li>
+<li>Authors cannot publish their own attachments.</li>
 </ul>
 </div>
 <p>If you want different defaults, you will need to edit the permissions using
@@ -625,13 +628,17 @@ etc) will also be denied from editing or deleting attachments for
 articles/parents that they did not create (from this permission).
 Fortunately, they generally have the higher level permissions 'Edit
 Attachments' and 'Delete Attachments' which means they can edit or
-delete any attachments on any article that they can edit.</p>
+delete any attachments on any article that they can edit (assuming
+their permissions have not been changed).</p>
 </li>
 </ul>
 </blockquote>
 </li>
 </ul>
 </blockquote>
+<p>If you have other common scenarios that you feel should be documented, please
+feel free to contact me so I can update this documentation (see the end of
+this page for contact information).</p>
 </div>
 <div class="section" id="other-notes-on-permissions">
 <h2>Other Notes on Permissions</h2>
@@ -639,11 +646,11 @@ delete any attachments on any article that they can edit.</p>
 <ul class="simple">
 <li>If a user has permissions to edit the state of their attachments, they
 will see the 'Publish: Yes/No' options on forms to add or edit
-attachments.   If they select 'No' and save the attachment, the attachment
-will still be visible to them in the front end (while they are logged
-in).  Anyone else will not see the attachments.  If the user wants to
-change the Published state, they can edit the attachment (even though it
-is grayed out) and change the states.</li>
+attachments.  If they select 'No' and save the attachment, the attachment
+will still be visible to them in the front end (while they are logged in).
+Noone else will see the unpublished attachments on the front end.  If the
+user wants to change the Published state, they can edit the attachment
+(even though it is grayed out) and change the states.</li>
 </ul>
 </blockquote>
 </div>
@@ -665,8 +672,8 @@ be inserted into the &quot;Display Filename or URL&quot; field.</p>
 </div>
 <div class="section" id="attaching-urls">
 <h1><a class="toc-backref" href="#id8">Attaching URLs</a></h1>
-<p>A new feature in 'Attachments' version 2.0 is the ability to &quot;attach&quot; URLs to
-content items.  When you bring up one of the &quot;Add attachment&quot; dialog boxes,
+<p>Besides files, 'Attachments' version 3.0 has is the ability to &quot;attach&quot; URLs
+to content items.  When you bring up one of the &quot;Add attachment&quot; dialog boxes,
 you will see a button labeled as &quot;Enter URL instead&quot;.  If you click on it you
 will get an entry field for the URL and see two options:</p>
 <ul>
@@ -725,6 +732,12 @@ is a manual that is available as part of this 'Attachments' installation:</p>
 <ul class="simple">
 <li><a class="reference external" href="plugin_manual/html/index.html">Attachments Plugin Creation Manual</a></li>
 </ul>
+<div class="warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This has not been updated for Attachments 3.0 yet.  There have been some
+architectural changes that means that Attachments plugins in Joomla
+1.6/1.7+ will have some significant differences from those for Joomla 1.5.</p>
+</div>
 </div>
 </div>
 <div class="section" id="css-styling-of-attachment-lists">
@@ -1001,7 +1014,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: July 28, 2011 at 06:04 UTC.
+Generated on: July 28, 2011 at 19:47 UTC.
 
 </div>
 </body>
