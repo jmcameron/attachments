@@ -30,17 +30,35 @@ li p {
 }
 
 h1 {
+    width: 100%;
     font-size: 125%;
     color: #003366;
-    margin: 16px 0 0 0;
+    margin: 20px 0 0 0;
+    border-bottom: 2px solid #024;
 }
+
+h1 a         { text-decoration: none; }
+h1 a:link    { text-decoration: none; }
+h1 a:visited { text-decoration: none; }
+h1 a:hover   { text-decoration: none; }
+h1 a:active  { text-decoration: none; }
 
 h1.title {
     font-size: 150%;
+    border: none;
 }
 
 h2 {
+    width: 100%;
     font-size: 110%;
+    color: #003366;
+    margin: 12px 0 0 0;
+    border-bottom: 1px solid #069;
+}
+
+h3 {
+    width: 100%;
+    font-size: 105%;
     color: #003366;
     margin: 8px 0 0 0;
 }
@@ -94,7 +112,7 @@ div.warning {
     background-color: #ffe4e4;
     border: 1px solid #f66;
     width: 60%;
-    margin: 4px 0px 0px 20px;
+    margin: 8px 0px 0px 20px;
     padding: 6px;
 }
 div.important {
@@ -218,6 +236,8 @@ div.small-figure p.caption {
 }
 
 table.permissions {
+    margin-left: 5%;
+    margin-right: 5%;
     border: 1;
     cellspacing: 0;
     cellpadding: 2px;
