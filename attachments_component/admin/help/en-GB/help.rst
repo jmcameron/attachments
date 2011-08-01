@@ -30,6 +30,12 @@ all options are controlled through the component manager.
 .. warning:: This version of the *Attachments* extension only works for
              Joomla! 1.6 or greater. 
 
+**NOTE**: In the rest of this document, the term **content item** is used.
+Normally we think of attaching files to articles.  Attachments supports
+attaching files and URLs to articles or categories by default.  But it is
+possible to attach to other types of content types (which requires special
+'Attachments' plugins).  All of these are referred to as **content items**.
+
 The 'Attachments' extension has been translated into many different
 languages.  Please see the `Translations`_ section for the list of
 available translations.  Most of these languages packs are in the process
@@ -57,8 +63,8 @@ New features in Version 3.0
 * Simplified and improved options for hiding attachments in various contexts.
 
 
-Major features of Attachments
-=============================
+Major features of the Attachments Extension
+===========================================
 
 * You can manage attachments from the article editor, including adding,
   editing, and deleting attachments.
@@ -66,7 +72,6 @@ Major features of Attachments
 * All attachments lists are updated by Ajax and do not require full page reloads.
 * You can "attach" URLs as well as files to content items.
 * You can show the attachments list anywhere in an article (or content item).
-* New optional field in attachments lists to display the name of the uploader
 * The Attachments extension supports "Attachments plugins".  These plugins allow
   attaching files to any content item that invokes the ``onPrepareContent``
   plugin.  For example, you can attach files to Category descriptions.  
@@ -75,12 +80,11 @@ Major features of Attachments
   displays, Virtuemart product descriptions, etc.  See section 
   `What Can Files Be Attached To?`_ for more details.
 * In the administrative back end:
-     - There is an option to suppress listing attachments to unpublished
-       or trashed articles or content items (although there is an easy
-       way to see them if you wish).
+     - There are options to filter the listed attachments to unpublished
+       or trashed articles or content items.
      - Filtering of the list of articles
      - Sorting the list of attachments by any of the column headers.
-     - Several new administrative utility commands
+     - Useful administrative utility commands
 
 Uploading Restrictions
 ======================
@@ -99,7 +103,6 @@ types in the "Legal MIME Types" field.
 
 .. warning::  If you add items to the "Legal Extensions" or "Legal MIME Types"
               fields, do not add any spaces!
-
 
 
 Attachments Settings
@@ -528,7 +531,9 @@ When the attachments extension is installed, it installs these basic permissions
        article/parent they can edit
 
      * Editors (and Managers) or above can publish/unpublish attachments from the
-       front end.  Authors cannot publish their own attachments.
+       front end.  
+
+     * Authors cannot publish their own attachments.
 
 If you want different defaults, you will need to edit the permissions using
 the "Permissions" tab on the Attachments options.
@@ -568,18 +573,23 @@ desired behaviors:
        articles/parents that they did not create (from this permission).
        Fortunately, they generally have the higher level permissions 'Edit
        Attachments' and 'Delete Attachments' which means they can edit or
-       delete any attachments on any article that they can edit.
+       delete any attachments on any article that they can edit (assuming
+       their permissions have not been changed).
+
+If you have other common scenarios that you feel should be documented, please
+feel free to contact me so I can update this documentation (see the end of
+this page for contact information).
 
 Other Notes on Permissions
 --------------------------
 
   * If a user has permissions to edit the state of their attachments, they
     will see the 'Publish: Yes/No' options on forms to add or edit
-    attachments.   If they select 'No' and save the attachment, the attachment
-    will still be visible to them in the front end (while they are logged
-    in).  Anyone else will not see the attachments.  If the user wants to
-    change the Published state, they can edit the attachment (even though it
-    is grayed out) and change the states.
+    attachments.  If they select 'No' and save the attachment, the attachment
+    will still be visible to them in the front end (while they are logged in).
+    Noone else will see the unpublished attachments on the front end.  If the
+    user wants to change the Published state, they can edit the attachment
+    (even though it is grayed out) and change the states.
 
 
 Display Filename or URL
@@ -601,8 +611,8 @@ be inserted into the "Display Filename or URL" field.
 Attaching URLs
 ==============
 
-A new feature in 'Attachments' version 2.0 is the ability to "attach" URLs to
-content items.  When you bring up one of the "Add attachment" dialog boxes,
+Besides files, 'Attachments' version 3.0 has is the ability to "attach" URLs
+to content items.  When you bring up one of the "Add attachment" dialog boxes,
 you will see a button labeled as "Enter URL instead".  If you click on it you
 will get an entry field for the URL and see two options:
 
@@ -660,6 +670,12 @@ is a manual that is available as part of this 'Attachments' installation:
   <plugin_manual/html/index.html>`_
 
 
+.. warning:: 
+
+   This has not been updated for Attachments 3.0 yet.  There have been some
+   architectural changes that means that Attachments plugins in Joomla
+   1.6/1.7+ will have some significant differences from those for Joomla 1.5.
+
 CSS Styling of Attachment Lists
 ===============================
 
@@ -699,14 +715,18 @@ list of attachments. If you wish to add a new icon type, follow these steps:
    to some directory outside of the website directories before upgrading the
    version of 'Attachments' in the future.
 
+Administrative Utility Commands
+===============================
+
+* ???
+
 Translations
 ============
 
 This extension provides translation capabilities and supports the
 following languages (besides English).  Note that some of these languages
-packs are in the process of being updated for 'Attachments' version 2.0 and
-not available yet for Attachments 2.0.  Anyone needing the language packs for
-1.3.4 should contact the author directly.
+packs are in the process of being updated for 'Attachments' version 3.0 and
+not available yet for Attachments 3.0.
 
 Thanks to these translators (available versions shown in parentheses):
 
@@ -750,6 +770,7 @@ Warnings
   anyone that does not have appropriate permissions (as determined by the
   options above).  See the discussion of the *Secure attachment downloads*
   option above for more detail.
+
 * Every time a file is uploaded, the existence of the upload subdirectory is
   checked and it will be created if if it does not exist.  By default the
   subdirectory for uploaded files is 'attachments' in the root directory of
@@ -763,6 +784,7 @@ Warnings
   permissions that prevent the web server (and PHP) from creating
   subdirectories.  You may need to loosen the permissions temporarily to allow
   the subdirectory to be created by uploading attachments.
+
 * If this extension does not permit you to upload specific types of files
   (such as zip files), be aware that the extension respects the restrictions
   placed by the Media Manager on types of files permitted to be uploaded. This
@@ -771,6 +793,7 @@ Warnings
   specific file types by going to the "Global Settings" item under the "Site"
   menu, selecting the "System" tab, and added the appropriate file extension and
   Mime type to the lists under the "Media Manager" section.
+
 * If you cannot see the attachments in the front end, there are several
   possible reasons:
 
@@ -787,6 +810,7 @@ Warnings
        level is not set to 'Public'.
      - If your site uses caching, try clearing the caches and refreshing the
        page.
+
 * If you encounter limits on the sizes of files that you attempt to upload,
   try adding the following lines to the .htaccess file in the root of
   your Joomla! website::
@@ -796,6 +820,7 @@ Warnings
 
   where you may change the 32M (megabytes) value to whatever you wish as the maximum
   upload file size.
+
 * 'Attachments' now supports "attaching" URLs to content items.  If your server
   is Windows Vista and you encounter problems attaching URLs that involve
   ``localhost``, this is a known problem related to IPv4 and IPv6 conflicts.
@@ -806,11 +831,13 @@ Warnings
   Comment out the line that has ``::1`` on it.  Note that ``hosts`` is a
   hidden system file and you may need to modify your folder options to show
   hidden files to see and edit it.
+
 * If you have difficulties attaching files that have unicode characters (such
   as Russian/Cyrillic characters), set the *Secure Attachments Downloads*
   option to 'Yes'.  Filenames with unicode characters should work properly on
   Linux servers in secure or non-secure modes, but do not always work
   correctly on Windows servers in non-secure mode.
+
 * 'Attachments' now supports attaching files to articles while they are being
   created in the Article editor.  There is one limitation to this.  New
   attachments are in a state of "limbo" after the file is uploaded and before
@@ -819,9 +846,11 @@ Warnings
   if more than one person is using the same user account and they create
   articles at the same time and add attachments at the same time, there is no
   guarantee that the attached files will end up with the correct article.
+
 * In the back end, sometimes when you execute one of the Utility commands, you
   may get a warning that the browser needs to resend the request.  This is
   harmless, so click [Ok] and the command will execute.
+
 * The Utility command to "Regenerate system filenames" works for migration
   from windows to Linux servers.  It also works for migraton from Linux to
   Windows servers with a couple of potential problems:
@@ -834,6 +863,7 @@ Warnings
        with the unicode filenames (on the Windows side).  You may need to save
        those files, delete the corresponding attachments, and then re-attach
        them.
+
 * There is a help forum and a 'Frequently Asked Questions' forum for the
   'Attachments' extension that is hosted on the joomlacode.org website.  If
   you encounter a problem that is not covered in this help page, please
@@ -847,29 +877,23 @@ Warnings
 Upgrading
 =========
 
-Upgrading is much easier now.  Simply install the new version of 'Attachments'.
+Upgrading is very easy.  You have two choices:
 
-* *[This step is optional but highly encouraged to make sure you have
-  a backup of the attachments database in case something goes wrong.]*
-  Use `phpMyAdmin <http://www.phpmyadmin.net/home_page/index.php>`_
-  (or other SQL editing tool) to save the contents
-  of the jos_attachments table (Use the 'Export' option with
-  'Complete' inserts for data (not 'Extended' inserts).  You should also
-  back up the uploaded attachments files (usually in the 'attachments'
-  directory )
-* **You do not need to uninstall the previous version of Attachments.** This
-  has been tested with 2.0 and 1.3.4 (but not with earlier versions).
-* If you wish to retain any existing attachments, you do not need to do
-  anything.  Simply install the new version and it will update everything
-  appropriately.
+1. Simply install the new version of 'Attachments'. There is no need to
+   uninstall the previous version.  You do not need to do anything to retain
+   your old attachments.  Simply install the new version and it will update
+   everything appropriately.
+
+2. Use the Joomla 1.6/1.7+ Updater ???
+
+
+UNINSTALLING
+============
+
+* avoid DB uninstall
+  
 * If you do not wish to keep existing attachments, delete them all first (in
   the administrative back end).
-* The multi-installer will install all necessary components and plugins and
-  enable all plugins.  If do not want any of the plugins enabled, install
-  first and then disable plugins as desired.  If there is a problem with
-  the installation, you may need to do a manual piece-by-piece installation.
-  See the INSTALL file included within the main installation zip file for
-  directions.
 
 
 Acknowledgements
@@ -880,6 +904,7 @@ Many thanks for the following contributors or resources:
 * The book *Learning Joomla! 1.5 Extension Development: Creating Modules,
   Components, and Plugins with PHP* by Joseph L. LeBlanc was very helpful
   in creating the 'Attachments' extension.
+
 * The icons for the file types were derived from several sources, including:
     - `The Silk icons by Mark James (http://www.famfamfam.com/lab/icons/silk/) <http://www.famfamfam.com/lab/icons/silk/>`_
     - `File-Type Icons 1.2 by John Zaitseff (http://www.zap.org.au/documents/icons/file-icons/sample.html) <http://www.zap.org.au/documents/icons/file-icons/sample.html>`_
@@ -890,16 +915,12 @@ Many thanks for the following contributors or resources:
   Note that many of the 'Attachments' icons were modified from the original
   icon images from these websites.  If you would like the original versions,
   please download them from the websites listed above.
+
 * Many thanks to Paul McDermott for generously donating the search plugin!
+
 * Thanks to Mohammad Samini for donating some PHP code and CSS files to
   improve 'Attachments' displays in right-to-left languages.
-* Thanks to Florian Tobias Huber for donating fixes to improve attachments
-  displays with caching is enabled.
-* Thanks to Manuel María Pérez Ayala for suggesting how to create the
-  integrated multi-installer.  The multi-installer uses the Joomla
-  installer API to automatically install the component and all the
-  plugins in one simple step.  My understanding is that this technique
-  was originally developed by JFusion.
+
 * Thanks to Ewout Weirda for many helpful discussions and suggestions in
   the development of the 'Attachments' extension.
 
