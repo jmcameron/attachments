@@ -158,8 +158,4 @@
 	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
     </languages>
 
-    <updateservers>
-       <server type="extension" priority="1" name="Attachments Update Site">http://jmcameron.net/attachments/updates/updates.xml</server>
-    </updateservers>
-
 </extension>

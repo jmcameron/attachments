@@ -10,7 +10,6 @@
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
     <creationDate>August  1, 2011</creationDate>
     <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS</description>
-    <update></update>
 
     <files folder="packages">
 	<file type="plugin" id="attachments"			group="content">attachments_plugin.zip</file>
@@ -23,5 +22,9 @@
 
 	<file type="component" id="com_attachments">attachments_component.zip</file>
     </files>
+
+    <updateservers>
+       <server type="extension" priority="1" name="Attachments Update Site">http://jmcameron.net/attachments/updates/updates.xml</server>
+    </updateservers>
 
 </extension>
