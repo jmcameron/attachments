@@ -26,12 +26,12 @@ with several many options to increase its flexibility and usefulness. Note:
 all options are controlled through the component manager.
 
 .. warning:: This version of the *Attachments* extension only works for
-             Joomla! 1.6 or greater. 
+             Joomla! 1.6, 1.7 or greater. 
 
-**NOTE**: In the rest of this document, the term **content item** is used.
-Normally we think of attaching files to articles.  Attachments supports
+**NOTE**: In the rest of this document, the term **content item** is sometimes
+used.  Normally we think of attaching files to articles.  Attachments supports
 attaching files and URLs to articles or categories by default.  But it is
-possible to attach to other types of content types (which requires special
+possible to attach to other types of content types (this requires special
 'Attachments' plugins).  All of these are referred to as **content items**.
 
 The 'Attachments' extension has been translated into many different
