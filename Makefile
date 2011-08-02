@@ -106,7 +106,6 @@ fixperms:
 	@find . -name '*.txt' -exec chmod -x {} \;
 	@find . -name '*.txt' -exec chmod g-s {} \;
 	@find . -name '*.xml' -exec chmod -x {} \;
-	@chmod g-s *.ppr
 
 watchfiles:
 	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch &
