@@ -777,46 +777,6 @@ Administrators.   These include:
    harmless, so click [Ok] and the command will execute.
 
 
-Translations
-============
-
-This extension provides translation capabilities and supports the
-following languages (besides English).  Note that some of these languages
-packs are in the process of being updated for 'Attachments' version 3.0 and
-not available yet for Attachments 3.0.
-
-Thanks to these translators (available versions shown in parentheses):
-
-* **Bulgarian:** by Stefan Ilivanov (1.3.4)
-* **Catalan:** by Jaume Jorba (2.2)
-* **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
-* **Croatian:** Tanja Dragisic (1.3.4)
-* **Czech:** by Tomas Udrzal (1.3.4)
-* **Dutch:** by Parvus (2.2)
-* **Finnish:** by Tapani Lehtonen (2.2)
-* **French:** by Marc-André Ladouceur (2.2) and Pascal Adalian (1.3.4)
-* **German:** by Bernhard Alois Gassner (2.2) Michael Scherer (1.3.4)
-* **Greek:** by Harry Nakos (1.3.4)
-* **Hungarian:** Formal and informal translations by Szabolcs Gáspár (1.3.4)
-* **Italian:** by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)
-* **Norwegian:** by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)
-* **Persian:** by Hossein Moradgholi and Mahmood Amintoosi (2.2)
-* **Polish:** by Sebastian Konieczny (2.2) and Piotr Wójcik (1.3.4)
-* **Portuguese (Brazilian):** by Arnaldo Giacomitti and Cauan Cabral (1.3.4)
-* **Portuguese (Portugal):** by José Paulo Tavares (2.2) and Bruno Moreira (1.3.4)
-* **Romanian:** by Alex Cojocaru (2.2)
-* **Russian:** by Sergey Litvintsev (2.2) and евгений панчев (Yarik Sharoiko) (1.3.4)
-* **Serbian:** by Vlada Jerkovic (1.3.4)
-* **Slovak:** by Miroslav Bystriansky (1.3.4)
-* **Slovenian:** by Matej Badalič (2.2)
-* **Spanish:** by Manuel María Pérez Ayala (2.2) and Carlos Alfaro (1.3.4)
-* **Swedish:** by Linda Maltanski (2.0) and Mats Elfström (1.3.4)
-* **Turkish:** by Kaya Zeren (2.0)
-
-Many thanks to these translators!  If you would like to help translate
-the extension to any other language, please contact the author (see the
-`Contact`_ section at the end).
-
 Warnings
 ========
 
@@ -941,6 +901,47 @@ Uninstalling
   the administrative back end).  Once you have uninstalled the Attachments
   extension, delete the 'attachments' directory at the top of your Joomla
   installation.
+
+
+Translations
+============
+
+This extension provides translation capabilities and supports the
+following languages (besides English).  Note that some of these languages
+packs are in the process of being updated for 'Attachments' version 3.0 and
+not available yet for Attachments 3.0.
+
+Thanks to these translators (available versions shown in parentheses):
+
+* **Bulgarian:** by Stefan Ilivanov (1.3.4)
+* **Catalan:** by Jaume Jorba (2.2)
+* **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
+* **Croatian:** Tanja Dragisic (1.3.4)
+* **Czech:** by Tomas Udrzal (1.3.4)
+* **Dutch:** by Parvus (2.2)
+* **Finnish:** by Tapani Lehtonen (2.2)
+* **French:** by Marc-André Ladouceur (2.2) and Pascal Adalian (1.3.4)
+* **German:** by Bernhard Alois Gassner (2.2) Michael Scherer (1.3.4)
+* **Greek:** by Harry Nakos (1.3.4)
+* **Hungarian:** Formal and informal translations by Szabolcs Gáspár (1.3.4)
+* **Italian:** by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)
+* **Norwegian:** by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)
+* **Persian:** by Hossein Moradgholi and Mahmood Amintoosi (2.2)
+* **Polish:** by Sebastian Konieczny (2.2) and Piotr Wójcik (1.3.4)
+* **Portuguese (Brazilian):** by Arnaldo Giacomitti and Cauan Cabral (1.3.4)
+* **Portuguese (Portugal):** by José Paulo Tavares (2.2) and Bruno Moreira (1.3.4)
+* **Romanian:** by Alex Cojocaru (2.2)
+* **Russian:** by Sergey Litvintsev (2.2) and евгений панчев (Yarik Sharoiko) (1.3.4)
+* **Serbian:** by Vlada Jerkovic (1.3.4)
+* **Slovak:** by Miroslav Bystriansky (1.3.4)
+* **Slovenian:** by Matej Badalič (2.2)
+* **Spanish:** by Manuel María Pérez Ayala (2.2) and Carlos Alfaro (1.3.4)
+* **Swedish:** by Linda Maltanski (2.0) and Mats Elfström (1.3.4)
+* **Turkish:** by Kaya Zeren (2.0)
+
+Many thanks to these translators!  If you would like to help translate
+the extension to any other language, please contact the author (see the
+`Contact`_ section at the end).
 
 
 Acknowledgements
