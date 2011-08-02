@@ -24,7 +24,6 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
         alist = window.parent.document.getElementById(id);
         }
     if ( !alist ) {
-        // ??? This should not be necessary...
         id = "attachmentsList_" + ptype + "_default_" + pid;
         alist = window.parent.document.getElementById(id);
         }
