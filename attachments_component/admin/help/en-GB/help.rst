@@ -10,8 +10,6 @@
 
 **This version is for Joomla 1.6/1.7+**
 
-**NOTE: This help file has not been updated!**
-
 .. contents::
     :depth: 1
 
@@ -718,7 +716,66 @@ list of attachments. If you wish to add a new icon type, follow these steps:
 Administrative Utility Commands
 ===============================
 
-* ???
+There are several utility commands in the back end that are available for
+Administrators.   These include:
+
+* **Disable uninstallation of MySQL Attachments Table:** Normally, when the
+  Attachents extension is uninstalled, the database table is deleted that
+  contains information about the attachments.   If you wish to retain this
+  data when uninstalling Attachments, execute this command.  After you
+  uninstall Attachments the attachments table will remain.
+
+* **Reinstall Default Asset Rules or Attachments Permissions:** When the
+  Attachments extension is installed, the installer adds several default asset
+  rules so that the custom permissions added in the Attachments extension
+  behave logically and similarly to the standard permissions.  If you
+  reinstall or update Joomla, these asset rules may be lost.  You can restore
+  them by executing this command.
+
+* **Regenerate attachment system filenames:** This command is very useful when
+  you move (migrate) your attachments from one computer to another.  The full
+  path each file attachment is kept in the database and called the "system
+  filename".  If you move attachments from one system to another, it is very
+  likely this path information will be incorrect.  You may execute this
+  command to regenerate all of the system filenames for all file attachments.
+
+  The Utility command to "Regenerate system filenames" works for migration
+  from windows to Linux servers.  It also works for migraton from Linux to
+  Windows servers with a couple of potential problems:
+
+     - When you copy your files to your Windows server, you need to verify
+       that the atthachments directory (usually 'attachments') and all files
+       within it are writable by the Joomla web server.
+
+     - You may have problems porting files that have unicode characters in
+       their filenames because the archiving/unarchiving software has problems
+       with the unicode filenames (on the Windows side).  You may need to save
+       those files, delete the corresponding attachments, and then re-attach
+       them.
+
+
+* **Remove spaces from filenames:** You may execute this command to replace
+  all spaces with underscores in the filename for all file attachments.  This
+  may be necessary on some systems.  In 'Secure' mode, this should not be
+  necessary.
+
+* **Update attachment file sizes:** This command will recompute the file
+  sizes for all file attachments.
+
+* **Check existence of attachment files:** This command may be used to verify
+  that the file exists for all file attachments.  Missing files will be
+  listed.
+
+* **Validate URLs:** The URL attachments retain information about the validity
+  of the URL given.  This command will check each URL attachment and check the
+  validity of the URL and update the validity information for the attachment.
+
+.. note:: 
+
+   In the back end, sometimes when you execute one of the Utility commands, you
+   may get a warning that the browser needs to resend the request.  This is
+   harmless, so click [Ok] and the command will execute.
+
 
 Translations
 ============
@@ -847,23 +904,6 @@ Warnings
   articles at the same time and add attachments at the same time, there is no
   guarantee that the attached files will end up with the correct article.
 
-* In the back end, sometimes when you execute one of the Utility commands, you
-  may get a warning that the browser needs to resend the request.  This is
-  harmless, so click [Ok] and the command will execute.
-
-* The Utility command to "Regenerate system filenames" works for migration
-  from windows to Linux servers.  It also works for migraton from Linux to
-  Windows servers with a couple of potential problems:
-
-     - When you copy your files to your Windows server, you need to verify
-       that the atthachments directory (usually 'attachments') and all files
-       within it are writable by the Joomla web server.
-     - You may have problems porting files that have unicode characters in
-       their filenames because the archiving/unarchiving software has problems
-       with the unicode filenames (on the Windows side).  You may need to save
-       those files, delete the corresponding attachments, and then re-attach
-       them.
-
 * There is a help forum and a 'Frequently Asked Questions' forum for the
   'Attachments' extension that is hosted on the joomlacode.org website.  If
   you encounter a problem that is not covered in this help page, please
@@ -887,13 +927,20 @@ Upgrading is very easy.  You have two choices:
 2. Use the Joomla 1.6/1.7+ Updater ???
 
 
-UNINSTALLING
+Uninstalling
 ============
 
-* avoid DB uninstall
-  
+* If you wish to retain your attachments, make a copy of the 'attachments'
+  directory at the top of the Joomla installation and copy the '_attachments'
+  table in the database.  If you intend to reinstall soon, see the **Disable
+  uninstallation of MySQL Attachments Table** command in the `Administrative
+  Utility Commands`_ to prevent the attachments database table from being
+  deleted on uninstallation of the Attachments extension.
+ 
 * If you do not wish to keep existing attachments, delete them all first (in
-  the administrative back end).
+  the administrative back end).  Once you have uninstalled the Attachments
+  extension, delete the 'attachments' directory at the top of your Joomla
+  installation.
 
 
 Acknowledgements
