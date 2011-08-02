@@ -14,6 +14,6 @@ if ($d eq '') {
 while (<>) {
     s|^([ \t]+<version>)[^<]+</version>|\1$v</version>|;
     s|^([ \t]+<creationDate>)[^<]+</creationDate>|\1$d</creationDate>|;
-    s|^([ \t]+static[ \t]+\$ATTACHMENTS_VERSION[ \t]+=[ \t]+)'[^\']+'|\1 '$v'|;
-    s|^\*\*Version [^ ]+ - [^\*]+\*\*$|**Version $v - $d**|;
+    s|^([ \t]+static[ \t]+\$ATTACHMENTS_VERSION[ \t]+=[ \t]+)'[^\']+'|\1'$v'|;
+    s|^\*\*Version .+ - [^\*]+[0-9]+\*\*$|**Version $v - $d**|;
     print;}
