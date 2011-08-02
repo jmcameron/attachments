@@ -41,6 +41,10 @@ $(ZIPFILE): $(ZIPS)
 	@echo "Finished creating package $(ZIPFILE)."
 	@echo
 
+update:
+	@echo "Copying update file to update server"
+	scp updates.xml jmcameron.net:webapps/jmcameron/attachments/updates/updates.xml
+
 clean:
 	@find . -name '*~' -exec rm {} \;
 	@rm -f _tests.pdf
