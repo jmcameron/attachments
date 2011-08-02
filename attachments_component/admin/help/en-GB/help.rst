@@ -893,7 +893,13 @@ Upgrading is very easy.  You have two choices:
    your old attachments.  Simply install the new version and it will update
    everything appropriately.
 
-2. Use the Joomla 1.6/1.7+ Updater ???
+2. PREFRERRED: One of the excellent new features in Joomla 1.6 and later is
+   the extension updater.  Go to the Extension Manager in the back end and
+   click on the 'Update' tab.  Click 'Purge Cache' and then 'Find Updates' on
+   the toolbar.  If there is a new release of Attachments, it will be shown.
+   You can select the release and then click on the 'Update' button on the
+   toolbar to install the new release.  This makes keeping the Attachments
+   extension updated very simple!
 
 
 Uninstalling
