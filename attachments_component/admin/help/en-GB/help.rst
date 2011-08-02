@@ -181,7 +181,7 @@ Basic Options
           that does not include this tag will display its the attachments list
           at its end.
 
-       In this mode, when editing an article, section, or category in the back
+       In this mode, when editing an article in the back
        end, an extra button will be displayed: [Insert {attachments} token].
        Position the cursor where you want the custom placement token and use
        this button to insert the token.  This button will add surrounding HTML
@@ -197,6 +197,10 @@ Basic Options
        plugin is disabled.  If you wish to remove the {attachments} token, you
        may want to use the "HTML" view mode in the editor to make sure that
        you also delete the surrounding span tags.
+
+       .. warning:: The custom placement mode does not work for attachments on
+                    Category descriptions.
+
      - '*Disabled (filter)*' - This option will disable the display of
        attachments lists and suppress the display of any {attachments}
        tags in articles or content items.
@@ -234,11 +238,11 @@ Formatting Options
 * **Show number of downloads:** This setting controls
   whether the number of downloads is shown in the list of attachments.
 
-  .. warning:: This option only works in secure mode!
+  .. warning:: This option only works for file attachments in secure mode!
      In non-secure mode, files are maintained as static files and accessed
      directly, without going through Joomla! code.  Therefore it is impossible
      to update the number of downloads for a file when it is accessed this way.
-     So the display of the number of downloads will only work in secure mode
+     So the display of the number of file downloads will only work in secure mode
      when this option is set to 'Yes'.
 
 * **Show file modification date:** If this setting
@@ -640,9 +644,9 @@ the "Utilities" command in the back end.
 What Can Files Be Attached To?
 ==============================
 
-Besides attaching files or URLs to articles, it is now possible to
-attach files or URLs to other types of content items such as Sections
-and Categories (see below).  If appropriate 'Attachments' plugins are
+Besides attaching files or URLs to articles, it is possible to
+attach files or URLs to other types of content items such as 
+Categories (see below).  If appropriate 'Attachments' plugins are
 installed, it may be possible to attach files or URLs to a wide variety
 of content items such as user profiles, shopping cart product
 descriptions, etc.  Basically any content item that is displayed on the
@@ -652,14 +656,17 @@ items that invoke content events are typically items that have content
 to be displayed (such as articles) or have descriptions that will be
 displayed.
 
-Attaching Files or URLs to Section or Category Descriptions
------------------------------------------------------------
+Attaching Files or URLs to Category Descriptions
+------------------------------------------------
 
-With this version of attachments, users can attach files to Section and
-Category descriptions.  These descriptions are generally only visible on
-Section or Category Blog pages, if the basic parameter 'description' is set to
-*Show* (via the Menu Editor).  Attachments may be added to Section or Category
-descriptions in the Section or Category editors.
+With this version of attachments, users can attach files to Category
+descriptions.  These descriptions are generally only visible on Category Blog
+pages.  Attachments may be added to Category descriptions in the Category
+editor.
+
+.. warning:: Attachments for categories will only show the category basic
+   parameter 'description' is set to *Show* (via the Menu Editor) AND the
+   category description is not empty.
 
 If you wish to learn more about how to develop a new Attachment plugin, there
 is a manual that is available as part of this 'Attachments' installation:
@@ -670,9 +677,11 @@ is a manual that is available as part of this 'Attachments' installation:
 
 .. warning:: 
 
-   This has not been updated for Attachments 3.0 yet.  There have been some
-   architectural changes that means that Attachments plugins in Joomla
-   1.6/1.7+ will have some significant differences from those for Joomla 1.5.
+   The Attachment Plugin Creation Manual has not been updated for Attachments
+   3.0 yet.  There have been some architectural changes that means that
+   Attachments plugins in Joomla 1.6/1.7+ will have some significant
+   differences from those for Joomla 1.5.
+
 
 CSS Styling of Attachment Lists
 ===============================
