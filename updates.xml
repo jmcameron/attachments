@@ -6,16 +6,16 @@
       <element>pkg_attachments</element>
       <type>package</type>
       <version>3.0 Beta 4</version>
- 
-      <infourl title="Attachments URL">http://jmcameron.net/attachments/updates/3.0-Beta-3/index.html</infourl>
-      <downloads>
-         <downloadurl type="full" format="zip">http://jmcameron.net/attachments/updates/3.0-Beta-3/attachments-3.0-Beta-3.zip</downloadurl>
-      </downloads>
+      <targetplatform name="joomla" version="1.7" />
 
       <maintainer>Jonathan M. Cameron</maintainer>
       <maintainerurl>http://joomlacode.org/gf/project/attachments</maintainerurl>
-      <section>some-section</section>
-      <targetplatform name="joomla" version="1.7" />
+ 
+      <infourl title="Attachments URL">http://jmcameron.net/attachments/updates/3.0-Beta-4/index.html</infourl>
+      <downloads>
+         <downloadurl type="full" format="zip">http://jmcameron.net/attachments/updates/3.0-Beta-4/attachments-3.0-Beta-4.zip</downloadurl>
+      </downloads>
+
    </update>
  
 </updates>
