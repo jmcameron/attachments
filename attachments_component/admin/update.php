@@ -156,7 +156,10 @@ class AttachmentsUpdate
 		jimport('joomla.filesystem.file');
 
 		// Construct the filenames
-		// ??? Fix so it works with mysqli
+		if ( $dbtype == 'mysqli' ) {
+			// Use the same MYSQL installation file for mysqli
+			$dbtype = 'mysql';
+			}
 		$filename = JPATH_COMPONENT_ADMINISTRATOR."/sql/uninstall.$dbtype.sql";
 		$tempfilename = $filename.'.tmp';
 		$msg = '';
