@@ -6,8 +6,8 @@
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>3.0 Beta 2</version>
-    <creationDate>July 19, 2011</creationDate>
+    <version>3.0 Beta 3</version>
+    <creationDate>August  1, 2011</creationDate>
     <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
 
     <scriptfile>attachments.install.php</scriptfile>
@@ -157,5 +157,9 @@
     <languages folder="site">
 	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
     </languages>
+
+    <updateservers>
+       <server type="extension" priority="1" name="Attachments Update Site">http://jmcameron.net/attachments/updates/updates.xml</server>
+    </updateservers>
 
 </extension>

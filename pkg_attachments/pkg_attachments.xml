@@ -2,13 +2,13 @@
 <extension type="package" version="1.6">
     <name>pkg_attachments</name>
     <packagename>attachments</packagename>
-    <version>3.0 Beta 2</version>
+    <version>3.0 Beta 3</version>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <packager>Jonathan M. Cameron</packager>
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
-    <creationDate>July 19, 2011</creationDate>
+    <creationDate>August  1, 2011</creationDate>
     <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS</description>
     <update></update>
 
