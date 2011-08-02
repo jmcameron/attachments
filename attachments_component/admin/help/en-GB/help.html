@@ -17,7 +17,6 @@
 
 <p class="version"><strong>Version 3.0 - August, 2011</strong></p>
 <p><strong>This version is for Joomla 1.6/1.7+</strong></p>
-<p><strong>NOTE: This help file has not been updated!</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -32,11 +31,13 @@
 <li><a class="reference internal" href="#what-can-files-be-attached-to" id="id9">What Can Files Be Attached To?</a></li>
 <li><a class="reference internal" href="#css-styling-of-attachment-lists" id="id10">CSS Styling of Attachment Lists</a></li>
 <li><a class="reference internal" href="#file-type-icons" id="id11">File Type Icons</a></li>
-<li><a class="reference internal" href="#translations" id="id12">Translations</a></li>
+<li><a class="reference internal" href="#administrative-utility-commands" id="id12">Administrative Utility Commands</a></li>
 <li><a class="reference internal" href="#warnings" id="id13">Warnings</a></li>
 <li><a class="reference internal" href="#upgrading" id="id14">Upgrading</a></li>
-<li><a class="reference internal" href="#acknowledgements" id="id15">Acknowledgements</a></li>
-<li><a class="reference internal" href="#contact" id="id16">Contact</a></li>
+<li><a class="reference internal" href="#uninstalling" id="id15">Uninstalling</a></li>
+<li><a class="reference internal" href="#translations" id="id16">Translations</a></li>
+<li><a class="reference internal" href="#acknowledgements" id="id17">Acknowledgements</a></li>
+<li><a class="reference internal" href="#contact" id="id18">Contact</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
@@ -51,13 +52,16 @@ all options are controlled through the component manager.</p>
 <div class="warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This version of the <em>Attachments</em> extension only works for
-Joomla! 1.6 or greater.</p>
+Joomla! 1.6, 1.7 or greater.</p>
 </div>
-<p><strong>NOTE</strong>: In the rest of this document, the term <strong>content item</strong> is used.
-Normally we think of attaching files to articles.  Attachments supports
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the rest of this document, the term <strong>content item</strong> is sometimes
+used.  Normally we think of attaching files to articles.  Attachments supports
 attaching files and URLs to articles or categories by default.  But it is
-possible to attach to other types of content types (which requires special
+possible to attach to other types of content types (this requires special
 'Attachments' plugins).  All of these are referred to as <strong>content items</strong>.</p>
+</div>
 <p>The 'Attachments' extension has been translated into many different
 languages.  Please see the <a class="reference internal" href="#translations">Translations</a> section for the list of
 available translations.  Most of these languages packs are in the process
@@ -776,44 +780,69 @@ to some directory outside of the website directories before upgrading the
 version of 'Attachments' in the future.</li>
 </ol>
 </div>
-<div class="section" id="translations">
-<h1><a class="toc-backref" href="#id12">Translations</a></h1>
-<p>This extension provides translation capabilities and supports the
-following languages (besides English).  Note that some of these languages
-packs are in the process of being updated for 'Attachments' version 2.0 and
-not available yet for Attachments 2.0.  Anyone needing the language packs for
-1.3.4 should contact the author directly.</p>
-<p>Thanks to these translators (available versions shown in parentheses):</p>
+<div class="section" id="administrative-utility-commands">
+<h1><a class="toc-backref" href="#id12">Administrative Utility Commands</a></h1>
+<p>There are several utility commands in the back end that are available for
+Administrators.   These include:</p>
+<ul>
+<li><p class="first"><strong>Disable uninstallation of MySQL Attachments Table:</strong> Normally, when the
+Attachents extension is uninstalled, the database table is deleted that
+contains information about the attachments.   If you wish to retain this
+data when uninstalling Attachments, execute this command.  After you
+uninstall Attachments the attachments table will remain.</p>
+</li>
+<li><p class="first"><strong>Reinstall Default Asset Rules or Attachments Permissions:</strong> When the
+Attachments extension is installed, the installer adds several default asset
+rules so that the custom permissions added in the Attachments extension
+behave logically and similarly to the standard permissions.  If you
+reinstall or update Joomla, these asset rules may be lost.  You can restore
+them by executing this command.</p>
+</li>
+<li><p class="first"><strong>Regenerate attachment system filenames:</strong> This command is very useful when
+you move (migrate) your attachments from one computer to another.  The full
+path each file attachment is kept in the database and called the &quot;system
+filename&quot;.  If you move attachments from one system to another, it is very
+likely this path information will be incorrect.  You may execute this
+command to regenerate all of the system filenames for all file attachments.</p>
+<p>The Utility command to &quot;Regenerate system filenames&quot; works for migration
+from windows to Linux servers.  It also works for migraton from Linux to
+Windows servers with a couple of potential problems:</p>
+<blockquote>
 <ul class="simple">
-<li><strong>Bulgarian:</strong> by Stefan Ilivanov (1.3.4)</li>
-<li><strong>Catalan:</strong> by Jaume Jorba (2.2)</li>
-<li><strong>Chinese:</strong> Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)</li>
-<li><strong>Croatian:</strong> Tanja Dragisic (1.3.4)</li>
-<li><strong>Czech:</strong> by Tomas Udrzal (1.3.4)</li>
-<li><strong>Dutch:</strong> by Parvus (2.2)</li>
-<li><strong>Finnish:</strong> by Tapani Lehtonen (2.2)</li>
-<li><strong>French:</strong> by Marc-André Ladouceur (2.2) and Pascal Adalian (1.3.4)</li>
-<li><strong>German:</strong> by Bernhard Alois Gassner (2.2) Michael Scherer (1.3.4)</li>
-<li><strong>Greek:</strong> by Harry Nakos (1.3.4)</li>
-<li><strong>Hungarian:</strong> Formal and informal translations by Szabolcs Gáspár (1.3.4)</li>
-<li><strong>Italian:</strong> by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)</li>
-<li><strong>Norwegian:</strong> by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)</li>
-<li><strong>Persian:</strong> by Hossein Moradgholi and Mahmood Amintoosi (2.2)</li>
-<li><strong>Polish:</strong> by Sebastian Konieczny (2.2) and Piotr Wójcik (1.3.4)</li>
-<li><strong>Portuguese (Brazilian):</strong> by Arnaldo Giacomitti and Cauan Cabral (1.3.4)</li>
-<li><strong>Portuguese (Portugal):</strong> by José Paulo Tavares (2.2) and Bruno Moreira (1.3.4)</li>
-<li><strong>Romanian:</strong> by Alex Cojocaru (2.2)</li>
-<li><strong>Russian:</strong> by Sergey Litvintsev (2.2) and евгений панчев (Yarik Sharoiko) (1.3.4)</li>
-<li><strong>Serbian:</strong> by Vlada Jerkovic (1.3.4)</li>
-<li><strong>Slovak:</strong> by Miroslav Bystriansky (1.3.4)</li>
-<li><strong>Slovenian:</strong> by Matej Badalič (2.2)</li>
-<li><strong>Spanish:</strong> by Manuel María Pérez Ayala (2.2) and Carlos Alfaro (1.3.4)</li>
-<li><strong>Swedish:</strong> by Linda Maltanski (2.0) and Mats Elfström (1.3.4)</li>
-<li><strong>Turkish:</strong> by Kaya Zeren (2.0)</li>
+<li>When you copy your files to your Windows server, you need to verify
+that the atthachments directory (usually 'attachments') and all files
+within it are writable by the Joomla web server.</li>
+<li>You may have problems porting files that have unicode characters in
+their filenames because the archiving/unarchiving software has problems
+with the unicode filenames (on the Windows side).  You may need to save
+those files, delete the corresponding attachments, and then re-attach
+them.</li>
 </ul>
-<p>Many thanks to these translators!  If you would like to help translate
-the extension to any other language, please contact the author (see the
-<a class="reference internal" href="#contact">Contact</a> section at the end).</p>
+</blockquote>
+</li>
+<li><p class="first"><strong>Remove spaces from filenames:</strong> You may execute this command to replace
+all spaces with underscores in the filename for all file attachments.  This
+may be necessary on some systems.  In 'Secure' mode, this should not be
+necessary.</p>
+</li>
+<li><p class="first"><strong>Update attachment file sizes:</strong> This command will recompute the file
+sizes for all file attachments.</p>
+</li>
+<li><p class="first"><strong>Check existence of attachment files:</strong> This command may be used to verify
+that the file exists for all file attachments.  Missing files will be
+listed.</p>
+</li>
+<li><p class="first"><strong>Validate URLs:</strong> The URL attachments retain information about the validity
+of the URL given.  This command will check each URL attachment and check the
+validity of the URL and update the validity information for the attachment.</p>
+</li>
+</ul>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the back end, sometimes when you execute one of the Utility commands, you
+may get a warning that the browser needs to resend the request.  This is
+harmless, so click [Ok] and the command will execute.</p>
+</div>
 </div>
 <div class="section" id="warnings">
 <h1><a class="toc-backref" href="#id13">Warnings</a></h1>
@@ -905,26 +934,6 @@ if more than one person is using the same user account and they create
 articles at the same time and add attachments at the same time, there is no
 guarantee that the attached files will end up with the correct article.</p>
 </li>
-<li><p class="first">In the back end, sometimes when you execute one of the Utility commands, you
-may get a warning that the browser needs to resend the request.  This is
-harmless, so click [Ok] and the command will execute.</p>
-</li>
-<li><p class="first">The Utility command to &quot;Regenerate system filenames&quot; works for migration
-from windows to Linux servers.  It also works for migraton from Linux to
-Windows servers with a couple of potential problems:</p>
-<blockquote>
-<ul class="simple">
-<li>When you copy your files to your Windows server, you need to verify
-that the atthachments directory (usually 'attachments') and all files
-within it are writable by the Joomla web server.</li>
-<li>You may have problems porting files that have unicode characters in
-their filenames because the archiving/unarchiving software has problems
-with the unicode filenames (on the Windows side).  You may need to save
-those files, delete the corresponding attachments, and then re-attach
-them.</li>
-</ul>
-</blockquote>
-</li>
 <li><p class="first">There is a help forum and a 'Frequently Asked Questions' forum for the
 'Attachments' extension that is hosted on the joomlacode.org website.  If
 you encounter a problem that is not covered in this help page, please
@@ -940,33 +949,70 @@ http://joomlacode.org/gf/project/attachments/forum/</a></li>
 </div>
 <div class="section" id="upgrading">
 <h1><a class="toc-backref" href="#id14">Upgrading</a></h1>
-<p>Upgrading is much easier now.  Simply install the new version of 'Attachments'.</p>
+<p>Upgrading is very easy.  You have two choices:</p>
+<ol class="arabic simple">
+<li>Simply install the new version of 'Attachments'. There is no need to
+uninstall the previous version.  You do not need to do anything to retain
+your old attachments.  Simply install the new version and it will update
+everything appropriately.</li>
+<li>Use the Joomla 1.6/1.7+ Updater ???</li>
+</ol>
+</div>
+<div class="section" id="uninstalling">
+<h1><a class="toc-backref" href="#id15">Uninstalling</a></h1>
 <ul class="simple">
-<li><em>[This step is optional but highly encouraged to make sure you have
-a backup of the attachments database in case something goes wrong.]</em>
-Use <a class="reference external" href="http://www.phpmyadmin.net/home_page/index.php">phpMyAdmin</a>
-(or other SQL editing tool) to save the contents
-of the jos_attachments table (Use the 'Export' option with
-'Complete' inserts for data (not 'Extended' inserts).  You should also
-back up the uploaded attachments files (usually in the 'attachments'
-directory )</li>
-<li><strong>You do not need to uninstall the previous version of Attachments.</strong> This
-has been tested with 2.0 and 1.3.4 (but not with earlier versions).</li>
-<li>If you wish to retain any existing attachments, you do not need to do
-anything.  Simply install the new version and it will update everything
-appropriately.</li>
+<li>If you wish to retain your attachments, make a copy of the 'attachments'
+directory at the top of the Joomla installation and copy the '_attachments'
+table in the database.  If you intend to reinstall soon, see the <strong>Disable
+uninstallation of MySQL Attachments Table</strong> command in the <a class="reference internal" href="#administrative-utility-commands">Administrative
+Utility Commands</a> to prevent the attachments database table from being
+deleted on uninstallation of the Attachments extension.</li>
 <li>If you do not wish to keep existing attachments, delete them all first (in
-the administrative back end).</li>
-<li>The multi-installer will install all necessary components and plugins and
-enable all plugins.  If do not want any of the plugins enabled, install
-first and then disable plugins as desired.  If there is a problem with
-the installation, you may need to do a manual piece-by-piece installation.
-See the INSTALL file included within the main installation zip file for
-directions.</li>
+the administrative back end).  Once you have uninstalled the Attachments
+extension, delete the 'attachments' directory at the top of your Joomla
+installation.</li>
 </ul>
 </div>
+<div class="section" id="translations">
+<h1><a class="toc-backref" href="#id16">Translations</a></h1>
+<p>This extension provides translation capabilities and supports the
+following languages (besides English).  Note that some of these languages
+packs are in the process of being updated for 'Attachments' version 3.0 and
+not available yet for Attachments 3.0.</p>
+<p>Thanks to these translators (available versions shown in parentheses):</p>
+<ul class="simple">
+<li><strong>Bulgarian:</strong> by Stefan Ilivanov (1.3.4)</li>
+<li><strong>Catalan:</strong> by Jaume Jorba (2.2)</li>
+<li><strong>Chinese:</strong> Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)</li>
+<li><strong>Croatian:</strong> Tanja Dragisic (1.3.4)</li>
+<li><strong>Czech:</strong> by Tomas Udrzal (1.3.4)</li>
+<li><strong>Dutch:</strong> by Parvus (2.2)</li>
+<li><strong>Finnish:</strong> by Tapani Lehtonen (2.2)</li>
+<li><strong>French:</strong> by Marc-André Ladouceur (2.2) and Pascal Adalian (1.3.4)</li>
+<li><strong>German:</strong> by Bernhard Alois Gassner (2.2) Michael Scherer (1.3.4)</li>
+<li><strong>Greek:</strong> by Harry Nakos (1.3.4)</li>
+<li><strong>Hungarian:</strong> Formal and informal translations by Szabolcs Gáspár (1.3.4)</li>
+<li><strong>Italian:</strong> by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)</li>
+<li><strong>Norwegian:</strong> by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)</li>
+<li><strong>Persian:</strong> by Hossein Moradgholi and Mahmood Amintoosi (2.2)</li>
+<li><strong>Polish:</strong> by Sebastian Konieczny (2.2) and Piotr Wójcik (1.3.4)</li>
+<li><strong>Portuguese (Brazilian):</strong> by Arnaldo Giacomitti and Cauan Cabral (1.3.4)</li>
+<li><strong>Portuguese (Portugal):</strong> by José Paulo Tavares (2.2) and Bruno Moreira (1.3.4)</li>
+<li><strong>Romanian:</strong> by Alex Cojocaru (2.2)</li>
+<li><strong>Russian:</strong> by Sergey Litvintsev (2.2) and евгений панчев (Yarik Sharoiko) (1.3.4)</li>
+<li><strong>Serbian:</strong> by Vlada Jerkovic (1.3.4)</li>
+<li><strong>Slovak:</strong> by Miroslav Bystriansky (1.3.4)</li>
+<li><strong>Slovenian:</strong> by Matej Badalič (2.2)</li>
+<li><strong>Spanish:</strong> by Manuel María Pérez Ayala (2.2) and Carlos Alfaro (1.3.4)</li>
+<li><strong>Swedish:</strong> by Linda Maltanski (2.0) and Mats Elfström (1.3.4)</li>
+<li><strong>Turkish:</strong> by Kaya Zeren (2.0)</li>
+</ul>
+<p>Many thanks to these translators!  If you would like to help translate
+the extension to any other language, please contact the author (see the
+<a class="reference internal" href="#contact">Contact</a> section at the end).</p>
+</div>
 <div class="section" id="acknowledgements">
-<h1><a class="toc-backref" href="#id15">Acknowledgements</a></h1>
+<h1><a class="toc-backref" href="#id17">Acknowledgements</a></h1>
 <p>Many thanks for the following contributors or resources:</p>
 <ul>
 <li><p class="first">The book <em>Learning Joomla! 1.5 Extension Development: Creating Modules,
@@ -993,28 +1039,19 @@ please download them from the websites listed above.</p>
 <li><p class="first">Thanks to Mohammad Samini for donating some PHP code and CSS files to
 improve 'Attachments' displays in right-to-left languages.</p>
 </li>
-<li><p class="first">Thanks to Florian Tobias Huber for donating fixes to improve attachments
-displays with caching is enabled.</p>
-</li>
-<li><p class="first">Thanks to Manuel María Pérez Ayala for suggesting how to create the
-integrated multi-installer.  The multi-installer uses the Joomla
-installer API to automatically install the component and all the
-plugins in one simple step.  My understanding is that this technique
-was originally developed by JFusion.</p>
-</li>
 <li><p class="first">Thanks to Ewout Weirda for many helpful discussions and suggestions in
 the development of the 'Attachments' extension.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="contact">
-<h1><a class="toc-backref" href="#id16">Contact</a></h1>
+<h1><a class="toc-backref" href="#id18">Contact</a></h1>
 <p>Please report bugs and suggestions to <a class="reference external" href="mailto:jmcameron&#64;jmcameron.net">jmcameron&#64;jmcameron.net</a></p>
 </div>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: July 28, 2011 at 19:47 UTC.
+Generated on: August 02, 2011 at 04:19 UTC.
 
 </div>
 </body>
