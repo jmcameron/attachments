@@ -64,7 +64,7 @@ class AttachmentsControllerParams extends JControllerForm
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			JError::raiseError(500, implode("\n", $errors) . ' (ERR 64)');
 			return false;
 		}
 

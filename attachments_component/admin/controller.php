@@ -49,7 +49,7 @@ class AttachmentsController extends JController
 		$parent_type = JRequest::getCmd('parent_type');
 		if ( !$parent_type ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
-				$db->getErrorMsg() . ' (ERR 27)';
+				$db->getErrorMsg() . ' (ERR 18)';
 			JError::raiseError(500, $errmsg);
 			}
 

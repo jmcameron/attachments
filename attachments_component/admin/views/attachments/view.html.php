@@ -39,7 +39,7 @@ class AttachmentsViewAttachments extends JView
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			JError::raiseError(500, implode("\n", $errors) . ' (ERR 65)');
 			return false;
 		}
 
@@ -55,7 +55,7 @@ class AttachmentsViewAttachments extends JView
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 58)';
+			$errmsg = $db->stderr() . ' (ERR 66)';
 			JError::raiseError(500, $errmsg);
 			}
 		$level_name = Array();

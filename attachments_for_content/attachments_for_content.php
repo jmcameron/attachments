@@ -209,7 +209,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$result = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERRN)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERR 402)';
 				JError::raiseError(500, $errmsg);
 				}
 			break;
@@ -219,7 +219,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$db->setQuery($query, 0, 1);
 			$result = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERRN)';
+				$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERR 403)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -360,7 +360,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$obj = $db->loadObject();
 			if ( $db->getErrorNum() ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 402)';
+										 $parent_entity_name, $parent_id) . ' (ERR 404)';
 				JError::raiseError(500, $errmsg);
 				}
 			if ( is_object( $obj ) ) {
@@ -381,7 +381,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$article = $db->loadObject();
 			if ( $db->getErrorNum() ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name,  $parent_id) . ' (ERR 403)';
+										 $parent_entity_name,  $parent_id) . ' (ERR 405)';
 				JError::raiseError(500, $errmsg);
 				}
 			else {
@@ -437,7 +437,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			if ( $db->getErrorNum() ) {
 				$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name,  $parent_id) . ' (ERR 404)';
+										 $parent_entity_name,  $parent_id) . ' (ERR 406)';
 				JError::raiseError(500, $errmsg);
 				}
 			else {
@@ -534,7 +534,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				"WHERE a.parent_entity = 'category' AND c2.id = a.parent_id ))";
 			}
 		else {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 405)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 407)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -583,7 +583,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $db->getErrorNum() ) {
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-									 $parent_entity_name, $parent_id) . ' (ERR 406)';
+									 $parent_entity_name, $parent_id) . ' (ERR 408)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -619,7 +619,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_id !== 0 ) {
 			// parent_id of 0 may be allowed for categories, so don't abort
 			if ( ($parent_id == null) || ($parent_id == '') || !is_numeric($parent_id) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 407)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 409)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -639,7 +639,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_entity == 'category' ) {
 
 			// NOTE: This code is apparently never invoked because categories don't invoke content plugins
-			$errmsg = 'ERROR in attachment_for_content for categories!';
+			$errmsg = 'ERROR in attachment_for_content for categories!  (ERR 410)';
 			JError::raiseError(500, $errmsg);
 
 			// Handle categories
@@ -675,7 +675,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$attachments = $db->loadObjectList();
 			if ( $db->getErrorNum() || (count($attachments) == 0) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 408)';
+										 $parent_entity_name, $parent_id) . ' (ERR 411)';
 				JError::raiseError(500, $errmsg);
 				}
 
