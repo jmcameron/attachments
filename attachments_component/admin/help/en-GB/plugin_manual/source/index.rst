@@ -5,7 +5,7 @@
 By: Jonathan M. Cameron
 
 Copyright (C) 2010 Jonathan M. Cameron, All Rights Reserved
-   License: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+   License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
 .. contents:: Contents
    :depth: 2
@@ -210,7 +210,7 @@ Here is what the installation file **attachments_for_newcomp.xml** should contai
 	<authorEmail>???</authorEmail>
 	<authorUrl>???</authorUrl>
 	<copyright>???</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<version>???</version>
 	<description>ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED</description>
 	<files>
@@ -259,7 +259,7 @@ The translations ``.ini`` file should look like this:
     # en-GB.plg_attachments_for_newcomp.ini
     # Attachments for Joomla! newcomp extension 
     # Copyright (C) ??? ???, All rights reserved.
-    # License http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+    # License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
     # Note : All ini files need to be saved as UTF-8 - No BOM
 
     # English translation

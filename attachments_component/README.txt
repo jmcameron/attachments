@@ -18,7 +18,7 @@ jmcameron@jmcameron.net (feedback is welcome!)
 http://joomlacode.org/gf/project/attachments/
 
 Copyright (C) 2007-2010 Jonathan M. Cameron, All Rights Reserved
-License http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
 NOTES:
 
