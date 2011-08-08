@@ -7,11 +7,11 @@ equally.
 
 The process involves creating a Comma-Separated-File (CSV) migration file
 containing the data for the attachments on the Joomla 1.5 system.  The CSV
-migration file is used to recrate the Attachments data on the Jooml 1.6+
+migration file is used to recreate the Attachments data on the Joomla 1.6+
 system.  The attachment files can be moved directly without modification.
 
-Necessary Conditions for Succesful Attachments Migration
---------------------------------------------------------
+Necessary Conditions for Successful Attachments Migration
+---------------------------------------------------------
 
  * The article ID's and Titles must be identical in the Joomla 1.5 system and
    the Joomla 1.6+ system.  If there are differences, the migration file will
@@ -40,12 +40,15 @@ The process to migrate the data for the Attachments involves several steps:
   2.  If your Joomla 1.5 site uses Attachments version 2.2, download this
       file:
 
-	  :download: http://jmcameron.net/attachments/migration/special.php.txt
+	  :download:`special.php.txt <special.php.txt>`
 
       Rename the file to 'special.php' on your local computer and upload it to
       your Joomla 1.5 site to replace the file::
 
-	  adminstrator/components/com_attachments/controllers/special.php
+	  administrator/components/com_attachments/controllers/special.php
+
+      This replacement file adds a function to export the Attachments into a
+      CSV migration file.
 
       .. note:: If your Joomla 1.5 site is running a version of Attachments
 	 later than version 2.2, you do not need to do this step.
@@ -72,13 +75,13 @@ The process to migrate the data for the Attachments involves several steps:
       Joomla 1.6 site before proceeding.  Doing this step will make it easier to
       delete any new attachments if the migration process does not go smoothly.
 
-  6.  Copy the CSV migration file ('migrate_attachments.csv') and the achive of
+  6.  Copy the CSV migration file ('migrate_attachments.csv') and the archive of
       attachments files to your Joomla 1.6 site.
 
   7.  Upload the migration file to some place on your Joomla 1.6 server file
       system. 
 
-  8.  Log into the back end of your Joomla 1.6 siste as an administrator.
+  8.  Log into the back end of your Joomla 1.6 system as an administrator.
 
   9.  Go to the Attachments page and execute this command manually on your
       Joomla 1.6 system (type in the full URL by hand)::
@@ -88,7 +91,7 @@ The process to migrate the data for the Attachments involves several steps:
       If there are problems with the article/parent ID's, tiles, or user IDs
       or usernames, the command will abort and alert you to the nature of the
       problem.  You can edit the migration file until your get it to complete
-      successfully.  Until this works without error, you should defintely use
+      successfully.  Until this works without error, you should definitely use
       the '&dry_run=true' option on the command so nothing is changed.
 
       Once you get the message:
