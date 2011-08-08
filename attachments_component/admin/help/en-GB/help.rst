@@ -917,6 +917,16 @@ Uninstalling
   extension, delete the 'attachments' directory at the top of your Joomla
   installation.
 
+Migration Attachments from Joomla 1.5 to Joomla 1.6+
+====================================================
+
+To migrate your attachments from a Joomla 1.5 site to a Joomla 1.6 (or later)
+site, follow the procedure outlined here:
+
+ 
+  * `Migrating Attachments from Joomla 1.5 to Joomla 1.6+
+    <http://jmcameron.net/attachments/migration/>`_
+
 
 Translations
 ============
