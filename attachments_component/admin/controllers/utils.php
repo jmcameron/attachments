@@ -305,6 +305,44 @@ class AttachmentsControllerUtils extends JController
 			}
 	}
 
+
+	/**
+	 * Install attachments data from CSV file
+	 */
+	public function installAttachmentsFromCsvFile()
+	{
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			}
+
+		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/import.php');
+
+		$filename = JRequest::getString('filename', null);
+		if ( $filename == null ) {
+			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL');
+			return JError::raiseWarning(500, $errmsg);
+			}
+		$verify_parent = JRequest::getBool('verify_parent', true);
+		$update = JRequest::getBool('update', false);
+		$dry_run = JRequest::getBool('dry_run', false);
+
+		$added = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
+																 $update,   $dry_run);
+
+		if ( is_array($added) ) {
+			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($added));
+			$this->setRedirect('index.php?option=com_attachments', $msg);
+			}
+		else {
+			if ( $dry_run ) {
+				$msg = JText::sprintf('ATTACH_DATA_FOR_ATTACHMENTS_OK');
+				}
+			return JError::raiseNotice(200, $msg);
+			}
+	}
+
+
 	/**
 	 * Test function
 	 */
