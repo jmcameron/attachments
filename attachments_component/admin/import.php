@@ -45,16 +45,16 @@ class AttachmentsImport
 			   'parent_title',
 			   'created',
 			   'created_by',
-			   'created_by_name',
+			   'created_by_username',
 			   'modified',
 			   'modified_by',
-			   'modified_by_name',
+			   'modified_by_username',
 			   'download_count' );
 
 	static $extra_field_names =
 		Array( 'parent_title',
-			   'created_by_name',
-			   'modified_by_name' );
+			   'created_by_username',
+			   'modified_by_username' );
 
 
 	/**
@@ -144,44 +144,36 @@ class AttachmentsImport
 					}
 				}
 
-			// Check the creator name
+			// Check the creator username
 			$creator_id = (int)$adata[$field['created_by']];
-			$attachment_creator_name = $adata[$field['created_by_name']];
-			if ( $attachment_creator_name == 'Super Administrator' ) {
-				// Convert to Joomla 1.6+ equivalent
-				$attachment_creator_name = 'Super User';
-				}
+			$attachment_creator_username = $adata[$field['created_by_username']];
 			$query = $db->getQuery(true);
-			$query->select('name')->from('#__users')->where('id = ' . $creator_id);
+			$query->select('username')->from('#__users')->where('id = ' . $creator_id);
 			$db->setQuery($query, 0, 1);
-			$creator_name = $db->loadResult();
-			if ( empty($creator_name) || $db->getErrorNum() ) {
+			$creator_username = $db->loadResult();
+			if ( empty($creator_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
-									  $creator_id, $attachment_creator_name) . ' (ERR 24)';
+									  $creator_id, $attachment_creator_username) . ' (ERR 24)';
 				}
-			if ( strtolower($creator_name) != strtolower($attachment_creator_name) ) {
-				return JText::sprintf('ATTACH_ERROR_CREATOR_NAME_MISMATCH_ID_S_S',
-									  $creator_id, $attachment_creator_name, $creator_name) . ' (ERR 25)';
+			if ( strtolower($creator_username) != strtolower($attachment_creator_username) ) {
+				return JText::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
+									  $creator_id, $attachment_creator_username, $creator_username) . ' (ERR 25)';
 				}
 
 			// Check the modifier name
 			$modifier_id = (int)$adata[$field['modified_by']];
-			$attachment_modifier_name = $adata[$field['modified_by_name']];
-			if ( $attachment_modifier_name == 'Super Administrator' ) {
-				// Convert to Joomla 1.6+ equivalent
-				$attachment_modifier_name = 'Super User';
-				}
+			$attachment_modifier_username = $adata[$field['modified_by_username']];
 			$query = $db->getQuery(true);
-			$query->select('name')->from('#__users')->where('id = ' . $modifier_id);
+			$query->select('username')->from('#__users')->where('id = ' . $modifier_id);
 			$db->setQuery($query, 0, 1);
-			$modifier_name = $db->loadResult();
-			if ( empty($modifier_name) || $db->getErrorNum() ) {
+			$modifier_username = $db->loadResult();
+			if ( empty($modifier_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
-									  $modifier_id, $attachment_modifier_name) . ' (ERR 26)';
+									  $modifier_id, $attachment_modifier_username) . ' (ERR 26)';
 				}
-			if ( strtolower($modifier_name) != strtolower($attachment_modifier_name) ) {
-				return JText::sprintf('ATTACH_ERROR_MODIFIER_NAME_MISMATCH_ID_S_S',
-									  $modifier_id, $attachment_modifier_name, $modifier_name) . ' (ERR 27)';
+			if ( strtolower($modifier_username) != strtolower($attachment_modifier_username) ) {
+				return JText::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
+									  $modifier_id, $attachment_modifier_username, $modifier_username) . ' (ERR 27)';
 				}
 
 			// Construct an attachments entry
