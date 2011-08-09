@@ -29,7 +29,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 * Constructor
 	 *
 	 * @param object $subject The object to observe
-	 * @param array  $config  An optional associative array of configuration settings.
+	 * @param array	 $config  An optional associative array of configuration settings.
 	 * Recognized key values include 'name', 'group', 'params', 'language'
 	 * (this list is not meant to be comprehensive).
 	 */
@@ -106,7 +106,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		case 'category':
 			return parent::getSelectEntityURL($parent_entity);
-		    break;
+			break;
 
 		default:
 			return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle";
@@ -271,7 +271,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 */
 	public function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
 	{
-        $app = JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -473,6 +473,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		$where = Array();
 
+		$filter_entity = JString::strtoupper($filter_entity);
+
 		// NOTE: These WHERE clauses will be combined by OR
 
 		if ( $parent_state == 'PUBLISHED' ) {
@@ -496,11 +498,13 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=0))";
+				$where[] = "(a.parent_entity = 'article' AND NOT EXISTS (select * from #__content as c1 where c1.id = a.parent_id))";
 				// ??? Add clauses here to get articles that are unpublished because of publish_up/publish_down
 				}
 			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY') ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
 					"WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=0))";
+				$where[] = "(a.parent_entity = 'category' AND NOT EXISTS (select * from #__categories as c1 where c1.id = a.parent_id))";
 				}
 			}
 		elseif ( $parent_state == 'ARCHIVED' ) {
@@ -570,7 +574,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		// Get the user's permitted access levels
-		$user   = JFactory::getUser($user_id);
+		$user	= JFactory::getUser($user_id);
 		$user_levels = array_unique($user->authorisedLevels());
 
 		// See if the parent's access level is permitted for the user
@@ -639,7 +643,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_entity == 'category' ) {
 
 			// NOTE: This code is apparently never invoked because categories don't invoke content plugins
-			$errmsg = 'ERROR in attachment_for_content for categories!  (ERR 410)';
+			$errmsg = 'ERROR in attachment_for_content for categories!	(ERR 410)';
 			JError::raiseError(500, $errmsg);
 
 			// Handle categories
@@ -939,7 +943,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
-    public function userMayChangeAttachmentState($parent_id, $parent_entity,
+	public function userMayChangeAttachmentState($parent_id, $parent_entity,
 												 $attachment_creator_id, $user_id=null)
 	{
 		// If the user generally has permissions to edit all content, they
