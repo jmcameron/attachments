@@ -137,8 +137,8 @@ class AttachmentsPluginManager extends JObject
 				foreach ($entities as $entity) {
 					$centity = $parent->getCanonicalEntityId($entity);
 					$this->_entity_info[] = array('id' => $centity,
-												  'name' => JText::_($centity),
-												  'name_plural' => JText::_($centity . 's'),
+												  'name' => JText::_('ATTACH_' . $centity),
+												  'name_plural' => JText::_('ATTACH_' . $centity . 's'),
 												  'parent_type' => $parent_type
 												  );
 					}
@@ -183,12 +183,12 @@ class AttachmentsPluginManager extends JObject
 			JError::raiseError(500, $errmsg);
 			}
 
- 		// Instantiate the plugin object, if we have not already done it
- 		if ( !array_key_exists( $parent_type, $this->_plugin ) ) {
- 			$this->_installPlugin($parent_type);
- 			}
+		// Instantiate the plugin object, if we have not already done it
+		if ( !array_key_exists( $parent_type, $this->_plugin ) ) {
+			$this->_installPlugin($parent_type);
+			}
 
- 		return $this->_plugin[$parent_type];
+		return $this->_plugin[$parent_type];
 	}
 
 
