@@ -52,7 +52,7 @@ else {
 
 // Set up the create/modify dates
 jimport( 'joomla.utilities.date' );
-$tz	= new DateTimeZone($user->getParam('timezone'));
+$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
 
 $cdate = JFactory::getDate($attachment->created);
 $cdate->setTimezone($tz);

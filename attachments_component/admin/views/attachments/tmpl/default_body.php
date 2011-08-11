@@ -65,7 +65,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	// Set up the create/modify dates
 	jimport( 'joomla.utilities.date' );
-	$tz = new DateTimeZone($user->getParam('timezone'));
+	$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
 
 	$cdate = JFactory::getDate($item->created);
 	$cdate->setTimeZone($tz);

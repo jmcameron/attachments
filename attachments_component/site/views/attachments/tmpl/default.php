@@ -135,7 +135,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	if ( $this->show_mod_date ) {
 		jimport( 'joomla.utilities.date' );
-		$tz	= new DateTimeZone($user->getParam('timezone'));
+		$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
 		$date = JFactory::getDate($attachment->modified);
 		$date->setTimezone($tz);
 		$last_modified = $date->toFormat($this->mod_date_format, true);

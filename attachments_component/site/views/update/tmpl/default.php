@@ -15,6 +15,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Add the plugins stylesheet to style the list of attachments
+$user = JFactory::getUser();
 $document = JFactory::getDocument();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
@@ -66,6 +67,14 @@ if ( $this->error ) {
 		break;
 		}
 	}
+
+// Format modified date
+jimport( 'joomla.utilities.date' );
+$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
+$mdate = JFactory::getDate($attachment->modified);
+$mdate->setTimezone($tz);
+$mod_date_format = $params->get('mod_date_format', '%Y-%m-%d %I:%M%P');
+$last_modified = $mdate->toFormat($mod_date_format, true);
 
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;
@@ -214,7 +223,7 @@ else {
 				  value="<?php echo $attachment->user_field_3; ?>" /></p>
 		<?php endif; ?>
 		<p><?php echo JText::sprintf('ATTACH_LAST_MODIFIED_ON_D_BY_S',
-									 $attachment->modified, $attachment->modifier_name); ?></p>
+									 $last_modified, $attachment->modifier_name); ?></p>
 	</fieldset>
 	<input type="hidden" name="MAX_FILE_SIZE" value="524288" />
 	<input type="hidden" name="submitted" value="TRUE" />
