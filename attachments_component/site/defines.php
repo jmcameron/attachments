@@ -23,7 +23,7 @@ class AttachmentsDefines
 {
 	/** The Attachments extension version number
 	 */
-	static $ATTACHMENTS_VERSION = '3.0.0RC';
+	static $ATTACHMENTS_VERSION = '3.0-RC';
 
 	/** Project URL
 	 */
