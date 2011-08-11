@@ -18,6 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
+$user = JFactory::getUser();
 $document = JFactory::getDocument();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
@@ -51,10 +52,14 @@ else {
 
 // Set up the create/modify dates
 jimport( 'joomla.utilities.date' );
-$tz	= new DateTimeZone($app->getCfg('offset'));
-$cdate = JFactory::getDate($attachment->created)->setTimezone($tz);
+$tz	= new DateTimeZone($user->getParam('timezone'));
+
+$cdate = JFactory::getDate($attachment->created);
+$cdate->setTimezone($tz);
 $created = $cdate->toFormat("%x %H:%M", true);
-$mdate = JFactory::getDate($attachment->modified)->setTimezone($tz);
+
+$mdate = JFactory::getDate($attachment->modified);
+$mdate->setTimezone($tz);
 $modified = $mdate->toFormat("%x %H:%M", true);
 
 $update = $this->update;

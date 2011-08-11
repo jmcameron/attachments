@@ -14,7 +14,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-global $option;
+$user = JFactory::getUser();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
@@ -50,7 +50,6 @@ if ( $format != 'raw' ) {
 	// Construct the empty div for the attachments
 	if ( $parent_id === null ) {
 		// If there is no parent_id, the parent is being created, use the username instead
-		$user = JFactory::getUser();
 		$pid = $user->get('username');
 		}
 	else {
@@ -136,8 +135,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	if ( $this->show_mod_date ) {
 		jimport( 'joomla.utilities.date' );
-		$tz	= new DateTimeZone($app->getCfg('offset'));
-		$date = JFactory::getDate($attachment->modified)->setTimezone($tz);
+		$tz	= new DateTimeZone($user->getParam('timezone'));
+		$date = JFactory::getDate($attachment->modified);
+		$date->setTimezone($tz);
 		$last_modified = $date->toFormat($this->mod_date_format, true);
 		}
 

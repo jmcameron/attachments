@@ -16,6 +16,7 @@ defined('_JEXEC') or die('Restricted Access');
 
 // Set up a few convenience items
 $app = JFactory::getApplication();
+$user = JFactory::getUser();
 $uri = JFactory::getURI();
 $params = $this->params;
 $secure = $params->get('secure',false);
@@ -64,10 +65,14 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	// Set up the create/modify dates
 	jimport( 'joomla.utilities.date' );
-	$tz	= new DateTimeZone($app->getCfg('offset'));
-	$cdate = JFactory::getDate($item->created)->setTimezone($tz);
+	$tz = new DateTimeZone($user->getParam('timezone'));
+
+	$cdate = JFactory::getDate($item->created);
+	$cdate->setTimeZone($tz);
 	$created = $cdate->toFormat("%x %H:%M", true);
-	$mdate = JFactory::getDate($item->modified)->setTimezone($tz);
+
+	$mdate = JFactory::getDate($item->modified);
+	$mdate->setTimeZone($tz);
 	$modified = $mdate->toFormat("%x %H:%M", true);
 
 	$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
