@@ -219,10 +219,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	            $uri = JFactory::getURI();
 				$base_url = $uri->base(true);
 				echo "<script type=\"text/javascript\">
-                   var fn = window.parent.refreshAttachments;
-			       window.parent.SqueezeBox.close();
-			       fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-				   </script>";
+			    window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+			    window.parent.SqueezeBox.close();
+				</script>";
 				exit();
 				}
 			}

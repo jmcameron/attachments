@@ -421,9 +421,8 @@ class AttachmentsController extends JController
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
 			echo "<script type=\"text/javascript\">
-               var fn = window.parent.refreshAttachments;
-			   window.parent.SqueezeBox.close();
-			   fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+			window.parent.SqueezeBox.close();
 			</script>";
 			exit();
 			}
@@ -557,9 +556,8 @@ class AttachmentsController extends JController
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
 			echo "<script type=\"text/javascript\">
-               var fn = window.parent.refreshAttachments;
-			   window.parent.SqueezeBox.close();
-			   fn(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+			window.parent.SqueezeBox.close();
 			</script>";
 			exit();
 
