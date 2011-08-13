@@ -340,7 +340,7 @@ class AttachmentsControllerUtils extends JController
 				return JError::raiseNotice(200, $msg);
 				}
 			else {
-				$errmsg = (JText::sprintf'ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status);
+				$errmsg = JText::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status);
 				return JError::raiseWarning(500, $errmsg);
 				}
 			}
