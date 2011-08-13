@@ -375,7 +375,7 @@ class AttachmentsControllerSpecial extends JController
 			$data[] = $attachment->user_field_2;
 			$data[] = $attachment->user_field_3;
 			$data[] = $attachment->parent_type;
-			$data[] = $attachment->parent_entity;
+			$data[] = JString::strtolower($attachment->parent_entity);
 			$data[] = $attachment->parent_id;
 			$data[] = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
 			$data[] = $attachment->create_date;
