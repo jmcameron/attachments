@@ -51,12 +51,12 @@ New features in Version 3.0
 
 * Full support for the new ACL/permissions system of Joomla 1.6/1.7+.  This
   gives you significant flexibility to control who can create, edit, or delete
-  attachments.  See the `Attachments Permissions`_ section for more
-  information.
+  attachments.  See the `Attachments Permissions`_ section for more details.
 
 * Full support for viewing access levels.  This means you can set some of your
-  attachments to be visible by anyone, and some of them visible only to users
-  in certain groups (as defined by the Access Levels).
+  attachments to be visible by anyone, and some to be visible only to users
+  in certain groups (as defined by the Access Levels).   
+  See the `Access Levels Visibility Control`_ section for more details.
 
 * Simplified and improved options for hiding attachments in various contexts.
 
@@ -67,9 +67,16 @@ Major features of the Attachments Extension
 * You can manage attachments from the article editor, including adding,
   editing, and deleting attachments.
 * You can create attachments while an article is being created.
-* All attachments lists are updated by Ajax and do not require full page reloads.
+* All attachments lists on the front end are updated by Ajax and do not
+  require full page reloads.
 * You can "attach" URLs as well as files to content items.
 * You can show the attachments list anywhere in an article (or content item).
+* In the administrative back end:
+     - There are options to filter the listed attachments to unpublished
+       or trashed articles or content items.
+     - Filtering of the list of articles
+     - Sorting the list of attachments by any of the column headers.
+     - Useful administrative utility commands
 * The Attachments extension supports "Attachments plugins".  These plugins allow
   attaching files to any content item that invokes the ``onPrepareContent``
   plugin.  For example, you can attach files to Category descriptions.  
@@ -77,12 +84,6 @@ Major features of the Attachments Extension
   plugin to support adding attachments to things like CB personal info
   displays, Virtuemart product descriptions, etc.  See section 
   `What Can Files Be Attached To?`_ for more details.
-* In the administrative back end:
-     - There are options to filter the listed attachments to unpublished
-       or trashed articles or content items.
-     - Filtering of the list of articles
-     - Sorting the list of attachments by any of the column headers.
-     - Useful administrative utility commands
 
 Uploading Restrictions
 ======================
@@ -155,7 +156,7 @@ Basic Options
      will not be displayed on the front end.  It will be visible when an
      attachment is edited on the front end and always visible in the back
      end.  This hidden user-defined field can be used to order attachments in
-     an arbitrary order by puttting integer values in the field.
+     an arbitrary order by putting integer values in the field.
 
 * **Maximum filename or URL length:**
   The maximum filename or URL length for attachments list.  Filenames or URLs
@@ -288,7 +289,7 @@ Visibility Options
 ------------------
 
 These options control when attachments will be visible on the front page,
-asssuming the user is in the appropriate groups to see the attachments.
+assuming the user is in the appropriate groups to see the attachments.
 
 .. image:: images/options-visibility.png
    :class: float-right
@@ -307,7 +308,7 @@ asssuming the user is in the appropriate groups to see the attachments.
 
 * **Hide attachments except on article views:** Select this option to prevent
   attachments from being shown on any page on the front page except for 
-  views for single specifc articles.
+  views for single specific articles.
 
 * **Always show attachments on category views:** Select this option to always
   show attachments on category views -- regardless of other options.
@@ -323,7 +324,7 @@ asssuming the user is in the appropriate groups to see the attachments.
 
    To select or deselect categories without affecting other categories, hold
    the Control-key when mouse-clicking on the category.  In the figure, only
-   one category is selcted.
+   one category is selected.
 
 
 * **Hide 'Add Attachments' link:** Always hide the 'Add Attachments' link on
@@ -368,7 +369,7 @@ Advanced Options
   above could have been done with 'article:211 Downloads'.  Note that an entry
   without a numeric ID at the beginning will be applied to all content items.
   So it is good practice to put such global overrides first in the list and
-  then override the item-by-item custom titles afterwards.
+  then override the item-by-item custom titles afterward.
 
   Note: If you wish to change the titles used for attachments lists globally,
   you may edit the translations file entry 'ATTACHMENTS TITLE' in the translation
@@ -416,22 +417,22 @@ Security Options
 
 * **Secure attachment downloads:**
   By default, the 'Attachments' extension saves attachment files in a publicly
-  accessible subdirectory.  If you choose the *secure* option, the directory
+  accessible sub-directory.  If you choose the *secure* option, the directory
   in which the attachments are saved will be made publicly inaccessible.  The
   download links for the attachments in the front end will download the
   attachment files but will not be direct links.  This will prevent access
   unless users have appropriate permissions.  If *secure* downloads are not
   selected, the links to the attachments will be shown as the options above
   indicate, but the files will still be accessible to anyone if they know the
-  full URL, since the subdirectory is public.  The *secure* option prevents
+  full URL, since the sub-directory is public.  The *secure* option prevents
   access to users without appropriate permissions even if they know the full
   URL, since this option prevents public access to the attachments
-  subdirectory.  In *secure* mode, the option "Who can see" can set to
+  sub-directory.  In *secure* mode, the option "Who can see" can set to
   'Anyone' and anyone will be able to see and download the attachments.
 
   .. hint::
 
-     If you have problems with filenames with unicode characters, you should
+     If you have problems with filenames with Unicode characters, you should
      enable the **Secure attachment downloads** option (especially on Windows
      servers).
 
@@ -459,9 +460,9 @@ The permissions options are explained in the following `Attachments Permissions`
 Attachments Permissions
 =======================
 
-The attachments extentension takes full advantage of the new Joomla!
+The attachments extension takes full advantage of the new Joomla!
 ACL/permissions system introduced in Joomla! 1.6.  This gives websites that
-use Attachments much more flexibilty to control who can create, edit, delete
+use Attachments much more flexibility to control who can create, edit, delete
 and manage attachments.
 
 Before describing the ACL permissions related to Attachments, it is important
@@ -472,10 +473,10 @@ to understand a key underlying principle:
    All attachments are attached to a parent article, category, or other
    content item.  Creating, editing, deleting, or changing the state of an
    attachment is considered to be a form of editing the parent content
-   item. So the user must first have permisson to edit the parent content item
+   item. So the user must first have permission to edit the parent content item
    before any Attachments-specific permissions are checked.
 
-To change the permissons for various user groups, go to the administrative
+To change the permissions for various user groups, go to the administrative
 back end and select "Attachments" under the "Component" menu.  Click
 on the "Options" button on the right end of the tool bar and then select the
 permissions tab. You will see this:
@@ -544,7 +545,7 @@ the "Permissions" tab on the Attachments options.
 Permissions Settings for Common Scenarios
 -----------------------------------------
 
-Here are some suggestions about how to set the permissions to archieve the
+Here are some suggestions about how to set the permissions to achieve the
 desired behaviors:
 
   * **Scenario 1 - Authors can publish their own Attachments**
@@ -589,9 +590,31 @@ Other Notes on Permissions
     will see the 'Publish: Yes/No' options on forms to add or edit
     attachments.  If they select 'No' and save the attachment, the attachment
     will still be visible to them in the front end (while they are logged in).
-    Noone else will see the unpublished attachments on the front end.  If the
+    No one else will see the unpublished attachments on the front end.  If the
     user wants to change the Published state, they can edit the attachment
     (even though it is grayed out) and change the states.
+
+Access Levels Visibility Control
+================================
+
+The Attachments extension now supports the Joomla 'Access Levels'.  Each
+attachment can be assigned to specific access levels such as 'Public',
+'Registered', and 'Special', as well as any other access levels created on
+your site.   This gives extensive control on who is able to see the
+attachments. 
+
+.. note:: 
+
+   Suppose you create a new access level on your site.  Users that are not
+   explicitly members of the groups associated with the new access level will
+   not be able to set their attachments for that access level.  If you edit an
+   attachment as the Super User, you might be surprised that the new access
+   level does not show up in the access level options.  There are two
+   potential issues.  (1) If you have just created the new access level, you
+   may need to log out of the back end and log in again for the changes to be
+   completely visible.  (2) The other reason is that the user (Super User, for
+   instance) is not in the access level.  The fix is simple, make sure the
+   user is in one of the groups associated with the new access level.
 
 
 Display Filename or URL
@@ -729,7 +752,7 @@ There are several utility commands in the back end that are available for
 Administrators.   These include:
 
 * **Disable uninstallation of MySQL Attachments Table:** Normally, when the
-  Attachents extension is uninstalled, the database table is deleted that
+  Attachments extension is uninstalled, the database table is deleted that
   contains information about the attachments.   If you wish to retain this
   data when uninstalling Attachments, execute this command.  After you
   uninstall Attachments the attachments table will remain.
@@ -749,16 +772,16 @@ Administrators.   These include:
   command to regenerate all of the system filenames for all file attachments.
 
   The Utility command to "Regenerate system filenames" works for migration
-  from windows to Linux servers.  It also works for migraton from Linux to
+  from windows to Linux servers.  It also works for migration from Linux to
   Windows servers with a couple of potential problems:
 
      - When you copy your files to your Windows server, you need to verify
-       that the atthachments directory (usually 'attachments') and all files
+       that the attachments directory (usually 'attachments') and all files
        within it are writable by the Joomla web server.
 
-     - You may have problems porting files that have unicode characters in
+     - You may have problems porting files that have Unicode characters in
        their filenames because the archiving/unarchiving software has problems
-       with the unicode filenames (on the Windows side).  You may need to save
+       with the Unicode filenames (on the Windows side).  You may need to save
        those files, delete the corresponding attachments, and then re-attach
        them.
 
@@ -791,25 +814,25 @@ Warnings
 
 * **If you have attachment files that are sensitive or private, use the
   *Secure attachment downloads* option!** If you do not use the secure option,
-  the attachment files are saved in a public subdirectory and are accessible
+  the attachment files are saved in a public sub-directory and are accessible
   to anyone that knows the full URL.  The *secure* option prevents access by
   anyone that does not have appropriate permissions (as determined by the
   options above).  See the discussion of the *Secure attachment downloads*
   option above for more detail.
 
-* Every time a file is uploaded, the existence of the upload subdirectory is
+* Every time a file is uploaded, the existence of the upload sub-directory is
   checked and it will be created if if it does not exist.  By default the
-  subdirectory for uploaded files is 'attachments' in the root directory of
-  your web site files.  The name of the subdirectory can be changed using the
-  'Subdirectory for uploads' option. If the 'Attachments' extension is unable
-  to create the subdirectory for uploads, you must create it yourself (and you
-  may have problems uploading files).  Make sure to give the subdirectory
+  sub-directory for uploaded files is 'attachments' in the root directory of
+  your web site files.  The name of the sub-directory can be changed using the
+  'Sub-directory for uploads' option. If the 'Attachments' extension is unable
+  to create the sub-directory for uploads, you must create it yourself (and you
+  may have problems uploading files).  Make sure to give the sub-directory
   suitable permissions for uploading files.  In the Unix/Linux world, that is
   probably something like 775.  Note the process of creating the upload
-  subdirectory may fail if the top level directory of your website has
+  sub-directory may fail if the top level directory of your website has
   permissions that prevent the web server (and PHP) from creating
-  subdirectories.  You may need to loosen the permissions temporarily to allow
-  the subdirectory to be created by uploading attachments.
+  sub-directories.  You may need to loosen the permissions temporarily to allow
+  the sub-directory to be created by uploading attachments.
 
 * If this extension does not permit you to upload specific types of files
   (such as zip files), be aware that the extension respects the restrictions
@@ -858,9 +881,9 @@ Warnings
   hidden system file and you may need to modify your folder options to show
   hidden files to see and edit it.
 
-* If you have difficulties attaching files that have unicode characters (such
+* If you have difficulties attaching files that have Unicode characters (such
   as Russian/Cyrillic characters), set the *Secure Attachments Downloads*
-  option to 'Yes'.  Filenames with unicode characters should work properly on
+  option to 'Yes'.  Filenames with Unicode characters should work properly on
   Linux servers in secure or non-secure modes, but do not always work
   correctly on Windows servers in non-secure mode.
 
@@ -969,8 +992,8 @@ the extension to any other language, please contact the author (see the
 `Contact`_ section at the end).
 
 
-Acknowledgements
-================
+Acknowledgments
+===============
 
 Many thanks for the following contributors or resources:
 
