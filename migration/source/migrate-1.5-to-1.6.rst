@@ -25,6 +25,18 @@ Necessary Conditions for Successful Attachments Migration
    there are differences, the migration file will need to be edited manually.
  
 
+.. warning::
+
+   One of the testers noticed that the migration process set the 'Access Level' 
+   for all migrated attachments to 'Public'.  This could be a problem for some
+   sites.  I have since fixed this so that it will use the 'Default Access
+   Level' option for all the migrated attachments.  I have updated the
+   Attachments-3.0-RC.zip file with these changes.  If the date of the
+   Attachments extension is not 'August 13, 2011' or later, please reinstall
+   from the orignal URL in the Release Candidate email before proceeding.  You
+   should be able to install it over any existing version.
+
+
 Migrating the Attachments Data
 ------------------------------
 
@@ -81,15 +93,25 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
       Joomla 1.6 site before proceeding.  Doing this step will make it easier to
       delete any new attachments if the migration process does not go smoothly.
 
- 7.   Copy the CSV migration file ('migrate_attachments.csv') and the archive of
+ 7.   All the migrated attachments will be set to the same Access Level.
+      Depending on your site, you may want this to be 'Public' or 'Registered'
+      (or other access level).   To choose which access level should be set
+      for all the migrated attachments do this:
+
+	* Go to the Attachments page in the back end (under Components),
+	* Click on the "Options" button on the toolbar,
+	* Select the 'Basic' tab and
+	* Set the 'Default Access Level' to the desired access level.
+
+ 8.   Copy the CSV migration file ('migrate_attachments.csv') and the archive of
       attachments files to your Joomla 1.6 site.
 
- 8.   Upload the migration file to some place on your Joomla 1.6 server file
+ 9.   Upload the migration file to some place on your Joomla 1.6 server file
       system.   **Note the exact location and path to the file on the server.**
 
- 9.   Log into the back end of your Joomla 1.6 system as an administrator.
+ 10.  Log into the back end of your Joomla 1.6 system as an administrator.
 
- 10.  Go to the Attachments page and execute this command manually on your
+ 11.  Go to the Attachments page and execute this command manually on your
       Joomla 1.6 system (type in the full URL by hand)::
  
 	  http://<yoursite>/administrator/index.php?option=com_attachments&task=utils.installAttachmentsFromCsvFile&filename=/path/to/migrate_attachments.csv&dry_run=1
@@ -117,14 +139,14 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
       where '4' will be replaced with the number of attachments in the
       migration file.
 
- 11.  Unzip the attachments file in the same directory on your Joomla 1.6 site
+ 12.  Unzip the attachments file in the same directory on your Joomla 1.6 site
       as they were on your Joomla 1.5 site.  This step requires that the
       article/parent IDs are identical between the 1.5 and 1.6 systems.  If
       this is not true, some directory renaming will be necessary to ensure
       that the name of the parent directory above each attachment matches the
       article/parent ID.
 
- 12.  In the back end on the Joomla 1.6 site, got to the Attachments page and
+ 13.  In the back end on the Joomla 1.6 site, got to the Attachments page and
       execute the 'Utilities' command (on the right end of the toolbar).
       Click on the item:
 
@@ -133,7 +155,7 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
       This should fix the system filenames for all of the newly migrated File
       attachments.  The URL attachments will not be affected.
 
- 13.  Test the newly migrated attachments (try downloading them on the back
+ 14.  Test the newly migrated attachments (try downloading them on the back
       end or front end).
 
 That should complete the process.  If you have any difficulties with this
