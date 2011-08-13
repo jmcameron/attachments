@@ -88,6 +88,11 @@ class AttachmentsImport
 			return $field;
 			}
 
+		// Get the default access level from the Attachments options
+		jimport('joomla.application.component.helper');
+		$params = JComponentHelper::getParams('com_attachments');
+		$default_access_level = $params->get('default_access_level', 2);
+
 		// Load the attachents parent manager
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
@@ -203,6 +208,10 @@ class AttachmentsImport
 					$attachment->$fname = $adata[$field[$fname]];
 					}
 				}
+
+			// Do any necessary overrides
+			$attachment->parent_entity = $parent_entity;
+			$attachment->access = $default_access_level;
 
 			if ( $dry_run ) {
 				$ids_ok++;
