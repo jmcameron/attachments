@@ -600,8 +600,23 @@ Access Levels Visibility Control
 The Attachments extension now supports the Joomla 'Access Levels'.  Each
 attachment can be assigned to specific access levels such as 'Public',
 'Registered', and 'Special', as well as any other access levels created on
-your site.   This gives extensive control on who is able to see the
-attachments. 
+your site.   The two basic levels are:
+
+ * **'Public'** - Anyone visiting the website will be able to see and download
+   attachments with 'access level' set to 'Public' if the article/parent is
+   visibile and no other Attachments visbility settings prevent the
+   attachments from being shown.
+
+ * **'Registered'** - Anyone that is logged into the website will be able to
+   see and download attachments with 'access level' set to 'Registered' if the
+   article/parent is visibile and no other Attachments visbility settings
+   prevent the attachments from being shown.
+
+The effect of other access levels depends on the groups associated with the
+access level.
+
+The ability to set the 'Access Level' for individual attachments gives
+extensive control on who is able to see and download attachments.
 
 .. note:: 
 
