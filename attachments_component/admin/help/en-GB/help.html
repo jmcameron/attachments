@@ -15,7 +15,7 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 3.0 Beta 5 - August  4, 2011</strong></p>
+<p class="version"><strong>Version 3.0-RC - August  9, 2011</strong></p>
 <p><strong>This version is for Joomla 1.6/1.7+</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -26,19 +26,20 @@
 <li><a class="reference internal" href="#uploading-restrictions" id="id4">Uploading Restrictions</a></li>
 <li><a class="reference internal" href="#attachments-settings" id="id5">Attachments Settings</a></li>
 <li><a class="reference internal" href="#attachments-permissions" id="id6">Attachments Permissions</a></li>
-<li><a class="reference internal" href="#display-filename-or-url" id="id7">Display Filename or URL</a></li>
-<li><a class="reference internal" href="#attaching-urls" id="id8">Attaching URLs</a></li>
-<li><a class="reference internal" href="#what-can-files-be-attached-to" id="id9">What Can Files Be Attached To?</a></li>
-<li><a class="reference internal" href="#css-styling-of-attachment-lists" id="id10">CSS Styling of Attachment Lists</a></li>
-<li><a class="reference internal" href="#file-type-icons" id="id11">File Type Icons</a></li>
-<li><a class="reference internal" href="#administrative-utility-commands" id="id12">Administrative Utility Commands</a></li>
-<li><a class="reference internal" href="#warnings" id="id13">Warnings</a></li>
-<li><a class="reference internal" href="#upgrading" id="id14">Upgrading</a></li>
-<li><a class="reference internal" href="#uninstalling" id="id15">Uninstalling</a></li>
-<li><a class="reference internal" href="#migration-attachments-from-joomla-1-5-to-joomla-1-6" id="id16">Migration Attachments from Joomla 1.5 to Joomla 1.6+</a></li>
-<li><a class="reference internal" href="#translations" id="id17">Translations</a></li>
-<li><a class="reference internal" href="#acknowledgements" id="id18">Acknowledgements</a></li>
-<li><a class="reference internal" href="#contact" id="id19">Contact</a></li>
+<li><a class="reference internal" href="#access-levels-visibility-control" id="id7">Access Levels Visibility Control</a></li>
+<li><a class="reference internal" href="#display-filename-or-url" id="id8">Display Filename or URL</a></li>
+<li><a class="reference internal" href="#attaching-urls" id="id9">Attaching URLs</a></li>
+<li><a class="reference internal" href="#what-can-files-be-attached-to" id="id10">What Can Files Be Attached To?</a></li>
+<li><a class="reference internal" href="#css-styling-of-attachment-lists" id="id11">CSS Styling of Attachment Lists</a></li>
+<li><a class="reference internal" href="#file-type-icons" id="id12">File Type Icons</a></li>
+<li><a class="reference internal" href="#administrative-utility-commands" id="id13">Administrative Utility Commands</a></li>
+<li><a class="reference internal" href="#warnings" id="id14">Warnings</a></li>
+<li><a class="reference internal" href="#upgrading" id="id15">Upgrading</a></li>
+<li><a class="reference internal" href="#uninstalling" id="id16">Uninstalling</a></li>
+<li><a class="reference internal" href="#migration-attachments-from-joomla-1-5-to-joomla-1-6" id="id17">Migration Attachments from Joomla 1.5 to Joomla 1.6+</a></li>
+<li><a class="reference internal" href="#translations" id="id18">Translations</a></li>
+<li><a class="reference internal" href="#acknowledgments" id="id19">Acknowledgments</a></li>
+<li><a class="reference internal" href="#contact" id="id20">Contact</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
@@ -78,11 +79,11 @@ this extension, please subscribe using this web page:</p>
 <ul class="simple">
 <li>Full support for the new ACL/permissions system of Joomla 1.6/1.7+.  This
 gives you significant flexibility to control who can create, edit, or delete
-attachments.  See the <a class="reference internal" href="#attachments-permissions">Attachments Permissions</a> section for more
-information.</li>
+attachments.  See the <a class="reference internal" href="#attachments-permissions">Attachments Permissions</a> section for more details.</li>
 <li>Full support for viewing access levels.  This means you can set some of your
-attachments to be visible by anyone, and some of them visible only to users
-in certain groups (as defined by the Access Levels).</li>
+attachments to be visible by anyone, and some to be visible only to users
+in certain groups (as defined by the Access Levels).
+See the <a class="reference internal" href="#access-levels-visibility-control">Access Levels Visibility Control</a> section for more details.</li>
 <li>Simplified and improved options for hiding attachments in various contexts.</li>
 </ul>
 </div>
@@ -94,19 +95,12 @@ editing, and deleting attachments.</p>
 </li>
 <li><p class="first">You can create attachments while an article is being created.</p>
 </li>
-<li><p class="first">All attachments lists are updated by Ajax and do not require full page reloads.</p>
+<li><p class="first">All attachments lists on the front end are updated by Ajax and do not
+require full page reloads.</p>
 </li>
 <li><p class="first">You can &quot;attach&quot; URLs as well as files to content items.</p>
 </li>
 <li><p class="first">You can show the attachments list anywhere in an article (or content item).</p>
-</li>
-<li><p class="first">The Attachments extension supports &quot;Attachments plugins&quot;.  These plugins allow
-attaching files to any content item that invokes the <tt class="docutils literal">onPrepareContent</tt>
-plugin.  For example, you can attach files to Category descriptions.
-With a bit of work, an extension developer can create a new 'Attachments'
-plugin to support adding attachments to things like CB personal info
-displays, Virtuemart product descriptions, etc.  See section
-<a class="reference internal" href="#what-can-files-be-attached-to">What Can Files Be Attached To?</a> for more details.</p>
 </li>
 <li><dl class="first docutils">
 <dt>In the administrative back end:</dt>
@@ -119,6 +113,14 @@ or trashed articles or content items.</li>
 </ul>
 </dd>
 </dl>
+</li>
+<li><p class="first">The Attachments extension supports &quot;Attachments plugins&quot;.  These plugins allow
+attaching files to any content item that invokes the <tt class="docutils literal">onPrepareContent</tt>
+plugin.  For example, you can attach files to Category descriptions.
+With a bit of work, an extension developer can create a new 'Attachments'
+plugin to support adding attachments to things like CB personal info
+displays, Virtuemart product descriptions, etc.  See section
+<a class="reference internal" href="#what-can-files-be-attached-to">What Can Files Be Attached To?</a> for more details.</p>
 </li>
 </ul>
 </div>
@@ -189,7 +191,7 @@ fields may be up to 100 characters long.</p>
 will not be displayed on the front end.  It will be visible when an
 attachment is edited on the front end and always visible in the back
 end.  This hidden user-defined field can be used to order attachments in
-an arbitrary order by puttting integer values in the field.</p>
+an arbitrary order by putting integer values in the field.</p>
 </div>
 </li>
 <li><p class="first"><strong>Maximum filename or URL length:</strong>
@@ -334,7 +336,7 @@ ordering the attachments in the order they were created.</li>
 <div class="section" id="visibility-options">
 <h2>Visibility Options</h2>
 <p>These options control when attachments will be visible on the front page,
-asssuming the user is in the appropriate groups to see the attachments.</p>
+assuming the user is in the appropriate groups to see the attachments.</p>
 <img alt="Visibility Options" class="float-right" src="images/options-visibility.png" />
 <ul class="simple">
 <li><strong>Hide attachments on the front page:</strong> Select this option to prevent any
@@ -347,7 +349,7 @@ full article, the attachments will be shown.</li>
 attachments from being shown on any page with 'blog' layouts.</li>
 <li><strong>Hide attachments except on article views:</strong> Select this option to prevent
 attachments from being shown on any page on the front page except for
-views for single specifc articles.</li>
+views for single specific articles.</li>
 <li><strong>Always show attachments on category views:</strong> Select this option to always
 show attachments on category views -- regardless of other options.</li>
 <li><strong>Hide attachments for categories:</strong> Hide attachments on any category views
@@ -358,7 +360,7 @@ children categories unless they are explicitly selected.</li>
 <img alt="Hide Categories Selection" src="images/options-hide-categories.png" />
 <p class="caption">To select or deselect categories without affecting other categories, hold
 the Control-key when mouse-clicking on the category.  In the figure, only
-one category is selcted.</p>
+one category is selected.</p>
 </div>
 <ul class="simple">
 <li><strong>Hide 'Add Attachments' link:</strong> Always hide the 'Add Attachments' link on
@@ -401,7 +403,7 @@ replaced by the name of the content item entity.  The example for articles
 above could have been done with 'article:211 Downloads'.  Note that an entry
 without a numeric ID at the beginning will be applied to all content items.
 So it is good practice to put such global overrides first in the list and
-then override the item-by-item custom titles afterwards.</p>
+then override the item-by-item custom titles afterward.</p>
 <p>Note: If you wish to change the titles used for attachments lists globally,
 you may edit the translations file entry 'ATTACHMENTS TITLE' in the translation
 files:</p>
@@ -445,21 +447,21 @@ the next time you log in as administrator.</p>
 <ul>
 <li><p class="first"><strong>Secure attachment downloads:</strong>
 By default, the 'Attachments' extension saves attachment files in a publicly
-accessible subdirectory.  If you choose the <em>secure</em> option, the directory
+accessible sub-directory.  If you choose the <em>secure</em> option, the directory
 in which the attachments are saved will be made publicly inaccessible.  The
 download links for the attachments in the front end will download the
 attachment files but will not be direct links.  This will prevent access
 unless users have appropriate permissions.  If <em>secure</em> downloads are not
 selected, the links to the attachments will be shown as the options above
 indicate, but the files will still be accessible to anyone if they know the
-full URL, since the subdirectory is public.  The <em>secure</em> option prevents
+full URL, since the sub-directory is public.  The <em>secure</em> option prevents
 access to users without appropriate permissions even if they know the full
 URL, since this option prevents public access to the attachments
-subdirectory.  In <em>secure</em> mode, the option &quot;Who can see&quot; can set to
+sub-directory.  In <em>secure</em> mode, the option &quot;Who can see&quot; can set to
 'Anyone' and anyone will be able to see and download the attachments.</p>
 <div class="hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">If you have problems with filenames with unicode characters, you should
+<p class="last">If you have problems with filenames with Unicode characters, you should
 enable the <strong>Secure attachment downloads</strong> option (especially on Windows
 servers).</p>
 </div>
@@ -496,9 +498,9 @@ downloaded as external files.</p>
 </div>
 <div class="section" id="attachments-permissions">
 <h1><a class="toc-backref" href="#id6">Attachments Permissions</a></h1>
-<p>The attachments extentension takes full advantage of the new Joomla!
+<p>The attachments extension takes full advantage of the new Joomla!
 ACL/permissions system introduced in Joomla! 1.6.  This gives websites that
-use Attachments much more flexibilty to control who can create, edit, delete
+use Attachments much more flexibility to control who can create, edit, delete
 and manage attachments.</p>
 <p>Before describing the ACL permissions related to Attachments, it is important
 to understand a key underlying principle:</p>
@@ -507,10 +509,10 @@ to understand a key underlying principle:</p>
 <p class="last">All attachments are attached to a parent article, category, or other
 content item.  Creating, editing, deleting, or changing the state of an
 attachment is considered to be a form of editing the parent content
-item. So the user must first have permisson to edit the parent content item
+item. So the user must first have permission to edit the parent content item
 before any Attachments-specific permissions are checked.</p>
 </div>
-<p>To change the permissons for various user groups, go to the administrative
+<p>To change the permissions for various user groups, go to the administrative
 back end and select &quot;Attachments&quot; under the &quot;Component&quot; menu.  Click
 on the &quot;Options&quot; button on the right end of the tool bar and then select the
 permissions tab. You will see this:</p>
@@ -603,7 +605,7 @@ the &quot;Permissions&quot; tab on the Attachments options.</p>
 </div>
 <div class="section" id="permissions-settings-for-common-scenarios">
 <h2>Permissions Settings for Common Scenarios</h2>
-<p>Here are some suggestions about how to set the permissions to archieve the
+<p>Here are some suggestions about how to set the permissions to achieve the
 desired behaviors:</p>
 <blockquote>
 <ul>
@@ -658,15 +660,36 @@ this page for contact information).</p>
 will see the 'Publish: Yes/No' options on forms to add or edit
 attachments.  If they select 'No' and save the attachment, the attachment
 will still be visible to them in the front end (while they are logged in).
-Noone else will see the unpublished attachments on the front end.  If the
+No one else will see the unpublished attachments on the front end.  If the
 user wants to change the Published state, they can edit the attachment
 (even though it is grayed out) and change the states.</li>
 </ul>
 </blockquote>
 </div>
 </div>
+<div class="section" id="access-levels-visibility-control">
+<h1><a class="toc-backref" href="#id7">Access Levels Visibility Control</a></h1>
+<p>The Attachments extension now supports the Joomla 'Access Levels'.  Each
+attachment can be assigned to specific access levels such as 'Public',
+'Registered', and 'Special', as well as any other access levels created on
+your site.   This gives extensive control on who is able to see the
+attachments.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Suppose you create a new access level on your site.  Users that are not
+explicitly members of the groups associated with the new access level will
+not be able to set their attachments for that access level.  If you edit an
+attachment as the Super User, you might be surprised that the new access
+level does not show up in the access level options.  There are two
+potential issues.  (1) If you have just created the new access level, you
+may need to log out of the back end and log in again for the changes to be
+completely visible.  (2) The other reason is that the user (Super User, for
+instance) is not in the access level.  The fix is simple, make sure the
+user is in one of the groups associated with the new access level.</p>
+</div>
+</div>
 <div class="section" id="display-filename-or-url">
-<h1><a class="toc-backref" href="#id7">Display Filename or URL</a></h1>
+<h1><a class="toc-backref" href="#id8">Display Filename or URL</a></h1>
 <p>Normally, when files are uploaded (or URLs are installed) and listed in a list
 of attachments, the full filename (or URL) is shown as a link to download the
 attachment.  In some cases, the filename (or URL) may be too long for this to
@@ -681,7 +704,7 @@ truncate uploaded displayed filenames; the resulting truncated filename will
 be inserted into the &quot;Display Filename or URL&quot; field.</p>
 </div>
 <div class="section" id="attaching-urls">
-<h1><a class="toc-backref" href="#id8">Attaching URLs</a></h1>
+<h1><a class="toc-backref" href="#id9">Attaching URLs</a></h1>
 <p>Besides files, 'Attachments' version 3.0 has is the ability to &quot;attach&quot; URLs
 to content items.  When you bring up one of the &quot;Add attachment&quot; dialog boxes,
 you will see a button labeled as &quot;Enter URL instead&quot;.  If you click on it you
@@ -718,7 +741,7 @@ parameter.  There are several useful commands relating to URLs (and files) in
 the &quot;Utilities&quot; command in the back end.</p>
 </div>
 <div class="section" id="what-can-files-be-attached-to">
-<h1><a class="toc-backref" href="#id9">What Can Files Be Attached To?</a></h1>
+<h1><a class="toc-backref" href="#id10">What Can Files Be Attached To?</a></h1>
 <p>Besides attaching files or URLs to articles, it is possible to
 attach files or URLs to other types of content items such as
 Categories (see below).  If appropriate 'Attachments' plugins are
@@ -757,7 +780,7 @@ differences from those for Joomla 1.5.</p>
 </div>
 </div>
 <div class="section" id="css-styling-of-attachment-lists">
-<h1><a class="toc-backref" href="#id10">CSS Styling of Attachment Lists</a></h1>
+<h1><a class="toc-backref" href="#id11">CSS Styling of Attachment Lists</a></h1>
 <p>The lists of attachments on the front end are done using a special
 'div' that contains a table for the attachments. The table has
 several different CSS classes associated with it to allow the website
@@ -776,7 +799,7 @@ when the version of 'Attachments' is upgraded. This could also be done via a
 CSS &#64;import command.</p>
 </div>
 <div class="section" id="file-type-icons">
-<h1><a class="toc-backref" href="#id11">File Type Icons</a></h1>
+<h1><a class="toc-backref" href="#id12">File Type Icons</a></h1>
 <p>The 'Attachments' extension adds an icon in front of each attachment in the
 list of attachments. If you wish to add a new icon type, follow these steps:</p>
 <ol class="arabic simple">
@@ -793,12 +816,12 @@ version of 'Attachments' in the future.</li>
 </ol>
 </div>
 <div class="section" id="administrative-utility-commands">
-<h1><a class="toc-backref" href="#id12">Administrative Utility Commands</a></h1>
+<h1><a class="toc-backref" href="#id13">Administrative Utility Commands</a></h1>
 <p>There are several utility commands in the back end that are available for
 Administrators.   These include:</p>
 <ul>
 <li><p class="first"><strong>Disable uninstallation of MySQL Attachments Table:</strong> Normally, when the
-Attachents extension is uninstalled, the database table is deleted that
+Attachments extension is uninstalled, the database table is deleted that
 contains information about the attachments.   If you wish to retain this
 data when uninstalling Attachments, execute this command.  After you
 uninstall Attachments the attachments table will remain.</p>
@@ -817,16 +840,16 @@ filename&quot;.  If you move attachments from one system to another, it is very
 likely this path information will be incorrect.  You may execute this
 command to regenerate all of the system filenames for all file attachments.</p>
 <p>The Utility command to &quot;Regenerate system filenames&quot; works for migration
-from windows to Linux servers.  It also works for migraton from Linux to
+from windows to Linux servers.  It also works for migration from Linux to
 Windows servers with a couple of potential problems:</p>
 <blockquote>
 <ul class="simple">
 <li>When you copy your files to your Windows server, you need to verify
-that the atthachments directory (usually 'attachments') and all files
+that the attachments directory (usually 'attachments') and all files
 within it are writable by the Joomla web server.</li>
-<li>You may have problems porting files that have unicode characters in
+<li>You may have problems porting files that have Unicode characters in
 their filenames because the archiving/unarchiving software has problems
-with the unicode filenames (on the Windows side).  You may need to save
+with the Unicode filenames (on the Windows side).  You may need to save
 those files, delete the corresponding attachments, and then re-attach
 them.</li>
 </ul>
@@ -857,29 +880,29 @@ harmless, so click [Ok] and the command will execute.</p>
 </div>
 </div>
 <div class="section" id="warnings">
-<h1><a class="toc-backref" href="#id13">Warnings</a></h1>
+<h1><a class="toc-backref" href="#id14">Warnings</a></h1>
 <ul>
 <li><p class="first"><strong>If you have attachment files that are sensitive or private, use the
 *Secure attachment downloads* option!</strong> If you do not use the secure option,
-the attachment files are saved in a public subdirectory and are accessible
+the attachment files are saved in a public sub-directory and are accessible
 to anyone that knows the full URL.  The <em>secure</em> option prevents access by
 anyone that does not have appropriate permissions (as determined by the
 options above).  See the discussion of the <em>Secure attachment downloads</em>
 option above for more detail.</p>
 </li>
-<li><p class="first">Every time a file is uploaded, the existence of the upload subdirectory is
+<li><p class="first">Every time a file is uploaded, the existence of the upload sub-directory is
 checked and it will be created if if it does not exist.  By default the
-subdirectory for uploaded files is 'attachments' in the root directory of
-your web site files.  The name of the subdirectory can be changed using the
-'Subdirectory for uploads' option. If the 'Attachments' extension is unable
-to create the subdirectory for uploads, you must create it yourself (and you
-may have problems uploading files).  Make sure to give the subdirectory
+sub-directory for uploaded files is 'attachments' in the root directory of
+your web site files.  The name of the sub-directory can be changed using the
+'Sub-directory for uploads' option. If the 'Attachments' extension is unable
+to create the sub-directory for uploads, you must create it yourself (and you
+may have problems uploading files).  Make sure to give the sub-directory
 suitable permissions for uploading files.  In the Unix/Linux world, that is
 probably something like 775.  Note the process of creating the upload
-subdirectory may fail if the top level directory of your website has
+sub-directory may fail if the top level directory of your website has
 permissions that prevent the web server (and PHP) from creating
-subdirectories.  You may need to loosen the permissions temporarily to allow
-the subdirectory to be created by uploading attachments.</p>
+sub-directories.  You may need to loosen the permissions temporarily to allow
+the sub-directory to be created by uploading attachments.</p>
 </li>
 <li><p class="first">If this extension does not permit you to upload specific types of files
 (such as zip files), be aware that the extension respects the restrictions
@@ -931,9 +954,9 @@ C:\Windows\System32\drivers\etc\hosts
 hidden system file and you may need to modify your folder options to show
 hidden files to see and edit it.</p>
 </li>
-<li><p class="first">If you have difficulties attaching files that have unicode characters (such
+<li><p class="first">If you have difficulties attaching files that have Unicode characters (such
 as Russian/Cyrillic characters), set the <em>Secure Attachments Downloads</em>
-option to 'Yes'.  Filenames with unicode characters should work properly on
+option to 'Yes'.  Filenames with Unicode characters should work properly on
 Linux servers in secure or non-secure modes, but do not always work
 correctly on Windows servers in non-secure mode.</p>
 </li>
@@ -960,7 +983,7 @@ http://joomlacode.org/gf/project/attachments/forum/</a></li>
 </ul>
 </div>
 <div class="section" id="upgrading">
-<h1><a class="toc-backref" href="#id14">Upgrading</a></h1>
+<h1><a class="toc-backref" href="#id15">Upgrading</a></h1>
 <p>Upgrading is very easy.  You have two choices:</p>
 <ol class="arabic simple">
 <li>Simply install the new version of 'Attachments'. There is no need to
@@ -977,7 +1000,7 @@ extension updated very simple!</li>
 </ol>
 </div>
 <div class="section" id="uninstalling">
-<h1><a class="toc-backref" href="#id15">Uninstalling</a></h1>
+<h1><a class="toc-backref" href="#id16">Uninstalling</a></h1>
 <ul class="simple">
 <li>If you wish to retain your attachments, make a copy of the 'attachments'
 directory at the top of the Joomla installation and copy the '_attachments'
@@ -992,7 +1015,7 @@ installation.</li>
 </ul>
 </div>
 <div class="section" id="migration-attachments-from-joomla-1-5-to-joomla-1-6">
-<h1><a class="toc-backref" href="#id16">Migration Attachments from Joomla 1.5 to Joomla 1.6+</a></h1>
+<h1><a class="toc-backref" href="#id17">Migration Attachments from Joomla 1.5 to Joomla 1.6+</a></h1>
 <p>To migrate your attachments from a Joomla 1.5 site to a Joomla 1.6 (or later)
 site, follow the procedure outlined here:</p>
 <blockquote>
@@ -1002,7 +1025,7 @@ site, follow the procedure outlined here:</p>
 </blockquote>
 </div>
 <div class="section" id="translations">
-<h1><a class="toc-backref" href="#id17">Translations</a></h1>
+<h1><a class="toc-backref" href="#id18">Translations</a></h1>
 <p>This extension provides translation capabilities and supports the
 following languages (besides English).  Note that some of these languages
 packs are in the process of being updated for 'Attachments' version 3.0 and
@@ -1039,8 +1062,8 @@ not available yet for Attachments 3.0.</p>
 the extension to any other language, please contact the author (see the
 <a class="reference internal" href="#contact">Contact</a> section at the end).</p>
 </div>
-<div class="section" id="acknowledgements">
-<h1><a class="toc-backref" href="#id18">Acknowledgements</a></h1>
+<div class="section" id="acknowledgments">
+<h1><a class="toc-backref" href="#id19">Acknowledgments</a></h1>
 <p>Many thanks for the following contributors or resources:</p>
 <ul>
 <li><p class="first">The book <em>Learning Joomla! 1.5 Extension Development: Creating Modules,
@@ -1073,13 +1096,13 @@ the development of the 'Attachments' extension.</p>
 </ul>
 </div>
 <div class="section" id="contact">
-<h1><a class="toc-backref" href="#id19">Contact</a></h1>
+<h1><a class="toc-backref" href="#id20">Contact</a></h1>
 <p>Please report bugs and suggestions to <a class="reference external" href="mailto:jmcameron&#64;jmcameron.net">jmcameron&#64;jmcameron.net</a></p>
 </div>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: August 08, 2011 at 07:03 UTC.
+Generated on: August 12, 2011 at 03:30 UTC.
 
 </div>
 </body>
