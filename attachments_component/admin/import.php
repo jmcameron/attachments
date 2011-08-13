@@ -212,6 +212,7 @@ class AttachmentsImport
 			// Do any necessary overrides
 			$attachment->parent_entity = $parent_entity;
 			$attachment->access = $default_access_level;
+			$attachment->file_size = (int)$adata[$field['file_size']];
 
 			if ( $dry_run ) {
 				$ids_ok++;

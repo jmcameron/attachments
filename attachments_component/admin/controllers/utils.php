@@ -327,18 +327,22 @@ class AttachmentsControllerUtils extends JController
 		$update = JRequest::getBool('update', false);
 		$dry_run = JRequest::getBool('dry_run', false);
 
-		$added = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
+		$status = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
 																 $update,   $dry_run);
 
-		if ( is_array($added) ) {
-			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($added));
+		if ( is_array($status) ) {
+			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($status));
 			$this->setRedirect('index.php?option=com_attachments', $msg);
 			}
 		else {
 			if ( $dry_run ) {
-				$msg = JText::sprintf('ATTACH_DATA_FOR_ATTACHMENTS_OK');
+				$msg = JText::_('ATTACH_DATA_FOR_ATTACHMENTS_OK');
+				return JError::raiseNotice(200, $msg);
 				}
-			return JError::raiseNotice(200, $msg);
+			else {
+				$errmsg = (JText::sprintf'ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status);
+				return JError::raiseWarning(500, $errmsg);
+				}
 			}
 	}
 
