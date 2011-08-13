@@ -129,15 +129,24 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
 	  Data for attachments is okay. 
 	  Rerun without 'dry_run' option to add attachments.
 
-      you will know that the migration should work.  Because of the 'dry_run'
-      flag that is part of the URL, no changes will occur on your website.  To
-      actually create the data for the attachments, remove the '&dry_run=true'
-      option and execute the command again.  You should see a success message::
+      you will know that the migration will probably work.  Because of the
+      'dry_run' flag that is part of the URL, no changes will occur on your
+      website.  To actually create the data for the attachments, remove the
+      '&dry_run=true' option and execute the command again.  You should see a
+      success message::
 
 	  Added data for 4 attachments!
 
       where '4' will be replaced with the number of attachments in the
       migration file.
+
+      .. note:: 
+
+         The 'dry_run' process does not catch all types of errors such as
+         missing categories, etc.  If you encounter errors running the real
+         import (without 'dry_run'), it may be necessary to do necessary
+         fixes, empty the \*_attachments table and repeat the import process
+         until all errors are eliminated.
 
  12.  Unzip the attachments file in the same directory on your Joomla 1.6 site
       as they were on your Joomla 1.5 site.  This step requires that the
