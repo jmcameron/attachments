@@ -6,6 +6,15 @@
 Welcome to Migrating Attachments's documentation!
 =================================================
 
+.. warning::
+
+   I've been alerted that the conversion process sets the 'Access Level' for
+   all migrated attachments to 'Public'.  This is not the correct behavior.  I
+   will modify the Attachents later today to use the 'Default Access Level'
+   option.  So if this is a concern to you, please wait until tomorrow (August
+   14, 2011) before trying the migration process.  You will also need to
+   reinstall Attachments.  I'll put the details here when this fix is ready.
+
 Contents:
 
 .. toctree::
