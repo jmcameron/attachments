@@ -13,6 +13,13 @@ system.  The attachment files can be moved directly without modification.
 Necessary Conditions for Successful Attachments Migration
 ---------------------------------------------------------
 
+ * The Attachments extension for your Joomla 1.5 site should be upgraded to
+   version 2.2.
+
+ * The Joomla version for your 1.6+ site should be 1.7 or later.  Although it
+   may work with Joomla 1.6.6, I encourage you to upgrade to 1.7 before
+   attempting migration of Attachments.
+
  * The article ID's and Titles must be identical in the Joomla 1.5 system and
    the Joomla 1.6+ system.  If there are differences, the migration file will
    need to be edited manually.  It is particularly important that the
