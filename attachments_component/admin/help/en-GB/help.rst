@@ -852,11 +852,12 @@ Warnings
 * If this extension does not permit you to upload specific types of files
   (such as zip files), be aware that the extension respects the restrictions
   placed by the Media Manager on types of files permitted to be uploaded. This
-  is to prevent uploading of potentially harmful types of files such as html or
-  php files. The administrator can update the Media Manager settings to add
+  is to prevent uploading of potentially harmful types of files such as html
+  or php files. The administrator can update the Media Manager settings to add
   specific file types by going to the "Global Settings" item under the "Site"
-  menu, selecting the "System" tab, and added the appropriate file extension and
-  Mime type to the lists under the "Media Manager" section.
+  menu, selecting the "System" tab, and added the appropriate file extension
+  in lower and upper case and Mime type to the lists under the "Media Manager"
+  section.
 
 * If you cannot see the attachments in the front end, there are several
   possible reasons:
