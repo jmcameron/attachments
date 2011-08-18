@@ -92,8 +92,10 @@ class Com_AttachmentsInstallerScript {
 		$lang->load('com_attachments.sys', dirname(__FILE__));
 
 		// First make sure that this version of Joomla is 1.6 or greater
-		$version = new JVersion();
-		if ( (real)$version->RELEASE < 1.6 ) {
+
+		if ( version_compare(JVERSION, '1.6.0', 'lt') ) {
+			// $version = new JVersion();
+			// if ( (real)$version->RELEASE < 1.6 ) {
 			$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 			$app = JFactory::getApplication();
 			$app->enqueueMessage($msg, 'warning');
@@ -117,6 +119,14 @@ class Com_AttachmentsInstallerScript {
 			$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 			$app->enqueueMessage($msg, 'message');
 			$app->enqueueMessage('<br/>', 'message');
+			}
+
+		// Joomla! 1.6/1.7 bugfix for "Can not build admin menus" (Thanks Nick!)
+		if(in_array($type, array('install','discover_install'))) {
+			$this->_bugfixDBFunctionReturnedNoError('com_attachments');
+			}
+		else {
+			$this->_bugfixCantBuildAdminMenus('com_attachments');
 			}
 	}
 
@@ -227,5 +237,136 @@ class Com_AttachmentsInstallerScript {
 			return true;
 			}
 	}
+
+
+	/**
+	 * Joomla! 1.6+ bugfix for "DB function returned no error"
+	 *
+	 * Adapted from Akeeba Backup install script (https://www.akeebabackup.com/)
+	 * with permission of Nicholas Dionysopoulos (Thanks Nick!)
+	 *
+	 * @param $extension_name string The name of the extension
+	 */
+	private function _bugfixDBFunctionReturnedNoError($extension_name)
+	{
+		$db = JFactory::getDbo();
+			
+		// Fix broken #__assets records
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__assets')
+			->where($db->nameQuote('name').' = '.$db->Quote($extension_name));
+		$db->setQuery($query);
+		$ids = $db->loadResultArray();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__assets')
+				->where($db->nameQuote('id').' = '.$db->Quote($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+
+		// Fix broken #__extensions records
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from('#__extensions')
+			->where($db->nameQuote('element').' = '.$db->Quote($extension_name));
+		$db->setQuery($query);
+		$ids = $db->loadResultArray();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__extensions')
+				->where($db->nameQuote('extension_id').' = '.$db->Quote($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+
+		// Fix broken #__menu records
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__menu')
+			->where($db->nameQuote('type').' = '.$db->Quote('component'))
+			->where($db->nameQuote('menutype').' = '.$db->Quote('main'))
+			->where($db->nameQuote('link').' LIKE '.$db->Quote('index.php?option='.$extension_name.'%'));
+		$db->setQuery($query);
+		$ids = $db->loadResultArray();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__menu')
+				->where($db->nameQuote('id').' = '.$db->Quote($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+	}
+	
+	/**
+	 * Joomla! 1.6+ bugfix for "Can not build admin menus"
+	 *
+	 * Adapted from Akeeba Backup install script (https://www.akeebabackup.com/)
+	 * with permission of Nicholas Dionysopoulos (Thanks Nick!)
+	 * 
+	 */
+	private function _bugfixCantBuildAdminMenus($extension_name)
+	{
+		$db = JFactory::getDbo();
+		
+		// If there are multiple #__extensions record, keep one of them
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from('#__extensions')
+			->where($db->nameQuote('element').' = '.$db->Quote($extension_name));
+		$db->setQuery($query);
+		$ids = $db->loadResultArray();
+		if(count($ids) > 1) {
+			asort($ids);
+			$extension_id = array_shift($ids); // Keep the oldest id
+			
+			foreach($ids as $id) {
+				$query = $db->getQuery(true);
+				$query->delete('#__extensions')
+					->where($db->nameQuote('extension_id').' = '.$db->Quote($id));
+				$db->setQuery($query);
+				$db->query();
+			}
+		}
+		
+		// If there are multiple assets records, delete all except the oldest one
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__assets')
+			->where($db->nameQuote('name').' = '.$db->Quote($extension_name));
+		$db->setQuery($query);
+		$ids = $db->loadObjectList();
+		if(count($ids) > 1) {
+			asort($ids);
+			$asset_id = array_shift($ids); // Keep the oldest id
+			
+			foreach($ids as $id) {
+				$query = $db->getQuery(true);
+				$query->delete('#__assets')
+					->where($db->nameQuote('id').' = '.$db->Quote($id));
+				$db->setQuery($query);
+				$db->query();
+			}
+		}
+
+		// Remove #__menu records for good measure!
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__menu')
+			->where($db->nameQuote('type').' = '.$db->Quote('component'))
+			->where($db->nameQuote('menutype').' = '.$db->Quote('main'))
+			->where($db->nameQuote('link').' LIKE '.$db->Quote('index.php?option='.$extension_name.'%'));
+		$db->setQuery($query);
+		$ids = $db->loadResultArray();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__menu')
+				->where($db->nameQuote('id').' = '.$db->Quote($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+	}
+		
 
 }
