@@ -10,7 +10,7 @@
     <creationDate>August 18, 2011</creationDate>
     <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
 
-    <scriptfile>attachments.install.php</scriptfile>
+    <scriptfile>install.attachments.php</scriptfile>
 
     <install>
 	<sql>
