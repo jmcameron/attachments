@@ -5,10 +5,10 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @author Jonathan M. Cameron
+ * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
- * @author Jonathan M. Cameron
  */
 
 // No direct access
@@ -121,7 +121,7 @@ class Com_AttachmentsInstallerScript {
 			$app->enqueueMessage('<br/>', 'message');
 			}
 
-		// Joomla! 1.6/1.7 bugfix for "Can not build admin menus" (Thanks Nick!)
+		// Joomla! 1.6/1.7 bugfix for "Can not build admin menus"
 		if(in_array($type, array('install','discover_install'))) {
 			$this->_bugfixDBFunctionReturnedNoError('com_attachments');
 			}
