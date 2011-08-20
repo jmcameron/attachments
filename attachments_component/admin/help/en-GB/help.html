@@ -15,7 +15,7 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 3.0-RC - August 11, 2011</strong></p>
+<p class="version"><strong>Version 3.0-RC2 - August 18, 2011</strong></p>
 <p><strong>This version is for Joomla 1.6/1.7+</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -922,11 +922,12 @@ the sub-directory to be created by uploading attachments.</p>
 <li><p class="first">If this extension does not permit you to upload specific types of files
 (such as zip files), be aware that the extension respects the restrictions
 placed by the Media Manager on types of files permitted to be uploaded. This
-is to prevent uploading of potentially harmful types of files such as html or
-php files. The administrator can update the Media Manager settings to add
+is to prevent uploading of potentially harmful types of files such as html
+or php files. The administrator can update the Media Manager settings to add
 specific file types by going to the &quot;Global Settings&quot; item under the &quot;Site&quot;
-menu, selecting the &quot;System&quot; tab, and added the appropriate file extension and
-Mime type to the lists under the &quot;Media Manager&quot; section.</p>
+menu, selecting the &quot;System&quot; tab, and added the appropriate file extension
+in lower and upper case and Mime type to the lists under the &quot;Media Manager&quot;
+section.</p>
 </li>
 <li><p class="first">If you cannot see the attachments in the front end, there are several
 possible reasons:</p>
@@ -1016,17 +1017,26 @@ extension updated very simple!</li>
 </div>
 <div class="section" id="uninstalling">
 <h1><a class="toc-backref" href="#id16">Uninstalling</a></h1>
-<ul class="simple">
-<li>If you wish to retain your attachments, make a copy of the 'attachments'
+<ul>
+<li><p class="first">To uninstall the Attachments extension, go to the 'Manage' tab on the
+Extension Manager page (under the 'Extensions' menu).  <strong>Select ONLY the item</strong>:</p>
+<pre class="literal-block">
+Package: Attachments for Joomla 1.6+
+</pre>
+<p>and click on the 'Uninstall' button on the toolbar.</p>
+</li>
+<li><p class="first">If you wish to retain your attachments, make a copy of the 'attachments'
 directory at the top of the Joomla installation and copy the '_attachments'
 table in the database.  If you intend to reinstall soon, see the <strong>Disable
 uninstallation of MySQL Attachments Table</strong> command in the <a class="reference internal" href="#administrative-utility-commands">Administrative
 Utility Commands</a> to prevent the attachments database table from being
-deleted on uninstallation of the Attachments extension.</li>
-<li>If you do not wish to keep existing attachments, delete them all first (in
+deleted on uninstallation of the Attachments extension.</p>
+</li>
+<li><p class="first">If you do not wish to keep existing attachments, delete them all first (in
 the administrative back end).  Once you have uninstalled the Attachments
 extension, delete the 'attachments' directory at the top of your Joomla
-installation.</li>
+installation.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="migration-attachments-from-joomla-1-5-to-joomla-1-6">
@@ -1117,7 +1127,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: August 13, 2011 at 02:41 UTC.
+Generated on: August 19, 2011 at 02:52 UTC.
 
 </div>
 </body>

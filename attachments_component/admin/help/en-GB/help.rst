@@ -944,6 +944,14 @@ Upgrading is very easy.  You have two choices:
 Uninstalling
 ============
 
+* To uninstall the Attachments extension, go to the 'Manage' tab on the
+  Extension Manager page (under the 'Extensions' menu).  **Select ONLY the item**::
+
+     Package: Attachments for Joomla 1.6+
+
+  and click on the 'Uninstall' button on the toolbar.  This will install the
+  attachments component and all the associated plugins.
+
 * If you wish to retain your attachments, make a copy of the 'attachments'
   directory at the top of the Joomla installation and copy the '_attachments'
   table in the database.  If you intend to reinstall soon, see the **Disable
@@ -955,6 +963,7 @@ Uninstalling
   the administrative back end).  Once you have uninstalled the Attachments
   extension, delete the 'attachments' directory at the top of your Joomla
   installation.
+
 
 Migration Attachments from Joomla 1.5 to Joomla 1.6+
 ====================================================
