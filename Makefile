@@ -41,9 +41,9 @@ $(ZIPFILE): $(ZIPS)
 	@echo "Finished creating package $(ZIPFILE)."
 	@echo
 
-update:
-	@echo "Copying update file to update server"
-	scp updates.xml jmcameron.net:webapps/jmcameron/attachments/updates/updates.xml
+updateweb:
+	@echo "Updating updates on jmcameron.net..."
+	@ssh jmcameron.net "cd webapps/jmcameron/attachments/updates; svn update"
 
 clean:
 	@find . -name '*~' -exec rm {} \;
