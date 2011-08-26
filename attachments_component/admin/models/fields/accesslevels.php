@@ -16,6 +16,9 @@ defined('JPATH_BASE') or die;
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
+/** Load the Attachements defines */
+require_once(JPATH_COMPONENT_SITE.'/defines.php');
+
 /**
  * Form Field class list of access levels the user has access to
  *
@@ -79,7 +82,7 @@ class JFormFieldAccessLevels extends JFormField
 		if ( $level_value === null ) {
 			jimport('joomla.application.component.helper');
 			$params = JComponentHelper::getParams('com_attachments');
-			$level_value = $params->get('default_access_level', 2);
+			$level_value = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
 			}
 
 		// Make sure the $level_value is in the user's authorised levels
