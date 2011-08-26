@@ -19,7 +19,7 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	}
 
 /** Load the Attachments defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+require_once(JPATH_COMPONENT_SITE.'/defines.php');
 
 /**
  * A class for update functions
@@ -688,7 +688,7 @@ class AttachmentsUpdate
 	static public function installAttachmentsPermissions()
 	{
 		// Load the Attachments defines
-		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+		require_once(JPATH_COMPONENT_SITE.'/defines.php');
 
 		jimport('joomla.access.rules');
 		$app = JFactory::getApplication();
