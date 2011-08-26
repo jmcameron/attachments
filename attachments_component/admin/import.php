@@ -14,6 +14,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 
+/** Load the Attachements defines */
+require_once(JPATH_COMPONENT_SITE.'/defines.php');
+
 /**
  * A class for importing attachments data from files
  *
@@ -91,7 +94,7 @@ class AttachmentsImport
 		// Get the default access level from the Attachments options
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
-		$default_access_level = $params->get('default_access_level', 2);
+		$default_access_level = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
 
 		// Load the attachents parent manager
 		JPluginHelper::importPlugin('attachments');
