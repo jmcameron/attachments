@@ -221,6 +221,10 @@ class AttachmentsController extends JController
 		// Make sure that the user is logged in
 		$user = JFactory::getUser();
 
+		// Get the parameters
+		jimport('joomla.application.component.helper');
+		$params = JComponentHelper::getParams('com_attachments');
+
 		// Get the article/parent handler
 		$new_parent = JRequest::getBool('new_parent', false);
 		$parent_type = JRequest::getCmd('parent_type', 'com_content');
@@ -319,6 +323,12 @@ class AttachmentsController extends JController
 				// Make sure only legal values are entered
 				$new_uri_type = '';
 				}
+
+			// Fix the access level
+			if ( !$params->get('allow_frontend_access_editing', false) ) {
+				$attachment->access = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
+				}
+			
 			}
 
 		elseif ( $save_type == 'update' ) {
