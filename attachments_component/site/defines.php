@@ -37,6 +37,12 @@ class AttachmentsDefines
 	 */
 	static $LEGAL_URI_TYPES = Array('file', 'url');
 
+	/** Default access level (if default_access_level parameter is not set)
+	 *
+	 * 1 = Public
+	 * 2 = Registered
+	 */
+	static $DEFAULT_ACCESS_LEVEL_ID = 2;
 
 	/** Default permissions for new attachments rules
 	 *
