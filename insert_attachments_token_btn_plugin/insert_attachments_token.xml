@@ -2,12 +2,12 @@
 <extension type="plugin" group="editors-xtd" version="1.6" method="upgrade">
     <name>plg_editors-xtd_insert_attachments_token_btn</name>
     <author>Jonathan M. Cameron</author>
-    <creationDate>August 25, 2011</creationDate>
+    <creationDate>August 28, 2011</creationDate>
     <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-    <version>3.0-RC3</version>
+    <version>3.0</version>
     <description>ATTACH_INSERT_ATTACHMENTS_TOKEN_BUTTON_PLUGIN_DESCRIPTION</description>
 
     <files>
