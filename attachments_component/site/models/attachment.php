@@ -82,11 +82,11 @@ class AttachmentsModelAttachment extends JModel
 		
 		if ( empty($this->_attachment) ) {
 				
-			$user   = JFactory::getUser();
+			$user	= JFactory::getUser();
 			$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 			$db		= $this->getDbo();
-			$query  = $db->getQuery(true);
+			$query	= $db->getQuery(true);
 
 			$query->select('a.*, a.id as id');
 			$query->from('#__attachments as a');

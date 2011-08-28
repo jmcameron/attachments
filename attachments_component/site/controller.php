@@ -184,20 +184,20 @@ class AttachmentsController extends JController
 
 		$view->uri_type = $uri_type;
 		$view->url = '';
-		$view->parent_id = 		 $parent_id;
-		$view->parent_type = 		 $parent_type;
-		$view->parent_entity = 	 $parent_entity;
+		$view->parent_id =		 $parent_id;
+		$view->parent_type =		 $parent_type;
+		$view->parent_entity =	 $parent_entity;
 		$view->parent_entity_name = $parent_entity_name;
 		$view->parent_title = $parent_title;
 		$view->new_parent = 		 $new_parent;
-		$view->parent       = $parent;
-		$view->description  = 	  '';
-		$view->display_name = 	  '';
-		$view->user_field_1 = 	  '';
-		$view->user_field_2 = 	  '';
-		$view->user_field_3 = 	  '';
-		$view->Itemid       =	  $Itemid;
-		$view->from         =	  $from;
+		$view->parent		= $parent;
+		$view->description	=	  '';
+		$view->display_name =	  '';
+		$view->user_field_1 =	  '';
+		$view->user_field_2 =	  '';
+		$view->user_field_3 =	  '';
+		$view->Itemid		=	  $Itemid;
+		$view->from			=	  $from;
 
 		$view->params = $params;
 
@@ -260,7 +260,7 @@ class AttachmentsController extends JController
 
 		// How to redirect?
 		$from = JRequest::getWord('from', 'closeme');
-	    $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		if ( $from ) {
 			if ( $from == 'frontpage' ) {
 				$redirect_to = $uri->root(true);
@@ -551,7 +551,7 @@ class AttachmentsController extends JController
 		// Figure out how to redirect
 		$from = JRequest::getWord('from', 'closeme');
 		$known_froms = array('frontpage', 'article', 'details', 'closeme', 'featured');
-	    $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		if ( in_array( $from, $known_froms ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -759,17 +759,17 @@ class AttachmentsController extends JController
 																   );
 		$view->update = 			$update;
 		$view->new_parent = 		$new_parent;
-		$view->parent_title = 		$parent_title;
-		$view->parent_entity = 		$parent_entity;
+		$view->parent_title =		$parent_title;
+		$view->parent_entity =		$parent_entity;
 		$view->parent_entity_name = $parent_entity_name;
-		$view->display_name = 		$display_name;
+		$view->display_name =		$display_name;
 
-		$view->lists      = $lists;
-		$view->params     = $params;
+		$view->lists	  = $lists;
+		$view->params	  = $params;
 		$view->attachment = $attachment;
 
-		$view->from       = $from;
-		$view->Itemid     = JRequest::getInt('Itemid', 1);
+		$view->from		  = $from;
+		$view->Itemid	  = JRequest::getInt('Itemid', 1);
 
 		$view->error = false;
 		$view->error_msg = false;

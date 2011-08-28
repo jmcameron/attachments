@@ -63,12 +63,12 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 	}
 
 
-    /**
+	/**
 	 * 
 	 *
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
-     */
+	 */
 	public function testImportAttachmentsFromCSVFile($test_filename, $expected_result, $update, $dry_run)
 	{
 		$path = dirname(__FILE__).'/'.$test_filename;
@@ -108,8 +108,8 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testImportAttachmentsData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testImportAttachmentsData.csv');
+	}
 
 }

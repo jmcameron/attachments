@@ -55,13 +55,13 @@ if ( $this->parent_title ) {
 		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
 		 rel="{handler: 'iframe', size: {x: 800, y: 450}}"><?php echo $this->selpar_btn_text ?></a>
 	  <input id="parent_id" name="parent_id" value="-1" type="hidden" />
-    </td>
+	</td>
   </tr>
 <?php endif; ?>
 <?php if ( $this->uri_type == 'file' ): ?>
   <tr>
 	<td class="key"><label for="upload" id="upload_file_label"><?php echo JText::_('ATTACH_ATTACH_FILE_COLON') ?></label></td>
-    <td>
+	<td>
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
 		 echo $this->upload_toggle_button_text;?></a><br />
@@ -79,47 +79,47 @@ if ( $this->parent_title ) {
    </td>
 <?php else: ?>
   <tr>
-    <td class="key"><label for="upload" class="hasTip"
-	    title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
-    <td>
+	<td class="key"><label for="upload" class="hasTip"
+		title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
+	<td>
 	  <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
- 	  <input type="checkbox" name="verify_url" value="verify" checked
+	  <input type="checkbox" name="verify_url" value="verify" checked
 			 title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	  <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 	  <input type="checkbox" name="url_relative" value="relative"
-             title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+			 title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
-	     echo $this->upload_toggle_button_text;?></a><br />
+		 echo $this->upload_toggle_button_text;?></a><br />
 
 	  <input type="text" name="url" id="<?php echo $upload_id; ?>"
 		 size="86" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
 		 value="<?php echo $this->url; ?>" /><br /><?php
 	  echo JText::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?>
-    </td>
+	</td>
  </tr>
  <tr>
 	<td class="key"><label for="display_name" title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
 			  ><?php echo JText::_('ATTACH_DISPLAY_URL'); ?></label></td>
-    <td>
+	<td>
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
 			  value="" />&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?>
-    </td>
+	</td>
  </tr>
 <?php endif; ?>
   <tr>
 	<td class="key"><label for="description"
 			  title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 		  ><?php echo JText::_('ATTACH_DESCRIPTION'); ?></label></td>
-    <td>
+	<td>
 	   <input type="text" name="description" id="description"
 		  title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 		  size="75" maxlength="255" value="" />
-    </td>
+	</td>
   </tr>
   <tr>
-    <td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
+	<td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
 	<td><?php echo $this->lists['published']; ?></td>
   </tr>
   <tr>

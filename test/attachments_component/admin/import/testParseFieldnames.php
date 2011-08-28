@@ -82,12 +82,12 @@ class ImportParseFieldnamesTest extends JoomlaDatabaseTestCase
 	}
 
 
-    /**
+	/**
 	 * 
 	 *
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
-     */
+	 */
 	public function testParseFieldnames($test_filename, $result)
 	{
 		// Open the CSV file
@@ -114,8 +114,8 @@ class ImportParseFieldnamesTest extends JoomlaDatabaseTestCase
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testParseFieldnamesData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testParseFieldnamesData.csv');
+	}
 
 }

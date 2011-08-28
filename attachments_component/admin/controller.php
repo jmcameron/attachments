@@ -23,8 +23,8 @@ class AttachmentsController extends JController
 
 	/** List the attachments
 	 *
-	 * @param   bool   $cachable   If true, the view output will be cached
-	 * @param   array  $urlparams  (ignored)
+	 * @param	bool   $cachable   If true, the view output will be cached
+	 * @param	array  $urlparams  (ignored)
 	 * @return void
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -125,7 +125,7 @@ class AttachmentsController extends JController
 		JHTML::_('behavior.tooltip', '.hasTip', $opts);
 
 		// Set up url/link/tooltip for each command
-	    $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		$url_top = $uri->base(true) . "/index.php?option=com_attachments&amp;controller=special";
 		$closeme = '&amp;tmpl=component&amp;close=1';
 
@@ -161,7 +161,7 @@ class AttachmentsController extends JController
 		$unspacify_system_filenames_url =
 			"$url_top&amp;task=utils.remove_spaces_from_system_filenames" . $closeme;
 		$unspacify_system_filenames_tooltip =
-			JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES')  . '::' .
+			JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES')	. '::' .
 			JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES_TOOLTIP');
 		$entries[] = JHTML::_('tooltip', $unspacify_system_filenames_tooltip, null, null,
 							  JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES'),

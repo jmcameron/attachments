@@ -49,7 +49,7 @@ class AttachmentsHelper
 		elseif ( $caching ) {
 			// If caching, load the Javascript function that allows dynamic insertion of stylesheets
 			if ( !$added_js ) {
-	            $uri = JFactory::getURI();
+				$uri = JFactory::getURI();
 				$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_caching.js';
 				echo "<script type=\"text/javascript\" src=\"$js_path\"></script>\n";
 				$added_js = true;
@@ -541,11 +541,11 @@ class AttachmentsHelper
 					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
-				$view->uri_type     = $attachment->uri_type;
-				$view->url          = $attachment->url;
-				$view->parent_id    = $attachment->parent_id;
-				$view->parent_type  = $attachment->parent_type;
-				$view->description  = $attachment->description;
+				$view->uri_type		= $attachment->uri_type;
+				$view->url			= $attachment->url;
+				$view->parent_id	= $attachment->parent_id;
+				$view->parent_type	= $attachment->parent_type;
+				$view->description	= $attachment->description;
 				$view->user_field_1 = $attachment->user_field_1;
 				$view->user_field_2 = $attachment->user_field_2;
 				$view->user_field_3 = $attachment->user_field_3;
@@ -675,14 +675,14 @@ class AttachmentsHelper
 					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
-				$view->uri_type = 		 $attachment->uri_type;
-				$view->url = 				 $attachment->url;
+				$view->uri_type =		 $attachment->uri_type;
+				$view->url =				 $attachment->url;
 				$view->parent_id = $attachment->parent_id;
-				$view->parent_type = 		 $attachment->parent_type;
-				$view->description = 		 $attachment->description;
-				$view->user_field_1 = 	 $attachment->user_field_1;
-				$view->user_field_2 = 	 $attachment->user_field_2;
-				$view->user_field_3 = 	 $attachment->user_field_3;
+				$view->parent_type =		 $attachment->parent_type;
+				$view->description =		 $attachment->description;
+				$view->user_field_1 =	 $attachment->user_field_1;
+				$view->user_field_2 =	 $attachment->user_field_2;
+				$view->user_field_3 =	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -695,9 +695,9 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->parent_entity = 	 $attachment->parent_entity;
+			$view->parent_entity =	 $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title = 	 $parent->title;
+			$view->parent_title =	 $parent->title;
 			$view->new_parent = $parent->new;
 
 			$view->display_name = $display_name;
@@ -798,20 +798,20 @@ class AttachmentsHelper
 											 $attachment->parent_type, null, $from);
 
 			// Set up the view
-			$view->uri_type = 		 $attachment->uri_type;
-			$view->url = 				 $attachment->url;
+			$view->uri_type =		 $attachment->uri_type;
+			$view->url =				 $attachment->url;
 			$view->parent_id = $attachment->parent_id;
-			$view->parent_type = 		 $attachment->parent_type;
-			$view->parent_entity = 	 $attachment->parent_entity;
+			$view->parent_type =		 $attachment->parent_type;
+			$view->parent_entity =	 $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title = 	 $parent->title;
+			$view->parent_title =	 $parent->title;
 			$view->new_parent = $parent->new;
-			$view->description = 		 $attachment->description;
-			$view->display_name = 	 $attachment->display_name;
-			$view->user_field_1 = 	 $attachment->user_field_1;
-			$view->user_field_2 = 	 $attachment->user_field_2;
-			$view->user_field_3 = 	 $attachment->user_field_3;
-			$view->from = 			 $from;
+			$view->description =		 $attachment->description;
+			$view->display_name =	 $attachment->display_name;
+			$view->user_field_1 =	 $attachment->user_field_1;
+			$view->user_field_2 =	 $attachment->user_field_2;
+			$view->user_field_3 =	 $attachment->user_field_3;
+			$view->from =			 $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 			$view->params = 			 $params;
 
@@ -972,7 +972,7 @@ class AttachmentsHelper
 		// Handle relative URLs
 		$url = $raw_url;
 		if ( $relative_url ) {
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$url = $uri->base(true) . "/" . $raw_url;
 			}
 
@@ -1390,14 +1390,14 @@ class AttachmentsHelper
 					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 					}
 
-				$view->uri_type = 		 $attachment->uri_type;
-				$view->url = 				 $attachment->url;
+				$view->uri_type =		 $attachment->uri_type;
+				$view->url =				 $attachment->url;
 				$view->parent_id = $attachment->parent_id;
-				$view->parent_type = 		 $attachment->parent_type;
-				$view->description = 		 $attachment->description;
-				$view->user_field_1 = 	 $attachment->user_field_1;
-				$view->user_field_2 = 	 $attachment->user_field_2;
-				$view->user_field_3 = 	 $attachment->user_field_3;
+				$view->parent_type =		 $attachment->parent_type;
+				$view->description =		 $attachment->description;
+				$view->user_field_1 =	 $attachment->user_field_1;
+				$view->user_field_2 =	 $attachment->user_field_2;
+				$view->user_field_3 =	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -1407,16 +1407,16 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->parent_entity = 	   $attachment->parent_entity;
+			$view->parent_entity =	   $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title = 	   $parent->title;
+			$view->parent_title =	   $parent->title;
 			$view->new_parent = $parent->new;
 
-			$view->display_name = 	   $display_name;
+			$view->display_name =	   $display_name;
 
 			$view->params = 	$params;
 
-			$view->from = 	$from;
+			$view->from =	$from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
 
 			$view->error = $result->error;
@@ -1532,7 +1532,7 @@ class AttachmentsHelper
 	 */
 	public function download_attachment($id)
 	{
-		$user   = JFactory::getUser();
+		$user	= JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Get the info about the attachment
@@ -1727,7 +1727,7 @@ class AttachmentsHelper
 	{
 		$app = JFactory::getApplication();
 
-		$user   = JFactory::getUser();
+		$user	= JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 
 		// Generate the HTML for the attachments for the specified parent

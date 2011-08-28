@@ -44,7 +44,7 @@ class AttachmentsViewAttachments extends JView
 			}
 
 		// Add javascript
-	    $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		JHTML::_('behavior.mootools');
 		$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
@@ -153,10 +153,10 @@ class AttachmentsViewAttachments extends JView
 		$this->style = $params->get('attachments_table_style', 'attachmentsList');
 		$this->show_column_titles = $params->get('show_column_titles', false);
 		$this->show_description = $params->get('show_description', true);
-		$this->show_creator = 	$params->get('show_creator', false);
+		$this->show_creator =	$params->get('show_creator', false);
 		$this->show_file_size = $params->get('show_file_size', true);
 		$this->show_downloads = $params->get('show_downloads', false);
-		$this->show_mod_date = 	$params->get('show_modified_date', false);
+		$this->show_mod_date =	$params->get('show_modified_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 
 		// Set up the file/url title
@@ -187,7 +187,7 @@ class AttachmentsViewAttachments extends JView
 		$this->title = $title; // Note: assume it is translated
 
 		// Construct the path for the icons
-        $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		$base_url = $uri->root(true) . '/';
 		$this->base_url = $base_url;
 		$this->icon_url_base = $base_url . 'components/com_attachments/media/icons/';

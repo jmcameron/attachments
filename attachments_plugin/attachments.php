@@ -27,10 +27,10 @@ class plgContentAttachments extends JPlugin
 	/**
 	 * Constructor
 	 *
-	 * @access      protected
-	 * @param       object  $subject The object to observe
-	 * @param       array   $config  An array that holds the plugin configuration
-	 * @since       1.5
+	 * @access		protected
+	 * @param		object	$subject The object to observe
+	 * @param		array	$config  An array that holds the plugin configuration
+	 * @since		1.5
 	 */
 	public function __construct(& $subject, $config)
 	{
@@ -250,7 +250,7 @@ class plgContentAttachments extends JPlugin
 	}
 
 
-    /**
+	/**
 	 * Set the parent_id for all attachments that were added to this
 	 * content before it was saved the first time.
 	 *

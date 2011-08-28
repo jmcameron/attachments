@@ -53,28 +53,28 @@ class AttachmentsHelper2 extends AttachmentsHelper
  */
 class HelperFilenameTruncationTest extends PHPUnit_Framework_TestCase
 {
-    /**
+	/**
 	 * Test filename trunction
 	 * 
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
 	 * @param string @truncated_filename the expected result of the truncation
 	 * @param strint @full_filename the filename before truncating
 	 * @param int the maximum length for the filename
-     */
-    public function testFilenameTruncation($truncated_filename, $full_filename, $maxlen)
-    {
+	 */
+	public function testFilenameTruncation($truncated_filename, $full_filename, $maxlen)
+	{
 		$maxlen = (int)$maxlen;
 
 		$this->assertEquals($truncated_filename,
 							AttachmentsHelper2::truncate_filename($full_filename, $maxlen));
-    }
+	}
 
 	/**
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testHelperFilenameTruncationData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testHelperFilenameTruncationData.csv');
+	}
 }

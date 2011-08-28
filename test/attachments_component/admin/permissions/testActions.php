@@ -57,10 +57,10 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	}
 
 
-    /**
+	/**
 	 * Test various ACL action permissions for com_attachments for various users
 	 *
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
 	 * @param int $user_id The ID of the user to test
 	 * @param string $username The name of ther user (for error outputs)
@@ -72,7 +72,7 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	 * @param int $edit correct 'core.edit' permission (0/1 interpreted as bool)
 	 * @param int $edit_own correct 'core.edit.own' permission (0/1 interpreted as bool)
 	 * @param int $delete_own correct 'attachments.delete.own' permission (0/1 interpreted as bool)
-     */
+	 */
 	public function testActions($user_id,$username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own, $delete_own)
 	{
 		$canDo = AttachmentsPermissions::getActions((int)$user_id);
@@ -115,8 +115,8 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testActionsData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testActionsData.csv');
+	}
 
 }

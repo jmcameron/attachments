@@ -24,8 +24,8 @@ $document = JFactory::getDocument();
 
 // Hide the vertical scrollbar using javascript
 $hide_scrollbar = "window.addEvent('domready', function() {
-       document.documentElement.style.overflow = \"hidden\";
-       document.body.scroll = \"no\";});";
+	   document.documentElement.style.overflow = \"hidden\";
+	   document.body.scroll = \"no\";});";
 $document->addScriptDeclaration($hide_scrollbar);
 
 $document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
@@ -50,9 +50,9 @@ if ( $lang->isRTL() ) {
 				 onClick="window.parent.SqueezeBox.close();" />
 	   </span>
 	</div>
-    <input type="hidden" name="option" value="<?php echo $this->option;?>" />
-    <input type="hidden" name="from" value="<?php echo $this->from;?>" />
+	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
+	<input type="hidden" name="from" value="<?php echo $this->from;?>" />
 
-    <?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHTML::_( 'form.token' ); ?>
   </form>
  </div>

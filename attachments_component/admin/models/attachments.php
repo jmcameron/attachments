@@ -62,7 +62,7 @@ class AttachmentsModelAttachments extends JModelList
 	/**
 	 * Method to build an SQL query to load the attachments data.
 	 *
-	 * @return  JDatabaseQuery   An SQL query
+	 * @return	JDatabaseQuery	 An SQL query
 	 */
 	protected function getListQuery()
 	{
@@ -176,7 +176,7 @@ class AttachmentsModelAttachments extends JModelList
 			}
 
 		// Make sure the user can only see the attachments they may access
-		$user   = JFactory::getUser();
+		$user	= JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
 		$where[] = 'a.access in ('.$user_levels.')';
 
@@ -304,11 +304,11 @@ class AttachmentsModelAttachments extends JModelList
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @param       type    The table type to instantiate
-	 * @param       string  A prefix for the table class name. Optional.
-	 * @param       array   Configuration array for model. Optional.
-	 * @return      JTable  A database object
-	 * @since       1.6
+	 * @param		type	The table type to instantiate
+	 * @param		string	A prefix for the table class name. Optional.
+	 * @param		array	Configuration array for model. Optional.
+	 * @return		JTable	A database object
+	 * @since		1.6
 	 */
 	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
 	{

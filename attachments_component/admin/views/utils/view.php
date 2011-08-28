@@ -49,8 +49,8 @@ class AttachmentsViewAdminUtils extends JView
 
 		// Hide the vertical scrollbar using javascript
 		$hide_scrollbar = "window.addEvent('domready', function() {
-               document.documentElement.style.overflow = \"hidden\";
-               document.body.scroll = \"no\";});";
+			   document.documentElement.style.overflow = \"hidden\";
+			   document.body.scroll = \"no\";});";
 		$document->addScriptDeclaration($hide_scrollbar);
 
 ?>

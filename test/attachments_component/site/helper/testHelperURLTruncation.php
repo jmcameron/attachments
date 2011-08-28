@@ -58,29 +58,29 @@ class AttachmentsHelper3 extends AttachmentsHelper
 class HelperURLTruncationTest extends PHPUnit_Framework_TestCase
 {
 
-    /**
+	/**
 	 * Test truncating a url
 	 * 
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
 	 * @param string $truncated_url the expected truncated URL
 	 * @param string $full_url the URL before truncating
 	 * @param int $maxlen the maximum length for truncation
-     */
-    public function testURLTruncation($truncated_url, $full_url, $maxlen)
-    {
+	 */
+	public function testURLTruncation($truncated_url, $full_url, $maxlen)
+	{
 		$maxlen = (int)$maxlen;
 
 		$this->assertEquals($truncated_url,
 							AttachmentsHelper3::truncate_url($full_url, $maxlen));
-    }
+	}
 
 
 	/**
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testHelperURLTruncationData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testHelperURLTruncationData.csv');
+	}
 }

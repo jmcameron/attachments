@@ -16,57 +16,57 @@
 class CsvFileIterator implements Iterator {
 
 	/** the filename */
-    protected $filename;
+	protected $filename;
 
 	/** The file handle */
-    protected $file;
+	protected $file;
 
 	/** The key */
-    protected $key = 0;
+	protected $key = 0;
 
 	/** The current line */
-    protected $current;
+	protected $current;
  
 	/**
 	 * Constructor
 	 *
 	 * @param string $filename the name of the file to parse
 	 */
-    public function __construct($filename) {
+	public function __construct($filename) {
 		$this->filename = $filename;
-        $this->file = fopen($filename, 'r');
-    }
+		$this->file = fopen($filename, 'r');
+	}
  
 	/** Destructor */
-    public function __destruct() {
-        fclose($this->file);
-    }
+	public function __destruct() {
+		fclose($this->file);
+	}
  
 	/** Rewind to the beginning of the file */
-    public function rewind() {
-        rewind($this->file);
-        $this->current = fgetcsv($this->file);
-        $this->key = 0;
-    }
+	public function rewind() {
+		rewind($this->file);
+		$this->current = fgetcsv($this->file);
+		$this->key = 0;
+	}
  
 	/** @return if the file is valid (not at the end) */
-    public function valid() {
-        return !feof($this->file);
-    }
+	public function valid() {
+		return !feof($this->file);
+	}
 
 	/** @return the key */
-    public function key() {
-        return $this->key;
-    }
+	public function key() {
+		return $this->key;
+	}
  
 	/** Get the current line of data */
-    public function current() {
-        return $this->current;
-    }
+	public function current() {
+		return $this->current;
+	}
  
 	/** Read the next line of data */
-    public function next() {
-        $this->current = fgetcsv($this->file);
-        $this->key++;
-    }
+	public function next() {
+		$this->current = fgetcsv($this->file);
+		$this->key++;
+	}
 }

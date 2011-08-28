@@ -57,10 +57,10 @@ class AttachmentsControllerUtils extends JController
 	/**
 	 * Enqueue a system message.
 	 *
-	 * @param   string   $msg   The message to enqueue.
-	 * @param   string   $type  The message type. Default is message.
+	 * @param	string	 $msg	The message to enqueue.
+	 * @param	string	 $type	The message type. Default is message.
 	 *
-	 * @return  void
+	 * @return	void
 	 */
 	protected function enqueueSystemMessage($msg, $type = 'message')
 	{
@@ -328,7 +328,7 @@ class AttachmentsControllerUtils extends JController
 		$dry_run = JRequest::getBool('dry_run', false);
 
 		$status = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
-																 $update,   $dry_run);
+																 $update,	$dry_run);
 
 		if ( is_array($status) ) {
 			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($status));

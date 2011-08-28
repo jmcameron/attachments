@@ -58,16 +58,16 @@ class CategoryEditTest extends JoomlaDatabaseTestCase
 	}
 
 
-    /**
+	/**
 	 * Test to see whether a user may edit a specified category
 	 * 
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
 	 * @param int $user_id the id of the user to test
 	 * @param string $username the username (for error printouts)
 	 * @param int $cat_id the id of the category to test
 	 * @param int $may_edit the expected result of the test
-     */
+	 */
 	public function testCategoryEdit($user_id, $username, $cat_id, $may_edit)
 	{
 		$result = AttachmentsPermissions::userMayEditCategory((int)$cat_id, (int)$user_id);
@@ -80,9 +80,9 @@ class CategoryEditTest extends JoomlaDatabaseTestCase
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testCategoryEditData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testCategoryEditData.csv');
+	}
 
 }
 

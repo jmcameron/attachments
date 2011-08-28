@@ -143,7 +143,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 		 ><img src="<?php echo $icon_dir . 'download.gif'; ?>" alt="<?php echo $download_verb; ?>" /></a>
 	  </td>
 	  <td class="at_description"><?php echo $item->description; ?></td>
-      <td class="at_access" align="center"><?php echo $access; ?></td>
+	  <td class="at_access" align="center"><?php echo $access; ?></td>
 	  <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
 		 <td class="at_user_field"><?php echo $item->user_field_1; ?></td>
 	  <?php endif; ?>

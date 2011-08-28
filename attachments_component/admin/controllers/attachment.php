@@ -192,19 +192,19 @@ class AttachmentsControllerAttachment extends JControllerForm
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/add/view.html.php');
 		$view = new AttachmentsViewAdd();
 
-		$view->uri_type      = $uri_type;
-		$view->url           = '';
-		$view->state         = $params->get('publish_default', false);
+		$view->uri_type		 = $uri_type;
+		$view->url			 = '';
+		$view->state		 = $params->get('publish_default', false);
 
-		$view->parent_id     = $parent_id;
-		$view->parent_type   = $parent_type;
+		$view->parent_id	 = $parent_id;
+		$view->parent_type	 = $parent_type;
 		$view->parent_entity = $parent_entity;
 		$view->parent_entity_name =  $parent_entity_name;
 		$view->parent_title  = $parent_title;
-		$view->new_parent    = $new_parent;
-		$view->entity_info   = $entity_info;
-		$view->option        = $this->option;
-		$view->from          = $from;
+		$view->new_parent	 = $new_parent;
+		$view->entity_info	 = $entity_info;
+		$view->option		 = $this->option;
+		$view->from			 = $from;
 
 		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
@@ -227,27 +227,27 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$user_field_1_name = $params->get('user_field_1_name', '');
 		if ( $user_field_1_name != '' ) {
 			$show_user_field_1 = true;
-			$view->user_field_1_name =  $user_field_1_name;
+			$view->user_field_1_name =	$user_field_1_name;
 			}
-		$view->show_user_field_1 =  $show_user_field_1;
+		$view->show_user_field_1 =	$show_user_field_1;
 
 		// Handle user field 2
 		$show_user_field_2 = false;
 		$user_field_2_name = $params->get('user_field_2_name', '');
 		if ( $user_field_2_name != '' ) {
 			$show_user_field_2 = true;
-			$view->user_field_2_name =  $user_field_2_name;
+			$view->user_field_2_name =	$user_field_2_name;
 			}
-		$view->show_user_field_2 =  $show_user_field_2;
+		$view->show_user_field_2 =	$show_user_field_2;
 
 		// Handle user field 3
 		$show_user_field_3 = false;
 		$user_field_3_name = $params->get('user_field_3_name', '');
 		if ( $user_field_3_name != '' ) {
 			$show_user_field_3 = true;
-			$view->user_field_3_name =  $user_field_3_name;
+			$view->user_field_3_name =	$user_field_3_name;
 			}
-		$view->show_user_field_3 =  $show_user_field_3;
+		$view->show_user_field_3 =	$show_user_field_3;
 
 		// Set up to toggle between uploading file/urls
 		AttachmentsControllerAttachment::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
@@ -287,9 +287,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$upload_toggle_url .= "&amp;editor=" . JRequest::getWord('editor');
 			}
 
-		$view->upload_toggle_button_text =  $upload_toggle_button_text;
-		$view->upload_toggle_url = 		  $upload_toggle_url;
-		$view->upload_toggle_tooltip = 	  $upload_toggle_tooltip;
+		$view->upload_toggle_button_text =	$upload_toggle_button_text;
+		$view->upload_toggle_url =		  $upload_toggle_url;
+		$view->upload_toggle_tooltip =	  $upload_toggle_tooltip;
 
 		// Set up the 'select parent' button
 		$view->selpar_label =  JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
@@ -470,7 +470,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		case 'saveNew':
 		default:
 			$link = 'index.php?option=com_attachments';
-		    break;
+			break;
 			}
 
 		// If called from the editor, go back to it
@@ -484,11 +484,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
-			     	$errmsg = $msg;
+					$errmsg = $msg;
 				if ( DS == "\\" ) {
-				    // Fix filename on Windows system so alert can display it
-				    $errmsg = str_replace(DS, "\\\\", $errmsg);
-				    }
+					// Fix filename on Windows system so alert can display it
+					$errmsg = str_replace(DS, "\\\\", $errmsg);
+					}
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
 				echo "<script type=\"text/javascript\"> alert('$errmsg');  window.history.go(-1); </script>";
@@ -504,7 +504,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
 			echo "<script type=\"text/javascript\">
 			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
@@ -520,8 +520,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 	/**
 	 * Edit - display the form for the user to edit an attachment
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable (IGNORED)
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (IGNORED)
+	 * @param	string	$key	 The name of the primary key of the URL variable (IGNORED)
+	 * @param	string	$urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (IGNORED)
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -530,7 +530,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
-        $uri = JFactory::getURI();
+		$uri = JFactory::getURI();
 		$db = JFactory::getDBO();
 
 		$model		= $this->getModel();
@@ -721,32 +721,32 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
 
 		// Set up view info
-		$view->update            = $update;
-		$view->change_parent     = $change_parent;
-		$view->new_parent_type   = $new_parent_type;
+		$view->update			 = $update;
+		$view->change_parent	 = $change_parent;
+		$view->new_parent_type	 = $new_parent_type;
 		$view->new_parent_entity = $new_parent_entity;
 		$view->change_parent_url = $change_parent_url;
-		$view->display_name      = $display_name;
-		$view->entity_info       = $entity_info;
+		$view->display_name		 = $display_name;
+		$view->entity_info		 = $entity_info;
 
 		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
 
-		$view->lists      = $lists;
+		$view->lists	  = $lists;
 		$view->attachment = $attachment;
-		$view->params     = $params;
+		$view->params	  = $params;
 
-		$view->from       = $from;
-		$view->option     = $this->option;
+		$view->from		  = $from;
+		$view->option	  = $this->option;
 
 		// Set up for selecting a new type of parent
 		if ( $change_parent ) {
-			$view->selpar_label = 		$selpar_label;
-			$view->selpar_btn_text = 		$selpar_btn_text;
+			$view->selpar_label =		$selpar_label;
+			$view->selpar_btn_text =		$selpar_btn_text;
 			$view->selpar_btn_tooltip = 	$selpar_btn_tooltip;
 			$view->selpar_btn_url = 		$selpar_btn_url;
 			$view->selpar_parent_title =  $selpar_parent_title;
-			$view->selpar_parent_id = 	$selpar_parent_id;
+			$view->selpar_parent_id =	$selpar_parent_id;
 			}
 
 		$view->display();
@@ -854,16 +854,16 @@ class AttachmentsControllerAttachment extends JControllerForm
 				if ( $old_parent_id == null ) {
 					$old_parent_id = 0;
 					// NOTE: When attaching a file to an article during creation,
-					//       the article_id (parent_id) is initially null until
-					//       the article is saved (at that point the
-					//       parent_id/article_id updated).	 If the attachment is
-					//       added and creating the article is canceled, the
-					//       attachment exists but is orhpaned since it does not
-					//       have a parent.  It's article_id is null, but it is
-					//       saved in directory as if its article_id is 0:
-					//       article/0/file.txt.  Therefore, if the parent has
-					//       changed, we pretend the old_parent_id=0 for file
-					//       renaming/moving.
+					//		 the article_id (parent_id) is initially null until
+					//		 the article is saved (at that point the
+					//		 parent_id/article_id updated).	 If the attachment is
+					//		 added and creating the article is canceled, the
+					//		 attachment exists but is orhpaned since it does not
+					//		 have a parent.  It's article_id is null, but it is
+					//		 saved in directory as if its article_id is 0:
+					//		 article/0/file.txt.  Therefore, if the parent has
+					//		 changed, we pretend the old_parent_id=0 for file
+					//		 renaming/moving.
 					}
 
 				$error_msg = AttachmentsHelper::switch_parent($attachment, $old_parent_id, $attachment->parent_id,
@@ -1018,11 +1018,11 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
-			     	$errmsg = $msg;
+					$errmsg = $msg;
 				if ( DS == "\\" ) {
-				    // Fix filename on Windows system so alert can display it
-				    $errmsg = str_replace(DS, "\\\\", $errmsg);
-				    }
+					// Fix filename on Windows system so alert can display it
+					$errmsg = str_replace(DS, "\\\\", $errmsg);
+					}
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
 				echo "<script type=\"text/javascript\"> alert('$errmsg');  window.history.go(-1); </script>";
@@ -1040,7 +1040,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
 			echo "<script type=\"text/javascript\">
 			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
@@ -1081,7 +1081,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		$save_task = 'attachment.save';
-        if ( $save_type == 'upload' ) {
+		if ( $save_type == 'upload' ) {
 			$save_task = 'attachment.saveNew';
 			}
 
@@ -1123,8 +1123,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 
 			// Add the URLs
-			$view->change_file_url   = JRoute::_($change_file_url);
-			$view->change_url_url    = JRoute::_($change_url_url);
+			$view->change_file_url	 = JRoute::_($change_file_url);
+			$view->change_url_url	 = JRoute::_($change_url_url);
 			$view->normal_update_url = JRoute::_($normal_update_url);
 			}
 	}

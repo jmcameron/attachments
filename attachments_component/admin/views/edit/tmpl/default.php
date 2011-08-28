@@ -104,18 +104,18 @@ else
 	  <td class="key"><label><?php echo
 	   JText::sprintf('ATTACH_ATTACHED_TO', $attachment->parent_entity_name); ?></label></td>
 	   <td class="at_title" colspan="2"><?php
-	    if ( $attachment->parent_id == null ) {
+		if ( $attachment->parent_id == null ) {
 			echo '<span class="error">' . $attachment->parent_title . '</span>';
-		    }
+			}
 		else {
 			echo $attachment->parent_title;
 			} ?>
-       </td>
+	   </td>
 	   <td class="switch">
- 	    <a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
-	       title="<?php echo $change_entity_tooltip; ?>"
+		<a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
+		   title="<?php echo $change_entity_tooltip; ?>"
 		   ><?php echo JText::sprintf('ATTACH_CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a>
-       </td>
+	   </td>
 	   <td class="switch" colspan="3"> <?php echo JText::_('ATTACH_SWITCH_TO_COLON') ?>
 <?php
 	// Create all the buttons to switch to other types of parents
@@ -154,7 +154,7 @@ else
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_FILE') . '::' . JText::_('ATTACH_CHANGE_TO_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_CHANGE_TO_FILE') ?></a>
   <?php elseif ( (($uri_type == 'file') && ($update != 'file')) ||
-                 (($uri_type == 'url') && ($update != 'url')) ): ?>
+				 (($uri_type == 'url') && ($update != 'url')) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->normal_update_url ?>"
 		 title="<?php echo JText::_('ATTACH_NORMAL_UPDATE') . '::' . JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a>
@@ -172,7 +172,7 @@ else
 <?php elseif ( $update == 'url' ): ?>
   <tr>
 	  <td class="key"><label for="upload" class="hasTip"
-	      title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
+		  title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
 	  <td colspan="5">
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 		 <input type="checkbox" name="verify_url" value="verify" checked 
@@ -180,7 +180,7 @@ else
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 	 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 	 <input type="checkbox" name="url_relative" value="relative"
-            <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+			<?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		 <br />
 		 <input type="text" name="url" id="upload"
 			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
@@ -222,7 +222,7 @@ else
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 		 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 	 <input type="checkbox" name="url_relative" value="relative"
-            <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+			<?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 	  <br />
 	  <input type="text" name="url" id="upload" value="<?php echo $attachment->url; ?>"
 			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />
@@ -274,7 +274,7 @@ else
 	  <td colspan="5"><?php echo $this->lists['published']; ?></td>
   </tr>
   <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
-      <td colspan="5"><?php echo $this->access_level; ?></td>
+	  <td colspan="5"><?php echo $this->access_level; ?></td>
   </tr>
   <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
   <tr><td class="key"><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?></label></td>
@@ -298,7 +298,7 @@ else
   </tr>
   <?php endif; ?>
   <tr>
-      <td class="key"><label for="icon_filename"><?php echo JText::_('ATTACH_ICON_FILENAME'); ?></label></td>
+	  <td class="key"><label for="icon_filename"><?php echo JText::_('ATTACH_ICON_FILENAME'); ?></label></td>
 	  <td><?php echo $this->lists['icon_filenames']; ?></td>
 	  <td class="key2"><label><?php echo JText::_('ATTACH_FILE_TYPE'); ?></label></td>
 	  <td colspan="3"><?php echo $attachment->file_type; ?></td>

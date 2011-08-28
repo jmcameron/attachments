@@ -27,7 +27,7 @@ class plgButtonAdd_attachment extends JPlugin
 	 * Constructor
 	 *
 	 * @param &object &$subject The object to observe
-	 * @param       array   $config  An array that holds the plugin configuration
+	 * @param		array	$config  An array that holds the plugin configuration
 	 */
 	public function __construct(& $subject, $config)
 	{
@@ -100,7 +100,7 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Figure out where we are and construct the right link and set
-        $app = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$uri = JFactory::getURI();
 		$base_url = $uri->root(true);
 		if ( $app->isAdmin() ) {

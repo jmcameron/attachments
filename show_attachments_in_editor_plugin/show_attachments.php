@@ -48,7 +48,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			$doc = JFactory::getDocument();
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css',
@@ -139,15 +139,15 @@ class plgSystemShow_attachments extends JPlugin
 		$layout = JRequest::getWord('layout');
 
 		// Front end:
-		//    - Edit existing article:  com_content,view=form,layout=edit,a_id=#
-		//    - Create new article: same but no a_id
+		//	  - Edit existing article:	com_content,view=form,layout=edit,a_id=#
+		//	  - Create new article: same but no a_id
 
 		// Back end
-		//    - Edit existing article: com_content,view=article,layout=edit,id=#
-		//    - Create new article: same but no id
+		//	  - Edit existing article: com_content,view=article,layout=edit,id=#
+		//	  - Create new article: same but no id
 		///
-		//    - Edit existing category: com_categories,view=category,layout=edit,id=#
-		//    - Create new category: same but no id
+		//	  - Edit existing category: com_categories,view=category,layout=edit,id=#
+		//	  - Create new category: same but no id
 
 		if ( ($parent_type == 'com_content') && ($layout =='edit') &&
 			 (($view == 'form') || ($view == 'article') || ($view == 'category') ) ) {
@@ -174,7 +174,7 @@ class plgSystemShow_attachments extends JPlugin
 
 			// Add the refresh Javascript
 			$app = JFactory::getApplication();
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			$doc = JFactory::getDocument();
 			JHTML::_('behavior.mootools');
@@ -236,7 +236,7 @@ class plgSystemShow_attachments extends JPlugin
 			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 			// Add the refresh Javascript
-	        $uri = JFactory::getURI();
+			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			$doc = JFactory::getDocument();
 
@@ -275,7 +275,7 @@ class plgSystemShow_attachments extends JPlugin
 			// NOTE: Assume that anyone editing the article can see its attachments
 			$body = JResponse::getBody();
 			$body = str_replace('<div class="clr"></div>',
-			 					$attachments . '<div class="clr"></div>', $body);
+								$attachments . '<div class="clr"></div>', $body);
 			JResponse::setBody($body);
 
 			}

@@ -216,11 +216,11 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					}
 
 				// Close the iframe and refresh the attachments list in the parent window
-	            $uri = JFactory::getURI();
+				$uri = JFactory::getURI();
 				$base_url = $uri->base(true);
 				echo "<script type=\"text/javascript\">
-			    window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-			    window.parent.SqueezeBox.close();
+				window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
+				window.parent.SqueezeBox.close();
 				</script>";
 				exit();
 				}

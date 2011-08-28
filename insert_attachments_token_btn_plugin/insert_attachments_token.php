@@ -97,7 +97,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 			";
 
-        $app = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$doc = JFactory::getDocument();
 		$uri = JFactory::getURI();
 

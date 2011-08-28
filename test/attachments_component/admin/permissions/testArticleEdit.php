@@ -60,16 +60,16 @@ class ArticleEditTest extends JoomlaDatabaseTestCase
 	}
 
 
-    /**
+	/**
 	 * Test to see whether a user may edit a specified article
 	 * 
-     * @dataProvider provider
+	 * @dataProvider provider
 	 *
 	 * @param int $user_id the id of the user to test
 	 * @param string $username the username (for error printouts)
 	 * @param int $art_id the id of the article to test
 	 * @param int $may_edit the expected result of the test
-     */
+	 */
 	public function testArticleEdit($user_id,$username,$art_id,$may_edit)
 	{
 		$result = AttachmentsPermissions::userMayEditArticle((int)$art_id, (int)$user_id);
@@ -83,8 +83,8 @@ class ArticleEditTest extends JoomlaDatabaseTestCase
 	 * Get the test data from CSV file
 	 */
 	public function provider()
-    {
-        return new CsvFileIterator(dirname(__FILE__).'/testArticleEditData.csv');
-    }
+	{
+		return new CsvFileIterator(dirname(__FILE__).'/testArticleEditData.csv');
+	}
 
 }

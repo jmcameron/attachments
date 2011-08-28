@@ -40,11 +40,11 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
   </table>
   <div>
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="boxchecked" value="0" />
+	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-    <?php echo JHtml::_('form.token'); ?>
+	<?php echo JHtml::_('form.token'); ?>
   </div>
 </form>
 <div id="componentVersion"><a target="_blank" title="<?php echo JText::_('ATTACH_ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>"><?php echo JText::sprintf('ATTACH_ATTACHMENTS_VERSION_S', $this->version); ?></a></div>

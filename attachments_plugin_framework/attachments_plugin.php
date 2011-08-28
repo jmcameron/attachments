@@ -22,7 +22,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * attaching files to various types of content entities
  *
  * The derived attachments plugin class must be in the main PHP file for that
- * plugin.  For instance for content articles or categories, the parent type
+ * plugin.	For instance for content articles or categories, the parent type
  * is 'com_content'.  The parent type is simply the name of the component
  * involved (eg, 'com_content').  The derived attachments plugin class (such
  * as 'AttachmentsPlugin_com_content') should be defined in the main file for
@@ -32,8 +32,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * code after the class definition to register the derived class with the
  * Attachments plugin manager:
  *
- *   $apm = getAttachmentsPluginManager();
- *   $apm->addParentType('com_content');
+ *	 $apm = getAttachmentsPluginManager();
+ *	 $apm->addParentType('com_content');
  *
  * where 'com_content' should be replaced by the name of the appropriate
  * parent type (component).
@@ -728,7 +728,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
-    public function userMayChangeAttachmentState($parent_id, $parent_entity,
+	public function userMayChangeAttachmentState($parent_id, $parent_entity,
 												 $attachment_creator_id, $user_id=null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));

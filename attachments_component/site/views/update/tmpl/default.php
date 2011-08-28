@@ -202,7 +202,7 @@ else {
 		   <input type="text" name="description" id="description"
 				  size="70" maxlength="255" value="<?php echo $attachment->description; ?>" /></p>
 <?php if ( $this->may_publish ): ?>
-        <p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></p>
+		<p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></p>
 <?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
 		<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?> </p>
