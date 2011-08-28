@@ -131,9 +131,8 @@ class AttachmentsUpdate
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
-											 $attachment->filename) . ' (ERR 3)';
-					// ??? Echo, raiseError, or enqueue system message?
-					echo $errmsg . $db->stderr() . ' (ERR 4)';
+											 $attachment->filename);
+					JError::raiseWarning(500, $errmsg  . $db->stderr() . ' (ERR 3)');
 					}
 				$numUpdated++;
 				}
