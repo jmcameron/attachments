@@ -15,7 +15,7 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 3.0-RC2 - August 18, 2011</strong></p>
+<p class="version"><strong>Version 3.0 - August 28, 2011</strong></p>
 <p><strong>This version is for Joomla 1.6/1.7+</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -226,7 +226,7 @@ at its end.</p>
 end, an extra button will be displayed: [Insert {attachments} token].
 Position the cursor where you want the custom placement token and use
 this button to insert the token.  This button will add surrounding HTML
-tags to hide the token when it is not replaced (eg, when the
+tags to hide the token when it is not replaced (for example when the
 attachments list is not supposed to be visible).  In HTML, the token
 looks like this with the surrounding tags to hide it:</p>
 <pre class="literal-block">
@@ -318,7 +318,7 @@ sorted alphabetically by the filename.</li>
 <li>'<em>Display filename or URL</em>' - All attachments that have blank
 display filenames will appear before the ones with display filenames and
 will be sorted by their filenames.</li>
-<li>'<em>Uploader</em>' - Sort by the name of the user who uploaded the attachment.</li>
+<li>'<em>Creator</em>' - Sort by the name of the user who uploaded the attachment.</li>
 <li>'<em>Creation date (oldest first)</em>'</li>
 <li>'<em>Creation date (newest first)</em>'</li>
 <li>'<em>Modification date (oldest first)</em>'</li>
@@ -622,7 +622,7 @@ desired behaviors:</p>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><strong>Scenario 2 - Authors can edit/delete their own attachments but no one elses</strong></p>
+<li><p class="first"><strong>Scenario 2 - Authors can edit/delete their own attachments but no one else's</strong></p>
 <blockquote>
 <ul>
 <li><p class="first">In the permissions options, click on the 'Author' entry.  Locate the
@@ -635,7 +635,7 @@ Click on 'Save' to verify the changes</p>
 <p>Since Author still has permissions to edit/delete their own attachments
 this effectively prevents them from editing/deleting attachments that
 they did not create, even if they can edit the article.</p>
-<p>Note that all user groups derived from Author (eg, Editor, Publisher,
+<p>Note that all user groups derived from Author (e.g., Editor, Publisher,
 etc) will also be denied from editing or deleting attachments for
 articles/parents that they did not create (from this permission).
 Fortunately, they generally have the higher level permissions 'Edit
@@ -677,11 +677,11 @@ your site.   The two basic levels are:</p>
 <ul class="simple">
 <li><strong>'Public'</strong> - Anyone visiting the website will be able to see and download
 attachments with 'access level' set to 'Public' if the article/parent is
-visibile and no other Attachments visbility settings prevent the
+visible and no other Attachments visibility settings prevent the
 attachments from being shown.</li>
 <li><strong>'Registered'</strong> - Anyone that is logged into the website will be able to
 see and download attachments with 'access level' set to 'Registered' if the
-article/parent is visibile and no other Attachments visbility settings
+article/parent is visible and no other Attachments visibility settings
 prevent the attachments from being shown.</li>
 </ul>
 </blockquote>
@@ -985,14 +985,15 @@ if more than one person is using the same user account and they create
 articles at the same time and add attachments at the same time, there is no
 guarantee that the attached files will end up with the correct article.</p>
 </li>
-<li><p class="first">There is a help forum and a 'Frequently Asked Questions' forum for the
-'Attachments' extension that is hosted on the joomlacode.org website.  If
+<li><p class="first">There is a 'Help' forum and a 'Frequently Asked Questions' forum for the
+'Attachments' 3 extension that is hosted on the joomlacode.org website.  If
 you encounter a problem that is not covered in this help page, please
-consult the forums:</p>
+consult the forums.  (Please post questions on the 'Help' form.  I will post
+commonly asked questions on the 'Frequently Asked Questions'):</p>
 <blockquote>
 <ul class="simple">
-<li><a class="reference external" href="http://joomlacode.org/gf/project/attachments/forum/">Attachments Forums at
-http://joomlacode.org/gf/project/attachments/forum/</a></li>
+<li><a class="reference external" href="http://joomlacode.org/gf/project/attachments3/forum/">Attachments Forums at
+http://joomlacode.org/gf/project/attachments3/forum/</a></li>
 </ul>
 </blockquote>
 </li>
@@ -1023,7 +1024,8 @@ Extension Manager page (under the 'Extensions' menu).  <strong>Select ONLY the i
 <pre class="literal-block">
 Package: Attachments for Joomla 1.6+
 </pre>
-<p>and click on the 'Uninstall' button on the toolbar.</p>
+<p>and click on the 'Uninstall' button on the toolbar.  This will install the
+attachments component and all the associated plugins.</p>
 </li>
 <li><p class="first">If you wish to retain your attachments, make a copy of the 'attachments'
 directory at the top of the Joomla installation and copy the '_attachments'
@@ -1064,10 +1066,11 @@ not available yet for Attachments 3.0.</p>
 <li><strong>Czech:</strong> by Tomas Udrzal (1.3.4)</li>
 <li><strong>Dutch:</strong> by Parvus (2.2)</li>
 <li><strong>Finnish:</strong> by Tapani Lehtonen (2.2)</li>
-<li><strong>French:</strong> by Marc-André Ladouceur (2.2) and Pascal Adalian (1.3.4)</li>
-<li><strong>German:</strong> by Bernhard Alois Gassner (2.2) Michael Scherer (1.3.4)</li>
+<li><strong>French:</strong> by Marc-André Ladouceur (2.2, 3.0), Yann Kerviel (3.0), and Pascal Adalian (1.3.4)</li>
+<li><strong>German:</strong> by Pierre Corell (3.0), Bernhard Alois Gassner (2.2), and Michael Scherer (1.3.4)</li>
 <li><strong>Greek:</strong> by Harry Nakos (1.3.4)</li>
 <li><strong>Hungarian:</strong> Formal and informal translations by Szabolcs Gáspár (1.3.4)</li>
+<li><strong>Indonesian:</strong> by Moh. Arif (3.0)</li>
 <li><strong>Italian:</strong> by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)</li>
 <li><strong>Norwegian:</strong> by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)</li>
 <li><strong>Persian:</strong> by Hossein Moradgholi and Mahmood Amintoosi (2.2)</li>
@@ -1075,7 +1078,7 @@ not available yet for Attachments 3.0.</p>
 <li><strong>Portuguese (Brazilian):</strong> by Arnaldo Giacomitti and Cauan Cabral (1.3.4)</li>
 <li><strong>Portuguese (Portugal):</strong> by José Paulo Tavares (2.2) and Bruno Moreira (1.3.4)</li>
 <li><strong>Romanian:</strong> by Alex Cojocaru (2.2)</li>
-<li><strong>Russian:</strong> by Sergey Litvintsev (2.2) and евгений панчев (Yarik Sharoiko) (1.3.4)</li>
+<li><strong>Russian:</strong> by Sergey Litvintsev (2.2, 3.0) and евгений панчев (Yarik Sharoiko) (1.3.4)</li>
 <li><strong>Serbian:</strong> by Vlada Jerkovic (1.3.4)</li>
 <li><strong>Slovak:</strong> by Miroslav Bystriansky (1.3.4)</li>
 <li><strong>Slovenian:</strong> by Matej Badalič (2.2)</li>
@@ -1127,7 +1130,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: August 19, 2011 at 02:52 UTC.
+Generated on: August 28, 2011 at 22:42 UTC.
 
 </div>
 </body>
