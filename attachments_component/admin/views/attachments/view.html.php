@@ -130,7 +130,7 @@ class AttachmentsViewAttachments extends JView
 		$this->num_columns = $num_columns;
 
 		// get the version number
-		require_once(JPATH_COMPONENT_SITE.'/defines.php');
+		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
 		$this->project_url = AttachmentsDefines::$PROJECT_URL;
 

@@ -17,7 +17,7 @@ jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
 /** Load the Attachements defines */
-require_once(JPATH_COMPONENT_SITE.'/defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * Form Field class list of access levels the user has access to

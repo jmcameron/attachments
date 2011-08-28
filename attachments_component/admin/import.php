@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 
 /** Load the Attachements defines */
-require_once(JPATH_COMPONENT_SITE.'/defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * A class for importing attachments data from files

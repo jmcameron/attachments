@@ -16,8 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport( 'joomla.application.component.controller' );
 
 /** Load the Attachements defines */
-require_once(JPATH_COMPONENT.'/defines.php');
-
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * The main attachments controller class (for the front end)
