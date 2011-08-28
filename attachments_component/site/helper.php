@@ -1470,8 +1470,9 @@ class AttachmentsHelper
 			}
 
 		// If the user is not authorised to change the state (eg, publish/unpublish),
-		// ignore the form data and make sure the publish state is is set correctly.
+		// ignore the form data and make sure the publish state is set correctly.
 		if ( !$may_publish ) {
+			$save_type = JString::strtolower(JRequest::getWord('save_type', 'update'));
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
 				jimport('joomla.application.component.helper');
