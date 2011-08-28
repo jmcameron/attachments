@@ -186,7 +186,7 @@ Basic Options
        end, an extra button will be displayed: [Insert {attachments} token].
        Position the cursor where you want the custom placement token and use
        this button to insert the token.  This button will add surrounding HTML
-       tags to hide the token when it is not replaced (eg, when the
+       tags to hide the token when it is not replaced (for example when the
        attachments list is not supposed to be visible).  In HTML, the token
        looks like this with the surrounding tags to hide it::
 
@@ -272,7 +272,7 @@ Formatting Options
   5.  '*Display filename or URL*' - All attachments that have blank
       display filenames will appear before the ones with display filenames and
       will be sorted by their filenames.
-  6.  '*Uploader*' - Sort by the name of the user who uploaded the attachment.
+  6.  '*Creator*' - Sort by the name of the user who uploaded the attachment.
   7.  '*Creation date (oldest first)*'
   8.  '*Creation date (newest first)*'
   9.  '*Modification date (oldest first)*'
@@ -557,7 +557,7 @@ desired behaviors:
        .. figure:: images/permissions-scenario1.png
           :alt: Permissions setting for scenario1
 
-  * **Scenario 2 - Authors can edit/delete their own attachments but no one elses**
+  * **Scenario 2 - Authors can edit/delete their own attachments but no one else's**
 
      - In the permissions options, click on the 'Author' entry.  Locate the 
        'Edit State Of Attachments For Owned Article/Parent' and
@@ -571,7 +571,7 @@ desired behaviors:
        this effectively prevents them from editing/deleting attachments that
        they did not create, even if they can edit the article.
 
-       Note that all user groups derived from Author (eg, Editor, Publisher,
+       Note that all user groups derived from Author (e.g., Editor, Publisher,
        etc) will also be denied from editing or deleting attachments for
        articles/parents that they did not create (from this permission).
        Fortunately, they generally have the higher level permissions 'Edit
@@ -604,12 +604,12 @@ your site.   The two basic levels are:
 
  * **'Public'** - Anyone visiting the website will be able to see and download
    attachments with 'access level' set to 'Public' if the article/parent is
-   visibile and no other Attachments visbility settings prevent the
+   visible and no other Attachments visibility settings prevent the
    attachments from being shown.
 
  * **'Registered'** - Anyone that is logged into the website will be able to
    see and download attachments with 'access level' set to 'Registered' if the
-   article/parent is visibile and no other Attachments visbility settings
+   article/parent is visible and no other Attachments visibility settings
    prevent the attachments from being shown.
 
 The effect of other access levels depends on the groups associated with the
@@ -912,14 +912,15 @@ Warnings
   articles at the same time and add attachments at the same time, there is no
   guarantee that the attached files will end up with the correct article.
 
-* There is a help forum and a 'Frequently Asked Questions' forum for the
-  'Attachments' extension that is hosted on the joomlacode.org website.  If
+* There is a 'Help' forum and a 'Frequently Asked Questions' forum for the
+  'Attachments' 3 extension that is hosted on the joomlacode.org website.  If
   you encounter a problem that is not covered in this help page, please
-  consult the forums:
+  consult the forums.  (Please post questions on the 'Help' form.  I will post
+  commonly asked questions on the 'Frequently Asked Questions'):
 
      - `Attachments Forums at
-       http://joomlacode.org/gf/project/attachments/forum/
-       <http://joomlacode.org/gf/project/attachments/forum/>`_
+       http://joomlacode.org/gf/project/attachments3/forum/
+       <http://joomlacode.org/gf/project/attachments3/forum/>`_
 
 
 Upgrading
