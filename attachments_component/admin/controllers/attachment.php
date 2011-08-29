@@ -416,6 +416,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Upload new file/url and create the attachment
 		$msg = '';
 		$msgType = 'message';
+		$error = false;
 		if ( $new_uri_type == 'file' ) {
 
 			// Upload a new file
@@ -423,6 +424,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// NOTE: store() is not needed if upload_file() is called since it does it
 
 			if ( is_object($result) ) {
+				$error = true;
 				$msg = $result->error_msg . ' (ERR 42)';
 				$msgType = 'error';
 				}
@@ -439,6 +441,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// NOTE: store() is not needed if add_url() is called since it does it
 
 			if ( is_object($result) ) {
+				$error = true;
 				$msg = $result->error_msg . ' (ERR 43)';
 				$msgType = 'error';
 				}
@@ -464,12 +467,24 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$task = $this->getTask();
 		switch ( $task ) {
 		case 'applyNew':
-			$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
+			if ( $error ) {
+				$link = 'index.php?option=com_attachments&task=attachment.add&parent_id='.(int)$parent_id;
+				$link .= "&parent_type={$parent_type}.{$parent_entity}&editor=add_to_parent";
+				}
+			else {
+				$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
+				}
 			break;
 
 		case 'saveNew':
 		default:
-			$link = 'index.php?option=com_attachments';
+			if ( $error ) {
+				$link = 'index.php?option=com_attachments&task=attachment.add&parent_id='.(int)$parent_id;
+				$link .= "&parent_type={$parent_type}.{$parent_entity}&editor=add_to_parent";
+				}
+			else {
+				$link = 'index.php?option=com_attachments';
+				}
 			break;
 			}
 
