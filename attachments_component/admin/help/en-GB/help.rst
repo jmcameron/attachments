@@ -1000,7 +1000,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Hungarian:** Formal and informal translations by Szabolcs Gáspár (1.3.4)
 * **Indonesian:** by Moh. Arif (3.0)
 * **Italian:** by Piero Mattirolo (2.2) and Lemminkainen and Alessandro Bianchi (1.3.4)
-* **Norwegian:** by Roar Jystad (2.2) and Espen Gjelsvik (1.3.4)
+* **Norwegian:** by Roar Jystad (2.2, 3.0) and Espen Gjelsvik (1.3.4)
 * **Persian:** by Hossein Moradgholi and Mahmood Amintoosi (2.2)
 * **Polish:** by Sebastian Konieczny (2.2) and Piotr Wójcik (1.3.4)
 * **Portuguese (Brazilian):** by Arnaldo Giacomitti and Cauan Cabral (1.3.4)
