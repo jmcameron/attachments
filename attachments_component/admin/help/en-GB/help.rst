@@ -988,7 +988,7 @@ not available yet for Attachments 3.0.
 Thanks to these translators (available versions shown in parentheses):
 
 * **Bulgarian:** by Stefan Ilivanov (1.3.4)
-* **Catalan:** by Jaume Jorba (2.2)
+* **Catalan:** by Jaume Jorba (2.2, 3.0)
 * **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
 * **Croatian:** Tanja Dragisic (1.3.4)
 * **Czech:** by Tomas Udrzal (1.3.4)
