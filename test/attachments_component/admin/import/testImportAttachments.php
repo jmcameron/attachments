@@ -89,7 +89,7 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 			}
 
 		// Delete the attachments
-		if ( !$update || ($attachment_id == 0) ) {
+		if ( !$update ) {
 			$db = JFactory::getDBO();
 			if (is_array($result)) {
 				$query = $db->getQuery(true);

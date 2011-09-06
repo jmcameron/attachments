@@ -9,3 +9,4 @@
 "testfiles/import_badmodifiername.csv", "Error importing attachments CSV file; attachment modifier user with id=42 has username 'QQQ', but CSV file expected 'admin'!", 0, 1
 "testfiles/import_zeroid.csv", "Error importing attachments CSV file; cannot modify attachment with id=0!", 1, 1
 "testfiles/import_add1.csv", 1, 0, 0
+"testfiles/import_windows.csv", 1, 0, 0
