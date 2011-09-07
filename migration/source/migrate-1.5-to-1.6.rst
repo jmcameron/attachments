@@ -3,7 +3,15 @@ How to Migrate Attachments from Joomla 1.5 to Joomla 1.6+
 
 This file describes how to migrate your attachments from your Joomla 1.5 site
 to a Joomla 1.6+ site.  Note this procedure applies to Joomla 1.6 and 1.7
-equally. 
+equally.
+
+.. warning::
+
+   I have discovered a bug in migration code in Attachments-3.0 that prevents
+   the migration process from complaining when an import error occurs (such as
+   not specifying the right filename).  Please email me to get an updated
+   version of Attachments (jmcameron@jmcameron.net).
+
 
 The process involves creating a Comma-Separated-File (CSV) migration file
 containing the data for the attachments on the Joomla 1.5 system.  The CSV
