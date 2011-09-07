@@ -330,13 +330,19 @@ class AttachmentsControllerUtils extends JController
 		$status = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
 																 $update,	$dry_run);
 
+		// Abort if it is an error message
+		if ( is_string($status) ) {
+			return JError::raiseWarning(500, $status);
+			}
+
+		// Otherwise, report the results
 		if ( is_array($status) ) {
 			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($status));
 			$this->setRedirect('index.php?option=com_attachments', $msg);
 			}
 		else {
 			if ( $dry_run ) {
-				$msg = JText::_('ATTACH_DATA_FOR_ATTACHMENTS_OK');
+				$msg = JText::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status);
 				return JError::raiseNotice(200, $msg);
 				}
 			else {
