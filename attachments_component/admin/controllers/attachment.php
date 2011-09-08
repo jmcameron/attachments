@@ -40,6 +40,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		parent::__construct($config);
 
 		$this->registerTask('applyNew',	'saveNew');
+		$this->registerTask('save2New',	'saveNew');
 	}
 
 
@@ -465,6 +466,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// See where to go to next
 		$task = $this->getTask();
+
 		switch ( $task ) {
 		case 'applyNew':
 			if ( $error ) {
@@ -473,6 +475,17 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 			else {
 				$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
+				}
+			break;
+
+		case 'save2New':
+			if ( $error ) {
+				$link = 'index.php?option=com_attachments&task=attachment.add&parent_id='.(int)$parent_id;
+				$link .= "&parent_type={$parent_type}.{$parent_entity}&editor=add_to_parent";
+				}
+			else {
+				$link = 'index.php?option=com_attachments&task=attachment.add&parent_id='.(int)$parent_id;
+				$link .= "&parent_type={$parent_type}.{$parent_entity}&editor=add_to_parent";
 				}
 			break;
 

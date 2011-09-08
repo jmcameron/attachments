@@ -50,6 +50,7 @@ class AttachmentsViewAdd extends JView
 		JToolBarHelper::title(JText::_('ATTACH_ADD_ATTACHMENT'));
 		JToolBarHelper::apply('attachment.applyNew');
 		JToolBarHelper::save('attachment.saveNew');
+		JToolBarHelper::save2new('attachment.save2New');
 		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
 	}
 }
