@@ -17,8 +17,8 @@ defined('_JEXEC') or die('Restricted access');
 Attachments 3.x Extension for Joomla 1.6/1.7+
 
 2011-09-??: Release 3.0.1
-   - Fixed bug in migration import code that prevented proper error messages
-     when imports failed (eg, file not found, etc).
+   - 2011-09-06 Fixed bug in migration import code that prevented proper error
+     messages when imports failed (eg, file not found, etc).
 
 2011-08-28: Release 3.0
    - Derived from unreleased 2.3
@@ -26,9 +26,3 @@ Attachments 3.x Extension for Joomla 1.6/1.7+
    - Testing several RC versions by over 140 testers
 
 </pre>
-
-<?php
-// Local variables:
-// mode: text
-// End:
-?>
