@@ -64,7 +64,7 @@ revertversions:
 	@find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
 
 check: 
-	find . -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual)'
+	find . -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual|coverage_)'
 
 check2: 
 	find . -name '*.php' -exec egrep -n -e "^[[:space:]]+echo.*<br.*" {} /dev/null \;
