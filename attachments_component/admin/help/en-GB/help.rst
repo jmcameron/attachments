@@ -821,7 +821,7 @@ Administrators.   These include:
 
    In the back end, sometimes when you execute one of the Utility commands, you
    may get a warning that the browser needs to resend the request.  This is
-   harmless, so click [Ok] and the command will execute.
+   harmless, so click [OK] and the command will execute.
 
 
 Warnings
@@ -1051,3 +1051,9 @@ Contact
 =======
 
 Please report bugs and suggestions to `jmcameron@jmcameron.net <mailto:jmcameron@jmcameron.net>`_
+
+..  LocalWords:  html plugin plugins ACL onPrepareContent filename Filenames qq
+..  LocalWords:  filenames frontend username PHP strftime CSS attachmentsList
+..  LocalWords:  QQ inline unpublish else's uncheck http php uninstallation IPv
+..  LocalWords:  MySQL uninstalled uninstalling uninstall unarchiving htaccess
+..  LocalWords:  filesize localhost joomlacode PREFRERRED
