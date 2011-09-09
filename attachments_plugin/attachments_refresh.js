@@ -1,7 +1,7 @@
 /**
  * Define Javascript function for refreshing attachments lists
  * 
- * Copyright (C) 2010 Jonathan M. Cameron, All Rights Reserved
+ * Copyright (C) 2010-2011 Jonathan M. Cameron, All Rights Reserved
  * License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  *
  * By Jonathan Cameron
