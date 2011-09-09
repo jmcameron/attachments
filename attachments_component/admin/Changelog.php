@@ -19,7 +19,7 @@ Attachments 3.x Extension for Joomla 1.6/1.7+
 2011-09-09: Release 3.0.1
    - 2011-09-09 Added missing error numbers
    - 2011-09-08 Added Save+New button in admin form to add attachments
-   - 2011-09-07 Fixed error in token IDs for admin publish/unpublish messages
+   - 2011-09-07 Fixed error in token IDs for admin unpublish messages
    - 2011-09-06 Fixed bug in migration import code that prevented proper error
      messages when imports fail (eg, file not found, etc).  Changed the dry_run
      success message to show number of attachments found in CSV file
