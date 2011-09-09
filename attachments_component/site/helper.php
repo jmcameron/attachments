@@ -255,7 +255,7 @@ class AttachmentsHelper
 		else {
 			if ( JFolder::create( $upload_dir )) {
 				// ??? Change to 2775 if files are owned by you but webserver runs as group
-				// ??? SHOULD THE PERMISSION BE AN OPTION?
+				// ??? (Should the permission be an option?)
 				chmod($upload_dir, 0775);
 				$subdir_ok = true;
 				}

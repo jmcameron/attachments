@@ -179,7 +179,7 @@ class plgSystemShow_attachments extends JPlugin
 			$doc = JFactory::getDocument();
 			JHTML::_('behavior.mootools');
 			if ( $app->isAdmin() ) {
-				// ??? This should not be necessary?
+				// ??? Is this line necessary?  If so, why?
 				$base_url = str_replace('/administrator','', $base_url);
 				}
 			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';

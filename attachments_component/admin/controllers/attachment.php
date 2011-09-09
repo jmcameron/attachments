@@ -54,7 +54,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	protected function checkEditId($context, $id)
 	{
-		// ??? workaround until ACL integration
+		// Do not think this function is used currently
 		return true;
 	}
 
