@@ -2,6 +2,8 @@ VERSION = "3.0.2 Beta"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
 
+# Only set DATE if you need to force the date.  
+# (Otherwise it uses the current date.)
 # DATE = "February 19, 2011"
 
 all: parts $(ZIPFILE)
