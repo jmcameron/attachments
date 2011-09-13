@@ -1,12 +1,23 @@
 /* Styles for the upload page */
 div#uploadAttachmentsPage {
     width: 95%;
-    margin: 5px 0px 0px 15px;
+    margin: 10px auto 6px auto;
     text-align: left;
+}
+
+div#uploadAttachmentsPage h1 {
+    font-size: 150%;
+    color: #000;
+}
+
+div#uploadAttachmentsPage h2 {
+    width: 100%;
+    color: #000;
 }
 
 div#uploadAttachmentsPage p {
     text-align: left;
+    width: 100%;
     margin: 0;
 }
 
@@ -14,13 +25,27 @@ div#uploadAttachmentsPage p label {
     font-weight: bold;
 }
 
-div#uploadAttachmentsPage fieldset {
+div#uploadAttachmentsPage form.attachments fieldset {
     padding-bottom: 4px;
 }
 
 div#uploadAttachmentsPage legend {
     padding: 3px 0;
 }
+
+div#uploadAttachmentsPage #display_name,
+div#uploadAttachmentsPage #description
+{
+    /* background-color: #D9D9D9; */
+    width: 100%;
+}
+
+div#uploadAttachmentsPage div.form_buttons {
+    width: 100%;
+    /* margin: 6px 0 0 0; */
+    text-align: center;
+}
+
 
 /* For button-like links to change/switch */
 
@@ -56,6 +81,9 @@ input#upload, input#upload_warning {
     margin-top: 4px;
 }
 
+input#upload {
+     /* background-color: #D9D9D9; */
+}
 
 form.attachments {
     margin: 0;
@@ -63,7 +91,7 @@ form.attachments {
 
 form.attachments fieldset { 
     margin: 0;
-    padding-right: 20px;
+    /* padding-right: 20px; */
 }
 
 form.attachments legend {
@@ -93,20 +121,6 @@ form.attachments input[type=checkbox] {
 
 form.attachments span.right {
     float: right;
-}
-
-div#uploadAttachmentsPage h1 {
-    font-size: 150%;
-    color: #000;
-}
-
-div#uploadAttachmentsPage h2 {
-    color: #000;
-}
-
-div#uploadAttachmentsPage div.form_buttons {
-    margin: 6px 0 0 0;
-    text-align: center;
 }
 
 
