@@ -550,7 +550,7 @@ class AttachmentsController extends JController
 
 		// Figure out how to redirect
 		$from = JRequest::getWord('from', 'closeme');
-		$known_froms = array('frontpage', 'article', 'details', 'closeme', 'featured');
+		$known_froms = array('frontpage', 'article', 'details', 'editor', 'closeme', 'featured');
 		$uri = JFactory::getURI();
 		if ( in_array( $from, $known_froms ) ) {
 
