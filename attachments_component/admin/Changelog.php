@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 Attachments 3.x Extension for Joomla 1.6/1.7+
 
 2011-??-??: Release 3.0.2
+   - 2011-09-17 Fixed bug in delete dialog while editing article on front end
    - 2011-09-17 Fixed save2New issue for Joomla 1.6.x
    - 2011-09-12 Improved display of frontend upload/update forms
 
