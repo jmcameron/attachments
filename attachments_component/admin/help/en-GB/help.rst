@@ -1056,4 +1056,13 @@ Please report bugs and suggestions to `jmcameron@jmcameron.net <mailto:jmcameron
 ..  LocalWords:  filenames frontend username PHP strftime CSS attachmentsList
 ..  LocalWords:  QQ inline unpublish else's uncheck http php uninstallation IPv
 ..  LocalWords:  MySQL uninstalled uninstalling uninstall unarchiving htaccess
-..  LocalWords:  filesize localhost joomlacode PREFRERRED
+..  LocalWords:  filesize localhost joomlacode Joomla Virtuemart Ilivanov Jaume
+..  LocalWords:  Jorba baijianpeng Tanja Dragisic Udrzal Parvus Tapani Lehtonen
+..  LocalWords:  André Ladouceur Yann Kerviel Adalian Corell Alois Gassner Moh
+..  LocalWords:  Scherer Nakos Szabolcs Gáspár Arif Piero Mattirolo Bianchi
+..  LocalWords:  Lemminkainen Jystad Espen Gjelsvik Hossein Moradgholi Mahmood
+..  LocalWords:  Amintoosi Konieczny Wajda Wójcik Giacomitti Cauan José Tavares
+..  LocalWords:  Moreira Cojocaru Sergey Litvintsev Yarik Sharoiko Vlada Matej
+..  LocalWords:  Jerkovic Miroslav Bystriansky Badalič María Pérez Alfaro Kaya
+..  LocalWords:  Maltanski Elfström Zeren LeBlanc Zaitseff Doctype OpenDocument
+..  LocalWords:  McDermott Samini Ewout Weirda
