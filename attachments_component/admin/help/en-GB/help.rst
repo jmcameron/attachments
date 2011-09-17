@@ -933,7 +933,7 @@ Upgrading is very easy.  You have two choices:
    your old attachments.  Simply install the new version and it will update
    everything appropriately.
 
-2. PREFRERRED: One of the excellent new features in Joomla 1.6 and later is
+2. PREFERRED: One of the excellent new features in Joomla 1.6 and later is
    the extension updater.  Go to the Extension Manager in the back end and
    click on the 'Update' tab.  Click 'Purge Cache' and then 'Find Updates' on
    the toolbar.  If there is a new release of Attachments, it will be shown.
@@ -950,7 +950,7 @@ Uninstalling
 
      Package: Attachments for Joomla 1.6+
 
-  and click on the 'Uninstall' button on the toolbar.  This will install the
+  and click on the 'Uninstall' button on the toolbar.  This will uninstall the
   attachments component and all the associated plugins.
 
 * If you wish to retain your attachments, make a copy of the 'attachments'
