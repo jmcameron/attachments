@@ -1010,7 +1010,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Serbian:** by Vlada Jerkovic (1.3.4)
 * **Slovak:** by Miroslav Bystriansky (1.3.4)
 * **Slovenian:** by Matej Badalič (2.2, 3.0)
-* **Spanish:** by Manuel María Pérez Ayala (2.2) and Carlos Alfaro (1.3.4)
+* **Spanish:** by Manuel María Pérez Ayala (2.2, 3.0) and Carlos Alfaro (1.3.4)
 * **Swedish:** by Linda Maltanski (2.0) and Mats Elfström (1.3.4)
 * **Turkish:** by Kaya Zeren (2.0)
 
