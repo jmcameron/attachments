@@ -1005,7 +1005,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Polish:** by Sebastian Konieczny (2.2, 3.0), Stefan Wajda (3.0), and Piotr Wójcik (1.3.4)
 * **Portuguese (Brazilian):** by Arnaldo Giacomitti and Cauan Cabral (1.3.4)
 * **Portuguese (Portugal):** by José Paulo Tavares (2.2, 3.0) and Bruno Moreira (1.3.4)
-* **Romanian:** by Alex Cojocaru (2.2)
+* **Romanian:** by Alex Cojocaru (2.2, 3.0)
 * **Russian:** by Sergey Litvintsev (2.2, 3.0) and евгений панчев (Yarik Sharoiko) (1.3.4)
 * **Serbian:** by Vlada Jerkovic (1.3.4)
 * **Slovak:** by Miroslav Bystriansky (1.3.4)
