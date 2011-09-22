@@ -5,14 +5,6 @@ This file describes how to migrate your attachments from your Joomla 1.5 site
 to a Joomla 1.6/1.7+ site.  Note this procedure applies to Joomla 1.6 and 1.7
 equally.
 
-.. warning::
-
-   I have discovered a bug in migration code in Attachments-3.0 that prevents
-   the migration process from complaining when an import error occurs (such as
-   not specifying the right filename).  Please email me to get an updated
-   version of Attachments (jmcameron@jmcameron.net).
-
-
 The process involves creating a Comma-Separated-File (CSV) migration file
 containing the data for the attachments on the Joomla 1.5 system.  The CSV
 migration file is used to recreate the Attachments data on the Joomla 1.6/1.7+
@@ -28,9 +20,15 @@ Necessary Conditions for Successful Attachments Migration
    might work with Joomla 1.6.6, I encourage you to upgrade to 1.7 before
    attempting migration of Attachments.
 
- * You should install a released version of Attachments 3.0 (or later) on your
-   Joomla 1.7 system before proceeding.  If you have one of the release
-   candidate versions, you should update to the latest version first.
+ * You should install a released version of Attachments 3.0.1 (or later) on your
+   Joomla 1.6.6/1.7 system before proceeding.
+   
+   .. warning::
+
+      There were issues with the original release 3.0 of Attachments for
+      1.6/1.7+ and previous RC and beta releases that affect migration.  These
+      issues were fixed in version 3.0.1 so make sure you use at least version
+      3.0.1.  Normally, you should use the latest version.
 
  * The article ID's and Titles must be identical in the Joomla 1.5 system and
    the Joomla 1.6/1.7+ system.  If there are differences, the migration file will
@@ -43,7 +41,6 @@ Necessary Conditions for Successful Attachments Migration
    Joomla 1.5 system must be the same as those on the Joomla 1.6/1.7+ system.  If
    there are differences, the migration file will need to be edited manually.
  
-
 Migrating the Attachments Data
 ------------------------------
 
@@ -178,3 +175,5 @@ That should complete the process.  If you have any difficulties with this
 process, please contact me:
 
 -Jonathan Cameron,   jmcameron@jmcameron.net
+
+..  LocalWords:  Joomla CSV username php csv usernames filenames
