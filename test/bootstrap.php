@@ -54,11 +54,12 @@ require_once JPATH_JOOMLA_TESTS.'/JoomlaDatabaseTestCase.php';
 // Include relative constants, JLoader and the jimport and jexit functions.
 require_once JPATH_BASE.'/includes/defines.php';
 require_once JPATH_LIBRARIES.'/import.php';
-require_once JPATH_LIBRARIES.'/joomla/utilities/string.php';
-require_once JPATH_LIBRARIES.'/joomla/registry/registry.php';
 
-// Include the Joomla session library.
-require_once JPATH_BASE.'/libraries/joomla/session/session.php';
+// Import some other things so the tests will run
+jimport('joomla.utilities.string');
+jimport('joomla.registry.registry');
+jimport('joomla.log.log');
+jimport('joomla.session.session');
 
 // Set error handling.
 JError::setErrorHandling(E_NOTICE, 'ignore');
