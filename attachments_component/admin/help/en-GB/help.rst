@@ -992,7 +992,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
 * **Croatian:** Tanja Dragisic (1.3.4)
 * **Czech:** by Tomas Udrzal (1.3.4)
-* **Dutch:** by Parvus (2.2)
+* **Dutch:** by Parvus (2.2, 3.0)
 * **Finnish:** by Tapani Lehtonen (2.2)
 * **French:** by Marc-André Ladouceur (2.2, 3.0), Yann Kerviel (3.0), and Pascal Adalian (1.3.4)
 * **German:** by Pierre Corell (3.0), Bernhard Alois Gassner (2.2), and Michael Scherer (1.3.4)
