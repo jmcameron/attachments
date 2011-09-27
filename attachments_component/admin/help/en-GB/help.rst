@@ -371,16 +371,27 @@ Advanced Options
   So it is good practice to put such global overrides first in the list and
   then override the item-by-item custom titles afterward.
 
-  Note: If you wish to change the titles used for attachments lists globally,
-  you may edit the translations file entry 'ATTACHMENTS TITLE' in the translation
-  files::
+  .. note::
+     If you wish to change the titles used for attachments lists globally, you
+     may copy the translations entry 'ATTACH_ATTACHMENTS_TITLE' from the
+     translation file::
 
-      administrator/language/qq-QQ/qq-QQ.plg_frontend_attachments.ini
+	 content/attachments/language/qq-QQ/qq-QQ.plg_content_attachments.ini
 
-  where qq-QQ refers to the language designator code such as en-GB for English.
-  (If you are not familiar with Joomla! translation files, find the line that
-  has 'ATTACHMENTS TITLE' on left side of the '=' sign.  Edit anything to the
-  right of the '=' sign.  Do not change anything to the left of the '=' sign.)
+     into the global override file::
+
+         language/overrides/en-GB.override.ini
+
+     where qq-QQ refers to the language designator code such as en-GB for
+     English.  (If you are not familiar with Joomla! translation files, find
+     the line that has 'ATTACH_ATTACHMENTS_TITLE' on left side of the '=' sign
+     and the translation on the right in double-quotes.  Edit anything to the
+     right of the '=' sign.  Do not change anything to the left of the '='
+     sign.).  The reason to put your translation modifications into the global
+     override file is because the first translation file listed above is part
+     of the Attachments extension and will be updated if the Attachments
+     extensions is upgraded (meaning that any changes you do to it will be
+     lost).
 
 * **Timeout for checking links:**
   Timeout for checking links (seconds).  Whenever a link is added as an
@@ -427,8 +438,8 @@ Security Options
   full URL, since the sub-directory is public.  The *secure* option prevents
   access to users without appropriate permissions even if they know the full
   URL, since this option prevents public access to the attachments
-  sub-directory.  In *secure* mode, the option "Who can see" can set to
-  'Anyone' and anyone will be able to see and download the attachments.
+  sub-directory.  In *secure* mode, any attachment set to the 'Public' access
+  level can be seen and downloaded by anyone.
 
   .. hint::
 
@@ -865,10 +876,8 @@ Warnings
      - The attachment is not published.  You can change this in Attachments
        manager page in the back end.
      - The parent article or content item is not published.
-     - The option 'Who can see attachments' is set to 'logged-in' and you are
+     - The attachment access level is set to 'Registered' and you are
        not logged in on the front end.
-     - Or the option 'Who can see attachments' is set to 'no one'. This can be
-       changed via the Parameter editor in the component manager.
      - The 'Content - Attachments' plugin is not enabled.  Use the plugin manager
        to enable it.
      - In the 'Content - Attachments' (via the plugin manager), the access
