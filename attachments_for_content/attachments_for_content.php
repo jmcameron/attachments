@@ -15,7 +15,9 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /** Load the attachments plugin class */
-JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework');
+if ( !JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework') ) {
+	return;
+	}
 
 /**
  * The class for the Attachments plugin for regular Joomla! content (articles, categories)
