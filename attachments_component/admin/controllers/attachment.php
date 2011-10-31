@@ -65,6 +65,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	public function add()
 	{
+		// Fail gracefully if the Attachments plugin framework plugin is disabled
+		if ( !JPluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+			echo '<h1>' . JText::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
+			return;
+			}
+
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));

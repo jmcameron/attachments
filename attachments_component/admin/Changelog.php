@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 Attachments 3.x Extension for Joomla 1.7+
 
 2011-??: Release 3.0.3
+   - 2011-10-31 More updates to make things fail more gracefully if the framework plugin is disabled.
    - 2011-10-30 Fixed issue that caused the backend to crash when users disabled the framework plugin.
    - 2011-10-30 Changes access/view level dialog to show all access levels to Super-User.
    - 2011-09-27 Fixed errors in the English version of the help file

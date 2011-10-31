@@ -33,6 +33,12 @@ class AttachmentsViewAttachments extends JView
 	 */
 	public function display($tpl = null)
 	{
+		// Fail gracefully if the Attachments plugin framework plugin is disabled
+		if ( !JPluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+			echo '<h1>' . JText::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
+			return;
+			}
+
 		$this->items = $this->get('Items');
 		$this->state = $this->get('State');
 		$this->pagination = $this->get('Pagination');

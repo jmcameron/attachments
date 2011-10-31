@@ -16,6 +16,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /** Load the attachments plugin class */
 if ( !JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework') ) {
+	// Fail gracefully if the Attachments plugin framework plugin is disabled
 	return;
 	}
 
