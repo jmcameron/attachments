@@ -1005,7 +1005,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Finnish:** by Tapani Lehtonen (2.2)
 * **French:** by Marc-André Ladouceur (2.2, 3.0), Yann Kerviel (3.0), and Pascal Adalian (1.3.4)
 * **German:** by Pierre Corell (3.0), Bernhard Alois Gassner (2.2), and Michael Scherer (1.3.4)
-* **Greek:** by Harry Nakos (1.3.4)
+* **Greek:** by Antonis Mylonopoulos (3.0), Harry Nakos (1.3.4, 2.0)
 * **Hungarian:** Formal and informal translations by Szabolcs Gáspár (1.3.4)
 * **Indonesian:** by Moh. Arif (3.0)
 * **Italian:** by Piero Mattirolo (2.2, 3.0) and Lemminkainen and Alessandro Bianchi (1.3.4)
