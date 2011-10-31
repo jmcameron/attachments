@@ -60,15 +60,19 @@ class JFormFieldAccessLevels extends JFormField
 	public static function getAccessLevels($for_id, $fieldname, $level_value=null)
 	{
 		$user	= JFactory::getUser();
-		$user_levels = array_unique($user->authorisedLevels());
+		$user_access_levels = array_unique($user->authorisedLevels());
 
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.*');
 		$query->from('#__viewlevels AS a');
-		$query->where('a.id in ('.implode(',', $user_levels).')');
+		if ( !$user->authorise('core.admin') ) {
+			// Users that are not super-users can ONLY see the the view levels that they are authorized for
+			$query->where('a.id in ('.implode(',', $user_access_levels).')');
+			}
 		$query->order('a.ordering ASC');
+		$query->order($query->qn('title') . ' ASC');
 
 		// Get the levels
 		$db->setQuery($query);
@@ -86,15 +90,15 @@ class JFormFieldAccessLevels extends JFormField
 			}
 
 		// Make sure the $level_value is in the user's authorised levels
-		if ( !in_array($level_value, $user_levels) ) {
+		if ( !in_array($level_value, $user_access_levels) ) {
 			// If not, set $level_value to the lowest legal value
 			$registered = 2;
-			if ( in_array($registered, $user_levels) ) {
+			if ( in_array($registered, $user_access_levels) ) {
 				$level_value = $registered;
 				}
 			else {
-				$sorted_user_levels = sort($user_levels, SORT_NUMERIC);
-				$level_value = $sorted_user_levels[0];
+				$sorted_access_levels = sort($user_access_levels, SORT_NUMERIC);
+				$level_value = $sorted_access_levels[0];
 				}
 			}
 
