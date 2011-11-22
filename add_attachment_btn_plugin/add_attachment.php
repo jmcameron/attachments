@@ -47,6 +47,8 @@ class plgButtonAdd_attachment extends JPlugin
 	 */
 	public function onDisplay($name, $asset, $author)
 	{
+		$app = JFactory::getApplication();
+
 		// Avoid displaying the button for anything except for registered parents
 		$parent_type = JRequest::getCmd('option');
 		if (!$parent_type) {
@@ -61,18 +63,6 @@ class plgButtonAdd_attachment extends JPlugin
 			$parent_entity = 'category';
 			$editor = 'category';
 			}
-
-		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
-		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			// Exit if there is no Attachments plugin to handle this parent_type
-			return new JObject();
-			}
-
-		// Get the parent handler
-		$parent = $apm->getAttachmentsPlugin($parent_type);
-		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the parent ID (id or first of cid array)
 		//	   NOTE: $parent_id=0 means no id (usually means creating a new entity)
@@ -94,13 +84,33 @@ class plgButtonAdd_attachment extends JPlugin
 				}
 			}
 
+		// Check for the special case where we are creating an article from a category list
+		$item_id = JRequest::getInt('Itemid');
+		$menu = $app->getMenu();
+		$menu_item = $menu->getItem($item_id);
+		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
+			$parent_entity = 'category';
+			$parent_id = NULL;
+			}
+
+		// Get the article/parent handler
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+			// Exit if there is no Attachments plugin to handle this parent_type
+			return new JObject();
+			}
+
+		// Get the parent handler
+		$parent = $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+
 		// Make sure we have permissions to add attachments to this article or category
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
 			return;
 			}
 
 		// Figure out where we are and construct the right link and set
-		$app = JFactory::getApplication();
 		$uri = JFactory::getURI();
 		$base_url = $uri->root(true);
 		if ( $app->isAdmin() ) {

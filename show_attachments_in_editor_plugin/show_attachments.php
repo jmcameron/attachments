@@ -93,7 +93,6 @@ class plgSystemShow_attachments extends JPlugin
 			// Exit if the framework does not exist (eg, during uninstallaton)
 			return false;
 			}
-
 		if ( !function_exists('getAttachmentsPluginManager') ) {
 			// Exit if the function does not exist (eg, during uninstallaton)
 			return false;
@@ -103,9 +102,6 @@ class plgSystemShow_attachments extends JPlugin
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return false;
 			}
-
-		$parent = $apm->getAttachmentsPlugin($parent_type);
-		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Get the article ID (strip off any SEF name appended with a colon)
 		$parent_id = JRequest::getVar('id');
@@ -137,6 +133,19 @@ class plgSystemShow_attachments extends JPlugin
 		$task = JRequest::getCmd('task');
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
+
+		// Check for the special case where we are creating an article from a category list
+		$item_id = JRequest::getInt('Itemid');
+		$application = JFactory::getApplication();
+		$menu = $application->getMenu();
+		$menu_item = $menu->getItem($item_id);
+		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
+			$parent_entity = 'category';
+			$parent_id = NULL;
+			}
+
+		$parent = $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
 		// Front end:
 		//	  - Edit existing article:	com_content,view=form,layout=edit,a_id=#
