@@ -89,7 +89,7 @@ class plgButtonAdd_attachment extends JPlugin
 		$menu = $app->getMenu();
 		$menu_item = $menu->getItem($item_id);
 		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
-			$parent_entity = 'category';
+			$parent_entity = 'article';
 			$parent_id = NULL;
 			}
 

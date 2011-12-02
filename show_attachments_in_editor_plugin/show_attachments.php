@@ -140,7 +140,7 @@ class plgSystemShow_attachments extends JPlugin
 		$menu = $application->getMenu();
 		$menu_item = $menu->getItem($item_id);
 		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
-			$parent_entity = 'category';
+			$parent_entity = 'article';
 			$parent_id = NULL;
 			}
 
