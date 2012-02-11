@@ -251,7 +251,7 @@ class AttachmentsImport
 		$field = Array();
 		$header_line = fgetcsv($file);
 		for ($i=0; $i < count($header_line); $i++) {
-			$field_name = strtolower($header_line[$i]);
+			$field_name = trim(strtolower($header_line[$i]));
 			if ( in_array($field_name, AttachmentsImport::$field_names) ) {
 				$field[$field_name] = $i;
 				}
