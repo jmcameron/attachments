@@ -222,6 +222,15 @@ class AttachmentsModelAttachments extends JModelList
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
 
+		// Set up the list limits (not sure why the base class version of this does not work)
+		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->getCfg('list_limit'));
+		$limit = $value;
+		$this->setState('list.limit', $limit);
+
+		$value = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0);
+		$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
+		$this->setState('list.start', $limitstart);
+
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -235,12 +244,25 @@ class AttachmentsModelAttachments extends JModelList
 		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
 		$this->setState('filter.state', $state);
 
+		// Check if the ordering field is in the white list, otherwise use the incoming value.
+		$value = $app->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering);
+		if (!in_array($value, $this->filter_fields)) {
+			$value = $ordering;
+			$app->setUserState($this->context.'.ordercol', $value);
+			}
+		$this->setState('list.ordering', $value);
+
+		// Check if the ordering direction is valid, otherwise use the incoming value.
+		$value = $app->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction);
+		if (!in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
+			$value = $direction;
+			$app->setUserState($this->context.'.orderdirn', $value);
+			}
+		$this->setState('list.direction', $value);
+
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_attachments');
 		$this->setState('params', $params);
-
-		// List state information.
-		parent::populateState('', 'asc');
 	}
 
 
