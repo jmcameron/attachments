@@ -112,6 +112,9 @@ fixperms:
 watchfiles:
 	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch &
 
+watchfiles25:
+	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch25 &
+
 # windmill:
 # 	$(eval APASS := `kdialog --password "Admin password:"`)
 # 	@echo "START: `date`"
