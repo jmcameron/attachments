@@ -53,6 +53,7 @@ class Com_AttachmentsInstallerScript {
 		$app->enqueueMessage('<br/>', 'message');
 	}
 
+
 	/**
 	 * Attachments component uninstall function
 	 *
@@ -194,8 +195,8 @@ class Com_AttachmentsInstallerScript {
 											'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
 											), 'message');
 		$app->enqueueMessage('<br/>', 'message');
-
 	}
+
 
 	/**
 	 * Install the default ACL/permissions rules for the new attachments privileges in the root rule
