@@ -124,9 +124,21 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
 
       If there are problems with the article/parent ID's, tiles, or user IDs
       or usernames, the command will abort and alert you to the nature of the
-      problem.  You can edit the migration file until your get it to complete
-      successfully.  Until this works without error, you should definitely use
-      the '&dry_run=true' option on the command so nothing is changed.
+      problem.  You can then edit the migration file manually until your get
+      it to complete successfully.
+
+      .. warning:: 
+         When you edit the migration CSV file, make very sure you use an
+         editor that does not insert a Byte Order Marker (BOM).  On windows,
+         use a text editor such as notepad or pspad.  For suggestions on how
+         to prevent or remove the BOM for other editors, try searching for::
+
+           eliminate byte order marker emacs
+
+         where 'emacs' should be replaced by the name of your text editor.
+
+      Until processing this file works without error, you should definitely
+      use the '&dry_run=true' option on the command so nothing is changed.
 
       Once you get the message::
 
