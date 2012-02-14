@@ -1022,6 +1022,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Spanish:** by Manuel María Pérez Ayala (2.2, 3.0) and Carlos Alfaro (1.3.4)
 * **Swedish:** by Linda Maltanski (2.0) and Mats Elfström (1.3.4)
 * **Turkish:** by Kaya Zeren (2.0)
+* **Ukrainian:** by Sergey Litvintsev (3.0)
 
 Many thanks to these translators!  If you would like to help translate
 the extension to any other language, please contact the author (see the
