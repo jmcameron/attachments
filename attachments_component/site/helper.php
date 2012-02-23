@@ -770,7 +770,7 @@ class AttachmentsHelper
 			// If updating, we may replace the existing file but may not overwrite any other existing file
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__attachments');
-			$query->where("filename_sys = '" . $filename_sys . "' AND id != " . (int)$attachment->id);
+			$query->where('filename_sys=' . $db->quote($filename_sys) . ' AND id != ' . (int)$attachment->id);
 			$db->setQuery($query, 0, 1);
 			if ( $db->loadResult() > 0 ) {
 				$duplicate_filename = true;
@@ -1737,7 +1737,7 @@ class AttachmentsHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('count(*)')->from('#__attachments');
-		$query->where('parent_id='.(int)$parent_id." AND parent_type='$parent_type'");
+		$query->where('parent_id='.(int)$parent_id.' AND parent_type=' . $db->quote($parent_type));
 		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query);
 		$total = $db->loadResult();

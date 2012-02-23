@@ -126,7 +126,7 @@ class AttachmentsUpdate
 			if ( $updated ) {
 				$query = $db->getQuery(true);
 				$query->update('#__attachments');
-				$query->set("modified='{$mod_date}', created='{$created}'");
+				$query->set('modified=' . $db->quote($mod_date) . ', created=' . $db->quote($created));
 				$query->where('id = ' . (int)$attachment->id);
 				$db->setQuery($query);
 				if (!$db->query()) {
@@ -272,7 +272,7 @@ class AttachmentsUpdate
 		// Get all the attachment IDs
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__attachments')->where("uri_type='file'");
+		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
@@ -427,7 +427,7 @@ class AttachmentsUpdate
 		// Get all the attachment IDs
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__attachments')->where("uri_type='file'");
+		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
@@ -519,7 +519,7 @@ class AttachmentsUpdate
 		// Get all the attachment IDs
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__attachments')->where("uri_type='file'");
+		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
@@ -573,7 +573,7 @@ class AttachmentsUpdate
 		// Get all the attachment IDs
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__attachments')->where("uri_type='file'");
+		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
@@ -628,7 +628,7 @@ class AttachmentsUpdate
 		// Get all the attachment IDs
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__attachments')->where("uri_type='url'");
+		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('url'));
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {

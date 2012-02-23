@@ -118,11 +118,11 @@ class AttachmentsModelAttachments extends JModelList
 			else {
 				$db = $this->getDBO();
 				$where[] = '(LOWER( a.filename ) LIKE ' .
-					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
 					' OR LOWER( a.description ) LIKE ' .
-					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
 					' OR LOWER( a.display_name ) LIKE ' .
-					$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false ) . ')';
+					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) . ')';
 				}
 			}
 

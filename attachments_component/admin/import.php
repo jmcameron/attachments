@@ -156,7 +156,7 @@ class AttachmentsImport
 			$creator_id = (int)$adata[$field['created_by']];
 			$attachment_creator_username = $adata[$field['created_by_username']];
 			$query = $db->getQuery(true);
-			$query->select('username')->from('#__users')->where('id = ' . $creator_id);
+			$query->select('username')->from('#__users')->where('id = ' . (int)$creator_id);
 			$db->setQuery($query, 0, 1);
 			$creator_username = $db->loadResult();
 			if ( empty($creator_username) || $db->getErrorNum() ) {
@@ -172,7 +172,7 @@ class AttachmentsImport
 			$modifier_id = (int)$adata[$field['modified_by']];
 			$attachment_modifier_username = $adata[$field['modified_by_username']];
 			$query = $db->getQuery(true);
-			$query->select('username')->from('#__users')->where('id = ' . $modifier_id);
+			$query->select('username')->from('#__users')->where('id = ' . (int)$modifier_id);
 			$db->setQuery($query, 0, 1);
 			$modifier_username = $db->loadResult();
 			if ( empty($modifier_username) || $db->getErrorNum() ) {

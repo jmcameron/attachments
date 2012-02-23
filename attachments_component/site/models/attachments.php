@@ -386,7 +386,7 @@ class AttachmentsModelAttachments extends JModel
 				}
 			}
 
-		$query->where("a.parent_type='$parent_type' AND a.parent_entity='$parent_entity'");
+		$query->where('a.parent_type=' . $db->quote($parent_type) . ' AND a.parent_entity=' . $db->quote($parent_entity));
 		$query->where('a.access IN ('.$user_levels.')');
 		$query->order($this->_sort_order);
 

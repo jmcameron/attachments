@@ -339,9 +339,9 @@ class AttachmentsPlugin extends JPlugin
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
-		$query->from('#__$entity_table');
+		$query->from("#__$entity_table");
 		if ( $filter ) {
-			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
+			$filter = $db->quote( '%'.$db->getEscaped( $filter, true ).'%', false );
 			$query->where($entity_title_field . ' LIKE ' . $filter);
 			}
 		if ( $order ) {

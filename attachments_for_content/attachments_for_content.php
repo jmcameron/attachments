@@ -156,10 +156,10 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Filter
 		if ( $filter ) {
-			$filter = $db->Quote( '%'.$db->getEscaped( $filter, true ).'%', false );
+			$filter = $db->quote( '%'.$db->getEscaped( $filter, true ).'%', false );
 			$query->where('title LIKE ' . $filter);
 			}
-		$query->where("extension='com_content'");
+		$query->where('extension=' . $db->quote('com_content'));
 
 		// NOTE: Ignore any requested order since only ordering by lft makes the hierarchy work
 		$query->order('lft');
@@ -487,8 +487,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				$nullDate = $db->getNullDate();
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND ".
-					'(c1.publish_up = '.$db->Quote($nullDate).' OR c1.publish_up <= '.$db->Quote($now).') AND '.
-					'(c1.publish_down = '.$db->Quote($nullDate).' OR c1.publish_down >= '.$db->Quote($now).')))';
+					'(c1.publish_up = '.$db->quote($nullDate).' OR c1.publish_up <= '.$db->quote($now).') AND '.
+					'(c1.publish_down = '.$db->quote($nullDate).' OR c1.publish_down >= '.$db->quote($now).')))';
 				}
 			if ( ($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY') ) {
 				$where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
@@ -661,7 +661,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$description = $parent->text;
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
-			$query->where('description=' . $db->Quote($description) . ' AND id = ' . (int)$parent_id);
+			$query->where('description=' . $db->quote($description) . ' AND id = ' . (int)$parent_id);
 			$db->setQuery($query, 0, 1);
 			if ( (int)$parent_id != (int)$db->loadResult() ) {
 				return true;

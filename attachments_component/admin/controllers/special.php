@@ -78,7 +78,7 @@ class AttachmentsControllerSpecial extends JController
 		$query->select('att.id,parent_id,parent_type,parent_entity,art.catid');
 		$query->from('#__attachments as att');
 		$query->leftJoin('#__content as art ON att.parent_id = art.id');
-		$query->where("att.parent_entity='article'");
+		$query->where('att.parent_entity=' . $db->quote('article'));
 		$query->order('art.id');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
@@ -92,7 +92,7 @@ class AttachmentsControllerSpecial extends JController
 		$query->select('att.id,att.parent_id,parent_type,parent_entity');
 		$query->from('#__attachments as att');
 		$query->leftJoin('#__categories as c ON att.parent_id = c.id');
-		$query->where("att.parent_entity='category'");
+		$query->where('att.parent_entity=' . $db->quote('category'));
 		$query->order('c.id');
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
