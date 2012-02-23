@@ -84,7 +84,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option .
 										 '&view='.$this->view_list.$this->getRedirectToListAppend(), false));
 			return false;
-		}
+			}
 
 		$parent_entity = 'default';
 
@@ -206,8 +206,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->parent_id	 = $parent_id;
 		$view->parent_type	 = $parent_type;
 		$view->parent_entity = $parent_entity;
-		$view->parent_entity_name =  $parent_entity_name;
-		$view->parent_title  = $parent_title;
+		$view->parent_entity_name =	 $parent_entity_name;
+		$view->parent_title	 = $parent_title;
 		$view->new_parent	 = $new_parent;
 		$view->entity_info	 = $entity_info;
 		$view->option		 = $this->option;
@@ -301,8 +301,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Set up the 'select parent' button
 		$view->selpar_label =  JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
 		$view->selpar_btn_text =  '&nbsp;' . JText::sprintf('ATTACH_SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
-		$view->selpar_btn_tooltip =  JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
-		$view->selpar_btn_url =  $parent->getSelectEntityURL($parent_entity);
+		$view->selpar_btn_tooltip =	 JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
+		$view->selpar_btn_url =	 $parent->getSelectEntityURL($parent_entity);
 
 		$view->display();
 	}
@@ -363,7 +363,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 40)';
 			JError::raiseError(500, $errmsg);
 			}
-
 
 		// Set up the new record
 		$model		= $this->getModel();
@@ -518,7 +517,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
-					$errmsg = $msg;
+				$errmsg = $msg;
 				if ( DS == "\\" ) {
 					// Fix filename on Windows system so alert can display it
 					$errmsg = str_replace(DS, "\\\\", $errmsg);
@@ -555,7 +554,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 * Edit - display the form for the user to edit an attachment
 	 *
 	 * @param	string	$key	 The name of the primary key of the URL variable (IGNORED)
-	 * @param	string	$urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (IGNORED)
+	 * @param	string	$urlVar	 The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (IGNORED)
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -777,8 +776,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( $change_parent ) {
 			$view->selpar_label =		$selpar_label;
 			$view->selpar_btn_text =		$selpar_btn_text;
-			$view->selpar_btn_tooltip = 	$selpar_btn_tooltip;
-			$view->selpar_btn_url = 		$selpar_btn_url;
+			$view->selpar_btn_tooltip =		$selpar_btn_tooltip;
+			$view->selpar_btn_url =			$selpar_btn_url;
 			$view->selpar_parent_title =  $selpar_parent_title;
 			$view->selpar_parent_id =	$selpar_parent_id;
 			}
@@ -893,7 +892,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 					//		 parent_id/article_id updated).	 If the attachment is
 					//		 added and creating the article is canceled, the
 					//		 attachment exists but is orhpaned since it does not
-					//		 have a parent.  It's article_id is null, but it is
+					//		 have a parent.	 It's article_id is null, but it is
 					//		 saved in directory as if its article_id is 0:
 					//		 article/0/file.txt.  Therefore, if the parent has
 					//		 changed, we pretend the old_parent_id=0 for file
@@ -1027,20 +1026,20 @@ class AttachmentsControllerAttachment extends JControllerForm
 				}
 			}
 
-		switch ( $this->getTask() )  {
+		switch ( $this->getTask() )	 {
 
-			case 'apply':
-				if ( !$msg ) {
-					$msg = JText::_('ATTACH_CHANGES_TO_ATTACHMENT_SAVED');
-					}
-				$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
-				break;
+		case 'apply':
+			if ( !$msg ) {
+				$msg = JText::_('ATTACH_CHANGES_TO_ATTACHMENT_SAVED');
+				}
+			$link = 'index.php?option=com_attachments&task=attachment.edit&cid[]=' . (int)$attachment->id;
+			break;
 
-			case 'save':
-			default:
-				if ( !$msg ) {
-					$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
-					}
+		case 'save':
+		default:
+			if ( !$msg ) {
+				$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
+				}
 			$link = 'index.php?option=com_attachments';
 			break;
 			}
@@ -1052,7 +1051,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
-					$errmsg = $msg;
+				$errmsg = $msg;
 				if ( DS == "\\" ) {
 					// Fix filename on Windows system so alert can display it
 					$errmsg = str_replace(DS, "\\\\", $errmsg);

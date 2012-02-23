@@ -85,25 +85,25 @@ class ImportAttachments extends ImportFromCSV
 		$num_records = 0;
 		while ( $self->readNextRecord() ) {
 
-// ??? 			// Create the raw record (???)
-// ??? 			$record = object();
+// ???			// Create the raw record (???)
+// ???			$record = object();
 // ??? 
-// ??? 			// Copy in the fields from the CSV data
-// ??? 			$this->bind($record);
+// ???			// Copy in the fields from the CSV data
+// ???			$this->bind($record);
 // ??? 
-// ??? 			// Verify the category
-// ??? 			$cat_ok = $this->_verifyCategory((int)$record->catid,
-// ??? 											 $record->category_title);
-// ??? 			if ( $cat_ok !== true ) {
-// ??? 				return JError::raiseWarning(500, $cat_ok);
-// ??? 				}
+// ???			// Verify the category
+// ???			$cat_ok = $this->_verifyCategory((int)$record->catid,
+// ???											 $record->category_title);
+// ???			if ( $cat_ok !== true ) {
+// ???				return JError::raiseWarning(500, $cat_ok);
+// ???				}
 // ??? 
-// ??? 			// Verify the creator
-// ??? 			$creator_ok = $this->_verifyUser((int)$record->created_by,
-// ??? 											 $record->created_by_name);
-// ??? 			if ( $creator_ok !== true ) {
-// ??? 				return JError::raiseWarning(500, $creator_ok);
-// ??? 				}
+// ???			// Verify the creator
+// ???			$creator_ok = $this->_verifyUser((int)$record->created_by,
+// ???											 $record->created_by_name);
+// ???			if ( $creator_ok !== true ) {
+// ???				return JError::raiseWarning(500, $creator_ok);
+// ???				}
 
 			// Save the record
 			if ( !$dry_run ) {

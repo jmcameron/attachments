@@ -18,158 +18,158 @@ defined('_JEXEC') or die('Restricted access');
  * A class for importing table records from a CSV file
  *
  * NOTES:
- *   - The Comma Separated Value (CSV) file must contain the data
- *     one line per record
- *   - The first line of the CSV file must contain the field names
- *     (the case of the field names is ignored).
+ *	 - The Comma Separated Value (CSV) file must contain the data
+ *	   one line per record
+ *	 - The first line of the CSV file must contain the field names
+ *	   (the case of the field names is ignored).
  *
  * @package Attachments
  */
 
 class ImportFromCSV
 {
-    /**
-     * The CSV filename
-     */
-    protected $_filename = null;
+	/**
+	 * The CSV filename
+	 */
+	protected $_filename = null;
 
-    /**
-     * The CSV file object
-     */
-    protected $_file = null;
+	/**
+	 * The CSV file object
+	 */
+	protected $_file = null;
 
-    /**
-     * The current line number
-     */
-    protected $_line_number = null;
+	/**
+	 * The current line number
+	 */
+	protected $_line_number = null;
 
-    /**
-     * The data for the current CSV record/line
-     */
-    protected $_data = null;
+	/**
+	 * The data for the current CSV record/line
+	 */
+	protected $_data = null;
 
-    /**
-     * The required field names
-     *
-     * @var array
-     */
-    protected $_fields = null;
+	/**
+	 * The required field names
+	 *
+	 * @var array
+	 */
+	protected $_fields = null;
 
-    /**
-     * Optional field names
-     *
-     * @var array
-     */
-    protected $_optional_fields = null;
+	/**
+	 * Optional field names
+	 *
+	 * @var array
+	 */
+	protected $_optional_fields = null;
 
-    /**
-     * Field defaults (associative array)
-     *
-     * The value to be used for the field if it is empty or not specified in
-     * the CSV file (typically for optional fields).
-     *
-     * Defaults can be defined for fields that are not in
-     * in the required or optional fields but are in the Table.
-     *
-     * eg,   Array('hits' => 0)
-     *
-     * @var array
-     */
-    protected $_field_default = null;
+	/**
+	 * Field defaults (associative array)
+	 *
+	 * The value to be used for the field if it is empty or not specified in
+	 * the CSV file (typically for optional fields).
+	 *
+	 * Defaults can be defined for fields that are not in
+	 * in the required or optional fields but are in the Table.
+	 *
+	 * eg,	 Array('hits' => 0)
+	 *
+	 * @var array
+	 */
+	protected $_field_default = null;
 
 
-    /**
-     * Extra fields
-     *
-     * These fields will be used by the derived class to construct
-     * values for the required or optional fields.  The extra field
-     * names may not duplicate any of the required or optional field
-     * names or duplicate any field name in the actual table.
+	/**
+	 * Extra fields
+	 *
+	 * These fields will be used by the derived class to construct
+	 * values for the required or optional fields.	The extra field
+	 * names may not duplicate any of the required or optional field
+	 * names or duplicate any field name in the actual table.
 	 *
 	 * 'Extra' fields must be present in every record in the CSV file
-     *
-     * @var array
-     */
-    protected $_extra_fields = null;
+	 *
+	 * @var array
+	 */
+	protected $_extra_fields = null;
 
 
-    /**
-     * The field map (between the field name and the column number)
-     *
-     * eg,   Array('fname1' => 0, 'fname2' => 1)
-     *
-     * @var array
-     */
-    protected $_field_map = null;
+	/**
+	 * The field map (between the field name and the column number)
+	 *
+	 * eg,	 Array('fname1' => 0, 'fname2' => 1)
+	 *
+	 * @var array
+	 */
+	protected $_field_map = null;
 
 
-    /**
-     * Constructor
-     *
-     * @param  array $required_fields the list of required field names in the CSV file
-     * @param  array $optional_fields the list of optional field names in the CSV file
-     * @param  array $field_default an associative array of the default values for each field (if empty)
-     * @param  array $extra_fields a list of extra user-defined field names in the CSV file
-     */
-    public function __construct($required_fields,
-                                $optional_fields = Array(),
-                                $field_default = Array(),
-                                $extra_fields = Array())
-    {
-        $this->_filename = null;
-        $this->_file = null;
+	/**
+	 * Constructor
+	 *
+	 * @param  array $required_fields the list of required field names in the CSV file
+	 * @param  array $optional_fields the list of optional field names in the CSV file
+	 * @param  array $field_default an associative array of the default values for each field (if empty)
+	 * @param  array $extra_fields a list of extra user-defined field names in the CSV file
+	 */
+	public function __construct($required_fields,
+								$optional_fields = Array(),
+								$field_default = Array(),
+								$extra_fields = Array())
+	{
+		$this->_filename = null;
+		$this->_file = null;
 		$this->_line_number = null;
-        $this->_data = null;
-        $this->_fields = $fields;
-        $this->_optional_fields = $optional_fields;
-        $this->_field_default = $field_default;
-        $this->_extra_fields = $extra_fields;
-        $this->_field_map = Array();
-    }
+		$this->_data = null;
+		$this->_fields = $fields;
+		$this->_optional_fields = $optional_fields;
+		$this->_field_default = $field_default;
+		$this->_extra_fields = $extra_fields;
+		$this->_field_map = Array();
+	}
 
 
-    /**
-     * Open the CSV file
-     *
-     * @param string $csv_filename The filename/path of the CSV input file
-     *
-     * @return true if successful or error message on failure
-     */
-    public function open($csv_filename)
-    {
-        $this->_filename = null;
-        $this->_file = null;
+	/**
+	 * Open the CSV file
+	 *
+	 * @param string $csv_filename The filename/path of the CSV input file
+	 *
+	 * @return true if successful or error message on failure
+	 */
+	public function open($csv_filename)
+	{
+		$this->_filename = null;
+		$this->_file = null;
 		$this->_line_number = 0;
 
-        // Open the CSV file
-        $this->_file = @fopen($csv_filename, 'r');
-        if ( ! $this->_file ) {
-            return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERRN)';
-            }
+		// Open the CSV file
+		$this->_file = @fopen($csv_filename, 'r');
+		if ( ! $this->_file ) {
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERRN)';
+			}
 
-        // Parse the first row to process field names and indeces
-        $result = $this->_parseFieldNames($this->_file);
-        if ( $result !== true ) {
-            fclose($this->_file);
-            return $result;
-            }
+		// Parse the first row to process field names and indeces
+		$result = $this->_parseFieldNames($this->_file);
+		if ( $result !== true ) {
+			fclose($this->_file);
+			return $result;
+			}
 
-        return true;
-    }
+		return true;
+	}
 
 
-    /**
-     * Close the CSV file
-     */
-    public function close()
-    {
-        if ( $this->_file ) {
-            fclose($this->_file);
-            }
-        $this->_file = null;
-        $this->_filename = null;
+	/**
+	 * Close the CSV file
+	 */
+	public function close()
+	{
+		if ( $this->_file ) {
+			fclose($this->_file);
+			}
+		$this->_file = null;
+		$this->_filename = null;
 		$this->_line_number = 0;
-    }
+	}
 
 
 	/**
@@ -179,8 +179,8 @@ class ImportFromCSV
 	 *
 	 * @return true of read is okay, false if at the end of the file, or error message
 	 */
-    public function readNextRecord()
-    {
+	public function readNextRecord()
+	{
 		if ( feof($this->_file) ) {
 			// Extra check just to be safe
 			return false;
@@ -190,7 +190,7 @@ class ImportFromCSV
 		while ( !feof($this->_file) ) {
 
 			// Read the line
-            $this->_data = fgetcsv($this->_file);
+			$this->_data = fgetcsv($this->_file);
 			$this->_line_number += 1;
 
 			// Do we have data?
@@ -217,33 +217,33 @@ class ImportFromCSV
 			}
 
 		return true;
-    }
+	}
 
 
-    /**
-     * Get the data for the specified field
+	/**
+	 * Get the data for the specified field
 	 *
 	 * @return the field data if available (otherwise null)
-     */
-    protected function _getData($fieldName)
-    {
+	 */
+	protected function _getData($fieldName)
+	{
 		if (isset( $this->_data[$fieldName] )) {
 			return $this->_data[$fieldName];
 			}
 		else {
 			return null;
 			}
-    }
+	}
 
 
-    /**
-     * Bind the data from the next line of the CSV file with the provided object
-     *
-     * @param object $record the record object that will be updated
-     */
-    public function bind(&$record)
-    {
-        // Bind the required fields
+	/**
+	 * Bind the data from the next line of the CSV file with the provided object
+	 *
+	 * @param object $record the record object that will be updated
+	 */
+	public function bind(&$record)
+	{
+		// Bind the required fields
 		foreach ($this->_fields as $field) {
 			$fdata = $this->_getData($field);
 			if ( $fdata ) {
@@ -251,7 +251,7 @@ class ImportFromCSV
 				}
 			}
 
-        // Bind the optional fields, if present
+		// Bind the optional fields, if present
 		foreach ($this->_optional_fields as $field) {
 			$fdata = $this->_getData($field);
 			if ( $fdata ) {
@@ -259,60 +259,60 @@ class ImportFromCSV
 				}
 			}
 
-        // Bind any defaults (not already set in required or optional fields)
+		// Bind any defaults (not already set in required or optional fields)
 		foreach ($this->_field_defaults as $field => $val) {
 			if ( (isset($record->$field) &&  ( $record->$field == '' )) ||
 				 !isset($record->$field) ) {
 					$record->$field = $val;
 					}
 				}
-    }
+	}
 
 
-    /**
-     * Parse the field names from the first(next) line of the CSV file
-     *
-     * @param file $file the handle for the already opened file object
-     *
-     * @return various true if successful and a translated error message if not
-     */
-    protected function _parseFieldNames($file)
-    {
-        $bad_fields = Array();
+	/**
+	 * Parse the field names from the first(next) line of the CSV file
+	 *
+	 * @param file $file the handle for the already opened file object
+	 *
+	 * @return various true if successful and a translated error message if not
+	 */
+	protected function _parseFieldNames($file)
+	{
+		$bad_fields = Array();
 
-        // Load the field names from the file
-        $header_line = fgetcsv($file);
+		// Load the field names from the file
+		$header_line = fgetcsv($file);
 		$this->_line_number += 1;
-        for ($i=0; $i < count($header_line); $i++) {
-            $field_name = strtolower(trim($header_line[$i]));
-            if ( in_array($field_name, $this->_fields) ||
-                 in_array($field_name, $this->_optional_fields) ||
-                 in_array($field_name, $this->_extra_fields)  ) {
-                $field[$field_name] = $i;
-                }
-            else {
-                $bad_fields[] = $field_name;
-                }
-            }
-        if ( count($bad_fields) > 0 ) {
-            // Warn if there were unrecognized field names
-            return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERRN)';
-            }
+		for ($i=0; $i < count($header_line); $i++) {
+			$field_name = strtolower(trim($header_line[$i]));
+			if ( in_array($field_name, $this->_fields) ||
+				 in_array($field_name, $this->_optional_fields) ||
+				 in_array($field_name, $this->_extra_fields)  ) {
+				$field[$field_name] = $i;
+				}
+			else {
+				$bad_fields[] = $field_name;
+				}
+			}
+		if ( count($bad_fields) > 0 ) {
+			// Warn if there were unrecognized field names
+			return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERRN)';
+			}
 
-        // Make sure all required field names were found
-        $missing = Array();
-        foreach ($this->_fields as $fname) {
-            if (!array_key_exists($fname, $this->_field_map)) {
-                $missing[] = $fname;
-                }
-            }
-        if ( count($missing) > 0 ) {
-            // Warn if there were missing required field names
+		// Make sure all required field names were found
+		$missing = Array();
+		foreach ($this->_fields as $fname) {
+			if (!array_key_exists($fname, $this->_field_map)) {
+				$missing[] = $fname;
+				}
+			}
+		if ( count($missing) > 0 ) {
+			// Warn if there were missing required field names
 			return JError::raiseWarning(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERRN)');
-            }
+			}
 
-        return true;
-    }
+		return true;
+	}
 
 
 	/**
