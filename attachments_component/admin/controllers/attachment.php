@@ -573,7 +573,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$change = JRequest::getWord('change', '');
 		$change_parent = ($change == 'parent');
 		$update_file = JRequest::getWord('change') == 'file';
-		$attachment_id = $cid[0];
+		$attachment_id = (int)$cid[0];
 
 		// Get the attachment data
 		$attachment = $model->getItem($attachment_id);
