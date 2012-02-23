@@ -367,7 +367,7 @@ class AttachmentsHelper
 
 			// Add the URLs
 			$view->change_file_url = JRoute::_($change_file_url);
-			$view->change_url_url = 	   JRoute::_($change_url_url);
+			$view->change_url_url =		   JRoute::_($change_url_url);
 			$view->normal_update_url = JRoute::_($normal_update_url);
 			}
 	}
@@ -813,7 +813,7 @@ class AttachmentsHelper
 			$view->user_field_3 =	 $attachment->user_field_3;
 			$view->from =			 $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
-			$view->params = 			 $params;
+			$view->params =				 $params;
 
 			// Set up publishing info
 			$view->may_publish = $may_publish;
@@ -1153,14 +1153,13 @@ class AttachmentsHelper
 				if ( $verify ) {
 					$u->error = true;
 					$u->error_code = 'url_check_exception';
-					$u->err_msg = $e->getMessage();
-					return false;
+					$u->error_msg = $e->getMessage();
 					}
 				}
 
 			if ( $u->error ) {
 				$error_msg = JText::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
-				$error_msg .= ' <br />(' . $u->err_msg . ' <br />' . $errstr . ')';
+				$error_msg .= ' <br />(' . $u->error_msg . ': ' . $errstr . ')';
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
@@ -1344,7 +1343,9 @@ class AttachmentsHelper
 			if ( $update ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
-				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id, $attachment->parent_type, $attachment_id, $from);
+				AttachmentsHelper::add_view_urls($view, 'update',
+												 $attachment->parent_id, $attachment->parent_type,
+												 $attachment_id, $from);
 
 				$view->update = $update_form;
 
@@ -1414,7 +1415,7 @@ class AttachmentsHelper
 
 			$view->display_name =	   $display_name;
 
-			$view->params = 	$params;
+			$view->params =		$params;
 
 			$view->from =	$from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
