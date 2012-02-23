@@ -25,6 +25,7 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-02-10 Minor translation fix to search plugin code.
    - 2012-02-10 Added trim() function to import code to clean field names from CSV files.
    - 2012-02-11 Fix pagination so that is remembers the limit start.
+   - 2012-02-14 Fixed bug in handling errors when checking URLs.
 
 2011-09-17: Release 3.0.2
    - 2011-09-17 Fixed bug in delete dialog while editing article on front end
