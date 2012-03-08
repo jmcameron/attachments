@@ -18,6 +18,8 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 	}
 
+jimport('joomla.application.component.controller');
+
 
 /**
  * The controller for utils requests

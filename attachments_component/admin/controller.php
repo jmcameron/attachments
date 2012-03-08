@@ -13,6 +13,9 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.application.component.controller');
+
+
 /**
  * Define the main attachments controller class
  *
