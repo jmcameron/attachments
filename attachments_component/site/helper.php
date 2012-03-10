@@ -1610,6 +1610,12 @@ class AttachmentsHelper
 		//	  $mod_filename = $basename . "(yoursite)" . $extension;
 		$mod_filename = $basename . $extension;
 
+		// Ensure UTF8 characters in filename are encoded correctly in IE
+		$ISIE = preg_match( "/MSIE/", $_SERVER["HTTP_USER_AGENT"] );
+		if ( $ISIE ) {
+			$mod_filename = rawurlencode($mod_filename);
+			}
+
 		// Force the download
 		header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
 		header("Content-Transfer-Encoding: binary");
