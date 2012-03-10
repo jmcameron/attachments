@@ -28,7 +28,9 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-02-14 Fixed bug in handling errors when checking URLs.
    - 2012-02-23 Cleaned up quoting in DB calls.
    - 2012-03-08 Added jimports for JController to a few files.
-   - 2012-03-09 IE-specific fix for downloading filenames with special characters Internet Explorer.
+   - 2012-03-09 IE-specific fix for downloading filenames with special
+     characters in Internet Explorer.  Thanks to crassus168 (chris@gamehit.net)
+     for suggestions for this fix.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
