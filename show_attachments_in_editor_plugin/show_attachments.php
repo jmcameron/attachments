@@ -29,7 +29,7 @@ class plgSystemShow_attachments extends JPlugin
 	 * Attach the Attachments CSS sheets for category pages
 	 *
 	 * @param	string	The context of the content being passed to the plugin.
-	 * @param	object	The article object.  Note $article->text is also available
+	 * @param	object	The article object.	 Note $article->text is also available
 	 * @param	object	The article params
 	 * @param	int		The 'page' number
 	 *
@@ -41,7 +41,7 @@ class plgSystemShow_attachments extends JPlugin
 		$layout = JRequest::getWord('layout');
 
 		if ( ($view == 'category') && ($layout == 'blog') ) {
-			
+
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
 				return;
@@ -73,6 +73,10 @@ class plgSystemShow_attachments extends JPlugin
 	 */
 	public function onAfterRender()
 	{
+		$task = JRequest::getCmd('task');
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getWord('layout');
+
 		// Make sure this we should handle this
 		$parent_type = JRequest::getCMD('option');
 		if (!$parent_type) {
@@ -104,10 +108,12 @@ class plgSystemShow_attachments extends JPlugin
 			}
 
 		// Get the article ID (strip off any SEF name appended with a colon)
-		$parent_id = JRequest::getVar('id');
-		if ( empty($parent_id) ) {
-			$parent_id = JRequest::getVar('a_id');
+		$a_id = JRequest::getVar('a_id');
+		$parent_id = $a_id;
+		if ( empty($parent_id) AND ($view != 'category') ) {
+			$parent_id = JRequest::getVar('id');
 			}
+
 		if ( strpos($parent_id, ':') > 0 ) {
 			$parent_id = substr($parent_id,0,strpos($parent_id,':'));
 			if ( is_numeric($parent_id) ) {
@@ -130,16 +136,12 @@ class plgSystemShow_attachments extends JPlugin
 				}
 			}
 
-		$task = JRequest::getCmd('task');
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getWord('layout');
-
 		// Check for the special case where we are creating an article from a category list
 		$item_id = JRequest::getInt('Itemid');
 		$application = JFactory::getApplication();
 		$menu = $application->getMenu();
 		$menu_item = $menu->getItem($item_id);
-		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
+		if ( $menu_item AND	 ($menu_item->query['view'] == 'category') AND empty($a_id) ) {
 			$parent_entity = 'article';
 			$parent_id = NULL;
 			}
