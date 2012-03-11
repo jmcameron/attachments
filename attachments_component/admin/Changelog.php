@@ -33,6 +33,7 @@ Attachments 3.x Extension for Joomla 1.7+
      (chris@gamehit.net) for suggestions for this fix.
    - 2012-03-10 Fixed handling of showing attachments for editing articles
      from category blog and category list.
+   - 2012-03-10 Updated minor translation fix to search plugin code to resolve issues in Joomla 2.5.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
