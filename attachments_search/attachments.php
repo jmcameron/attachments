@@ -45,7 +45,7 @@ class plgSearchAttachments extends JPlugin
 	public function onContentSearchAreas()
 	{
 		static $areas = array(
-			'attachments' => JText::_('ATTACH_ATTACHMENTS')
+			'attachments' => 'ATTACH_ATTACHMENTS'
 			);
 		return $areas;
 	}
