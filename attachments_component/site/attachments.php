@@ -28,7 +28,7 @@ if ( $controller ) {
 		$classname	= 'AttachmentsController' . $controller;
 		}
 	else {
-		$errmsg = JText::_('ATTACH_UNKNOWN_CONTROLLER') . ' (ERR 118)';
+		$errmsg = JText::_('ATTACH_UNKNOWN_CONTROLLER') . ' (ERR 128)';
 		JError::raiseError(500, $errmsg);
 		}
 	}

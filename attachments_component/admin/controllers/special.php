@@ -84,7 +84,7 @@ class AttachmentsControllerSpecial extends JController
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 34)';
+			$errmsg = $db->stderr() . ' (ERR 41)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -98,7 +98,7 @@ class AttachmentsControllerSpecial extends JController
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 35)';
+			$errmsg = $db->stderr() . ' (ERR 42)';
 			JError::raiseError(500, $errmsg);
 			}
 

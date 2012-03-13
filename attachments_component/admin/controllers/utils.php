@@ -322,7 +322,7 @@ class AttachmentsControllerUtils extends JController
 
 		$filename = JRequest::getString('filename', null);
 		if ( $filename == null ) {
-			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 132)';
+			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 43)';
 			return JError::raiseWarning(500, $errmsg);
 			}
 		$verify_parent = JRequest::getBool('verify_parent', true);
@@ -344,11 +344,11 @@ class AttachmentsControllerUtils extends JController
 			}
 		else {
 			if ( $dry_run ) {
-				$msg = JText::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status) . ' (ERR 133)';
+				$msg = JText::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status) . ' (ERR 44)';
 				return JError::raiseNotice(200, $msg);
 				}
 			else {
-				$errmsg = JText::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 134)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 45)';
 				return JError::raiseWarning(500, $errmsg);
 				}
 			}

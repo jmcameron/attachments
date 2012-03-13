@@ -61,7 +61,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$db->setQuery($query, 0, 1);
 			$item->creator_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 67)';
+				$errmsg = $db->stderr() . ' (ERR 77)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -71,7 +71,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$db->setQuery($query, 0, 1);
 			$item->modifier_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 68)';
+				$errmsg = $db->stderr() . ' (ERR 78)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -81,7 +81,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 			JPluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 69)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 79)';
 				JError::raiseError(500, $errmsg);
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);

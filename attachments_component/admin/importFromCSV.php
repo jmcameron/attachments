@@ -144,7 +144,7 @@ class ImportFromCSV
 		// Open the CSV file
 		$this->_file = @fopen($csv_filename, 'r');
 		if ( ! $this->_file ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERRN)';
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 0)';
 			}
 
 		// Parse the first row to process field names and indeces
@@ -213,7 +213,7 @@ class ImportFromCSV
 				}
 			}
 		if ( count($missing_fields) > 0 ) {
-			return JText::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_s', implode(',', $missing_fields)) . ' (ERRN)';
+			return JText::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_s', implode(',', $missing_fields)) . ' (ERR 1)';
 			}
 
 		return true;
@@ -296,7 +296,7 @@ class ImportFromCSV
 			}
 		if ( count($bad_fields) > 0 ) {
 			// Warn if there were unrecognized field names
-			return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERRN)';
+			return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERR 2)';
 			}
 
 		// Make sure all required field names were found
@@ -308,7 +308,7 @@ class ImportFromCSV
 			}
 		if ( count($missing) > 0 ) {
 			// Warn if there were missing required field names
-			return JError::raiseWarning(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERRN)');
+			return JError::raiseWarning(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 3)');
 			}
 
 		return true;
@@ -332,11 +332,11 @@ class ImportFromCSV
 		$db->setQuery($query, 0, 1);
 		$actual_username = $db->loadResult();
 		if ( empty($actual_username) || $db->getErrorNum() ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_ID_S', $user_id, $expected_username) . ' (ERRN)';
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_ID_S', $user_id, $expected_username) . ' (ERR 4)';
 			}
 		if ( strtolower($expected_username) != strtolower($actual_username) ) {
 			return JText::sprintf('ATTACH_ERROR_USERNAME_MISMATCH_ID_S_S',
-								  $user_id, $expected_username, $actual_username) . ' (ERRN)';
+								  $user_id, $expected_username, $actual_username) . ' (ERR 5)';
 			}
 
 		return true;
@@ -360,16 +360,16 @@ class ImportFromCSV
 		$db->setQuery($query, 0, 1);
 		$actual_category_title = $db->loadResult();
 		if ( empty($actual_category_title) || $db->getErrorNum() ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERRN)';
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 6)';
 			}
 		if ( strtolower($expected_category_title) != strtolower($actual_category_title) ) {
 			return JText::sprintf('ATTACH_ERROR_CATEGORY_TITLE_MISMATCH_ID_S_S',
-								  $category_id, $expected_category_title, $actual_category_title) . ' (ERRN)';
+								  $category_id, $expected_category_title, $actual_category_title) . ' (ERR 7)';
 			}
 
 		return true;
 	}
-	 
+
 
 }
 
