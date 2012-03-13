@@ -367,8 +367,8 @@ class plgContentAttachments extends JPlugin
 		// Get the html for the attachments list
 		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
-		return $controller->display($parent_id, $parent_type, $parent_entity,
-									null, true, true, false, $from);
+		return $controller->displayString($parent_id, $parent_type, $parent_entity,
+										  null, true, true, false, $from);
 	}
 
 

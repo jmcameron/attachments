@@ -59,9 +59,9 @@ class AttachmentsControllerList extends JController
 	 *
 	 * @return the string (if $echo is false)
 	 */
-	public function display($parent_id, $parent_type, $parent_entity,
-							$title=null, $show_file_links=true, $allow_edit=true,
-							$echo=true, $from=null)
+	public function displayString($parent_id, $parent_type, $parent_entity,
+								  $title=null, $show_file_links=true, $allow_edit=true,
+								  $echo=true, $from=null)
 	{
 		$document = JFactory::getDocument();
 

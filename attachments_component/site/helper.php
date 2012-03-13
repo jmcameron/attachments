@@ -1774,8 +1774,8 @@ class AttachmentsHelper
 
 				$controller = new AttachmentsControllerList();
 
-				$alist = $controller->display($parent_id, $parent_type, $parent_entity,
-											  null, $show_file_links, $allow_edit, false, $from);
+				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
+													null, $show_file_links, $allow_edit, false, $from);
 				}
 			else {
 				// Get the html for the attachments list
@@ -1783,8 +1783,8 @@ class AttachmentsHelper
 
 				$controller = new AttachmentsControllerAttachments();
 
-				$alist = $controller->display($parent_id, $parent_type, $parent_entity,
-											  null, $show_file_links, $allow_edit, false, $from);
+				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
+													null, $show_file_links, $allow_edit, false, $from);
 				}
 
 			}

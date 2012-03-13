@@ -226,8 +226,8 @@ class AttachmentsController extends JController
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 		$controller = new AttachmentsControllerList();
-		$response = $controller->display($parent_id, $parent_type, $parent_entity,
-										 $title, $show_links, $allow_edit, false, $from);
+		$response = $controller->displayString($parent_id, $parent_type, $parent_entity,
+											   $title, $show_links, $allow_edit, false, $from);
 		echo $response;
 	}
 
