@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Migrating Attachments'
-copyright = u'2011, Jonathan M. Cameron'
+copyright = u'2011-2012, Jonathan M. Cameron'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
