@@ -127,7 +127,8 @@ Importing your old Attachments to your Joomla 1.6/1.7/2.5+ site
 
       .. note:: You must use the full path to the migration file on the server
          file system.  On a Windows system, this path may look like a Windows
-         path including 'C:\' at the beginning of the path.
+         path including a drive letter such as 'C:\\' at the beginning of the
+         path.
 
       If there are problems with the article/parent ID's, titles, or user IDs
       or usernames, the command will abort and alert you to the nature of the
