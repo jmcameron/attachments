@@ -1,9 +1,9 @@
-How to Migrate Attachments from Joomla 1.5 to Joomla 1.6/1.7+
-=============================================================
+How to Migrate Attachments from Joomla 1.5 to Joomla 1.6/1.7/2.5+
+=================================================================
 
 This file describes how to migrate your attachments from your Joomla 1.5 site
-to a Joomla 1.6/1.7+ site.  Note this procedure applies to Joomla 1.6 and 1.7
-equally.
+to a Joomla 1.6/1.7/2.5+ site.  Note this procedure applies to Joomla 1.6,
+1.7, and 2.5+ equally.
 
 The process involves creating a Comma-Separated-File (CSV) migration file
 containing the data for the attachments on the Joomla 1.5 system.  The CSV
@@ -16,30 +16,32 @@ Necessary Conditions for Successful Attachments Migration
  * The Attachments extension for your Joomla 1.5 site should be upgraded to
    version 2.2.
 
- * The Joomla version for your 1.6+ site should be 1.7 or later.  Although it
-   might work with Joomla 1.6.6, I encourage you to upgrade to 1.7 before
-   attempting migration of Attachments.
+ * The Joomla version for your 1.6+ site should be 1.7 or later (preferably
+   2.5+).  Although it might work with Joomla 1.6.6, I encourage you to
+   upgrade to at least 1.7 before attempting migration of Attachments.
 
- * You should install a released version of Attachments 3.0.1 (or later) on your
-   Joomla 1.6.6/1.7 system before proceeding.
+ * You should install a released version of Attachments 3.0.1 (or later) on
+   your Joomla 1.6.6/1.7/2.5+ system before proceeding.
    
    .. warning::
 
       There were issues with the original release 3.0 of Attachments for
-      1.6/1.7+ and previous RC and beta releases that affect migration.  These
-      issues were fixed in version 3.0.1 so make sure you use at least version
-      3.0.1.  Normally, you should use the latest version.
+      1.6/1.7 and previous RC and beta releases that affect migration.  These
+      issues were fixed in Attachments version 3.0.1 so make sure you use at
+      least version 3.0.1.  Normally, you should use the latest version.
 
  * The article ID's and Titles must be identical in the Joomla 1.5 system and
-   the Joomla 1.6/1.7+ system.  If there are differences, the migration file will
-   need to be edited manually.  It is particularly important that the
-   article/parent ID's are the same since these are embedded in the attachment
-   file paths.  If the article ID's are different, the parent directories for
-   the attachments files will need to be renamed on the Joomla 1.6/1.7 side.
+   the Joomla 1.6/1.7/2.5+ system.  If there are differences, the migration
+   file will need to be edited manually.  It is particularly important that
+   the article/parent ID's are the same since these are embedded in the
+   attachment file paths.  If the article ID's are different, the parent
+   directories for the attachments files will need to be renamed on the Joomla
+   1.6/1.7/2.5 side.
 
  * The user ID and username of the users that created the Attachments on the
-   Joomla 1.5 system must be the same as those on the Joomla 1.6/1.7+ system.  If
-   there are differences, the migration file will need to be edited manually.
+   Joomla 1.5 system must be the same as those on the Joomla 1.6/1.7/2.5+
+   system.  If there are differences, the migration file will need to be
+   edited manually.
  
 Migrating the Attachments Data
 ------------------------------
@@ -47,9 +49,9 @@ Migrating the Attachments Data
 The process to migrate the data for the Attachments involves several steps:
 
   1.  This procedure should not affect your Joomla 1.5 site, but it will
-      affect your Joomla 1.6/1.7+ site, so it is a good idea to back up your
-      Joomla 1.6/1.7+ site before proceeding.  You may also want to back up your
-      Joomla 1.5 site.
+      affect your Joomla 1.6/1.7/2.5+ site, so it is a good idea to back up
+      your Joomla 1.6/1.7/2.5+ site before proceeding.  You may also want to
+      back up your Joomla 1.5 site.
 
 Export the attachments information from your Joomla 1.5 site
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,13 +90,13 @@ Export the attachments information from your Joomla 1.5 site
 
 	attachments
 
-Importing your old Attachments to your Joomla 1.6/1.7+ site
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Importing your old Attachments to your Joomla 1.6/1.7/2.5+ site
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  6.   Although not strictly necessary, it is probably a good idea to delete all
-      attachments on your Joomla 1.6/1.7 site.  If you do not do this, you will
+      attachments on your Joomla 1.6/1.7/2.5 site.  If you do not do this, you will
       probably want to carefully note all of the existing attachments on your
-      Joomla 1.6/1.7 site before proceeding.  Doing this step will make it easier to
+      Joomla 1.6/1.7/2.5 site before proceeding.  Doing this step will make it easier to
       delete any new attachments if the migration process does not go smoothly.
 
  7.   All the migrated attachments will be set to the same Access Level.
@@ -107,22 +109,27 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
 	* Select the 'Basic' tab and
 	* Set the 'Default Access Level' to the desired access level.
 
- 8.   Copy the CSV migration file ('migrate_attachments.csv') and the archive of
-      attachments files to your Joomla 1.6/1.7 site.
+ 8.   Copy the archive (eg, zip file) of attachments files to your Joomla
+      1.6/1.7/2.5 site.
 
- 9.   Upload the migration file to some place on your Joomla 1.6/1.7 server file
-      system.   **Note the exact location and path to the file on the server.**
+ 9.   Upload or copy the migration file ('migrate_attachments.csv') to some
+      place on your Joomla 1.6/1.7/2.5 server file system.  **Note the exact
+      location and path to the file on the server.** If the Joomla 1.5 site
+      and the Joomla 1.6/1.7/2.5 sites are on the same computer, simply note
+      the full path to the migration file.
 
- 10.  Log into the back end of your Joomla 1.6/1.7 system as an administrator.
+ 10.  Log into the back end of your Joomla 1.6/1.7/2.5 system as an administrator.
 
  11.  Go to the Attachments page and execute this command manually on your
-      Joomla 1.6/1.7 system (type in the full URL by hand)::
+      Joomla 1.6/1.7/2.5 system (type in the full URL by hand)::
  
 	  http://<yoursite>/administrator/index.php?option=com_attachments&task=utils.installAttachmentsFromCsvFile&filename=/path/to/migrate_attachments.csv&dry_run=1
 
-      .. note:: You must use the full path to the migration file on the server file system.
+      .. note:: You must use the full path to the migration file on the server
+         file system.  On a Windows system, this path may look like a Windows
+         path including 'C:\' at the beginning of the path.
 
-      If there are problems with the article/parent ID's, tiles, or user IDs
+      If there are problems with the article/parent ID's, titles, or user IDs
       or usernames, the command will abort and alert you to the nature of the
       problem.  You can then edit the migration file manually until your get
       it to complete successfully.
@@ -164,16 +171,16 @@ Importing your old Attachments to your Joomla 1.6/1.7+ site
          fixes, empty the \*_attachments table and repeat the import process
          until all errors are eliminated.
 
- 12.  Unzip the attachments file in the same directory on your Joomla 1.6/1.7 site
-      as they were on your Joomla 1.5 site.  This step requires that the
-      article/parent IDs are identical between the 1.5 and 1.6/1.7 systems.  If
-      this is not true, some directory renaming will be necessary to ensure
-      that the name of the parent directory above each attachment matches the
-      article/parent ID.
+ 12.  Unzip the attachments file in the same directory on your Joomla
+      1.6/1.7/2.5 site as they were on your Joomla 1.5 site.  This step
+      requires that the article/parent IDs are identical between the 1.5 and
+      1.6/1.7/2.5 systems.  If this is not true, some directory renaming will
+      be necessary to ensure that the name of the parent directory above each
+      attachment matches the article/parent ID.
 
- 13.  In the back end on the Joomla 1.6/1.7 site, got to the Attachments page and
-      execute the 'Utilities' command (on the right end of the toolbar).
-      Click on the item:
+ 13.  In the back end on the Joomla 1.6/1.7/2.5 site, go to the Attachments
+      page and execute the 'Utilities' command (on the right end of the
+      toolbar).  Click on the item:
 
 	  **Regenerate system filenames**
 
