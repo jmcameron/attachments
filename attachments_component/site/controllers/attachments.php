@@ -50,8 +50,7 @@ class AttachmentsControllerAttachments extends JController
 	 */
 	public function display()
 	{
-		$errmsg = JText::_('JDISABLED') . ' (ERR 130)';
-		JError::raiseError(500, $errmsg);
+		// Do nothing (not sure why this works...)
 	}
 
 
