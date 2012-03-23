@@ -26,7 +26,7 @@ with several many options to increase its flexibility and usefulness. Note:
 all options are controlled through the component manager.
 
 .. warning:: This version of the *Attachments* extension only works for
-             Joomla! 1.6, 1.7 or greater. 
+             Joomla! 1.6, 1.7, 2.5 or greater. 
 
 .. note:: In the rest of this document, the term **content item** is sometimes
    used.  Normally we think of attaching files to articles.  Attachments supports
@@ -1012,7 +1012,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Norwegian:** by Roar Jystad (2.2, 3.0) and Espen Gjelsvik (1.3.4)
 * **Persian:** by Hossein Moradgholi and Mahmood Amintoosi (2.2)
 * **Polish:** by Sebastian Konieczny (2.2, 3.0), Stefan Wajda (3.0), and Piotr Wójcik (1.3.4)
-* **Portuguese (Brazilian):** by Arnaldo Giacomitti and Cauan Cabral (1.3.4)
+* **Portuguese (Brazilian):** by Nelson Teixeira (3.0), Arnaldo Giacomitti and Cauan Cabral (1.3.4)
 * **Portuguese (Portugal):** by José Paulo Tavares (2.2, 3.0) and Bruno Moreira (1.3.4)
 * **Romanian:** by Alex Cojocaru (2.2, 3.0)
 * **Russian:** by Sergey Litvintsev (2.2, 3.0) and евгений панчев (Yarik Sharoiko) (1.3.4)
