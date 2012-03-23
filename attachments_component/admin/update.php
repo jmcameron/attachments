@@ -684,7 +684,7 @@ class AttachmentsUpdate
 	/**
 	 * Validate all URLS and update their "valid" status
 	 */
-	static public function installAttachmentsPermissions()
+	static public function installAttachmentsPermissions($verbose = true)
 	{
 		jimport('joomla.access.rules');
 		$app = JFactory::getApplication();
@@ -701,10 +701,14 @@ class AttachmentsUpdate
 		$root_rules->merge($new_rules);
 		$root->rules = (string)$root_rules;
 		if ( $root->store() ) {
-			$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+			if ( $verbose ) {
+				$app->enqueueMessage(JText::_('ATTACH_INSTALLED_DEFAULT_ATTACHMENTS_ASSET_RULES'), 'message');
+				}
 			}
 		else {
-			$app->enqueueMessage(JText::_('ATTACH_INSTALLING_DEFAULT_ATTACHMENTS_ASSET_RULES_FAILED'), 'message');
+			if ( $verbose ) {
+				$app->enqueueMessage(JText::_('ATTACH_INSTALLING_DEFAULT_ATTACHMENTS_ASSET_RULES_FAILED'), 'message');
+				}
 			}
 	}
 
