@@ -25,6 +25,10 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
  */
 class AttachmentsController extends JController
 {
+	/**
+	 * Known 'froms'
+	 */
+	static $KNOWN_FROMS = array('frontpage', 'article', 'category', 'editor', 'details', 'closeme', 'featured');	
 
 	/**
 	 * Constructor
@@ -416,8 +420,7 @@ class AttachmentsController extends JController
 			}
 
 		// If we are supposed to close this iframe, do it now.
-		$known_froms = array('frontpage', 'article', 'editor', 'details', 'closeme', 'featured');
-		if ( in_array( $from, $known_froms ) ) {
+		if ( in_array( $from, AttachmentsController::$KNOWN_FROMS ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
 			if ( $new_parent ) {
@@ -550,9 +553,8 @@ class AttachmentsController extends JController
 
 		// Figure out how to redirect
 		$from = JRequest::getWord('from', 'closeme');
-		$known_froms = array('frontpage', 'article', 'details', 'editor', 'closeme', 'featured');
 		$uri = JFactory::getURI();
-		if ( in_array( $from, $known_froms ) ) {
+		if ( in_array( $from, AttachmentsController::$KNOWN_FROMS ) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
 			if ( !$parent_id ) {
