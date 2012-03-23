@@ -47,7 +47,7 @@ class AttachmentsModelAttachments extends JModelList
 				'a.file_size',
 				'creator_name',
 				'modifier_name',
-				'u.name',
+				'u1.name',
 				'a.created',
 				'a.modified',
 				'a.download_count'
