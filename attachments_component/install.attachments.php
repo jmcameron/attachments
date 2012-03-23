@@ -93,6 +93,7 @@ class Com_AttachmentsInstallerScript {
 		$lang->load('com_attachments.sys', dirname(__FILE__));
 
 		// First make sure that this version of Joomla is 1.6 or greater
+		// ??? Update this to a later version!
 
 		if ( version_compare(JVERSION, '1.6.0', 'lt') ) {
 			// $version = new JVersion();
