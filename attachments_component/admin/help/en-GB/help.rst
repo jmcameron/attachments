@@ -957,7 +957,7 @@ Uninstalling
 * To uninstall the Attachments extension, go to the 'Manage' tab on the
   Extension Manager page (under the 'Extensions' menu).  **Select ONLY the item**::
 
-     Package: Attachments for Joomla 1.6+
+     Package: Attachments for Joomla 1.6/1.7/2.5+
 
   and click on the 'Uninstall' button on the toolbar.  This will uninstall the
   attachments component and all the associated plugins.
