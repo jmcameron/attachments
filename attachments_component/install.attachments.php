@@ -14,12 +14,33 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+// Define some global variables to help figure out whether log messages.
+//
+//  Note: Apparently with Joomala 2.5, the installer behavior has changed.
+//        If the extension is being installed the first time, it first does the
+//        install() method and the the update() method of this install script class.
+//        Similarly when upgrading a previously installed component, it does the
+//        update() method twice.  Not sure if this is a bug in Joomla or a config
+//        error in this extension.  In any case, these flags are used to eliminate
+//        the duplicate user information messages (about enabled plugins, etc).
+//        The second time through the postFlight() function does not hurt anything,
+//        so there is no point in repeating the inforamtional messages to the user.
+
+/** Flag whether the informational messages should be emitted (warnings always go).
+ */
+$attachments_install_verbose = true;
+
+/** Name of the last executed install method (install or upgrade)
+ */
+$attachments_install_last_method = null;
+
+
 /**
  * The main attachments installation class
  *
  * @package Attachments
  */
-class Com_AttachmentsInstallerScript {
+class com_AttachmentsInstallerScript {
 
 	/**
 	 * name of moved attachments directory (if present)
@@ -45,12 +66,40 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function install($parent)
 	{
+		global $attachments_install_verbose, $attachments_install_last_method;
+		$attachments_install_verbose = true;
+		$attachments_install_last_method = 'install';
+
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
 		$app->enqueueMessage('<br/>', 'message');
 
-		Com_AttachmentsInstallerScript::installPermissions();
+		com_AttachmentsInstallerScript::installPermissions();
 		$app->enqueueMessage('<br/>', 'message');
+	}
+
+
+	/**
+	 * Attachments component update function
+	 *
+	 * @param $parent : the installer parent
+	 */
+	public function update($parent)
+	{
+		global $attachments_install_verbose, $attachments_install_last_method;
+		$attachments_install_last_method = 'update';
+
+		$app = JFactory::getApplication();
+		if ( $attachments_install_verbose ) {
+			$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
+			$app->enqueueMessage('<br/>', 'message');
+			}
+
+		com_AttachmentsInstallerScript::installPermissions();
+
+		if ( $attachments_install_verbose ) {
+			$app->enqueueMessage('<br/>', 'message');
+			}
 	}
 
 
@@ -65,22 +114,6 @@ class Com_AttachmentsInstallerScript {
 
 
 	/**
-	 * Attachments component update function
-	 *
-	 * @param $parent : the installer parent
-	 */
-	public function update($parent)
-	{
-		$app = JFactory::getApplication();
-		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
-		$app->enqueueMessage('<br/>', 'message');
-
-		Com_AttachmentsInstallerScript::installPermissions();
-		$app->enqueueMessage('<br/>', 'message');
-	}
-
-
-	/**
 	 * Attachments component preflight function
 	 *
 	 * @param $type : type of installation
@@ -88,16 +121,22 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function preflight($type, $parent)
 	{
+		global $attachments_install_verbose, $attachments_install_last_method;
+
+		if ( $attachments_install_last_method == 'update' ) {
+			$attachments_install_verbose = false;
+			}
+		if ( $attachments_install_last_method == null ) {
+			$attachments_install_verbose = true;
+			}
+
 		// Load the installation language
 		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
-
-		// First make sure that this version of Joomla is 1.6 or greater
-		// ??? Update this to a later version!
-
-		if ( version_compare(JVERSION, '1.6.0', 'lt') ) {
-			// $version = new JVersion();
-			// if ( (real)$version->RELEASE < 1.6 ) {
+ 
+        // Verify that the Joomla version is adequate for this extension
+        $this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;        
+		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
 			$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 			$app = JFactory::getApplication();
 			$app->enqueueMessage($msg, 'warning');
@@ -118,9 +157,11 @@ class Com_AttachmentsInstallerScript {
 				return false;
 				}
 
-			$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
-			$app->enqueueMessage($msg, 'message');
-			$app->enqueueMessage('<br/>', 'message');
+			if ( $attachments_install_verbose ) {
+				$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
+				$app->enqueueMessage($msg, 'message');
+				$app->enqueueMessage('<br/>', 'message');
+				}
 			}
 
 		// Joomla! 1.6/1.7 bugfix for "Can not build admin menus"
@@ -141,6 +182,8 @@ class Com_AttachmentsInstallerScript {
 	 */
 	public function postflight($type, $parent)
 	{
+		global $attachments_install_verbose, $attachments_install_last_method;
+
 		$app = JFactory::getApplication();
 		$db = JFactory::getDBO();
 
@@ -167,35 +210,50 @@ class Com_AttachmentsInstallerScript {
 				$app->enqueueMessage($errmsg, 'error');
 				return false;
 				}
-			$app->enqueueMessage(JText::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
+
+			if ( $attachments_install_verbose ) {
+				$app->enqueueMessage(JText::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
+				}
 		}
-		$app->enqueueMessage('<br/>', 'message');
-		$app->enqueueMessage(JText::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
-		$app->enqueueMessage('<br/>', 'message');
+
+		if ( $attachments_install_verbose ) {
+			$app->enqueueMessage('<br/>', 'message');
+			$app->enqueueMessage(JText::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
+			$app->enqueueMessage('<br/>', 'message');
+			}
 
 		// Restore the attachments directory (if renamed)
 		$attachdir = JPATH_ROOT.'/attachments';
 		if ( $this->moved_attachments_dir && JFolder::exists($this->moved_attachments_dir) ) {
 			JFolder::move($this->moved_attachments_dir, $attachdir);
-			$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
-			$app->enqueueMessage('<br/>', 'message');
+			if ( $attachments_install_verbose ) {
+				$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
+				$app->enqueueMessage('<br/>', 'message');
+				}
 			}
 
 		// Check to see if we should be in secure mode
 		jimport('joomla.filesystem.file');
 		$htaccess_file = $attachdir . '/.htaccess';
 		if ( JFile::exists($htaccess_file) ) {
-			if ( Com_AttachmentsInstallerScript::setSecureMode() ) {
-				$app->enqueueMessage(JText::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
-				$app->enqueueMessage('<br/>', 'message');
+			if ( com_AttachmentsInstallerScript::setSecureMode() ) {
+				if ( $attachments_install_verbose ) {
+					$app->enqueueMessage(JText::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
+					$app->enqueueMessage('<br/>', 'message');
+					}
 				}
 			}
 		
 		// Ask the user for feedback
-		$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
-											'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
-											), 'message');
-		$app->enqueueMessage('<br/>', 'message');
+		if ( $attachments_install_verbose ) {
+			$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+												'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
+												), 'message');
+			$app->enqueueMessage('<br/>', 'message');
+			}
+
+		// Once postflight has run once, don't repeat the message if it runs again (eg, upgrade after install)
+		$attachments_install_verbose = false;
 	}
 
 
@@ -204,9 +262,11 @@ class Com_AttachmentsInstallerScript {
 	 */
 	protected function installPermissions()
 	{
+		global $attachments_install_verbose;
+
 		/** Load the Attachments defines */
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-		AttachmentsUpdate::installAttachmentsPermissions();
+		AttachmentsUpdate::installAttachmentsPermissions($attachments_install_verbose);
 	}
 
 
