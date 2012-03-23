@@ -173,6 +173,7 @@ trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
 type = INI
 
+
 [joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini]
 source_file = ../translations-j1.6/attachments-Spanish-es-ES/language/en-GB/en-GB.files_attachments_es_es_language_pack.sys.ini
 source_lang = en_GB
