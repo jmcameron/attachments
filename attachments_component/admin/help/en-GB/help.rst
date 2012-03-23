@@ -8,7 +8,7 @@
 
 **Version 3.0.3-Beta5 - March 23, 2012**
 
-**This version is for Joomla 1.6/1.7+**
+**This version is for Joomla 1.6/1.7/2.5+**
 
 .. contents::
     :depth: 1
@@ -49,7 +49,7 @@ this extension, please subscribe using this web page:
 New features in Version 3.0
 ===========================
 
-* Full support for the new ACL/permissions system of Joomla 1.6/1.7+.  This
+* Full support for the new ACL/permissions system of Joomla 1.6/1.7/2.5+.  This
   gives you significant flexibility to control who can create, edit, or delete
   attachments.  See the `Attachments Permissions`_ section for more details.
 
@@ -728,7 +728,7 @@ is a manual that is available as part of this 'Attachments' installation:
 
    The Attachment Plugin Creation Manual has not been updated for Attachments
    3.0 yet.  There have been some architectural changes that means that
-   Attachments plugins in Joomla 1.6/1.7+ will have some significant
+   Attachments plugins in Joomla 1.6/1.7/2.5+ will have some significant
    differences from those for Joomla 1.5.
 
 
@@ -975,14 +975,14 @@ Uninstalling
   installation.
 
 
-Migration Attachments from Joomla 1.5 to Joomla 1.6+
-====================================================
+Migration Attachments from Joomla 1.5 to Joomla 1.6/1.7/2.5+
+============================================================
 
-To migrate your attachments from a Joomla 1.5 site to a Joomla 1.6 (or later)
-site, follow the procedure outlined here:
+To migrate your attachments from a Joomla 1.5 site to a Joomla 1.6/1.7/2.5 (or
+later) site, follow the procedure outlined here:
 
  
-  * `Migrating Attachments from Joomla 1.5 to Joomla 1.6+
+  * `Migrating Attachments from Joomla 1.5 to Joomla 1.6/1.7/2.5+
     <http://jmcameron.net/attachments/migration/>`_
 
 
