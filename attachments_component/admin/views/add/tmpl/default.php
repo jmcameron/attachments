@@ -179,8 +179,8 @@ if ( ($this->uri_type == 'file') && $this->parent_id ) {
 	/** Get the Attachments controller class */
 	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
-	$controller->display($this->parent_id, $this->parent_type, $this->parent_entity,
-						 'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
+	$controller->displayString($this->parent_id, $this->parent_type, $this->parent_entity,
+							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
 
 // Show buttons for adding the attachments to other entitites (if appropriate)

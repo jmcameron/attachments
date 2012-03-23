@@ -358,6 +358,6 @@ if ( $attachment->parent_id ) {
 	/** Get the attachments controller class */
 	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
-	$controller->display($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
-						 'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
+	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
+							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
