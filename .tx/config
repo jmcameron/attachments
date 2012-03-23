@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.net
-lang_map = af_ZA: af-ZA, am_ET: am-ET, ar_AE: ar-AE, ar_BH: ar-BH, ar_DZ: ar-DZ, ar_EG: ar-EG, ar_IQ: ar-IQ, ar_JO: ar-JO, ar_KW: ar-KW, ar_LB: ar-LB, ar_LY: ar-LY, ar_MA: ar-MA, ar_OM: ar-OM, ar_QA: ar-QA, ar_SA: ar-SA, ar_SY: ar-SY, ar_TN: ar-TN, ar_YE: ar-YE, arn_CL: arn-CL, as_IN: as-IN, az_AZ: az-AZ, ba_RU: ba-RU, be_BY: be-BY, bg_BG: bg-BG, bn_BD: bn-BD, bn_IN: bn-IN, bo_CN: bo-CN, br_FR: br-FR, bs_BA: bs-BA, ca_ES: ca-ES, co_FR: co-FR, cs_CZ: cs-CZ, cy_GB: cy-GB, da_DK: da-DK, de_AT: de-AT, de_CH: de-CH, de_DE: de-DE, de_LI: de-LI, de_LU: de-LU, dsb_DE: dsb-DE, dv_MV: dv-MV, el_GR: el-GR, en_AU: en-AU, en_BZ: en-BZ, en_CA: en-CA, en_GB: en-GB, en_IE: en-IE, en_IN: en-IN, en_JM: en-JM, en_MY: en-MY, en_NZ: en-NZ, en_PH: en-PH, en_SG: en-SG, en_TT: en-TT, en_US: en-US, en_ZA: en-ZA, en_ZW: en-ZW, es_AR: es-AR, es_BO: es-BO, es_CL: es-CL, es_CO: es-CO, es_CR: es-CR, es_DO: es-DO, es_EC: es-EC, es_ES: es-ES, es_GT: es-GT, es_HN: es-HN, es_MX: es-MX, es_NI: es-NI, es_PA: es-PA, es_PE: es-PE, es_PR: es-PR, es_PY: es-PY, es_SV: es-SV, es_US: es-US, es_UY: es-UY, es_VE: es-VE, et_EE: et-EE, eu_ES: eu-ES, fa_IR: fa-IR, fi_FI: fi-FI, fil_PH: fil-PH, fo_FO: fo-FO, fr_BE: fr-BE, fr_CA: fr-CA, fr_CH: fr-CH, fr_FR: fr-FR, fr_LU: fr-LU, fr_MC: fr-MC, fy_NL: fy-NL, ga_IE: ga-IE, gd_GB: gd-GB, gl_ES: gl-ES, gsw_FR: gsw-FR, gu_IN: gu-IN, ha_NG: ha-NG, he_IL: he-IL, hi_IN: hi-IN, hr_BA: hr-BA, hr_HR: hr-HR, hsb_DE: hsb-DE, hu_HU: hu-HU, hy_AM: hy-AM, id_ID: id-ID, ig_NG: ig-NG, ii_CN: ii-CN, is_IS: is-IS, it_CH: it-CH, it_IT: it-IT, iu_CA: iu-CA, ja_JP: ja-JP, ka_GE: ka-GE, kk_KZ: kk-KZ, kl_GL: kl-GL, km_KH: km-KH, kn_IN: kn-IN, ko_KR: ko-KR, kok_IN: kok-IN, ky_KG: ky-KG, lb_LU: lb-LU, lo_LA: lo-LA, lt_LT: lt-LT, lv_LV: lv-LV, mi_NZ: mi-NZ, mk_MK: mk-MK, ml_IN: ml-IN, mn_CN: mn-CN, mn_MN: mn-MN, moh_CA: moh-CA, mr_IN: mr-IN, ms_BN: ms-BN, ms_MY: ms-MY, mt_MT: mt-MT, nb_NO: nb-NO, ne_NP: ne-NP, nl_BE: nl-BE, nl_NL: nl-NL, nn_NO: nn-NO, nso_ZA: nso-ZA, oc_FR: oc-FR, or_IN: or-IN, pa_IN: pa-IN, pl_PL: pl-PL, prs_AF: prs-AF, ps_AF: ps-AF, pt_BR: pt-BR, pt_PT: pt-PT, qut_GT: qut-GT, quz_BO: quz-BO, quz_EC: quz-EC, quz_PE: quz-PE, rm_CH: rm-CH, ro_RO: ro-RO, ru_RU: ru-RU, rw_RW: rw-RW, sa_IN: sa-IN, sah_RU: sah-RU, se_FI: se-FI, se_NO: se-NO, se_SE: se-SE, si_LK: si-LK, sk_SK: sk-SK, sl_SI: sl-SI, sma_NO: sma-NO, sma_SE: sma-SE, smj_NO: smj-NO, smj_SE: smj-SE, smn_FI: smn-FI, sms_FI: sms-FI, sq_AL: sq-AL, sr_BA: sr-BA, sr_CS: sr-CS, sr_ME: sr-ME, sr_RS: sr-RS, sv_FI: sv-FI, sv_SE: sv-SE, sw_KE: sw-KE, syr_SY: syr-SY, ta_IN: ta-IN, te_IN: te-IN, tg_TJ: tg-TJ, th_TH: th-TH, tk_TM: tk-TM, tn_ZA: tn-ZA, tr_TR: tr-TR, tt_RU: tt-RU, tzm_DZ: tzm-DZ, ug_CN: ug-CN, uk_UA: uk-UA, ur_PK: ur-PK, uz_UZ: uz-UZ, vi_VN: vi-VN, wo_SN: wo-SN, xh_ZA: xh-ZA, yo_NG: yo-NG, zh_CN: zh-CN, zh_HK: zh-HK, zh_MO: zh-MO, zh_SG: zh-SG, zh_TW: zh-TW, zu_ZA: zu-ZA
+lang_map = af_ZA: af-ZA, am_ET: am-ET, ar_AE: ar-AE, ar_BH: ar-BH, ar_DZ: ar-DZ, ar_EG: ar-EG, ar_IQ: ar-IQ, ar_JO: ar-JO, ar_KW: ar-KW, ar_LB: ar-LB, ar_LY: ar-LY, ar_MA: ar-MA, ar_OM: ar-OM, ar_QA: ar-QA, ar_SA: ar-SA, ar_SY: ar-SY, ar_TN: ar-TN, ar_YE: ar-YE, arn_CL: arn-CL, as_IN: as-IN, az_AZ: az-AZ, ba_RU: ba-RU, be_BY: be-BY, bg_BG: bg-BG, bn_BD: bn-BD, bn_IN: bn-IN, bo_CN: bo-CN, br_FR: br-FR, bs_BA: bs-BA, ca_ES: ca-ES, co_FR: co-FR, cs_CZ: cs-CZ, cy_GB: cy-GB, da_DK: da-DK, de_AT: de-AT, de_CH: de-CH, de_DE: de-DE, de_LI: de-LI, de_LU: de-LU, dsb_DE: dsb-DE, dv_MV: dv-MV, el_GR: el-GR, en_AU: en-AU, en_BZ: en-BZ, en_CA: en-CA, en_GB: en-GB, en_IE: en-IE, en_IN: en-IN, en_JM: en-JM, en_MY: en-MY, en_NZ: en-NZ, en_PH: en-PH, en_SG: en-SG, en_TT: en-TT, en_US: en-US, en_ZA: en-ZA, en_ZW: en-ZW, es_AR: es-AR, es_BO: es-BO, es_CL: es-CL, es_CO: es-CO, es_CR: es-CR, es_DO: es-DO, es_EC: es-EC, es_ES: es-ES, es_GT: es-GT, es_HN: es-HN, es_MX: es-MX, es_NI: es-NI, es_PA: es-PA, es_PE: es-PE, es_PR: es-PR, es_PY: es-PY, es_SV: es-SV, es_US: es-US, es_UY: es-UY, es_VE: es-VE, et_EE: et-EE, eu_ES: eu-ES, fa_IR: fa-IR, fi_FI: fi-FI, fil_PH: fil-PH, fo_FO: fo-FO, fr_BE: fr-BE, fr_CA: fr-CA, fr_CH: fr-CH, fr_FR: fr-FR, fr_LU: fr-LU, fr_MC: fr-MC, fy_NL: fy-NL, ga_IE: ga-IE, gd_GB: gd-GB, gl_ES: gl-ES, gsw_FR: gsw-FR, gu_IN: gu-IN, ha_NG: ha-NG, he_IL: he-IL, hi_IN: hi-IN, hr_BA: hr-BA, hr_HR: hr-HR, hsb_DE: hsb-DE, hu_HU: hu-HU, hy_AM: hy-AM, id_ID: id-ID, ig_NG: ig-NG, ii_CN: ii-CN, is_IS: is-IS, it_CH: it-CH, it_IT: it-IT, iu_CA: iu-CA, ja_JP: ja-JP, ka_GE: ka-GE, kk_KZ: kk-KZ, kl_GL: kl-GL, km_KH: km-KH, kn_IN: kn-IN, ko_KR: ko-KR, kok_IN: kok-IN, ky_KG: ky-KG, lb_LU: lb-LU, lo_LA: lo-LA, lt_LT: lt-LT, lv_LV: lv-LV, mi_NZ: mi-NZ, mk_MK: mk-MK, ml_IN: ml-IN, mn_CN: mn-CN, mn_MN: mn-MN, moh_CA: moh-CA, mr_IN: mr-IN, ms_BN: ms-BN, ms_MY: ms-MY, mt_MT: mt-MT, nb_NO: nb-NO, ne_NP: ne-NP, nl_BE: nl-BE, nl_NL: nl-NL, nn_NO: nn-NO, nso_ZA: nso-ZA, oc_FR: oc-FR, or_IN: or-IN, pa_IN: pa-IN, pl_PL: pl-PL, prs_AF: prs-AF, ps_AF: ps-AF, pt_BR: pt-BR, pt_PT: pt-PT, qut_GT: qut-GT, quz_BO: quz-BO, quz_EC: quz-EC, quz_PE: quz-PE, rm_CH: rm-CH, ro_RO: ro-RO, ru_RU: ru-RU, rw_RW: rw-RW, sa_IN: sa-IN, sah_RU: sah-RU, se_FI: se-FI, se_NO: se-NO, se_SE: se-SE, si_LK: si-LK, sk_SK: sk-SK, sl_SI: sl-SI, sma_NO: sma-NO, sma_SE: sma-SE, smj_NO: smj-NO, smj_SE: smj-SE, smn_FI: smn-FI, sms_FI: sms-FI, sq_AL: sq-AL, sr_BA: sr-BA, sr_CS: sr-CS, sr_ME: sr-ME, sr_RS: sr-RS, sv_FI: sv-FI, sv_SE: sv-SE, sw_KE: sw-KE, syr_SY: syr-SY, ta_IN: ta-IN, te_IN: te-IN, tg_TJ: tg-TJ, th_TH: th-TH, tk_TM: tk-TM, tn_ZA: tn-ZA, tr_TR: tr-TR, tt_RU: tt-RU, tzm_DZ: tzm-DZ, ug_CN: ug-CN, uk_UA: uk-UA, ur_PK: ur-PK, uz_UZ: uz-UZ, vi_VN: vi-VN, wo_SN: wo-SN, xh_ZA: xh-ZA, yo_NG: yo-NG, zh_CN: zh-CN, zh_HK: zh-HK, zh_MO: zh-MO, zh_SG: zh-SG, zh_TW: zh-TW, zu_ZA: zu-ZA, pt_PT: pt_PT, sv_SE: sv_SE
 
 
 [joomla-attachments-3.com_attachments_admin-com_attachments_ini]
@@ -9,6 +9,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/admin/pt-PT.com_attachments.ini
 type = INI
 
 [joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini]
@@ -17,6 +18,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/admin/pt-PT.com_attachments.sys.ini
 type = INI
 
 
@@ -26,6 +28,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/site/es-ES.com_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/site/sv-SE.com_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/site/pt-PT.com_attachments.ini
 type = INI
 
 [joomla-attachments-3.com_attachments_install-com_attachments_ini]
@@ -34,6 +37,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/language/es-ES/es-ES.com_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/language/sv-SE/sv-SE.com_attachments.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/language/pt-PT/pt-PT.com_attachments.sys.ini
 type = INI
 
 
@@ -43,6 +47,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/es-ES.plg_content_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin/pt-PT.plg_content_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_content_attachments_sys_ini]
@@ -51,6 +56,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/es-ES.plg_content_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin/pt-PT.plg_content_attachments.sys.ini
 type = INI
 
 
@@ -60,6 +66,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_framework/es-ES.plg_attachments_attachments_plugin_framework.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin_framework/pt-PT.plg_attachments_attachments_plugin_framework.ini
 type = INI
 
 [joomla-attachments-3.plg_attachments_plugin_framework_sys_ini]
@@ -68,6 +75,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_framework/es-ES.plg_attachments_attachments_plugin_framework.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin_framework/pt-PT.plg_attachments_attachments_plugin_framework.sys.ini
 type = INI
 
 
@@ -77,6 +85,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_content/es-ES.plg_attachments_attachments_for_content.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_for_content/pt-PT.plg_attachments_attachments_for_content.ini
 type = INI
 
 [joomla-attachments-3.plg_attachments_for_content_sys_ini]
@@ -85,6 +94,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_content/es-ES.plg_attachments_attachments_for_content.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_for_content/pt-PT.plg_attachments_attachments_for_content.sys.ini
 type = INI
 
 
@@ -94,6 +104,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/es-ES.plg_search_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_search/pt-PT.plg_search_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_search_attachments_sys_ini]
@@ -102,6 +113,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/es-ES.plg_search_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_search/pt-PT.plg_search_attachments.sys.ini
 type = INI
 
 
@@ -111,6 +123,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_token_btn_plugin/es-ES.plg_editors-xtd_insert_attachments_token.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/insert_attachments_token_btn_plugin/pt-PT.plg_editors-xtd_insert_attachments_token.ini
 type = INI
 
 [joomla-attachments-3.insert_attachments_token_btn_sys_ini]
@@ -119,6 +132,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_token_btn_plugin/es-ES.plg_editors-xtd_insert_attachments_token.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/insert_attachments_token_btn_plugin/pt-PT.plg_editors-xtd_insert_attachments_token.sys.ini
 type = INI
 
 
@@ -128,6 +142,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_plugin/es-ES.plg_editors-xtd_add_attachment.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/add_attachment_btn_plugin/pt-PT.plg_editors-xtd_add_attachment.ini
 type = INI
 
 [joomla-attachments-3.add_attachment_btn_sys_ini]
@@ -136,6 +151,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_plugin/es-ES.plg_editors-xtd_add_attachment.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/add_attachment_btn_plugin/pt-PT.plg_editors-xtd_add_attachment.sys.ini
 type = INI
 
 
@@ -145,6 +161,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in_editor_plugin/es-ES.plg_system_show_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini]
@@ -153,6 +170,7 @@ source_lang = en_GB
 minimum_perc = 100
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in_editor_plugin/es-ES.plg_system_show_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
 type = INI
 
 [joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini]
@@ -167,4 +185,11 @@ source_file = ../translations-j1.6/attachments-Swedish-sv-SE/language/en-GB/en-G
 source_lang = en_GB
 minimum_perc = 100
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/language/sv-SE/sv-SE.files_attachments_sv_se_language_pack.sys.ini
+type = INI
+
+[joomla-attachments-3.Portuguse_pt_PT_language_pack_sys_ini]
+source_file = ../translations-j1.6/attachments-Portuguese-pt-PT/language/en-GB/en-GB.files_attachments_pt_pt_language_pack.sys.ini
+source_lang = en_GB
+minimum_perc = 100
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/language/pt-PT/pt-PT.files_attachments_pt_pt_language_pack.sys.ini
 type = INI
