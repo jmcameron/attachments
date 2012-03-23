@@ -38,6 +38,7 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-03-23 Fixed bug in sorting by Creator name in backend attachments list.
    - 2012-03-23 Fixed issue with redisplay after editing/deleting attachments from
 	            category blog view on front end.
+   - 2012-03-23 Suppress extra info messages during installation.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
