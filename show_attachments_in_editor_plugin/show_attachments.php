@@ -146,6 +146,12 @@ class plgSystemShow_attachments extends JPlugin
 			$parent_id = NULL;
 			}
 
+		// Deal with the special case where are editing a category
+		if ( $view == 'category' AND $layout == 'edit' ) {
+			$parent_entity = 'category';
+			$parent_id = JRequest::getVar('id');
+			}
+
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
