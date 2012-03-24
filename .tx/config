@@ -190,30 +190,30 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/show_attachments_i
 type = INI
 
 
-[joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini]
-source_file = ../translations-j1.6/attachments-Spanish-es-ES/language/en-GB/en-GB.files_attachments_es_es_language_pack.sys.ini
-source_lang = en_GB
-minimum_perc = 100
-trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/language/es-ES/es-ES.files_attachments_es_es_language_pack.sys.ini
-type = INI
-
-[joomla-attachments-3.Swedish_sv_SE_language_pack_sys_ini]
-source_file = ../translations-j1.6/attachments-Swedish-sv-SE/language/en-GB/en-GB.files_attachments_sv_se_language_pack.sys.ini
-source_lang = en_GB
-minimum_perc = 100
-trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/language/sv-SE/sv-SE.files_attachments_sv_se_language_pack.sys.ini
-type = INI
-
-[joomla-attachments-3.Portuguse_pt_PT_language_pack_sys_ini]
-source_file = ../translations-j1.6/attachments-Portuguese-pt-PT/language/en-GB/en-GB.files_attachments_pt_pt_language_pack.sys.ini
-source_lang = en_GB
-minimum_perc = 100
-trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/language/pt-PT/pt-PT.files_attachments_pt_pt_language_pack.sys.ini
-type = INI
-
-[joomla-attachments-3.Estonian_et_EE_language_pack_sys_ini]
-source_file = ../translations-j1.6/attachments-Estonian-et-EE/language/en-GB/en-GB.files_attachments_et_ee_language_pack.sys.ini
-source_lang = en_GB
-minimum_perc = 100
-trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/language/et-EE/et-EE.files_attachments_et_ee_language_pack.sys.ini
-type = INI
+# [joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini]
+# source_file = ../translations-j1.6/attachments-Spanish-es-ES/language/en-GB/en-GB.files_attachments_es_es_language_pack.sys.ini
+# source_lang = en_GB
+# minimum_perc = 100
+# trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/language/es-ES/es-ES.files_attachments_es_es_language_pack.sys.ini
+# type = INI
+# 
+# [joomla-attachments-3.Swedish_sv_SE_language_pack_sys_ini]
+# source_file = ../translations-j1.6/attachments-Swedish-sv-SE/language/en-GB/en-GB.files_attachments_sv_se_language_pack.sys.ini
+# source_lang = en_GB
+# minimum_perc = 100
+# trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/language/sv-SE/sv-SE.files_attachments_sv_se_language_pack.sys.ini
+# type = INI
+# 
+# [joomla-attachments-3.Portuguse_pt_PT_language_pack_sys_ini]
+# source_file = ../translations-j1.6/attachments-Portuguese-pt-PT/language/en-GB/en-GB.files_attachments_pt_pt_language_pack.sys.ini
+# source_lang = en_GB
+# minimum_perc = 100
+# trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/language/pt-PT/pt-PT.files_attachments_pt_pt_language_pack.sys.ini
+# type = INI
+# 
+# [joomla-attachments-3.Estonian_et_EE_language_pack_sys_ini]
+# source_file = ../translations-j1.6/attachments-Estonian-et-EE/language/en-GB/en-GB.files_attachments_et_ee_language_pack.sys.ini
+# source_lang = en_GB
+# minimum_perc = 100
+# trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/language/et-EE/et-EE.files_attachments_et_ee_language_pack.sys.ini
+# type = INI
