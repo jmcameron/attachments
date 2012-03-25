@@ -179,6 +179,14 @@ Importing your old Attachments to your Joomla 1.6/1.7/2.5+ site
       be necessary to ensure that the name of the parent directory above each
       attachment matches the article/parent ID.
 
+      .. note:: 
+
+         If your web server is a Linux system, you may need to adust the user
+         and group ownership of the files so that your webserver process can
+         access and updated them as needed.  Please consult a system
+         adminstrator for your web server to determine what ownership is
+         necessary.
+
  13.  In the back end on the Joomla 1.6/1.7/2.5 site, go to the Attachments
       page and execute the 'Utilities' command (on the right end of the
       toolbar).  Click on the item:
