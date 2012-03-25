@@ -5,6 +5,11 @@ if ( "$1" == "" ) then
     exit
 endif
 
+if ( "$1" == "--code") then
+    echo "Do not use --code, just use the transifex lang token (e.g.,  es_ES)"
+    exit
+endif
+
 echo "Downloading updates for $1"
 
 tx pull -f -r joomla-attachments-3.com_attachments_admin-com_attachments_ini -l "$1"
