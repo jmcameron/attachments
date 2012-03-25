@@ -1,5 +1,12 @@
 #!/bin/csh -f
 
+if ( "$1" == "" ) then
+    echo "Must specify the language code in transifex form (e.g.,  es_ES)"
+    exit
+endif
+
+echo "Downloading updates for $1"
+
 tx pull -f -r joomla-attachments-3.com_attachments_admin-com_attachments_ini -l "$1"
 tx pull -f -r joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini -l "$1"
 tx pull -f -r joomla-attachments-3.com_attachments_site-com_attachments_ini -l "$1"
@@ -18,15 +25,3 @@ tx pull -f -r joomla-attachments-3.plg_search_attachments_ini -l "$1"
 tx pull -f -r joomla-attachments-3.plg_search_attachments_sys_ini -l "$1"
 tx pull -f -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini -l "$1"
 tx pull -f -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini -l "$1"
-
-if ( "$1" == "pt_PT" ) then
-    tx pull -f -r joomla-attachments-3.Portuguse_pt_PT_language_pack_sys_ini -l pt_PT
-endif
-
-if ( "$1" == "es_ES" ) then
-    tx pull -f -r joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini -l es_ES
-endif
-
-if ( "$1" == "sv_SE" ) then
-    tx pull -f -r joomla-attachments-3.Swedish_sv_SE_language_pack_sys_ini -l sv_SE
-endif
