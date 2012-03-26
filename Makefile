@@ -76,6 +76,7 @@ classdefs:
 
 purge:
 	@find . -name '*.bak' -exec rm {} \;
+	@rm -f .tx/*.bak
 
 unittests:
 	@echo
