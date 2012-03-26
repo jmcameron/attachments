@@ -10,6 +10,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_compon
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/admin/pt-PT.com_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/admin/qq-ZZ.com_attachments.ini
 type = INI
 
 [joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini]
@@ -20,6 +21,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_compon
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/admin/pt-PT.com_attachments.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.sys.ini
+#trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/admin/qq-ZZ.com_attachments.sys.ini
 type = INI
 
 [joomla-attachments-3.com_attachments_site-com_attachments_ini]
@@ -30,6 +32,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_compon
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/site/pt-PT.com_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/site/es-ES.com_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/site/sv-SE.com_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/site/qq-ZZ.com_attachments.ini
 type = INI
 
 [joomla-attachments-3.com_attachments_install-com_attachments_ini]
@@ -40,6 +43,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_compon
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_component/language/pt-PT/pt-PT.com_attachments.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/language/es-ES/es-ES.com_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/language/sv-SE/sv-SE.com_attachments.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/language/qq-ZZ/qq-ZZ.com_attachments.sys.ini
 type = INI
 
 
@@ -51,6 +55,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_plugin
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin/pt-PT.plg_content_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/es-ES.plg_content_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin/qq-ZZ.plg_content_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_content_attachments_sys_ini]
@@ -61,6 +66,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_plugin
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin/pt-PT.plg_content_attachments.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/es-ES.plg_content_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin/qq-ZZ.plg_content_attachments.sys.ini
 type = INI
 
 
@@ -72,6 +78,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_plugin
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin_framework/pt-PT.plg_attachments_attachments_plugin_framework.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_framework/es-ES.plg_attachments_attachments_plugin_framework.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin_framework/qq-ZZ.plg_attachments_attachments_plugin_framework.ini
 type = INI
 
 [joomla-attachments-3.plg_attachments_plugin_framework_sys_ini]
@@ -82,6 +89,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_plugin
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_plugin_framework/pt-PT.plg_attachments_attachments_plugin_framework.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_framework/es-ES.plg_attachments_attachments_plugin_framework.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin_framework/qq-ZZ.plg_attachments_attachments_plugin_framework.sys.ini
 type = INI
 
 
@@ -93,6 +101,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_for_co
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_for_content/pt-PT.plg_attachments_attachments_for_content.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_content/es-ES.plg_attachments_attachments_for_content.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_for_content/qq-ZZ.plg_attachments_attachments_for_content.ini
 type = INI
 
 [joomla-attachments-3.plg_attachments_for_content_sys_ini]
@@ -103,6 +112,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_for_co
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_for_content/pt-PT.plg_attachments_attachments_for_content.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_content/es-ES.plg_attachments_attachments_for_content.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_for_content/qq-ZZ.plg_attachments_attachments_for_content.sys.ini
 type = INI
 
 
@@ -114,6 +124,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_search
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_search/pt-PT.plg_search_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/es-ES.plg_search_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_search/qq-ZZ.plg_search_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_search_attachments_sys_ini]
@@ -124,6 +135,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_search
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_search/pt-PT.plg_search_attachments.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/es-ES.plg_search_attachments.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_search/qq-ZZ.plg_search_attachments.sys.ini
 type = INI
 
 
@@ -135,6 +147,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/insert_attachments
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/insert_attachments_token_btn_plugin/pt-PT.plg_editors-xtd_insert_attachments_token.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_token_btn_plugin/es-ES.plg_editors-xtd_insert_attachments_token.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/insert_attachments_token_btn_plugin/qq-ZZ.plg_editors-xtd_insert_attachments_token.ini
 type = INI
 
 [joomla-attachments-3.insert_attachments_token_btn_sys_ini]
@@ -145,6 +158,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/insert_attachments
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/insert_attachments_token_btn_plugin/pt-PT.plg_editors-xtd_insert_attachments_token.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_token_btn_plugin/es-ES.plg_editors-xtd_insert_attachments_token.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/insert_attachments_token_btn_plugin/qq-ZZ.plg_editors-xtd_insert_attachments_token.sys.ini
 type = INI
 
 
@@ -156,6 +170,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/add_attachment_btn
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/add_attachment_btn_plugin/pt-PT.plg_editors-xtd_add_attachment.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_plugin/es-ES.plg_editors-xtd_add_attachment.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/add_attachment_btn_plugin/qq-ZZ.plg_editors-xtd_add_attachment.ini
 type = INI
 
 [joomla-attachments-3.add_attachment_btn_sys_ini]
@@ -166,6 +181,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/add_attachment_btn
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/add_attachment_btn_plugin/pt-PT.plg_editors-xtd_add_attachment.sys.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_plugin/es-ES.plg_editors-xtd_add_attachment.sys.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/add_attachment_btn_plugin/qq-ZZ.plg_editors-xtd_add_attachment.sys.ini
 type = INI
 
 
@@ -173,10 +189,11 @@ type = INI
 source_file = show_attachments_in_editor_plugin/language/en-GB/en-GB.plg_system_show_attachments.ini
 source_lang = en_GB
 minimum_perc = 100
+trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/show_attachments_in_editor_plugin/et-EE.plg_system_show_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in_editor_plugin/es-ES.plg_system_show_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.ini
-trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
-trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/show_attachments_in_editor_plugin/et-EE.plg_system_show_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/show_attachments_in_editor_plugin/qq-ZZ.plg_system_show_attachments.ini
 type = INI
 
 [joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini]
@@ -187,6 +204,7 @@ trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/show_attachments_i
 trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/show_attachments_in_editor_plugin/pt-PT.plg_system_show_attachments.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in_editor_plugin/es-ES.plg_system_show_attachments.ini
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/show_attachments_in_editor_plugin/qq-ZZ.plg_system_show_attachments.ini
 type = INI
 
 
