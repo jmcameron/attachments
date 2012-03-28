@@ -25,6 +25,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_compone
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/admin/tr-TR.com_attachments.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_component/admin/uk-UA.com_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_component/admin/hr-HR.com_attachments.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/admin/qq-ZZ.com_attachments.ini
 type = INI
 
@@ -51,6 +52,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_compone
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/admin/tr-TR.com_attachments.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_component/admin/uk-UA.com_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_component/admin/hr-HR.com_attachments.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/admin/qq-ZZ.com_attachments.sys.ini
 type = INI
 
@@ -77,6 +79,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_compone
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/site/sv-SE.com_attachments.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/site/tr-TR.com_attachments.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_component/site/uk-UA.com_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_component/site/hr-HR.com_attachments.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/site/qq-ZZ.com_attachments.ini
 type = INI
 
@@ -103,6 +106,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_compone
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/language/sv-SE/sv-SE.com_attachments.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/language/tr-TR/tr-TR.com_attachments.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_component/language/uk-UA/uk-UA.com_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_component/language/hr-HR/hr-HR.com_attachments.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_component/language/qq-ZZ/qq-ZZ.com_attachments.sys.ini
 type = INI
 
@@ -130,6 +134,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_plugin/tr-TR.plg_content_attachments.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_plugin/uk-UA.plg_content_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_plugin/hr-HR.plg_content_attachments.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin/qq-ZZ.plg_content_attachments.ini
 type = INI
 
@@ -156,6 +161,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin/
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin/sv-SE.plg_content_attachments.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_plugin/tr-TR.plg_content_attachments.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_plugin/uk-UA.plg_content_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_plugin/hr-HR.plg_content_attachments.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin/qq-ZZ.plg_content_attachments.sys.ini
 type = INI
 
@@ -183,6 +189,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_plugin_framework/tr-TR.plg_attachments_attachments_plugin_framework.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_plugin_framework/uk-UA.plg_attachments_attachments_plugin_framework.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_plugin_framework/hr-HR.plg_attachments_attachments_plugin_framework.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin_framework/qq-ZZ.plg_attachments_attachments_plugin_framework.ini
 type = INI
 
@@ -209,6 +216,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_plugin_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_plugin_framework/sv-SE.plg_attachments_attachments_plugin_framework.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_plugin_framework/tr-TR.plg_attachments_attachments_plugin_framework.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_plugin_framework/uk-UA.plg_attachments_attachments_plugin_framework.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_plugin_framework/hr-HR.plg_attachments_attachments_plugin_framework.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_plugin_framework/qq-ZZ.plg_attachments_attachments_plugin_framework.sys.ini
 type = INI
 
@@ -236,6 +244,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_con
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_for_content/tr-TR.plg_attachments_attachments_for_content.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_for_content/uk-UA.plg_attachments_attachments_for_content.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_for_content/hr-HR.plg_attachments_attachments_for_content.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_for_content/qq-ZZ.plg_attachments_attachments_for_content.ini
 type = INI
 
@@ -262,6 +271,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_for_con
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_for_content/sv-SE.plg_attachments_attachments_for_content.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_for_content/tr-TR.plg_attachments_attachments_for_content.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_for_content/uk-UA.plg_attachments_attachments_for_content.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_for_content/hr-HR.plg_attachments_attachments_for_content.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_for_content/qq-ZZ.plg_attachments_attachments_for_content.sys.ini
 type = INI
 
@@ -289,6 +299,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_search/tr-TR.plg_search_attachments.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_search/uk-UA.plg_search_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_search/hr-HR.plg_search_attachments.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_search/qq-ZZ.plg_search_attachments.ini
 type = INI
 
@@ -315,6 +326,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_search/
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_search/sv-SE.plg_search_attachments.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_search/tr-TR.plg_search_attachments.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_search/uk-UA.plg_search_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_search/hr-HR.plg_search_attachments.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_search/qq-ZZ.plg_search_attachments.sys.ini
 type = INI
 
@@ -342,6 +354,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/insert_attachments_token_btn_plugin/tr-TR.plg_editors-xtd_insert_attachments_token.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/insert_attachments_token_btn_plugin/uk-UA.plg_editors-xtd_insert_attachments_token.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/insert_attachments_token_btn_plugin/hr-HR.plg_editors-xtd_insert_attachments_token.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/insert_attachments_token_btn_plugin/qq-ZZ.plg_editors-xtd_insert_attachments_token.ini
 type = INI
 
@@ -368,6 +381,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/insert_attachments_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/insert_attachments_token_btn_plugin/sv-SE.plg_editors-xtd_insert_attachments_token.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/insert_attachments_token_btn_plugin/tr-TR.plg_editors-xtd_insert_attachments_token.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/insert_attachments_token_btn_plugin/uk-UA.plg_editors-xtd_insert_attachments_token.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/insert_attachments_token_btn_plugin/hr-HR.plg_editors-xtd_insert_attachments_token.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/insert_attachments_token_btn_plugin/qq-ZZ.plg_editors-xtd_insert_attachments_token.sys.ini
 type = INI
 
@@ -395,6 +409,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/add_attachment_btn_plugin/tr-TR.plg_editors-xtd_add_attachment.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/add_attachment_btn_plugin/uk-UA.plg_editors-xtd_add_attachment.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/add_attachment_btn_plugin/hr-HR.plg_editors-xtd_add_attachment.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/add_attachment_btn_plugin/qq-ZZ.plg_editors-xtd_add_attachment.ini
 type = INI
 
@@ -421,6 +436,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/add_attachment_btn_
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/add_attachment_btn_plugin/sv-SE.plg_editors-xtd_add_attachment.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/add_attachment_btn_plugin/tr-TR.plg_editors-xtd_add_attachment.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/add_attachment_btn_plugin/uk-UA.plg_editors-xtd_add_attachment.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/add_attachment_btn_plugin/hr-HR.plg_editors-xtd_add_attachment.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/add_attachment_btn_plugin/qq-ZZ.plg_editors-xtd_add_attachment.sys.ini
 type = INI
 
@@ -448,6 +464,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/show_attachments_in_editor_plugin/tr-TR.plg_system_show_attachments.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/show_attachments_in_editor_plugin/uk-UA.plg_system_show_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/show_attachments_in_editor_plugin/hr-HR.plg_system_show_attachments.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/show_attachments_in_editor_plugin/qq-ZZ.plg_system_show_attachments.ini
 type = INI
 
@@ -474,6 +491,7 @@ trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/show_attachments_in
 trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/show_attachments_in_editor_plugin/sv-SE.plg_system_show_attachments.sys.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/show_attachments_in_editor_plugin/tr-TR.plg_system_show_attachments.sys.ini
 trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/show_attachments_in_editor_plugin/uk-UA.plg_system_show_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/show_attachments_in_editor_plugin/hr-HR.plg_system_show_attachments.sys.ini
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/show_attachments_in_editor_plugin/qq-ZZ.plg_system_show_attachments.sys.ini
 type = INI
 
