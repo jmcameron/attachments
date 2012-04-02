@@ -170,7 +170,13 @@ class AttachmentsController extends JController
 		$view = new AttachmentsViewUpload();
 
 		// Set up the view
-		AttachmentsHelper::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
+		if ( $new_parent ) {
+			$parent_id_str = (string)$parent_id . ",new";
+			}
+		else {
+			$parent_id_str = (string)$parent_id;
+			}
+		AttachmentsHelper::add_view_urls($view, 'upload', $parent_id_str, $parent_type, null, $from);
 
 		// Set up for editing the access level
 		if ( $params->get('allow_frontend_access_editing', false) ) {

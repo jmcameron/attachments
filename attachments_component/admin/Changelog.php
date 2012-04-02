@@ -28,9 +28,8 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-02-14 Fixed bug in handling errors when checking URLs.
    - 2012-02-23 Cleaned up quoting in DB calls.
    - 2012-03-08 Added jimports for JController to a few files.
-   - 2012-03-09 IE-specific fix for downloading filenames with special
-                characters in Internet Explorer.  Thanks to crassus168
-                (chris@gamehit.net) for suggestions for this fix.
+   - 2012-03-09 IE-specific fix for downloading filenames with special characters in Internet Explorer.
+                Thanks to crassus168 (chris@gamehit.net) for suggestions for this fix.
    - 2012-03-10 Fixed handling of showing attachments for editing articles
                 from category blog and category list.
    - 2012-03-10 Updated minor translation fix to search plugin code to resolve issues in Joomla 2.5.
@@ -39,6 +38,7 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-03-23 Fixed issue with redisplay after editing/deleting attachments from
 	            category blog view on front end.
    - 2012-03-23 Suppress extra info messages during installation.
+   - 2012-04-01 Fixed bug when adding URLs during creating an article from front end.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
