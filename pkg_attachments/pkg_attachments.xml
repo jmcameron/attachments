@@ -4,13 +4,13 @@
     <packagename>attachments</packagename>
     <copyright>(C) 2007-2011 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>3.0.3-Beta6</version>
+    <version>3.0.3-Beta7</version>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <packager>Jonathan M. Cameron</packager>
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
-    <creationDate>March 23, 2012</creationDate>
+    <creationDate>April  1, 2012</creationDate>
     <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS</description>
 
     <files folder="packages">
