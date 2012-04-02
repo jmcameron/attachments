@@ -999,7 +999,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Bulgarian:** by Stefan Ilivanov (1.3.4)
 * **Catalan:** by Jaume Jorba (2.2, 3.0)
 * **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
-* **Croatian:** Tanja Dragisic (1.3.4)
+* **Croatian:** Tanja Dragisic (3.0, 1.3.4)
 * **Czech:** by Tomas Udrzal (1.3.4)
 * **Dutch:** by Parvus (2.2, 3.0)
 * **Finnish:** by Tapani Lehtonen (2.2)
@@ -1021,7 +1021,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Slovenian:** by Matej Badalič (2.2, 3.0)
 * **Spanish:** by Manuel María Pérez Ayala (2.2, 3.0) and Carlos Alfaro (1.3.4)
 * **Swedish:** by Linda Maltanski (2.0) and Mats Elfström (1.3.4)
-* **Turkish:** by Kaya Zeren (2.0)
+* **Turkish:** by Kaya Zeren (3.0, 2.0)
 * **Ukrainian:** by Sergey Litvintsev (3.0)
 
 Many thanks to these translators!  If you would like to help translate
