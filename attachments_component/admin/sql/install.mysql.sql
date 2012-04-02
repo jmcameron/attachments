@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `display_name` VARCHAR(80) NOT NULL DEFAULT '',
     `description` VARCHAR(255) NOT NULL DEFAULT '',
     `icon_filename` VARCHAR(20) NOT NULL,
-    `access` int(11) NOT NULL DEFAULT '1',
+    `access` INT(11) NOT NULL DEFAULT '1',
     `state` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
     `user_field_1` VARCHAR(255) NOT NULL DEFAULT '',
     `user_field_2` VARCHAR(255) NOT NULL DEFAULT '',
