@@ -1743,7 +1743,9 @@ class AttachmentsHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('count(*)')->from('#__attachments');
-		$query->where('parent_id='.(int)$parent_id.' AND parent_type=' . $db->quote($parent_type));
+		$query->where('((parent_id='.(int)$parent_id . ') OR (parent_id is NULL))'.
+					  ' AND parent_type=' . $db->quote($parent_type) .
+					  ' AND parent_entity=' . $db->quote($parent_entity));
 		$query->where('access in ('.$user_levels.')');
 		$db->setQuery($query);
 		$total = $db->loadResult();
