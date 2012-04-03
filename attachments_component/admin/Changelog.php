@@ -39,6 +39,8 @@ Attachments 3.x Extension for Joomla 1.7+
 	            category blog view on front end.
    - 2012-03-23 Suppress extra info messages during installation.
    - 2012-04-01 Fixed bug when adding URLs during creating an article from front end.
+   - 2012-04-03 Fix to make sure that pre-existing orphaned attachments are displayed
+	            when creating an article.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
