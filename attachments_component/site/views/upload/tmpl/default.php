@@ -212,9 +212,9 @@ if ( $lang->isRTL() ) {
 	if ( $parent_id || ($parent_id === 0) ) {
 		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();
-		$controller->display($parent_id, $parent_type, $parent_entity,
-							 'ATTACH_EXISTING_ATTACHMENTS',
-							 false, false, true, $this->from);
+		$controller->displayString($parent_id, $parent_type, $parent_entity,
+								   'ATTACH_EXISTING_ATTACHMENTS',
+								   false, false, true, $this->from);
 		}
 
 	?>
