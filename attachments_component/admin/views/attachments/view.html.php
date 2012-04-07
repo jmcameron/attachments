@@ -66,7 +66,8 @@ class AttachmentsViewAttachments extends JView
 			}
 		$level_name = Array();
 		foreach ($levels as $level) {
-			$level_name[$level->id] = JText::_($level->title);
+			// NOTE: We do not translate the access level title
+			$level_name[$level->id] = $level->title;
 			}
 		$this->level_name = $level_name;
 
