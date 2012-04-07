@@ -48,7 +48,7 @@ class AttachmentsControllerAttachments extends JController
 	/**
 	 * Disable the default display function
 	 */
-	public function display()
+	public function display($cachable = false, $urlparams = false)
 	{
 		// Do nothing (not sure why this works...)
 	}
