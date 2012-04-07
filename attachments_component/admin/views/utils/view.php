@@ -32,7 +32,7 @@ class AttachmentsViewAdminUtils extends JView
 	/**
 	 * Display the view
 	 */
-	public function display()
+	public function display($tpl = null)
 	{
 		$document = JFactory::getDocument();
 		$app = JFactory::getApplication();
