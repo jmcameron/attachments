@@ -33,7 +33,6 @@ parts: $(ZIPS)
 	@rm -f $@
 	@(cd $*; zip -r ../$@ * $(ZIPIGNORES))
 
-
 $(ZIPFILE): $(ZIPS)
 	@echo "-------------------------------------------------------"
 	@echo "Creating extension zip file: $(ZIPFILE)"
@@ -41,6 +40,7 @@ $(ZIPFILE): $(ZIPS)
 	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
 	@echo "-------------------------------------------------------"
 	@echo "Finished creating package $(ZIPFILE)."
+	@scp $@ jmcameron:/home/jmcameron/webapps/jmcameron/attachments/
 	@echo
 
 updateweb:
