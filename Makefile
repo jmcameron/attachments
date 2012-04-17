@@ -40,6 +40,8 @@ $(ZIPFILE): $(ZIPS)
 	@(cd pkg_attachments; zip -r ../$@ * $(ZIPIGNORES))
 	@echo "-------------------------------------------------------"
 	@echo "Finished creating package $(ZIPFILE)."
+	@echo "-------------------------------------------------------"
+	@echo "Copying new package to jmcameron.net"
 	@scp $@ jmcameron:/home/jmcameron/webapps/jmcameron/attachments/
 	@echo
 
