@@ -154,7 +154,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if the file was successfully written
 	 */
-	public function write_empty_index_html($dir)
+	public static function write_empty_index_html($dir)
 	{
 		jimport('joomla.filesystem.file');
 
@@ -175,7 +175,7 @@ class AttachmentsHelper
 	 *
 	 * @param string $filename path of the file to have its containing directory cleaned.
 	 */
-	public function clean_directory($filename)
+	public static function clean_directory($filename)
 	{
 		jimport('joomla.filesystem.folder');
 
@@ -235,7 +235,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if successful
 	 */
-	public function setup_upload_directory($upload_dir, $secure)
+	public static function setup_upload_directory($upload_dir, $secure)
 	{
 		$subdir_ok = false;
 
@@ -311,7 +311,7 @@ class AttachmentsHelper
 	 * @param int $attachment_id id for the attachment
 	 * @param string $from the from ($option) value
 	 */
-	public function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
+	public static function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
 		$url_base = "index.php?option=com_attachments";
@@ -389,7 +389,7 @@ class AttachmentsHelper
 	 * NOTE: The caller should set up all the parent info in the record before calling this
 	 *		 (see $parent->* below for necessary items)
 	 */
-	public function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
+	public static function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
 	{
 		$user = JFactory::getUser();
 		$db = JFactory::getDBO();
@@ -1091,7 +1091,7 @@ class AttachmentsHelper
 	 *
 	 * @return true if the URL is okay, or an error object if not
 	 */
-	public function get_url_info($raw_url, &$attachment, $verify, $relative_url)
+	public static function get_url_info($raw_url, &$attachment, $verify, $relative_url)
 	{
 		// Check the URL for existence
 		// * Get 'size' (null if the there were errors accessing the link,
@@ -1291,8 +1291,8 @@ class AttachmentsHelper
 	 *
 	 * @return an error message if there is a problem
 	 */
-	public function add_url(&$attachment, &$parent, $verify, $relative_url=false,
-							$update=false, $attachment_id=false)
+	public static function add_url(&$attachment, &$parent, $verify, $relative_url=false,
+								   $update=false, $attachment_id=false)
 	{
 		$user = JFactory::getUser();
 
@@ -1532,7 +1532,7 @@ class AttachmentsHelper
 	 *
 	 * @param int $id the attachment id
 	 */
-	public function download_attachment($id)
+	public static function download_attachment($id)
 	{
 		$user	= JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->authorisedLevels()));
@@ -1635,7 +1635,7 @@ class AttachmentsHelper
 	 *
 	 * @return '' if successful, else an error message
 	 */
-	public function switch_parent(&$attachment, $old_parent_id, $new_parent_id,
+	public static function switch_parent(&$attachment, $old_parent_id, $new_parent_id,
 								  $new_parent_type=null, $new_parent_entity=null)
 	{
 		// Switch the parent as specified, renaming the file as necessary
@@ -1730,8 +1730,9 @@ class AttachmentsHelper
 	 *
 	 * @return the html as a string
 	 */
-	public function attachmentsListHTML($parent_id, $parent_type, $parent_entity, $user_can_add, $Itemid, $from,
-										$show_file_links=true, $allow_edit=true)
+	public static function attachmentsListHTML($parent_id, $parent_type, $parent_entity,
+											   $user_can_add, $Itemid, $from,
+											   $show_file_links=true, $allow_edit=true)
 	{
 		$app = JFactory::getApplication();
 
