@@ -62,7 +62,7 @@ class AttachmentsController extends JController
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	object	The model.
 	 */
-	public function getModel($name = 'Attachments', $prefix = 'AttachmentModel')
+	public function getModel($name = 'Attachments', $prefix = 'AttachmentModel', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

@@ -34,7 +34,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 *
 	 * @return	object	The model.
 	 */
-	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel')
+	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
