@@ -43,6 +43,8 @@ Attachments 3.x Extension for Joomla 1.7+
 	            when creating an article.
    - 2012-04-06 Removed code to translate access levels.  Apparently they are not translated!
    - 2012-04-06 Added code to warn user there are bad attachments (eg, ones whose parents are uninstalled).
+   - 2012-04-17 Fixed several 'strict PHP' issues.
+   - 2012-04-20 Fixed issue with the display of attachments for categories.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
