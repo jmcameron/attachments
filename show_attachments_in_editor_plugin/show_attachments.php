@@ -40,7 +40,7 @@ class plgSystemShow_attachments extends JPlugin
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
-		if ( ($view == 'category') && ($layout == 'blog') ) {
+		if ( $view == 'category' ) {
 
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
@@ -152,8 +152,8 @@ class plgSystemShow_attachments extends JPlugin
 			$parent_id = JRequest::getInt('id', null);
 			}
 
-		// Deal with the case where we are displaying a category blog
-		if ( $view == 'category' AND $layout == 'blog' ) {
+		// Deal with the case where we are displaying a category blog or list
+		if ( $view == 'category' ) {
 			$parent_entity = 'category';
 			$parent_id = JRequest::getInt('id', null);
 			}
@@ -243,7 +243,7 @@ class plgSystemShow_attachments extends JPlugin
 			JResponse::setBody($body);
 			}
 
-		elseif ( $parent_id && ($view == 'category') && ($layout == 'blog') ) {
+		elseif ( $parent_id && ($view == 'category') ) {
 
 			// Display attachments lists for category descriptions!
 
