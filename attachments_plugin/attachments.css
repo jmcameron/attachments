@@ -11,6 +11,7 @@ div.attachmentsContainer {
 div.attachmentsList table {
     background: transparent;
     border: 1px solid #C0C0C0;
+    clear: both;
     font-size: 90%;
     font-weight: bold;
     line-height: 160%;
