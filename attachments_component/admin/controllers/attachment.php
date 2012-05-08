@@ -73,7 +73,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)' );
 			}
 
 		// Access check.
@@ -358,7 +358,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			exit();
 			}
 
-		// Make sure this user has permission to upload (should never fail with admin?)
+		// Make sure this user has permission to upload
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 50)';
 			JError::raiseError(500, $errmsg);
@@ -559,8 +559,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function edit($key = null, $urlVar = null)
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		if ( !(JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
+			   JFactory::getUser()->authorise('core.edit.own', 'com_attachments')) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		$uri = JFactory::getURI();
@@ -947,6 +948,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$parent->title = $parent->getTitle($attachment->parent_id, $parent_entity);
 			}
 
+		// Check to make sure the user has permissions to edit the attachment
+		if ( !$parent->userMayEditAttachment($attachment) ) {
+			// ??? Add better error message
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			}
+
 		// Double-check to see if the URL changed
 		$old_url = JRequest::getString('old_url');
 		if ( !$new_uri_type && $old_url && ($old_url != $attachment->url) ) {
@@ -1191,8 +1198,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function delete_warning()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
+				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		// Make sure we have a valid attachment ID

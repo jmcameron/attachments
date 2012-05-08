@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 	}
 
 jimport('joomla.application.component.controller');

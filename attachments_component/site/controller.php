@@ -76,7 +76,7 @@ class AttachmentsController extends JController
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		require_once(JPATH_COMPONENT_SITE.'/helper.php');
@@ -514,7 +514,7 @@ class AttachmentsController extends JController
 
 		// Check to make sure we can edit it
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		// Make sure the parent exists

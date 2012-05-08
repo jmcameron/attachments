@@ -120,7 +120,7 @@ class AttachmentsController extends JController
 	{
 		// Access check
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		// Set up the tooltip behavior

@@ -163,7 +163,7 @@ class AttachmentsViewAttachments extends JView
 			JToolBarHelper::addNewX('attachment.add');
 			}
 
-		if ($canDo->get('core.edit')) {
+		if ($canDo->get('core.edit') OR $canDo->get('core.edit.own') ) {
 			JToolBarHelper::editListX('attachment.edit');
 			}
 
@@ -173,7 +173,7 @@ class AttachmentsViewAttachments extends JView
 			JToolBarHelper::unpublishList('attachments.unpublish');
 			}
 
-		if ($canDo->get('core.delete')) {
+		if ($canDo->get('core.delete') OR $canDo->get('attachments.delete.own')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::deleteListX('', 'attachments.delete');
 			}
