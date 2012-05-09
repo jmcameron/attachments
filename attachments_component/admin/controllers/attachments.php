@@ -133,94 +133,64 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 */
 	public function delete()
 	{
-		// If this persion may delete the attachment, let them!
-		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
-				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+		// If this persion may delete any attachment, let them!
+		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
 		// Check for request forgeries
 		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
-
-		// Get ready
-		$app = JFactory::getApplication();
-		jimport('joomla.filesystem.file');
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Get attachments to remove from the request
 		$cid = JRequest::getVar('cid', array(), '', 'array');
 
 		if (count($cid)) {
 
-			$model		= $this->getModel('Attachment');
-			$attachment = $model->getTable();
+			$cids = implode(',', $cid);
 
-			JPluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
-
-			// Loop through the attachments and delete them one-by-one
-			foreach ($cid as $attachment_id)
-			{
-				// Load the attachment object
-				$id = (int)$attachment_id;
-				if ( ($id == 0) OR !$attachment->load($id) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
-					JError::raiseError(500, $errmsg);
-					}
-				$parent_id = $attachment->parent_id;
-				$parent_type = $attachment->parent_type;
-				$parent_entity = $attachment->parent_entity;
-
-				// Get the article/parent handler
-				JPluginHelper::importPlugin('attachments');
-				$apm = getAttachmentsPluginManager();
-				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
-					JError::raiseError(500, $errmsg);
-					}
-				$parent = $apm->getAttachmentsPlugin($parent_type);
-
-				// If we may not delete it, complain!
-				if ( !$parent->userMayDeleteAttachment($attachment) )
-				{
-					$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-					$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
-											 $parent_entity, $attachment->filename, $id);
-					$app->enqueueMessage($errmsg, 'warning');
-					continue;
+			// Get all the attachments to be deleted
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
+			$db->setQuery($query);
+			$attachments = $db->loadObjectList();
+			if ( $db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERR 70)';
+				JError::raiseError(500, $errmsg);
 				}
 
-				// Delete the actual file
-				if ( JFile::exists($attachment->filename_sys) )
-				{
+			// First delete the actual attachment files
+			jimport('joomla.filesystem.file');
+			require_once(JPATH_COMPONENT_SITE.'/helper.php');
+			foreach ($attachments as $attachment) {
+				if ( JFile::exists($attachment->filename_sys) ) {
 					JFile::delete($attachment->filename_sys);
 					AttachmentsHelper::clean_directory($attachment->filename_sys);
+					}
 				}
 
-				// Delete the record in the attachments table
-				$db = JFactory::getDBO();
-				$query = $db->getQuery(true);
-				$query->delete('#__attachments')->where("id=".(int)$id);
-				$db->setQuery($query);
-				if (!$db->query()) {
-					$errmsg = $db->getErrorMsg() . ' (ERRN)';
-					JError::raiseError(500, $errmsg);
-					}
-			}
+			// Delete the entries in the attachments table
+			$query = $db->getQuery(true);
+			$query->delete('#__attachments')->where("id IN ( $cids )");
+			$db->setQuery($query);
+			if (!$db->query()) {
+				$errmsg = $db->getErrorMsg() . ' (ERR 71)';
+				JError::raiseError(500, $errmsg);
+				}
 
 			// Figure out how to redirect
 			$from = JRequest::getWord('from');
 			$known_froms = array('frontpage', 'article', 'editor', 'closeme');
 			if ( in_array( $from, $known_froms ) ) {
 
-				// Get the parent info from the last attachment
-				$parent_id	   = $attachment->parent_id;
-				$parent_type   = $attachment->parent_type;
-				$parent_entity = $attachment->parent_entity;
+				// Get the parent info from the first attachment
+				$parent_id	   = $attachments[0]->parent_id;
+				$parent_type   = $attachments[0]->parent_type;
+				$parent_entity = $attachments[0]->parent_entity;
 
 				// Get the article/parent handler
-				// ??? JPluginHelper::importPlugin('attachments');
-				// ??? $apm = getAttachmentsPluginManager();
+				JPluginHelper::importPlugin('attachments');
+				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 72)';
 					JError::raiseError(500, $errmsg);
