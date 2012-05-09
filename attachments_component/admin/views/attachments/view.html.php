@@ -167,7 +167,7 @@ class AttachmentsViewAttachments extends JView
 			JToolBarHelper::editListX('attachment.edit');
 			}
 
-		if ($canDo->get('core.edit.state')) {
+		if ($canDo->get('core.edit.state') OR $canDo->get('attachments.edit.state.own')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::publishList('attachments.publish');
 			JToolBarHelper::unpublishList('attachments.unpublish');

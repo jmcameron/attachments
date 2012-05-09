@@ -34,10 +34,17 @@ class AttachmentsPermissions
 
 		$assetName = 'com_attachments';
 
-		$actions = array( 'core.admin', 'core.manage',
-						  'core.create', 'core.delete', 'core.edit.state',
-						  'core.edit', 'core.edit.own',
-						  'attachments.delete.own'
+		$actions = array( 'core.admin',
+						  'core.manage',
+						  'core.create',
+						  'core.delete',
+						  'core.edit',
+						  'core.edit.state',
+						  'core.edit.own',
+						  'attachments.edit.state.own',
+						  'attachments.delete.own',
+						  'attachments.edit.state.ownparent',
+						  'attachments.delete.ownparent'
 						 );
 
 		foreach ($actions as $action) {

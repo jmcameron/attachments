@@ -143,6 +143,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get ready
+		$app = JFactory::getApplication();
 		jimport('joomla.filesystem.file');
 		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
@@ -151,8 +152,11 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 		if (count($cid)) {
 
-			$model		= $this->getModel('attachment');
+			$model		= $this->getModel('Attachment');
 			$attachment = $model->getTable();
+
+			JPluginHelper::importPlugin('attachments');
+			$apm = getAttachmentsPluginManager();
 
 			// Loop through the attachments and delete them one-by-one
 			foreach ($cid as $attachment_id)
@@ -163,7 +167,6 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
 					JError::raiseError(500, $errmsg);
 					}
-
 				$parent_id = $attachment->parent_id;
 				$parent_type = $attachment->parent_type;
 				$parent_entity = $attachment->parent_entity;
@@ -180,7 +183,6 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				// If we may not delete it, complain!
 				if ( !$parent->userMayDeleteAttachment($attachment) )
 				{
-					$app = JFactory::getApplication();
 					$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 					$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
 											 $parent_entity, $attachment->filename, $id);
@@ -217,8 +219,8 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				$parent_entity = $attachment->parent_entity;
 
 				// Get the article/parent handler
-				JPluginHelper::importPlugin('attachments');
-				$apm = getAttachmentsPluginManager();
+				// ??? JPluginHelper::importPlugin('attachments');
+				// ??? $apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 72)';
 					JError::raiseError(500, $errmsg);
