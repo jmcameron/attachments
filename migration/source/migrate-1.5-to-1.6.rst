@@ -20,15 +20,23 @@ Necessary Conditions for Successful Attachments Migration
    2.5+).  Although it might work with Joomla 1.6.6, I encourage you to
    upgrade to at least 1.7 before attempting migration of Attachments.
 
- * You should install a released version of Attachments 3.0.1 (or later) on
+ * You should install a released version of Attachments 3.0.2 (or later) on
    your Joomla 1.6.6/1.7/2.5+ system before proceeding.
    
    .. warning::
-
       There were issues with the original release 3.0 of Attachments for
       1.6/1.7 and previous RC and beta releases that affect migration.  These
       issues were fixed in Attachments version 3.0.1 so make sure you use at
       least version 3.0.1.  Normally, you should use the latest version.
+
+   .. warning::
+      If you use a tool to migrate your site from Joomla 1.5 to Joomla
+      1.7/2.5+, it may try to migrate the Attachments extension.  This will
+      not work properly.  Before you install Attachments, you will need to
+      uninstall any old version of Attachments and make sure that all the
+      files related to Attachments extensions are deleted.  If you have any
+      difficulty doing this, please contact me (see my email at the bottom of
+      this page).
 
  * The article ID's and Titles must be identical in the Joomla 1.5 system and
    the Joomla 1.6/1.7/2.5+ system.  If there are differences, the migration
