@@ -667,7 +667,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 				$new_parent = $apm->getAttachmentsPlugin($new_parent_type);
 				$new_parent_entity = $new_parent->getCanonicalEntityId($new_parent_entity);
-				$new_parent_entity_name = JText::_($new_parent_entity);
+				$new_parent_entity_name = JText::_('ATTACH_' . $new_parent_entity);
 
 				// Set up the 'select parent' button
 				$selpar_label = JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $new_parent_entity_name);

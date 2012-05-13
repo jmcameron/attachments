@@ -269,7 +269,7 @@ class AttachmentsModelAttachments extends JModel
 				JError::raiseError(500, $errmsg);
 				}
 
-			$this->_parent_entity_name = JText::_($this->getParentEntity());
+			$this->_parent_entity_name = JText::_('ATTACH_' . $this->getParentEntity());
 			}
 
 		return $this->_parent_entity_name;
