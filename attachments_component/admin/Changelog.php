@@ -48,7 +48,8 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-04-20 Fixed issue with attachments list display in editor displaying badly when the
                 'toggle editor' button is used.
    - 2012-05-07 Fixed issue with missing translation items.
-   - 2012-05-17 Added trunction of filenames if longer than the filename field in the database.
+   - 2012-05-11 Added trunction of filenames if longer than the filename field in the database.
+   - 2012-05-18 Added warning messages when a filename is truncated.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms

@@ -426,9 +426,25 @@ class AttachmentsHelper
 		$filename = JString::str_ireplace("\'", "'", $_FILES['upload']['name']);
 		$ftype = $_FILES['upload']['type'];
 
-		// Truncate the filename, if necessary
+		// Truncate the filename, if necessary and alert the user
 		if (JString::strlen($filename) > AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH) {
 			$filename = AttachmentsHelper::truncate_filename($filename, AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH);
+			$msg = JText::_('ATTACH_WARNING_FILENAME_TRUNCATED');
+			$app = JFactory::getApplication();
+			if ( $app->isAdmin() ) {
+				$lang = JFactory::getLanguage();
+				if ( $lang->isRTL() ) {
+					$msg = "'$filename' " . $msg;
+					}
+				else {
+					$msg = $msg . " '$filename'";
+					}
+				$app->enqueueMessage($msg, 'warning');
+				}
+			else {
+				$msg .= "\\n \'$filename\'";
+				echo "<script type=\"text/javascript\">alert('$msg')</script>";
+				}
 			}
 
 		$from = JRequest::getWord('from');
