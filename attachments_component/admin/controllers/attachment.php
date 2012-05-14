@@ -728,7 +728,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Suppress the display filename if we are switching from file to url
 		$display_name = $attachment->display_name;
-		if ( $update && (($update == 'file') || ($update != $attachment->uri_type)) ) {
+		if ( $update && ($update != $attachment->uri_type) ) {
 			$display_name = '';
 			}
 

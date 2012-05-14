@@ -49,7 +49,8 @@ Attachments 3.x Extension for Joomla 1.7+
                 'toggle editor' button is used.
    - 2012-05-07 Fixed issue with missing translation items.
    - 2012-05-11 Added trunction of filenames if longer than the filename field in the database.
-   - 2012-05-18 Added warning messages when a filename is truncated.
+   - 2012-05-13 Added warning messages when a filename is truncated.
+   - 2012-05-13 Updated behavior: Do not kill display-name when updating/replacing a file.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
