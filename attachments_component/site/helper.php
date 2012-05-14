@@ -71,7 +71,7 @@ class AttachmentsHelper
 	 *
 	 * @return the truncated filename
 	 */
-	protected function truncate_filename($raw_filename, $maxlen)
+	protected static function truncate_filename($raw_filename, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
 		if ( ($maxlen == 0) || (strlen($raw_filename) <= $maxlen) ) {
@@ -111,7 +111,7 @@ class AttachmentsHelper
 	 *
 	 * @return the truncated URL
 	 */
-	protected function truncate_url($raw_url, $maxlen)
+	protected static function truncate_url($raw_url, $maxlen)
 	{
 		// Do not truncate if $maxlen is 0 or no truncation is needed
 		if ( ($maxlen == 0) || (strlen($raw_url) <= $maxlen) ) {
@@ -425,6 +425,11 @@ class AttachmentsHelper
 		//			single quotes in filenames to work correctly.)
 		$filename = JString::str_ireplace("\'", "'", $_FILES['upload']['name']);
 		$ftype = $_FILES['upload']['type'];
+
+		// Truncate the filename, if necessary
+		if (JString::strlen($filename) > AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH) {
+			$filename = AttachmentsHelper::truncate_filename($filename, AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH);
+			}
 
 		$from = JRequest::getWord('from');
 
@@ -962,7 +967,7 @@ class AttachmentsHelper
 	 *
 	 * @return an object (if successful) with the parts as attributes (or a error string in case of error)
 	 */
-	private function parse_url(&$raw_url, $relative_url)
+	private static function parse_url(&$raw_url, $relative_url)
 	{
 		// Set up the return object
 		$result = new JObject();

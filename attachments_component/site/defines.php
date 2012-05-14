@@ -58,6 +58,11 @@ class AttachmentsDefines
 	static $DEFAULT_ATTACHMENTS_ACL_PERMISSIONS = '{"attachments.delete.own":{"6":1,"3":1},"attachments.edit.state.own":{"6":1,"4":1},"attachments.edit.state.ownparent":{"6":1,"4":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}';
 
 
+	/** Maximum filename length (MUST match the `filename` SQL definition)
+	 */
+	static $MAXIMUM_FILENAME_LENGTH = 80;
+	
+
 	/** Attachments subdirectory
 	 *
 	 * NOTE: If you have any existing attachments, follow one of these procedures
