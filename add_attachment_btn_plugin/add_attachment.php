@@ -72,13 +72,13 @@ class plgButtonAdd_attachment extends JPlugin
 			$parent_id = (int)$cid[0];
 			}
 		if ( $parent_id == 0) {
-			$nid = JRequest::getInt('id');
-			if ( !is_null($nid) ) {
-				$parent_id = (int)$nid;
+			$a_id = JRequest::getInt('a_id');
+			if ( !is_null($a_id) ) {
+				$parent_id = (int)$a_id;
 				}
 			}
 		if ( $parent_id == 0) {
-			$nid = JRequest::getInt('a_id');
+			$nid = JRequest::getInt('id');
 			if ( !is_null($nid) ) {
 				$parent_id = (int)$nid;
 				}
@@ -88,7 +88,7 @@ class plgButtonAdd_attachment extends JPlugin
 		$item_id = JRequest::getInt('Itemid');
 		$menu = $app->getMenu();
 		$menu_item = $menu->getItem($item_id);
-		if ( $menu_item AND ($menu_item->query['view'] == 'category') ) {
+		if ( $menu_item AND ($menu_item->query['view'] == 'category') AND empty($a_id) ) {
 			$parent_entity = 'article';
 			$parent_id = NULL;
 			}
