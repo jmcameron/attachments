@@ -5,7 +5,7 @@
       <description>Attachments for Joomla 1.6+</description>
       <element>pkg_attachments</element>
       <type>package</type>
-      <version>3.0.3-Beta12</version>
+      <version>3.0.3-Beta13</version>
       <targetplatform name="joomla" version="1.7" />
 
       <maintainer>Jonathan M. Cameron</maintainer>
