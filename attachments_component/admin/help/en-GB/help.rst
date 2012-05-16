@@ -884,6 +884,11 @@ Warnings
        level is not set to 'Public'.
      - If your site uses caching, try clearing the caches and refreshing the
        page.
+     - If you not seeing attachments for a category in a category blog view
+       and you are using a custom template, it may be necessary to make a
+       small modification to the template in order to see the category
+       attachements.  Feel free to contact the author for help with this
+       issue (see the contact info at the bottom of this page).
 
 * If you encounter limits on the sizes of files that you attempt to upload,
   try adding the following lines to the .htaccess file in the root of
