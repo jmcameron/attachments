@@ -40,7 +40,7 @@ class AttachmentsControllerAttachments extends JController
 	 */
 	public function noop()
 	{
-		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 129)';
+		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 150)';
 		JError::raiseError(500, $errmsg);
 	}
 
@@ -78,7 +78,7 @@ class AttachmentsControllerAttachments extends JController
 		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
 		$model = new AttachmentsModelAttachments();
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 131)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 151)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -102,7 +102,7 @@ class AttachmentsControllerAttachments extends JController
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 132)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 152)';
 			JError::raiseError(500, $errmsg);
 			}
 		$view->setModel($model);

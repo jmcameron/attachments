@@ -288,7 +288,7 @@ class AttachmentsModelAttachments extends JModelList
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S',
 										 $parent_type . ':' . $parent_entity .
-										 ' (ID ' .(string)$item->id . ')') . ' (ERR 80)';
+										 ' (ID ' .(string)$item->id . ')') . ' (ERR 99)';
 				$app = JFactory::getApplication();
 				$app->enqueueMessage($errmsg, 'warning');
 				continue;

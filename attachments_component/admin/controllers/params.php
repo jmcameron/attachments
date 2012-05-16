@@ -46,7 +46,7 @@ class AttachmentsControllerParams extends JControllerForm
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 90)');
 			}
 
 		// Get the component parameters
@@ -64,7 +64,7 @@ class AttachmentsControllerParams extends JControllerForm
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors) . ' (ERR 74)');
+			JError::raiseError(500, implode("\n", $errors) . ' (ERR 91)');
 			return false;
 		}
 

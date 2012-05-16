@@ -82,7 +82,7 @@ class AttachmentsImport
 		// Open the CSV file
 		$f = @fopen($filename, 'r');
 		if ( !$f ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 26)';
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 29)';
 			}
 
 		// Parse the first row to process field names and indeces
@@ -121,7 +121,7 @@ class AttachmentsImport
 			// get the attachment ID
 			$attachment_id = $adata[$field['id']];
 			if ( !is_numeric($attachment_id) ) {
-				return JText::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . ' (ERR 27)';
+				return JText::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . ' (ERR 30)';
 				}
 			$attachment_id = (int)$attachment_id;
 
@@ -131,7 +131,7 @@ class AttachmentsImport
 
 			// Get the attachment parent object
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 28)';
+				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 31)';
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -140,7 +140,7 @@ class AttachmentsImport
 
 				// Make sure a parent with the specified ID exists
 				if ( !$parent->parentExists($parent_id, $parent_entity) ) {
-					return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . ' (ERR 29)';
+					return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . ' (ERR 32)';
 					}
 
 				// Double-check by comparing the title
@@ -148,7 +148,7 @@ class AttachmentsImport
 				$parent_title = $parent->getTitle($parent_id, $parent_entity);
 				if ( strtolower($parent_title) != strtolower($attachment_parent_title) ) {
 					return JText::sprintf('ATTACH_ERROR_PARENT_TITLE_MISMATCH_ID_N_TITLE_S_S', $parent_id,
-										  $parent_title, $attachment_parent_title) . ' (ERR 30)';
+										  $parent_title, $attachment_parent_title) . ' (ERR 33)';
 					}
 				}
 
@@ -161,11 +161,11 @@ class AttachmentsImport
 			$creator_username = $db->loadResult();
 			if ( empty($creator_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
-									  $creator_id, $attachment_creator_username) . ' (ERR 31)';
+									  $creator_id, $attachment_creator_username) . ' (ERR 34)';
 				}
 			if ( strtolower($creator_username) != strtolower($attachment_creator_username) ) {
 				return JText::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
-									  $creator_id, $attachment_creator_username, $creator_username) . ' (ERR 32)';
+									  $creator_id, $attachment_creator_username, $creator_username) . ' (ERR 35)';
 				}
 
 			// Check the modifier name
@@ -177,11 +177,11 @@ class AttachmentsImport
 			$modifier_username = $db->loadResult();
 			if ( empty($modifier_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
-									  $modifier_id, $attachment_modifier_username) . ' (ERR 33)';
+									  $modifier_id, $attachment_modifier_username) . ' (ERR 36)';
 				}
 			if ( strtolower($modifier_username) != strtolower($attachment_modifier_username) ) {
 				return JText::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
-									  $modifier_id, $attachment_modifier_username, $modifier_username) . ' (ERR 34)';
+									  $modifier_id, $attachment_modifier_username, $modifier_username) . ' (ERR 37)';
 				}
 
 			// Construct an attachments entry
@@ -192,7 +192,7 @@ class AttachmentsImport
 
 				// The attachment ID cannot be 0 for updating!
 				if ( $attachment_id == 0 ) {
-					return JText::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . ' (ERR 35)';
+					return JText::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . ' (ERR 38)';
 					}
 
 				// Load the data from the attachment to be updated (or create new one)
@@ -226,7 +226,7 @@ class AttachmentsImport
 					$ids_ok[] = $attachment->getDbo()->insertid();
 					}
 				else {
-					return JText::sprintf('ATTACH_ERROR_STORING_ATTACHMENT_S', $attachment->getError()) . ' (ERR 36)';
+					return JText::sprintf('ATTACH_ERROR_STORING_ATTACHMENT_S', $attachment->getError()) . ' (ERR 39)';
 					}
 				}
 			}
@@ -256,7 +256,7 @@ class AttachmentsImport
 				$field[$field_name] = $i;
 				}
 			else {
-				return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', $field_name) . ' (ERR 37)';
+				return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', $field_name) . ' (ERR 40)';
 				}
 			}
 
@@ -269,7 +269,7 @@ class AttachmentsImport
 					$missing[] = $fname;
 					}
 				}
-			return JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(',',$missing)) . ' (ERR 38)';
+			return JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(',',$missing)) . ' (ERR 41)';
 			}
 
 		return $field;
