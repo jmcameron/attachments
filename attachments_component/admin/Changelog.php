@@ -52,6 +52,8 @@ Attachments 3.x Extension for Joomla 1.7+
    - 2012-05-13 Added warning messages when a filename is truncated.
    - 2012-05-13 Updated behavior: Do not kill display-name when updating/replacing a file.
    - 2012-05-14 Fixed issue with adding attachments while editing an article (in category list/blog)
+   - 2012-05-15 Updated most of the error numbers, added a warning about potential templates
+	            problems in the category blog view
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
