@@ -40,18 +40,27 @@ div.attachmentsList tbody tr {
     background: transparent;
 }
 
-#div.attachmentsList tbody tr.odd,
-div.attachmentsList tbody tr.odd {
+#main div.attachmentsList tbody tr.odd,
+#main div.attachmentsList table tbody tr.odd td,
+div.attachmentsList tbody tr.odd,
+div.attachmentsList table tbody tr.odd td
+{
     background: transparent;
 }
 
 #main div.attachmentsList tbody tr.even,
-div.attachmentsList tbody tr.even {
+#main div.attachmentsList tbody tr.even td,
+div.attachmentsList tbody tr.even td,
+div.attachmentsList tbody tr.even
+{
     background-color: #EEE;
 }
 
-#div.attachmentsList  tr.unpublished,
-div.attachmentsList  tr.unpublished {
+#main div.attachmentsList  tr.unpublished,
+#main div.attachmentsList  tr.unpublished td,
+div.attachmentsList  tr.unpublished,
+div.attachmentsList  tr.unpublished td 
+{
     background-color: #AAA;
 }
 
