@@ -1006,6 +1006,7 @@ Thanks to these translators (available versions shown in parentheses):
 * **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
 * **Croatian:** Tanja Dragisic (3.0, 1.3.4)
 * **Czech:** by Tomas Udrzal (1.3.4)
+* **Danish:** by Sune Folkmann (3.0), Villy Feltmann (2.2), Bo Urskov (1.3.4)
 * **Dutch:** by Parvus (2.2, 3.0)
 * **Finnish:** by Tapani Lehtonen (2.2)
 * **French:** by Marc-André Ladouceur (2.2, 3.0), Yann Kerviel (3.0), and Pascal Adalian (1.3.4)
