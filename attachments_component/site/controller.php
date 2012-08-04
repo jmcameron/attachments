@@ -89,11 +89,17 @@ class AttachmentsController extends JController
 			}
 		else {
 			$pid_info = explode(',', JRequest::getString('parent_id'));
-			$parent_type = JRequest::getCmd('parent_type', 'com_content');
+			// Be extra cautious and remove all non-cmd characters except for ':'
+			$parent_type = preg_replace('/[^A-Z0-9_\.:-]/i', '', JRequest::getString('parent_type', 'com_content'));
 
 			// If the entity is embedded in the parent type, split them
 			if ( strpos($parent_type, '.') ) {
 				$parts = explode('.', $parent_type);
+				$parent_type = $parts[0];
+				$parent_entity = $parts[1];
+				}
+			if ( strpos($parent_type, ':') ) {
+				$parts = explode(':', $parent_type);
 				$parent_type = $parts[0];
 				$parent_entity = $parts[1];
 				}
