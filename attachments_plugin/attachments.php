@@ -43,26 +43,26 @@ class plgContentAttachments extends JPlugin
 	* The content plugin that inserts the attachments list into content items
 	*
 	* @param string The context of the content being passed to the plugin.
-	* @param &object &$attachment the content object (eg, article) being displayed
+	* @param &object &$row the content object (eg, article) being displayed
 	* @param &object &$params the parameters
 	* @param int $page the 'page' number
 	*
 	* @return true if anything has been inserted into the content object
 	*/
-	public function onContentBeforeDisplay($context, &$attachment, &$params, $page = 0)
+	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
 		$uri = JFactory::getURI();
 
 		list ($parent_type, $parent_entity) = explode('.', $context, 2);
 
 		// Figure out the name of the text field
-		if ( isset($attachment->text) ) {
+		if ( isset($row->text) ) {
 			$text_field_name = 'text';
 			}
-		elseif ( isset($attachment->fulltext) ) {
+		elseif ( isset($row->fulltext) ) {
 			$text_field_name = 'fulltext';
 			}
-		elseif ( isset($attachment->introtext) ) {
+		elseif ( isset($row->introtext) ) {
 			$text_field_name = 'introtext';
 			}
 		else {
@@ -97,7 +97,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Figure out the parent entity
-		$parent_entity = $parent->determineParentEntity($attachment);
+		$parent_entity = $parent->determineParentEntity($row);
 		if ( !$parent_entity ) {
 			return false;
 			}
@@ -117,11 +117,11 @@ class plgContentAttachments extends JPlugin
 		$logged_in = $user->get('username') <> '';
 		$user_type = $user->get('usertype', false);
 		$parent_id = null;
-		if ( isset( $attachment->id ) && ($attachment->id > 0) ) {
-			$parent_id = (int)$attachment->id;
+		if ( isset( $row->id ) && ($row->id > 0) ) {
+			$parent_id = (int)$row->id;
 			}
 		else {
-			$parent_id = $parent->getParentId($attachment);
+			$parent_id = $parent->getParentId($row);
 			}
 		if ( $parent_id === false ) {
 			return false;
@@ -132,7 +132,7 @@ class plgContentAttachments extends JPlugin
 		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
 
 		// exit if we should not display attachments for this parent
-		if ( $parent->attachmentsHiddenForParent($attachment, $parent_id, $parent_entity, $attachParams) ) {
+		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
 			return false;
 			}
 
@@ -147,9 +147,9 @@ class plgContentAttachments extends JPlugin
 		$attachments_tag = '';
 		$attachments_tag_args = '';
 		$match = false;
-		if ( JString::strpos($attachment->$text_field_name, '{attachments') ) {
+		if ( JString::strpos($row->$text_field_name, '{attachments') ) {
 			if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
-							$attachment->$text_field_name, $match) ) {
+							$row->$text_field_name, $match) ) {
 				$attachments_tag = true;
 				}
 			if ( isset($match[1]) && $match[1] ) {
@@ -205,10 +205,10 @@ class plgContentAttachments extends JPlugin
 			// Put the attachments list at the beginning of the article/entity
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$attachment->$text_field_name = $html . $attachment->$text_field_name;
+					$row->$text_field_name = $html . $row->$text_field_name;
 					}
 				else {
-					$attachment->$text_field_name = $html . str_replace($attachments_tag, '', $attachment->$text_field_name);
+					$row->$text_field_name = $html . str_replace($attachments_tag, '', $row->$text_field_name);
 					}
 				}
 			break;
@@ -217,11 +217,11 @@ class plgContentAttachments extends JPlugin
 			// Insert the attachments at the desired location
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$attachment->$text_field_name = str_replace($attachments_tag, $html, $attachment->$text_field_name);
+					$row->$text_field_name = str_replace($attachments_tag, $html, $row->$text_field_name);
 					}
 				else {
 					// If there is no tag, insert the attachments at the end
-					$attachment->$text_field_name .= $html;
+					$row->$text_field_name .= $html;
 					}
 				}
 			break;
@@ -229,7 +229,7 @@ class plgContentAttachments extends JPlugin
 		case 'disabled_filter':
 			// Disable and strip out any attachments tags
 			if ( $attachments_tag ) {
-				$attachment->$text_field_name = str_replace($attachments_tag, '', $attachment->$text_field_name);
+				$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name);
 				}
 			break;
 
@@ -237,10 +237,10 @@ class plgContentAttachments extends JPlugin
 			// Add the attachments to the end of the article
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$attachment->$text_field_name = str_replace($attachments_tag, '', $attachment->$text_field_name) . $html;
+					$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name) . $html;
 					}
 				else {
-					$attachment->$text_field_name .= $html;
+					$row->$text_field_name .= $html;
 					}
 				}
 			break;
@@ -248,6 +248,7 @@ class plgContentAttachments extends JPlugin
 
 		return;
 	}
+
 
 
 	/**
