@@ -127,10 +127,6 @@ class plgContentAttachments extends JPlugin
 			return false;
 			}
 
-		// Load the language files from the backend
-		$lang =  JFactory::getLanguage();
-		$lang->load('plg_frontend_attachments', JPATH_ADMINISTRATOR);
-
 		// exit if we should not display attachments for this parent
 		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
 			return false;
@@ -247,6 +243,215 @@ class plgContentAttachments extends JPlugin
 			}
 
 		return;
+	}
+
+
+   /**
+	* The content plugin that inserts the attachments list into content items
+	*
+	* @param string The context of the content being passed to the plugin.
+	* @param &object &$row the content object (eg, article) being displayed
+	* @param &object &$params the parameters
+	* @param int $page the 'page' number
+	*
+	* @return true if anything has been inserted into the content object
+	*/
+	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	{
+		$uri = JFactory::getURI();
+
+		// CURRENTLY, only display for category blogs
+		$view = JRequest::getCmd('view');
+		if ( $view != 'category' ) {
+			return false;
+			}
+
+		// Ignore articles
+		if ( $context != 'com_content.category' ) {
+			return false;
+			}
+
+		// Ignore items without the normal 'text' field
+		if ( !isset($row->text) ) {
+			return false;
+			}
+
+
+		// Set the parent info
+		$parent_type = 'com_content';
+		$parent_entity = 'category';
+
+		// Get the parent ID
+		$parent_id = JRequest::getInt('id', null);
+		if ( $parent_id === null ) {
+			return false;
+			}
+
+		// Load the language
+		$lang = JFactory::getLanguage();
+		$lang->load('plg_content_attachments', dirname(__FILE__));
+
+		// Always include the hide rule (since it may be needed to hide the custom tags)
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
+
+		$doc = JFactory::getDocument();
+		JHTML::_('behavior.mootools');
+		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
+		$doc->addScript( $js_path );
+
+		// Get the article/parent handler
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+			// Exit quietly if there is no Attachments plugin to handle this parent_type
+			return false;
+			}
+		$parent = $apm->getAttachmentsPlugin($parent_type);
+
+		// If this attachments plugin is disabled, skip it
+		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
+			return false;
+			}
+
+		// Get the component parameters
+		jimport('joomla.application.component.helper');
+		$attachParams = JComponentHelper::getParams('com_attachments');
+
+		// Get the desired placement
+		$attachments_placement = $attachParams->get('attachments_placement', 'end');
+		if ( $attachments_placement == 'disabled_nofilter' ) {
+			return false;
+			}
+		
+		// Get some of the options
+		$user = JFactory::getUser();
+		$logged_in = $user->get('username') <> '';
+		$user_type = $user->get('usertype', false);
+
+		// exit if we should not display attachments for this parent
+		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
+			return false;
+			}
+
+		// See whether we can display the links to add attachments
+		$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
+
+		// Make sure we should be showing the category attachments
+		$always_show_category_attachments = $attachParams->get('always_show_category_attachments', false);
+		$all_but_article_views = $attachParams->get('hide_except_article_views', false);
+		if ( $all_but_article_views && !$always_show_category_attachments ) {
+			return false;
+			}
+
+		// Determine where we are
+		$from = JRequest::getCmd('view');
+		$Itemid = JRequest::getInt( 'Itemid', 1);
+
+		// Get the attachments tag, if present
+		$attachments_tag = '';
+		$attachments_tag_args = '';
+		$match = false;
+		if ( JString::strpos($row->text, '{attachments') ) {
+			if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
+							$row->text, $match) ) {
+				$attachments_tag = true;
+				}
+			if ( isset($match[1]) && $match[1] ) {
+				$attachments_tag_args_raw = $match[1];
+				$attachments_tag_args = ltrim($attachments_tag_args_raw, ' :');
+				}
+			if ( $attachments_tag ) {
+				$attachments_tag = $match[0];
+				}
+			}
+
+		// Construct the attachment list (if appropriate)
+		$html = '';
+		$attachments_list = false;
+		$add_attachement_btn = false;
+		$attachments_list =
+			$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+
+		// If the attachments list is empty, insert an empty div for it
+		if ( $attachments_list == '' ) {
+			$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
+			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
+			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
+			}
+
+		$html .= $attachments_list;
+
+		if ( $html || $user_can_add ) {
+			// Add the style sheet
+			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
+			}
+
+		// Construct the add-attachments button, if appropriate
+		$hide_add_attachments_link = $attachParams->get('hide_add_attachments_link', 0);
+		if ( $user_can_add && !$hide_add_attachments_link ) {
+			$add_attachments_btn =
+				$this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
+			$html .= $add_attachments_btn;
+			}
+
+		// Wrap both list and the Add Attachments button in another div
+		if ( $html ) {
+			$html = "<div class=\"attachmentsContainer\">\n" . $html . "\n</div>";
+			}
+
+		// Finally, add the attachments
+
+		// NOTE: Hope str_replace() below is UTF8 safe...
+
+		switch ( $attachments_placement ) {
+
+		case 'beginning':
+			// Put the attachments list at the beginning
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$row->text = $html . $row->text;
+					}
+				else {
+					$row->text = $html . str_replace($attachments_tag, '', $row->text);
+					}
+				}
+			break;
+
+		case 'custom':
+			// Insert the attachments at the desired location
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$row->text = str_replace($attachments_tag, $html, $row->text);
+					}
+				else {
+					// If there is no tag, insert the attachments at the end
+					$row->text .= $html;
+					}
+				}
+			break;
+
+		case 'disabled_filter':
+			// Disable and strip out any attachments tags
+			if ( $attachments_tag ) {
+				$row->text = str_replace($attachments_tag, '', $row->text);
+				}
+			break;
+
+		default:
+			// Add the attachments to the end
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$row->text = str_replace($attachments_tag, '', $row->text) . $html;
+					}
+				else {
+					$row->text .= $html;
+					}
+				}
+			break;
+			}
+
+		return true;
 	}
 
 
