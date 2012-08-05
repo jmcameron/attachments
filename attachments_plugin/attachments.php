@@ -29,7 +29,7 @@ class plgContentAttachments extends JPlugin
 	 *
 	 * @access		protected
 	 * @param		object	$subject The object to observe
-	 * @param		array	$config  An array that holds the plugin configuration
+	 * @param		array	$config	 An array that holds the plugin configuration
 	 * @since		1.5
 	 */
 	public function __construct(& $subject, $config)
@@ -39,16 +39,16 @@ class plgContentAttachments extends JPlugin
 	}
 
 
-   /**
-	* The content plugin that inserts the attachments list into content items
-	*
-	* @param string The context of the content being passed to the plugin.
-	* @param &object &$row the content object (eg, article) being displayed
-	* @param &object &$params the parameters
-	* @param int $page the 'page' number
-	*
-	* @return true if anything has been inserted into the content object
-	*/
+	/**
+	 * The content plugin that inserts the attachments list into content items
+	 *
+	 * @param string The context of the content being passed to the plugin.
+	 * @param &object &$row the content object (eg, article) being displayed
+	 * @param &object &$params the parameters
+	 * @param int $page the 'page' number
+	 *
+	 * @return true if anything has been inserted into the content object
+	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
 		$uri = JFactory::getURI();
@@ -167,7 +167,7 @@ class plgContentAttachments extends JPlugin
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
 			$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
-			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
+			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 			}
 
@@ -246,16 +246,16 @@ class plgContentAttachments extends JPlugin
 	}
 
 
-   /**
-	* The content plugin that inserts the attachments list into content items
-	*
-	* @param string The context of the content being passed to the plugin.
-	* @param &object &$row the content object (eg, article) being displayed
-	* @param &object &$params the parameters
-	* @param int $page the 'page' number
-	*
-	* @return true if anything has been inserted into the content object
-	*/
+	/**
+	 * The content plugin that inserts the attachments list into content items
+	 *
+	 * @param string The context of the content being passed to the plugin.
+	 * @param &object &$row the content object (eg, article) being displayed
+	 * @param &object &$params the parameters
+	 * @param int $page the 'page' number
+	 *
+	 * @return true if anything has been inserted into the content object
+	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
 		$uri = JFactory::getURI();
@@ -268,6 +268,11 @@ class plgContentAttachments extends JPlugin
 
 		// Ignore articles
 		if ( $context != 'com_content.category' ) {
+			return false;
+			}
+
+		// ??? Temporary check.	 Once Joomla bug is fixed this will no longer be necessary
+		if ( !AttachmentsDefines::$USE_ON_CONTENT_PREPARE_FOR_CATEGORY ) {
 			return false;
 			}
 
@@ -376,7 +381,7 @@ class plgContentAttachments extends JPlugin
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
 			$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
-			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
+			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 			}
 

@@ -14,6 +14,10 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+/** Load the Attachments defines */
+require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+
+
 jimport('joomla.plugin.plugin');
 
 
@@ -242,5 +246,71 @@ class plgSystemShow_attachments extends JPlugin
 								$attachments . '<div id="editor-xtd-buttons">', $body);
 			JResponse::setBody($body);
 			}
+
+
+		elseif ( $parent_id && ($view == 'category') ) {
+
+			// Display attachments lists for category descriptions!
+
+			$parent_entity = 'category';
+
+			// Only dislay this in the front end
+			$app = JFactory::getApplication();
+			if ( $app->isAdmin() ) {
+				return;
+				}
+
+			// ??? Temporary check.  Once Joomla bug is fixed this will no longer be necessary
+			if ( AttachmentsDefines::$USE_ON_CONTENT_PREPARE_FOR_CATEGORY ) {
+				return;
+				}
+
+			// Load the code from the attachments plugin to create the list
+			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
+			// Add the refresh Javascript
+			$uri = JFactory::getURI();
+			$base_url = $uri->root(true);
+			$doc = JFactory::getDocument();
+
+
+			// Get the article/parent handler
+			$parent = $apm->getAttachmentsPlugin($parent_type);
+
+			// Figure out if the attachments list should be visible for this category
+			jimport('joomla.application.component.helper');
+			$params = JComponentHelper::getParams('com_attachments');
+
+			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
+			$all_but_article_views = $params->get('hide_except_article_views', false);
+			if ( $all_but_article_views && !$always_show_category_attachments ) {
+				return;
+				}
+
+			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
+
+			// Construct the attachment list
+			$Itemid = JRequest::getInt( 'Itemid', 1);
+			$from = 'frontpage';
+			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
+																 $user_can_add, $Itemid, $from, true, $user_can_add);
+
+			// If the attachments list is empty, insert an empty div for it
+			if ( $attachments == '' ) {
+				jimport('joomla.application.component.helper');
+				$params = JComponentHelper::getParams('com_attachments');
+				$class_name = $params->get('attachments_table_style', 'attachmentsList');
+				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
+				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
+				}
+
+			// Insert the attachments above the editor buttons
+			// NOTE: Assume that anyone editing the article can see its attachments
+			$body = JResponse::getBody();
+			$body = str_replace('<div class="clr"></div>',
+								$attachments . '<div class="clr"></div>', $body);
+			JResponse::setBody($body);
+			}
+
 	}
 }
