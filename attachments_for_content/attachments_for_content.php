@@ -646,8 +646,8 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_entity == 'category' ) {
 
 			// NOTE: This code is apparently never invoked because categories don't invoke content plugins
-			$errmsg = 'ERROR in attachment_for_content for categories!	(ERR 410)';
-			JError::raiseError(500, $errmsg);
+			// ??? $errmsg = 'ERROR in attachment_for_content for categories!	(ERR 410)';
+			// ??? JError::raiseError(500, $errmsg);
 
 			// Handle categories
 			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
@@ -658,6 +658,13 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				return true;
 				}
 
+			// Check to see whether the attachments should be hidden for this category
+			$hide_attachments_for_categories = $params->get('hide_attachments_for_categories',Array());
+			if ( in_array( $parent_id, $hide_attachments_for_categories) ) {
+				return true;
+				}
+
+			// Double-check that there is no mismatch of category ID (??? May not be necessary)
 			$description = $parent->text;
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
