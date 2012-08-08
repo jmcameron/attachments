@@ -277,10 +277,16 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Ignore items without the normal 'text' field
-		if ( !isset($row->text) ) {
+		if ( isset($row->text) ) {
+			$text_field_name = 'text';
+			}
+		elseif ( isset($row->introtext) ) {
+			$text_field_name = 'introtext';
+			}
+		else {
+			// Unrecognized
 			return false;
 			}
-
 
 		// Set the parent info
 		$parent_type = 'com_content';
@@ -357,9 +363,9 @@ class plgContentAttachments extends JPlugin
 		$attachments_tag = '';
 		$attachments_tag_args = '';
 		$match = false;
-		if ( JString::strpos($row->text, '{attachments') ) {
+		if ( JString::strpos($row->$text_field_name, '{attachments') ) {
 			if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
-							$row->text, $match) ) {
+							$row->$text_field_name, $match) ) {
 				$attachments_tag = true;
 				}
 			if ( isset($match[1]) && $match[1] ) {
@@ -381,7 +387,7 @@ class plgContentAttachments extends JPlugin
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
 			$class_name = $attachParams->get('attachments_table_style', 'attachmentsList');
-			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
+			$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 			}
 
@@ -415,10 +421,10 @@ class plgContentAttachments extends JPlugin
 			// Put the attachments list at the beginning
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$row->text = $html . $row->text;
+					$row->$text_field_name = $html . $row->$text_field_name;
 					}
 				else {
-					$row->text = $html . str_replace($attachments_tag, '', $row->text);
+					$row->$text_field_name = $html . str_replace($attachments_tag, '', $row->$text_field_name);
 					}
 				}
 			break;
@@ -427,11 +433,11 @@ class plgContentAttachments extends JPlugin
 			// Insert the attachments at the desired location
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$row->text = str_replace($attachments_tag, $html, $row->text);
+					$row->$text_field_name = str_replace($attachments_tag, $html, $row->$text_field_name);
 					}
 				else {
 					// If there is no tag, insert the attachments at the end
-					$row->text .= $html;
+					$row->$text_field_name .= $html;
 					}
 				}
 			break;
@@ -439,7 +445,7 @@ class plgContentAttachments extends JPlugin
 		case 'disabled_filter':
 			// Disable and strip out any attachments tags
 			if ( $attachments_tag ) {
-				$row->text = str_replace($attachments_tag, '', $row->text);
+				$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name);
 				}
 			break;
 
@@ -447,10 +453,10 @@ class plgContentAttachments extends JPlugin
 			// Add the attachments to the end
 			if ( $attachments_list || $user_can_add ) {
 				if ( $attachments_tag ) {
-					$row->text = str_replace($attachments_tag, '', $row->text) . $html;
+					$row->$text_field_name = str_replace($attachments_tag, '', $row->$text_field_name) . $html;
 					}
 				else {
-					$row->text .= $html;
+					$row->$text_field_name .= $html;
 					}
 				}
 			break;
