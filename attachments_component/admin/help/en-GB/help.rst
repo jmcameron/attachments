@@ -6,9 +6,9 @@
 
 .. class:: version
 
-**Version 3.0.3-Beta16 - August  8, 2012**
+**Version 3.0.3-Beta16 - August  9, 2012**
 
-**This version is for Joomla 1.6/1.7/2.5+**
+**This version is for Joomla 1.7/2.5+**
 
 .. contents::
     :depth: 1
@@ -26,7 +26,7 @@ with several many options to increase its flexibility and usefulness. Note:
 all options are controlled through the component manager.
 
 .. warning:: This version of the *Attachments* extension only works for
-             Joomla! 1.6, 1.7, 2.5 or greater. 
+             Joomla! 1.7, 2.5 or greater. 
 
 .. note:: In the rest of this document, the term **content item** is sometimes
    used.  Normally we think of attaching files to articles.  Attachments supports
@@ -49,7 +49,7 @@ this extension, please subscribe using this web page:
 New features in Version 3.0
 ===========================
 
-* Full support for the new ACL/permissions system of Joomla 1.6/1.7/2.5+.  This
+* Full support for the new ACL/permissions system of Joomla 1.7/2.5+.  This
   gives you significant flexibility to control who can create, edit, or delete
   attachments.  See the `Attachments Permissions`_ section for more details.
 
@@ -728,7 +728,7 @@ is a manual that is available as part of this 'Attachments' installation:
 
    The Attachment Plugin Creation Manual has not been updated for Attachments
    3.0 yet.  There have been some architectural changes that means that
-   Attachments plugins in Joomla 1.6/1.7/2.5+ will have some significant
+   Attachments plugins in Joomla 1.7/2.5+ will have some significant
    differences from those for Joomla 1.5.
 
 
@@ -962,7 +962,7 @@ Uninstalling
 * To uninstall the Attachments extension, go to the 'Manage' tab on the
   Extension Manager page (under the 'Extensions' menu).  **Select ONLY the item**::
 
-     Package: Attachments for Joomla 1.6/1.7/2.5+
+     Package: Attachments for Joomla 1.7/2.5+
 
   and click on the 'Uninstall' button on the toolbar.  This will uninstall the
   attachments component and all the associated plugins.
@@ -980,14 +980,14 @@ Uninstalling
   installation.
 
 
-Migration Attachments from Joomla 1.5 to Joomla 1.6/1.7/2.5+
-============================================================
+Migration Attachments from Joomla 1.5 to Joomla 1.7/2.5+
+========================================================
 
-To migrate your attachments from a Joomla 1.5 site to a Joomla 1.6/1.7/2.5 (or
+To migrate your attachments from a Joomla 1.5 site to a Joomla 1.7/2.5 (or
 later) site, follow the procedure outlined here:
 
  
-  * `Migrating Attachments from Joomla 1.5 to Joomla 1.6/1.7/2.5+
+  * `Migrating Attachments from Joomla 1.5 to Joomla 1.7/2.5+
     <http://jmcameron.net/attachments/migration/>`_
 
 
