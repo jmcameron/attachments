@@ -56,6 +56,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 	            problems in the category blog view
    - 2012-05-16 Updated the CSS rules for the attachments display to be more robust.
    - 2012-08-04 Fixed frontend display of category attachments using regular onContentPrepare event.
+   - 2012-08-10 Updated minimum supported version of Joomla to 1.7
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
