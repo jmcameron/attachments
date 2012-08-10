@@ -134,10 +134,15 @@ class com_AttachmentsInstallerScript {
 		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
  
-        // Verify that the Joomla version is adequate for this extension
+        // Verify that the Joomla version is adequate for this version of the Attachments extension
         $this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;        
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
-			$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
+			$msg = JText::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
+			if ( $msg == 'ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP' ) {
+				// Handle unupdated languages
+				$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
+				$msg = str_replace('1.6', $this->minimum_joomla_release, $msg);
+				}
 			$app = JFactory::getApplication();
 			$app->enqueueMessage($msg, 'warning');
 			return false;
