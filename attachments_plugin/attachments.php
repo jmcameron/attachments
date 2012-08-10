@@ -70,6 +70,20 @@ class plgContentAttachments extends JPlugin
 			return false;
 			}
 
+		// In some cases, we know what the text_field_name should be
+		$option = JRequest::getCmd('option');
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+		if ($option == 'com_content' AND $view == 'category' AND $layout == 'blog')
+		{
+			$text_field_name = 'introtext';
+		}
+		if ($option == 'com_content' AND $view == 'featured')
+		{
+			$text_field_name = 'introtext';
+		}
+
+		// Load the language
 		$lang = JFactory::getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
@@ -77,6 +91,7 @@ class plgContentAttachments extends JPlugin
 		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
 
+		// Add the refresh javascript
 		$doc = JFactory::getDocument();
 		JHTML::_('behavior.mootools');
 		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
@@ -291,6 +306,12 @@ class plgContentAttachments extends JPlugin
 		// Set the parent info
 		$parent_type = 'com_content';
 		$parent_entity = 'category';
+
+		// In the case of a blog, we know what text_field_name should be
+		$layout = JRequest::getCmd('layout');
+		if ( $layout == 'blog' ) {
+			$text_field_name = 'introtext';
+			}
 
 		// Get the parent ID
 		$parent_id = JRequest::getInt('id', null);
