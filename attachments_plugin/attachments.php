@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Main_Attachments_Plugin
  *
- * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2012 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -74,11 +74,11 @@ class plgContentAttachments extends JPlugin
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getCmd('layout');
-		if ($option == 'com_content' AND $view == 'category' AND $layout == 'blog')
+		if (isset($row->introtext) AND $option == 'com_content' AND $view == 'category' AND $layout == 'blog')
 		{
 			$text_field_name = 'introtext';
 		}
-		if ($option == 'com_content' AND $view == 'featured')
+		if (isset($row->introtext) AND $option == 'com_content' AND $view == 'featured')
 		{
 			$text_field_name = 'introtext';
 		}
@@ -309,7 +309,7 @@ class plgContentAttachments extends JPlugin
 
 		// In the case of a blog, we know what text_field_name should be
 		$layout = JRequest::getCmd('layout');
-		if ( $layout == 'blog' ) {
+		if ( isset($row->introtext) AND $layout == 'blog' ) {
 			$text_field_name = 'introtext';
 			}
 
