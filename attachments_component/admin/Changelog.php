@@ -59,6 +59,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-08-10 Updated minimum supported version of Joomla to 1.7.
                 Generalized error message when trying to install Attachments on an old/unsupported
 				version of Joomla.
+   - 2012-08-11 Tested with Joomla 2.5.6 on Linux and Windows.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms
