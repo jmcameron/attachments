@@ -16,15 +16,15 @@ defined('_JEXEC') or die('Restricted access');
 
 // Define some global variables to help figure out whether log messages.
 //
-//  Note: Apparently with Joomala 2.5, the installer behavior has changed.
-//        If the extension is being installed the first time, it first does the
-//        install() method and the the update() method of this install script class.
-//        Similarly when upgrading a previously installed component, it does the
-//        update() method twice.  Not sure if this is a bug in Joomla or a config
-//        error in this extension.  In any case, these flags are used to eliminate
-//        the duplicate user information messages (about enabled plugins, etc).
-//        The second time through the postFlight() function does not hurt anything,
-//        so there is no point in repeating the inforamtional messages to the user.
+//	Note: Apparently with Joomala 2.5, the installer behavior has changed.
+//		  If the extension is being installed the first time, it first does the
+//		  install() method and the the update() method of this install script class.
+//		  Similarly when upgrading a previously installed component, it does the
+//		  update() method twice.  Not sure if this is a bug in Joomla or a config
+//		  error in this extension.	In any case, these flags are used to eliminate
+//		  the duplicate user information messages (about enabled plugins, etc).
+//		  The second time through the postFlight() function does not hurt anything,
+//		  so there is no point in repeating the inforamtional messages to the user.
 
 /** Flag whether the informational messages should be emitted (warnings always go).
  */
@@ -134,8 +134,8 @@ class com_AttachmentsInstallerScript {
 		$lang =  JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
  
-        // Verify that the Joomla version is adequate for this version of the Attachments extension
-        $this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;        
+		// Verify that the Joomla version is adequate for this version of the Attachments extension
+		$this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
 			$msg = JText::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
 			if ( $msg == 'ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP' ) {
