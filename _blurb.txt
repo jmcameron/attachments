@@ -4,15 +4,17 @@ INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zi
 
 There are two versions of Attachments:
 
- * Version 2.x for Joomla 1.5
-     - The 2.x versions will NOT work on Joomla 1.6 and later
-     - See demo video: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1
-     - DOWNLOAD: http://joomlacode.org/gf/project/attachments/frs/
+* Version 2.x for Joomla 1.5
+     -- The 2.x versions will NOT work on Joomla 1.6 and later
+     -- See demo video: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1
+     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments/frs/
+     -- FORUMS: http://joomlacode.org/gf/project/attachments/forum/
 
- * Version 3.x for Joomla 1.6/1.7+
-     - The 3.x versions will NOT work on Joomla 1.5 
-     - See demo video: http://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
-     - DOWNLOAD: http://joomlacode.org/gf/project/attachments3/frs/
+* Version 3.x for Joomla 1.7/2.5+
+     -- The 3.x versions will NOT work on Joomla 1.5
+     -- See demo video: http://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
+     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments3/frs/
+     -- FORUMS: http://joomlacode.org/gf/project/attachments3/forum/
 
 If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
 
@@ -20,14 +22,12 @@ Releases 2.2+ and 3.0+ give you several ways to add, edit, and delete your attac
 
 If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
 
-Attachments 3.x for Joomla 1.6/1.7+
------------------------------------
+NEW! Attachments 3.x for Joomla 1.7/2.5+
 
-The forums and the file download area for the Attachments 3.x version for Joomla 1.6+ are on a separate area on Joomlacode.org (http://joomlacode.org/gf/project/attachments3/).
+NOTE: The forums and the file download area for the Attachments 3.x version for Joomla 1.7+ are on a separate area on Joomlacode.org (http://joomlacode.org/gf/project/attachments3/).
 
 Attachments 3 includes many new features:
-  * Improved permissions system give very flexible control on who can add, edit, or change the state of attachments.
-  * All attachments can be assigned to any access level.  The improved ability to create access levels in Joomla 1.6+ means that you can control access to attachments to specific groups of people in a powerful way.
-  * Improved ability to control which pages attachments are visible on.
-  * Supports the new Joomla extension update system for simplified updates.
-
+--- Improved permissions system give very flexible control on who can add, edit, or change the state of attachments.
+--- All attachments can be assigned to any access level.  The improved ability to create access levels in Joomla 1.7+ means that you can control access to attachments to specific groups of people in a powerful way.
+--- Improved ability to control which pages attachments are visible on.
+--- Supports the new Joomla extension update system for simplified updates.
