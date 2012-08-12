@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2011 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2012 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 1.7/2.5+
 
-2011-??: Release 3.0.3
+2012-??: Release 3.0.3
    - 2011-09-27 Fixed errors in the English version of the help file
    - 2011-10-30 Changes access/view level dialog to show all access levels to Super-User.
    - 2011-10-30 Fixed issue that caused the backend to crash when users disabled the framework plugin.
@@ -56,7 +56,9 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 	            problems in the category blog view
    - 2012-05-16 Updated the CSS rules for the attachments display to be more robust.
    - 2012-08-04 Fixed frontend display of category attachments using regular onContentPrepare event.
-   - 2012-08-10 Updated minimum supported version of Joomla to 1.7
+   - 2012-08-10 Updated minimum supported version of Joomla to 1.7.
+                Generalized error message when trying to install Attachments on an old/unsupported
+				version of Joomla.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms

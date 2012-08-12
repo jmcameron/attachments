@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Plugin_For_Content
  *
- * @copyright Copyright (C) 2009-2011 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2009-2012 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -644,10 +644,6 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		$db = JFactory::getDBO();
 
 		if ( $parent_entity == 'category' ) {
-
-			// NOTE: This code is apparently never invoked because categories don't invoke content plugins
-			// ??? $errmsg = 'ERROR in attachment_for_content for categories!	(ERR 410)';
-			// ??? JError::raiseError(500, $errmsg);
 
 			// Handle categories
 			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
