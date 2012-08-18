@@ -39,7 +39,7 @@ class plgSystemShow_attachments extends JPlugin
 	 *
 	 * @return	void
 	 */
-	public function onContentPrepare($context, &$attachment, &$params, $page = 0)
+	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{  
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
