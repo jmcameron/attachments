@@ -291,6 +291,8 @@ class AttachmentsModelAttachments extends JModel
 			$order_by = "file_size DESC";
 		else if ( $new_sort_order == 'description' )
 			$order_by = "description";
+		else if ( $new_sort_order == 'description_desc' )
+			$order_by = "description DESC";
 		else if ( $new_sort_order == 'display_name' )
 			$order_by = "display_name, filename";
 		else if ( $new_sort_order == 'created' )

@@ -16,6 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 1.7/2.5+
 
+2012-??: Release 3.1
+   - 2012-08-18 Added attachments list sort option: description (reversed, z-a)
+
 2012-08-11: Release 3.0.3
    - 2011-09-27 Fixed errors in the English version of the help file
    - 2011-10-30 Changes access/view level dialog to show all access levels to Super-User.
