@@ -133,52 +133,52 @@ Importing your old Attachments to your Joomla 1.7/2.5+ site
  
 	  http://<yoursite>/administrator/index.php?option=com_attachments&task=utils.installAttachmentsFromCsvFile&filename=/path/to/migrate_attachments.csv&dry_run=1
 
-      .. note:: You must use the full path to the migration file on the server
-         file system.  On a Windows system, this path may look like a Windows
-         path including a drive letter such as 'C:\\' at the beginning of the
-         path.
+     .. note:: You must use the full path to the migration file on the server
+        file system.  On a Windows system, this path may look like a Windows
+        path including a drive letter such as 'C:\\' at the beginning of the
+        path.
 
-      If there are problems with the article/parent ID's, titles, or user IDs
-      or usernames, the command will abort and alert you to the nature of the
-      problem.  You can then edit the migration file manually until your get
-      it to complete successfully.
+     If there are problems with the article/parent ID's, titles, or user IDs
+     or usernames, the command will abort and alert you to the nature of the
+     problem.  You can then edit the migration file manually until your get
+     it to complete successfully.
 
-      .. warning:: 
-         When you edit the migration CSV file, make very sure you use an
-         editor that does not insert a Byte Order Marker (BOM).  On windows,
-         use a text editor such as notepad or pspad.  For suggestions on how
-         to prevent or remove the BOM for other editors, try searching for::
+     .. warning:: 
+        When you edit the migration CSV file, make very sure you use an
+        editor that does not insert a Byte Order Marker (BOM).  On windows,
+        use a text editor such as notepad or pspad.  For suggestions on how
+        to prevent or remove the BOM for other editors, try searching for::
 
-           eliminate byte order marker emacs
+          eliminate byte order marker emacs
 
-         where 'emacs' should be replaced by the name of your text editor.
+        where 'emacs' should be replaced by the name of your text editor.
 
-      Until processing this file works without error, you should definitely
-      use the '&dry_run=true' option on the command so nothing is changed.
+     Until processing this file works without error, you should definitely
+     use the '&dry_run=true' option on the command so nothing is changed.
 
-      Once you get the message::
+     Once you get the message::
 
-	  Data for attachments is okay. 
-	  Rerun without 'dry_run' option to add attachments.
+     	  Data for attachments is okay. 
+     	  Rerun without 'dry_run' option to add attachments.
 
-      you will know that the migration will probably work.  Because of the
-      'dry_run' flag that is part of the URL, no changes will occur on your
-      website.  To actually create the data for the attachments, remove the
-      '&dry_run=true' option and execute the command again.  You should see a
-      success message::
+     you will know that the migration will probably work.  Because of the
+     'dry_run' flag that is part of the URL, no changes will occur on your
+     website.  To actually create the data for the attachments, remove the
+     '&dry_run=true' option and execute the command again.  You should see a
+     success message::
 
-	  Added data for 4 attachments!
+     	  Added data for 4 attachments!
 
-      where '4' will be replaced with the number of attachments in the
-      migration file.
+     where '4' will be replaced with the number of attachments in the
+     migration file.
 
-      .. note:: 
+     .. note:: 
 
-         The 'dry_run' process does not catch all types of errors such as
-         missing categories, etc.  If you encounter errors running the real
-         import (without 'dry_run'), it may be necessary to do necessary
-         fixes, empty the \*_attachments table and repeat the import process
-         until all errors are eliminated.
+        The 'dry_run' process does not catch all types of errors such as
+        missing categories, etc.  If you encounter errors running the real
+        import (without 'dry_run'), it may be necessary to do necessary
+        fixes, empty the \*_attachments table and repeat the import process
+        until all errors are eliminated.
 
  12.  Unzip the attachments file in the same directory on your Joomla 1.7/2.5
       site as they were on your Joomla 1.5 site.  This step requires that the
