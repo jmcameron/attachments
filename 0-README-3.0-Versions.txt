@@ -9,6 +9,7 @@ Versions of Attachments-3.0 for Joomla 1.6/1.7+
    - Fixed many bugs
    - Cleaned up strict PHP issues
    - Minor improvements
+   - 6008 Downloads
 
 3.0.2 - Released September 17, 2011
    - 2011-09-17 Fixed bug in delete dialog while editing article on front end
