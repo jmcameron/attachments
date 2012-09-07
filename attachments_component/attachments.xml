@@ -6,8 +6,8 @@
     <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>
     <copyright>(C) 2007-2012 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>3.1-Alpha1</version>
-    <creationDate>August 18, 2012</creationDate>
+    <version>3.0.4</version>
+    <creationDate>September  7, 2012</creationDate>
     <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
 
     <scriptfile>install.attachments.php</scriptfile>
