@@ -100,7 +100,6 @@
       <option value="file_size">ATTACH_SORT_FILE_SIZE</option>
       <option value="file_size_desc">ATTACH_SORT_FILE_SIZE_DESCENDING</option>
       <option value="description">ATTACH_SORT_DESCRIPTION</option>
-      <option value="description_desc">ATTACH_SORT_DESCRIPTION_DESCENDING</option>
       <option value="display_name">ATTACH_DISPLAY_FILENAME_OR_URL</option>
       <option value="creator">ATTACH_CREATOR</option>
       <option value="created">ATTACH_SORT_CREATED_DATE</option>
@@ -113,6 +112,8 @@
       <option value="user_field_3">ATTACH_USER_DEFINED_FIELD_3</option>
     </field>
   </fieldset>
+
+  <!-- <option value="description_desc">ATTACH_SORT_DESCRIPTION_DESCENDING</option> -->
 
   <fieldset name="visibility"
 	    label="ATTACH_CONFIG_VISIBILITY_SETTINGS_LABEL">
