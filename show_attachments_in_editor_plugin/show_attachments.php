@@ -14,8 +14,16 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-/** Load the Attachments defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+/** Load the Attachments defines (if available) */
+if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
+{
+	require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+}
+else
+{
+	// Exit quietly if the attachments component has been removed
+	return;
+}
 
 
 jimport('joomla.plugin.plugin');
