@@ -131,7 +131,7 @@ class com_AttachmentsInstallerScript {
 			}
 
 		// Load the installation language
-		$lang =  JFactory::getLanguage();
+		$lang = JFactory::getLanguage();
 		$lang->load('com_attachments.sys', dirname(__FILE__));
  
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
@@ -193,7 +193,7 @@ class com_AttachmentsInstallerScript {
 		$db = JFactory::getDBO();
 
 		// Make sure the translations are available
-		$lang =  JFactory::getLanguage();
+		$lang = JFactory::getLanguage();
 		$lang->load('com_attachments', JPATH_ADMINISTRATOR);
 
 		// Enable all the plugins
@@ -323,7 +323,8 @@ class com_AttachmentsInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 			->from('#__assets')
-			->where($db->nameQuote('name').' = '.$db->quote($extension_name));
+			->where('name = '.$db->quote($extension_name));
+			// ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
 		$ids = $db->loadResultArray();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -402,7 +403,8 @@ class com_AttachmentsInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 			->from('#__assets')
-			->where($db->nameQuote('name').' = '.$db->quote($extension_name));
+			->where('name = '.$db->quote($extension_name));
+			// ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
 		if(count($ids) > 1) {
