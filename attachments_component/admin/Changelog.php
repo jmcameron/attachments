@@ -18,6 +18,18 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 
 2012-??: Release 3.1
    - 2012-08-18 Added attachments list sort option: description (reversed, z-a).
+   - 2012-09-08 Several updates to support upgrade to Joomla 3.0:
+      - Updated deprecated classes/functions (JRules->JAccessRules,
+        user->authorisedLevels(), user->getAuthorisedViewLevels()).
+      - Converted all 'X' toolbar items to non-X versions (eg, addNewX->addNew,
+        editListX->editList, deleteListX->deleteList) for compatibility with Joomla
+        3.0.  Updated JView class to JViewLegacy for Joomla 3.0 backwards
+        compatibility.
+      - Converted several Joomal classes to legacy version for future backwards
+        compatibility for Joomla 3.0 (JModel->JModelLegacy,
+        JController->JControllerLegacy, JView->JViewLegacy).
+      - NOTE that these legacy classes only work with Joomla 2.5.5 or later, so
+        earlier versions of Joomla are not longer supported (including Joomla 1.7).
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
