@@ -692,10 +692,10 @@ class AttachmentsUpdate
 		// Get the root rules
 		$root = JTable::getInstance('asset');
 		$root->loadByName('root.1');
-		$root_rules = new JRules($root->rules);
+		$root_rules = new JAccessRules($root->rules);
 
 		// Define the new rules
-		$new_rules = new JRules(AttachmentsDefines::$DEFAULT_ATTACHMENTS_ACL_PERMISSIONS);
+		$new_rules = new JAccessRules(AttachmentsDefines::$DEFAULT_ATTACHMENTS_ACL_PERMISSIONS);
 
 		// Merge the rules into default rules and save it
 		$root_rules->merge($new_rules);

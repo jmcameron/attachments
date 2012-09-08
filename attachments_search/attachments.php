@@ -165,7 +165,7 @@ class plgSearchAttachments extends JPlugin
 
 		// Load the permissions functions
 		$user = JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		// Construct and execute the query
 		$query = $db->getQuery(true);

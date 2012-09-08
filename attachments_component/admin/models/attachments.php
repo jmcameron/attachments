@@ -28,7 +28,7 @@ class AttachmentsModelAttachments extends JModelList
 	 * Constructor
 	 *
 	 * @param	array	An optional associative array of configuration settings.
-	 * @see		JController
+	 * @see		JControllerLegacy
 	 * @since	1.6
 	 */
 	public function __construct($config = array())
@@ -177,7 +177,7 @@ class AttachmentsModelAttachments extends JModelList
 
 		// Make sure the user can only see the attachments they may access
 		$user	= JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 		$where[] = 'a.access in ('.$user_levels.')';
 
 		// Construct the WHERE clause

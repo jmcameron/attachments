@@ -27,7 +27,7 @@ jimport('joomla.application.component.controller');
  *
  * @package Attachments
  */
-class AttachmentsControllerUtils extends JController
+class AttachmentsControllerUtils extends JControllerLegacy
 {
 	/**
 	 * Javascript script to close the pop-up window

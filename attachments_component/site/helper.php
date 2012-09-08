@@ -1556,7 +1556,7 @@ class AttachmentsHelper
 	public static function download_attachment($id)
 	{
 		$user	= JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		// Get the info about the attachment
 		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
@@ -1758,7 +1758,7 @@ class AttachmentsHelper
 		$app = JFactory::getApplication();
 
 		$user	= JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		// Generate the HTML for the attachments for the specified parent
 		$alist = '';

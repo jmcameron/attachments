@@ -21,7 +21,7 @@ jimport('joomla.application.component.model');
  *
  * @package Attachments
  */
-class AttachmentsModelAttachments extends JModel
+class AttachmentsModelAttachments extends JModelLegacy
 {
 	/**
 	 * ID of parent of the list of attachments
@@ -349,7 +349,7 @@ class AttachmentsModelAttachments extends JModel
 		// Construct the query
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->authorisedLevels()));
+		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');

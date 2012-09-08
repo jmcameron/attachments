@@ -22,6 +22,6 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_attachments')) {
 jimport('joomla.application.component.controller');
 
 // Execute the requested task
-$controller = JController::getInstance('Attachments');
+$controller = JControllerLegacy::getInstance('Attachments');
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();

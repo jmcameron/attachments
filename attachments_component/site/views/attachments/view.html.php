@@ -21,7 +21,7 @@ jimport( 'joomla.application.component.view' );
  *
  * @package Attachments
  */
-class AttachmentsViewAttachments extends JView
+class AttachmentsViewAttachments extends JViewLegacy
 {
 	/**
 	 * Construct the output for the view/template.

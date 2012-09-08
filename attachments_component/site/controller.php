@@ -23,7 +23,7 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
  *
  * @package Attachments
  */
-class AttachmentsController extends JController
+class AttachmentsController extends JControllerLegacy
 {
 	/**
 	 * Known 'froms'

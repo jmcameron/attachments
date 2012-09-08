@@ -22,7 +22,7 @@ jimport( 'joomla.application.component.view' );
  *
  * @package Attachments
  */
-class AttachmentsViewParams extends JView
+class AttachmentsViewParams extends JViewLegacy
 {
 	/**
 	 * Display the params view

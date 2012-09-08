@@ -26,7 +26,7 @@ jimport( 'joomla.application.component.view');
  *
  * @package Attachments
  */
-class AttachmentsViewEdit extends JView
+class AttachmentsViewEdit extends JViewLegacy
 {
 	/**
 	 * Display the edit view

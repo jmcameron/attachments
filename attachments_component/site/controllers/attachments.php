@@ -20,7 +20,7 @@ jimport( 'joomla.application.component.controller' );
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachments extends JController
+class AttachmentsControllerAttachments extends JControllerLegacy
 {
 	/**
 	 * Constructor

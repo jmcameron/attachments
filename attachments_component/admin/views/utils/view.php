@@ -27,7 +27,7 @@ jimport( 'joomla.application.component.view' );
  *
  * @package Attachments
  */
-class AttachmentsViewAdminUtils extends JView
+class AttachmentsViewAdminUtils extends JViewLegacy
 {
 	/**
 	 * Display the view

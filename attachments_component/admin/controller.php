@@ -21,7 +21,7 @@ jimport('joomla.application.component.controller');
  *
  * @package Attachments
  */
-class AttachmentsController extends JController
+class AttachmentsController extends JControllerLegacy
 {
 
 	/** List the attachments

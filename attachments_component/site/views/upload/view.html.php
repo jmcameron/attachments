@@ -22,7 +22,7 @@ jimport( 'joomla.application.component.view' );
  *
  * @package Attachments
  */
-class AttachmentsViewUpload extends JView
+class AttachmentsViewUpload extends JViewLegacy
 {
 
 	/**

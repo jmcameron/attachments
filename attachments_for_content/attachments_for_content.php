@@ -578,7 +578,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Get the user's permitted access levels
 		$user	= JFactory::getUser($user_id);
-		$user_levels = array_unique($user->authorisedLevels());
+		$user_levels = array_unique($user->getAuthorisedViewLevels());
 
 		// See if the parent's access level is permitted for the user
 		$db = JFactory::getDBO();
@@ -1035,7 +1035,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	public function userMayAccessAttachment(&$attachment, $user_id=null)
 	{
 		$user = JFactory::getUser($user_id);
-		return in_array($attachment->access, $user->authorisedLevels());
+		return in_array($attachment->access, $user->getAuthorisedViewLevels());
 	}
 
 }

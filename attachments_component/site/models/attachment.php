@@ -15,12 +15,12 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.model');
 
-/** 
+/**
  * Attachment Model
  *
  * @package Attachments
  */
-class AttachmentsModelAttachment extends JModel
+class AttachmentsModelAttachment extends JModelLegacy
 {
 
 	/**
@@ -29,7 +29,7 @@ class AttachmentsModelAttachment extends JModel
 	var $_id = null;
 
 
-	/** 
+	/**
 	 * Attachment object/data
 	 *
 	 * @var object
@@ -37,7 +37,7 @@ class AttachmentsModelAttachment extends JModel
 	var $_attachment = null;
 
 
-	/** 
+	/**
 	 * Constructor, build object and determines its ID
 	 */
 	public function __construct()
@@ -59,7 +59,7 @@ class AttachmentsModelAttachment extends JModel
 	}
 
 
-	/** 
+	/**
 	 * Reset the model ID and data
 	 */
 	public function setId($id=0)
@@ -68,7 +68,7 @@ class AttachmentsModelAttachment extends JModel
 		$this->_attachment = null;
 	}
 
-	
+
 	/**
 	 * Load the attachment data
 	 *
@@ -79,11 +79,11 @@ class AttachmentsModelAttachment extends JModel
 		if ($this->_id == 0) {
 			return false;
 			}
-		
+
 		if ( empty($this->_attachment) ) {
-				
+
 			$user	= JFactory::getUser();
-			$user_levels = implode(',', array_unique($user->authorisedLevels()));
+			$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
@@ -96,14 +96,14 @@ class AttachmentsModelAttachment extends JModel
 
 			$query->select('u2.name as modifier_name');
 			$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
-			
+
 			$query->where('a.id = '.(int)$this->_id);
 
 			$query->where('a.access in ('.$user_levels.')');
 
 			$db->setQuery($query, 0, 1);
 			$this->_attachment = $db->loadObject();
-			
+
 			if ( empty($this->_attachment) ) {
 				return false;
 				}
@@ -125,21 +125,21 @@ class AttachmentsModelAttachment extends JModel
 			$this->_attachment->parent_published =
 				$parent->isParentPublished($parent_id, $parent_entity);
 			}
-				
+
 		return true;
 	}
 
-	
+
 	/**
-	 * Create a new Attachment object  
+	 * Create a new Attachment object
 	 */
 	private function _initAttachment()
 	{
-		echo "_initData not implemented yet <br />";	
-		return null;	
+		echo "_initData not implemented yet <br />";
+		return null;
 	}
 
-	
+
 	/**
 	 * Get the data
 	 *
@@ -155,10 +155,10 @@ class AttachmentsModelAttachment extends JModel
 		return $this->_attachment;
 	}
 
-	
+
 	/**
 	 * Save the attachment
-	 * 
+	 *
 	 * @param object $data mixed object or associative array of data to save
 	 *
 	 * @return Boolean true on success
@@ -167,14 +167,14 @@ class AttachmentsModelAttachment extends JModel
 	{
 		// Get the table
 		$table = $this->getTable('Attachments');
-		
+
 		// Save the data
 		if ( !$table->save($data) ) {
 			// An error occured, save the model error message
 			$this->setError($table->getError());
-			return false;		
+			return false;
 			}
-			
+
 		return true;
 	}
 

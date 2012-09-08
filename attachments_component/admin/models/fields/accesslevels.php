@@ -60,7 +60,7 @@ class JFormFieldAccessLevels extends JFormField
 	public static function getAccessLevels($for_id, $fieldname, $level_value=null)
 	{
 		$user	= JFactory::getUser();
-		$user_access_levels = array_unique($user->authorisedLevels());
+		$user_access_levels = array_unique($user->getAuthorisedViewLevels());
 
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
