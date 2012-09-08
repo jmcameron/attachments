@@ -22,7 +22,7 @@ jimport( 'joomla.application.component.view' );
  *
  * @package Attachments
  */
-class AttachmentsViewAttachments extends JView
+class AttachmentsViewAttachments extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -160,11 +160,11 @@ class AttachmentsViewAttachments extends JView
 		JToolBarHelper::title(JText::_('ATTACH_ATTACHMENTS'), 'attachments.png');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNewX('attachment.add');
+			JToolBarHelper::addNew('attachment.add');
 			}
 
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editListX('attachment.edit');
+			JToolBarHelper::editList('attachment.edit');
 			}
 
 		if ($canDo->get('core.edit.state')) {
@@ -175,7 +175,7 @@ class AttachmentsViewAttachments extends JView
 
 		if ($canDo->get('core.delete')) {
 			JToolBarHelper::divider();
-			JToolBarHelper::deleteListX('', 'attachments.delete');
+			JToolBarHelper::deleteList('', 'attachments.delete');
 			}
 
 		if ($canDo->get('core.admin')) {
