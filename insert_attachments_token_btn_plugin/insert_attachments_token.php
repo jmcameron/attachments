@@ -56,7 +56,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 		// Check to make sure that is the case
 		$placement = $params->get('attachments_placement', 'end');
 		if ( $placement != 'custom' ) {
-			return new JObject();
+			return false;
 			}
 
 		// Avoid displaying the button for anything except for registered parents
