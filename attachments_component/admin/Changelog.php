@@ -23,15 +23,15 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
         user->authorisedLevels(), user->getAuthorisedViewLevels()).
       - Converted all 'X' toolbar items to non-X versions (eg, addNewX->addNew,
         editListX->editList, deleteListX->deleteList) for future compatibility with
-		Joomla 3.0.
+        Joomla 3.0.
       - Converted several Joomal classes to legacy version for future compatibility
-	    for Joomla 3.0 (JModel->JModelLegacy, JController->JControllerLegacy,
-		JView->JViewLegacy).
+        for Joomla 3.0 (JModel->JModelLegacy, JController->JControllerLegacy,
+        JView->JViewLegacy).
       - NOTE that these legacy classes only work with Joomla 2.5.5 or later, so
         earlier versions of Joomla are not longer supported (including Joomla 1.7).
    - 2012-10-13 Added in missing translation term for error messages.
    - 2012-10-17 Fixed issue in display of insert_attachments_editor editor button.
-	    (Primarily affected joomlaCK editor.)
+        (Primarily affected joomlaCK editor.)
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
@@ -56,11 +56,11 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-03-19 Fixed issue with displayString refactor (front end upload failing).
    - 2012-03-23 Fixed bug in sorting by Creator name in backend attachments list.
    - 2012-03-23 Fixed issue with redisplay after editing/deleting attachments from
-	            category blog view on front end.
+                category blog view on front end.
    - 2012-03-23 Suppress extra info messages during installation.
    - 2012-04-01 Fixed bug when adding URLs during creating an article from front end.
    - 2012-04-03 Fix to make sure that pre-existing orphaned attachments are displayed
-	            when creating an article.
+                when creating an article.
    - 2012-04-06 Removed code to translate access levels.  Apparently they are not translated!
    - 2012-04-06 Added code to warn user there are bad attachments (eg, ones whose parents are uninstalled).
    - 2012-04-17 Fixed several 'strict PHP' issues.
@@ -73,12 +73,12 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-05-13 Updated behavior: Do not kill display-name when updating/replacing a file.
    - 2012-05-14 Fixed issue with adding attachments while editing an article (in category list/blog)
    - 2012-05-15 Updated most of the error numbers, added a warning about potential templates
-	            problems in the category blog view
+                problems in the category blog view
    - 2012-05-16 Updated the CSS rules for the attachments display to be more robust.
    - 2012-08-04 Fixed frontend display of category attachments using regular onContentPrepare event.
    - 2012-08-10 Updated minimum supported version of Joomla to 1.7.
                 Generalized error message when trying to install Attachments on an old/unsupported
-				version of Joomla.
+                version of Joomla.
    - 2012-08-11 Tested with Joomla 2.5.6 on Linux and Windows.
 
 2011-09-17: Release 3.0.2
