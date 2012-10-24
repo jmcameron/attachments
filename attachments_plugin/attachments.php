@@ -311,6 +311,10 @@ class plgContentAttachments extends JPlugin
 			return false;
 			}
 
+		// Enable these diagnostic lines to see if your component uses onContentPrepare
+		// $row->$text_field_name .= "PC: $option,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
+		// return;
+
 		// Set the parent info
 		$parent_type = 'com_content';
 		$parent_entity = 'category';
