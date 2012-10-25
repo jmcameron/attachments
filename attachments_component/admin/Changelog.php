@@ -32,6 +32,10 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-10-13 Added in missing translation term for error messages.
    - 2012-10-17 Fixed issue in display of insert_attachments_editor editor button.
         (Primarily affected joomlaCK editor.)
+   - 2012-10-25 Added optional display of 'Created' date in front end displays
+	    of attachments lists.  Changed modification date format to be date format
+	    since it now applies to both creation and modification dates.
+   
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
