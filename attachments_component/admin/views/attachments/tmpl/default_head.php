@@ -55,8 +55,8 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							 'a.file_size', $listDirn, $listOrder ) ?></th>
 	 <th class="at_creator_name"><?php echo JHTML::_('grid.sort', 'ATTACH_CREATOR',
 							 'u1.name', $listDirn, $listOrder ) ?></th>
-	 <th class="at_created"><?php echo JHTML::_('grid.sort', 'JGLOBAL_CREATED',
-								'a.created', $listDirn, $listOrder ) ?></th>
+	 <th class="at_created_date"><?php echo JHTML::_('grid.sort', 'JGLOBAL_CREATED',
+							 'a.created', $listDirn, $listOrder ) ?></th>
 	 <th class="at_mod_date"><?php echo JHTML::_('grid.sort', 'ATTACH_LAST_MODIFIED',
 							 'a.modified', $listDirn, $listOrder ) ?></th>
 	 <?php if ( $secure ): ?>

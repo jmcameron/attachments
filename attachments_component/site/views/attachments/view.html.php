@@ -156,10 +156,11 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$this->show_creator =	$params->get('show_creator', false);
 		$this->show_file_size = $params->get('show_file_size', true);
 		$this->show_downloads = $params->get('show_downloads', false);
-		$this->show_mod_date =	$params->get('show_modified_date', false);
+		$this->show_created_date = $params->get('show_created_date', false);
+		$this->show_modified_date =	$params->get('show_modified_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 
-		// Set up the file/url title
+		// Set up the file/url titleshow_mod_date
 		if ( $this->show_column_titles ) {
 			switch ( $model->types() ) {
 			case 'file':
@@ -173,8 +174,8 @@ class AttachmentsViewAttachments extends JViewLegacy
 				}
 			}
 
-		if ( $this->show_mod_date ) {
-			$this->mod_date_format = $params->get('mod_date_format', '%Y-%m-%d %I:%M%P');
+		if ( $this->show_created_date OR $this->show_modified_date ) {
+			$this->date_format = $params->get('date_format', '%Y-%m-%d %I:%M%P');
 			}
 
 		// Get the attachments list title

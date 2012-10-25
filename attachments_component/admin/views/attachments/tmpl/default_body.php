@@ -156,7 +156,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	  <td class="at_file_type"><?php echo $item->file_type; ?></td>
 	  <td class="at_file_size"><?php echo $size_kb; ?></td>
 	  <td class="at_creator_name"><?php echo $item->creator_name; ?></td>
-	  <td class="at_created"><?php echo $created; ?></td>
+	  <td class="at_created_date"><?php echo $created; ?></td>
 	  <td class="at_mod_date"><?php echo $modified ?></td>
 	  <?php if ( $secure ): ?>
 		 <td class="at_downloads"><?php echo $item->download_count; ?></td>

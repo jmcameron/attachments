@@ -386,7 +386,9 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Update the modified info
+		$now = JFactory::getDate();
 		$attachment->modified_by = $user->get('id');
+		$attachment->modified = $now->toMySQL();
 
 		// Set up a couple of items that the upload function may need
 		$parent->new = $new_parent;

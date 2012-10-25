@@ -87,7 +87,10 @@ if ( $this->show_column_titles ) {
 	if ( $this->secure && $this->show_downloads ) {
 		$html .= "<th class=\"at_downloads\">" . JText::_('ATTACH_DOWNLOADS') . "</th>";
 		}
-	if ( $this->show_mod_date ) {
+	if ( $this->show_created_date ) {
+		$html .= "<th class=\"at_created_date\">" . JText::_('ATTACH_CREATED') . "</th>";
+		}
+	if ( $this->show_modified_date ) {
 		$html .= "<th class=\"at_mod_date\">" . JText::_('ATTACH_LAST_MODIFIED') . "</th>";
 		}
 	if ( $this->some_attachments_modifiable && $this->allow_edit ) {
@@ -133,12 +136,21 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			}
 		}
 
-	if ( $this->show_mod_date ) {
+	if ( $this->show_created_date OR $this->show_modified_date ) {
 		jimport( 'joomla.utilities.date' );
 		$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
+		}
+
+	if ( $this->show_created_date ) {
+		$date = JFactory::getDate($attachment->created);
+		$date->setTimezone($tz);
+		$created = $date->toFormat($this->date_format, true);
+		}
+
+	if ( $this->show_modified_date ) {
 		$date = JFactory::getDate($attachment->modified);
 		$date->setTimezone($tz);
-		$last_modified = $date->toFormat($this->mod_date_format, true);
+		$last_modified = $date->toFormat($this->date_format, true);
 		}
 
 	// Add the filename
@@ -253,8 +265,11 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$html .= '<td class="at_downloads">'. $num_downloads.$label.'</td>';
 		}
 
-	// Add the modification date (maybe)
-	if ( $this->show_mod_date ) {
+	// Add the created and modification date (maybe)
+	if ( $this->show_created_date ) {
+		$html .= "<td class=\"at_created_date\">$created</td>";
+		}
+	if ( $this->show_modified_date ) {
 		$html .= "<td class=\"at_mod_date\">$last_modified</td>";
 		}
 

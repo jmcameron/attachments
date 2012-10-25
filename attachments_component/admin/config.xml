@@ -83,15 +83,21 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
+    <field name="show_created_date" type="radio" default="0"
+           label="ATTACH_SHOW_CREATION_DATE"
+           description="ATTACH_SHOW_CREATION_DATE_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
     <field name="show_modified_date" type="radio" default="0"
            label="ATTACH_SHOW_MODIFICATION_DATE"
            description="ATTACH_SHOW_MODIFICATION_DATE_DESCRIPTION">
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
-    <field name="mod_date_format" type="text" default="%x %H:%M"
-           label="ATTACH_FORMAT_STRING_FOR_MODIFICATION_DATE" size="30"
-           description="ATTACH_FORMAT_STRING_FOR_MODIFICATION_DATE_DESCRIPTION">
+    <field name="date_format" type="text" default="%x %H:%M"
+           label="ATTACH_FORMAT_STRING_FOR_DATES" size="30"
+           description="ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION">
     </field>
     <field name="sort_order" type="list" default="filename"
            label="ATTACH_ATTACHMENTS_LIST_ORDER"
