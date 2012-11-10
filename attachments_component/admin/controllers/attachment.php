@@ -54,7 +54,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 */
 	protected function checkEditId($context, $id)
 	{
-		// Do not think this function is used currently
+		// ??? Do not think this function is used currently
 		return true;
 	}
 
@@ -72,7 +72,8 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
+		$user = JFactory::getUser();
+		if (!$user->authorise('core.create', 'com_attachments')) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 61)' );
 			}
 
@@ -209,6 +210,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->parent_entity_name =	 $parent_entity_name;
 		$view->parent_title	 = $parent_title;
 		$view->new_parent	 = $new_parent;
+		$view->may_publish   = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		$view->entity_info	 = $entity_info;
 		$view->option		 = $this->option;
 		$view->from			 = $from;
@@ -317,8 +319,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Check for request forgeries
 		JRequest::checkToken() or die( 'Invalid Token');
 
-		// Make sure we have a user
+		// Access check.
 		$user = JFactory::getUser();
+		if (!$user->authorise('core.create', 'com_attachments')) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 61)' );
+			}
+
+		// Make sure we have a user
 		if ( $user->get('username') == '' ) {
 			$errmsg = JText::_('ATTACH_ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 64)';
 			JError::raiseError(500, $errmsg);
@@ -554,13 +561,21 @@ class AttachmentsControllerAttachment extends JControllerForm
 	 * Edit - display the form for the user to edit an attachment
 	 *
 	 * @param	string	$key	 The name of the primary key of the URL variable (IGNORED)
-	 * @param	string	$urlVar	 The name of the URL variable if different from the primary key (sometimes required to avoid router collisions). (IGNORED)
+	 * @param	string	$urlVar	 The name of the URL variable if different from the primary key. (IGNORED)
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
+		// Fail gracefully if the Attachments plugin framework plugin is disabled
+		if ( !JPluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+			echo '<h1>' . JText::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
+			return;
+			}
+
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		$user = JFactory::getUser();
+		if ( !($user->authorise('core.edit', 'com_attachments') OR
+			   $user->authorise('core.edit.own', 'com_attachments')) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		$uri = JFactory::getURI();
@@ -761,6 +776,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$view->change_parent_url = $change_parent_url;
 		$view->display_name		 = $display_name;
 		$view->entity_info		 = $entity_info;
+		$view->may_publish       = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 
 		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
@@ -793,6 +809,13 @@ class AttachmentsControllerAttachment extends JControllerForm
 	{
 		// Check for request forgeries
 		JRequest::checkToken() or die( 'Invalid Token');
+
+		// Access check.
+		$user = JFactory::getUser();
+		if ( !($user->authorise('core.edit', 'com_attachments') OR
+			   $user->authorise('core.edit.own', 'com_attachments')) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			}
 
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
@@ -947,6 +970,12 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$parent->title = $parent->getTitle($attachment->parent_id, $parent_entity);
 			}
 
+		// Check to make sure the user has permissions to edit the attachment
+		if ( !$parent->userMayEditAttachment($attachment) ) {
+			// ??? Add better error message
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			}
+
 		// Double-check to see if the URL changed
 		$old_url = JRequest::getString('old_url');
 		if ( !$new_uri_type && $old_url && ($old_url != $attachment->url) ) {
@@ -971,7 +1000,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$now = JFactory::getDate();
 
 		// Update create/modify info
-		$user = JFactory::getUser();
 		$attachment->modified_by = $user->get('id');
 		$attachment->modified = $now->toMySQL();
 
@@ -1191,8 +1219,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function delete_warning()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
+				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 			}
 
 		// Make sure we have a valid attachment ID

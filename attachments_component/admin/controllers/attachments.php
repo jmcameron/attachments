@@ -133,43 +133,75 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 */
 	public function delete()
 	{
-		// If this persion may delete any attachment, let them!
-		if (!JFactory::getUser()->authorise('core.delete', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-			}
-
 		// Check for request forgeries
 		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
+		// If this persion may delete the attachment, let them!
+		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
+				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			}
+
+		// Get ready
+		$app = JFactory::getApplication();
+		jimport('joomla.filesystem.file');
+		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Get attachments to remove from the request
 		$cid = JRequest::getVar('cid', array(), '', 'array');
 
-		if (count($cid)) {
-
+		if (count($cid))
+		{
 			$cids = implode(',', $cid);
 
-			// Get all the attachments to be deleted
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
-			$query->select('*')->from('#__attachments')->where("id IN ( $cids )");
-			$db->setQuery($query);
-			$attachments = $db->loadObjectList();
-			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 86)';
-				JError::raiseError(500, $errmsg);
+			$model		= $this->getModel('Attachment');
+			$attachment = $model->getTable();
+
+			JPluginHelper::importPlugin('attachments');
+			$apm = getAttachmentsPluginManager();
+
+			// Loop through the attachments and delete them one-by-one
+			foreach ($cid as $attachment_id)
+			{
+				// Load the attachment object
+				$id = (int)$attachment_id;
+				if ( ($id == 0) OR !$attachment->load($id) ) {
+					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
+					JError::raiseError(500, $errmsg);
+					}
+				$parent_id = $attachment->parent_id;
+				$parent_type = $attachment->parent_type;
+				$parent_entity = $attachment->parent_entity;
+
+				// Get the article/parent handler
+				JPluginHelper::importPlugin('attachments');
+				$apm = getAttachmentsPluginManager();
+				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+					JError::raiseError(500, $errmsg);
+					}
+				$parent = $apm->getAttachmentsPlugin($parent_type);
+
+				// If we may not delete it, complain!
+				if ( !$parent->userMayDeleteAttachment($attachment) )
+				{
+					$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+					$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
+											 $parent_entity, $attachment->filename, $id);
+					$app->enqueueMessage($errmsg, 'warning');
+					continue;
 				}
 
-			// First delete the actual attachment files
-			jimport('joomla.filesystem.file');
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
-			foreach ($attachments as $attachment) {
-				if ( JFile::exists($attachment->filename_sys) ) {
+				// Delete the actual file
+				if ( JFile::exists($attachment->filename_sys) )
+				{
 					JFile::delete($attachment->filename_sys);
 					AttachmentsHelper::clean_directory($attachment->filename_sys);
-					}
 				}
+			}
 
 			// Delete the entries in the attachments table
+			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->delete('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
@@ -177,58 +209,122 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				$errmsg = $db->getErrorMsg() . ' (ERR 87)';
 				JError::raiseError(500, $errmsg);
 				}
+		}
 
-			// Figure out how to redirect
-			$from = JRequest::getWord('from');
-			$known_froms = array('frontpage', 'article', 'editor', 'closeme');
-			if ( in_array( $from, $known_froms ) ) {
+		// Figure out how to redirect
+		$from = JRequest::getWord('from');
+		$known_froms = array('frontpage', 'article', 'editor', 'closeme');
+		if ( in_array( $from, $known_froms ) )
+		{
 
-				// Get the parent info from the first attachment
-				$parent_id	   = $attachments[0]->parent_id;
-				$parent_type   = $attachments[0]->parent_type;
-				$parent_entity = $attachments[0]->parent_entity;
+			// Get the parent info from the last attachment
+			$parent_id	   = $attachment->parent_id;
+			$parent_type   = $attachment->parent_type;
+			$parent_entity = $attachment->parent_entity;
 
-				// Get the article/parent handler
-				JPluginHelper::importPlugin('attachments');
-				$apm = getAttachmentsPluginManager();
-				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 88)';
-					JError::raiseError(500, $errmsg);
-					}
-				$parent = $apm->getAttachmentsPlugin($parent_type);
-				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+			// Get the article/parent handler
+			// ??? JPluginHelper::importPlugin('attachments');
+			// ??? $apm = getAttachmentsPluginManager();
+			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 88)';
+				JError::raiseError(500, $errmsg);
+				}
+			$parent = $apm->getAttachmentsPlugin($parent_type);
+			$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
-				// Make sure the parent exists
-				// NOTE: $parent_id===null means the parent is being created
-				if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
-					$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-											 $parent_entity_name, $parent_id) . ' (ERR 89)';
-					JError::raiseError(500, $errmsg);
-					}
+			// Make sure the parent exists
+			// NOTE: $parent_id===null means the parent is being created
+			if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
+				$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+				$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
+										 $parent_entity_name, $parent_id) . ' (ERR 89)';
+				JError::raiseError(500, $errmsg);
+				}
 
-				// If there is no parent_id, the parent is being created, use the username instead
-				if ( !$parent_id ) {
-					$pid = 0;
-					}
-				else {
-					$pid = (int)$parent_id;
-					}
+			// If there is no parent_id, the parent is being created, use the username instead
+			if ( !$parent_id ) {
+				$pid = 0;
+				}
+			else {
+				$pid = (int)$parent_id;
+				}
 
-				// Close the iframe and refresh the attachments list in the parent window
-				$uri = JFactory::getURI();
-				$base_url = $uri->base(true);
-				echo "<script type=\"text/javascript\">
+			// Close the iframe and refresh the attachments list in the parent window
+			$uri = JFactory::getURI();
+			$base_url = $uri->base(true);
+			echo "<script type=\"text/javascript\">
 				window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
 				window.parent.SqueezeBox.close();
 				</script>";
-				exit();
-				}
-			}
+			exit();
+		}
 
 		$this->setRedirect( 'index.php?option=' . $this->option);
 	}
 
 
+	/**
+	 * Method to publish a list of items
+	 * (Adapted from JControllerAdmin)
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
+	 */
+	public function publish()
+	{
+		// Check for request forgeries
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
+		// Get items to publish from the request.
+		$cid = JRequest::getVar('cid', array(), '', 'array');
+		$data = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
+		$task = $this->getTask();
+		$value = JArrayHelper::getValue($data, $task, 0, 'int');
+
+		if (empty($cid))
+		{
+			JError::raiseWarning(500, JText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+		}
+		else
+		{
+			// Get the model.
+			$model = $this->getModel();
+
+			// Make sure the item ids are integers
+			JArrayHelper::toInteger($cid);
+
+			// Publish the items.
+			$att_published = $model->publish($cid, $value);
+			if (($att_published == false) OR ($att_published == 0))
+			{
+				JError::raiseWarning(500, $model->getError());
+			}
+			else
+			{
+				if ($value == 1)
+				{
+					$ntext = $this->text_prefix . '_N_ITEMS_PUBLISHED';
+				}
+				elseif ($value == 0)
+				{
+					$ntext = $this->text_prefix . '_N_ITEMS_UNPUBLISHED';
+				}
+				elseif ($value == 2)
+				{
+					$ntext = $this->text_prefix . '_N_ITEMS_ARCHIVED';
+				}
+				else
+				{
+					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
+				}
+				// ??? $this->setMessage(JText::plural($ntext, count($cid)));
+				$this->setMessage(JText::plural($ntext,  $att_published));
+			}
+		}
+		$extension = JRequest::getCmd('extension');
+		$extensionURL = ($extension) ? '&extension=' . JRequest::getCmd('extension') : '';
+		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+	}
 
 }

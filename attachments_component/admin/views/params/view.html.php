@@ -14,6 +14,11 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+// Access check.
+if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 90)');
+	}
+
 jimport( 'joomla.application.component.view' );
 
 /**

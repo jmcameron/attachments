@@ -163,17 +163,17 @@ class AttachmentsViewAttachments extends JViewLegacy
 			JToolBarHelper::addNew('attachment.add');
 			}
 
-		if ($canDo->get('core.edit')) {
+		if ($canDo->get('core.edit') OR $canDo->get('core.edit.own') ) {
 			JToolBarHelper::editList('attachment.edit');
 			}
 
-		if ($canDo->get('core.edit.state')) {
+		if ($canDo->get('core.edit.state') OR $canDo->get('attachments.edit.state.own')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::publishList('attachments.publish');
 			JToolBarHelper::unpublishList('attachments.unpublish');
 			}
 
-		if ($canDo->get('core.delete')) {
+		if ($canDo->get('core.delete') OR $canDo->get('attachments.delete.own')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::deleteList('', 'attachments.delete');
 			}

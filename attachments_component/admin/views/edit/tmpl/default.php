@@ -270,9 +270,11 @@ else
 				 id="description" size="80" maxlength="255"
 				 value="<?php echo $attachment->description;?>" /></td>
   </tr>
+<?php if ( $this->may_publish ): ?>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
 	  <td colspan="5"><?php echo $this->lists['published']; ?></td>
   </tr>
+<?php endif; ?>
   <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
 	  <td colspan="5"><?php echo $this->access_level; ?></td>
   </tr>

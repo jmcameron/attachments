@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -18,8 +19,9 @@
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Attachments Extensions for Joomla! v1.2 documentation" href="#" /> 
+    <link rel="top" title="Attachments Extensions for Joomla! 1.2 documentation" href="#" /> 
   </head>
   <body>
     <div class="related">
@@ -28,7 +30,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="#">Attachments Extensions for Joomla! v1.2 documentation</a> &raquo;</li> 
+        <li><a href="#">Attachments Extensions for Joomla! 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -132,7 +134,7 @@ determine if this is the case, we need to do a little diagnostic work.
 Install the Attachments extension and temporarily edit the main attachments
 plugin file:</p>
 <blockquote>
-<tt class="docutils literal"><span class="pre">plugins/content/attachments.php</span></tt></blockquote>
+<div><tt class="docutils literal"><span class="pre">plugins/content/attachments.php</span></tt></div></blockquote>
 <p>Edit this file and look for the <cite>addAttachments()</cite> function and look for the
 line containing <tt class="docutils literal"><span class="pre">global</span> <span class="pre">$option;</span></tt> at the beginning of the function.  In
 order to generate the necessary diagnostic output, insert the following line
@@ -247,7 +249,7 @@ description field is a translation token and should include no spaces.</p>
 <p>The second file is the <strong>attachments_for_newcomp.php</strong> file:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-  <span class="c">// no direct access</span>
+  <span class="c1">// no direct access</span>
   <span class="nb">defined</span><span class="p">(</span> <span class="s1">&#39;_JEXEC&#39;</span> <span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span> <span class="s1">&#39;Restricted access&#39;</span> <span class="p">);</span>
 
 <span class="cp">?&gt;</span><span class="x"></span>
@@ -291,17 +293,17 @@ in the code our write.</p>
 <span id="index-3"></span><h3>3.3.4&nbsp;&nbsp;&nbsp;File: <tt class="docutils literal"><span class="pre">plugin/com_newcomp.ini</span></tt><a class="headerlink" href="#file-plugin-com-newcomp-ini" title="Permalink to this headline">¶</a></h3>
 <p>Next we look at the two files in the plugin directory.  First consider the
 configuration file <tt class="docutils literal"><span class="pre">plugin/com_newcomp.ini</span></tt>:</p>
-<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><pre>1
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6</pre></td><td class="code"><div class="highlight"><pre> <span class="k">[default]</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[default]</span>
  <span class="na">alias</span> <span class="o">=</span> <span class="s">item</span>
- <span class="na">entity</span> <span class="o">=</span> <span class="s">THING</span>
- <span class="na">entity_table</span> <span class="o">=</span> <span class="s">newcomp_thing</span>
- <span class="na">entity_id_field</span> <span class="o">=</span> <span class="s">id</span>
- <span class="na">entity_title_field</span> <span class="o">=</span> <span class="s">title</span>
+<span class="s"> entity = THING</span>
+<span class="s"> entity_table = newcomp_thing</span>
+<span class="s"> entity_id_field = id</span>
+<span class="s"> entity_title_field = title</span>
 </pre></div>
 </td></tr></table></div>
 <p>This file should contain a series of blocks for each entity, separated by a
@@ -316,7 +318,7 @@ first line of each block have assignments.  Only the part to the right of the
 equals sign should be changed.</p>
 <p>Now consider each of the lines above.</p>
 <blockquote>
-<dl class="docutils">
+<div><dl class="docutils">
 <dt><strong>Line 1</strong></dt>
 <dd>is the name of the parent entity type in lower case in square brackets.
 <strong>This name must be a single alphanumeric token without spaces</strong> (because
@@ -347,7 +349,7 @@ id field is &#8216;id&#8217;;</dd>
 <dd>is the name of the title field for the parent entity in the database
 table <tt class="docutils literal"><span class="pre">entity_table</span></tt>.</dd>
 </dl>
-</blockquote>
+</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">By default, the AttachmentsPlugin base class (which your code will extend)
@@ -367,7 +369,7 @@ installed).</p>
 <p>Finally, the main code for the plugin is in <tt class="docutils literal"><span class="pre">plugin/com_newcomp.php</span></tt>:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="c">// no direct access</span>
+<span class="c1">// no direct access</span>
 <span class="nb">defined</span><span class="p">(</span> <span class="s1">&#39;_JEXEC&#39;</span> <span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span> <span class="s1">&#39;Restricted access&#39;</span> <span class="p">);</span>
 
 <span class="k">class</span> <span class="nc">AttachmentsPlugin_com_newcomp</span> <span class="k">extends</span> <span class="nx">AttachmentsPlugin</span>
@@ -392,10 +394,10 @@ Replace <tt class="docutils literal"><span class="pre">newcom</span></tt> with t
 throughout this code.</p>
 <p id="index-5">Your new class extends the AttachmentsPlugin class that can be found in the file:</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li><tt class="docutils literal"><span class="pre">plugins/attachments/attachments_plugin.php</span></tt></li>
 </ul>
-</blockquote>
+</div></blockquote>
 <p>in your Joomla! installation.</p>
 </div>
 </div>
@@ -425,7 +427,7 @@ Joomla! using the regular installer (under the Extensions &gt; Install/Uninstall
 menu item in the administrative back end).  You will then need to enable the
 plugin.</p>
 <blockquote>
-<strong>DO NOT FORGET TO ENABLE YOUR NEW PLUGIN!</strong></blockquote>
+<div><strong>DO NOT FORGET TO ENABLE YOUR NEW PLUGIN!</strong></div></blockquote>
 <p>Once the new attachments plugin is installed and enabled, you should be able
 to test it.</p>
 <p>Go to the front end and log in as a user with adequate permissions to edit the
@@ -887,7 +889,7 @@ following form</p>
 </div>
 <p>where:</p>
 <blockquote>
-<dl class="docutils">
+<div><dl class="docutils">
 <dt>&lt;joomla&gt;</dt>
 <dd>is the top directory in which your Joomla! installation is installed</dd>
 <dt>&lt;entity-name&gt;</dt>
@@ -898,7 +900,7 @@ following form</p>
 <dt>&lt;filename&gt;</dt>
 <dd>is the name of the file (without any associated path)</dd>
 </dl>
-</blockquote>
+</div></blockquote>
 <p>So for an article, the path might look like this:</p>
 <div class="highlight-python"><pre>&lt;joomla&gt;/attachments/article/23/attachmentFile.txt</pre>
 </div>
@@ -915,12 +917,12 @@ following form</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="#">Attachments Extensions for Joomla! v1.2 documentation</a> &raquo;</li> 
+        <li><a href="#">Attachments Extensions for Joomla! 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2010, Jonathan M. Cameron.
-      Last updated on May 21, 2010 at 05:39 pm.
+      Last updated on Nov 02, 2012 at 05:12 pm.
     </div>
   </body>
 </html>

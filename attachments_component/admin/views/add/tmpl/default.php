@@ -118,10 +118,12 @@ if ( $this->parent_title ) {
 		  size="75" maxlength="255" value="" />
 	</td>
   </tr>
+<?php if ( $this->may_publish ): ?>
   <tr>
 	<td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
 	<td><?php echo $this->lists['published']; ?></td>
   </tr>
+<?php endif; ?>
   <tr>
 	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
 	<td><?php echo $this->access_level; ?></td>

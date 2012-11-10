@@ -53,7 +53,7 @@ class AttachmentsModelAttachments extends JModelList
 				'a.download_count'
 			);
 		}
-
+		
 		parent::__construct($config);
 	}
 

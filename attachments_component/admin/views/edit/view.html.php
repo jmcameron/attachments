@@ -15,9 +15,12 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.edit', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+if ( !( JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
+		JFactory::getUser()->authorise('core.edit.own', 'com_attachments') ) )
+{
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
 }
+
 
 jimport( 'joomla.application.component.view');
 
@@ -33,6 +36,12 @@ class AttachmentsViewEdit extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		// Prevent unallowed editing
+		if (!$this->attachment->parent->userMayEditAttachment($this->attachment))
+		{
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+		}
+
 		// Set the toolbar
 		$this->addToolBar();
 

@@ -97,7 +97,7 @@ manual: extensions_manual/manual.rst
 	rst2pdf extensions_manual/manual.rst -o extensions_manual.pdf --stylesheets extensions_manual/.rst2style
 
 _tests.pdf: _tests.rst
-	/usr/local/bin/rst2pdf _tests.rst -s narrowmargins -o _tests.pdf
+	rst2pdf _tests.rst -s narrowmargins -o _tests.pdf
 
 
 docs:

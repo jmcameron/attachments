@@ -34,6 +34,7 @@ class AttachmentsTableAttachment extends JTable
 		parent::__construct('#__attachments', 'id', $db);
 	}
 
+
 	/**
 	 * Method to set the publishing state for a row or list of rows in the database
 	 * table.  The method respects checked out rows by other users and will attempt
@@ -43,7 +44,7 @@ class AttachmentsTableAttachment extends JTable
 	 *					set the instance property value is used.
 	 * @param	integer The publishing state. eg. [0 = unpublished, 1 = published]
 	 * @param	integer The user id of the user performing the operation.
-	 * @return	boolean	True on success.
+	 * @return	int Number of attachments published ( false if 0 )
 	 * @since	1.0.4
 	 * @link	http://docs.joomla.org/JTable/publish
 	 */
@@ -66,11 +67,65 @@ class AttachmentsTableAttachment extends JTable
 			else {
 				$e = new JException(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
 				$this->setError($e);
-
 				return false;
 			}
 		}
 
+		// Get the article/parent handler
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+
+		// Remove any attachments that the user may not publish/unpublish
+		$bad_ids = Array();
+		foreach ($pks as $id)
+		{
+			// Get the info about this attachment
+			$query = $this->_db->getQuery(true);
+			$query->select('*')->from($this->_tbl);
+			$query->where('id='.(int)$id);
+			$this->_db->setQuery($query);
+			$attachment = $this->_db->loadObject();
+			if ( $this->_db->getErrorNum() ) {
+				$errmsg = $db->stderr() . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
+
+			$parent_id = $attachment->parent_id;
+			$parent_type = $attachment->parent_type;
+			$parent_entity = $attachment->parent_entity;
+			
+			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+				JError::raiseError(500, $errmsg);
+				}
+			$parent = $apm->getAttachmentsPlugin($parent_type);
+
+			// If we may not change it's state, complain!
+			if ( !$parent->userMayChangeAttachmentState($parent_id, $parent_entity,
+														$attachment->created_by) )
+			{
+				// Note the bad ID
+				$bad_ids[] = $id;
+
+				// If the user is not authorized, complain
+				$app = JFactory::getApplication();
+				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+				$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_PUBLISH_S_ATTACHMENT_S_ID_N',
+										 $parent_entity, $attachment->filename, $id) . ' (ERRN)';
+				$app->enqueueMessage($errmsg, 'error');
+			}
+		}
+
+		// Remove any offending attachments
+		$pks = array_diff($pks, $bad_ids);
+
+		// Exit if there are no attachments the user can change the state of
+		if ( empty($pks) )
+		{
+			// No warning needed because warnings already issued for attachments user cannot change
+			return false;
+		}
+		
 		// Update the publishing state for rows with the given primary keys.
 		$query = $this->_db->getQuery(true);
 		$query->update($this->_tbl);
@@ -92,9 +147,9 @@ class AttachmentsTableAttachment extends JTable
 
 		// Check for a database error.
 		if (!$this->_db->query()) {
-			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
+											   get_class($this), $this->_db->getErrorMsg()) . ' (ERRN)');
 			$this->setError($e);
-
 			return false;
 		}
 
@@ -113,7 +168,7 @@ class AttachmentsTableAttachment extends JTable
 		}
 
 		$this->setError('');
-		return true;
+		return count($pks);
 	}
 
 }
