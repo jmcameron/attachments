@@ -21,6 +21,10 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 
 jimport( 'joomla.application.component.view' );
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * View for editing the component parameters
  * (adapted from administrator/components/com_config/views/component/view.php)

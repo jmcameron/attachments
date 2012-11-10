@@ -16,6 +16,10 @@ defined('_JEXEC') or die('Restricted Access');
 
 jimport( 'joomla.application.component.view' );
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * View for a list of attachments
  *

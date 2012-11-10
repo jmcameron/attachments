@@ -16,6 +16,10 @@ defined('_JEXEC') or die('Restricted access');
 // Import the controller library
 jimport('joomla.application.component.controller');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 // Execute the requested task
 $controller = JControllerLegacy::getInstance('Attachments');
 $controller->execute(JRequest::getCmd('task'));

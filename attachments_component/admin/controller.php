@@ -15,6 +15,9 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.controller');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
 
 /**
  * Define the main attachments controller class

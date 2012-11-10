@@ -17,6 +17,10 @@ defined('_JEXEC') or die('Restricted access');
 // import the Joomla modellist library
 jimport('joomla.application.component.modellist');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * Attachments Model
  *

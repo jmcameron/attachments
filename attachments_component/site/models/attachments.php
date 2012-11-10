@@ -15,6 +15,10 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.model');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * Attachment List Model for all attachments belonging to one
  * content article (or other content-related entity)

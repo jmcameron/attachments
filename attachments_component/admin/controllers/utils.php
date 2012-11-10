@@ -20,6 +20,9 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 
 jimport('joomla.application.component.controller');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
 
 /**
  * The controller for utils requests

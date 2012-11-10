@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
 
 jimport( 'joomla.application.component.view' );
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * View for the special controller
  * (adapted from administrator/components/com_config/views/component/view.php)

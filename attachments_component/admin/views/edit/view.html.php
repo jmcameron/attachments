@@ -24,6 +24,10 @@ if ( !( JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
 
 jimport( 'joomla.application.component.view');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
+
 /**
  * HTML View class for editing new attachments
  *

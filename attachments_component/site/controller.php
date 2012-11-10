@@ -18,6 +18,9 @@ jimport( 'joomla.application.component.controller' );
 /** Load the Attachements defines */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
 /**
  * The main attachments controller class (for the front end)
  *
