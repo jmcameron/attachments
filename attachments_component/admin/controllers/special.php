@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 44)');
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 146)');
 	}
 
 jimport('joomla.application.component.controller');
@@ -84,7 +84,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 45)';
+			$errmsg = $db->stderr() . ' (ERR 147)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -98,7 +98,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 		$db->setQuery($query);
 		$crows = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 46)';
+			$errmsg = $db->stderr() . ' (ERR 148)';
 			JError::raiseError(500, $errmsg);
 			}
 

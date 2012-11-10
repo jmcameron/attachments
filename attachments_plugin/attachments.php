@@ -367,7 +367,7 @@ class plgContentAttachments extends JPlugin
 		if ( $attachments_placement == 'disabled_nofilter' ) {
 			return false;
 			}
-		
+
 		// Get some of the options
 		$user = JFactory::getUser();
 		$logged_in = $user->get('username') <> '';

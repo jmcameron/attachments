@@ -243,7 +243,7 @@ class AttachmentsHelper
 		$dirend_chars = DS.'/';
 		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) ||
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 101)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -262,7 +262,7 @@ class AttachmentsHelper
 			}
 
 		if ( !$subdir_ok || !JFolder::exists($upload_dir) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 102)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 30)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -270,7 +270,7 @@ class AttachmentsHelper
 		$index_ok = false;
 		$index_fname = $upload_dir.'/index.html';
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 103)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -286,7 +286,7 @@ class AttachmentsHelper
 				$hta_ok = true;
 				}
 			if ( ! $hta_ok ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 104)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 32)';
 				JError::raiseError(500, $errmsg);
 				}
 			}
@@ -407,7 +407,7 @@ class AttachmentsHelper
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 105)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -763,7 +763,7 @@ class AttachmentsHelper
 		if ( !JFile::exists($fullpath) ) {
 			jimport( 'joomla.filesystem.folder' );
 			if ( !JFolder::create($fullpath) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 106)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
 				JError::raiseError(500, $errmsg);
 				}
 			AttachmentsHelper::write_empty_index_html($fullpath);
@@ -904,7 +904,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERR 107)';
+					$errmsg = $db->stderr() . ' (ERR 35)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
@@ -927,7 +927,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 108)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 36)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -955,7 +955,7 @@ class AttachmentsHelper
 			$db->setQuery($query);
 			$result = $db->query();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 109)';
+				$errmsg = $db->stderr() . ' (ERR 37)';
 				JError::raiseError(500, $errmsg);
 				}
 			$msg = JText::_('ATTACH_ERROR_MOVING_FILE')
@@ -1509,7 +1509,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERR 110)';
+					$errmsg = $db->stderr() . ' (ERR 38)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
@@ -1524,7 +1524,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 111)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 39)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1564,7 +1564,7 @@ class AttachmentsHelper
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 112)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 40)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent_id = $attachment->parent_id;
@@ -1575,14 +1575,14 @@ class AttachmentsHelper
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 113)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 41)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
-			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 114)';
+			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 42)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1599,7 +1599,7 @@ class AttachmentsHelper
 		// Make sure the file exists
 		jimport('joomla.filesystem.file');
 		if ( !JFile::exists($filename_sys) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 115)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
 		$len = filesize($filename_sys);
@@ -1611,7 +1611,7 @@ class AttachmentsHelper
 		$query->where('id = ' .(int)$id);
 		$db->setQuery($query);
 		if ( !$db->query() ) {
-			$errmsg = $db->stderr() . ' (ERR 116)';
+			$errmsg = $db->stderr() . ' (ERR 44)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1679,7 +1679,7 @@ class AttachmentsHelper
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 117)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -1703,7 +1703,7 @@ class AttachmentsHelper
 		// Make sure the new directory exists
 		jimport('joomla.filesystem.folder');
 		if ( !JFolder::create($new_fullpath) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 118)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 46)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1772,7 +1772,7 @@ class AttachmentsHelper
 		$db->setQuery($query);
 		$total = $db->loadResult();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 119)';
+			$errmsg = $db->stderr() . ' (ERR 47)';
 			JError::raiseError(500, $errmsg);
 			}
 

@@ -40,7 +40,7 @@ class AttachmentsControllerList extends JControllerLegacy
 	 */
 	public function noop()
 	{
-		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 82)';
+		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 118)';
 		JError::raiseError(500, $errmsg);
 	}
 
@@ -88,7 +88,7 @@ class AttachmentsControllerList extends JControllerLegacy
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 83)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 119)';
 			JError::raiseError(500, $errmsg);
 			}
 		$view->setModel($model);

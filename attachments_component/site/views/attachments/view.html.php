@@ -51,7 +51,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		// Get the model
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 153)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 62)';
 			JError::raiseError( 500, $errmsg);
 			}
 

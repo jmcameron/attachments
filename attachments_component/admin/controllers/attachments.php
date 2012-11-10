@@ -65,7 +65,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 84)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 163)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -89,7 +89,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 85)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 164)';
 			JError::raiseError(500, $errmsg);
 			}
 		$view->setModel($model);
@@ -139,7 +139,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		// If this persion may delete the attachment, let them!
 		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
 				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERRN)');
+			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 165)');
 			}
 
 		// Get ready
@@ -166,7 +166,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				// Load the attachment object
 				$id = (int)$attachment_id;
 				if ( ($id == 0) OR !$attachment->load($id) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERRN)';
+					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
 					JError::raiseError(500, $errmsg);
 					}
 				$parent_id = $attachment->parent_id;
@@ -177,7 +177,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				JPluginHelper::importPlugin('attachments');
 				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
 					JError::raiseError(500, $errmsg);
 					}
 				$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -206,7 +206,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$query->delete('#__attachments')->where("id IN ( $cids )");
 			$db->setQuery($query);
 			if (!$db->query()) {
-				$errmsg = $db->getErrorMsg() . ' (ERR 87)';
+				$errmsg = $db->getErrorMsg() . ' (ERR 168)';
 				JError::raiseError(500, $errmsg);
 				}
 		}
@@ -226,7 +226,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			// ??? JPluginHelper::importPlugin('attachments');
 			// ??? $apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 88)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -237,7 +237,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
 				$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 				$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 89)';
+										 $parent_entity_name, $parent_id) . ' (ERR 170)';
 				JError::raiseError(500, $errmsg);
 				}
 

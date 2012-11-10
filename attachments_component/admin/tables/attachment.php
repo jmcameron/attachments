@@ -13,10 +13,10 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
- 
+
 // import Joomla table library
 jimport('joomla.database.table');
- 
+
 /**
  * Attachments table class
  *
@@ -29,7 +29,7 @@ class AttachmentsTableAttachment extends JTable
 	 *
 	 * @param object Database connector object
 	 */
-	public function __construct(&$db) 
+	public function __construct(&$db)
 	{
 		parent::__construct('#__attachments', 'id', $db);
 	}
@@ -86,16 +86,16 @@ class AttachmentsTableAttachment extends JTable
 			$this->_db->setQuery($query);
 			$attachment = $this->_db->loadObject();
 			if ( $this->_db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERRN)';
+				$errmsg = $db->stderr() . ' (ERR 107)';
 				JError::raiseError(500, $errmsg);
 				}
 
 			$parent_id = $attachment->parent_id;
 			$parent_type = $attachment->parent_type;
 			$parent_entity = $attachment->parent_entity;
-			
+
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERRN)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 108)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -111,7 +111,7 @@ class AttachmentsTableAttachment extends JTable
 				$app = JFactory::getApplication();
 				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 				$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_PUBLISH_S_ATTACHMENT_S_ID_N',
-										 $parent_entity, $attachment->filename, $id) . ' (ERRN)';
+										 $parent_entity, $attachment->filename, $id) . ' (ERR 109)';
 				$app->enqueueMessage($errmsg, 'error');
 			}
 		}
@@ -125,7 +125,7 @@ class AttachmentsTableAttachment extends JTable
 			// No warning needed because warnings already issued for attachments user cannot change
 			return false;
 		}
-		
+
 		// Update the publishing state for rows with the given primary keys.
 		$query = $this->_db->getQuery(true);
 		$query->update($this->_tbl);
@@ -148,7 +148,7 @@ class AttachmentsTableAttachment extends JTable
 		// Check for a database error.
 		if (!$this->_db->query()) {
 			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
-											   get_class($this), $this->_db->getErrorMsg()) . ' (ERRN)');
+											   get_class($this), $this->_db->getErrorMsg()) . ' (ERR 110)');
 			$this->setError($e);
 			return false;
 		}

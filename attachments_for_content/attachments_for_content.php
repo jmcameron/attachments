@@ -685,7 +685,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			$attachments = $db->loadObjectList();
 			if ( $db->getErrorNum() || (count($attachments) == 0) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
-										 $parent_entity_name, $parent_id) . ' (ERR 411)';
+										 $parent_entity_name, $parent_id) . ' (ERR 410)';
 				JError::raiseError(500, $errmsg);
 				}
 
