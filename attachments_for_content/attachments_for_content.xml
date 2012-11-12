@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="attachments" version="1.6" method="upgrade">
     <name>plg_attachments_for_content</name>
-    <creationDate>November 10, 2012</creationDate>
+    <creationDate>November 11, 2012</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <copyright>(C) 2009-2012 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>3.1-Alpha4</version>
+    <version>3.1-Alpha5</version>
     <description>ATTACH_ATTACHMENTS_FOR_CONTENT_PLUGIN_DESCRIPTION</description>
 
     <files>
