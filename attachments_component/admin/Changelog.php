@@ -40,6 +40,8 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-11-10 Renumbered all error numbers.
    - 2012-11-10 Added extra code to handle legacy classes for Joomla version 2.5.5
      	and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6.)
+   - 2012-11-11 Cleaned up some permissions issues with adding/editing attachments
+	    in the backend by non-super-user.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
