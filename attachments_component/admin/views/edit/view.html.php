@@ -43,7 +43,8 @@ class AttachmentsViewEdit extends JViewLegacy
 		// Prevent unallowed editing
 		if (!$this->attachment->parent->userMayEditAttachment($this->attachment))
 		{
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 177)');
+			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT');
+			return JError::raiseWarning(403, $errmsg . ' (ERR 177)');
 		}
 
 		// Set the toolbar

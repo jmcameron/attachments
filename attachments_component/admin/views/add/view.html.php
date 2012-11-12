@@ -38,6 +38,13 @@ class AttachmentsViewAdd extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		// Prevent unallowed editing PID PE
+		if (!$this->parent->userMayAddAttachment($this->parent_id, $this->parent_entity, $this->new_parent))
+		{
+			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $this->parent_entity_name);
+			return JError::raiseWarning(403, $errmsg . ' (ERRN)');
+		}
+
 		// Set the toolbar
 		$this->addToolBar();
 
