@@ -157,7 +157,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$this->style = $params->get('attachments_table_style', 'attachmentsList');
 		$this->show_column_titles = $params->get('show_column_titles', false);
 		$this->show_description = $params->get('show_description', true);
-		$this->show_creator =	$params->get('show_creator', false);
+		$this->show_creator_name =	$params->get('show_creator_name', false);
 		$this->show_file_size = $params->get('show_file_size', true);
 		$this->show_downloads = $params->get('show_downloads', false);
 		$this->show_created_date = $params->get('show_created_date', false);

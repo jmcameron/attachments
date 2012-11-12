@@ -78,7 +78,7 @@ if ( $this->show_column_titles ) {
 	if ( $this->show_user_field_3 ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_3_name . "</th>";
 		}
-	if ( $this->show_creator ) {
+	if ( $this->show_creator_name ) {
 		$html .= "<th class=\"at_creator_name\">" . JText::_('ATTACH_CREATOR') . "</th>";
 		}
 	if ( $this->show_file_size ) {
@@ -243,7 +243,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 
 	// Add the creator's username (if requested)
-	if ( $this->show_creator ) {
+	if ( $this->show_creator_name ) {
 		$html .= "<td class=\"at_creator_name\">{$attachment->creator_name}</td>";
 		}
 
