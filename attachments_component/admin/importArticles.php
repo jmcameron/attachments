@@ -73,7 +73,7 @@ class ImportArticles extends ImportFromCSV
 		// Open the file
 		$open_ok = $self->open($filename);
 		if ( $open_ok !== true ) {
-			return JError::raiseWarning(500, $open_ok);
+			return JError::raiseError(500, $open_ok);
 			}
 
 		// Read the data and import the articles
@@ -90,14 +90,14 @@ class ImportArticles extends ImportFromCSV
 			$cat_ok = $this->_verifyCategory((int)$record->catid,
 											 $record->category_title);
 			if ( $cat_ok !== true ) {
-				return JError::raiseWarning(500, $cat_ok);
+				return JError::raiseError(500, $cat_ok);
 				}
 
 			// Verify the creator
 			$creator_ok = $this->_verifyUser((int)$record->created_by,
 											 $record->created_by_name);
 			if ( $creator_ok !== true ) {
-				return JError::raiseWarning(500, $creator_ok);
+				return JError::raiseError(500, $creator_ok);
 				}
 
 			// Save the record

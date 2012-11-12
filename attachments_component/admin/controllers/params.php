@@ -46,7 +46,7 @@ class AttachmentsControllerParams extends JControllerForm
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 116)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 116)');
 			}
 
 		// Get the component parameters

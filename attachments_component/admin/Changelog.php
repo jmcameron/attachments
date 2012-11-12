@@ -42,6 +42,8 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
      	and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6.)
    - 2012-11-11 Cleaned up some permissions issues with adding/editing attachments
 	    in the backend by non-super-user.
+   - 2012-11-11 Changed all JError::raiseWarning() to JError::raiseError().
+	    Apparently, raiseWarning is not well supported by Joomla. 
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.

@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)');
+	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)');
 }
 
 jimport( 'joomla.application.component.view');
@@ -42,7 +42,7 @@ class AttachmentsViewAdd extends JViewLegacy
 		if (!$this->parent->userMayAddAttachment($this->parent_id, $this->parent_entity, $this->new_parent))
 		{
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $this->parent_entity_name);
-			return JError::raiseWarning(403, $errmsg . ' (ERR 178)');
+			return JError::raiseError(403, $errmsg . ' (ERR 178)');
 		}
 
 		// Set the toolbar

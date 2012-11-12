@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 149)');
+	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 149)');
 	}
 
 jimport('joomla.application.component.controller');
@@ -87,7 +87,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -104,7 +104,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -124,7 +124,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -152,7 +152,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -180,7 +180,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -208,7 +208,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -236,7 +236,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -263,7 +263,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -291,7 +291,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 158)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 158)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -318,7 +318,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)');
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/import.php');
@@ -326,7 +326,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 		$filename = JRequest::getString('filename', null);
 		if ( $filename == null ) {
 			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 160)';
-			return JError::raiseWarning(500, $errmsg);
+			return JError::raiseError(500, $errmsg);
 			}
 		$verify_parent = JRequest::getBool('verify_parent', true);
 		$update = JRequest::getBool('update', false);
@@ -337,7 +337,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		// Abort if it is an error message
 		if ( is_string($status) ) {
-			return JError::raiseWarning(500, $status);
+			return JError::raiseError(500, $status);
 			}
 
 		// Otherwise, report the results
@@ -352,7 +352,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 				}
 			else {
 				$errmsg = JText::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 162)';
-				return JError::raiseWarning(500, $errmsg);
+				return JError::raiseError(500, $errmsg);
 				}
 			}
 	}
@@ -365,7 +365,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR'));
 			}
 
 		echo "Test!";

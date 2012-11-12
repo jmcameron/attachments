@@ -74,7 +74,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Access check.
 		$user = JFactory::getUser();
 		if (!$user->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 120)' );
+			return JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 120)' );
 			}
 
 		// Access check.
@@ -323,7 +323,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Access check.
 		$user = JFactory::getUser();
 		if (!$user->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 123)' );
+			return JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 123)' );
 			}
 
 		// Make sure we have a user
@@ -576,7 +576,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$user = JFactory::getUser();
 		if ( !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
-			return JError::raiseWarning(403, JText::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT') . ' (ERR 131)');
+			return JError::raiseError(403, JText::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT') . ' (ERR 131)');
 			}
 
 		$uri = JFactory::getURI();
@@ -815,7 +815,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$user = JFactory::getUser();
 		if ( !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
-			return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 133)');
+			return JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 133)');
 			}
 
 		$model		= $this->getModel();
@@ -974,7 +974,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Check to make sure the user has permissions to edit the attachment
 		if ( !$parent->userMayEditAttachment($attachment) ) {
 			// ??? Add better error message
-			return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 138)');
+			return JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 138)');
 			}
 
 		// Double-check to see if the URL changed
@@ -1222,7 +1222,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Access check.
 		if ( !( JFactory::getUser()->authorise('core.delete', 'com_attachments') OR
 				JFactory::getUser()->authorise('attachments.delete.own', 'com_attachments') ) ) {
-			return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 143)');
+			return JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 143)');
 			}
 
 		// Make sure we have a valid attachment ID

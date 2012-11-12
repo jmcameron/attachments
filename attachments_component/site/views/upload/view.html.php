@@ -35,7 +35,7 @@ class AttachmentsViewUpload extends JViewLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 63)' );
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 63)' );
 			}
 
 		parent::display($tpl);

@@ -281,7 +281,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 		if (empty($cid))
 		{
-			JError::raiseWarning(500, JText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+			JError::raiseError(500, JText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
 		}
 		else
 		{
@@ -295,7 +295,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$att_published = $model->publish($cid, $value);
 			if (($att_published == false) OR ($att_published == 0))
 			{
-				JError::raiseWarning(500, $model->getError());
+				JError::raiseError(500, $model->getError());
 			}
 			else
 			{

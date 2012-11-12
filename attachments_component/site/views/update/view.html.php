@@ -35,7 +35,7 @@ class AttachmentsViewUpdate extends JViewLegacy
 		// Access check.
 		if ( !(JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
 			   JFactory::getUser()->authorise('core.edit.own', 'com_attachments')) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 61)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 61)');
 			}
 
 		parent::display($tpl);

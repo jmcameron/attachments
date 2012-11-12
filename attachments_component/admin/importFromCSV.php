@@ -308,7 +308,7 @@ class ImportFromCSV
 			}
 		if ( count($missing) > 0 ) {
 			// Warn if there were missing required field names
-			return JError::raiseWarning(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 100)');
+			return JError::raiseError(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 100)');
 			}
 
 		return true;

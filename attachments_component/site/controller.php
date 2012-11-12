@@ -79,7 +79,7 @@ class AttachmentsController extends JControllerLegacy
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 1)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 1)');
 			}
 
 		require_once(JPATH_COMPONENT_SITE.'/helper.php');
@@ -525,7 +525,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Check to make sure we can edit it
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 16)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 16)');
 			}
 
 		// Make sure the parent exists
@@ -635,7 +635,7 @@ class AttachmentsController extends JControllerLegacy
 		$parent_id = $attachment->parent_id;
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_ATTACHMENT') . ' (ERR 23)';
-			JError::raiseWarning(403, $errmsg);
+			JError::raiseError(403, $errmsg);
 			}
 
 		// Set up the view
@@ -713,7 +713,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Check to make sure we can edit it
 		if ( !$parent->userMayEditAttachment($attachment) ) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 27)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 27)');
 			}
 
 		// Set up the entity name for display

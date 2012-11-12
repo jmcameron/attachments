@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)');
+	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)');
 	}
 
 /** Load the Attachments defines */
@@ -132,7 +132,7 @@ class AttachmentsUpdate
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
-					JError::raiseWarning(500, $errmsg  . $db->stderr() . ' (ERR 70)');
+					JError::raiseError(500, $errmsg  . $db->stderr() . ' (ERR 70)');
 					}
 				$numUpdated++;
 				}
