@@ -45,6 +45,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-11-11 Changed all JError::raiseWarning() to JError::raiseError().
 		Apparently, raiseWarning is not well supported by Joomla.  Switched the
 		permissions related errors to 403 in the backend for nicer error handling.
+   - 2012-11-12 Improved config variable (show_creator --> show_creator_name).
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
