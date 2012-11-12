@@ -138,7 +138,7 @@ class AttachmentsController extends JControllerLegacy
 		$user = JFactory::getUser();
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 3)';
-			JError::raiseError(403, $errmsg);
+			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the title of the parent
@@ -271,7 +271,7 @@ class AttachmentsController extends JControllerLegacy
 		// Verify that this user may add attachments to this parent
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 7)';
-			JError::raiseError(403, $errmsg);
+			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the Itemid
@@ -539,7 +539,7 @@ class AttachmentsController extends JControllerLegacy
 		// See if this user can edit (or delete) the attachment
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S', $parent_entity_name) . ' (ERR 18)';
-			JError::raiseError(403, $errmsg);
+			JError::raiseError(500, $errmsg);
 			}
 
 		// First delete the actual attachment files (if any)
@@ -635,7 +635,7 @@ class AttachmentsController extends JControllerLegacy
 		$parent_id = $attachment->parent_id;
 		if ( !$parent->userMayDeleteAttachment($attachment) ) {
 			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_ATTACHMENT') . ' (ERR 23)';
-			JError::raiseError(403, $errmsg);
+			JError::raiseError(500, $errmsg);
 			}
 
 		// Set up the view

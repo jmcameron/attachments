@@ -1583,7 +1583,7 @@ class AttachmentsHelper
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
 			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 42)';
-			JError::raiseError(403, $errmsg);
+			JError::raiseError(500, $errmsg);
 			}
 
 		// Get the component parameters
