@@ -369,7 +369,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		// Make sure this user has permission to upload
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 126)';
-			JError::raiseError(500, $errmsg);
+			JError::raiseError(403, $errmsg);
 			}
 
 		// Set up the new record
