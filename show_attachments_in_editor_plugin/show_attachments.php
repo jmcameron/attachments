@@ -207,22 +207,6 @@ class plgSystemShow_attachments extends JPlugin
 			// Load the code from the attachments plugin to create the list
 			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
-			// Add the refresh Javascript
-			$app = JFactory::getApplication();
-			$uri = JFactory::getURI();
-			$base_url = $uri->root(true);
-			$doc = JFactory::getDocument();
-			JHTML::_('behavior.mootools');
-			if ( $app->isAdmin() ) {
-				// ??? Is this line necessary?	If so, why?
-				$base_url = str_replace('/administrator','', $base_url);
-				}
-			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
-			$doc->addScript( $js_path );
-
-			$doc->addStyleSheet( $base_url . 'plugins/content/attachments/attachments.css',
-								 'text/css', null, array() );
-
 			// Get the article/parent handler
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 
@@ -319,6 +303,5 @@ class plgSystemShow_attachments extends JPlugin
 								$attachments . '<div class="clr"></div>', $body);
 			JResponse::setBody($body);
 			}
-
 	}
 }

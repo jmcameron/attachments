@@ -100,16 +100,6 @@ class plgButtonAdd_attachment extends JPlugin
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return new JObject();
 			}
-
-		// Get the parent handler
-		$parent = $apm->getAttachmentsPlugin($parent_type);
-		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-
-		// Make sure we have permissions to add attachments to this article or category
-		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
-			return;
-			}
-
 		// Figure out where we are and construct the right link and set
 		$uri = JFactory::getURI();
 		$base_url = $uri->root(true);
@@ -133,6 +123,15 @@ class plgButtonAdd_attachment extends JPlugin
 		if ( $lang->isRTL() ) {
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments_rtl.css' );
 			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment_rtl.css' );
+			}
+
+		// Get the parent handler
+		$parent = $apm->getAttachmentsPlugin($parent_type);
+		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+
+		// Make sure we have permissions to add attachments to this article or category
+		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
+			return;
 			}
 
 		// Load the language file from the frontend
