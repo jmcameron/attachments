@@ -234,8 +234,8 @@ class plgSystemShow_attachments extends JPlugin
 			// Insert the attachments above the editor buttons
 			// NOTE: Assume that anyone editing the article can see its attachments
 			$body = JResponse::getBody();
-			$body = str_replace('<div id="editor-xtd-buttons">',
-								$attachments . '<div id="editor-xtd-buttons">', $body);
+			$body = str_replace('<div id="editor-xtd-buttons"',
+								$attachments . '<div id="editor-xtd-buttons"', $body);
 			JResponse::setBody($body);
 			}
 
