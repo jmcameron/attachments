@@ -7,6 +7,16 @@ By: Jonathan M. Cameron
 Copyright (C) 2010 Jonathan M. Cameron, All Rights Reserved
    License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
+.. warning::
+
+   THIS IS A DRAFT. 
+
+   This manual has been updated for Attachments 3x for Joomla 2.5x but has not
+   been tested for correctness.  If you follow this manual and have any
+   difficulties creating an attachments plugin, please email your corrections,
+   additions, or suggestions to the the author (see the email at the end of
+   this document).   2012-11-14
+
 .. contents:: Contents
    :depth: 2
 
@@ -1036,6 +1046,11 @@ where:
 So for an article, the path might look like this::
 
    <joomla>/attachments/article/23/attachmentFile.txt
+
+Contact
+=======
+
+Please report corrections and suggestions to `jmcameron@jmcameron.net <mailto:jmcameron@jmcameron.net>`_
 
 .. footer::
 
