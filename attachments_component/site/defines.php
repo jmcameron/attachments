@@ -60,7 +60,11 @@ class AttachmentsDefines
 
 	/** Maximum filename length (MUST match the `filename` SQL definition)
 	 */
-	static $MAXIMUM_FILENAME_LENGTH = 80;
+	static $MAXIMUM_FILENAME_LENGTH = 256;
+
+	/** Maximum filename path length (MUST match the `filename_sys` SQL definition)
+	 */
+	static $MAXIMUM_FILENAME_SYS_LENGTH = 512;
 	
 
 	/** Attachments subdirectory

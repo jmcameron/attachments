@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS `#__attachments`
 (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `filename` VARCHAR(80) NOT NULL,
-    `filename_sys` VARCHAR(255) NOT NULL,
+    `filename` VARCHAR(256) NOT NULL,
+    `filename_sys` VARCHAR(512) NOT NULL,
     `file_type` VARCHAR(128) NOT NULL,
     `file_size` INT(11) UNSIGNED NOT NULL,
     `url` VARCHAR(1024) NOT NULL DEFAULT '',
