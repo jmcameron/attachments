@@ -18,6 +18,12 @@
 	</sql>
     </install>
 
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
     <uninstall>
 	<sql>
 	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
@@ -86,7 +92,6 @@
 	    <filename>help/en-GB/help.css</filename>
 	    <filename>help/en-GB/help.html</filename>
 	    <filename>help/en-GB/index.html</filename>
-	    <folder>help/en-GB/images</folder>
 	    <filename>help/en-GB/plugin_manual/html/genindex.html</filename>
 	    <filename>help/en-GB/plugin_manual/html/index.html</filename>
 	    <filename>help/en-GB/plugin_manual/html/search.html</filename>
@@ -113,7 +118,6 @@
 	    <filename>sql/index.html</filename>
 	    <filename>sql/install.mysql.sql</filename>
 	    <filename>sql/uninstall.mysql.sql</filename>
-	    <filename>sql/updates/index.html</filename>
 	    <filename>tables/attachment.php</filename>
 	    <filename>tables/index.html</filename>
 	    <filename>update.php</filename>
@@ -149,6 +153,8 @@
 	    <filename>views/warning/tmpl/index.html</filename>
 	    <filename>views/warning/view.html.php</filename>
 	    <filename>Changelog.php</filename>
+	    <folder>sql/updates</folder>
+	    <folder>help/en-GB/images</folder>
 	    <folder>help/en-GB/plugin_manual/html/_static</folder>
 	    <folder>language</folder>
 	</files>
