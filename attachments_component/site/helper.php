@@ -439,9 +439,18 @@ class AttachmentsHelper
 			JError::raiseError(500, "<b>".$errmsg."</b>");
 			}
 
+		// Get the maximum allowed filename length (for the filename display)
+		$max_filename_length = (int)$params->get('max_filename_length', 0);
+		if ( $max_filename_length == 0 ) {
+			$max_filename_length = AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH;
+			}
+		else {
+			$max_filename_length = min($max_filename_length, AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH);
+			}
+
 		// Truncate the filename, if necessary and alert the user
-		if (JString::strlen($filename) > AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH) {
-			$filename = AttachmentsHelper::truncate_filename($filename, AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH);
+		if (JString::strlen($filename) > $max_filename_length) {
+			$filename = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			$msg = JText::_('ATTACH_WARNING_FILENAME_TRUNCATED');
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
@@ -459,7 +468,7 @@ class AttachmentsHelper
 				echo "<script type=\"text/javascript\">alert('$msg')</script>";
 				}
 			}
-
+		
 		// Check the filename for bad characters
 		$bad_chars = false;
 		$forbidden_chars = $params->get('forbidden_filename_characters', '#=?%&');
@@ -791,6 +800,16 @@ class AttachmentsHelper
 			$url = str_replace(DS, '/', $url);
 			}
 
+		// Check on length of filename_sys
+		// if (JString::strlen($filename_sys) > AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH) {
+		if (true) {
+			$errmsg = JText::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
+									 JString::strlen($filename_sys),
+									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
+									 $filename) . '(ERRN)';
+			JError::raiseError(500, $errmsg);
+			}
+
 		// Make sure the system filename doesn't already exist
 		$error = false;
 		$duplicate_filename = false;
@@ -867,15 +886,6 @@ class AttachmentsHelper
 			// Display the view
 			$view->display();
 			exit();
-			}
-
-		// Get the maximum allowed filename length (for the filename display)
-		$max_filename_length =$params->get('max_filename_length', 0);
-		if ( is_numeric($max_filename_length) ) {
-			$max_filename_length = (int)$max_filename_length;
-			}
-		else {
-			$max_filename_length = 0;
 			}
 
 		// See of the display name needs to change
