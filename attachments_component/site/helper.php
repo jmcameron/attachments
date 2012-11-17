@@ -394,6 +394,8 @@ class AttachmentsHelper
 		$user = JFactory::getUser();
 		$db = JFactory::getDBO();
 
+		$from = JRequest::getWord('from');
+
 		// Figure out if the user may publish this attachment
 		$may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
 															 $attachment->parent_entity,
@@ -426,6 +428,17 @@ class AttachmentsHelper
 		$filename = JString::str_ireplace("\'", "'", $_FILES['upload']['name']);
 		$ftype = $_FILES['upload']['type'];
 
+		// Check the file size
+		$max_upload_size = (int)ini_get('max_file_uploads');
+		$max_attachment_size = (int)$params->get('max_attachment_size', 10);
+		$max_size = min($max_upload_size, $max_attachment_size);
+		$file_size = filesize($_FILES['upload']['tmp_name']) / 1048576.0;
+		if ( $file_size > $max_size ) {
+			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_TOO_BIG_N_N_N', $filename,
+									 $file_size, $max_attachment_size, $max_upload_size);
+			JError::raiseError(500, "<b>".$errmsg."</b>");
+			}
+
 		// Truncate the filename, if necessary and alert the user
 		if (JString::strlen($filename) > AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH) {
 			$filename = AttachmentsHelper::truncate_filename($filename, AttachmentsDefines::$MAXIMUM_FILENAME_LENGTH);
@@ -446,8 +459,6 @@ class AttachmentsHelper
 				echo "<script type=\"text/javascript\">alert('$msg')</script>";
 				}
 			}
-
-		$from = JRequest::getWord('from');
 
 		// Check the filename for bad characters
 		$bad_chars = false;
