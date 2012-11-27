@@ -2,21 +2,21 @@
 /**
  * Attachments plugin for inserting attachments lists into content
  *
- * @package Attachments
- * @subpackage Main_Attachments_Plugin
+ * @package     Attachments
+ * @subpackage  Main_Attachments_Plugin
  *
- * @copyright Copyright (C) 2007-2012 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
- * @author Jonathan M. Cameron
+ * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright   Copyright (C) 2007-2012 Jonathan M. Cameron, All Rights Reserved
+ * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link        http://joomlacode.org/gf/project/attachments/frs/
  */
 
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines (if available) */
-if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
+if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
 {
-	require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+	require_once JPATH_SITE . '/components/com_attachments/defines.php';
 }
 else
 {
@@ -28,32 +28,32 @@ else
 /**
  * Attachments plugin
  *
- * @package		Attachments
+ * @package  Attachments
+ * @since    1.3.4
  */
 class plgContentAttachments extends JPlugin
 {
 	/**
 	 * Constructor
 	 *
-	 * @access		protected
-	 * @param		object	$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
-	 * @since		1.5
+	 * @param   object  &$subject  The object to observe
+	 * @param   array   $config    An array that holds the plugin configuration
+	 *
+	 * @access  protected
 	 */
-	public function __construct(& $subject, $config)
+	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
 
-
 	/**
 	 * The content plugin that inserts the attachments list into content items
 	 *
-	 * @param string The context of the content being passed to the plugin.
-	 * @param &object &$row the content object (eg, article) being displayed
-	 * @param &object &$params the parameters
-	 * @param int $page the 'page' number
+	 * @param   string   $context  the context of the content being passed to the plugin.
+	 * @param   &object  &$row     the content object (eg, article) being displayed
+	 * @param   &object  &$params  the parameters
+	 * @param   int      $page     the 'page' number
 	 *
 	 * @return true if anything has been inserted into the content object
 	 */
@@ -64,29 +64,36 @@ class plgContentAttachments extends JPlugin
 		list ($parent_type, $parent_entity) = explode('.', $context, 2);
 
 		// Figure out the name of the text field
-		if ( isset($row->text) ) {
+		if (isset($row->text))
+		{
 			$text_field_name = 'text';
-			}
-		elseif ( isset($row->fulltext) ) {
+		}
+		elseif (isset($row->fulltext))
+		{
 			$text_field_name = 'fulltext';
-			}
-		elseif ( isset($row->introtext) ) {
+		}
+		elseif (isset($row->introtext))
+		{
 			$text_field_name = 'introtext';
-			}
-		else {
+		}
+		else
+		{
 			// Unrecognized
 			return false;
-			}
+		}
 
 		// In some cases, we know what the text_field_name should be
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getCmd('layout');
-		if (isset($row->introtext) AND $option == 'com_content' AND $view == 'category' AND $layout == 'blog')
+
+		// ??? Refactor/combine these two if-s
+		if (isset($row->introtext) AND ($option == 'com_content') AND ($view == 'category') AND ($layout == 'blog'))
 		{
 			$text_field_name = 'introtext';
 		}
-		if (isset($row->introtext) AND $option == 'com_content' AND $view == 'featured')
+
+		if (isset($row->introtext) AND ($option == 'com_content') AND ($view == 'featured'))
 		{
 			$text_field_name = 'introtext';
 		}
@@ -96,34 +103,39 @@ class plgContentAttachments extends JPlugin
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
+		require_once JPATH_SITE . '/components/com_attachments/helper.php';
+		AttachmentsHelper::addStyleSheet($uri->root(true) . '/plugins/content/attachments/attachments1.css');
 
 		// Add the refresh javascript
 		$doc = JFactory::getDocument();
 		JHTML::_('behavior.mootools');
 		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
-		$doc->addScript( $js_path );
+		$doc->addScript($js_path);
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
-		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+
+		if (!$apm->attachmentsPluginInstalled($parent_type))
+		{
 			// Exit quietly if there is no Attachments plugin to handle this parent_type
 			return false;
-			}
+		}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// If this attachments plugin is disabled, skip it
-		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
+		if (!$apm->attachmentsPluginEnabled($parent_type))
+		{
 			return false;
-			}
+		}
 
 		// Figure out the parent entity
 		$parent_entity = $parent->determineParentEntity($row);
-		if ( !$parent_entity ) {
+
+		if (!$parent_entity)
+		{
 			return false;
-			}
+		}
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -131,36 +143,43 @@ class plgContentAttachments extends JPlugin
 
 		// Get the desired placement
 		$attachments_placement = $attachParams->get('attachments_placement', 'end');
-		if ( $attachments_placement == 'disabled_nofilter' ) {
+
+		if ( $attachments_placement == 'disabled_nofilter' )
+		{
 			return false;
-			}
+		}
 
 		// Get some of the options
 		$user = JFactory::getUser();
 		$logged_in = $user->get('username') <> '';
 		$user_type = $user->get('usertype', false);
 		$parent_id = null;
-		if ( isset( $row->id ) && ($row->id > 0) ) {
-			$parent_id = (int)$row->id;
-			}
-		else {
-			$parent_id = $parent->getParentId($row);
-			}
-		if ( $parent_id === false ) {
-			return false;
-			}
 
-		// exit if we should not display attachments for this parent
-		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
+		// Get the parent ID
+		if (isset( $row->id ) && ($row->id > 0)) {
+			$parent_id = (int) $row->id;
+		} else {
+			$parent_id = $parent->getParentId($row);
+		}
+
+		// Exit if there is no parent
+		if ($parent_id === false)
+		{
 			return false;
-			}
+		}
+
+		// Exit if we should not display attachments for this parent
+		if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams))
+		{
+			return false;
+		}
 
 		// See whether we can display the links to add attachments
 		$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 
 		// Determine where we are
 		$from = JRequest::getCmd('view');
-		$Itemid = JRequest::getInt( 'Itemid', 1);
+		$Itemid = JRequest::getInt('Itemid', 1);
 
 		// Get the attachments tag, if present
 		$attachments_tag = '';
@@ -540,7 +559,7 @@ class plgContentAttachments extends JPlugin
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
-		$query->where('created_by='.(int)$user_id.' AND parent_id IS NULL');
+		$query->where('created_by=' . (int) $user_id . ' AND parent_id IS NULL');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
