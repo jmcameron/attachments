@@ -12,7 +12,7 @@
  */
 
 /** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
 require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
@@ -42,7 +42,7 @@ class AttachmentsHelper3 extends AttachmentsHelper
 	 *
 	 * @return the truncated URL
 	 */
-	public function truncate_url($raw_url, $maxlen)
+	static public function truncate_url($raw_url, $maxlen)
 	{
 		return parent::truncate_url($raw_url, $maxlen);
 	}

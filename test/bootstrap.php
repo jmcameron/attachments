@@ -23,7 +23,7 @@ define('_JEXEC',		1);
 
 if (!defined('JPATH_BASE'))
 {
-	define('JPATH_BASE', '/var/www/test/joomla16');
+	define('JPATH_BASE', '/var/www/test/joomla25');
 }
 
 if (!defined('JPATH_JOOMLA_TESTS'))
@@ -60,6 +60,25 @@ jimport('joomla.utilities.string');
 jimport('joomla.registry.registry');
 jimport('joomla.log.log');
 jimport('joomla.session.session');
+
+require_once JPATH_BASE.'/libraries/joomla/plugin/plugin.php';
+require_once JPATH_BASE.'/libraries/joomla/plugin/helper.php';
+
+require_once JPATH_BASE.'/libraries/joomla/filter/input.php';
+
+require_once JPATH_BASE.'/libraries/joomla/session/session.php';
+require_once JPATH_BASE.'/libraries/joomla/session/storage.php';
+
+require_once JPATH_BASE.'/libraries/joomla/environment/request.php';
+
+require_once JPATH_BASE.'/libraries/joomla/user/user.php';
+
+require_once JPATH_BASE.'/libraries/joomla/cache/cache.php';
+require_once JPATH_BASE.'/libraries/joomla/cache/controller.php';
+
+require_once JPATH_BASE.'/libraries/joomla/filesystem/path.php';
+
+require_once JPATH_BASE.'/libraries/joomla/access/access.php';
 
 // Set error handling.
 JError::setErrorHandling(E_NOTICE, 'ignore');

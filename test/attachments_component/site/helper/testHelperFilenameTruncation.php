@@ -12,7 +12,7 @@
  */
 
 /** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
 require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
@@ -38,7 +38,7 @@ class AttachmentsHelper2 extends AttachmentsHelper
 	 *
 	 * @return the truncated filename
 	 */
-	public function truncate_filename($raw_filename, $maxlen)
+	static public function truncate_filename($raw_filename, $maxlen)
 	{
 		return parent::truncate_filename($raw_filename, $maxlen);
 	}

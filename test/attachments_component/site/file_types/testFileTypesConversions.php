@@ -12,7 +12,7 @@
  */
 
 /** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
 require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
