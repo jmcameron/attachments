@@ -468,7 +468,7 @@ class AttachmentsHelper
 				echo "<script type=\"text/javascript\">alert('$msg')</script>";
 				}
 			}
-		
+
 		// Check the filename for bad characters
 		$bad_chars = false;
 		$forbidden_chars = $params->get('forbidden_filename_characters', '#=?%&');
@@ -806,7 +806,7 @@ class AttachmentsHelper
 			$errmsg = JText::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
 									 JString::strlen($filename_sys),
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
-									 $filename) . '(ERRN)';
+									 $filename) . '(ERR 179)';
 			JError::raiseError(500, $errmsg);
 			}
 
