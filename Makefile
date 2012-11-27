@@ -86,7 +86,7 @@ purge:
 unittests:
 	@echo
 	@echo "Running unit tests..."
-	@cd test; phing -Droot=/var/www/test/joomla16/ unit_tests
+	@cd test; phing -Droot=/var/www/test/joomla25/ unit_tests
 	@echo
 
 unittests_show: unittests
