@@ -12,11 +12,12 @@
     <include name="plugins/attachments/attachments_for_content/attachments_for_content.php"/>
   </fileset>
 
-  <fileset dir="." id="tests">
-    <include name="test*.php"/>
-    <include name="*Test.php"/>
-    <include name="**/test*.php"/>
-    <include name="**/*Test.php"/>
+  <fileset dir="./attachments_component/admin/permissions/" id="tests">
+    <include name="testActions.php"/>
+    <!-- <include name="test*.php"/> -->
+    <!-- <include name="*Test.php"/> -->
+    <!-- <include name="**/test*.php"/> -->
+    <!-- <include name="**/*Test.php"/> -->
   </fileset>
 
   <target name="unit_tests">

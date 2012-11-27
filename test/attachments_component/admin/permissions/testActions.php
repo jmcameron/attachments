@@ -19,6 +19,8 @@ require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
 
 jimport('joomla.log.log');
 
+jimport('joomla.user.user');
+jimport('joomla.user.helper');
 jimport('joomla.plugin.plugin');
 jimport('joomla.plugin.helper');
 jimport('joomla.event.dispatcher');
@@ -62,7 +64,6 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	 *
 	 * @dataProvider provider
 	 *
-	 * @param int $user_id The ID of the user to test
 	 * @param string $username The name of ther user (for error outputs)
 	 * @param int $admin correct 'core.admin' permission (0/1 interpreted as bool)
 	 * @param int $manage correct 'core.manage' permission (0/1 interpreted as bool)
@@ -73,8 +74,13 @@ class ActionsTest extends JoomlaDatabaseTestCase
 	 * @param int $edit_own correct 'core.edit.own' permission (0/1 interpreted as bool)
 	 * @param int $delete_own correct 'attachments.delete.own' permission (0/1 interpreted as bool)
 	 */
-	public function testActions($user_id,$username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own, $delete_own)
+	public function testActions($username,$admin,$manage,$create,$delete,$edit_state,$edit,$edit_own,$delete_own)
 	{
+		$user_id = JUserHelper::getUserId($username);
+
+		$errmsg = "ERROR: ========> USERNAME=$username does not exist!";
+		$this->assertNotEquals((int)$user_id, 0, $errmsg);
+
 		$canDo = AttachmentsPermissions::getActions((int)$user_id);
 
 		$errmsg = "----> Failed test for $username core.admin for com_attachments, " .
