@@ -436,7 +436,7 @@ class AttachmentsHelper
 		if ( $file_size > $max_size ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_TOO_BIG_N_N_N', $filename,
 									 $file_size, $max_attachment_size, $max_upload_size);
-			JError::raiseError(500, "<b>".$errmsg."</b>");
+			JError::raiseError(500, '<b>' . $errmsg . '</b>');
 			}
 
 		// Get the maximum allowed filename length (for the filename display)
