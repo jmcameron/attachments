@@ -801,8 +801,7 @@ class AttachmentsHelper
 			}
 
 		// Check on length of filename_sys
-		// if (JString::strlen($filename_sys) > AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH) {
-		if (true) {
+		if (JString::strlen($filename_sys) > AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
 									 JString::strlen($filename_sys),
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
