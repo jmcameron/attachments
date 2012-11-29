@@ -92,7 +92,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 				'&amp;parent_type=' . $parent_type . '&amp;editor=add_to_parent';
 			$addAttachLink = JFilterOutput::ampReplace($addAttachLink);
 			$artLine = "<tr><td class=\"at_parentsep\" colspan=\"$this->num_columns\">";
-			$artLine .= "<b>".$item->parent_entity_type.":</b> <a title=\"$view_parent_title\" " .
+			$artLine .= "<b>" . $item->parent_entity_type.":</b> <a title=\"$view_parent_title\" " .
 				"href=\"".$item->parent_url."\" target=\"_blank\">" . $item->parent_title . "</a>";
 			$artLine .= JFilterOutput::ampReplace('&nbsp;&nbsp;&nbsp;&nbsp;');
 			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
