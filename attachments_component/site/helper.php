@@ -429,7 +429,7 @@ class AttachmentsHelper
 		$ftype = $_FILES['upload']['type'];
 
 		// Check the file size
-		$max_upload_size = (int)ini_get('max_file_uploads');
+		$max_upload_size = (int)ini_get('upload_max_filesize');
 		$max_attachment_size = (int)$params->get('max_attachment_size', 10);
 		$max_size = min($max_upload_size, $max_attachment_size);
 		$file_size = filesize($_FILES['upload']['tmp_name']) / 1048576.0;
