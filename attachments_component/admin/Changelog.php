@@ -54,6 +54,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 		when uploaded to ensure that is not larger than the attachments limit or the PHP
 		upload size limit.
    - 2012-11-22 Cosmetic code cleanups in attachments_plugi/attachments.php.
+   - 2012-11-30 Added support for downloading files with mod_xsendfile (if available)
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.

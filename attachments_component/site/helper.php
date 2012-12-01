@@ -1660,8 +1660,15 @@ class AttachmentsHelper
 		// Force the download
 		header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
 		header("Content-Transfer-Encoding: binary");
-		header("Content-Length: ".$len);
-		@readfile($filename_sys);
+
+		// If x-sendfile is available, use it
+		if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+			header("X-Sendfile: $filename_sys");
+			}
+		else {
+			header("Content-Length: ".$len);
+			@readfile($filename_sys);
+			}
 		exit;
 	}
 
