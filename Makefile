@@ -45,7 +45,7 @@ $(ZIPFILE): $(ZIPS)
 upload:
 	@echo "-------------------------------------------------------"
 	@echo "Copying new package $(ZIPFILE) to jmcameron.net"
-	@scp $(ZIPFILE) jmcameron:/home/jmcameron/webapps/jmcameron/attachments/
+	@scp $(ZIPFILE) jmcameron:/home/jmcameron/webapps/jmcameron/attachments/downloads/
 	@echo
 
 updateweb:
