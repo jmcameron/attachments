@@ -431,6 +431,9 @@ class AttachmentsHelper
 		// Check the file size
 		$max_upload_size = (int)ini_get('upload_max_filesize');
 		$max_attachment_size = (int)$params->get('max_attachment_size', 10);
+		if ($max_attachments_size == 0) {
+			$max_attachment_size = $max_upload_size;
+			}
 		$max_size = min($max_upload_size, $max_attachment_size);
 		$file_size = filesize($_FILES['upload']['tmp_name']) / 1048576.0;
 		if ( $file_size > $max_size ) {
@@ -1622,7 +1625,7 @@ class AttachmentsHelper
 			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
-		$len = filesize($filename_sys);
+		$file_size = filesize($filename_sys);
 
 		// Update the download count
 		$db = JFactory::getDBO();
@@ -1635,13 +1638,6 @@ class AttachmentsHelper
 			JError::raiseError(500, $errmsg);
 			}
 
-		// Begin writing headers
-		ob_clean(); // Clear any previously written headers in the output buffer
-		header('Cache-Control: private, max-age=0, must-revalidate, no-store');
-
-		// Use the desired Content-Type
-		header("Content-Type: $content_type");
-
 		// Construct the downloaded filename
 		$filename_info = pathinfo($filename);
 		$extension = "." . $filename_info['extension'];
@@ -1652,25 +1648,54 @@ class AttachmentsHelper
 		$mod_filename = $basename . $extension;
 
 		// Ensure UTF8 characters in filename are encoded correctly in IE
-		$ISIE = preg_match( "/MSIE/", $_SERVER["HTTP_USER_AGENT"] );
-		if ( $ISIE ) {
-			$mod_filename = rawurlencode($mod_filename);
-			}
+		$browser = $_SERVER["HTTP_USER_AGENT"];
 
+		// Begin writing headers
+		ob_clean(); // Clear any previously written headers in the output buffer
+		header('Cache-Control: private, max-age=0, must-revalidate, no-store');
+
+		// Use the desired Content-Type
+		header("Content-Type: $content_type");
+
+		// Handle MSIE differently...
+		if (preg_match('/MSIE 5.5/', $browser) || preg_match('/MSIE 6.0/', $browser))
+		{
+			$mod_filename = rawurlencode($mod_filename);
+			header('Pragma: private');
+			header('Cache-control: private, must-revalidate');
+			header("Content-Length: ".$file_size); // MUST be a number for IE
+		}
+		else
+		{
+			header("Content-Length: ".(string)($file_size));
+		}
+ 
 		// Force the download
 		header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
-		header("Content-Transfer-Encoding: binary");
+		header('Content-Transfer-Encoding: binary');
 
 		// If x-sendfile is available, use it
 		if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
 			header("X-Sendfile: $filename_sys");
 			}
-		else {
-			header("Content-Length: ".$len);
+		else if ( $file_size <= 1048576 ) {
+			// If the file size is one MB or less, use readfile
+			header("Content-Length: ".$file_size);
 			@readfile($filename_sys);
+			}
+		else {
+			// Send it in 8K chunks
+			set_time_limit(0);
+			$file = @fopen($filename_sys,"rb");
+			while (!feof($file) and (connection_status()==0)) {
+				print(@fread($file, 1024*8));
+				ob_flush();
+				flush();
+				}
 			}
 		exit;
 	}
+
 
 	/**
 	 * Switch attachment from one parent to another
