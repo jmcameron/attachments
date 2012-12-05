@@ -167,7 +167,7 @@
 
   <fieldset name="advanced"
 	    label="ATTACH_CONFIG_ADVANCED_SETTINGS_LABEL">
-    <field name="max_attachment_size" type="text" size="50" default="10" filter="integer"
+    <field name="max_attachment_size" type="text" size="50" default="0" filter="integer"
 	   label="ATTACH_MAX_ATTACHMENT_SIZE" 
 	   description="ATTACH_MAX_ATTACHMENT_SIZE_DESCRIPTION" />
     <field name="forbidden_filename_characters" type="text" default="#=?%&amp;"
