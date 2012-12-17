@@ -80,15 +80,26 @@ classdefs:
 	find . -name '*.php' -exec egrep -n -e "^class " {} /dev/null \;
 
 diff25:
-	@diff -qwcr --exclude-from=diffs/all.txt attachments_plugin /var/www/test/joomla25/plugins/content/attachments/
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_plugin /var/www/test/joomla25/plugins/content/attachments/
 	@diff -qwcr --exclude-from=diffs/exclude_component_site.txt attachments_component/site /var/www/test/joomla25/components/com_attachments
 	@diff -qwcr --exclude-from=diffs/exclude_component_admin.txt attachments_component/admin /var/www/test/joomla25/administrator/components/com_attachments
-	@diff -qwcr --exclude-from=diffs/all.txt add_attachment_btn_plugin /var/www/test/joomla25/plugins/editors-xtd/add_attachment
-	@diff -qwcr --exclude-from=diffs/all.txt attachments_for_content /var/www/test/joomla25/plugins/attachments/attachments_for_content
-	@diff -qwcr --exclude-from=diffs/all.txt attachments_plugin_framework /var/www/test/joomla25/plugins/attachments/attachments_plugin_framework
-	@diff -qwcr --exclude-from=diffs/all.txt attachments_search /var/www/test/joomla25/plugins/search/attachments/
-	@diff -qwcr --exclude-from=diffs/all.txt insert_attachments_token_btn_plugin /var/www/test/joomla25/plugins/editors-xtd/insert_attachments_token
-	@diff -qwcr --exclude-from=diffs/all.txt show_attachments_in_editor_plugin /var/www/test/joomla25/plugins/system/show_attachments
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt add_attachment_btn_plugin /var/www/test/joomla25/plugins/editors-xtd/add_attachment
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_for_content /var/www/test/joomla25/plugins/attachments/attachments_for_content
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_plugin_framework /var/www/test/joomla25/plugins/attachments/attachments_plugin_framework
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_search /var/www/test/joomla25/plugins/search/attachments/
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt insert_attachments_token_btn_plugin /var/www/test/joomla25/plugins/editors-xtd/insert_attachments_token
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt show_attachments_in_editor_plugin /var/www/test/joomla25/plugins/system/show_attachments
+
+diff3test:
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_plugin /var/www/test/joomla3test/plugins/content/attachments/
+	@diff -qwcr --exclude-from=diffs/exclude_component_site.txt attachments_component/site /var/www/test/joomla3test/components/com_attachments
+	@diff -qwcr --exclude-from=diffs/exclude_component_admin.txt attachments_component/admin /var/www/test/joomla3test/administrator/components/com_attachments
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt add_attachment_btn_plugin /var/www/test/joomla3test/plugins/editors-xtd/add_attachment
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_for_content /var/www/test/joomla3test/plugins/attachments/attachments_for_content
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_plugin_framework /var/www/test/joomla3test/plugins/attachments/attachments_plugin_framework
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt attachments_search /var/www/test/joomla3test/plugins/search/attachments/
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt insert_attachments_token_btn_plugin /var/www/test/joomla3test/plugins/editors-xtd/insert_attachments_token
+	@diff -qwcr --exclude-from=diffs/exclude_all.txt show_attachments_in_editor_plugin /var/www/test/joomla3test/plugins/system/show_attachments
 
 purge:
 	@find . -name '*.bak' -exec rm {} \;
