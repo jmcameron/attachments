@@ -25,9 +25,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 
 ?>
 <tr>
-	 <th class="at_published" width="20">
-	<input type="checkbox" name="toggle" value=""
-		   onclick="checkAll(<?php echo count( $this->items ); ?>);" />
+	 <th class="at_checked">
+        <input type="checkbox" name="toggle" value=""
+		       onclick="checkAll(<?php echo count( $this->items ); ?>);" />
 	 </th>
 	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', 'ATTACH_PUBLISHED',
 							 'a.state', $listDirn, $listOrder ) ?></th>

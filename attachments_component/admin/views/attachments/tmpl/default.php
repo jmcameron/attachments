@@ -47,4 +47,4 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<?php echo JHtml::_('form.token'); ?>
   </div>
 </form>
-<div id="componentVersion"><a target="_blank" title="<?php echo JText::_('ATTACH_ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>"><?php echo JText::sprintf('ATTACH_ATTACHMENTS_VERSION_S', $this->version); ?></a></div>
+

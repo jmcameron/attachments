@@ -14,12 +14,18 @@ div#element-box div.m form#adminForm table#attachmentsList tr td a {
 	font-size: 85%;
 }
 
+
+form#adminForm div.attachments_filter label.filter-search-lbl {
+	display: inline;
+	font-size: 100%;
+}
+
 form#adminForm div.attachments_filter { 
 	padding: 0 0 2px 6px;
 }
 
 form#adminForm button#reset_order {
-	margin: 0 0 0 6em;
+	margin: 0 0 0 3em;
 }
 
 form#adminForm div.attachments_filter table,
@@ -37,6 +43,12 @@ form#adminForm input[type=checkbox] {
 table.adminlist th { 
 	text-align: left;
 	border-bottom: 0; 
+	padding: 4px 0 4px 8px;
+}
+table.adminlist th.at_checked { 
+    padding: 0;
+    text-align: center; 
+    width: 20px; 
 }
 table.adminlist th.at_published	   { text-align: center; }
 table.adminlist th.at_filename	   { text-align: left; }
@@ -45,9 +57,9 @@ table.adminlist th.at_access	   { text-align: center; }
 table.adminlist th.at_user_field   { text-align: left; }
 table.adminlist th.at_file_type	   { text-align: center; }
 table.adminlist th.at_file_size	   { text-align: center; }
-table.adminlist th.at_creator_name { text-align: center; }
-table.adminlist th.at_created_date { text-align: center; }
-table.adminlist th.at_mod_date	   { text-align: center; }
+table.adminlist th.at_creator_name { text-align: left; }
+table.adminlist th.at_created_date { text-align: left; }
+table.adminlist th.at_mod_date	   { text-align: left; }
 table.adminlist th.at_downloads	   { text-align: center; }
 
 table.adminlist td { 
@@ -61,22 +73,38 @@ table.adminlist img#link {
 
 table.adminlist td.at_filename { 
 	text-align: left; 
-	font-size: 125%; 
-}
-table.adminlist td.at_filename a img { 
-	vertical-align: middle; 
+	padding: 4px 0 4px 8px;
 }
 
-table.adminlist td.at_published	   { text-align: center; }
-table.adminlist td.at_description  { text-align: left; }
-table.adminlist td.at_access	   { text-align: center; }
-table.adminlist td.at_user_field   { text-align: left; }
-table.adminlist td.at_file_type	   { text-align: center; }
-table.adminlist td.at_file_size	   { text-align: center; }
-table.adminlist td.at_creator_name { text-align: center; }
-table.adminlist td.at_created_date { text-align: center; }
-table.adminlist td.at_mod_date	   { text-align: center; }
-table.adminlist td.at_downloads	   { text-align: center; }
+table.adminlist td.at_filename { 
+	font-size: 120%; 
+}
+
+div.container-fluid table.adminlist td.at_filename { 
+	font-size: 100%;
+}
+
+
+table.adminlist td.at_filename a img { 
+	vertical-align: top; 
+}
+
+table.adminlist td.at_checked { 
+    text-align: center; 
+    width: 20px; 
+    padding: 0;
+}
+
+table.adminlist td.at_published	   { text-align: center; padding: 4px 0 4px 8px;}
+table.adminlist td.at_description  { text-align: left;   padding: 4px 0 4px 8px;}
+table.adminlist td.at_access	   { text-align: center; padding: 4px 0 4px 8px;}
+table.adminlist td.at_user_field   { text-align: left;   padding: 4px 0 4px 8px;}
+table.adminlist td.at_file_type	   { text-align: center; padding: 4px 0 4px 8px;}
+table.adminlist td.at_file_size	   { text-align: center; padding: 4px 0 4px 8px;}
+table.adminlist td.at_creator_name { text-align: left; padding: 4px 0 4px 8px;}
+table.adminlist td.at_created_date { text-align: left; padding: 4px 0 4px 8px;}
+table.adminlist td.at_mod_date	   { text-align: left; padding: 4px 0 4px 8px;}
+table.adminlist td.at_downloads	   { text-align: center; padding: 4px 0 4px 8px;}
 
 
 table.adminlist td.at_parentsep {
@@ -85,6 +113,10 @@ table.adminlist td.at_parentsep {
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #BBB;
 	font-weight: bold;
+}
+
+table.adminlist tr.row1 {
+    background-color: #F0F0F0;
 }
 
 span.error {
@@ -164,7 +196,7 @@ div.attachmentsAdmin li a:active  { color: #0000FF; text-decoration: none; }
 
 div#componentVersion {
 	font-style: italic;
-	font-size: 1.2em;
+	font-size: 1em;
 	float: right;
 }
 
@@ -498,6 +530,29 @@ div.attachmentsWarning span.left {
 div.attachmentsWarning span.right {
     width: 8em;
     float: right;
+}
+
+/* For utils command list */
+
+div#modal-adminUtils div.modal-header {
+    /* Copied from 3.0 .subheader */
+    background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #D3D3D3;
+    color: #0C192E;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+div#utilsList {
+	margin-left: 0;
+}
+
+div#utilsList h1 {
+	font-size: 150%;
+}
+
+div#utilsList h2 {
+	font-size: 125%;
 }
 
 

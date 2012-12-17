@@ -110,7 +110,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$download_verb = JText::_('ATTACH_DOWNLOAD_VERB');
    ?>
 	<tr class="<?php echo "row$k"; ?>">
-	  <td><?php echo $checked; ?></td>
+	  <td class="at_checked"><?php echo $checked; ?></td>
 	  <td class="at_published" align="center"><?php echo $published;?></td>
 	  <td class="at_filename">
 		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
