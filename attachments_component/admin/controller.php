@@ -128,7 +128,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Set up the tooltip behavior
 		$opts = Array( 'hideDelay' => 0, 'showDelay' => 0 );
-		JHTML::_('behavior.tooltip', '.hasTip', $opts);
+		JHtml::_('behavior.tooltip', '.hasTip', $opts);
 
 		// Set up url/link/tooltip for each command
 		$uri = JFactory::getURI();
@@ -143,14 +143,14 @@ class AttachmentsController extends JControllerLegacy
 			"$url_top&amp;task=utils.disable_sql_uninstall" . $closeme;
 		$disable_mysql_uninstall_tooltip =
 			JText::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION') . '::' . JText::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $disable_mysql_uninstall_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $disable_mysql_uninstall_tooltip, null, null,
 							  JText::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION'),
 							  $disable_mysql_uninstall_url );
 
 		// Set up the HTML for the 'Reinstall Attachments Permissions' command
 		$reinstall_permissions_url = "$url_top&amp;task=utils.reinstall_permissions" . $closeme;
 		$reinstall_permissions_tooltip = JText::_('ATTACH_REINSTALL_PERMISSIONS') . '::' . JText::_('ATTACH_REINSTALL_PERMISSIONS_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $reinstall_permissions_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $reinstall_permissions_tooltip, null, null,
 							  JText::_('ATTACH_REINSTALL_PERMISSIONS'), $reinstall_permissions_url);
 
 		// Set up the HTML for the 'Regenerate attachment system filenames' command
@@ -159,7 +159,7 @@ class AttachmentsController extends JControllerLegacy
 		$regenerate_system_filenames_tooltip =
 			JText::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES') . '::' .
 			JText::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $regenerate_system_filenames_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $regenerate_system_filenames_tooltip, null, null,
 							  JText::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES'),
 							  $regenerate_system_filenames_url);
 
@@ -169,7 +169,7 @@ class AttachmentsController extends JControllerLegacy
 		$unspacify_system_filenames_tooltip =
 			JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES')	. '::' .
 			JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $unspacify_system_filenames_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $unspacify_system_filenames_tooltip, null, null,
 							  JText::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES'),
 							  $unspacify_system_filenames_url);
 
@@ -179,26 +179,26 @@ class AttachmentsController extends JControllerLegacy
 		$update_file_sizes_tooltip =
 			JText::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES') . '::' .
 			JText::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $update_file_sizes_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $update_file_sizes_tooltip, null, null,
 							  JText::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES'),
 							  $update_file_sizes_url);
 
 		// Set up the HTML for the 'Check Files' command
 		$check_files_url = "$url_top&amp;task=utils.check_files" . $closeme;
 		$check_files_tooltip = JText::_('ATTACH_CHECK_FILES') . '::' . JText::_('ATTACH_CHECK_FILES_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $check_files_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $check_files_tooltip, null, null,
 							  JText::_('ATTACH_CHECK_FILES'), $check_files_url);
 
 		// Set up the HTML for the 'Validate URLs' command
 		$validate_urls_url = "$url_top&amp;task=utils.validate_urls" . $closeme;
 		$validate_urls_tooltip = JText::_('ATTACH_VALIDATE_URLS') . '::' . JText::_('ATTACH_VALIDATE_URLS_TOOLTIP');
-		$entries[] = JHTML::_('tooltip', $validate_urls_tooltip, null, null,
+		$entries[] = JHtml::_('tooltip', $validate_urls_tooltip, null, null,
 							  JText::_('ATTACH_VALIDATE_URLS'), $validate_urls_url);
 
 		// Test ???
 		// $utils_test_url = "$url_top&amp;task=utils.test" . $closeme;
 		// $utils_test_tooltip = 'Test';
-		// $entries[] = JHTML::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
+		// $entries[] = JHtml::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
 
 		// Get the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/utils/view.php');

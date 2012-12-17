@@ -51,10 +51,10 @@ $lists = $this->lists;
 	   <tr>
 		 <th width="5"><?php echo JText::_( 'JGRID_HEADING_ROW_NUMBER' ); ?></th>
 		 <th class="title">
-			<?php echo JHTML::_('grid.sort', 'ATTACH_TITLE', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
+			<?php echo JHtml::_('grid.sort', 'ATTACH_TITLE', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>
 		 <th width="2%" class="title">
-			<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', @$lists['order_Dir'], @$lists['order'] ); ?>
+			<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>
 	   </tr>
 	</thead>
@@ -89,5 +89,5 @@ $lists = $this->lists;
 	<input type="hidden" name="filter_order" value="<?php echo $lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $lists['order_Dir']; ?>" />
 
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 </form>

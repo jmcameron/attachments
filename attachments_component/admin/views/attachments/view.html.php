@@ -93,15 +93,15 @@ class AttachmentsViewAttachments extends JViewLegacy
 		// Add the drop-down menu to decide which attachments to show
 		$filter_parent_state = $this->state->get('filter.parent_state', 'ALL');
 		$filter_parent_state_options = array();
-		$filter_parent_state_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'PUBLISHED', JText::_( 'ATTACH_PUBLISHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'UNPUBLISHED', JText::_( 'ATTACH_UNPUBLISHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'ARCHIVED', JText::_( 'ATTACH_ARCHIVED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'TRASHED', JText::_( 'ATTACH_TRASHED_PARENTS' ) );
-		$filter_parent_state_options[] = JHTML::_('select.option', 'NONE', JText::_( 'ATTACH_NO_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'PUBLISHED', JText::_( 'ATTACH_PUBLISHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'UNPUBLISHED', JText::_( 'ATTACH_UNPUBLISHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'ARCHIVED', JText::_( 'ATTACH_ARCHIVED_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'TRASHED', JText::_( 'ATTACH_TRASHED_PARENTS' ) );
+		$filter_parent_state_options[] = JHtml::_('select.option', 'NONE', JText::_( 'ATTACH_NO_PARENTS' ) );
 		$filter_parent_state_tooltip = JText::_('ATTACH_SHOW_FOR_PARENTS_TOOLTIP');
 		$lists['filter_parent_state_menu'] =
-			JHTML::_('select.genericlist', $filter_parent_state_options, 'filter_parent_state',
+			JHtml::_('select.genericlist', $filter_parent_state_options, 'filter_parent_state',
 					 'class="inputbox" onChange="document.adminForm.submit();" title="' .
 					 $filter_parent_state_tooltip . '"', 'value', 'text', $filter_parent_state);
 		$this->filter_parent_state = $filter_parent_state;
@@ -109,16 +109,16 @@ class AttachmentsViewAttachments extends JViewLegacy
 		// Add the drop-down menu to filter for types of entities
 		$filter_entity = $this->state->get('filter.entity', 'ALL');
 		$filter_entity_options = array();
-		$filter_entity_options[] = JHTML::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_TYPES' ) );
+		$filter_entity_options[] = JHtml::_('select.option', 'ALL', JText::_( 'ATTACH_ALL_TYPES' ) );
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		$entity_info = $apm->getInstalledEntityInfo();
 		foreach ($entity_info as $einfo) {
-			$filter_entity_options[] = JHTML::_('select.option', $einfo['id'], $einfo['name_plural']);
+			$filter_entity_options[] = JHtml::_('select.option', $einfo['id'], $einfo['name_plural']);
 			}
 		$filter_entity_tooltip = JText::_('ATTACH_FILTER_ENTITY_TOOLTIP');
 		$lists['filter_entity_menu'] =
-			JHTML::_('select.genericlist', $filter_entity_options, 'filter_entity',
+			JHtml::_('select.genericlist', $filter_entity_options, 'filter_entity',
 					 'class="inputbox" onChange="this.form.submit();" ' .
 					 'title="'.$filter_entity_tooltip .'"', 'value', 'text', $filter_entity);
 

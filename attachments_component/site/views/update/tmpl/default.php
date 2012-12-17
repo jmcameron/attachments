@@ -233,7 +233,7 @@ else {
 	<input type="hidden" name="parent_entity" value="<?php echo $this->parent_entity; ?>" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 	<div class="form_buttons">
 		<input type="submit" name="submit" value="<?php echo JText::_('ATTACH_UPDATE'); ?>" />
 		<span class="right">

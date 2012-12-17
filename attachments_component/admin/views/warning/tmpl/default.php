@@ -53,6 +53,6 @@ if ( $lang->isRTL() ) {
 	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
 	<input type="hidden" name="from" value="<?php echo $this->from;?>" />
 
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
   </form>
  </div>

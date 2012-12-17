@@ -45,8 +45,8 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	else {
 		$url = $item->url;
 		}
-	$checked = JHTML::_('grid.id', $i, $item->id );
-	$published = JHTML::_('jgrid.published', $item->state, $i, 'attachments.' );
+	$checked = JHtml::_('grid.id', $i, $item->id );
+	$published = JHtml::_('jgrid.published', $item->state, $i, 'attachments.' );
 	$access = $this->level_name[$item->access];
 
 	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;

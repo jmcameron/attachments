@@ -201,7 +201,7 @@ class AttachmentsController extends JControllerLegacy
 		$view->may_publish = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		if ( $view->may_publish ) {
 			$default_state = $params->get('publish_default', false);
-			$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+			$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 			}
 
 		$view->uri_type = $uri_type;
@@ -734,9 +734,9 @@ class AttachmentsController extends JControllerLegacy
 
 		// Set up the selection lists
 		$lists = array();
-		$lists['published'] = JHTML::_('select.booleanlist', 'state',
+		$lists['published'] = JHtml::_('select.booleanlist', 'state',
 									   'class="inputbox"', $attachment->state);
-		$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
+		$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
 									   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 									   $attachment->url_valid);
 

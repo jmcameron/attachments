@@ -223,7 +223,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Add the published selection
 		$lists = Array();
-		$lists['published'] = JHTML::_('select.booleanlist', 'state',
+		$lists['published'] = JHtml::_('select.booleanlist', 'state',
 									   'class="inputbox"', $view->state);
 
 		$view->lists = $lists;
@@ -599,9 +599,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// set up lists for form controls
 		$lists = array();
-		$lists['published'] = JHTML::_('select.booleanlist', 'state',
+		$lists['published'] = JHtml::_('select.booleanlist', 'state',
 									   'class="inputbox"', $attachment->state);
-		$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
+		$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
 									   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 									   $attachment->url_valid);
 
@@ -609,10 +609,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$icon_filenames = array();
 		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
-			$icon_filenames[] = JHTML::_('select.option', $ifname);
+			$icon_filenames[] = JHtml::_('select.option', $ifname);
 			}
 		$lists['icon_filenames'] =
-			JHTML::_('select.genericlist',	 $icon_filenames,
+			JHtml::_('select.genericlist',	 $icon_filenames,
 					 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
 					 $attachment->icon_filename);
 

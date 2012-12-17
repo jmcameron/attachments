@@ -46,9 +46,9 @@ class JFormFieldIconfilenames extends JFormField
 		$icon_filenames = array();
 		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
-			$icon_filenames[] = JHTML::_('select.option', $ifname);
+			$icon_filenames[] = JHtml::_('select.option', $ifname);
 			}
-		$icon_list = JHTML::_('select.genericlist',	 $icon_filenames, 'jform[icon_filename]',
+		$icon_list = JHtml::_('select.genericlist',	 $icon_filenames, 'jform[icon_filename]',
 							  'class="inputbox" size="1"', 'value', 'text', $this->value,
 							  'jform_icon_filename'
 							  );

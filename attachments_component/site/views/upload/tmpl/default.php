@@ -177,7 +177,7 @@ if ( $lang->isRTL() ) {
 		<input type="hidden" name="new_parent" value="<?php echo $this->new_parent; ?>" />
 		<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 		<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<br/><div class="form_buttons">
 			<input type="submit" name="submit" value="<?php echo $upload_button_text ?>" />

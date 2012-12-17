@@ -544,7 +544,7 @@ class AttachmentsHelper
 
 				// Set up the selection lists
 				$lists = array();
-				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
+				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
@@ -552,7 +552,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
 
 				// Set up for editing the access level
@@ -575,7 +575,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
 
 				// Set up for editing the access level
@@ -678,7 +678,7 @@ class AttachmentsHelper
 
 				// Set up the selection lists
 				$lists = array();
-				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
+				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
@@ -686,7 +686,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
 
 				// Set up for editing the access level
@@ -709,7 +709,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
 
 				// Set up for editing the access level
@@ -752,7 +752,7 @@ class AttachmentsHelper
 			$view->may_publish = $may_publish;
 			if ( $may_publish ) {
 				$default_state = $params->get('publish_default', false);
-				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+				$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 				}
 
 			// Set up the access levels
@@ -872,7 +872,7 @@ class AttachmentsHelper
 			$view->may_publish = $may_publish;
 			if ( $may_publish ) {
 				$default_state = $params->get('publish_default', false);
-				$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+				$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 				}
 
 			// Set up the access levels
@@ -1395,7 +1395,7 @@ class AttachmentsHelper
 
 				// Set up the selection lists
 				$lists = array();
-				$lists['url_valid'] = JHTML::_('select.booleanlist', 'url_valid',
+				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
 											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											   $attachment->url_valid);
 
@@ -1403,7 +1403,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 					}
 
 				// Set up for editing the access level
@@ -1425,7 +1425,7 @@ class AttachmentsHelper
 				$view->may_publish = $may_publish;
 				if ( $may_publish ) {
 					$default_state = $params->get('publish_default', false);
-					$view->publish = JHTML::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
+					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
 					}
 
 				// Set up for editing the access level

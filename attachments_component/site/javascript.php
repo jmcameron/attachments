@@ -27,12 +27,12 @@ class AttachmentsJavascript
 	{
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
-			JHTML::_('behavior.framework');
+			JHtml::_('behavior.framework');
 		}
 		else
 		{
 			// up the style sheet (to get the visual for the button working)
-			JHTML::_('behavior.mootools');
+			JHtml::_('behavior.mootools');
 		}
 		if ($add_refresh_script)
 		{
@@ -64,11 +64,11 @@ class AttachmentsJavascript
 	{
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
-			JHTML::_('behavior.modal', 'a.modal-button');
+			JHtml::_('behavior.modal', 'a.modal-button');
 		}
 		else
 		{
-			JHTML::_('behavior.modal', 'a.modal-button');
+			JHtml::_('behavior.modal', 'a.modal-button');
 		}
 	}
 

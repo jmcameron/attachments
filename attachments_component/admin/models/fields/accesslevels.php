@@ -106,9 +106,9 @@ class JFormFieldAccessLevels extends JFormField
 		$level_options = Array();
 		foreach ( $levels as $level ) {
 			// NOTE: We do not translate the access level titles
-			$level_options[] = JHTML::_('select.option', $level->id, $level->title);
+			$level_options[] = JHtml::_('select.option', $level->id, $level->title);
 			}
-		return JHTML::_('select.genericlist',  $level_options, $for_id,
+		return JHtml::_('select.genericlist',  $level_options, $for_id,
 						'class="inputbox" size="1"', 'value', 'text', $level_value,
 						$fieldname
 						);
