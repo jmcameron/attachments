@@ -12,10 +12,12 @@
 
     <files>
 	<filename plugin="insert_attachments_token">insert_attachments_token.php</filename>
-	<filename>insert_attachments_token.png</filename>
 	<filename>insert_attachments_token.css</filename>
-	<filename>insert_attachments_token_rtl.png</filename>
+	<filename>insert_attachments_token.png</filename>
+	<filename>insert_attachments_token_small.png</filename>
 	<filename>insert_attachments_token_rtl.css</filename>
+	<filename>insert_attachments_token_rtl.png</filename>
+	<filename>insert_attachments_token_small_rtl.png</filename>
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
