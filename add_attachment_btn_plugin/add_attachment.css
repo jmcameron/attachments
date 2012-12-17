@@ -7,4 +7,6 @@ div#editor-xtd-buttons div.btn-toolbar i.icon-add_attachment
 {
 	background: url(add_attachment_small.png) no-repeat scroll 100% 0;
 	vertical-align: middle;
+	height: 16px;
+	width: 16px;
 }
