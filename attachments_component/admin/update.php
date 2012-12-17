@@ -31,7 +31,7 @@ class AttachmentsUpdate
 	/**
 	 * Add icon filenames for all attachments missing an icon
 	 */
-	public function add_icon_filenames()
+	public static function add_icon_filenames()
 	{
 		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 
@@ -85,7 +85,7 @@ class AttachmentsUpdate
 	/**
 	 * Update dates for all attachments with null dates
 	 */
-	public function update_null_dates()
+	public static function update_null_dates()
 	{
 		$app = JFactory::getApplication();
 
@@ -150,7 +150,7 @@ class AttachmentsUpdate
 	 * comment out the line that deletes the attachments table.	 Note that
 	 * this only affects the table, not the attachments files.
 	 */
-	public function disable_sql_uninstall($dbtype = 'mysql')
+	public static function disable_sql_uninstall($dbtype = 'mysql')
 	{
 		jimport('joomla.filesystem.file');
 
@@ -196,7 +196,7 @@ class AttachmentsUpdate
 	/**
 	 * Check an attachment filename and return relevant info
 	 */
-	private function checkFilename($filename)
+	private static function checkFilename($filename)
 	{
 		$finfo = new JObject();
 
@@ -257,7 +257,7 @@ class AttachmentsUpdate
 	 * from one computer to another and the actual file paths need to be
 	 * updated.
 	 */
-	public function regenerate_system_filenames()
+	public static function regenerate_system_filenames()
 	{
 		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
@@ -415,7 +415,7 @@ class AttachmentsUpdate
 	 *
 	 * The spaces are replaces with underscores '_'
 	 */
-	public function remove_spaces_from_system_filenames()
+	public static function remove_spaces_from_system_filenames()
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -507,7 +507,7 @@ class AttachmentsUpdate
 	/**
 	 * Update the file sizes for all attachments (only applies to files)
 	 */
-	public function update_file_sizes()
+	public static function update_file_sizes()
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -560,7 +560,7 @@ class AttachmentsUpdate
 	/**
 	 * Check all files and make sure they exist
 	 */
-	public function check_files_existance()
+	public static function check_files_existance()
 	{
 		jimport('joomla.filesystem.file');
 
@@ -619,7 +619,7 @@ class AttachmentsUpdate
 	/**
 	 * Validate all URLS and update their "valid" status
 	 */
-	public function validate_urls()
+	public static function validate_urls()
 	{
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -683,7 +683,7 @@ class AttachmentsUpdate
 	/**
 	 * Validate all URLS and update their "valid" status
 	 */
-	static public function installAttachmentsPermissions($verbose = true)
+	public static function installAttachmentsPermissions($verbose = true)
 	{
 		jimport('joomla.access.rules');
 		$app = JFactory::getApplication();
