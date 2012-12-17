@@ -8,6 +8,7 @@ div#uploadAttachmentsPage {
 div#uploadAttachmentsPage h1 {
     font-size: 150%;
     color: #000;
+    margin: 6px 0;
 }
 
 div#uploadAttachmentsPage h2 {
@@ -21,9 +22,30 @@ div#uploadAttachmentsPage p {
     margin: 0;
 }
 
-div#uploadAttachmentsPage p label {
-    font-weight: bold;
+div#uploadAttachmentsPage label {
+    display: inline-block;
 }
+
+div#uploadAttachmentsPage div.at_control label.at_control_label {
+    font-weight: bold;
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control {
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control div.controls {
+    margin-left: 5px;
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control div.controls label {
+    margin: 0 0 0 5px;
+    display: inline-block;
+}
+
+
 
 div#uploadAttachmentsPage form.attachments fieldset {
     padding-bottom: 4px;
@@ -41,11 +63,14 @@ div#uploadAttachmentsPage #description
 }
 
 div#uploadAttachmentsPage div.form_buttons {
-    width: 100%;
-    /* margin: 6px 0 0 0; */
+    background-color: #F4F4F4;
+    padding: 8px 20px 8px 20px;
     text-align: center;
 }
 
+div#uploadAttachmentsPage div.form_buttons span.right {
+    margin-right: 20px;
+}
 
 /* For button-like links to change/switch */
 
@@ -134,11 +159,12 @@ div.attachmentsList caption {
 
 
 /* Styles for delete warnings */
+body.modal div.attachmentsWarning,
 #main div.attachmentsWarning {
     padding: 10px;
-    margin: 20px;
 }
 
+body.modal div.attachmentsWarning h1,
 #main div.attachmentsWarning h1 {
     line-height: normal;
     font-size: 200%;
@@ -147,6 +173,7 @@ div.attachmentsList caption {
     color: red;
 }
 
+body.modal div.attachmentsWarning h2,
 #main div.attachmentsWarning h2 {
     line-height: normal;
     font-size: 150%;
@@ -154,12 +181,21 @@ div.attachmentsList caption {
     text-align: center;
 }
 
+body.modal div.attachmentsWarning span.left,
 #main div.attachmentsWarning span.left {
     width: 8em;
     float: left;
 }
 
+body.modal div.attachmentsWarning span.right,
 #main div.attachmentsWarning span.right {
     width: 8em;
     float: right;
+}
+
+body.modal div.attachmentsWarning div.form_buttons,
+#main div.attachmentsWarning div.form_buttons {
+    background-color: #F4F4F4;
+     padding: 8px 20px 8px 20px;
+    text-align: center;
 }
