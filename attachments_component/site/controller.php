@@ -23,6 +23,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
 
 /** Load the attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 
 /**
@@ -449,7 +450,7 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 
@@ -577,7 +578,7 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 		else {

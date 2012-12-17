@@ -20,6 +20,7 @@ jimport('joomla.application.component.controllerform');
 /** Load the Attachments defines */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /**
  * Attachment Controller
@@ -129,7 +130,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Set up mootools/modal
-		AttachmentsHelper::setupModalJavascript();
+		AttachmentsJavascript::setupModalJavascript();
 
 		// Set up the "select parent" button
 		JPluginHelper::importPlugin('attachments');
@@ -142,7 +143,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
-			AttachmentsHelper::setupJavascript();
+			AttachmentsJavascript::setupJavascript();
 
 			$uri = JFactory::getURI();
 			$document = JFactory::getDocument();
@@ -546,7 +547,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 
@@ -594,7 +595,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$layout = JRequest::getWord('tmpl');
 
 		// Set up mootools/modal
-		AttachmentsHelper::setupModalJavascript();
+		AttachmentsJavascript::setupModalJavascript();
 
 		// set up lists for form controls
 		$lists = array();
@@ -753,7 +754,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
-			AttachmentsHelper::setupJavascript();
+			AttachmentsJavascript::setupJavascript();
 			$save_url = 'index.php?option=com_attachments&amp;task=attachment.save';
 			}
 		$view->save_url = $save_url;
@@ -1096,7 +1097,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 

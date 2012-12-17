@@ -24,9 +24,10 @@ $document = JFactory::getDocument();
 
 /** Load the Attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the regular css file
-AttachmentsHelper::setupJavascript(false);
+AttachmentsJavascript::setupJavascript(false);
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );
 
 // Handle the RTL styling

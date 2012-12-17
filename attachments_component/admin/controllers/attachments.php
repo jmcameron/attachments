@@ -247,9 +247,10 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
+			require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 		}
 

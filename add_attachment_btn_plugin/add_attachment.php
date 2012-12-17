@@ -107,9 +107,12 @@ class plgButtonAdd_attachment extends JPlugin
 			$base_url = str_replace('/administrator','', $base_url);
 			}
 
+		// Set up the Javascript framework
+		require_once JPATH_SITE . '/components/com_attachments/javascript.php';
+		AttachmentsJavascript::setupJavascript();
+
 		// Add the regular css file
 		require_once JPATH_SITE . '/components/com_attachments/helper.php';
-		AttachmentsHelper::setupJavascript();
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css' );
 		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment.css' );
 

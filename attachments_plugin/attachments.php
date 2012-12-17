@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 /** Load the attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
@@ -106,7 +107,7 @@ class plgContentAttachments extends JPlugin
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Add the refresh javascript
-		AttachmentsHelper::setupJavascript();
+		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
 		AttachmentsHelper::addStyleSheet($uri->root(true) . '/plugins/content/attachments/attachments1.css');
@@ -354,7 +355,7 @@ class plgContentAttachments extends JPlugin
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Set up the refresh behavior
-		AttachmentsHelper::setupJavascript();
+		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
@@ -644,7 +645,7 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
 	{
-		AttachmentsHelper::setupModalJavascript();
+		AttachmentsJavascript::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {

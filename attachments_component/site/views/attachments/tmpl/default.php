@@ -16,6 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Load the Attachments helper
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 $user = JFactory::getUser();
 $app = JFactory::getApplication();
@@ -37,7 +38,7 @@ if ( $format != 'raw' ) {
 
 	// If any attachments are modifiable, add necessary Javascript for iframe
 	if ( $this->some_attachments_modifiable ) {
-		AttachmentsHelper::setupModalJavascript();
+		AttachmentsJavascript::setupModalJavascript();
 		}
 
 	/** Load the attachments helper to add the stylesheet */

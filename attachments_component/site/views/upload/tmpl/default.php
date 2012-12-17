@@ -16,12 +16,13 @@ defined('_JEXEC') or die('Restricted access');
 
 // Load the Attachments helper
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the plugins stylesheet to style the list of attachments
 $uri = JFactory::getURI();
 
 // Add javascript
-AttachmentsHelper::setupJavascript();
+AttachmentsJavascript::setupJavascript();
 
 // Get the parent id and a few other convenience items
 $parent_id = $this->parent_id;

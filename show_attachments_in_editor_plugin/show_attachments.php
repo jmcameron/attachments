@@ -29,6 +29,7 @@ else
 
 /* Load the attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 
 /**
@@ -64,8 +65,8 @@ class plgSystemShow_attachments extends JPlugin
 
 			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
-			AttachmentsHelper::setupJavascript();
-			AttachmentsHelper::setupModalJavascript();
+			AttachmentsJavascript::setupJavascript();
+			AttachmentsJavascript::setupModalJavascript();
 
 			$doc = JFactory::getDocument();
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css',

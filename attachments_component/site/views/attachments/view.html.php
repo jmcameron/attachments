@@ -18,6 +18,7 @@ jimport( 'joomla.application.component.view' );
 
 /** Load the Attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
@@ -54,7 +55,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Add javascript
 		$uri = JFactory::getURI();
-		AttachmentsHelper::setupJavascript();
+		AttachmentsJavascript::setupJavascript();
 
 		// Get the model
 		$model = $this->getModel('Attachments');
