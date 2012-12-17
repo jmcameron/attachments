@@ -19,6 +19,7 @@ jimport('joomla.application.component.controllerform');
 
 /** Load the Attachments defines */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /**
  * Attachment Controller
@@ -128,8 +129,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Set up mootools/modal
-		$document = JFactory::getDocument();
-		JHTML::_('behavior.modal', 'a.modal-button');
+		AttachmentsHelper::setupModalJavascript();
 
 		// Set up the "select parent" button
 		JPluginHelper::importPlugin('attachments');
@@ -142,10 +142,10 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		if ( !$parent_id ) {
 			// Set up the necessary javascript
-			$uri = JFactory::getURI();
-			JHTML::_('behavior.mootools');
-			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
+			AttachmentsHelper::setupJavascript();
 
+			$uri = JFactory::getURI();
+			$document = JFactory::getDocument();
 			$js = '
 	   function jSelectArticle(id, title, catid, object) {
 		   document.id("parent_id").value = id;
@@ -394,7 +394,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Upload the file!
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Handle 'from' clause
 		$from = JRequest::getWord('from');
@@ -547,10 +546,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			echo "<script type=\"text/javascript\">
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-			window.parent.SqueezeBox.close();
-			</script>";
+			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 
@@ -598,8 +594,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$layout = JRequest::getWord('tmpl');
 
 		// Set up mootools/modal
-		$document = JFactory::getDocument();
-		JHTML::_('behavior.modal', 'a.modal-button');
+		AttachmentsHelper::setupModalJavascript();
 
 		// set up lists for form controls
 		$lists = array();
@@ -656,6 +651,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			}
 
 		// Set up view for changing parent
+		$document = JFactory::getDocument();
 		if ( $change_parent ) {
 			$js = "
 	   function jSelectArticle(id, title) {
@@ -757,8 +753,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
 			$in_popup = true;
-			JHTML::_('behavior.mootools');
-			$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
+			AttachmentsHelper::setupJavascript();
 			$save_url = 'index.php?option=com_attachments&amp;task=attachment.save';
 			}
 		$view->save_url = $save_url;
@@ -891,7 +886,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// If the parent has changed, switch the parent, rename files if necessary
 		if ( $parent_changed ) {
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 			if ( ($new_uri_type == 'url') && ($old_uri_type == 'file') ) {
 				// If we are changing parents and converting from file to URL, delete the old file
@@ -1010,7 +1004,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		if ( $new_uri_type == 'file' ) {
 
 			// Upload a new file
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 			$result = AttachmentsHelper::upload_file($attachment, $parent, $attachment_id, 'update');
 			if ( is_object($result) ) {
 				$msg = $result->error_msg . ' (ERR 139)';
@@ -1025,7 +1018,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 		elseif ( $new_uri_type == 'url' ) {
 
 			// Upload/add the new URL
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 			$result = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url,
 												 $old_uri_type, $attachment_id);
 
@@ -1104,10 +1096,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			echo "<script type=\"text/javascript\">
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-			window.parent.SqueezeBox.close();
-			</script>";
+			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 
@@ -1203,8 +1192,6 @@ class AttachmentsControllerAttachment extends JControllerForm
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 142)';
 			JError::raiseError(500, $errmsg);
 			}
-
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// NOTE: AttachmentsHelper::download_attachment($id) checks access permission
 

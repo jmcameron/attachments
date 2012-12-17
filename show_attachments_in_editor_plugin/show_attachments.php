@@ -14,6 +14,8 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+jimport('joomla.plugin.plugin');
+
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
 {
@@ -25,8 +27,8 @@ else
 	return;
 }
 
-
-jimport('joomla.plugin.plugin');
+/* Load the attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 
 /**
@@ -49,6 +51,7 @@ class plgSystemShow_attachments extends JPlugin
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{  
+
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
@@ -59,20 +62,16 @@ class plgSystemShow_attachments extends JPlugin
 				return;
 				}
 
-			$doc = JFactory::getDocument();
 			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
+			AttachmentsHelper::setupJavascript();
+			AttachmentsHelper::setupModalJavascript();
 
+			$doc = JFactory::getDocument();
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css',
 								 'text/css', null, array() );
 			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments1.css',
 								 'text/css', null, array() );
-
-			JHTML::_('behavior.mootools');
-			JHTML::_('behavior.modal', 'a.modal-button');
-
-			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
-			$doc->addScript( $js_path );
 			}
 	}
 
@@ -204,9 +203,6 @@ class plgSystemShow_attachments extends JPlugin
 					}
 				}
 
-			// Load the code from the attachments plugin to create the list
-			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
 			// Get the article/parent handler
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 
@@ -256,9 +252,6 @@ class plgSystemShow_attachments extends JPlugin
 			if ( AttachmentsDefines::$USE_ON_CONTENT_PREPARE_FOR_CATEGORY ) {
 				return;
 				}
-
-			// Load the code from the attachments plugin to create the list
-			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 			// Add the refresh Javascript
 			$uri = JFactory::getURI();

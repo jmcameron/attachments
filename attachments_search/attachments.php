@@ -110,7 +110,7 @@ class plgSearchAttachments extends JPlugin
 		switch ($phrase)  {
 
 		case 'exact':
-			$text	= $db->quote( '%'.$db->getEscaped( $text, true ).'%', false );
+			$text	= $db->quote( '%'.$db->escape( $text, true ).'%', false );
 			$user_fields_sql = '';
 			if ( $user_field_1 )
 				$user_fields_sql .= " OR (LOWER(a.user_field_1) LIKE $text)";
@@ -129,7 +129,7 @@ class plgSearchAttachments extends JPlugin
 			$words	= explode( ' ', $text );
 			$wheres = array();
 			foreach ($words as $word) {
-				$word		= $db->quote( '%'.$db->getEscaped( $word, true ).'%', false );
+				$word		= $db->quote( '%'.$db->escape( $word, true ).'%', false );
 				$wheres2	= array();
 				$wheres2[]	= "LOWER(a.filename) LIKE $word";
 				$wheres2[]	= "LOWER(a.display_name) LIKE $word";

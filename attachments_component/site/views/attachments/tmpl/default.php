@@ -14,6 +14,9 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+// Load the Attachments helper
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 $user = JFactory::getUser();
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
@@ -34,11 +37,10 @@ if ( $format != 'raw' ) {
 
 	// If any attachments are modifiable, add necessary Javascript for iframe
 	if ( $this->some_attachments_modifiable ) {
-		JHTML::_('behavior.modal', 'a.modal-button');
+		AttachmentsHelper::setupModalJavascript();
 		}
 
 	/** Load the attachments helper to add the stylesheet */
-	require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
 
 	// Handle RTL styling (if necessary)

@@ -22,13 +22,11 @@ JHtml::_('behavior.tooltip');
 $uri = JFactory::getURI();
 $document = JFactory::getDocument();
 
-// Meant to be shown in the iframe popup
-JHTML::_('behavior.mootools');
-
 /** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.'/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 // Add the regular css file
+AttachmentsHelper::setupJavascript(false);
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );
 
 // Handle the RTL styling

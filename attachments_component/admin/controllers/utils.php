@@ -18,6 +18,9 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 149)');
 	}
 
+// Load the helper functions
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 jimport('joomla.application.component.controller');
 
 /** Define the legacy classes, if necessary */
@@ -32,12 +35,6 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
  */
 class AttachmentsControllerUtils extends JControllerLegacy
 {
-	/**
-	 * Javascript script to close the pop-up window
-	 */
-	var $_close_script = '<script>var myparent = window.parent; window.parent.SqueezeBox.close(); myparent.location.reload();</script>';
-
-
 	/**
 	 * Constructor.
 	 *
@@ -136,7 +133,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=com_attachments', $msg);
@@ -164,7 +161,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -192,7 +189,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -220,7 +217,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -248,7 +245,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -275,7 +272,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);
@@ -303,7 +300,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 			$this->enqueueSystemMessage($msg);
 
 			// Close this window and refesh the parent window
-			echo $this->_close_script;
+			AttachmentsHelper::closeModal();
 			}
 		else {
 			$this->setRedirect('index.php?option=' . $this->option, $msg);

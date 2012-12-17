@@ -13,6 +13,9 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+/** Load the attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
 {
@@ -102,15 +105,11 @@ class plgContentAttachments extends JPlugin
 		$lang = JFactory::getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
-		// Always include the hide rule (since it may be needed to hide the custom tags)
-		require_once JPATH_SITE . '/components/com_attachments/helper.php';
-		AttachmentsHelper::addStyleSheet($uri->root(true) . '/plugins/content/attachments/attachments1.css');
-
 		// Add the refresh javascript
-		$doc = JFactory::getDocument();
-		JHTML::_('behavior.mootools');
-		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
-		$doc->addScript($js_path);
+		AttachmentsHelper::setupJavascript();
+
+		// Always include the hide rule (since it may be needed to hide the custom tags)
+		AttachmentsHelper::addStyleSheet($uri->root(true) . '/plugins/content/attachments/attachments1.css');
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -354,15 +353,11 @@ class plgContentAttachments extends JPlugin
 		$lang = JFactory::getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
+		// Set up the refresh behavior
+		AttachmentsHelper::setupJavascript();
+
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
-
-		$doc = JFactory::getDocument();
-		JHTML::_('behavior.mootools');
-		$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js';
-		$doc->addScript( $js_path );
-
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
@@ -576,9 +571,6 @@ class plgContentAttachments extends JPlugin
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$atrow = JTable::getInstance('Attachment', 'AttachmentsTable');
 
-		/// Load the Attachments helper
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
 		foreach ($attachments as $attachment) {
 
 			// Change the filename/URL as necessary
@@ -629,7 +621,6 @@ class plgContentAttachments extends JPlugin
 		$hta_filename = $attach_dir.'/.htaccess';
 		if ( ($secure && !file_exists($hta_filename)) ||
 			 (!$secure && file_exists($hta_filename)) ) {
-			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 			}
 
@@ -653,9 +644,7 @@ class plgContentAttachments extends JPlugin
 	 */
 	private function _attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
 	{
-		$document = JFactory::getDocument();
-
-		JHTML::_('behavior.modal', 'a.modal-button');
+		AttachmentsHelper::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {

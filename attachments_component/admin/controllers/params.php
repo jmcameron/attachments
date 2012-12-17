@@ -176,7 +176,7 @@ class AttachmentsControllerParams extends JControllerForm
 		if ( $new_secure != $old_secure ) {
 
 			// Check/update the security status
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
+			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 

@@ -16,6 +16,9 @@ defined('_JEXEC') or die('Restricted Access');
 
 jimport( 'joomla.application.component.view' );
 
+/** Load the Attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
 
@@ -41,6 +44,8 @@ class AttachmentsViewAttachments extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		jimport('joomla.application.component.helper');
+
 		$document = JFactory::getDocument();
 		if ( JRequest::getWord('format', '') == 'raw' ) {
 			// Choose raw text even though it is actually html
@@ -49,8 +54,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Add javascript
 		$uri = JFactory::getURI();
-		JHTML::_('behavior.mootools');
-		$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
+		AttachmentsHelper::setupJavascript();
 
 		// Get the model
 		$model = $this->getModel('Attachments');
@@ -79,7 +83,6 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$lang->load('plg_content_attachments', JPATH_SITE.'/plugins/content/attachments');
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// See whether the user-defined fields should be shown

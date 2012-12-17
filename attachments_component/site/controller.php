@@ -21,6 +21,10 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
 
+/** Load the attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
+
 /**
  * The main attachments controller class (for the front end)
  *
@@ -81,8 +85,6 @@ class AttachmentsController extends JControllerLegacy
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
 			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 1)');
 			}
-
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		// Get the parent info
 		$parent_entity = 'default';
@@ -404,8 +406,6 @@ class AttachmentsController extends JControllerLegacy
 			$parent->title = $parent->getTitle($parent_id, $parent_entity);
 			}
 
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
-
 		// Upload new file/url and create/update the attachment
 		if ( $new_uri_type == 'file' ) {
 
@@ -449,10 +449,7 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			echo "<script type=\"text/javascript\">
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-			window.parent.SqueezeBox.close();
-			</script>";
+			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 			}
 
@@ -473,8 +470,6 @@ class AttachmentsController extends JControllerLegacy
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 12)';
 			JError::raiseError(500, $errmsg);
 			}
-
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 		AttachmentsHelper::download_attachment($id);
 	}
@@ -560,7 +555,6 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Clean up after ourselves
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 		AttachmentsHelper::clean_directory($filename_sys);
 
 		// Get the Itemid
@@ -583,12 +577,8 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			echo "<script type=\"text/javascript\">
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-			window.parent.SqueezeBox.close();
-			</script>";
+			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
-
 			}
 		else {
 			$redirect_to = $uri->root(true);
@@ -671,7 +661,6 @@ class AttachmentsController extends JControllerLegacy
 	 */
 	public function update()
 	{
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 		// Call with: index.php?option=com_attachments&task=update&id=1&tmpl=component
 		//		  or: component/attachments/update/id/1/tmpl/component
 
@@ -729,7 +718,6 @@ class AttachmentsController extends JControllerLegacy
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 
 		// Make sure the attachments directory exists
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
 		$upload_dir = JPATH_BASE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {

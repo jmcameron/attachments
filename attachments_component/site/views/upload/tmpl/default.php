@@ -14,15 +14,16 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+// Load the Attachments helper
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 // Add the plugins stylesheet to style the list of attachments
-$document = JFactory::getDocument();
-$app = JFactory::getApplication();
 $uri = JFactory::getURI();
 
 // Add javascript
-JHTML::_('behavior.mootools');
-$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
+AttachmentsHelper::setupJavascript();
 
+// Get the parent id and a few other convenience items
 $parent_id = $this->parent_id;
 if ( $parent_id === null ) {
 	$parent_id = 0;
@@ -33,12 +34,6 @@ $parent_entity = $this->parent_entity;
 $uri_type = $this->uri_type;
 
 $params = $this->params;
-
-// // Use a component template for the iframe view
-// $from = JRequest::getWord('from');
-// if ( $from == 'closeme' ) {
-//	JRequest::setVar('tmpl', 'component');
-//	}
 
 // Set up to toggle between uploading file/urls
 if ( $uri_type == 'file' ) {
@@ -82,11 +77,6 @@ case 'file_already_on_server':
 
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;
-
-JHTML::_('behavior.mootools');
-
-/** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 // Add the stylesheets
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );

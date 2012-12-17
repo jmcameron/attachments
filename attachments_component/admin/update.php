@@ -259,7 +259,7 @@ class AttachmentsUpdate
 	 */
 	public function regenerate_system_filenames()
 	{
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -644,13 +644,12 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {
-
-			require_once(JPATH_COMPONENT_SITE.'/helper.php');
 
 			$attachment->load($id);
 

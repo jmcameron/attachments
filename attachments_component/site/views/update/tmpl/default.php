@@ -79,19 +79,14 @@ $last_modified = $mdate->toFormat($date_format, true);
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;
 
-JHTML::_('behavior.mootools');
-
 /** Load the Attachments helper */
-require_once(JPATH_COMPONENT_SITE.'/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 // Add the stylesheets
 $uri = JFactory::getURI();
+AttachmentsHelper::setupJavascript();
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
 AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
-
-// Add javascript
-JHTML::_('behavior.mootools');
-$document->addScript( $uri->root(true) . '/plugins/content/attachments/attachments_refresh.js' );
 
 // Handle RTL styling
 if ( $lang->isRTL() ) {

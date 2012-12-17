@@ -139,7 +139,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		// Get ready
 		$app = JFactory::getApplication();
 		jimport('joomla.filesystem.file');
-		require_once(JPATH_COMPONENT_SITE.'/helper.php');
+		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 		// Get the attachments parent manager
 		JPluginHelper::importPlugin('attachments');
@@ -249,10 +249,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			echo "<script type=\"text/javascript\">
-				window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$pid,\"$from\");
-				window.parent.SqueezeBox.close();
-				</script>";
+			AttachmentsHelper::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
 			exit();
 		}
 

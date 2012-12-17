@@ -156,7 +156,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 		// Filter
 		if ( $filter ) {
-			$filter = $db->quote( '%'.$db->getEscaped( $filter, true ).'%', false );
+			$filter = $db->quote( '%'.$db->escape( $filter, true ).'%', false );
 			$query->where('title LIKE ' . $filter);
 			}
 		$query->where('extension=' . $db->quote('com_content'));

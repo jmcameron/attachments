@@ -341,7 +341,7 @@ class AttachmentsPlugin extends JPlugin
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from("#__$entity_table");
 		if ( $filter ) {
-			$filter = $db->quote( '%'.$db->getEscaped( $filter, true ).'%', false );
+			$filter = $db->quote( '%'.$db->escape( $filter, true ).'%', false );
 			$query->where($entity_title_field . ' LIKE ' . $filter);
 			}
 		if ( $order ) {
