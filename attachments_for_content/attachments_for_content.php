@@ -483,7 +483,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		if ( $parent_state == 'PUBLISHED' ) {
 
 			if ( ($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE') ) {
-				$now = JFactory::getDate()->toMySQL();
+				$now = JFactory::getDate()->toSql();
 				$nullDate = $db->getNullDate();
 				$where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND ".
@@ -782,7 +782,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
 		$user = JFactory::getUser($user_id);
-		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
+		if ( $user->authorise('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
 
@@ -813,7 +813,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has permission to edit attachments on their own cateogory
-			if ( $user->authorize('attachments.edit.ownparent', 'com_attachments') ) {
+			if ( $user->authorise('attachments.edit.ownparent', 'com_attachments') ) {
 				$category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
 				return (int)$user->id == (int)$category_creator_id;
 				}
@@ -842,7 +842,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 				}
 
 			// See if the user has permission to edit attachments on their own article
-			if ( $user->authorize('attachments.edit.ownparent', 'com_attachments') ) {
+			if ( $user->authorise('attachments.edit.ownparent', 'com_attachments') ) {
 				$article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
 				return (int)$user->id == (int)$article_creator_id;
 				}
@@ -869,7 +869,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// If the user generally has permissions to edit ALL content, they
 		// may edit this attachment (editor, publisher, admin, etc)
 		$user = JFactory::getUser($user_id);
-		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
+		if ( $user->authorise('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
 
@@ -955,7 +955,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 		// If the user generally has permissions to edit all content, they
 		// may change this attachment state (editor, publisher, admin, etc)
 		$user = JFactory::getUser($user_id);
-		if ( $user->authorize('com_content', 'edit', 'content', 'all') ) {
+		if ( $user->authorise('com_content', 'edit', 'content', 'all') ) {
 			return true;
 			}
 

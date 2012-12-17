@@ -180,7 +180,7 @@ class AttachmentsHelper
 		jimport('joomla.filesystem.folder');
 
 		// Assume anything with a trailing DS or '/' is a directory
-		if ( ($filename[strlen($filename)-1] == DS) || ($filename[strlen($filename)-1] == '/') ) {
+		if ( ($filename[strlen($filename)-1] == DIRECTORY_SEPARATOR) || ($filename[strlen($filename)-1] == '/') ) {
 
 			if ( !JFolder::exists($filename) ) {
 				return;
@@ -212,7 +212,7 @@ class AttachmentsHelper
 		// they were all saved in the top-level directory.)
 		jimport('joomla.application.component.helper');
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$dirend_chars = DS.'/';
+		$dirend_chars = DIRECTORY_SEPARATOR.'/';
 		if ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(rtrim($dirname,$dirend_chars)) ) {
 			return;
 			}
@@ -240,7 +240,7 @@ class AttachmentsHelper
 		$subdir_ok = false;
 
 		// Do not allow the main site directory to be set up as the upload directory
-		$dirend_chars = DS.'/';
+		$dirend_chars = DIRECTORY_SEPARATOR.'/';
 		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) ||
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
@@ -431,7 +431,7 @@ class AttachmentsHelper
 		// Check the file size
 		$max_upload_size = (int)ini_get('upload_max_filesize');
 		$max_attachment_size = (int)$params->get('max_attachment_size', 10);
-		if ($max_attachments_size == 0) {
+		if ($max_attachment_size == 0) {
 			$max_attachment_size = $max_upload_size;
 			}
 		$max_size = min($max_upload_size, $max_attachment_size);
@@ -798,9 +798,9 @@ class AttachmentsHelper
 		$url = $upload_url . '/' . $path . $filename;
 
 		// If we are on windows, fix the filename and URL
-		if ( DS != '/' ) {
-			$filename_sys = str_replace('/', DS, $filename_sys);
-			$url = str_replace(DS, '/', $url);
+		if ( DIRECTORY_SEPARATOR != '/' ) {
+			$filename_sys = str_replace('/', DIRECTORY_SEPARATOR, $filename_sys);
+			$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
 			}
 
 		// Check on length of filename_sys
@@ -936,7 +936,7 @@ class AttachmentsHelper
 
 		// Set the create/modify dates
 		$now = JFactory::getDate();
-		$now = $now->toMySQL();
+		$now = $now->toSql();
 
 		// Update the create/modify info
 		if ( $save_type == 'upload' ) {
@@ -1541,7 +1541,7 @@ class AttachmentsHelper
 
 		// Set the create/modify dates
 		$now = JFactory::getDate();
-		$attachment->created = $now->toMySQL();
+		$attachment->created = $now->toSql();
 		$attachment->modified = $attachment->created;
 		$attachment->uri_type = 'url';
 
@@ -1762,7 +1762,7 @@ class AttachmentsHelper
 		// Construct the new filename and URL
 		$old_filename_sys = $attachment->filename_sys;
 		$new_filename_sys = $new_fullpath . $attachment->filename;
-		$new_url = JString::str_ireplace(DS, '/', $upload_url . '/' . $new_path . $attachment->filename);
+		$new_url = JString::str_ireplace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $new_path . $attachment->filename);
 
 		// Rename the file
 		jimport('joomla.filesystem.file');

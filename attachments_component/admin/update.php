@@ -112,13 +112,13 @@ class AttachmentsUpdate
 			$created = $attachment->created;
 			if ( is_null($created) || ($created == '') ) {
 				$cdate = JFactory::getDate(filemtime($attachment->filename_sys));
-				$created = $cdate->toMySQL();
+				$created = $cdate->toSql();
 				$updated = true;
 				}
 			$mod_date = $attachment->modified;
 			if ( is_null($mod_date) || ($mod_date == '') ) {
 				$mdate = JFactory::getDate(filemtime($attachment->filename_sys));
-				$mod_date = $mdate->toMySQL();
+				$mod_date = $mdate->toSql();
 				$updated = true;
 				}
 
@@ -351,18 +351,18 @@ class AttachmentsUpdate
 				if ( $finfo->oldstyle && $finfo->prefix ) {
 					$new_filename_sys = $new_path . $finfo->basename_no_prefix;
 					$attachment->filename = $finfo->basename_no_prefix;
-					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $finfo->basename_no_prefix);
+					$new_url = str_replace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $newdir . $finfo->basename_no_prefix);
 					}
 				else {
 					$new_filename_sys = $new_path . $basename;
-					$new_url = str_replace(DS, '/', $upload_url . '/' . $newdir . $basename);
+					$new_url = str_replace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $newdir . $basename);
 					}
 
 
 				// If we are on windows, fix the filename and URL
-				if ( DS != '/' ) {
-					$new_filename_sys = str_replace('/', DS, $new_filename_sys);
-					$new_url = str_replace(DS, '/', $new_url);
+				if ( DIRECTORY_SEPARATOR != '/' ) {
+					$new_filename_sys = str_replace('/', DIRECTORY_SEPARATOR, $new_filename_sys);
+					$new_url = str_replace(DIRECTORY_SEPARATOR, '/', $new_url);
 					}
 
 				// Make sure the target directory exists
@@ -482,9 +482,9 @@ class AttachmentsUpdate
 
 			// Construct the new URL (figuire it out from the system filename)
 			$attachments_dir = str_replace(JPATH_SITE, '', $filename_info['dirname']);
-			$dirend_chars = DS.'/';
+			$dirend_chars = DIRECTORY_SEPARATOR.'/';
 			$attachments_dir = JString::trim($attachments_dir, $dirend_chars);
-			$attachments_dir = str_replace(DS, '/', $attachments_dir);
+			$attachments_dir = str_replace(DIRECTORY_SEPARATOR, '/', $attachments_dir);
 			$new_url = $attachments_dir . '/' . $new_basename;
 
 			// Update the record

@@ -526,9 +526,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
 				$errmsg = $msg;
-				if ( DS == "\\" ) {
+				if ( DIRECTORY_SEPARATOR == "\\" ) {
 					// Fix filename on Windows system so alert can display it
-					$errmsg = str_replace(DS, "\\\\", $errmsg);
+					$errmsg = str_replace(DIRECTORY_SEPARATOR, "\\\\", $errmsg);
 					}
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
@@ -997,7 +997,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		// Update create/modify info
 		$attachment->modified_by = $user->get('id');
-		$attachment->modified = $now->toMySQL();
+		$attachment->modified = $now->toSql();
 
 		// Upload new file/url and create/update the attachment
 		$msg = null;
@@ -1074,9 +1074,9 @@ class AttachmentsControllerAttachment extends JControllerForm
 			// If there has been a problem, alert the user and redisplay
 			if ( $msgType == 'error' ) {
 				$errmsg = $msg;
-				if ( DS == "\\" ) {
+				if ( DIRECTORY_SEPARATOR == "\\" ) {
 					// Fix filename on Windows system so alert can display it
-					$errmsg = str_replace(DS, "\\\\", $errmsg);
+					$errmsg = str_replace(DIRECTORY_SEPARATOR, "\\\\", $errmsg);
 					}
 				$errmsg = str_replace("'", "\'", $errmsg);
 				$errmsg = str_replace("<br />", "\\n", $errmsg);
@@ -1101,7 +1101,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 			exit();
 			}
 
-		$this->setRedirect($link, $msg, $msgType . " " . $from);
+		$this->setRedirect($link, $msg, $msgType);
 	}
 
 
