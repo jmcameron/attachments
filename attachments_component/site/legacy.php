@@ -16,38 +16,64 @@ defined('_JEXEC') or die('Restricted access');
 
 if (!class_exists('JControllerLegacy', false))
 {
-	if (!class_exists('JController', false))
+	if (version_compare(JVERSION, '3.0', 'ge'))
 	{
-		jimport('joomla.application.component.controller');
+		// Joomla 3.0
+		jimport('legacy.controller.legacy');
 	}
-
-	class JControllerLegacy extends JController
+	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
+		// Joomla 2.5
+		if (!class_exists('JController', false))
+		{
+			jimport('joomla.application.component.controller');
+		}
+		class JControllerLegacy extends JController
+		{
+		}
 	}
 }
 
 
 if (!class_exists('JModelLegacy', false))
 {
-	if (!class_exists('JModel', false))
+	if (version_compare(JVERSION, '3.0', 'ge'))
 	{
-		jimport('joomla.application.component.model');
+		// Joomla 3.0
+		jimport('legacy.model.legacy');
 	}
-
-	class JModelLegacy extends JModel
+	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
+		// Joomla 2.5
+		if (!class_exists('JModel', false))
+		{
+			jimport('joomla.application.component.model');
+		}
+
+		class JModelLegacy extends JModel
+		{
+		}
 	}
 }
 
 
 if (!class_exists('JViewLegacy', false))
 {
-	if (!class_exists('JView', false))
+	if (version_compare(JVERSION, '3.0', 'ge'))
 	{
-		jimport('joomla.application.component.view');
+		// Joomla 3.0
+		jimport('legacy.view.legacy');
 	}
-
-	class JViewLegacy extends JView
+	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
+		// Joomla 2.5
+		if (!class_exists('JView', false))
+		{
+			jimport('joomla.application.component.view');
+		}
+
+		class JViewLegacy extends JView
+		{
+		}
 	}
 }
