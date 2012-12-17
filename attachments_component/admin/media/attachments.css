@@ -1,5 +1,10 @@
 /* Styles for the main list of attachments in the administrative back end */
 
+body.component {
+	padding-top: 0;
+	margin-right: 10px;
+}
+
 form.attachmentsBackend * {
 	float: none;
 }
@@ -101,11 +106,10 @@ table.adminlist td.at_access	   { text-align: center; padding: 4px 0 4px 8px;}
 table.adminlist td.at_user_field   { text-align: left;   padding: 4px 0 4px 8px;}
 table.adminlist td.at_file_type	   { text-align: center; padding: 4px 0 4px 8px;}
 table.adminlist td.at_file_size	   { text-align: center; padding: 4px 0 4px 8px;}
-table.adminlist td.at_creator_name { text-align: left; padding: 4px 0 4px 8px;}
-table.adminlist td.at_created_date { text-align: left; padding: 4px 0 4px 8px;}
-table.adminlist td.at_mod_date	   { text-align: left; padding: 4px 0 4px 8px;}
+table.adminlist td.at_creator_name { text-align: left;   padding: 4px 0 4px 8px;}
+table.adminlist td.at_created_date { text-align: left;   padding: 4px 0 4px 8px;}
+table.adminlist td.at_mod_date	   { text-align: left;   padding: 4px 0 4px 8px;}
 table.adminlist td.at_downloads	   { text-align: center; padding: 4px 0 4px 8px;}
-
 
 table.adminlist td.at_parentsep {
 	height: 0.8em;
@@ -259,8 +263,18 @@ form.attachmentsBackend fieldset.adminform table.admintable td input[type="check
 {
 	float: none;
 	padding: 0;
-	margin: 0 0 0 1em;
+	margin: 0 0 0 0.5em;
 	display: inline;
+}
+
+form.attachmentsBackend fieldset.adminform table.admintable tr {
+	margin: 4px 0 4px 0;
+	border: 1px solid #FFF;
+}
+
+form.attachmentsBackend fieldset.adminform table.admintable td select.inputbox {
+	background-color: #DDD;
+	margin: 0 8px 0 1px;
 }
 
 form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"] {
@@ -268,7 +282,7 @@ form.attachmentsBackend fieldset.adminform table.admintable td input[type="check
 }
 
 form.attachmentsBackend fieldset.adminform table.admintable td label {
-	font-size: 1.1em;
+	font-size: 1em;
 }
 
 
@@ -304,17 +318,20 @@ form.attachmentsBackend input#parent_title {
 	color: #555;
 }
 
-
-form.attachmentsBackend select.inputbox {
-	background-color: #DDD;
-}
-
 form.attachmentsBackend input[type="button"], 
 form.attachmentsBackend input[type="submit"],
 {
 	font-size: 1.3em;
 	font-weight: bold;
 	border: 1px solid #666; 
+}
+
+div.attachmentsWarning div.form_buttons,
+form.attachmentsBackend div.form_buttons {
+    background-color: #F4F4F4;
+    margin-top: 4px;
+    padding: 8px 20px 8px 20px;
+    text-align: center;
 }
 
 form.attachmentsBackend span.right {
@@ -327,8 +344,9 @@ form.attachmentsBackend table.admintable {
 }
 
 form.attachmentsBackend table.admintable td {
-	padding-right: 8px;
+        padding: 3px 8px 3px 3px;
 	vertical-align: middle;
+	font-size: 1.0em;
 }
 
 form.attachmentsBackend table.admintable td span {
@@ -418,7 +436,6 @@ input#paramshide_attachments_for {
 dl#config-tabs-com_attachments_configuration h3 {
     font-size: 1.4em;
 }
-
 
 dl#config-tabs-com_attachments_configuration > dt {
     background-color: #CACACA;

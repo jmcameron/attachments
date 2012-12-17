@@ -82,13 +82,11 @@ else
 <?php if ( $this->in_popup ): ?>
 <div class="attachmentsBackendTitle">
 	<h1><?php echo JText::_('ATTACH_UPDATE_ATTACHMENT_COLON') . " " . $attachment->filename; ?></h1>
-	<h2><?php echo JText::sprintf('ATTACH_FOR_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title); ?></h2>
 </div>
 <?php endif; ?>
 <form class="attachmentsBackend" action="<?php echo $this->save_url; ?>" method="post" <?php echo $enctype ?>
 	  name="adminForm" id="adminForm">
 <fieldset class="adminform">
-<legend><?php echo JText::_('ATTACH_UPDATE_ATTACHMENT'); ?></legend>
 <table class="admintable">
   <tr>
 <?php if ( $this->change_parent ): ?>
@@ -345,7 +343,7 @@ else
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />
 <input type="hidden" name="task" value="attachment.edit" />
 <?php if ( $this->in_popup ): ?>
-<div align="center">
+<div class="form_buttons" align="center">
 	<input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" value="<?php echo JText::_('ATTACH_SAVE'); ?>" />
 	<span class="right"><input type="button" name="cancel" value="<?php echo JText::_('ATTACH_CANCEL'); ?>"
 			  onClick="window.parent.SqueezeBox.close();" /></span>

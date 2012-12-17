@@ -162,7 +162,7 @@ if ( $this->parent_title ) {
 	<input type="hidden" name="task" value="attachment.add" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<?php if ( $this->from == 'closeme' ): ?>
-	<div align="center">
+	<div class="form_buttons" align="center">
 	   <input type="submit" name="Submit" class="button"
 			  onclick="javascript: submitbutton('attachment.saveNew')"
 			  value="<?php echo JText::_('ATTACH_UPLOAD_VERB'); ?>" />
