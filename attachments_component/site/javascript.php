@@ -25,8 +25,15 @@ class AttachmentsJavascript
 	 */
 	public static function setupJavascript($add_refresh_script = true)
 	{
-		// up the style sheet (to get the visual for the button working)
-		JHTML::_('behavior.mootools');
+		if (version_compare(JVERSION, '3.0', 'ge'))
+		{
+			JHTML::_('behavior.framework');
+		}
+		else
+		{
+			// up the style sheet (to get the visual for the button working)
+			JHTML::_('behavior.mootools');
+		}
 		if ($add_refresh_script)
 		{
 			$uri = JFactory::getURI();
@@ -55,7 +62,14 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		JHTML::_('behavior.modal', 'a.modal-button');
+		if (version_compare(JVERSION, '3.0', 'ge'))
+		{
+			JHTML::_('behavior.modal', 'a.modal-button');
+		}
+		else
+		{
+			JHTML::_('behavior.modal', 'a.modal-button');
+		}
 	}
 
 
