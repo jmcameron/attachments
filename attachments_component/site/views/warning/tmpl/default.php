@@ -47,7 +47,7 @@ $document->addScriptDeclaration($hide_scrollbar);
 	 <h1><?php echo $this->warning_title; ?></h1>
 	 <h2 id="warning_msg"><?php echo $this->warning_question ?></h2>
   <form action="<?php echo $this->action_url; ?>" name="warning_form" method="post">
-	<div align="center">
+	<div class="form_buttons">
 	   <span class="left">&nbsp;</span>
 	   <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
 	   <span class="right">

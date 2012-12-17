@@ -144,10 +144,10 @@ if ( $lang->isRTL() ) {
 						  size="70" maxlength="255"
 				  value="<?php echo $this->description; ?>" /></p>
 <?php if ( $this->may_publish ): ?>
-			<p><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->publish; ?></p>
+			<div class="at_control"><label class="at_control_label"><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->publish; ?></div>
 <?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
-			<p><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?></p>
+			<div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label><?php echo $this->access_level; ?></div>
 <?php endif; ?>
 			<?php if ( $params->get('user_field_1_name', false) ): ?>
 			<p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
