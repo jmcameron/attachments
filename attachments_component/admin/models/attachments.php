@@ -93,7 +93,7 @@ class AttachmentsModelAttachments extends JModelList
 		// Add the order-by clause
 		$order_by = $this->_buildContentOrderBy();
 		if ($order_by) {
-			$query->order($db->getEscaped($order_by));
+			$query->order($db->escape($order_by));
 			}
 
 		return $query;
@@ -122,11 +122,11 @@ class AttachmentsModelAttachments extends JModelList
 			else {
 				$db = $this->getDBO();
 				$where[] = '(LOWER( a.filename ) LIKE ' .
-					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
 					' OR LOWER( a.description ) LIKE ' .
-					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) .
+					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
 					' OR LOWER( a.display_name ) LIKE ' .
-					$db->quote( '%'.$db->getEscaped( $search, true ).'%', false ) . ')';
+					$db->quote( '%'.$db->escape( $search, true ).'%', false ) . ')';
 				}
 			}
 
@@ -279,6 +279,10 @@ class AttachmentsModelAttachments extends JModelList
 	public function getItems()
 	{
 		$items = parent::getItems();
+		if ( $items === false )
+		{
+			return false;
+		}
 
 		$good_items = Array();
 
