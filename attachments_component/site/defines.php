@@ -27,7 +27,7 @@ class AttachmentsDefines
 
 	/** Project URL
 	 */
-	static $PROJECT_URL = 'http://joomlacode.org/gf/project/attachments/';
+	static $PROJECT_URL = 'http://joomlacode.org/gf/project/attachments3/';
 
 	/** Supported save types for uploading/updating
 	 */
