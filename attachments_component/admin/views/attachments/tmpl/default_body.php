@@ -69,11 +69,11 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 
 	$cdate = JFactory::getDate($item->created);
 	$cdate->setTimeZone($tz);
-	$created = $cdate->toFormat("%x %H:%M", true);
+	$created = $cdate->format("Y-m-d H:i", true);
 
 	$mdate = JFactory::getDate($item->modified);
 	$mdate->setTimeZone($tz);
-	$modified = $mdate->toFormat("%x %H:%M", true);
+	$modified = $mdate->format("Y-m-d H:i", true);
 
 	$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 	if ( ($item->parent_id != $last_parent_id) || ($item->parent_type != $last_parent_type) 

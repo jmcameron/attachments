@@ -73,8 +73,8 @@ jimport( 'joomla.utilities.date' );
 $tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
 $mdate = JFactory::getDate($attachment->modified);
 $mdate->setTimezone($tz);
-$date_format = $params->get('date_format', '%Y-%m-%d %I:%M%P');
-$last_modified = $mdate->toFormat($date_format, true);
+$date_format = $params->get('date_format', 'Y-m-d H:i');
+$last_modified = $mdate->format($date_format, true);
 
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;

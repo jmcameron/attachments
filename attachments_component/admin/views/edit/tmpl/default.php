@@ -56,11 +56,11 @@ $tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
 
 $cdate = JFactory::getDate($attachment->created);
 $cdate->setTimezone($tz);
-$created = $cdate->toFormat("%x %H:%M", true);
+$created = $cdate->format("Y-m-d H:i", true);
 
 $mdate = JFactory::getDate($attachment->modified);
 $mdate->setTimezone($tz);
-$modified = $mdate->toFormat("%x %H:%M", true);
+$modified = $mdate->format("Y-m-d H:i", true);
 
 $update = $this->update;
 $uri_type = $attachment->uri_type;

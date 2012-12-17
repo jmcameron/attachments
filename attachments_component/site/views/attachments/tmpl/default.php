@@ -147,13 +147,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->show_created_date ) {
 		$date = JFactory::getDate($attachment->created);
 		$date->setTimezone($tz);
-		$created = $date->toFormat($this->date_format, true);
+		$created = $date->format($this->date_format, true);
 		}
 
 	if ( $this->show_modified_date ) {
 		$date = JFactory::getDate($attachment->modified);
 		$date->setTimezone($tz);
-		$last_modified = $date->toFormat($this->date_format, true);
+		$last_modified = $date->format($this->date_format, true);
 		}
 
 	// Add the filename
