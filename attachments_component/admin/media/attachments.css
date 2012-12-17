@@ -64,7 +64,7 @@ table.adminlist td.at_filename {
 	font-size: 125%; 
 }
 table.adminlist td.at_filename a img { 
-	vertical-align: text-bottom; 
+	vertical-align: middle; 
 }
 
 table.adminlist td.at_published	   { text-align: center; }
