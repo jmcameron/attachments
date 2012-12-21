@@ -103,11 +103,13 @@
            label="ATTACH_ATTACHMENTS_LIST_ORDER"
            description="ATTACH_ATTACHMENTS_LIST_ORDER_DESCRIPTION">
       <option value="filename">ATTACH_SORT_FILENAME</option>
+      <option value="filename_desc">ATTACH_SORT_FILENAME_DESCENDING</option>
       <option value="file_size">ATTACH_SORT_FILE_SIZE</option>
       <option value="file_size_desc">ATTACH_SORT_FILE_SIZE_DESCENDING</option>
       <option value="description">ATTACH_SORT_DESCRIPTION</option>
       <option value="description_desc">ATTACH_SORT_DESCRIPTION_DESCENDING</option>
-      <option value="display_name">ATTACH_DISPLAY_FILENAME_OR_URL</option>
+      <option value="display_name">ATTACH_SORT_DISPLAY_FILENAME_OR_URL</option>
+      <option value="display_name_desc">ATTACH_SORT_DISPLAY_FILENAME_OR_URL_DESCENDING</option>
       <option value="creator">ATTACH_CREATOR</option>
       <option value="created">ATTACH_SORT_CREATED_DATE</option>
       <option value="created_desc">ATTACH_SORT_CREATED_DATE_DESCENDING</option>

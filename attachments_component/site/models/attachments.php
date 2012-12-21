@@ -289,6 +289,8 @@ class AttachmentsModelAttachments extends JModelLegacy
 	{
 		if ( $new_sort_order == 'filename' )
 			$order_by = "filename";
+		else if ( $new_sort_order == 'filename_desc' )
+			$order_by = "filename DESC";
 		else if ( $new_sort_order == 'file_size' )
 			$order_by = "file_size";
 		else if ( $new_sort_order == 'file_size_desc' )
@@ -299,6 +301,8 @@ class AttachmentsModelAttachments extends JModelLegacy
 			$order_by = "description DESC";
 		else if ( $new_sort_order == 'display_name' )
 			$order_by = "display_name, filename";
+		else if ( $new_sort_order == 'display_name_desc' )
+			$order_by = "display_name DESC, filename";
 		else if ( $new_sort_order == 'created' )
 			$order_by = "created";
 		else if ( $new_sort_order == 'created_desc' )
