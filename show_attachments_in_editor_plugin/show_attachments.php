@@ -290,11 +290,10 @@ class plgSystemShow_attachments extends JPlugin
 				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 				}
 
-			// Insert the attachments above the editor buttons
-			// NOTE: Assume that anyone editing the article can see its attachments
+			// Insert the attachments after the category description
+			$reptag = '<div class="clr"></div>';
 			$body = JResponse::getBody();
-			$body = str_replace('<div class="clr"></div>',
-								$attachments . '<div class="clr"></div>', $body);
+			$body = str_replace($reptag, $attachments . $reptag, $body);
 			JResponse::setBody($body);
 			}
 	}
