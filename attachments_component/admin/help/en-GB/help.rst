@@ -251,14 +251,14 @@ Formatting Options
   attachment list for articles that have attachments. If 'No' is
   selected, no date will be added to the attachment list.
 
-* **Format string for modification date:** You may
-  select the format for the modification date by using the format
-  used by the PHP strftime() function.  Search the web with
-  'PHP strftime' for examples.  The default format (%x %H:%M)
-  gives dates with 24-hour time like 4/28/2008 14:21.  To
-  remove the time of day part, leave out the "%H:%M" part.  Note
-  that MS Windows and Linux PHP implementations may differ in
-  some of the codes that they support.
+* **Format string for modification date:** 
+  You may select the format for the displayed creation and modification dates
+  by giving a format string like ones used by the Joomla `JDate::format()`
+  function (which is based on the PHP dateformat function).  Search the web
+  with 'PHP date' for examples.  Note that JDate handles translation of
+  month/day names as necessary.  The default format string (Y-m-d H:M) gives
+  dates with 24-hour time like 2013-01-05 16:21.  To remove the time-of-day
+  part, leave out the 'H:M' part.
 
 * **Attachments list order:** This option allows you to specify the order in
   which attachments will be listed in the attachments lists.  Most of the

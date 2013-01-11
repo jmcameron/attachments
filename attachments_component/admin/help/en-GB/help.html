@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
 <title>Attachments Documentation</title>
 <link rel="stylesheet" href="help.css" type="text/css" />
 </head>
@@ -15,7 +15,7 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 3.0.3 - August 11, 2012</strong></p>
+<p class="version"><strong>Version 3.1-Alpha11 - December 16, 2012</strong></p>
 <p><strong>This version is for Joomla 1.7/2.5+</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -297,14 +297,14 @@ is 'Yes', the modification date for the file will be added to the
 attachment list for articles that have attachments. If 'No' is
 selected, no date will be added to the attachment list.</p>
 </li>
-<li><p class="first"><strong>Format string for modification date:</strong> You may
-select the format for the modification date by using the format
-used by the PHP strftime() function.  Search the web with
-'PHP strftime' for examples.  The default format (%x %H:%M)
-gives dates with 24-hour time like 4/28/2008 14:21.  To
-remove the time of day part, leave out the &quot;%H:%M&quot; part.  Note
-that MS Windows and Linux PHP implementations may differ in
-some of the codes that they support.</p>
+<li><p class="first"><strong>Format string for modification date:</strong>
+You may select the format for the displayed creation and modification dates
+by giving a format string like ones used by the Joomla <cite>JDate::format()</cite>
+function (which is based on the PHP dateformat function).  Search the web
+with 'PHP date' for examples.  Note that JDate handles translation of
+month/day names as necessary.  The default format string (Y-m-d H:M) gives
+dates with 24-hour time like 2013-01-05 16:21.  To remove the time-of-day
+part, leave out the 'H:M' part.</p>
 </li>
 <li><p class="first"><strong>Attachments list order:</strong> This option allows you to specify the order in
 which attachments will be listed in the attachments lists.  Most of the
@@ -1162,7 +1162,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: August 12, 2012 at 02:56 UTC.
+Generated on: January 05, 2013 at 23:37 UTC.
 
 </div>
 </body>
