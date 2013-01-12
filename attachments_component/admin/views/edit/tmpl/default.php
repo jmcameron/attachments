@@ -164,7 +164,7 @@ else
   <tr>
 	  <td class="key"><label for="upload"><?php echo JText::_('ATTACH_SELECT_FILE_COLON') ?></label></td>
 	  <td colspan="5"><b><?php echo JText::_('ATTACH_SELECT_NEW_FILE_IF_YOU_WANT_TO_UPDATE_ATTACHMENT_FILE') ?></b><br />
-	  <input type="file" name="upload" id="upload" size="68" maxlength="512" />
+	  <input type="file" name="upload" id="upload" size="68" maxlength="1024" />
 	  </td>
   </tr>
 <?php elseif ( $update == 'url' ): ?>

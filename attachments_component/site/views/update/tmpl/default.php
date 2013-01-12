@@ -118,7 +118,7 @@ else {
 		   title="<?php echo JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a> <br />
 		<input type="file" name="upload" id="<?php echo $update_id; ?>"
-			   size="80" maxlength="512" />
+			   size="80" maxlength="1024" />
 		</p>
 <?php elseif ( $update == 'url' ): ?>
 		<p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label>

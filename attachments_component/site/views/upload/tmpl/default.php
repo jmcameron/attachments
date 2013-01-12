@@ -106,7 +106,7 @@ if ( $lang->isRTL() ) {
 		   <a class="changeButton" href="<?php echo $upload_toggle_url ?>"><?php
 			  echo $upload_toggle_button_text;?></a></p>
 			<p><input type="file" name="upload" id="<?php echo $upload_id; ?>"
-				  size="80" maxlength="512" /></p>
+				  size="80" maxlength="1024" /></p>
 			<p class="display_name"><label for="display_name"
 				  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
 				  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>

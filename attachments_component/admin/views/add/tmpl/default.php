@@ -66,7 +66,7 @@ if ( $this->parent_title ) {
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
 		 echo $this->upload_toggle_button_text;?></a><br />
 	  <input type="file" name="upload" id="<?php echo $upload_id; ?>"
-			 size="74" maxlength="512" />
+			 size="74" maxlength="1024" />
 	</td>
   </tr>
   <tr>
