@@ -890,7 +890,7 @@ class AttachmentsHelper
 			exit();
 			}
 
-		// See of the display name needs to change
+		// See if the display name needs to change
 		if ( $attachment->display_name && ($save_type == 'update') && ( $filename != $old_filename ) ) {
 			$attachment->display_name = '';
 			}
