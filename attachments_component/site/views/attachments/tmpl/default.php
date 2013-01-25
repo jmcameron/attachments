@@ -283,7 +283,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {
 
 		// Create the edit link
-		$update_url = sprintf($this->update_url, (int)$attachment->id);
+		$update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
 		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
 		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
@@ -294,7 +294,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->some_attachments_modifiable && $attachment->user_may_delete && $this->allow_edit ) {
 
 		// Create the delete link
-		$delete_url = sprintf($this->delete_url, (int)$attachment->id);
+		$delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
 		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
 		$tooltip = JText::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$delete_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
