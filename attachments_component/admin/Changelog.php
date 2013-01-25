@@ -62,6 +62,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-12-16 Switched all JHTML to JHtml everywhere.
    - 2012-12-30 Added options for sorting my 'filename descending' and 'display name descending'.
    - 2013-01-05 Updated documentation for date display format string.
+   - 2013-01-24 Fix bug that cased problems when there are spaces in the site base URL.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
