@@ -319,7 +319,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function saveNew()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token');
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Access check.
 		$user = JFactory::getUser();
@@ -805,7 +805,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token');
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Access check.
 		$user = JFactory::getUser();

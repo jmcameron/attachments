@@ -134,7 +134,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	public function delete()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get ready
 		$app = JFactory::getApplication();

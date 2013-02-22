@@ -237,7 +237,7 @@ class AttachmentsController extends JControllerLegacy
 	public function save()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token');
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Make sure that the user is logged in
 		$user = JFactory::getUser();
