@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 3.1-Alpha12 - January 24, 2013**
+**Version 3.1-Alpha13 - February 22, 2013**
 
 **This version is for Joomla 1.7/2.5+**
 
