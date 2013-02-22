@@ -13,7 +13,7 @@
  
 // no direct access
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die('Restricted access');
  
 // import Joomla view library
 jimport('joomla.application.component.view');

@@ -12,7 +12,7 @@
  */
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Access check.
 if ( !( JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
