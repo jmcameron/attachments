@@ -500,9 +500,22 @@ ul#attachments-options div.pane-sliders p {
     margin: 0 0 4px 0;
 }
 
-fieldset#jform_download_mode label {
-	width: 4em;
+/* fieldset#jform_download_mode label { width: 5em; } */
+
+.form-horizontal .control-group .controls {
+    margin-left: 300px;
 }
+
+.form-horizontal .control-group .control-label {
+    width: 285px;
+    padding-left: 4px;
+    background-color: #F9F9F9;
+}
+
+.form-horizontal .control-group .radio.btn-group {
+    padding-top: 0;
+}
+
 
 /* For warning dialog */
 

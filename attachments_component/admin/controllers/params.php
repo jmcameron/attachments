@@ -100,7 +100,6 @@ class AttachmentsControllerParams extends JControllerForm
 		jimport('joomla.application.component.helper');
 		$old_params = JComponentHelper::getParams('com_attachments');
 		$old_secure = JRequest::getInt('old_secure');
-		$old_upload_dir = JRequest::getString('old_upload_dir');
 
 		// Set FTP credentials, if given.
 		jimport('joomla.client.helper');
@@ -166,8 +165,6 @@ class AttachmentsControllerParams extends JControllerForm
 
 			// Save failed, go back to the screen and display a notice.
 			$message = JText::sprintf('JERROR_SAVE_FAILED', $model->getError());
-			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit'), false);
-
 			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit'), $message, 'error');
 			return false;
 		}
