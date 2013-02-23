@@ -24,6 +24,7 @@ div#uploadAttachmentsPage p {
 
 div#uploadAttachmentsPage label {
     display: inline-block;
+    font-weight: bold;
 }
 
 div#uploadAttachmentsPage div.at_control label.at_control_label {
