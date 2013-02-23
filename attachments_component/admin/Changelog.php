@@ -14,7 +14,7 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <pre>
-Attachments 3.x Extension for Joomla 1.7/2.5+
+Attachments 3.x Extension for Joomla 2.5+
 
 2012-??: Release 3.1
    - 2012-08-18 Added attachments list sort option: description (reversed, z-a).
@@ -27,7 +27,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 	  - Converted several Joomal classes to legacy version for future compatibility
 		for Joomla 3.0 (JModel->JModelLegacy, JController->JControllerLegacy,
 		JView->JViewLegacy).
-	  - NOTE that these legacy classes only work with Joomla 2.5.5 or later, so
+	  - NOTE that these legacy classes only work with Joomla 2.5 or later, so
 		earlier versions of Joomla are not longer supported (including Joomla 1.7).
    - 2012-10-13 Added in missing translation term for error messages.
    - 2012-10-17 Fixed issue in display of insert_attachments_editor editor button.
@@ -38,8 +38,8 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-11-10 Fixed many permissions issues for backend users with limited
 		permissions.
    - 2012-11-10 Renumbered all error numbers.
-   - 2012-11-10 Added extra code to handle legacy classes for Joomla version 2.5.5
-		and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6.)
+   - 2012-11-10 Added extra code to handle legacy classes for Joomla version 2.5+
+		and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6)
    - 2012-11-11 Cleaned up some permissions issues with adding/editing attachments
 		in the backend by non-super-user.
    - 2012-11-11 Changed all JError::raiseWarning() to JError::raiseError().
@@ -64,6 +64,8 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2013-01-05 Updated documentation for date display format string.
    - 2013-01-24 Fix bug that cased problems when there are spaces in the site base URL.
    - 2013-02-22 Updates to catch up with Joomla deprecations (eg JRequest::checkToken()).
+   - 2013-02-22 Fixed display of Attachments options in Joomla 3.x.
+   - 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible)
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
@@ -84,7 +86,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
 				Thanks to crassus168 (chris@gamehit.net) for suggestions for this fix.
    - 2012-03-10 Fixed handling of showing attachments for editing articles
 				from category blog and category list.
-   - 2012-03-10 Updated minor translation fix to search plugin code to resolve issues in Joomla 2.5.
+   - 2012-03-10 Updated minor translation fix to search plugin code to resolve issues in Joomla 2.5+.
    - 2012-03-19 Fixed issue with displayString refactor (front end upload failing).
    - 2012-03-23 Fixed bug in sorting by Creator name in backend attachments list.
    - 2012-03-23 Fixed issue with redisplay after editing/deleting attachments from
@@ -111,7 +113,7 @@ Attachments 3.x Extension for Joomla 1.7/2.5+
    - 2012-08-10 Updated minimum supported version of Joomla to 1.7.
 				Generalized error message when trying to install Attachments on an old/unsupported
 				version of Joomla.
-   - 2012-08-11 Tested with Joomla 2.5.6 on Linux and Windows.
+   - 2012-08-11 Tested with Joomla 2.5+.6 on Linux and Windows.
 
 2011-09-17: Release 3.0.2
    - 2011-09-12 Improved display of frontend upload/update forms

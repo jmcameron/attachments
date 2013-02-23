@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.7.1" method="upgrade">
+<extension type="component" version="2.5.7" method="upgrade">
     <name>com_attachments</name>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>

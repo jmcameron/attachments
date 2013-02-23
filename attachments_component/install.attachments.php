@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Define some global variables to help figure out whether log messages.
 //
-//	Note: Apparently with Joomala 2.5, the installer behavior has changed.
+//	Note: Apparently with Joomala 2.5+, the installer behavior has changed.
 //		  If the extension is being installed the first time, it first does the
 //		  install() method and the the update() method of this install script class.
 //		  Similarly when upgrading a previously installed component, it does the
