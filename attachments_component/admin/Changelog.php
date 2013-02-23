@@ -65,7 +65,8 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-01-24 Fix bug that cased problems when there are spaces in the site base URL.
    - 2013-02-22 Updates to catch up with Joomla deprecations (eg JRequest::checkToken()).
    - 2013-02-22 Fixed display of Attachments options in Joomla 3.x.
-   - 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible)
+   - 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible).
+   - 2013-02-22 Cosmetic improvements to frontend update/update dialogs.	   
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
