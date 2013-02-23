@@ -64,7 +64,7 @@ veryclean: clean
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
-	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' ! -name 'updates.xml' \) -exec ./fixvd {} \;
+	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec ./fixvd {} \;
 
 revertversions:
 	@echo "Reverting all install xml files"
