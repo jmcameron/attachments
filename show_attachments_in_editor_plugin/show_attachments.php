@@ -94,6 +94,23 @@ class plgSystemShow_attachments extends JPlugin
 		if (!$parent_type) {
 			return;
 			}
+
+		// Handle the special case of Global Config for Attachments 3.x
+		if (version_compare(JVERSION, '3.0', 'ge'))
+		{
+			if (($parent_type == 'com_config') AND ($task == '') AND ($view == ''))
+			{
+				// Force use of the Attachments options editor
+
+				// option=com_config&view=component&component=com_attachments
+				$body = JResponse::getBody();
+				$body = str_replace('option=com_config&view=component&component=com_attachments',
+									'option=com_attachments&task=params.edit', $body);
+				JResponse::setBody($body);
+			}
+		}
+
+		// Handle attachments
 		$parent_entity = 'default';
 		$editor = 'article';
 
