@@ -118,9 +118,9 @@ Importing your old Attachments to your Joomla 2.5+ site
      Joomla 2.5 sites are on the same computer, simply note the full path to
      the migration file.  
 
-     THIS IS IMPORTANT!  If your Joomla 2.5 is on some other computer, such as
-     a NAS web server, you must copy the migration file to that computer!  It
-     will not be uploaded by the migration software!
+     .. warning:: THIS IS IMPORTANT!  If your Joomla 2.5 is on some other
+        computer, such as a NAS web server, you must copy the migration file
+        to that computer!  It will not be uploaded by the migration software!
 
  10. Log into the back end of your Joomla 2.5 system as an administrator.
 
