@@ -15,6 +15,18 @@ form#adminForm
 	font-size: 1.2em;
 }
 
+form.attachmentsBackend th,
+form#adminForm th
+{
+	font-size: 1em;
+}
+
+/* for Joomla 3.x */
+div.container-fluid form#adminForm 
+{
+	font-size: 1em;
+}
+
 div#element-box div.m form#adminForm table#attachmentsList tr td a {
 	font-size: 85%;
 }
@@ -27,6 +39,7 @@ form#adminForm div.attachments_filter label.filter-search-lbl {
 
 form#adminForm div.attachments_filter { 
 	padding: 0 0 2px 6px;
+	margin: 0 0 6px 0;
 }
 
 form#adminForm button#reset_order {
@@ -39,6 +52,22 @@ form#adminForm div.attachments_filter tr,
 form#adminForm div.attachments_filter td { 
 	padding: 0;
 	margin: 0;
+}
+
+form#adminForm div.attachments_filter td { 
+	vertical-align: middle;
+}
+
+form#adminForm div.attachments_filter td select,
+form#adminForm div.attachments_filter td option,
+form#adminForm div.attachments_filter td input { 
+	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+}
+
+form#adminForm div.attachments_filter td select { 
+        height: 1.6em;
 }
 
 form#adminForm input[type=checkbox] {
@@ -420,6 +449,7 @@ div#attachmentsPotentialParents {
 }
 
 div.attachmentsList {
+        margin-top: 0;
 	font-size: 1.1em;
 }
 
