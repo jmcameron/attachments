@@ -22,5 +22,5 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
 
 // Execute the requested task
 $controller = JControllerLegacy::getInstance('Attachments');
-$controller->execute(JRequest::getCmd('task'));
+$controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

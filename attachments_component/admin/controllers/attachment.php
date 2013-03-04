@@ -14,10 +14,10 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-// import Joomla controllerform library
-jimport('joomla.application.component.controllerform');
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
 
-/** Load the Attachments defines */
+/** Load the Attachments defines and helpers */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
@@ -27,7 +27,7 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachment extends JControllerForm
+class AttachmentsControllerAttachment extends JControllerFormLegacy
 {
 
 	/**

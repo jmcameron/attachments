@@ -14,30 +14,17 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-// import Joomla controllerform library
-jimport('joomla.application.component.controllerform');
+/** Define the legacy classes, if necessary */
+require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+
 
 /**
  * Attachment Controller
  *
  * @package Attachments
  */
-class AttachmentsControllerParams extends JControllerForm
+class AttachmentsControllerParams extends JControllerFormLegacy
 {
-	/**
-	 * Class Constructor
-	 *
-	 * @param	array	$config		An optional associative array of configuration settings.
-	 * @return	void
-	 */
-	public function __construct($config = array())
-	{
-		parent::__construct($config);
-
-		// Map the apply task to the save method.
-		$this->registerTask('apply', 'save');
-	}
-
 
 	/**
 	 * Edit the component parameters
