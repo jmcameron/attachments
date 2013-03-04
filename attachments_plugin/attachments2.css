@@ -56,12 +56,6 @@ div#uploadAttachmentsPage legend {
     padding: 3px 0;
 }
 
-div#uploadAttachmentsPage #display_name,
-div#uploadAttachmentsPage #description
-{
-    /* background-color: #D9D9D9; */
-    width: 100%;
-}
 
 div#uploadAttachmentsPage div.form_buttons {
     background-color: #F4F4F4;
@@ -92,23 +86,16 @@ a.changeButton:active  { color : #333333; text-decoration: none; }
 
 /* Styles for upload form */
 
-input#description { width: 100%; }
-input#upload { width: 100%; }
-input#display_name {
-    width: 100%;
-}
+input#description  { width: 100%; }
+input#upload       { width: 100%; }
+input#display_name { width: 100%; }
 
-p.display_name {
-    margin-top: 12px;
+div#uploadAttachmentsPage p.display_name {
+    margin-top: 6px;
 }
 
 input#upload, input#upload_warning {
-    /* width: 100%;  */
     margin-top: 4px;
-}
-
-input#upload {
-     /* background-color: #D9D9D9; */
 }
 
 form.attachments {
