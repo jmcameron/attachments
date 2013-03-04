@@ -53,6 +53,10 @@
 	<filename>views/attachments/view.html.php</filename>
 	<filename>views/attachments/view.raw.php</filename>
 	<filename>views/index.html</filename>
+	<filename>views/login/index.html</filename>
+	<filename>views/login/view.html.php</filename>
+	<filename>views/login/tmpl/index.html</filename>
+	<filename>views/login/tmpl/default.php</filename>
 	<filename>views/update/index.html</filename>
 	<filename>views/update/metadata.xml</filename>
 	<filename>views/update/view.html.php</filename>
