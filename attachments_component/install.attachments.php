@@ -72,10 +72,8 @@ class com_AttachmentsInstallerScript {
 
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
-		$app->enqueueMessage('<br/>', 'message');
 
 		com_AttachmentsInstallerScript::installPermissions();
-		$app->enqueueMessage('<br/>', 'message');
 	}
 
 
@@ -92,14 +90,9 @@ class com_AttachmentsInstallerScript {
 		$app = JFactory::getApplication();
 		if ( $attachments_install_verbose ) {
 			$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
-			$app->enqueueMessage('<br/>', 'message');
 			}
 
 		com_AttachmentsInstallerScript::installPermissions();
-
-		if ( $attachments_install_verbose ) {
-			$app->enqueueMessage('<br/>', 'message');
-			}
 	}
 
 
@@ -122,6 +115,9 @@ class com_AttachmentsInstallerScript {
 	public function preflight($type, $parent)
 	{
 		global $attachments_install_verbose, $attachments_install_last_method;
+
+		$app = JFactory::getApplication();
+		$app->enqueueMessage('<br/>', 'message');
 
 		if ( $attachments_install_last_method == 'update' ) {
 			$attachments_install_verbose = false;
@@ -165,7 +161,6 @@ class com_AttachmentsInstallerScript {
 			if ( $attachments_install_verbose ) {
 				$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 				$app->enqueueMessage($msg, 'message');
-				$app->enqueueMessage('<br/>', 'message');
 				}
 			}
 
@@ -222,9 +217,7 @@ class com_AttachmentsInstallerScript {
 		}
 
 		if ( $attachments_install_verbose ) {
-			$app->enqueueMessage('<br/>', 'message');
 			$app->enqueueMessage(JText::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
-			$app->enqueueMessage('<br/>', 'message');
 			}
 
 		// Restore the attachments directory (if renamed)
@@ -233,7 +226,6 @@ class com_AttachmentsInstallerScript {
 			JFolder::move($this->moved_attachments_dir, $attachdir);
 			if ( $attachments_install_verbose ) {
 				$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
-				$app->enqueueMessage('<br/>', 'message');
 				}
 			}
 
@@ -244,13 +236,13 @@ class com_AttachmentsInstallerScript {
 			if ( com_AttachmentsInstallerScript::setSecureMode() ) {
 				if ( $attachments_install_verbose ) {
 					$app->enqueueMessage(JText::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
-					$app->enqueueMessage('<br/>', 'message');
 					}
 				}
 			}
 		
 		// Ask the user for feedback
 		if ( $attachments_install_verbose ) {
+			$app->enqueueMessage('<br/>', 'message');
 			$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
 												'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
 												), 'message');
