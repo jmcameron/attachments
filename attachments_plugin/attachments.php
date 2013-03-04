@@ -669,7 +669,7 @@ class plgContentAttachments extends JPlugin
 
 		$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
-		$ahead .= "rel=\"{handler: 'iframe', size: {x: 900, y: 550}}\">";
+		$ahead .= "rel=\"{handler: 'iframe', size: {x: 950, y: 550}}\">";
 		$links = "$ahead<img src=\"$icon_url\" alt=\"$add_attachment_txt\" /></a>";
 		$links .= $ahead.$add_attachment_txt."</a>";
 		return "\n<div class=\"addattach\">$links</div>\n";

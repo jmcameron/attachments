@@ -299,7 +299,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
 		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
-		$update_link .= " rel=\"{handler: 'iframe', size: {x: 1000, y: 580}}\"";
+		$update_link .= " rel=\"{handler: 'iframe', size: {x: 950, y: 580}}\"";
 		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
 		}
 
