@@ -92,7 +92,7 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
 
-		// Set up to list the attachments for this artticle
+		// Set up to list the attachments for this article/content item
 		$sort_order = $params->get('sort_order', 'filename');
 		$model->setSortOrder($sort_order);
 

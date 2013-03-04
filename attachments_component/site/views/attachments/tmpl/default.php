@@ -19,6 +19,8 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 $user = JFactory::getUser();
+$logged_in = $user->get('username') <> '';
+
 $app = JFactory::getApplication();
 $uri = JFactory::getURI();
 

@@ -211,6 +211,17 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
+    <field name="login_url" type="text"
+           default="index.php?option=com_users&amp;view=login"
+           label="ATTACH_URL_TO_LOGIN" size="65"
+           description="ATTACH_URL_TO_LOGIN_DESCRIPTION">
+    </field>
+    <field name="register_url" type="text"
+           default="index.php?option=com_users&amp;view=registration"
+           label="ATTACH_URL_TO_REGISTER" size="65"
+           description="ATTACH_URL_TO_REGISTER_DESCRIPTION">
+    </field>
+
   </fieldset>
 
   <fieldset name="security"

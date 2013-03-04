@@ -14,6 +14,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.model');
+jimport('joomla.application.component.helper');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
@@ -339,6 +340,9 @@ class AttachmentsModelAttachments extends JModelLegacy
 			return $this->_list;
 			}
 
+		// Get the component parameters
+		$params = JComponentHelper::getParams('com_attachments');
+
 		// Create the list
 
 		// Get the parent id and type
@@ -354,11 +358,27 @@ class AttachmentsModelAttachments extends JModelLegacy
 			$this->_sort_order = 'filename';
 			}
 
-		// Construct the query
+		// Determine allowed access levels
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
+		$user_levels = $user->getAuthorisedViewLevels();
 
+		// If the user is not logged in, add extra view levels (if configured)
+		$logged_in = $user->get('username') <> '';
+		if ( !$logged_in ) {
+			$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
+			if (is_array($guest_levels)) {
+				foreach ($guest_levels as $glevel) {
+					$user_levels[] = $glevel;
+					}
+				}
+			else {
+				$user_levels[] = $glevel;
+				}
+			}
+		$user_levels = implode(',', array_unique($user_levels));
+
+		// Create the query
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
 		$query->leftJoin('#__users AS u ON u.id = a.created_by');

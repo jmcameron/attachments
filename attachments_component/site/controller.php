@@ -812,4 +812,17 @@ class AttachmentsController extends JControllerLegacy
 		echo $response;
 	}
 
+	/**
+	 * Request the user log in
+	 */
+	public function requestLogin()
+	{
+		// Set up the view to redisplay the form with warnings
+		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'login'.DS.'view.html.php');
+		$view = new AttachmentsViewLogin();
+
+		// Display the view
+		$view->display(null, false, false);
+	}
+
 }
