@@ -777,6 +777,7 @@ class AttachmentsControllerAttachment extends JControllerForm
 
 		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+		$view->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
 
 		$view->lists	  = $lists;
 		$view->attachment = $attachment;

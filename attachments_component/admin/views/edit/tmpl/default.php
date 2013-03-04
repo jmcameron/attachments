@@ -234,7 +234,7 @@ else
    <?php endif; ?>
 <?php endif; ?>
 
-<?php if ( ($update == 'file') || ($uri_type == 'file') ): ?>
+<?php if ( (($uri_type == 'file') AND ($update == '')) OR ($update == 'file') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo $this->display_filename_tooltip; ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
@@ -246,9 +246,9 @@ else
 		  <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 	 </td>
   </tr>
-<?php elseif ( ($update == 'url') || ($uri_type == 'url') ): ?>
+<?php elseif ( (($uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
-							 title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
+							 title="<?php echo $this->display_url_tooltip; ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_URL'); ?></label></td>
 	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
