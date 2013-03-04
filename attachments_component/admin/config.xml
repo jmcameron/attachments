@@ -159,6 +159,11 @@
            extension="com_content" multiple="multiple"
            description="ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
+    <field name="show_guest_access_levels" type="accesslevels" default="[1,2]"
+	   extension="com_attachments" multiple="multiple" size="3"
+	   label="ATTACH_SHOW_GUEST_ACCESS_LEVELS"
+	   description="ATTACH_SHOW_GUEST_ACCESS_LEVELS_DESCRIPTION"
+	   />
     <field name="hide_add_attachments_link" type="radio" default="0" class="btn-group"
            label="ATTACH_HIDE_ADD_ATTACHMENTS_LINK"
            description="ATTACH_HIDE_ADD_ATTACHMENTS_LINK_DESCRIPTION">
