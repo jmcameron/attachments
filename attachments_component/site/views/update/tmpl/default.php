@@ -173,7 +173,7 @@ else {
 </p>
 <?php endif; ?>
 <?php endif; ?>
-<?php if ( ($update == 'file') || ($uri_type == 'file') ): ?>
+<?php if ( (($uri_type == 'file') AND ($update == '') ) OR ($update == 'file') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>
@@ -183,7 +183,7 @@ else {
 		  value="<?php echo $this->display_name; ?>" />
    <input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
 </p>
-<?php elseif ( ($update == 'url') || ($uri_type == 'url') ): ?>
+<?php elseif ( (($uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_URL_COLON'); ?></label>
