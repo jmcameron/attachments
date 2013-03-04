@@ -169,7 +169,7 @@ class com_AttachmentsInstallerScript {
 				}
 			}
 
-		// Joomla! 1.6/1.7 bugfix for "Can not build admin menus"
+		// ??? Joomla! 1.6/1.7 bugfix for "Can not build admin menus"
 		if(in_array($type, array('install','discover_install'))) {
 			$this->_bugfixDBFunctionReturnedNoError('com_attachments');
 			}

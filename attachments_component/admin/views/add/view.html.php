@@ -61,9 +61,8 @@ class AttachmentsViewAdd extends JViewLegacy
 		JToolBarHelper::apply('attachment.applyNew');
 		JToolBarHelper::save('attachment.saveNew');
 
-		// ??? Switch to this newer version once we stop supporting Joomla 1.6.x:
-		// ???	   JToolBarHelper::save2new('attachment.save2New');
-		JToolBarHelper::custom('attachment.save2New', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+		JToolBarHelper::save2new('attachment.save2New');
+		// ??? OLD JToolBarHelper::custom('attachment.save2New', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 
 		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
 	}

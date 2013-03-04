@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="search" method="upgrade">
+<extension type="plugin" group="search" version="2.6" method="upgrade">
     <name>plg_search_attachments</name>
     <creationDate>February 22, 2013</creationDate>
     <author>Jonathan M. Cameron</author>
