@@ -194,9 +194,11 @@ if ( $lang->isRTL() ) {
 	if ( !$params->get('publish_default', false) && !$this->may_publish ) {
 		$msg = $params->get('auto_publish_warning', '');
 		if ( JString::strlen($msg) == 0 ) {
-			$msg = 'ATTACH_WARNING_ADMIN_MUST_PUBLISH';
-			}
-		$msg = JText::_($msg);
+			$msg = JText::_('ATTACH_WARNING_ADMIN_MUST_PUBLISH');
+		}
+		else {
+			$msg = JText::_($msg);
+		}
 		echo "<h2>$msg</h2>";
 		}
 
