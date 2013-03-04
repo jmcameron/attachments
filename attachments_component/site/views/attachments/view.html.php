@@ -156,6 +156,8 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		$this->secure = $params->get('secure', false);
 
+		$this->params = $params;
+
 		// Get the display options
 		$this->superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 		$this->style = $params->get('attachments_table_style', 'attachmentsList');

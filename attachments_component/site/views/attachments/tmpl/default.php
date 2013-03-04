@@ -185,7 +185,17 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
-			$url = $attachment->url;
+			// Hand the link url if not logged in but link displayed for guests
+			$url = '';
+			if ( !$logged_in AND ($attachment->access != '1')) {
+				$guest_levels = $this->params->get('show_guest_access_levels', Array('1', '2'));
+				if ( in_array($attachment->access, $guest_levels) ) {
+					$url = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+					}
+				}
+			if ( $url == '' ) {
+				$url = $attachment->url;
+				}
 			$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";

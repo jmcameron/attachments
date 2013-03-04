@@ -87,7 +87,27 @@ class AttachmentsModelAttachment extends JModelLegacy
 		if ( empty($this->_attachment) ) {
 
 			$user	= JFactory::getUser();
-			$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
+			$user_levels = $user->getAuthorisedViewLevels();
+
+			// If the user is not logged in, add extra view levels (if configured)
+			if ( $user->get('username') == '' ) {
+
+				// Get the component parameters
+				jimport('joomla.application.component.helper');
+				$params = JComponentHelper::getParams('com_attachments');
+
+				// Add the specified access levels
+				$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
+				if (is_array($guest_levels)) {
+					foreach ($guest_levels as $glevel) {
+						$user_levels[] = $glevel;
+						}
+					}
+				else {
+					$user_levels[] = $glevel;
+					}
+				}
+			$user_levels = implode(',', array_unique($user_levels));
 
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);

@@ -1578,9 +1578,6 @@ class AttachmentsHelper
 	 */
 	public static function download_attachment($id)
 	{
-		$user	= JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
-
 		// Get the info about the attachment
 		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
 		$model = new AttachmentsModelAttachment();
@@ -1603,15 +1600,28 @@ class AttachmentsHelper
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
-		// Make sure that the user can access the attachment
-		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
-			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 42)';
-			JError::raiseError(500, $errmsg);
-			}
-
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
+
+		// Make sure that the user can access the attachment
+		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
+
+			// If not logged in, warn them to log in
+			$user	= JFactory::getUser();
+			if ( $user->get('username') == '' ) {
+				$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
+				if ( in_array($attachment->access, $guest_levels) ) {
+					$redirect_to = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+					$app = JFactory::getApplication();
+					$app->redirect($redirect_to );
+					}
+				}
+
+			// Otherwise, just error out
+			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 42)';
+			JError::raiseError(500, $errmsg);
+			}
 
 		// Get the other info about the attachment
 		$download_mode = $params->get('download_mode', 'attachment');
