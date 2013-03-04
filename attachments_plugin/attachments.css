@@ -205,18 +205,20 @@ div.addattach a.modal-button:active { background: transparent; }
 
 /* ---- Misc ----- */
 
-div.requestLogin h1 {
+div#main div.requestLogin h1 {
     color: #135cae;
-    font-size: 130%;
-    line-height: 130%;
+    font-size: 150%;
+    line-height: 150%;
 }
 
-div.requestLogin h2 {
-    font-size: 115%;
-    line-height: 115%;
+div#main div.requestLogin h2 {
+    margin: 0;
+    padding: 4px 0 0 20px;
+    font-size: 100%;
+    line-height: 100%;
 }
 
-div.requestLogin h2 a {
+div#main div.requestLogin h2 a {
     font-size: 100%;
     font-weight: bold;
 }

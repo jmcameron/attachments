@@ -151,8 +151,8 @@ class plgContentAttachments extends JPlugin
 
 		// Get some of the options
 		$user = JFactory::getUser();
-		$logged_in = $user->get('username') <> '';
-		$user_type = $user->get('usertype', false);
+		// ??? $logged_in = $user->get('username') <> '';
+		// ??? $user_type = $user->get('usertype', false);
 		$parent_id = null;
 
 		// Get the parent ID
@@ -385,8 +385,8 @@ class plgContentAttachments extends JPlugin
 
 		// Get some of the options
 		$user = JFactory::getUser();
-		$logged_in = $user->get('username') <> '';
-		$user_type = $user->get('usertype', false);
+		// ??? $logged_in = $user->get('username') <> '';
+		// ??? $user_type = $user->get('usertype', false);
 
 		// exit if we should not display attachments for this parent
 		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
