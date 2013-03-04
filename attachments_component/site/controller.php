@@ -818,7 +818,7 @@ class AttachmentsController extends JControllerLegacy
 	public function requestLogin()
 	{
 		// Set up the view to redisplay the form with warnings
-		require_once(JPATH_COMPONENT_SITE.DS.'views'.DS.'login'.DS.'view.html.php');
+		require_once(JPATH_COMPONENT_SITE . '/views/login/view.html.php');
 		$view = new AttachmentsViewLogin();
 
 		// Display the view
