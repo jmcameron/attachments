@@ -522,7 +522,7 @@ class plgContentAttachments extends JPlugin
 	 * This method is called right after the content is saved.
 	 *
 	 * @param string The context of the content being passed to the plugin.
-	 * @param &object &$article A JTableContent object
+	 * @param object $article A JTableContent object
 	 * @param bool $isNew If the content is newly created
 	 *
 	 * @return	void
@@ -530,7 +530,7 @@ class plgContentAttachments extends JPlugin
 	 * NOTE: Currently this only supports attachment parents being articles since
 	 *		 this will only be invoked when articles are saved.
 	 */
-	function onContentAfterSave($context, &$article, $isNew )
+	function onContentAfterSave($context, $article, $isNew )
 	{
 		if ( !$isNew ) {
 			// If the article is not new, this step is not needed
