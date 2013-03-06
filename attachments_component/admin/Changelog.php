@@ -67,8 +67,8 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-02-22 Fixed display of Attachments options in Joomla 3.x.
    - 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible).
    - 2013-02-22 Cosmetic improvements to frontend update/update dialogs.	   
-   - 2013-03-01 Added ability to display restricted attachments to non-logged in users
-	    but require they log in before actually being able to see the attachments.
+   - 2013-03-01 Added ability to display non-public attachments to non-logged in users
+	    but require they log in before actually being able to access the attachments.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
