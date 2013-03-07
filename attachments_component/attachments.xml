@@ -43,6 +43,7 @@
 	<filename>legacy/controller_form.php</filename>
 	<filename>legacy/model.php</filename>
 	<filename>legacy/view.php</filename>
+	<filename>legacy/index.html</filename>
 	<filename>index.html</filename>
 	<filename>models/attachment.php</filename>
 	<filename>models/attachments.php</filename>
