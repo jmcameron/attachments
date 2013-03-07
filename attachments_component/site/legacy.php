@@ -24,13 +24,7 @@ if (!class_exists('JControllerLegacy', false))
 	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
 		// Joomla 2.5
-		if (!class_exists('JController', false))
-		{
-			jimport('joomla.application.component.controller');
-		}
-		class JControllerLegacy extends JController
-		{
-		}
+		jimport('cms.controller.legacy');
 	}
 }
 
@@ -69,14 +63,7 @@ if (!class_exists('JModelLegacy', false))
 	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
 		// Joomla 2.5
-		if (!class_exists('JModel', false))
-		{
-			jimport('joomla.application.component.model');
-		}
-
-		class JModelLegacy extends JModel
-		{
-		}
+		jimport('cms.model.legacy');
 	}
 }
 
@@ -91,13 +78,6 @@ if (!class_exists('JViewLegacy', false))
 	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
 		// Joomla 2.5
-		if (!class_exists('JView', false))
-		{
-			jimport('joomla.application.component.view');
-		}
-
-		class JViewLegacy extends JView
-		{
-		}
+		jimport('cms.view.legacy');
 	}
 }
