@@ -19,7 +19,7 @@ jimport( 'joomla.application.component.controller' );
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
 
 /** Load the attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');

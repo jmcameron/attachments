@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
 
 /** Load the Attachments defines and helpers */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');

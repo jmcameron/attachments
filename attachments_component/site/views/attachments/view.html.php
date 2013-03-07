@@ -21,7 +21,7 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
 
 /**

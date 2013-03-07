@@ -17,7 +17,7 @@ jimport('joomla.application.component.model');
 jimport('joomla.application.component.helper');
 
 /** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy.php');
+require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
 
 
 /**
