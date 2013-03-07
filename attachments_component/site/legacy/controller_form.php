@@ -1,6 +1,6 @@
 <?php
 /**
- * Attachments component Legacy classes compatibility
+ * Attachments component Legacy controllerForm class compatibility
  *
  * @package Attachments
  * @subpackage Attachments_Component
@@ -13,20 +13,6 @@
 
 // No direct access.
 defined('_JEXEC') or die('Restricted access');
-
-if (!class_exists('JControllerLegacy', false))
-{
-	if (version_compare(JVERSION, '3.0', 'ge'))
-	{
-		// Joomla 3.0
-		jimport('legacy.controller.legacy');
-	}
-	else if (version_compare(JVERSION, '2.5', 'ge'))
-	{
-		// Joomla 2.5
-		jimport('cms.controller.legacy');
-	}
-}
 
 
 if (!class_exists('JControllerFormLegacy', false))
@@ -49,35 +35,5 @@ if (!class_exists('JControllerFormLegacy', false))
 		class JControllerFormLegacy extends JControllerForm
 		{
 		}
-	}
-}
-
-
-if (!class_exists('JModelLegacy', false))
-{
-	if (version_compare(JVERSION, '3.0', 'ge'))
-	{
-		// Joomla 3.0
-		jimport('legacy.model.legacy');
-	}
-	else if (version_compare(JVERSION, '2.5', 'ge'))
-	{
-		// Joomla 2.5
-		jimport('cms.model.legacy');
-	}
-}
-
-
-if (!class_exists('JViewLegacy', false))
-{
-	if (version_compare(JVERSION, '3.0', 'ge'))
-	{
-		// Joomla 3.0
-		jimport('legacy.view.legacy');
-	}
-	else if (version_compare(JVERSION, '2.5', 'ge'))
-	{
-		// Joomla 2.5
-		jimport('cms.view.legacy');
 	}
 }
