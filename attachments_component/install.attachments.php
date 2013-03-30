@@ -14,6 +14,8 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.filesystem.folder');
+
 // Define some global variables to help figure out whether log messages.
 //
 //	Note: Apparently with Joomala 2.5+, the installer behavior has changed.
@@ -87,8 +89,8 @@ class com_AttachmentsInstallerScript {
 		global $attachments_install_verbose, $attachments_install_last_method;
 		$attachments_install_last_method = 'update';
 
-		$app = JFactory::getApplication();
 		if ( $attachments_install_verbose ) {
+			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
 			}
 
@@ -144,8 +146,29 @@ class com_AttachmentsInstallerScript {
 			return false;
 			}
 
+		// If there is debris from a previous failed attempt to install Attachments, delete it
+		// NOTE: Creating custom query because using JComponentHelper::isEnabled insists on
+		//       printing a warning if the component is not installed
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('extension_id AS id, enabled');
+		$query->from('#__extensions');
+		$query->where($query->qn('type') . ' = ' . $db->quote('component'));
+		$query->where($query->qn('element') . ' = ' . $db->quote('com_attachments'));
+		$db->setQuery($query);
+		if ( $db->loadResult() == 0 )
+		{
+			if (JFolder::exists(JPATH_ROOT . '/components/com_attachments') OR
+				JFolder::exists(JPATH_ROOT . '/administrator/components/com_attachments'))
+			{
+				$msg = JText::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
+				$app = JFactory::getApplication();
+				$app->enqueueMessage($msg, 'error');
+				return false;
+			}
+		}
+
 		// Temporarily move the attachments directory out of the way to avoid conflicts
-		jimport('joomla.filesystem.folder');
 		$attachdir = JPATH_ROOT.'/attachments';
 		if ( JFolder::exists($attachdir) ) {
 			$app = JFactory::getApplication();
@@ -154,7 +177,7 @@ class com_AttachmentsInstallerScript {
 			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
 			if ( JFolder::move($attachdir, $this->moved_attachments_dir) !== true ) {
 				$msg = JText::sprintf('ATTACH_ERROR_MOVING_ATTACHMENTS_DIR');
-				$app->enqueueMessage($msg, 'warning');
+				$app->enqueueMessage($msg, 'error');
 				return false;
 				}
 

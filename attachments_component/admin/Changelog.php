@@ -74,6 +74,8 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-03-06 Split legacy.php into separate files for each class (for efficiency).
    - 2013-03-19 Better handling of downloads for MS IE browsers.
    - 2013-03-29 Safer db storage and html display for display_filename and description.
+   - 2013-03-30 Abort installation if debris from failed install exists
+	            (to make installation more robust for Joomla 3.x)
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
