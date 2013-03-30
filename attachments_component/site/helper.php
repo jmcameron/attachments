@@ -1657,26 +1657,31 @@ class AttachmentsHelper
 		//	  $mod_filename = $basename . "(yoursite)" . $extension;
 		$mod_filename = $basename . $extension;
 
-		// Ensure UTF8 characters in filename are encoded correctly in IE
-		$browser = $_SERVER["HTTP_USER_AGENT"];
-
 		// Begin writing headers
 		ob_clean(); // Clear any previously written headers in the output buffer
-		header('Cache-Control: private, max-age=0, must-revalidate, no-store');
-
-		// Use the desired Content-Type
-		header("Content-Type: $content_type");
 
 		// Handle MSIE differently...
-		if (preg_match('/MSIE 5.5/', $browser) || preg_match('/MSIE 6.0/', $browser))
+		jimport('joomla.environment.browser');
+		$browser = JBrowser::getInstance();
+		$browserType = $browser->getBrowser();
+		$browserVersion = $browser->getMajor();
+
+		// Handle older versions of MS Internet Explorer
+		if ( ($browserType == 'msie') AND ( $browserVersion <= 8 ) )
 		{
+			// Ensure UTF8 characters in filename are encoded correctly in IE
 			$mod_filename = rawurlencode($mod_filename);
+
+			// Tweak the headers for MSIE
 			header('Pragma: private');
 			header('Cache-control: private, must-revalidate');
+			header("Content-Type: $content_type");
 			header("Content-Length: ".$file_size); // MUST be a number for IE
 		}
 		else
 		{
+			header('Cache-Control: private, max-age=0, must-revalidate, no-store');
+			header("Content-Type: $content_type");
 			header("Content-Length: ".(string)($file_size));
 		}
  

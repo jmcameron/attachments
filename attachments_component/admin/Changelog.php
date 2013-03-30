@@ -72,6 +72,7 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-03-05 Fixed issue creating attachment for an article being created in Joomla 3.x.
    - 2013-03-06 Fixed improper handling of legacy classes in Joomla 2.5.x.
    - 2013-03-06 Split legacy.php into separate files for each class (for efficiency).
+   - 2013-03-19 Better handling of downloads for MS IE browsers.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
