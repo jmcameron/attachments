@@ -166,7 +166,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( JString::strlen($attachment->display_name) == 0 )
 		$filename = $attachment->filename;
 	else
-		$filename = $attachment->display_name;
+		$filename = htmlspecialchars(stripslashes($attachment->display_name));
 	$actual_filename = $attachment->filename;
 	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
 	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
@@ -219,7 +219,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	// Add description (maybe)
 	if ( $this->show_description ) {
-		$description = $attachment->description;
+		$description = htmlspecialchars(stripslashes($attachment->description));
 		if ( JString::strlen($description) == 0)
 			$description = '&nbsp;';
 		if ( $this->show_column_titles )

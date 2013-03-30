@@ -196,7 +196,7 @@ else {
 <?php endif; ?>
 		<p><label for="description"><?php echo JText::_('ATTACH_DESCRIPTION_COLON'); ?></label>
 		   <input type="text" name="description" id="description"
-				  size="70" maxlength="255" value="<?php echo $attachment->description; ?>" /></p>
+				  size="70" maxlength="255" value="<?php echo $this->description; ?>" /></p>
 <?php if ( $this->may_publish ): ?>
 		<div class="at_control"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></div>
 <?php endif; ?>

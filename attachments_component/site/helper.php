@@ -890,11 +890,6 @@ class AttachmentsHelper
 			exit();
 			}
 
-		// See if the display name needs to change
-		if ( $attachment->display_name && ($save_type == 'update') && ( $filename != $old_filename ) ) {
-			$attachment->display_name = '';
-			}
-
 		// Create a display filename, if needed (for long filenames)
 		if ( ($max_filename_length > 0) &&
 			 ( JString::strlen($attachment->display_name) == 0 ) &&
@@ -1356,11 +1351,13 @@ class AttachmentsHelper
 		// (Needed for switching from a file to a URL)
 		$old_filename = null;
 		$old_filename_sys = null;
+		$old_display_name = null;
 		if ( $update ) {
 			if ( $attachment->filename_sys ) {
 				$old_filename = $attachment->filename;
 				$old_filename_sys = $attachment->filename_sys;
 				}
+			$old_display_name = JRequest::getString('old_display_name', null);
 			}
 
 		// Set up the entity name for display
@@ -1510,7 +1507,7 @@ class AttachmentsHelper
 			}
 
 		// If there is no filename, do something about it
-		if ( !$attachment->filename && !$attachment->display_name ) {
+		if ( !$attachment->filename AND !$attachment->display_name ) {
 			$attachment->display_name = $attachment->url;
 			}
 

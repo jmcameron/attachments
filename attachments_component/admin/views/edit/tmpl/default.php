@@ -241,10 +241,8 @@ else
 	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
-				 value="<?php echo $attachment->display_name;?>"
-				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?>
-		  <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
-	 </td>
+				 value="<?php echo $this->display_name;?>"
+				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?></td>
   </tr>
 <?php elseif ( (($uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
@@ -253,10 +251,8 @@ else
 	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
-				 value="<?php echo $attachment->display_name;?>"
-				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?>
-		  <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
-	 </td>
+				 value="<?php echo $this->display_name;?>"
+				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?></td>
   </tr>
 <?php endif; ?>
 
@@ -266,7 +262,7 @@ else
 	  <td colspan="5"><input class="text hasTip" type="text" name="description"
 			 title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 				 id="description" size="80" maxlength="255"
-				 value="<?php echo $attachment->description;?>" /></td>
+				 value="<?php echo $this->description;?>" /></td>
   </tr>
 <?php if ( $this->may_publish ): ?>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
@@ -339,6 +335,7 @@ else
 <input type="hidden" name="old_parent_entity" value="<?php echo $attachment->parent_entity ?>" />
 <input type="hidden" name="new_parent_type" id="new_parent_type" value="<?php echo $this->new_parent_type; ?>" />
 <input type="hidden" name="new_parent_entity" id="new_parent_entity" value="<?php echo $this->new_parent_entity; ?>" />
+<input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
 <input type="hidden" name="option" value="<?php echo $this->option;?>" />
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />
 <input type="hidden" name="task" value="attachment.edit" />

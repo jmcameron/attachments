@@ -211,7 +211,7 @@ class AttachmentsController extends JControllerLegacy
 		$view->parent_entity =	 $parent_entity;
 		$view->parent_entity_name = $parent_entity_name;
 		$view->parent_title = $parent_title;
-		$view->new_parent = 		 $new_parent;
+		$view->new_parent =			 $new_parent;
 		$view->parent		= $parent;
 		$view->description	=	  '';
 		$view->display_name =	  '';
@@ -338,6 +338,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Figure out what the new URI is
 		if ( $save_type == 'upload' ) {
+
 			// See if we are uploading a file or URL
 			$new_uri_type = JRequest::getWord('uri_type');
 			if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
@@ -431,7 +432,7 @@ class AttachmentsController extends JControllerLegacy
 				JError::raiseError(500, $errmsg);
 				}
 
-			$lang =  JFactory::getLanguage();
+			$lang =	 JFactory::getLanguage();
 			$lang->load('com_attachments', JPATH_SITE);
 
 			$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
@@ -765,12 +766,14 @@ class AttachmentsController extends JControllerLegacy
 																   $attachment->parent_entity,
 																   $attachment->created_by
 																   );
-		$view->update = 			$update;
-		$view->new_parent = 		$new_parent;
+		$view->update =				$update;
+		$view->new_parent =			$new_parent;
 		$view->parent_title =		$parent_title;
 		$view->parent_entity =		$parent_entity;
 		$view->parent_entity_name = $parent_entity_name;
-		$view->display_name =		$display_name;
+
+		$view->display_name =		stripslashes($display_name);
+		$view->description =		stripslashes($attachment->description);
 
 		$view->lists	  = $lists;
 		$view->params	  = $params;

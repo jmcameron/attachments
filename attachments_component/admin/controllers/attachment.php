@@ -205,14 +205,14 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->url			 = '';
 		$view->state		 = $params->get('publish_default', false);
 
-		$view->parent        = $parent;
+		$view->parent		 = $parent;
 		$view->parent_id	 = $parent_id;
 		$view->parent_type	 = $parent_type;
 		$view->parent_entity = $parent_entity;
 		$view->parent_entity_name =	 $parent_entity_name;
 		$view->parent_title	 = $parent_title;
 		$view->new_parent	 = $new_parent;
-		$view->may_publish   = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
+		$view->may_publish	 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		$view->entity_info	 = $entity_info;
 		$view->option		 = $this->option;
 		$view->from			 = $from;
@@ -771,9 +771,10 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->new_parent_type	 = $new_parent_type;
 		$view->new_parent_entity = $new_parent_entity;
 		$view->change_parent_url = $change_parent_url;
-		$view->display_name		 = $display_name;
+		$view->display_name		 = stripslashes($display_name);
+		$view->description		 = stripslashes($attachment->description);
 		$view->entity_info		 = $entity_info;
-		$view->may_publish       = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
+		$view->may_publish		 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 
 		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');

@@ -171,4 +171,27 @@ class AttachmentsTableAttachment extends JTable
 		return count($pks);
 	}
 
+
+
+	/**
+	 * Store the attachment into the database 
+	 * 
+	 * Extend base class function to encode description and display_name safely
+	 *
+	 * @param	boolean	 $updateNulls  True to update fields even if they are null.
+	 *
+	 * @return	boolean	 True on success.
+	 *
+	 * @link	http://docs.joomla.org/JTable/store
+	 */
+	public function store($updateNulls = false)
+	{
+		// make sure the display name and description are escaped since they may contain quotes
+		$this->display_name = $this->_db->escape($this->display_name);
+		$this->description = $this->_db->escape($this->description);
+
+		// Let the parent class do the real work!
+		return parent::store($updateNulls);
+	}
 }
+
