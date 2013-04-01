@@ -202,4 +202,24 @@ class AttachmentsModelAttachment extends JModelLegacy
 		return true;
 	}
 
+
+	/**
+	 * Increment the download cout
+	 *
+	 * @param int $attachment_id the attachment ID
+	 */
+	public function incrementDownloadCount()
+	{
+		// Update the download count
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->update('#__attachments')->set('download_count = (download_count + 1)');
+		$query->where('id = ' .(int)$this->_id);
+		$db->setQuery($query);
+		if ( !$db->query() ) {
+			$errmsg = $db->stderr() . ' (ERR 44)';
+			JError::raiseError(500, $errmsg);
+			}
+	}
+
 }

@@ -1623,89 +1623,94 @@ class AttachmentsHelper
 		// Get the other info about the attachment
 		$download_mode = $params->get('download_mode', 'attachment');
 		$content_type = $attachment->file_type;
-		$filename = $attachment->filename;
-		$filename_sys = $attachment->filename_sys;
 
-		// Make sure the file exists
-		jimport('joomla.filesystem.file');
-		if ( !JFile::exists($filename_sys) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 43)';
-			JError::raiseError(500, $errmsg);
-			}
-		$file_size = filesize($filename_sys);
-
-		// Update the download count
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		$query->update('#__attachments')->set('download_count = (download_count + 1)');
-		$query->where('id = ' .(int)$id);
-		$db->setQuery($query);
-		if ( !$db->query() ) {
-			$errmsg = $db->stderr() . ' (ERR 44)';
-			JError::raiseError(500, $errmsg);
-			}
-
-		// Construct the downloaded filename
-		$filename_info = pathinfo($filename);
-		$extension = "." . $filename_info['extension'];
-		$basename = basename($filename, $extension);
-		// Modify the following line insert a string into
-		// the filename of the downloaded file, for example:
-		//	  $mod_filename = $basename . "(yoursite)" . $extension;
-		$mod_filename = $basename . $extension;
-
-		// Begin writing headers
-		ob_clean(); // Clear any previously written headers in the output buffer
-
-		// Handle MSIE differently...
-		jimport('joomla.environment.browser');
-		$browser = JBrowser::getInstance();
-		$browserType = $browser->getBrowser();
-		$browserVersion = $browser->getMajor();
-
-		// Handle older versions of MS Internet Explorer
-		if ( ($browserType == 'msie') AND ( $browserVersion <= 8 ) )
+		if ( $attachment->uri_type == 'file' )
 		{
-			// Ensure UTF8 characters in filename are encoded correctly in IE
-			$mod_filename = rawurlencode($mod_filename);
+			$filename = $attachment->filename;
+			$filename_sys = $attachment->filename_sys;
 
-			// Tweak the headers for MSIE
-			header('Pragma: private');
-			header('Cache-control: private, must-revalidate');
-			header("Content-Type: $content_type");
-			header("Content-Length: ".$file_size); // MUST be a number for IE
-		}
-		else
-		{
-			header('Cache-Control: private, max-age=0, must-revalidate, no-store');
-			header("Content-Type: $content_type");
-			header("Content-Length: ".(string)($file_size));
-		}
- 
-		// Force the download
-		header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
-		header('Content-Transfer-Encoding: binary');
-
-		// If x-sendfile is available, use it
-		if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
-			header("X-Sendfile: $filename_sys");
-			}
-		else if ( $file_size <= 1048576 ) {
-			// If the file size is one MB or less, use readfile
-			header("Content-Length: ".$file_size);
-			@readfile($filename_sys);
-			}
-		else {
-			// Send it in 8K chunks
-			set_time_limit(0);
-			$file = @fopen($filename_sys,"rb");
-			while (!feof($file) and (connection_status()==0)) {
-				print(@fread($file, 1024*8));
-				ob_flush();
-				flush();
+			// Make sure the file exists
+			jimport('joomla.filesystem.file');
+			if ( !JFile::exists($filename_sys) ) {
+				$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 43)';
+				JError::raiseError(500, $errmsg);
 				}
+			$file_size = filesize($filename_sys);
+
+			// Construct the downloaded filename
+			$filename_info = pathinfo($filename);
+			$extension = "." . $filename_info['extension'];
+			$basename = basename($filename, $extension);
+			// Modify the following line insert a string into
+			// the filename of the downloaded file, for example:
+			//	  $mod_filename = $basename . "(yoursite)" . $extension;
+			$mod_filename = $basename . $extension;
+
+			$model->incrementDownloadCount();
+
+			// Begin writing headers
+			ob_clean(); // Clear any previously written headers in the output buffer
+
+			// Handle MSIE differently...
+			jimport('joomla.environment.browser');
+			$browser = JBrowser::getInstance();
+			$browserType = $browser->getBrowser();
+			$browserVersion = $browser->getMajor();
+
+			// Handle older versions of MS Internet Explorer
+			if ( ($browserType == 'msie') AND ( $browserVersion <= 8 ) )
+			{
+				// Ensure UTF8 characters in filename are encoded correctly in IE
+				$mod_filename = rawurlencode($mod_filename);
+
+				// Tweak the headers for MSIE
+				header('Pragma: private');
+				header('Cache-control: private, must-revalidate');
+				header("Content-Type: $content_type");
+				header("Content-Length: ".$file_size); // MUST be a number for IE
 			}
-		exit;
+			else
+			{
+				header('Cache-Control: private, max-age=0, must-revalidate, no-store');
+				header("Content-Type: $content_type");
+				header("Content-Length: ".(string)($file_size));
+			}
+ 
+			// Force the download
+			header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
+			header('Content-Transfer-Encoding: binary');
+
+			// If x-sendfile is available, use it
+			if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+				header("X-Sendfile: $filename_sys");
+				}
+			else if ( $file_size <= 1048576 ) {
+				// If the file size is one MB or less, use readfile
+				header("Content-Length: ".$file_size);
+				@readfile($filename_sys);
+				}
+			else {
+				// Send it in 8K chunks
+				set_time_limit(0);
+				$file = @fopen($filename_sys,"rb");
+				while (!feof($file) and (connection_status()==0)) {
+					print(@fread($file, 1024*8));
+					ob_flush();
+					flush();
+					}
+				}
+			exit;
+		}
+
+		else if ( $attachment->uri_type == 'url' )
+		{
+			// Note the download
+			$model->incrementDownloadCount();
+
+			// Forward to the URL
+			ob_clean(); // Clear any previously written headers in the output buffer
+			header("Location: {$attachment->url}");
+		}
 	}
 
 

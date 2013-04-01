@@ -75,7 +75,9 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-03-19 Better handling of downloads for MS IE browsers.
    - 2013-03-29 Safer db storage and html display for display_filename and description.
    - 2013-03-30 Abort installation if debris from failed install exists
-	            (to make installation more robust for Joomla 3.x)
+	    (to make installation more robust for Joomla 3.x)
+   - 2013-03-31 Handle URLs in secure mode better (do not expose URL).
+	    Thanks to Daniel Guidry for the idea for this fix!
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.

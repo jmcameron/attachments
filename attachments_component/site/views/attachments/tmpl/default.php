@@ -179,24 +179,30 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			else {
 				$url = $base_url . $attachment->url;
 				if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
-				   $url = utf8_encode($url);
-				   }
+					$url = utf8_encode($url);
+					}
 				}
 			$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
-			// Hand the link url if not logged in but link displayed for guests
-			$url = '';
-			if ( !$logged_in AND ($attachment->access != '1')) {
-				$guest_levels = $this->params->get('show_guest_access_levels', Array('1', '2'));
-				if ( in_array($attachment->access, $guest_levels) ) {
-					$url = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+			if ( $this->secure ) {
+				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
+				}
+			else {
+				// Handle the link url if not logged in but link displayed for guests
+				$url = '';
+				if ( !$logged_in AND ($attachment->access != '1')) {
+					$guest_levels = $this->params->get('show_guest_access_levels', Array('1', '2'));
+					if ( in_array($attachment->access, $guest_levels) ) {
+						$url = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+						}
 					}
+				if ( $url == '' ) {
+					$url = $attachment->url;
+					}
+				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 				}
-			if ( $url == '' ) {
-				$url = $attachment->url;
-				}
-			$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
