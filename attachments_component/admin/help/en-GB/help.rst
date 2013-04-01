@@ -435,11 +435,18 @@ Security Options
   unless users have appropriate permissions.  If *secure* downloads are not
   selected, the links to the attachments will be shown as the options above
   indicate, but the files will still be accessible to anyone if they know the
-  full URL, since the sub-directory is public.  The *secure* option prevents
-  access to users without appropriate permissions even if they know the full
-  URL, since this option prevents public access to the attachments
-  sub-directory.  In *secure* mode, any attachment set to the 'Public' access
-  level can be seen and downloaded by anyone.
+  full URL, since the sub-directory is public.  
+
+  The *secure* option prevents access to uploaded files to users without
+  appropriate permissions even if they know the full URL, since this option
+  prevents public access to the attachments sub-directory.  For URL
+  'attachments', the 'display name' for the URL is shown but not the full URL.
+  When a user with appropriate permissions tries to access a URL attachment,
+  they will be redirected to the desired URL.  So for URL 'attachments', the
+  display name must be set if the actual URL is not to be exposed.
+
+  In *secure* mode, any attachment set to the 'Public' access level can be
+  seen and downloaded by anyone.
 
   .. hint::
 

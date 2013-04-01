@@ -15,7 +15,7 @@
 <div class="document">
 
 
-<p class="version"><strong>Version 3.1-Alpha11 - December 16, 2012</strong></p>
+<p class="version"><strong>Version 3.1-Beta3 - March 30, 2013</strong></p>
 <p><strong>This version is for Joomla 1.7/2.5+</strong></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -467,11 +467,16 @@ attachment files but will not be direct links.  This will prevent access
 unless users have appropriate permissions.  If <em>secure</em> downloads are not
 selected, the links to the attachments will be shown as the options above
 indicate, but the files will still be accessible to anyone if they know the
-full URL, since the sub-directory is public.  The <em>secure</em> option prevents
-access to users without appropriate permissions even if they know the full
-URL, since this option prevents public access to the attachments
-sub-directory.  In <em>secure</em> mode, any attachment set to the 'Public' access
-level can be seen and downloaded by anyone.</p>
+full URL, since the sub-directory is public.</p>
+<p>The <em>secure</em> option prevents access to uploaded files to users without
+appropriate permissions even if they know the full URL, since this option
+prevents public access to the attachments sub-directory.  For URL
+'attachments', the 'display name' for the URL is shown but not the full URL.
+When a user with appropriate permissions tries to access a URL attachment,
+they will be redirected to the desired URL.  So for URL 'attachments', the
+display name must be set if the actual URL is not to be exposed.</p>
+<p>In <em>secure</em> mode, any attachment set to the 'Public' access level can be
+seen and downloaded by anyone.</p>
 <div class="hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">If you have problems with filenames with Unicode characters, you should
@@ -1162,7 +1167,7 @@ the development of the 'Attachments' extension.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: January 05, 2013 at 23:37 UTC.
+Generated on: April 01, 2013 at 05:21 UTC.
 
 </div>
 </body>
