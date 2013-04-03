@@ -1,5 +1,14 @@
 /* Styles for the main list of attachments in the administrative back end */
 
+body.com_attachments h1.page-title
+{
+    font-weight: bold;
+    padding-left: 40px;
+    background-image: url(attachments_logo32.png);
+    background-repeat:no-repeat;
+}
+
+
 body.component {
 	padding-top: 0;
 	margin-right: 10px;
