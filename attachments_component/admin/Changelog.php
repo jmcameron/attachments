@@ -79,6 +79,7 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2013-03-31 Handle URLs in secure mode better (do not expose URL).
 	    Thanks to Daniel Guidry for the idea for this fix!
    - 2012-04-02 Added paperclip icon in backend Attachments manager page for Joomle 3.x.
+   - 2012-04-05 Refactored css/js files to use central media/com_attachments folder.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
