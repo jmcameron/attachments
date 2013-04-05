@@ -943,7 +943,7 @@ class AttachmentsHelper
 			}
 
 		// If we are updating, we may need to delete the old file
-		if ( $old_uri_type ) {
+		if ($save_type == 'update') {
 			if ( ($filename_sys != $old_filename_sys) && JFile::exists($old_filename_sys) ) {
 				JFile::delete($old_filename_sys);
 				AttachmentsHelper::clean_directory($old_filename_sys);
