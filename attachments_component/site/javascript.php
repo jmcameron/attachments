@@ -36,11 +36,7 @@ class AttachmentsJavascript
 		}
 		if ($add_refresh_script)
 		{
-			$uri = JFactory::getURI();
-			$base_url = $uri->root(true);
-			$js_path = $base_url . '/plugins/content/attachments/attachments_refresh.js';
-			$doc = JFactory::getDocument();
-			$doc->addScript( $js_path );
+			JHtml::script('com_attachments/attachments_refresh.js', false, true);
 		}
 	}
 
