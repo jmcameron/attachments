@@ -80,7 +80,7 @@
     </files>
 
     <administration>
-	<menu img="components/com_attachments/media/attachments.png">ATTACH_ATTACHMENTS</menu>
+	<menu img="../media/com_attachments/images/attachments.png">ATTACH_ATTACHMENTS</menu>
 	<submenu>
 	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
 	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
@@ -109,13 +109,6 @@
 	    <filename>help/index.html</filename>
 	    <filename>import.php</filename>
 	    <filename>index.html</filename>
-	    <filename>media/attachments.css</filename>
-	    <filename>media/attachments.png</filename>
-	    <filename>media/attachments_logo32.png</filename>
-	    <filename>media/attachments_logo48.png</filename>
-	    <filename>media/attachments_rtl.css</filename>
-	    <filename>media/attachments_utils32.png</filename>
-	    <filename>media/index.html</filename>
 	    <filename>models/attachment.php</filename>
 	    <filename>models/attachments.php</filename>
 	    <filename>models/fields/accesslevels.php</filename>
@@ -170,36 +163,36 @@
 	</files>
     </administration>
 
-    <media destinaton="com_attachments" folder="media">
-       <file>index.html</file>
-       <file>css/index.html</file>
-       <file>css/add_attachment_button.css</file>
-       <file>css/add_attachment_button_rtl.css</file>
-       <file>css/attachments_admin.css</file>
-       <file>css/attachments_admin_form.css</file>
-       <file>css/attachments_admin_form_rtl.css</file>
-       <file>css/attachments_admin_rtl.css</file>
-       <file>css/attachments_admin_utils.css</file>
-       <file>css/attachments_admin_utils_rtl.css</file>
-       <file>css/attachments_frontend_form.css</file>
-       <file>css/attachments_frontend_form_rtl.css</file>
-       <file>css/attachments_hide.css</file>
-       <file>css/attachments_list.css</file>
-       <file>css/attachments_list_rtl.css</file>
-       <file>css/insert_attachments_token_button.css</file>
-       <file>css/insert_attachments_token_button_rtl.css</file>
-       <file>images/index.html</file>
-       <file>images/add_attachment_button.png</file>
-       <file>images/add_attachment_button_rtl.png</file>
-       <file>images/add_attachment_button_small.png</file>
-       <file>images/add_attachment_button_small_rtl.png</file>
-       <file>images/attachments_logo48.png</file>
-       <file>images/attachments.png</file>
-       <file>images/attachments_utils32.png</file>
-       <file>images/insert_attachments_token_button.png</file>
-       <file>images/insert_attachments_token_button_rtl.png</file>
-       <file>images/insert_attachments_token_button_small.png</file>
-       <file>images/insert_attachments_token_button_small_rtl.png</file>
+    <media destination="com_attachments" folder="media">
+       <filename>index.html</filename>
+       <filename>css/index.html</filename>
+       <filename>css/add_attachment_button.css</filename>
+       <filename>css/add_attachment_button_rtl.css</filename>
+       <filename>css/attachments_admin.css</filename>
+       <filename>css/attachments_admin_form.css</filename>
+       <filename>css/attachments_admin_form_rtl.css</filename>
+       <filename>css/attachments_admin_rtl.css</filename>
+       <filename>css/attachments_admin_utils.css</filename>
+       <filename>css/attachments_admin_utils_rtl.css</filename>
+       <filename>css/attachments_frontend_form.css</filename>
+       <filename>css/attachments_frontend_form_rtl.css</filename>
+       <filename>css/attachments_hide.css</filename>
+       <filename>css/attachments_list.css</filename>
+       <filename>css/attachments_list_rtl.css</filename>
+       <filename>css/insert_attachments_token_button.css</filename>
+       <filename>css/insert_attachments_token_button_rtl.css</filename>
+       <filename>images/index.html</filename>
+       <filename>images/add_attachment_button.png</filename>
+       <filename>images/add_attachment_button_rtl.png</filename>
+       <filename>images/add_attachment_button_small.png</filename>
+       <filename>images/add_attachment_button_small_rtl.png</filename>
+       <filename>images/attachments_logo48.png</filename>
+       <filename>images/attachments.png</filename>
+       <filename>images/attachments_utils32.png</filename>
+       <filename>images/insert_attachments_token_button.png</filename>
+       <filename>images/insert_attachments_token_button_rtl.png</filename>
+       <filename>images/insert_attachments_token_button_small.png</filename>
+       <filename>images/insert_attachments_token_button_small_rtl.png</filename>
     </media>
 
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
