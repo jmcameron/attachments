@@ -193,6 +193,9 @@
        <filename>images/insert_attachments_token_button_rtl.png</filename>
        <filename>images/insert_attachments_token_button_small.png</filename>
        <filename>images/insert_attachments_token_button_small_rtl.png</filename>
+       <filename>js/index.html</filename>
+       <filename>js/attachments_caching.js</filename>
+       <filename>js/attachments_refresh.js</filename>
     </media>
 
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
