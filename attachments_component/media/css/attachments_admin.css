@@ -623,3 +623,11 @@ div#utilsList h2 {
 .icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
 
 .icon-16-attachments  { background-image: url(../images/attachments.png); }
+
+/* for Joomla 3 page logo */
+body.com_attachments h1.page-title
+{
+	padding-left: 40px;
+	background-image: url(../images/attachments_logo32.png);
+	background-repeat:no-repeat;
+}
