@@ -12,8 +12,6 @@
 
     <files>
 	<filename plugin="attachments">attachments.php</filename>
-	<filename>attachments_caching.js</filename>
-	<filename>attachments_refresh.js</filename>
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
