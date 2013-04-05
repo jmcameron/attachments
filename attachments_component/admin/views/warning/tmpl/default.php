@@ -28,15 +28,6 @@ $hide_scrollbar = "window.addEvent('domready', function() {
 	   document.body.scroll = \"no\";});";
 $document->addScriptDeclaration($hide_scrollbar);
 
-$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
-						  'text/css', null, array() );
-
-$lang = JFactory::getLanguage();
-if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/media/attachments_rtl.css',
-							  'text/css', null, array() );
-	}
-
 ?>
 <div class="attachmentsWarning">
 	 <h1><?php echo $this->warning_title; ?></h1>

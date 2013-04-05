@@ -43,15 +43,6 @@ if ( $format != 'raw' ) {
 		AttachmentsJavascript::setupModalJavascript();
 		}
 
-	/** Load the attachments helper to add the stylesheet */
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
-
-	// Handle RTL styling (if necessary)
-	$lang = JFactory::getLanguage();
-	if ( $lang->isRTL() ) {
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css' );
-		}
-
 	// Construct the empty div for the attachments
 	if ( $parent_id === null ) {
 		// If there is no parent_id, the parent is being created, use the username instead

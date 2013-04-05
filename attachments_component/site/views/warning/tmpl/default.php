@@ -28,13 +28,6 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the regular css file
 AttachmentsJavascript::setupJavascript(false);
-AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css' );
-
-// Handle the RTL styling
-$lang = JFactory::getLanguage();
-if ( $lang->isRTL() ) {
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2_rtl.css' );
-	}
 
 // Hide the vertical scrollbar using javascript
 $hide_scrollbar = "window.addEvent('domready', function() {

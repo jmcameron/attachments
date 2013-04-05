@@ -111,18 +111,6 @@ class plgButtonAdd_attachment extends JPlugin
 		require_once JPATH_SITE . '/components/com_attachments/javascript.php';
 		AttachmentsJavascript::setupJavascript();
 
-		// Add the regular css file
-		require_once JPATH_SITE . '/components/com_attachments/helper.php';
-		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css' );
-		AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment.css' );
-
-		// Handle RTL styling (if necessary)
-		$lang = JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/content/attachments/attachments_rtl.css' );
-			AttachmentsHelper::addStyleSheet( $base_url . '/plugins/editors-xtd/add_attachment/add_attachment_rtl.css' );
-			}
-
 		// Get the parent handler
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -130,6 +118,17 @@ class plgButtonAdd_attachment extends JPlugin
 		// Make sure we have permissions to add attachments to this article or category
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
 			return;
+			}
+
+		// Add the regular css file
+		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true); // ??? WHY?
+		JHtml::stylesheet('com_attachments/add_attachment_button.css', Array(), true);
+
+		// Handle RTL styling (if necessary)
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true); // ??? WHY?
+			JHtml::stylesheet('com_attachments/add_attachment_button_rtl.css', Array(), true);
 			}
 
 		// Load the language file from the frontend

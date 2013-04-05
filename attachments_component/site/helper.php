@@ -25,44 +25,6 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 class AttachmentsHelper
 {
 	/**
-	 * Install the specified stylesheet (handles caching)
-	 *
-	 * @param string $css_path the URL/path to the CSS file to add to the document
-	 */
-	public static function addStyleSheet($css_path, $echo=false)
-	{
-		static $added_js = false;
-
-		$document = JFactory::getDocument();
-		$config	 = JFactory::getConfig();
-
-		// See if we are caching
-		$cache = JFactory::getCache();
-		// ??? Do we need to handle caching?
-		// ??? $caching = $config->get('cache') || $cache->_options['caching'];
-		$caching = false;
-
-		// Add the style sheet
-		if ( $echo ) {
-			echo "<link rel=\"stylesheet\" href=\"$css_path\" type=\"text/css\" />\n";
-			}
-		elseif ( $caching ) {
-			// If caching, load the Javascript function that allows dynamic insertion of stylesheets
-			if ( !$added_js ) {
-				$uri = JFactory::getURI();
-				$js_path = $uri->root(true) . '/plugins/content/attachments/attachments_caching.js';
-				echo "<script type=\"text/javascript\" src=\"$js_path\"></script>\n";
-				$added_js = true;
-				}
-			echo "<script type=\"text/javascript\">includeCSS(\"$css_path\");</script>\n";
-			}
-		else {
-			$document->addStyleSheet( $css_path, 'text/css', null, array() );
-			}
-	}
-
-
-	/**
 	 * Truncate the filename if it is longer than the maxlen
 	 * Do this by deleting necessary at the end of the base filename (before the extensions)
 	 *

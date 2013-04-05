@@ -17,18 +17,6 @@ defined('_JEXEC') or die('Restricted access');
 // Add the plugins stylesheet to style the list of attachments
 $document = JFactory::getDocument();
 $uri = JFactory::getURI();
-$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css',
-						  'text/css', null, array() );
-$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
-						  'text/css', null, array() );
-
-$lang = JFactory::getLanguage();
-if ( $lang->isRTL() ) {
-	$document->addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css',
-							  'text/css', null, array() );
-	$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments_rtl.css',
-							  'text/css', null, array() );
-	}
 
 $lists = $this->lists;
 

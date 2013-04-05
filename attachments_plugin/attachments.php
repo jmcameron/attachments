@@ -110,7 +110,7 @@ class plgContentAttachments extends JPlugin
 		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		AttachmentsHelper::addStyleSheet($uri->root(true) . '/plugins/content/attachments/attachments1.css');
+		JHtml::stylesheet('com_attachments/attachments_hide.css', array(), true);
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -216,8 +216,15 @@ class plgContentAttachments extends JPlugin
 		$html .= $attachments_list;
 
 		if ( $html || $user_can_add ) {
-			// Add the style sheet
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
+
+			// Add stylesheets
+			JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
+
+			// Handle RTL styling (if necessary)
+			$lang = JFactory::getLanguage();
+			if ( $lang->isRTL() ) {
+				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
+				}
 			}
 
 		// Construct the add-attachments button, if appropriate
@@ -358,7 +365,8 @@ class plgContentAttachments extends JPlugin
 		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments1.css' );
+		JHtml::stylesheet('com_attachments/attachments_hide.css', Array(), true);
+
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
@@ -442,8 +450,15 @@ class plgContentAttachments extends JPlugin
 		$html .= $attachments_list;
 
 		if ( $html || $user_can_add ) {
+
 			// Add the style sheet
-			AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css' );
+			JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
+
+			// Handle RTL styling (if necessary)
+			$lang = JFactory::getLanguage();
+			if ( $lang->isRTL() ) {
+				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
+				}
 			}
 
 		// Construct the add-attachments button, if appropriate

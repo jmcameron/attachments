@@ -145,6 +145,13 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
 		$this->project_url = AttachmentsDefines::$PROJECT_URL;
 
+		// Add the style sheets
+		JHtml::stylesheet('com_attachments/attachments_admin.css', Array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_admin_rtl.css', Array(), true);
+			}
+
 		// Set the toolbar
 		$this->addToolBar();
 

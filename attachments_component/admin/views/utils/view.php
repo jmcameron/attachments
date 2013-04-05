@@ -42,13 +42,11 @@ class AttachmentsViewAdminUtils extends JViewLegacy
 		$app = JFactory::getApplication();
 		$uri = JFactory::getURI();
 
-		$document->addStyleSheet( $uri->base(true) . '/components/com_attachments/media/attachments.css',
-								  'text/css', null, array() );
-
+		// Add the style sheets
+		JHtml::stylesheet('com_attachments/attachments_admin_utils.css', Array(), true);
 		$lang = JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			$document->addStyleSheet( $uri->root(true) . '/components/com_attachments/media/attachments_rtl.css',
-									  'text/css', null, array() );
+			JHtml::stylesheet('com_attachments/attachments_admin_form_utils.css', Array(), true);
 			}
 
 		// Hide the vertical scrollbar using javascript

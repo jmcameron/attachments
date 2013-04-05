@@ -52,7 +52,6 @@ class plgSystemShow_attachments extends JPlugin
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{  
-
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getWord('layout');
 
@@ -63,16 +62,25 @@ class plgSystemShow_attachments extends JPlugin
 				return;
 				}
 
+			// Note if this is a category view, we must add attachment
+            // javascript and CSS whether we know there are going to be
+			// attachments later or not because when the attachments list is
+            // created it, it is in the onAfterRender() callback, which means
+            // that the headers have already been rendered, so we cannot go
+			// go back and add headers (easily)
+
 			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			AttachmentsJavascript::setupJavascript();
 			AttachmentsJavascript::setupModalJavascript();
 
-			$doc = JFactory::getDocument();
-			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments.css',
-								 'text/css', null, array() );
-			$doc->addStyleSheet( $base_url . '/plugins/content/attachments/attachments1.css',
-								 'text/css', null, array() );
+			// Add the style sheets
+			JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
+			JHtml::stylesheet('com_attachments/attachments_hide.css', array(), true);
+			$lang = JFactory::getLanguage();
+			if ( $lang->isRTL() ) {
+				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
+				}
 			}
 	}
 

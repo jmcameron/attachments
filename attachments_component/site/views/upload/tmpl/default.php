@@ -79,16 +79,6 @@ case 'file_already_on_server':
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;
 
-// Add the stylesheets
-AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
-AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
-
-// Handle RTL styling
-$lang = JFactory::getLanguage();
-if ( $lang->isRTL() ) {
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', $echo_css );
-	}
-
 // Display the form
 ?>
 <div id="uploadAttachmentsPage">

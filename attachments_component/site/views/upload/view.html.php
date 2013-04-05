@@ -38,6 +38,13 @@ class AttachmentsViewUpload extends JViewLegacy
 			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 63)' );
 			}
 
+		// Add the stylesheets for the form
+		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			}
+
 		parent::display($tpl);
 	}
 }

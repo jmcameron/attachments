@@ -38,6 +38,13 @@ class AttachmentsViewParams extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		// Add the style sheets
+		JHtml::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
+			}
+
 		$this->addToolBar();
 
 		parent::display($tpl);

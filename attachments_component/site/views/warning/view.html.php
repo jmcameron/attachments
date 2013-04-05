@@ -32,6 +32,13 @@ class AttachmentsViewWarning extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		// Add the stylesheets
+		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			}
+
 		parent::display($tpl);
 	}
 }

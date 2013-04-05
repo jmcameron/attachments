@@ -32,8 +32,12 @@ class AttachmentsViewLogin extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		// Add CSS for styling
-		AttachmentsHelper::addStyleSheet( JURI::base(true) . '/plugins/content/attachments/attachments.css' );
+		// Add the stylesheets
+		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			}
 
 		// Is the user already logged in?
 		$user = JFactory::getUser();
@@ -51,13 +55,6 @@ class AttachmentsViewLogin extends JViewLegacy
 		$login_url = JRoute::_($login_url);
 		$this->login_url = $login_url;
 		
-
-		// Deal with RTL styling
-		$lang = JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			AttachmentsHelper::addStyleSheet( JURI::base() . '/plugins/content/attachments/attachments_rtl.css' );
-			}
-
 		// Get the warning message
 		$this->must_be_logged_in = JText::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
 

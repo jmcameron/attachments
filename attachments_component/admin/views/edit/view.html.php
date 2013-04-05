@@ -47,6 +47,13 @@ class AttachmentsViewEdit extends JViewLegacy
 			return JError::raiseError(403, $errmsg . ' (ERR 177)');
 		}
 
+		// Add the style sheets
+		JHtml::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
+			}
+
 		// Set the toolbar
 		$this->addToolBar();
 

@@ -85,14 +85,8 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the stylesheets
 $uri = JFactory::getURI();
-AttachmentsJavascript::setupJavascript();
-AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments.css', $echo_css );
-AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments2.css', $echo_css );
 
-// Handle RTL styling
-if ( $lang->isRTL() ) {
-	AttachmentsHelper::addStyleSheet( $uri->root(true) . '/plugins/content/attachments/attachments_rtl.css', $echo_css );
-	}
+AttachmentsJavascript::setupJavascript();
 
 if ( $uri_type == 'file' ) {
 	$header_msg = JText::sprintf('ATTACH_UPDATE_ATTACHMENT_FILE_S', $filename);
