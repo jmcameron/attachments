@@ -170,6 +170,38 @@
 	</files>
     </administration>
 
+    <media destinaton="com_attachments" folder="media">
+       <file>index.html</file>
+       <file>css/index.html</file>
+       <file>css/add_attachment_button.css</file>
+       <file>css/add_attachment_button_rtl.css</file>
+       <file>css/attachments_admin.css</file>
+       <file>css/attachments_admin_form.css</file>
+       <file>css/attachments_admin_form_rtl.css</file>
+       <file>css/attachments_admin_rtl.css</file>
+       <file>css/attachments_admin_utils.css</file>
+       <file>css/attachments_admin_utils_rtl.css</file>
+       <file>css/attachments_frontend_form.css</file>
+       <file>css/attachments_frontend_form_rtl.css</file>
+       <file>css/attachments_hide.css</file>
+       <file>css/attachments_list.css</file>
+       <file>css/attachments_list_rtl.css</file>
+       <file>css/insert_attachments_token_button.css</file>
+       <file>css/insert_attachments_token_button_rtl.css</file>
+       <file>images/index.html</file>
+       <file>images/add_attachment_button.png</file>
+       <file>images/add_attachment_button_rtl.png</file>
+       <file>images/add_attachment_button_small.png</file>
+       <file>images/add_attachment_button_small_rtl.png</file>
+       <file>images/attachments_logo48.png</file>
+       <file>images/attachments.png</file>
+       <file>images/attachments_utils32.png</file>
+       <file>images/insert_attachments_token_button.png</file>
+       <file>images/insert_attachments_token_button_rtl.png</file>
+       <file>images/insert_attachments_token_button_small.png</file>
+       <file>images/insert_attachments_token_button_small_rtl.png</file>
+    </media>
+
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
     <languages folder="site">
 	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
