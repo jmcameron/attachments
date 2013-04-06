@@ -364,8 +364,9 @@ class AttachmentsModelAttachments extends JModelLegacy
 		$user_levels = $user->getAuthorisedViewLevels();
 
 		// If the user is not logged in, add extra view levels (if configured)
+		$secure = $params->get('secure', false);
 		$logged_in = $user->get('username') <> '';
-		if ( !$logged_in ) {
+		if ( !$logged_in AND $secure ) {
 			$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
 			if (is_array($guest_levels)) {
 				foreach ($guest_levels as $glevel) {
