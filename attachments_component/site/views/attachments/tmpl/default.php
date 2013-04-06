@@ -118,11 +118,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		
 	// Construct some display items
 	if ( JString::strlen($attachment->icon_filename) > 0 )
-		$icon_url = $this->icon_url_base . $attachment->icon_filename;
+		$icon = $attachment->icon_filename;
 	else
-		$icon_url = $this->icon_url_base . 'generic.gif';
-	$link_icon_url = $this->icon_url_base . 'link_arrow.png';
-	$link_broken_icon_url = $this->icon_url_base . 'link_broken.png';
+		$icon = 'generic.gif';
 
 	if ( $this->show_file_size) {
 		$file_size = (int)( $attachment->file_size / 1024.0 );
@@ -195,13 +193,14 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 				}
 			}
-		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\"><img src=\"$icon_url\" alt=\"$tooltip\" />";
+		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\">";
+		$html .= JHtml::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
-				$html .= "<img id=\"link\" src=\"$link_icon_url\" />";
+				$html .= JHtml::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
 				}
 			else {
-				$html .= "<img id=\"link\" src=\"$link_broken_icon_url\" />";
+				$html .= JHtml::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
 				}
 			}
 		$html .= "</a>";
@@ -209,8 +208,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 	else {
 		$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
-		$html .= "<img src=\"$icon_url\" alt=\"$tooltip\" />&nbsp;";
-		$html .= $filename;
+		$html .= JHtml::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+		$html .= '&nbsp;' . $filename;
 		}
 	$html .= "</td>";
 
@@ -293,22 +292,22 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 		// Create the edit link
 		$update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
-		$update_img = $base_url . 'components/com_attachments/media/pencil.gif';
 		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = '<a class="modal-button" type="button" href="' . $update_url . '"';
-		$update_link .= " rel=\"{handler: 'iframe', size: {x: 950, y: 580}}\"";
-		$update_link .= " title=\"$tooltip\"><img src=\"$update_img\" alt=\"$tooltip\" /></a>";
+		$update_link .= " rel=\"{handler: 'iframe', size: {x: 950, y: 580}}\" title=\"$tooltip\">";
+		$update_link .= JHtml::image('com_attachments/pencil.gif', $tooltip, null, true);
+		$update_link .= "</a>";
 		}
 
 	if ( $this->some_attachments_modifiable && $attachment->user_may_delete && $this->allow_edit ) {
 
 		// Create the delete link
 		$delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
-		$delete_img = $base_url . 'components/com_attachments/media/delete.gif';
 		$tooltip = JText::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$delete_link = '<a class="modal-button" type="button" href="' . $delete_url . '"';
-		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\"";
-		$delete_link .= " title=\"$tooltip\"><img src=\"$delete_img\" alt=\"$tooltip\" /></a>";
+		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 300}}\" title=\"$tooltip\">";
+		$delete_link .= JHtml::image('com_attachments/delete.gif', $tooltip, null, true);
+		$delete_link .= "</a>";
 		}
 
 	if ( $this->some_attachments_modifiable && $this->allow_edit ) {

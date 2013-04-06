@@ -53,12 +53,9 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$link = JFilterOutput::ampReplace( 'index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]='. (int)$item->id );
 	$view_parent_title = JText::_('ATTACH_VIEW_ARTICLE_TITLE');
 	if ( JString::strlen($item->icon_filename) > 0 )
-		$icon_url = $icon_dir . $item->icon_filename;
+		$icon = $item->icon_filename;
 	else
-		$icon_url = $icon_dir . 'generic.gif';
-	$link_icon_url = $icon_dir . 'link_arrow.png';
-	$link_broken_icon_url = $icon_dir . 'link_broken.png';
-	$add_attachment_icon = $uri->root(true) . '/components/com_attachments/media/add_attachment.gif';
+		$icon = 'generic.gif';
 	$add_attachment_title = JText::_('ATTACH_ADD_ATTACHMENT_TITLE');
 	$edit_attachment_title = JText::_('ATTACH_EDIT_THIS_ATTACHMENT_TITLE');
 	$access_attachment_title = JText::_('ATTACH_ACCESS_THIS_ATTACHMENT_TITLE');
@@ -95,9 +92,9 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 			$artLine .= "<b>" . $item->parent_entity_type.":</b> <a title=\"$view_parent_title\" " .
 				"href=\"".$item->parent_url."\" target=\"_blank\">" . $item->parent_title . "</a>";
 			$artLine .= JFilterOutput::ampReplace('&nbsp;&nbsp;&nbsp;&nbsp;');
-			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
-				"<img src=\"$add_attachment_icon\" alt=\"$add_attachment_txt\" /></a>&nbsp;";
-			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
+			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">";
+			$artLine .= JHtml::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+			$artLine .= "</a>&nbsp;<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
 				"$add_attachment_txt</a>";
 			$artLine .= "</td></tr>";
 			}
@@ -114,15 +111,15 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	  <td class="at_published" align="center"><?php echo $published;?></td>
 	  <td class="at_filename">
 		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
-		 ><img src="<?php echo $icon_url; ?>" alt="<?php echo $download_verb; ?>" /><?php
+		  ><?php echo JHtml::image('com_attachments/file_icons/'.$icon, $download_verb, null, true);
 		if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
-			 if ( $item->url_valid ) {
-					echo "<img id=\"link\" src=\"$link_icon_url\">";
-				 }
-				 else {
-					echo "<img id=\"link\" src=\"$link_broken_icon_url\">";
-				 }
-			 }
+			if ( $item->url_valid ) {
+				echo JHtml::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+				}
+			else {
+				echo JHtml::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+				}
+			}
 		 ?></a>&nbsp;<a
 		 href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
 			 ><?php if ( $item->uri_type == 'file' ) {
@@ -140,7 +137,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 		 title="<?php echo $access_attachment_title; ?>"><?php echo $download_verb;
 		  ?></a><a class="downloadAttach" href="<?php echo $url; ?>"  target="_blank"
 		 title="<?php echo $access_attachment_title; ?>"
-		 ><img src="<?php echo $icon_dir . 'download.gif'; ?>" alt="<?php echo $download_verb; ?>" /></a>
+		  ><?php echo JHtml::image('com_attachments/download.gif', $download_verb, null, true); ?></a>
 	  </td>
       <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
 	  <td class="at_access" align="center"><?php echo $access; ?></td>
