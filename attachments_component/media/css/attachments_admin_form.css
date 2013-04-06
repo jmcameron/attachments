@@ -22,6 +22,14 @@ form#adminForm th
 }
 
 
+form.attachmentsBackend div.right,
+form#adminForm div.right {
+    display: inline-block;
+    float: right;
+    padding-right: 10px;
+}
+
+
 /* for Joomla 3.x */
 div.container-fluid form#adminForm 
 {
