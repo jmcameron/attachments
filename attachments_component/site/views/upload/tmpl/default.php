@@ -77,7 +77,10 @@ case 'file_already_on_server':
 	}
 
 // If this is an error re-display, display the CSS links directly
-$echo_css = $this->error;
+if ( $this->error )
+{
+	echo $this->startHTML();
+}
 
 // Display the form
 ?>
@@ -178,28 +181,31 @@ $echo_css = $this->error;
 			</span>
 		</div>
 	</form>
-	<?php
+<?php
 
-	// Display the auto-publish warning, if appropriate
-	if ( !$params->get('publish_default', false) && !$this->may_publish ) {
-		$msg = $params->get('auto_publish_warning', '');
-		if ( JString::strlen($msg) == 0 ) {
-			$msg = JText::_('ATTACH_WARNING_ADMIN_MUST_PUBLISH');
-		}
-		else {
-			$msg = JText::_($msg);
-		}
-		echo "<h2>$msg</h2>";
-		}
+// Display the auto-publish warning, if appropriate
+if ( !$params->get('publish_default', false) && !$this->may_publish ) {
+	  $msg = $params->get('auto_publish_warning', '');
+	  if ( JString::strlen($msg) == 0 ) {
+		  $msg = JText::_('ATTACH_WARNING_ADMIN_MUST_PUBLISH');
+		  }
+	  else {
+		  $msg = JText::_($msg);
+	  }
+	  echo "<h2>$msg</h2>";
+}
 
-	// Show the existing attachments (if any)
-	if ( $parent_id || ($parent_id === 0) ) {
-		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
-		$controller = new AttachmentsControllerAttachments();
-		$controller->displayString($parent_id, $parent_type, $parent_entity,
-								   'ATTACH_EXISTING_ATTACHMENTS',
-								   false, false, true, $this->from);
-		}
+// Show the existing attachments (if any)
+if ( $parent_id || ($parent_id === 0) ) {
+	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
+	$controller = new AttachmentsControllerAttachments();
+	$controller->displayString($parent_id, $parent_type, $parent_entity,
+							   'ATTACH_EXISTING_ATTACHMENTS',
+							   false, false, true, $this->from);
+	}
 
-	?>
-</div>
+echo "</div>";
+
+if ( $this->error ) {
+	echo $this->endHTML();
+	}

@@ -70,6 +70,13 @@ class AttachmentsViewAttachments extends JViewLegacy
 			return null;
 			}
 
+		// if we have attachments, add the stylesheets for the attachments list
+		JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
+		$lang = JFactory::getLanguage();
+		if ( $lang->isRTL() ) {
+			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
+			}
+
 		// Add the default path
 		$this->addTemplatePath(JPATH_SITE.'/components/com_attachments/views/attachments/tmpl');
 
@@ -219,16 +226,6 @@ class AttachmentsViewAttachments extends JViewLegacy
 	 */
 	public function getOutput()
 	{
-		// if we have attachments, add the stylesheets for the attachments list
-		if ( ($this->_output != null) and ($this->_output != '')  ) {
-
-			JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
-			$lang = JFactory::getLanguage();
-			if ( $lang->isRTL() ) {
-				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
-				}
-			}
-
 		return $this->_output;
 	}
 

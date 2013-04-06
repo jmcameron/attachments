@@ -94,6 +94,13 @@ if ( $uri_type == 'file' ) {
 else {
 	$header_msg = JText::sprintf('ATTACH_UPDATE_ATTACHMENT_URL_S', $attachment->url);
 	}
+
+// If this is an error re-display, display the CSS links directly
+if ( $this->error )
+{
+	echo $this->startHTML();
+}
+
 ?>
 <div id="uploadAttachmentsPage">
 <h1><?php echo $header_msg; ?></h1>
@@ -250,3 +257,7 @@ if ( ($update == 'file') || ($uri_type == 'file') ) {
 	}
 
 echo '</div>';
+
+if ( $this->error ) {
+	echo $this->endHTML();
+	}

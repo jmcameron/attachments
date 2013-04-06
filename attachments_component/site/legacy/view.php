@@ -24,6 +24,7 @@ if (!class_exists('JViewLegacy', false))
 	else if (version_compare(JVERSION, '2.5', 'ge'))
 	{
 		// Joomla 2.5
+		jimport( 'joomla.application.component.view' );
 		jimport('cms.view.legacy');
 	}
 }

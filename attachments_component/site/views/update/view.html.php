@@ -14,10 +14,8 @@
 // No direct access
 defined('_JEXEC') or die();
 
-jimport( 'joomla.application.component.view' );
-
 /** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
+require_once(JPATH_SITE.'/components/com_attachments/views/view.php');
 
 
 /**
@@ -25,7 +23,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewUpdate extends JViewLegacy
+class AttachmentsViewUpdate extends AttachmentsFormView
 {
 	/**
 	 * Display the view
@@ -47,6 +45,5 @@ class AttachmentsViewUpdate extends JViewLegacy
 
 		parent::display($tpl);
 	}
-
 
 }

@@ -48,7 +48,6 @@ class AttachmentsController extends JControllerLegacy
 	public function __construct( $default = array() )
 	{
 		parent::__construct( $default );
-		// $this->registerTask('apply', 'save');
 	}
 
 
