@@ -83,6 +83,8 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2012-04-05 Fixed bug that was exposing registered attachments in non-secure mode.
         (Introduced in the 2013-03-01 mod to display links for non-public attachments.)
    - 2012-04-05 Minor cosmetic adjustments to form displays in frontend and backend.
+   - 2012-04-06 Refactored handling of image files to use central media folder
+	    to allow template overrides of images.
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
