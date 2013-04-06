@@ -75,6 +75,7 @@
 	<filename>views/warning/tmpl/default.php</filename>
 	<filename>views/warning/tmpl/index.html</filename>
 	<filename>views/warning/view.html.php</filename>
+	<filename>views/view.html.php</filename>
 	<folder>language</folder>
 	<folder>media</folder>
     </files>
