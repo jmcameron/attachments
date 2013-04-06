@@ -88,20 +88,19 @@ else
 <?php else: ?>
 	  <td class="key"><label><?php echo
 	   JText::sprintf('ATTACH_ATTACHED_TO', $attachment->parent_entity_name); ?></label></td>
-	   <td class="at_title" colspan="2"><?php
+	   <td class="at_title" colspan="3"><?php
 		if ( $attachment->parent_id == null ) {
 			echo '<span class="error">' . $attachment->parent_title . '</span>';
 			}
 		else {
 			echo $attachment->parent_title;
 			} ?>
-	   </td>
-	   <td class="switch">
+        <div class="right">
 		<a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
 		   title="<?php echo $change_entity_tooltip; ?>"
-		   ><?php echo JText::sprintf('ATTACH_CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a>
+		   ><?php echo JText::sprintf('ATTACH_CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a></div>
 	   </td>
-	   <td class="switch" colspan="3"> <?php echo JText::_('ATTACH_SWITCH_TO_COLON') ?>
+	   <td class="switch" colspan="2"> <?php echo JText::_('ATTACH_SWITCH_TO_COLON') ?>
 <?php
 	// Create all the buttons to switch to other types of parents
 	foreach ($this->entity_info as $einfo) {
