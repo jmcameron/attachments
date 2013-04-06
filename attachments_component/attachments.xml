@@ -77,7 +77,6 @@
 	<filename>views/warning/view.html.php</filename>
 	<filename>views/view.php</filename>
 	<folder>language</folder>
-	<folder>media</folder>
     </files>
 
     <administration>
@@ -183,21 +182,28 @@
        <filename>css/insert_attachments_token_button.css</filename>
        <filename>css/insert_attachments_token_button_rtl.css</filename>
        <filename>images/index.html</filename>
+       <filename>images/add_attachment.gif</filename>
        <filename>images/add_attachment_button.png</filename>
        <filename>images/add_attachment_button_rtl.png</filename>
        <filename>images/add_attachment_button_small.png</filename>
        <filename>images/add_attachment_button_small_rtl.png</filename>
+       <filename>images/attachment.gif</filename>
+       <filename>images/attachments.png</filename>
        <filename>images/attachments_logo32.png</filename>
        <filename>images/attachments_logo48.png</filename>
-       <filename>images/attachments.png</filename>
        <filename>images/attachments_utils32.png</filename>
+       <filename>images/delete.gif</filename>
+       <filename>images/download.gif</filename>
        <filename>images/insert_attachments_token_button.png</filename>
        <filename>images/insert_attachments_token_button_rtl.png</filename>
        <filename>images/insert_attachments_token_button_small.png</filename>
        <filename>images/insert_attachments_token_button_small_rtl.png</filename>
+       <filename>images/pencil.gif</filename>
+       <filename>images/update.gif</filename>
        <filename>js/index.html</filename>
        <filename>js/attachments_caching.js</filename>
        <filename>js/attachments_refresh.js</filename>
+       <folder>images/file_icons</folder>
     </media>
 
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
