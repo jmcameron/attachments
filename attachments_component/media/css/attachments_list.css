@@ -224,12 +224,13 @@ div#main div.requestLogin h2 a {
 }
 
 /* Styles for warnings */
-div.warning {
+div.uploadAttachmentsPage div.warning
+{
     margin-left: 20px;
     margin-top: 10px;
 }
 
-div.warning h1 {
+div.uploadAttachmentsPage div.warning h1 {
     line-height: normal;
     font-size: 200%;
     font-weight: bold;
@@ -237,9 +238,13 @@ div.warning h1 {
     color: red;
 }
 
-div.warning h2 {
+div.uploadAttachmentsPage div.warning h2 {
     line-height: normal;
     font-size: 150%;
     font-weight: bold;
 }
 
+/* Make sure the table background is white in forms in the back end */
+form.attachmentsBackend + div.attachmentsList table {
+    background-color: #FFF;
+}

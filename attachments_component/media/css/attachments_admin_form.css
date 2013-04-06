@@ -21,6 +21,7 @@ form#adminForm th
 	font-size: 1em;
 }
 
+
 /* for Joomla 3.x */
 div.container-fluid form#adminForm 
 {
@@ -448,10 +449,6 @@ div#attachmentsPotentialParents {
 	font-size: 1.2em;
 }
 
-div.attachmentsList {
-        margin-top: 0;
-	font-size: 1.1em;
-}
 
 /* Small fixes for form to edit parameters */
 
@@ -546,6 +543,10 @@ ul#attachments-options div.pane-sliders p {
     padding-top: 0;
 }
 
+form.attachmentsBackend > fieldset.adminform > table.admintable {
+    border: 0;
+    width: 100%;
+}
 
 /* For warning dialog */
 

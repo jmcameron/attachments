@@ -1,5 +1,5 @@
-/* Styles for lists of attachments */
+/* Hide unreplaced attachments token */
 
-span.hide {
+span.hide_attachments_token {
     display: none;
 }

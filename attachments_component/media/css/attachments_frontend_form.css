@@ -47,9 +47,8 @@ div#uploadAttachmentsPage div.at_control div.controls label {
 }
 
 
-
 div#uploadAttachmentsPage form.attachments fieldset {
-    padding-bottom: 4px;
+    padding: 15px 10px 4px 10px;
 }
 
 div#uploadAttachmentsPage legend {
@@ -104,7 +103,6 @@ form.attachments {
 
 form.attachments fieldset { 
     margin: 0;
-    /* padding-right: 20px; */
 }
 
 form.attachments legend {

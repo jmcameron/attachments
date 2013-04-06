@@ -21,12 +21,6 @@ form#adminForm th
 	font-size: 1em;
 }
 
-/* for Joomla 3.x */
-div.container-fluid form#adminForm 
-{
-	font-size: 1em;
-}
-
 div#element-box div.m form#adminForm table#attachmentsList tr td a {
 	font-size: 85%;
 }
@@ -152,7 +146,7 @@ table.adminlist tr.row1 {
     background-color: #F0F0F0;
 }
 
-span.error {
+table.adminlist span.error {
 	color: #FF0000;
 	font-style: italic;
 	font-size: 110%;
@@ -169,32 +163,32 @@ table.adminlist td.showlinks a {
 
 /* For the link to download a file */
 
-a.downloadAttach  {
+table.adminlist a.downloadAttach  {
 	margin-left: 0px;
 	font-size: 80%;
 	color : #F00; 
 	text-decoration: none; 
 }
-a.downloadAttach:link	 { color : #F00; text-decoration: none; }
-a.downloadAttach:visited { color : #F00; text-decoration: none; }
-a.downloadAttach:hover	 { color : #F00; text-decoration: underline; }
-a.downloadAttach:active	 { color : #F00; text-decoration: none; }
+table.adminlist a.downloadAttach:link	 { color : #F00; text-decoration: none; }
+table.adminlist a.downloadAttach:visited { color : #F00; text-decoration: none; }
+table.adminlist a.downloadAttach:hover	 { color : #F00; text-decoration: underline; }
+table.adminlist a.downloadAttach:active	 { color : #F00; text-decoration: none; }
 
 
 
 /* For the link to add another attachment to an parent */
 
-a.addAttach	  { 
+table.adminlist a.addAttach	  { 
 	font-weight: normal;
 	color: #F00;
 	text-decoration: none;
 }
-a.addAttach:link	{ color : #F00; text-decoration: none; }
-a.addAttach:visited { color : #F00; text-decoration: none; } 
-a.addAttach:hover	{ color : #F00; text-decoration: underline; }
-a.addAttach:active	{ color : #F00; text-decoration: none; } 
+table.adminlist a.addAttach:link	{ color : #F00; text-decoration: none; }
+table.adminlist a.addAttach:visited { color : #F00; text-decoration: none; } 
+table.adminlist a.addAttach:hover	{ color : #F00; text-decoration: underline; }
+table.adminlist a.addAttach:active	{ color : #F00; text-decoration: none; } 
 
-a.addAttach img {
+table.adminlist a.addAttach img {
 	vertical-align: text-bottom;
 }
 
@@ -275,170 +269,6 @@ a.modal-button:visited { color: #333333; text-decoration: none; }
 a.modal-button:active  { color: #333333; text-decoration: none; }
 
 
-/* For the upload attachment form */
-
-form.attachmentsBackend {
-	margin: 0 0 8px 0;
-}
-
-form.attachmentsBackend fieldset,
-form.attachmentsBackend td > fieldset.radio {
-	margin: 0;
-}
-
-form.attachmentsBackend fieldset.adminform table.admintable td label,
-form.attachmentsBackend fieldset.adminform table.admintable td input[type="radio"],
-form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"]
-{
-	float: none;
-	padding: 0;
-	margin: 0 0 0 0.5em;
-	display: inline;
-}
-
-form.attachmentsBackend fieldset.adminform table.admintable tr {
-	margin: 4px 0 4px 0;
-	border: 1px solid #FFF;
-}
-
-form.attachmentsBackend fieldset.adminform table.admintable td select.inputbox {
-	background-color: #DDD;
-	margin: 0 8px 0 1px;
-}
-
-form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"] {
-	margin: 0 0 0 0.25em;
-}
-
-form.attachmentsBackend fieldset.adminform table.admintable td label {
-	font-size: 1em;
-}
-
-
-form.attachmentsBackend fieldset.adminform table.admintable td label.radiobtn {
-	float: none;
-	min-width: 0em;
-	padding: 0;
-	margin: 0 1em 0 0;
-	display: inline;
-}
-
-
-form.attachmentsBackend legend {
-	font-size: 140%;
-	font-weight: bold;
-}
-
-
-form.attachmentsBackend input {
-	float: none;
-	border: 1px solid #888;
-	color : #333333;
-	background-color: #CCC;
-	margin: 2px;
-}
-
-form.attachmentsBackend input[type="text"] {
-	background-color: transparent;
-}
-
-form.attachmentsBackend input#parent_title {
-	background-color: #BBB;
-	color: #555;
-}
-
-form.attachmentsBackend input[type="button"], 
-form.attachmentsBackend input[type="submit"],
-{
-	font-size: 1.3em;
-	font-weight: bold;
-	border: 1px solid #666; 
-}
-
-div.attachmentsWarning div.form_buttons,
-form.attachmentsBackend div.form_buttons {
-    background-color: #F4F4F4;
-    margin-top: 4px;
-    padding: 8px 20px 8px 20px;
-    text-align: center;
-}
-
-form.attachmentsBackend span.right {
-	float: right;
-}
-
-form.attachmentsBackend table.admintable {
-	padding: 4px;
-	border: 1px solid #CCC;
-}
-
-form.attachmentsBackend table.admintable td {
-        padding: 3px 8px 3px 3px;
-	vertical-align: middle;
-	font-size: 1.0em;
-}
-
-form.attachmentsBackend table.admintable td span {
-	float: none;
-	display: inline-block;
-	vertical-align: middle;
-}
-
-form.attachmentsBackend table.admintable td span.optional {
-	vertical-align: inherit;
-	margin-left: 10px;
-}
-
-
-form.attachmentsBackend table.admintable td.key,
-form.attachmentsBackend table.admintable td.key2 {
-	background-color: #DADAF0;
-	color: #444;
-	width: 12em;
-	padding: 0 4px 0 4px;
-	margin: 2px 0 2px 0;
-	vertical-align: middle;
-	text-align: right;
-}
-
-form.attachmentsBackend table.admintable td.key2 {
-	width: 8em;
-}
-
-form.attachmentsBackend table.admintable td.switch {
-	padding: 0 4px 0 10px;
-	border: 1px solid #CCC;
-}
-
-form.attachmentsBackend table.admintable td.at_title {
-	-- max-width: 18em;
-}
-
-
-form.attachmentsBackend fieldset.adminform label {
-	vertical-align: middle;
-	text-align: right;
-}
-
-form.attachmentsBackend fieldset.adminform label#upload_file_label {
-	display: inline-block;
-        margin-top: 1.2em;
-}
-
-div.attachmentsBackendTitle h1 {
-	font-size: 1.5em;
-	color: #05B;
-	margin: 0;
-	padding: 0 0 4px 0;
-}
-
-div.attachmentsBackendTitle h2 {
-	font-size: 1.25em;
-	color: #05B;
-	margin: 0;
-	padding: 0 0 6px 0;
-}
-
 input#upload, input#upload_warning {
 	margin-top: 4px;
 }
@@ -453,84 +283,6 @@ div.attachmentsList {
 	font-size: 1.1em;
 }
 
-/* Small fixes for form to edit parameters */
-
-input#paramsregister_url {
-	width: 100%;
-}
-
-input#paramshide_attachments_for {
-	width: 100%;
-}
-
-dl#config-tabs-com_attachments_configuration h3 {
-    font-size: 1.4em;
-}
-
-dl#config-tabs-com_attachments_configuration > dt {
-    background-color: #CACACA;
-}
-
-dl#config-tabs-com_attachments_configuration > dt.open {
-    background-color: transparent;
-}
-
-dl#config-tabs-com_attachments_configuration > dt.open h3 {
-    font-weight: bold;
-}
-
-ul#attachments-options {
-    font-size: 1.2em;
-}
-
-ul#attachments-options > li label,
-ul#attachments-options > li select,
-ul#attachments-options > li textarea,
-ul#attachments-options > li input,
-ul#attachments-options > li > fieldset.radio
-{
-	float: none;
-	display: inline-block;
-	min-width: 2.75em;
-}
-
-ul#attachments-options > li {
-	background-color: #E0E0E0;
-	margin: 3px 0 3px 0;
-}
-
-ul#attachments-options > li textarea,
-ul#attachments-options > li select {
-	vertical-align: middle;
-}
-
-ul#attachments-options > li > label {
-	min-width: 20em;
-	width: 20em;
-	text-align: right;
-	padding: 0 8px 0 0;
-	margin: 0 2px 4px 0;
-}
-
-
-ul#attachments-options > li > label#jform_rules-lbl {
-    display: none;
-}
-
-ul#attachments-options div#permissions-sliders {
-    margin: 4px 0 0 0;
-}
-
-form#component-form p.tab-description {
-    font-size: 150%;
-    margin: 0 0 0 0;
-}
-
-ul#attachments-options div.pane-sliders p {
-    margin: 0 0 4px 0;
-}
-
-/* fieldset#jform_download_mode label { width: 5em; } */
 
 .form-horizontal .control-group .controls {
     margin-left: 300px;
@@ -623,6 +375,12 @@ div#utilsList h2 {
 .icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
 
 .icon-16-attachments  { background-image: url(../images/attachments.png); }
+
+/* for Joomla 3.x */
+div.container-fluid form#adminForm 
+{
+	font-size: 1em;
+}
 
 /* for Joomla 3 page logo */
 body.com_attachments h1.page-title
