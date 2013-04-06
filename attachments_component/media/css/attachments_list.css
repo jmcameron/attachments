@@ -122,8 +122,8 @@ div.attachmentsList table td.at_edit a.modal-button img {
     display: inline;
 }
 
-#main div.attachmentsList img#link,
-div.attachmentsList img#link {
+#main div.attachmentsList img.link_overlay,
+div.attachmentsList img.link.link_overlay {
     margin-left: -16px;
 }
 

@@ -95,7 +95,7 @@ table.adminlist td {
 	border-bottom: 0; 
 }
 
-table.adminlist img#link {
+table.adminlist img.link_overlay {
 	margin-left: -16px;
 }
 
