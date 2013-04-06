@@ -186,7 +186,7 @@ class plgContentAttachments extends JPlugin
 		$attachments_tag_args = '';
 		$match = false;
 		if ( JString::strpos($row->$text_field_name, '{attachments') ) {
-			if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
+			if ( preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
 							$row->$text_field_name, $match) ) {
 				$attachments_tag = true;
 				}
@@ -420,7 +420,7 @@ class plgContentAttachments extends JPlugin
 		$attachments_tag_args = '';
 		$match = false;
 		if ( JString::strpos($row->$text_field_name, '{attachments') ) {
-			if ( preg_match('@(<span class="hide">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
+			if ( preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
 							$row->$text_field_name, $match) ) {
 				$attachments_tag = true;
 				}

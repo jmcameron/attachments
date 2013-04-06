@@ -92,7 +92,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 					alert('$present');
 					return false;
 				} else {
-					jInsertEditorText('<span class=\"hide\">{attachments}</span>', editor);
+					jInsertEditorText('<span class=\"hide_attachments_token\">{attachments}</span>', editor);
 				}
 			}
 			";
