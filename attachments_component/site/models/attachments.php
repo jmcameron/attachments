@@ -13,7 +13,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.application.component.model');
 jimport('joomla.application.component.helper');
 
 /** Define the legacy classes, if necessary */

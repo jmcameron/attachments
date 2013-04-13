@@ -14,8 +14,6 @@
 // No direct access
 defined('_JEXEC') or die('Restricted Access');
 
-jimport( 'joomla.application.component.view' );
-
 /** Load the Attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
