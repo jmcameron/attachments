@@ -19,8 +19,6 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)');
 }
 
-jimport( 'joomla.application.component.view' );
-
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
@@ -38,10 +36,6 @@ class AttachmentsViewAdminUtils extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$document = JFactory::getDocument();
-		$app = JFactory::getApplication();
-		$uri = JFactory::getURI();
-
 		// Add the style sheets
 		JHtml::stylesheet('com_attachments/attachments_admin_utils.css', Array(), true);
 		$lang = JFactory::getLanguage();
@@ -49,22 +43,6 @@ class AttachmentsViewAdminUtils extends JViewLegacy
 			JHtml::stylesheet('com_attachments/attachments_admin_form_utils.css', Array(), true);
 			}
 
-		// Hide the vertical scrollbar using javascript
-		$hide_scrollbar = "window.addEvent('domready', function() {
-			   document.documentElement.style.overflow = \"hidden\";
-			   document.body.scroll = \"no\";});";
-		$document->addScriptDeclaration($hide_scrollbar);
-
-?>
-<div class="attachmentsAdmin" id="utilsList">
-  <h1><?php echo JText::_('ATTACH_ATTACHMENTS_ADMINISTRATIVE_UTILITY_COMMANDS'); ?></h1>
-  <ul>
-<?php foreach ($this->entries as $link_html) {
-		  echo "	  <li><h2>$link_html</h2></li>\n";
-	}
-?>
-  </ul>
-</div>
-<?php
+		parent::display($tpl);
 	}
 }

@@ -56,6 +56,12 @@ class AttachmentsControllerUtils extends JControllerLegacy
 		exit();
 	}
 
+
+	/**
+	 * 
+	 */
+
+
 	/**
 	 * Enqueue a system message.
 	 *
@@ -114,7 +120,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 
 	/**
-	 * Disalbe SQL uninstall of existing attachments (when Attachments is uninstalled)
+	 * Disable SQL uninstall of existing attachments (when Attachments is uninstalled)
 	 * (See AttachmentsUpdate::disable_sql_uninstall() in update.php for details )
 	 */
 	public function disable_sql_uninstall()

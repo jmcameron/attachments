@@ -146,11 +146,13 @@
 	    <filename>views/entity/view.html.php</filename>
 	    <filename>views/index.html</filename>
 	    <filename>views/params/index.html</filename>
+	    <filename>views/params/view.html.php</filename>
 	    <filename>views/params/tmpl/default.php</filename>
 	    <filename>views/params/tmpl/index.html</filename>
-	    <filename>views/params/view.html.php</filename>
 	    <filename>views/utils/index.html</filename>
-	    <filename>views/utils/view.php</filename>
+	    <filename>views/utils/view.html.php</filename>
+	    <filename>views/utils/tmpl/default.php</filename>
+	    <filename>views/utils/tmpl/index.html</filename>
 	    <filename>views/warning/index.html</filename>
 	    <filename>views/warning/tmpl/default.php</filename>
 	    <filename>views/warning/tmpl/index.html</filename>
