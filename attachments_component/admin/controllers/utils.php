@@ -18,8 +18,6 @@ if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 149)');
 	}
 
-jimport('joomla.application.component.controller');
-
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
 
