@@ -14,9 +14,6 @@
 // no direct access
 
 defined( '_JEXEC' ) or die('Restricted access');
- 
-// import Joomla view library
-jimport('joomla.application.component.view');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');

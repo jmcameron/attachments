@@ -20,8 +20,6 @@ if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)');
 }
 
-jimport( 'joomla.application.component.view');
-
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 

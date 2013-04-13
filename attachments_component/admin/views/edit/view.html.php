@@ -21,9 +21,6 @@ if ( !( JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 176)');
 }
 
-
-jimport( 'joomla.application.component.view');
-
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
