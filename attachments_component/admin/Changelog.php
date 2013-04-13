@@ -89,6 +89,7 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2012-04-12 Removed several unnecessary imports (for views and controllers).
 	- 2012-04-13 In admin edit form, only show attachments if updating file.
 	- 2012-04-13 Fixed missing editor add-attachment/insert-token button icons for Joomla 3.
+	     Other small tweaks to the CSS files for the 'add attachment' link.
 
 2012-09-07: Release 3.0.4
 	- 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
