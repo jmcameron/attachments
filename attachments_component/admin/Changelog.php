@@ -85,6 +85,8 @@ Attachments 3.x Extension for Joomla 2.5+
    - 2012-04-05 Minor cosmetic adjustments to form displays in frontend and backend.
    - 2012-04-06 Refactored handling of image files to use central media folder
 	    to allow template overrides of images.
+	- 2012-04-12 Converted admin utils view to use template (so it can be overridden).
+	- 2012-04-12 Removed several unnecessary imports (for views and controllers).
 
 2012-09-07: Release 3.0.4
    - 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
