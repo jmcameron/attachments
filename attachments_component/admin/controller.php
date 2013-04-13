@@ -202,8 +202,9 @@ class AttachmentsController extends JControllerLegacy
 
 		// Get the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/utils/view.html.php');
-		$view = new AttachmentsViewAdminUtils( );
+		$view = new AttachmentsViewUtils();
 		$view->entries = $entries;
+
 		$view->display();
 	}
 

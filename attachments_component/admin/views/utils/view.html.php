@@ -14,34 +14,30 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-// Access check.
-if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)');
-}
-
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
 
 /**
- * View for the special controller
- * (adapted from administrator/components/com_config/views/component/view.php)
- *
+ * View for the utils controller
+ * 
  * @package Attachments
  */
-class AttachmentsViewAdminUtils extends JViewLegacy
+class AttachmentsViewUtils extends JViewLegacy
 {
 	/**
 	 * Display the view
+	 *
+	 * @param   string  $tpl  A template file to load. [optional]
+	 *
 	 */
 	public function display($tpl = null)
 	{
-		// Add the style sheets
-		JHtml::stylesheet('com_attachments/attachments_admin_utils.css', Array(), true);
-		$lang = JFactory::getLanguage();
-		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_admin_form_utils.css', Array(), true);
-			}
+		// Access check.
+		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments'))
+		{
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)');
+		}
 
 		parent::display($tpl);
 	}
