@@ -337,7 +337,8 @@ else
 <?php
 
 // Show the existing attachments (if any)
-if ( $attachment->parent_id ) {
+if ( $attachment->parent_id AND ($this->update == 'file') )
+{
 	/** Get the attachments controller class */
 	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 	$controller = new AttachmentsControllerList();
