@@ -60,12 +60,24 @@ class PlgQuickiconAttachments extends JPlugin
 			return;
 		}
 
+		if (version_compare(JVERSION, '3.0', 'ge'))
+		{
+			$image = 'flag-2';
+			$icon = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
+		}
+		else
+		{
+			$image = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
+			$icon = '';
+		}
+
 		// Return the icon info for the quickicon system
 		return
 			array(
 				array(
 					'link' => 'index.php?option=com_attachments',
-					'image' => JUri::root() . '/media/com_attachments/images/attachments_logo48.png',
+					'image' => $image,
+					'icon' => $icon,
 					'text' => JText::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
 					'id' => 'plg_quickicon_attachment'));
     }
