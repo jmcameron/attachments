@@ -60,6 +60,9 @@ class PlgQuickiconAttachments extends JPlugin
 			return;
 		}
 
+		// Add the CSS file
+		JHtml::stylesheet('com_attachments/attachments_quickicon.css', array(), true);
+
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
 			$image = 'flag-2';
