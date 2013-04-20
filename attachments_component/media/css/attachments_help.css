@@ -33,6 +33,17 @@ div.help-document p.version {
     font-size: 105%;
 }
 
+a#tc_toggle {
+    font-size: 70%;
+    color: #88F;
+    float: right;
+    margin: 0 2em 0.5em 0;
+}
+
+a#tc_toggle:hover {
+    color: #33F;
+}
+
 div.help-document div.main {
     margin: 1em;
 }
