@@ -106,6 +106,9 @@ $this->sections = Array(
     );
 
 // A few other miscellaneous items
+
+$tlc = JText::_('ATTACH_HELP_TOGGLE_CODES');
+
 $onContentPrepare = "<tt class=\"docutils literal\">'onPrepareContent'</tt>";
 
 $title_ctid    = $this->textCodeSpan('ATTACH_HELP_000000_MAIN_TITLE');
@@ -116,7 +119,9 @@ $contents_ctid = $this->textCodeSpan('ATTACH_HELP_000200_MAIN_CONTENTS');
 <div class="help-document">
 
 <div class="header">
-   <h1 class="title"><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') . ' ' . $title_ctid; ?></h1>
+	<a id="tc_toggle" title="<? echo $tlc ?>" href="#"
+	   onClick="$(document.body).getElements('span[class=text_code]').toggle()">A</a>
+	<h1 class="title"><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') . ' ' . $title_ctid; ?></h1>
    <hr class="header"/>
 </div>
 
@@ -124,7 +129,7 @@ $contents_ctid = $this->textCodeSpan('ATTACH_HELP_000200_MAIN_CONTENTS');
 
 <p class="version"><strong><?php echo $this->version . ' - ' . $this->date ?></strong></p>
 <p><strong><?php echo JText::_('ATTACH_HELP_000100_MAIN_VERSION') . $vers_ctid ?></strong></p>
-
+	
 <div class="contents topic" id="contents">
 <p class="topic-title first"><?php echo JText::_('ATTACH_HELP_000200_MAIN_CONTENTS') . $contents_ctid ?></p>
 <?php
@@ -663,5 +668,7 @@ $contents_ctid = $this->textCodeSpan('ATTACH_HELP_000200_MAIN_CONTENTS');
 
 ?>
 
+<a id="tc_toggle" href="#" title="<?php echo $tlc ?>"
+   onClick="$(document.body).getElements('span[class=text_code]').toggle()"><?php echo $tlc ?></a>   
 </div><!-- end div.main -->
 </div><!-- end div.document -->
