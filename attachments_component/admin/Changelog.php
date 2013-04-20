@@ -31,34 +31,34 @@ Attachments 3.x Extension for Joomla 2.5+
 		 earlier versions of Joomla are not longer supported (including Joomla 1.7).
 	- 2012-10-13 Added in missing translation term for error messages.
 	- 2012-10-17 Fixed issue in display of insert_attachments_editor editor button.
-		 (Primarily affected joomlaCK editor.)
+		(Primarily affected joomlaCK editor.)
 	- 2012-10-25 Added optional display of 'Created' date in front end displays
-		 of attachments lists.  Changed modification date format to be date format
-		 since it now applies to both creation and modification dates.
+		of attachments lists.	Changed modification date format to be date format
+		since it now applies to both creation and modification dates.
 	- 2012-11-10 Fixed many permissions issues for backend users with limited
-		 permissions.
+		permissions.
 	- 2012-11-10 Renumbered all error numbers.
 	- 2012-11-10 Added extra code to handle legacy classes for Joomla version 2.5+
-		 and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6)
+		and earlier.  (The new legacy classes were introduced in Joomla version 2.5.6)
 	- 2012-11-11 Cleaned up some permissions issues with adding/editing attachments
-		 in the backend by non-super-user.
+		in the backend by non-super-user.
 	- 2012-11-11 Changed all JError::raiseWarning() to JError::raiseError().
-		 Apparently, raiseWarning is not well supported by Joomla.  Switched the
-		 permissions related errors to 403 in the backend for nicer error handling.
+		Apparently, raiseWarning is not well supported by Joomla.	Switched the
+		permissions related errors to 403 in the backend for nicer error handling.
 	- 2012-11-12 Improved config variable (show_creator --> show_creator_name).
 	- 2012-11-12 Fixed stylesheet issue in editor by moving stylesheet additions 
-		 from show_attachments::contentAfterRender() to add_attachment::onDisplay()
-		 since afterRender is too late to add stylesheets.
+		from show_attachments::contentAfterRender() to add_attachment::onDisplay()
+		since afterRender is too late to add stylesheets.
 	- 2012-11-12 Fix to show_attachments to handle various article editors better.
 	- 2012-11-16 Added maximum attachment file size limit option.  Check actual file size
-		 when uploaded to ensure that is not larger than the attachments limit or the PHP
-		 upload size limit.
+		when uploaded to ensure that is not larger than the attachments limit or the PHP
+		upload size limit.
 	- 2012-11-22 Cosmetic code cleanups in attachments_plugi/attachments.php.
 	- 2012-11-30 Added support for downloading files with mod_xsendfile (if available).
 	- 2012-12-05 Implemented fix for downloading large files by send the file in 8K chunks.
 	- 2012-12-16 Various updates, fixes, updates and tweaks for Joomla 3.0 compatibility.
-		 Updated date display format string to use JDate::format function syntax.
-		 (This is a work in progress; still some rough edges.)
+		Updated date display format string to use JDate::format function syntax.
+		(This is a work in progress; still some rough edges.)
 	- 2012-12-16 Switched all JHTML to JHtml everywhere.
 	- 2012-12-30 Added options for sorting my 'filename descending' and 'display name descending'.
 	- 2013-01-05 Updated documentation for date display format string.
@@ -66,9 +66,9 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2013-02-22 Updates to catch up with Joomla deprecations (eg JRequest::checkToken()).
 	- 2013-02-22 Fixed display of Attachments options in Joomla 3.x.
 	- 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible).
-	- 2013-02-22 Cosmetic improvements to frontend update/update dialogs.       
+	- 2013-02-22 Cosmetic improvements to frontend update/update dialogs.		
 	- 2013-03-01 Added ability to display non-public attachments to non-logged in users
-		 but require they log in before actually being able to access the attachments.
+		but require they log in before actually being able to access the attachments.
 	- 2013-03-05 Fixed issue creating attachment for an article being created in Joomla 3.x.
 	- 2013-03-06 Fixed improper handling of legacy classes in Joomla 2.5.x.
 	- 2013-03-06 Split legacy.php into separate files for each class (for efficiency).
@@ -81,16 +81,17 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2012-04-02 Added paperclip icon in backend Attachments manager page for Joomle 3.x.
 	- 2012-04-05 Refactored css/js files to use central media/com_attachments folder.
 	- 2012-04-05 Fixed bug that was exposing registered attachments in non-secure mode.
-		 (Introduced in the 2013-03-01 mod to display links for non-public attachments.)
+		(Introduced in the 2013-03-01 mod to display links for non-public attachments.)
 	- 2012-04-05 Minor cosmetic adjustments to form displays in frontend and backend.
 	- 2012-04-06 Refactored handling of image files to use central media folder
-		 to allow template overrides of images.
+		to allow template overrides of images.
 	- 2012-04-12 Converted admin utils view to use template (so it can be overridden).
 	- 2012-04-12 Removed several unnecessary imports (for views and controllers).
 	- 2012-04-13 In admin edit form, only show attachments if updating file.
 	- 2012-04-13 Fixed missing editor add-attachment/insert-token button icons for Joomla 3.
-	     Other small tweaks to the CSS files for the 'add attachment' link.
-        - 2012-04-13 Added quickicon plugin for both Joomla 2.5 and 3.x.
+		Other small tweaks to the CSS files for the 'add attachment' link.
+	- 2012-04-13 Added quickicon plugin for both Joomla 2.5 and 3.x.
+	- 2012-04-19 Converted help page to use a view with template and translation tokens.
 
 2012-09-07: Release 3.0.4
 	- 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
@@ -147,7 +148,7 @@ Attachments 3.x Extension for Joomla 2.5+
 
 2011-09-09: Release 3.0.1
 	- 2011-09-06 Fixed bug in migration import code that prevented proper error
-	  messages when imports fail (eg, file not found, etc).  Changed the dry_run
+	  messages when imports fail (eg, file not found, etc).	 Changed the dry_run
 	  success message to show number of attachments found in CSV file
 	- 2011-09-07 Fixed error in token IDs for admin unpublish messages
 	- 2011-09-08 Added Save+New button in admin form to add attachments
