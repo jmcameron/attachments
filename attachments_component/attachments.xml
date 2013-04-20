@@ -98,15 +98,6 @@
 	    <filename>controllers/params.php</filename>
 	    <filename>controllers/special.php</filename>
 	    <filename>controllers/utils.php</filename>
-	    <filename>help/en-GB/help.css</filename>
-	    <filename>help/en-GB/help.html</filename>
-	    <filename>help/en-GB/index.html</filename>
-	    <filename>help/en-GB/plugin_manual/html/genindex.html</filename>
-	    <filename>help/en-GB/plugin_manual/html/index.html</filename>
-	    <filename>help/en-GB/plugin_manual/html/search.html</filename>
-	    <filename>help/en-GB/plugin_manual/html/searchindex.js</filename>
-	    <filename>help/en-GB/plugin_manual/index.html</filename>
-	    <filename>help/index.html</filename>
 	    <filename>import.php</filename>
 	    <filename>index.html</filename>
 	    <filename>models/attachment.php</filename>
@@ -144,6 +135,10 @@
 	    <filename>views/entity/tmpl/default.php</filename>
 	    <filename>views/entity/tmpl/index.html</filename>
 	    <filename>views/entity/view.html.php</filename>
+	    <filename>views/help/index.html</filename>
+	    <filename>views/help/tmpl/default.php</filename>
+	    <filename>views/help/tmpl/index.html</filename>
+	    <filename>views/help/view.html.php</filename>
 	    <filename>views/index.html</filename>
 	    <filename>views/params/index.html</filename>
 	    <filename>views/params/view.html.php</filename>
@@ -159,8 +154,6 @@
 	    <filename>views/warning/view.html.php</filename>
 	    <filename>Changelog.php</filename>
 	    <folder>sql/updates</folder>
-	    <folder>help/en-GB/images</folder>
-	    <folder>help/en-GB/plugin_manual/html/_static</folder>
 	    <folder>language</folder>
 	</files>
     </administration>
@@ -179,6 +172,7 @@
        <filename>css/attachments_frontend_form.css</filename>
        <filename>css/attachments_frontend_form_rtl.css</filename>
        <filename>css/attachments_hide.css</filename>
+       <filename>css/attachments_help.css</filename>
        <filename>css/attachments_list.css</filename>
        <filename>css/attachments_list_rtl.css</filename>
        <filename>css/attachments_quickicon.css</filename>
@@ -207,6 +201,7 @@
        <filename>js/attachments_caching.js</filename>
        <filename>js/attachments_refresh.js</filename>
        <folder>images/file_icons</folder>
+       <folder>images/help</folder>
     </media>
 
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
