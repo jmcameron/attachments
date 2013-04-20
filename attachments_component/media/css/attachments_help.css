@@ -2,6 +2,7 @@ body,
 body.contentpane {
     font-size: 0.95em;
     margin: 0;
+    padding-top: 0;
 }
 
 div.help-document {
@@ -15,6 +16,7 @@ div.help-document div.header {
     padding: 4px 0 6px 1em;
     background-color: #BBBBFF;
     border-bottom: 1px solid #0000FF;
+    background-image: none;
 }
 
 div.help-document div.header {
@@ -186,14 +188,21 @@ div.help-document p.topic-title {
 
 
 div.help-document div#contents {
-    margin: 0 0 20px 40px;
+    margin: 0 0 1em 2em;
     background-color: #BBBBFF;
     border: 1px solid #003366;
-    width: 60%;
+    width: 32em;
+}
+
+
+div.help-document ul,
+div.help-document ol {
+    padding-left: 1.5em;
 }
 
 div.help-document div#contents ul {
     margin: 6px 0 0 0;
+    padding: 0 0.5em 0.5em 2em;
 }
 
 div.help-document div#contents p.topic-title {
