@@ -166,6 +166,8 @@ class AttachmentsViewAttachments extends JViewLegacy
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/permissions.php');
 		$canDo = AttachmentsPermissions::getActions();
 
+		$toolbar = JToolBar::getInstance('toolbar');
+
 		JToolBarHelper::title(JText::_('ATTACH_ATTACHMENTS'), 'attachments.png');
 
 		if ($canDo->get('core.create')) {
@@ -192,28 +194,21 @@ class AttachmentsViewAttachments extends JViewLegacy
 			JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
 			// Add a button for extra admin commands
-			$bar = JToolBar::getInstance('toolbar');
-			$bar->appendButton( 'Popup', 'adminUtils', $alt='ATTACH_UTILITIES',
-								'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
-								$width='600', $height='400' );
+			$toolbar->appendButton( 'Popup', 'adminUtils', $alt='ATTACH_UTILITIES',
+									'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
+									$width='600', $height='400' );
 
 			}
 
 		JToolBarHelper::divider();
 		
-		$bar = JToolBar::getInstance('toolbar');
+		// Manually add a help button for the help view
 		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
 		$help = JText::_('JTOOLBAR_HELP');
 		$link = "<a class=\"toolbar\" href=\"$url\" target=\"_blank\"><span class=\"icon-32-help\"></span>$help</a>";
-		$bar->appendButton('Custom', $link, 'toolbar-help');
+		$toolbar->appendButton('Custom', $link, 'toolbar-help');
 
-//		$bar->appendButton( 'Link', 'help', 'help', 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component');
-
-// 		$bar->appendButton( 'Popup', 'help', $alt='JTOOLBAR_HELP',
-// 							'index.php?option=com_attachments&amp;task=help&amp;tmpl=component',
-// 							$width='700', $height='500' );
-
-		JToolBarHelper::help('help', true);
+		// ??? JToolBarHelper::help('help', true);  The old way
 	}
 
 }
