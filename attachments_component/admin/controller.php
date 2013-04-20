@@ -234,5 +234,34 @@ class AttachmentsController extends JControllerLegacy
 	}
 
 
+
+	/** Show the help page
+	 */
+	public function help()
+	{
+		// Set up the view
+		require_once(JPATH_COMPONENT_ADMINISTRATOR . '/views/help/view.html.php');
+		$view = new AttachmentsViewHelp();
+
+		// Load language(s)
+		$view->lang = JFactory::getLanguage();
+
+		// Now load the help page file
+		// (Load the component file first since the help pages share some items)
+		if ( $view->lang->getDefault() != 'en-GB' )
+		{
+			// First load English for any untranslated items
+		    $view->lang->load('com_attachments', dirname(__FILE__), 'en-GB');
+			$view->lang->load('com_attachments.help', dirname(__FILE__), 'en-GB');
+		}
+		// Load current language
+		$view->lang->load('com_attachments', dirname(__FILE__));
+		$view->lang->load('com_attachments.help', dirname(__FILE__));
+
+		// Call parent to display
+		$view->display();
+	}
+	
+
 }
 

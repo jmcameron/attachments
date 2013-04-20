@@ -200,6 +200,19 @@ class AttachmentsViewAttachments extends JViewLegacy
 			}
 
 		JToolBarHelper::divider();
+		
+		$bar = JToolBar::getInstance('toolbar');
+		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
+		$help = JText::_('JTOOLBAR_HELP');
+		$link = "<a class=\"toolbar\" href=\"$url\" target=\"_blank\"><span class=\"icon-32-help\"></span>$help</a>";
+		$bar->appendButton('Custom', $link, 'toolbar-help');
+
+//		$bar->appendButton( 'Link', 'help', 'help', 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component');
+
+// 		$bar->appendButton( 'Popup', 'help', $alt='JTOOLBAR_HELP',
+// 							'index.php?option=com_attachments&amp;task=help&amp;tmpl=component',
+// 							$width='700', $height='500' );
+
 		JToolBarHelper::help('help', true);
 	}
 
