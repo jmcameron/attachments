@@ -24,7 +24,7 @@ NAMES = $(INSTALLS) $(EXTRAS)
 
 ZIPS = $(NAMES:=.zip)
 
-ZIPIGNORES = -x "*.svn/*" -x ".svnignore" -x ".directory" -x "*.xcf"
+ZIPIGNORES = -x "*.svn/*" -x ".svnignore" -x ".directory" -x "*.xcf" -x "*admin/help*"
 
 parts: $(ZIPS)
 
