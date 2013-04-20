@@ -25,6 +25,10 @@ class AttachmentsDefines
 	 */
 	static $ATTACHMENTS_VERSION = '3.1-Beta7';
 
+	/** The Attachments extension version number
+	 */
+	static $ATTACHMENTS_VERSION_DATE = 'April 13, 2013';
+
 	/** Project URL
 	 */
 	static $PROJECT_URL = 'http://joomlacode.org/gf/project/attachments3/';
