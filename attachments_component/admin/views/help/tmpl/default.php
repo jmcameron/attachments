@@ -113,7 +113,6 @@ $onContentPrepare = "<tt class=\"docutils literal\">'onPrepareContent'</tt>";
 
 $title_ctid    = $this->textCodeSpan('ATTACH_HELP_000000_MAIN_TITLE');
 $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
-$contents_ctid = $this->textCodeSpan('ATTACH_HELP_000200_MAIN_CONTENTS');
 
 ?>
 <div class="help-document">
@@ -129,21 +128,12 @@ $contents_ctid = $this->textCodeSpan('ATTACH_HELP_000200_MAIN_CONTENTS');
 
 <p class="version"><strong><?php echo $this->version . ' - ' . $this->date ?></strong></p>
 <p><strong><?php echo JText::_('ATTACH_HELP_000100_MAIN_VERSION') . $vers_ctid ?></strong></p>
-	
-<div class="contents topic" id="contents">
-<p class="topic-title first"><?php echo JText::_('ATTACH_HELP_000200_MAIN_CONTENTS') . $contents_ctid ?></p>
-<?php
-    // Add the table of contents items
-    $this->startList();
-    foreach ($this->sections as $snum => $sdata)
-    {
-        $this->sectionTOC($snum);
-    }
-    $this->endList();
-?>
-</div>
 
 <?php
+   // ------------------------------------------------------------
+   // Add the table of contents
+   $this->tableOfContents('ATTACH_HELP_000200_MAIN_CONTENTS');
+
    // ------------------------------------------------------------
    // Introduction
    $this->startSection(SECT_INTRO);

@@ -20,7 +20,12 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
 /**
  * View for the help pages
- * 
+ *
+ * The goal is to provide a PHP programmatic interface to create a help page
+ * using primarily PHP function calls in the view/template.	 The styling is
+ * base on styling of Restructured Text documents rendered into HTML using
+ * converion tools such as docutils.
+ *
  * @package Attachments
  */
 class HelpView extends JViewLegacy
@@ -32,10 +37,10 @@ class HelpView extends JViewLegacy
 	 * arrays of information about the sections like this:
 	 *
 	 * $this->sections = Array( 1  => Array( 'id' => 'introduction',
-	 *                         'code' =>           'SECTION_TITLE_1',
-	 *                         'title' => JText::_('SECTION_TITLE_1'),
-	 *                         ...
-	 *                         ),
+	 *						   'code' =>		   'SECTION_TITLE_1',
+	 *						   'title' => JText::_('SECTION_TITLE_1'),
+	 *						   ...
+	 *						   ),
 	 *
 	 * where the 'SECTION_TITLE_1' is the language token for the title of
 	 * section 1.
@@ -62,14 +67,14 @@ class HelpView extends JViewLegacy
 	 * Replace a series of items from the html using an array of replacements
 	 *
 	 * For example:
-	 *    replace('<span>{TEST}-{NUM}</span>', Array('{TEST}' => 'MyTest', '{NUM}' => '23'))
+	 *	  replace('<span>{TEST}-{NUM}</span>', Array('{TEST}' => 'MyTest', '{NUM}' => '23'))
 	 * returns:
-	 *    <span>MyTest-23</span>
+	 *	  <span>MyTest-23</span>
 	 *
-	 * @param  string  $html         The original HTML string to be modified
-	 * @param  array   $replacement  Array of textual replacments
-	 * 
-	 * @return  string  the original HTML with the replacements performed
+	 * @param  string  $html		 The original HTML string to be modified
+	 * @param  array   $replacement	 Array of textual replacments
+	 *
+	 * @return	string	the original HTML with the replacements performed
 	 */
 	function replace($html, $replacements)
 	{
@@ -86,23 +91,48 @@ class HelpView extends JViewLegacy
 
 
 	/**
-	 * Add a section Table-of-contents line for a section
+	 * Add a table of contents
 	 *
-	 * @param  int  $sect_num The section number to echo (as a list element)
+	 * @param  string  $title_code	The language code for the title of the table of contents
+	 */
+	protected function tableOfContents($title_code, $class = 'contents topic')
+	{
+		$title = JText::_($title_code);
+		$code = $this->textCodeSpan($title_code);
+
+		$html  = "<div class=\"$class\" id=\"contents\">\n";
+		$html .= "	 <p class=\"topic-title first\">" . $title . $code . "</p>\n";
+		$html .= "	 <ul class=\"$class\">\n";
+		foreach ($this->sections as $sect_num => $sdata)
+		{
+			$html .= '		' . $this->sectionTOC($sect_num);
+		}
+		$html .= "	 </ul>\n";
+		$html .= "</div> <!-- table of contents -->\n";
+		echo $html;
+	}
+
+
+	/**
+	 * Construct a section Table-of-contents line for a section
+	 *
+	 * @param  int	$sect_num The section number to echo (as a list element)
+	 *
+	 * @return string  the table-of-conents list item
 	 */
 	function sectionTOC($sect_num)
 	{
 		$sect_data = $this->sections[$sect_num];
 		$sid = $sect_data['id'];
 		$stitle = $sect_data['title'];
-		echo "   <li><a class=\"reference internal\" href=\"#$sid\" id=\"id$sect_num\">$stitle</a></li>\n";
+		return "<li><a class=\"reference internal\" href=\"#$sid\" id=\"id$sect_num\">$stitle</a></li>\n";
 	}
 
 
 	/**
 	 * Add the start of a section (using <h1>)
 	 *
-	 * @param  int  $sect_num The desired section number
+	 * @param  int	$sect_num The desired section number
 	 */
 	function startSection($sect_num)
 	{
@@ -112,7 +142,7 @@ class HelpView extends JViewLegacy
 		$stitle = $sect_data['title'];
 		$tcid = "<span class=\"text_code\">[$text_code]</span>";
 		$hclass = 'class="toc-backref"';
-		$html =  "<div class=\"section\" id=\"$sid\">\n";
+		$html =	 "<div class=\"section\" id=\"$sid\">\n";
 		$html .= "<h1><a $hclass href=\"#id$sect_num\">$stitle$tcid</a></h1>\n";
 		echo $html;
 	}
@@ -121,7 +151,7 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add the end of a section
 	 *
-	 * @param  int  $sect_num The desired section number
+	 * @param  int	$sect_num The desired section number
 	 */
 	function endSection($sect_num)
 	{
@@ -138,7 +168,7 @@ class HelpView extends JViewLegacy
 	{
 		$sid = $sect_data['id'];
 		$stitle = $sect_data['title'];
-		$html =  "<div class=\"section\" id=\"$sid\">\n";
+		$html =	 "<div class=\"section\" id=\"$sid\">\n";
 		$html .= "<h2>$stitle</h2>\n";
 		echo $html;
 	}
@@ -146,7 +176,7 @@ class HelpView extends JViewLegacy
 
 	/**
 	 * Add the start of a subsection (using <h2>)
-	 * 
+	 *
 	 * @param  string  $title  The subsection title (should be same as in the start)
 	 */
 	function endSubSection($title)
@@ -158,11 +188,11 @@ class HelpView extends JViewLegacy
 	/**
 	 * Construct an admonition (note, warning, hint, etc)
 	 *
-	 * @param  string  $type          The type of admonition (hint, note, important, warning)
-	 * @param  string  $type_code     Language token for the name of the admonition (eg, $type)
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
+	 * @param  string  $type		  The type of admonition (hint, note, important, warning)
+	 * @param  string  $type_code	  Language token for the name of the admonition (eg, $type)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <div> that contains the note
+	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 *
 	 * @param  string  the HTML for the admonition
 	 */
@@ -175,12 +205,12 @@ class HelpView extends JViewLegacy
 		}
 
 		$html  = "<div class=\"$type\">\n";
-		$html .= "   <p class=\"first admonition-title\">$title</p>\n";
+		$html .= "	 <p class=\"first admonition-title\">$title</p>\n";
 		foreach ($text_codes as $text_code)
 		{
 			$tcid = "<span class=\"text_code\">[$text_code]</span>";
 			$text = $this->replace(JText::_($text_code), $replacements);
-			$html .= "   <p class=\"last\">" . $text . $tcid . "</p>\n";
+			$html .= "	 <p class=\"last\">" . $text . $tcid . "</p>\n";
 		}
 		if ( $terminate )
 		{
@@ -203,9 +233,9 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add a 'hint' admonition
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <div> that contains the note
+	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
 	function addHint($text_codes, $replacements = null, $terminate = true)
 	{
@@ -216,9 +246,9 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add an 'important' admonition
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <div> that contains the note
+	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
 	function addImportant($text_codes, $replacements = null, $terminate = true)
 	{
@@ -229,9 +259,9 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add a 'note' admonition
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <div> that contains the note
+	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
 	function addNote($text_codes, $replacements = null, $terminate = true)
 	{
@@ -242,9 +272,9 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add a 'warning' admonition
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <div> that contains the note
+	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
 	function addWarning($text_codes, $replacements = null, $terminate = true)
 	{
@@ -255,9 +285,9 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add a paragraph
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs)
 	 * @param  array   $replacements  Array of replacements to be applied to the text (see replace functin)
-	 * @param  string  $pclass        The class for the paragraph HTML <p> element
+	 * @param  string  $pclass		  The class for the paragraph HTML <p> element
 	 */
 	function addParagraph($text_codes, $replacements = null, $pclass = null)
 	{
@@ -279,7 +309,7 @@ class HelpView extends JViewLegacy
 				$html .= '<p>' . $text . "</p>\n";
 			}
 		}
-    
+
 		echo $html;
 	}
 
@@ -310,13 +340,13 @@ class HelpView extends JViewLegacy
 		echo "<$type class=\"$class\">\n";
 	}
 
-	
+
 	/**
 	 * Add a list element
 	 *
-	 * @param  array   $text_codes    Array of Language tokens for the body text (as separate paragraphs inside the list element)
+	 * @param  array   $text_codes	  Array of Language tokens for the body text (as separate paragraphs inside the list element)
 	 * @param  array   $replacements  Array of replacements to be applied to the text (see replace functin)
-	 * @param  bool    $terminate     Whether to terminatate the <li> that contains the text
+	 * @param  bool	   $terminate	  Whether to terminatate the <li> that contains the text
 	 */
 	function addListElement($text_codes, $replacements = null, $terminate = true)
 	{
@@ -414,7 +444,7 @@ class HelpView extends JViewLegacy
 	 * @param  string  $filename  Filename for the image (full path)
 	 * @param  string  $alt_code  Language token for the text to be use for the 'alt' attribute
 	 * @parma  string  $caption_code  Language token for the text to use for the caption (OPTIONAL)
-	 * @param  string  $dclass    Class for the figure <div>
+	 * @param  string  $dclass	  Class for the figure <div>
 	 */
 	function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure')
 	{
@@ -427,15 +457,26 @@ class HelpView extends JViewLegacy
 		$html .= '</div>';
 		echo $html;
 	}
-		
+
 
 
 	/**
 	 * Return an image URL if the file is found
 	 *
 	 * @param  string  $filename  Filename for the image in the media folder (more below)
-	 * @param  string  $alt       Text to be inserted into the alt='text' attribute
-	 * @param  array   $attribs   Attributes to be added to the image URL
+	 * @param  string  $alt		  Text to be inserted into the alt='text' attribute
+	 * @param  array   $attribs	  Attributes to be added to the image URL
+	 *
+	 * The file location uses the JHtml::image() function call which expects
+	 * to find images in the [base]/media/com_attachments/images directory.
+	 * This function as the necessary checks to add level of language folders
+	 * (like the translation files).  For instance:
+	 *
+	 *    For a file:
+	 *         [base]/media/com_attachments/images/en-GB/test1.png
+	 *    Use:
+	 *         $this->image('com_attachments/test1.png')
+	 * 
 	 *
 	 * @return string image URL (or null if the image was not found)
 	 */
@@ -460,5 +501,5 @@ class HelpView extends JViewLegacy
 		// The image was not found for either language so return nothing
 		return null;
 	}
-	
+
 }
