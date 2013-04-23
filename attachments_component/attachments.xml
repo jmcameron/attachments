@@ -136,6 +136,7 @@
 	    <filename>views/entity/tmpl/index.html</filename>
 	    <filename>views/entity/view.html.php</filename>
 	    <filename>views/help/index.html</filename>
+	    <filename>views/help/helpview.php</filename>
 	    <filename>views/help/tmpl/default.php</filename>
 	    <filename>views/help/tmpl/index.html</filename>
 	    <filename>views/help/view.html.php</filename>
