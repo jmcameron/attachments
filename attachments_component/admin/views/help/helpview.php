@@ -55,7 +55,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @return string an html link for the specified section
 	 */
-	function sectionLink($sect_num)
+	protected function sectionLink($sect_num)
 	{
 		$id = $this->sections[$sect_num]['id'];
 		$title = $this->sections[$sect_num]['title'];
@@ -76,7 +76,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @return	string	the original HTML with the replacements performed
 	 */
-	function replace($html, $replacements)
+	protected function replace($html, $replacements)
 	{
 		if ( is_array($replacements) )
 		{
@@ -120,7 +120,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @return string  the table-of-conents list item
 	 */
-	function sectionTOC($sect_num)
+	protected function sectionTOC($sect_num)
 	{
 		$sect_data = $this->sections[$sect_num];
 		$sid = $sect_data['id'];
@@ -134,7 +134,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  int	$sect_num The desired section number
 	 */
-	function startSection($sect_num)
+	protected function startSection($sect_num)
 	{
 		$sect_data = $this->sections[$sect_num];
 		$sid = $sect_data['id'];
@@ -153,7 +153,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  int	$sect_num The desired section number
 	 */
-	function endSection($sect_num)
+	protected function endSection($sect_num)
 	{
 		echo "</div><?-- end of section $sect_num -->\n";
 	}
@@ -164,7 +164,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  array  $sect_data An array of data for the subsection (providing 'id' and 'title')
 	 */
-	function startSubSection($sect_data)
+	protected function startSubSection($sect_data)
 	{
 		$sid = $sect_data['id'];
 		$stitle = $sect_data['title'];
@@ -179,7 +179,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  string  $title  The subsection title (should be same as in the start)
 	 */
-	function endSubSection($title)
+	protected function endSubSection($title)
 	{
 		echo "</div><?-- end of subsection $title -->\n";
 	}
@@ -196,7 +196,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  string  the HTML for the admonition
 	 */
-	function addAdmonition($type, $type_code, $text_codes, $replacements = null, $terminate = true)
+	protected function addAdmonition($type, $type_code, $text_codes, $replacements = null, $terminate = true)
 	{
 		$title = JText::_($type_code);
 		if (!is_array($text_codes))
@@ -224,7 +224,7 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add the end the admonition
 	 */
-	function endAdmonition()
+	protected function endAdmonition()
 	{
 		echo "</div>\n";
 	}
@@ -237,7 +237,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
 	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
-	function addHint($text_codes, $replacements = null, $terminate = true)
+	protected function addHint($text_codes, $replacements = null, $terminate = true)
 	{
 		echo $this->addAdmonition('hint', 'ATTACH_HELP_HINT', $text_codes, $replacements, $terminate);
 	}
@@ -250,7 +250,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
 	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
-	function addImportant($text_codes, $replacements = null, $terminate = true)
+	protected function addImportant($text_codes, $replacements = null, $terminate = true)
 	{
 		echo $this->addAdmonition('important', 'ATTACH_HELP_IMPORTANT', $text_codes, $replacements, $terminate);
 	}
@@ -263,7 +263,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
 	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
-	function addNote($text_codes, $replacements = null, $terminate = true)
+	protected function addNote($text_codes, $replacements = null, $terminate = true)
 	{
 		echo $this->addAdmonition('note', 'ATTACH_HELP_NOTE', $text_codes, $replacements, $terminate);
 	}
@@ -276,7 +276,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the body text (see replace functin)
 	 * @param  bool	   $terminate	  Whether to terminatate the <div> that contains the note
 	 */
-	function addWarning($text_codes, $replacements = null, $terminate = true)
+	protected function addWarning($text_codes, $replacements = null, $terminate = true)
 	{
 		echo $this->addAdmonition('warning', 'ATTACH_HELP_WARNING', $text_codes, $replacements, $terminate);
 	}
@@ -289,7 +289,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the text (see replace functin)
 	 * @param  string  $pclass		  The class for the paragraph HTML <p> element
 	 */
-	function addParagraph($text_codes, $replacements = null, $pclass = null)
+	protected function addParagraph($text_codes, $replacements = null, $pclass = null)
 	{
 		if (!is_array($text_codes))
 		{
@@ -320,7 +320,7 @@ class HelpView extends JViewLegacy
 	 * @param  string  $text The raw string to print literally
 	 * @param  string  $class The class for the HTML <pre> block
 	 */
-	function addPreBlock($text, $class='literal-block')
+	protected function addPreBlock($text, $class='literal-block')
 	{
 		$html = "<pre class=\"$class\">\n";
 		$html .= $text . "\n";
@@ -335,7 +335,7 @@ class HelpView extends JViewLegacy
 	 * @param  string  $type The type of list (defaults to unordered <ul>)
 	 * @param  string  $class The class for the HTML <ul> or <ol> element
 	 */
-	function startList($type = 'ul', $class='simple')
+	protected function startList($type = 'ul', $class='simple')
 	{
 		echo "<$type class=\"$class\">\n";
 	}
@@ -348,7 +348,7 @@ class HelpView extends JViewLegacy
 	 * @param  array   $replacements  Array of replacements to be applied to the text (see replace functin)
 	 * @param  bool	   $terminate	  Whether to terminatate the <li> that contains the text
 	 */
-	function addListElement($text_codes, $replacements = null, $terminate = true)
+	protected function addListElement($text_codes, $replacements = null, $terminate = true)
 	{
 		if (!is_array($text_codes))
 		{
@@ -376,7 +376,7 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add the ending of a list element (use with unterminated list element)
 	 */
-	function endListElement()
+	protected function endListElement()
 	{
 		echo "</li>\n";
 	}
@@ -388,7 +388,7 @@ class HelpView extends JViewLegacy
 	 * @param  string  $url the URL of the link
 	 * @param  string  $text_code the language token for the text of the link
 	 */
-	function addListElementLink($url, $text_code)
+	protected function addListElementLink($url, $text_code)
 	{
 		$tcid = "<span class=\"text_code\">[$text_code]</span>";
 		$text = $this->replace(JText::_($text_code), Array('{LINK}' => $url));
@@ -401,7 +401,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @parma  string  $html The HTML to insert into the list element
 	 */
-	function addListElementHtml($html)
+	protected function addListElementHtml($html)
 	{
 		echo "<li>$html</li>\n";
 	}
@@ -412,7 +412,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  string  $class The class for the HTML </ul> or </ol> element
 	 */
-	function endList($type = 'ul')
+	protected function endList($type = 'ul')
 	{
 		echo "</$type>\n";
 	}
@@ -421,7 +421,7 @@ class HelpView extends JViewLegacy
 	/**
 	 * Add a line break
 	 */
-	function addLineBreak()
+	protected function addLineBreak()
 	{
 		echo "<br/>\n";
 	}
@@ -432,7 +432,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param  string  $text_code  The language code to insert in the hidden span (raw)
 	 */
-	function textCodeSpan($text_code)
+	protected function textCodeSpan($text_code)
 	{
 		return "<span class=\"text_code\">[$text_code]</span>";
 	}
@@ -446,7 +446,7 @@ class HelpView extends JViewLegacy
 	 * @parma  string  $caption_code  Language token for the text to use for the caption (OPTIONAL)
 	 * @param  string  $dclass	  Class for the figure <div>
 	 */
-	function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure')
+	protected function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure')
 	{
 		$html = "<div class=\"$dclass\">\n";
 		$html .= $this->image($filename, JText::_($alt_code)) . "\n";
@@ -480,7 +480,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @return string image URL (or null if the image was not found)
 	 */
-	function image($filename, $alt, $attribs = Array())
+	protected function image($filename, $alt, $attribs = Array())
 	{
 		$lcode = $this->lang->getDefault();
 
