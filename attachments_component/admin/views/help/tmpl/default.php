@@ -509,7 +509,8 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
               $this->startList();
                   $this->addListElement('ATTACH_HELP_140500_TEXT');
                   $this->addListElement('ATTACH_HELP_140600_TEXT');
-                  $this->addListElement('ATTACH_HELP_140700_TEXT');
+                  $this->addListElement('ATTACH_HELP_140700_TEXT',
+										ARRAY('{DEFACCLEVEL}' => JText::_('ATTACH_DEFAULT_ACCESS_LEVEL')));
                   $this->addListElement('ATTACH_HELP_140800_TEXT');
                   $this->addListElement('ATTACH_HELP_140900_TEXT');
                   $this->addListElement('ATTACH_HELP_141000_TEXT');
