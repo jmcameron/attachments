@@ -420,8 +420,9 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				}
 			}
 
-		// Update the url_relative field
+		// Update the url checkbox fields
 		$attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
+		$attachment->url_verify = JRequest::getWord('verify_url') == 'verify';
 
 		// Update create/modify info
 		$attachment->created_by = $user->get('id');
@@ -449,8 +450,11 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 
 		elseif ( $new_uri_type == 'url' ) {
 
-			// Upload/add the new URL
+			// Extra handling for checkboxes for URLs
 			$attachment->url_relative = $relative_url;
+			$attachment->url_verify = $verify_url;
+			
+			// Upload/add the new URL
 			$result = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url);
 			// NOTE: store() is not needed if add_url() is called since it does it
 
@@ -745,8 +749,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$display_name = '';
 			}
 
-		// Handle the relative URL checkbox
-		$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
+// ??? 		// Handle the relative URL checkbox
+// ??? 		$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
 
 		// Handle iframe popup requests
 		$known_froms = array('editor', 'closeme');
@@ -1040,7 +1044,10 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if ( $attachment->uri_type == 'url' ) {
 
 				// Update the url_relative field
-				$attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
+				// ??? $attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
+				// ??? $attachment->url_verify = JRequest::getWord('verify_url') == 'verify';
+				$attachment->url_relative = $relative_url;
+				$attachment->url_verify = $verify_url;
 				}
 
 			// Save the updated attachment info

@@ -24,6 +24,9 @@ if ( !( JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
+/** Load the Attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 
 /**
  * HTML View class for editing new attachments
@@ -51,9 +54,18 @@ class AttachmentsViewEdit extends JViewLegacy
 			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
 			}
 
+		// Construct derived data
+		$this->url_relative_checked = $this->attachment->url_relative ? 'checked="yes"' : '';
+		$this->verify_url_checked = $this->attachment->url_verify ? 'checked="yes"' : '';
+		if (!isset($this->attachment->modifier_name))
+		{
+			AttachmentsHelper::addAttachmentUserNames($this->attachment);
+		}
+
 		// Set the toolbar
 		$this->addToolBar();
 
+		// Display the form
 		parent::display($tpl);
 	}
 

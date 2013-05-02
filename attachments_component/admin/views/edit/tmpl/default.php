@@ -159,12 +159,12 @@ else
 		  title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
 	  <td colspan="5">
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-		 <input type="checkbox" name="verify_url" value="verify" checked 
+		 <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 	 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	 <input type="checkbox" name="url_relative" value="relative"
-			<?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+	 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->url_relative_checked ?>
+			title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		 <br />
 		 <input type="text" name="url" id="upload"
 			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
@@ -201,12 +201,12 @@ else
    ?></label></td>
 	  <td colspan="5">
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-		 <input type="checkbox" name="verify_url" value="verify" checked
+		 <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 		 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	 <input type="checkbox" name="url_relative" value="relative"
-			<?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+	 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->url_relative_checked ?>
+			title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 	  <br />
 	  <input type="text" name="url" id="upload" value="<?php echo $attachment->url; ?>"
 			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />

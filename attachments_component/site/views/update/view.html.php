@@ -46,7 +46,7 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
-		// Add derived data
+		// Construct derived data
 		$this->url_relative_checked = $this->attachment->url_relative ? 'checked="yes"' : '';
 		$this->verify_url_checked = $this->attachment->url_verify ? 'checked="yes"' : '';
 
@@ -57,12 +57,11 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 											 'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											 $this->attachment->url_valid);
 
-		// Make sure the creator/modifier user names are available
 		if (!isset($this->attachment->modifier_name))
 		{
 			AttachmentsHelper::addAttachmentUserNames($this->attachment);
 		}
-
+			
 		// Display the form
 		parent::display($tpl);
 	}
