@@ -211,7 +211,7 @@ class AttachmentsFileTypes {
 	public static function icon_filename($filename, $mime_type)
 	{
 		// Recognize some special cases first
-		if ( $mime_type == 'link/unknown' ) {
+		if ( ($mime_type == 'link/unknown') OR ($mime_type == 'unknown') ) {
 			return 'link.gif';
 			}
 		if ( $mime_type == 'link/broken' ) {
@@ -219,6 +219,12 @@ class AttachmentsFileTypes {
 			}
 
 		if ( $filename ) {
+
+			// Make sure it is a real filename
+			if (strpos($filename, '.') === false) {
+				// Do not know any better, assume it is text
+				return 'text/plain';
+				}
 
 			$path_info = pathinfo($filename);
 
@@ -271,6 +277,11 @@ class AttachmentsFileTypes {
 	public static function mime_type($filename)
 	{
 		$path_info = pathinfo($filename);
+
+		// Make sure it is a real filename
+		if (strpos($filename, '.') === false) {
+			return 'unknown';
+			}
 				
 		// Try the extension first
 		$extension = strtolower($path_info['extension']);
