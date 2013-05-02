@@ -1395,10 +1395,10 @@ class AttachmentsHelper
 					}
 
 				$view->uri_type =		 $attachment->uri_type;
-				$view->url =				 $attachment->url;
-				$view->parent_id = $attachment->parent_id;
-				$view->parent_type =		 $attachment->parent_type;
-				$view->description =		 $attachment->description;
+				$view->url =			 $attachment->url;
+				$view->parent_id =       $attachment->parent_id;
+				$view->parent_type =	 $attachment->parent_type;
+				$view->description =	 $attachment->description;
 				$view->user_field_1 =	 $attachment->user_field_1;
 				$view->user_field_2 =	 $attachment->user_field_2;
 				$view->user_field_3 =	 $attachment->user_field_3;
@@ -1411,11 +1411,13 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
+			$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
 			$view->parent_entity =	   $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title =	   $parent->title;
 			$view->new_parent = $parent->new;
 
+			$view->description =	 $attachment->description;
 			$view->display_name =	   $display_name;
 
 			$view->params =		$params;

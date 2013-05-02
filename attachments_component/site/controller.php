@@ -759,6 +759,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Set up for the user editing
+		$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
 		$view->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
 																   $attachment->parent_entity,
 																   $attachment->created_by

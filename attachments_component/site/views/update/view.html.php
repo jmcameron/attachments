@@ -43,6 +43,9 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
+		// Add any missing data
+		
+
 		parent::display($tpl);
 	}
 

@@ -130,7 +130,7 @@ if ( $this->error )
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 		<input type="checkbox" name="relative_url" value="relative"
-			   title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+               <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		<a class="changeButton" href="<?php echo $this->normal_update_url ?>"
 		   title="<?php echo JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a> <br />
@@ -154,11 +154,11 @@ if ( $this->error )
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 		<input type="checkbox" name="verify_url" value="verify" checked
-					   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
+			   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 		<input type="checkbox" name="relative_url" value="relative"
-					   title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+					 <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		<a class="changeButton" href="<?php echo $this->change_file_url ?>"
 		   title="<?php echo JText::_('ATTACH_CHANGE_TO_FILE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_CHANGE_TO_FILE') ?></a> </p>
