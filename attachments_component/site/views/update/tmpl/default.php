@@ -125,7 +125,7 @@ if ( $this->error )
 		<p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-		<input type="checkbox" name="verify_url" value="verify" checked
+		<input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?> 
 			   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
@@ -153,7 +153,7 @@ if ( $this->error )
 <p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_NEW_URL_COLON') ?></label>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-		<input type="checkbox" name="verify_url" value="verify" checked
+		<input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
 			   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>

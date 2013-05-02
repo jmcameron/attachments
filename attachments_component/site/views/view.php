@@ -70,7 +70,7 @@ class AttachmentsFormView extends JViewLegacy
 		$html .= "<head>\n";
 		$html .= $head_renderer->fetchHead($document);
 		$html .= "</head>\n";
-		$html .= "<body>\n";
+		$html .= "<body id=\"attachments_iframe\">\n";
 
 		return $html;
 	}

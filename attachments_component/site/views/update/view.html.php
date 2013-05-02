@@ -43,8 +43,24 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
-		// Add any missing data
-		
+		// Add derived data
+		$this->url_relative_checked = $this->attachment->url_relative ? 'checked="yes"' : '';
+		$this->verify_url_checked = $this->attachment->url_verify ? 'checked="yes"' : '';
+
+		$this->lists = Array();
+		$this->lists['published'] = JHtml::_('select.booleanlist', 'state',
+											 'class="inputbox"', $this->attachment->state);
+		$this->lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
+											 'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
+											 $this->attachment->url_valid);
+
+		if (!isset($this->attachment->modifier_name))
+		{
+			$this->attachment->addUserNames();
+		}
+			
+		// ??? $this->attachment->modifier_name = '???Modifier???';
+		// ??? $this->attachment->creator_name = '???Creator???';
 
 		parent::display($tpl);
 	}

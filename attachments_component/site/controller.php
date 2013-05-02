@@ -415,10 +415,13 @@ class AttachmentsController extends JControllerLegacy
 
 		elseif ( $new_uri_type == 'url' ) {
 
+			$attachment->url_relative = $relative_url;
+			$attachment->url_verify = $verify_url;
+
 			// Upload/add the new URL
 			$msg = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url,
 											  $old_uri_type, $attachment_id);
-			// NOTE: store() is not needed if upload_url() is called since it does it
+			// NOTE: store() is not needed if add_url() is called since it does it
 			}
 
 		else {

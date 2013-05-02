@@ -1,4 +1,4 @@
-/* Styles for the upload page */
+/* Styles for the upload and update pages */
 div#uploadAttachmentsPage {
     width: 95%;
     margin: 10px auto 6px auto;
@@ -185,3 +185,28 @@ body.modal div.attachmentsWarning div.form_buttons,
      padding: 8px 20px 8px 20px;
     text-align: center;
 }
+
+
+/* Some special overrides for redisplay of forms in the iframe */
+
+body#attachments_iframe
+{
+    font-size: 0.8em;
+}
+
+body#attachments_iframe div#uploadAttachmentsPage
+{
+    margin-top: 24px;
+}
+
+body#attachments_iframe h1
+{
+    padding-bottom: 4px;
+    border-bottom: 1px solid #BBB;
+}
+
+body#attachments_iframe fieldset
+{
+    border: none;
+}
+

@@ -1160,7 +1160,6 @@ class AttachmentsHelper
 
 			if ( $u->error ) {
 				$error_msg = JText::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
-				$error_msg .= ' <br />(' . $u->error_msg . ': ' . $errstr . ')';
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
@@ -1411,7 +1410,8 @@ class AttachmentsHelper
 				}
 
 			// Set up the view
-			$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
+
+			// Set up the selection lists
 			$view->parent_entity =	   $attachment->parent_entity;
 			$view->parent_entity_name = $parent_entity_name;
 			$view->parent_title =	   $parent->title;
