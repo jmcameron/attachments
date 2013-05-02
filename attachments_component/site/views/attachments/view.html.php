@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted Access');
 
 /** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');  /* ??? Needed? */
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Define the legacy classes, if necessary */

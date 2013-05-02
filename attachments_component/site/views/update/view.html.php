@@ -17,6 +17,9 @@ defined('_JEXEC') or die();
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/views/view.php');
 
+/** Load the Attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 
 /**
  * View for the uploads
@@ -54,14 +57,13 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 											 'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											 $this->attachment->url_valid);
 
+		// Make sure the creator/modifier user names are available
 		if (!isset($this->attachment->modifier_name))
 		{
-			$this->attachment->addUserNames();
+			AttachmentsHelper::addAttachmentUserNames($this->attachment);
 		}
-			
-		// ??? $this->attachment->modifier_name = '???Modifier???';
-		// ??? $this->attachment->creator_name = '???Creator???';
 
+		// Display the form
 		parent::display($tpl);
 	}
 

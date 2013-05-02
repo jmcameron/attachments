@@ -1083,6 +1083,44 @@ class AttachmentsHelper
 
 
 	/**
+	 * Add the user names for creator and modifier to an attachment
+	 *
+	 * This is needed for attachments that are created from scratch
+	 * (eg, via form processing)
+	 *
+	 * Note: This function does not check to make sure the current user has
+	 *       necessary permissions to access the attachment.
+	 *
+	 * @param  object  $attachment  the attachment to add the names to
+	 */
+	public static function addAttachmentUserNames(&$attachment)
+	{
+		// Get the names of the users from the database item for this attachment
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$query->select('a.id');
+		$query->from('#__attachments as a');
+
+		$query->select('u1.name as creator_name');
+		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
+
+		$query->select('u2.name as modifier_name');
+		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
+
+		$query->where('a.id = '.(int)$attachment->id);
+
+		// Do the query and get the result
+		$db->setQuery($query, 0, 1);
+		$result = $db->loadObject();
+
+		// Copy the names to this attachment object
+		$attachment->creator_name = $result->creator_name;
+		$attachment->modifier_name = $result->modifier_name;
+	}
+
+
+	/**
 	 * Get the info about this URL
 	 *
 	 * @param string $raw_url the raw url to parse

@@ -313,7 +313,6 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				{
 					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
 				}
-				// ??? $this->setMessage(JText::plural($ntext, count($cid)));
 				$this->setMessage(JText::plural($ntext,  $att_published));
 			}
 		}

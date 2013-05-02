@@ -17,6 +17,10 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla table library
 jimport('joomla.database.table');
 
+/** Load the Attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
+
 /**
  * Attachments table class
  *
@@ -191,65 +195,6 @@ class AttachmentsTableAttachment extends JTable
 
 		// Let the parent class do the real work!
 		return parent::store($updateNulls);
-	}
-
-
-	/**
-	 * Add the user names for creator, modifier, etc
-	 *
-	 * This is needed for attachments that are created from scratch
-	 * (eg, via form processing)
-	 */
-	public function addUserNames()
-	{
-		// Get information about this user
-		$user	= JFactory::getUser();
-		$user_levels = $user->getAuthorisedViewLevels();
-
-		// If the user is not logged in, add extra view levels (if configured)
-		if ( $user->get('username') == '' ) {
-
-			// Get the component parameters
-			jimport('joomla.application.component.helper');
-			$params = JComponentHelper::getParams('com_attachments');
-
-			// Add the specified access levels
-			$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
-			if (is_array($guest_levels)) {
-				foreach ($guest_levels as $glevel) {
-					$user_levels[] = $glevel;
-					}
-				}
-			else {
-				$user_levels[] = $glevel;
-				}
-			}
-		$user_levels = implode(',', array_unique($user_levels));
-
-		// Get the names of the users from the database item for this attachment
-		$db		= $this->getDbo();
-		$query	= $db->getQuery(true);
-		
-		$query->select('a.id, a.access');
-		$query->from('#__attachments as a');
-
-		$query->select('u1.name as creator_name');
-		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
-
-		$query->select('u2.name as modifier_name');
-		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
-
-		$query->where('a.id = '.(int)$this->id);
-
-		$query->where('a.access in ('.$user_levels.')');
-
-		$db->setQuery($query, 0, 1);
-
-		$result = $db->loadObject();
-
-		// Copy the names to this attachment object
-		$this->creator_name = $result->creator_name;
-		$this->modifier_name = $result->modifier_name;
 	}
 	
 }
