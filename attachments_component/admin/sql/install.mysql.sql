@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
     `uri_type` ENUM('file', 'url') DEFAULT 'file',
     `url_valid` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
     `url_relative` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+    `url_verify` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
     `display_name` VARCHAR(80) NOT NULL DEFAULT '',
     `description` VARCHAR(255) NOT NULL DEFAULT '',
     `icon_filename` VARCHAR(20) NOT NULL,
