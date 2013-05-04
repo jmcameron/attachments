@@ -1092,7 +1092,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			}
 
 		// NOTE: AttachmentsHelper::download_attachment($id) checks access permission
-
 		AttachmentsHelper::download_attachment($id);
 	}
 

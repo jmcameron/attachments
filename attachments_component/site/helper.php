@@ -1481,7 +1481,7 @@ class AttachmentsHelper
 				set_time_limit(0);
 				$file = @fopen($filename_sys,"rb");
 				while (!feof($file) and (connection_status()==0)) {
-					print(@fread($file, 1024*8));
+					print(@fread($file, 8*1024));
 					ob_flush();
 					flush();
 					}

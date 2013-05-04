@@ -459,8 +459,6 @@ class AttachmentsController extends JControllerLegacy
 	 */
 	public function download()
 	{
-		// NOTE: The helper download_attachment($id) function does the access check
-
 		// Get the attachment ID
 		$id = JRequest::getInt('id');
 		if ( !is_numeric($id) ) {
@@ -468,6 +466,7 @@ class AttachmentsController extends JControllerLegacy
 			JError::raiseError(500, $errmsg);
 			}
 
+		// NOTE: The helper download_attachment($id) function does the access check
 		AttachmentsHelper::download_attachment($id);
 	}
 
