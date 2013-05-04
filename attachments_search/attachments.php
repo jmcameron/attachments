@@ -219,7 +219,7 @@ class plgSearchAttachments extends JPlugin
 				}
 
 			// Add the parent title
-			$attachment->parent_title = $parent->getTitle( $attachment->parent_id, $parent_entity );
+			$attachment->parent_title = $parent->getTitle($attachment->parent_id, $parent_entity);
 
 			// Construct the download URL if necessary
 			if ( $secure && $attachment->uri_type == 'file' ) {
@@ -251,23 +251,25 @@ class plgSearchAttachments extends JPlugin
 				}
 
 			if ( JString::strlen($attachment->description) > 0 ) {
-				$text .= " | " . JText::_('ATTACH_DESCRIPTION_COLON') . $attachment->description;
+				$text .= " | " . JText::_('ATTACH_DESCRIPTION_COLON') . stripslashes($attachment->description);
 				}
 
 			if ( $user_field_1 && (JString::strlen($attachment->user_field_1) > 0) ) {
-				$text .= " | " . $user_field_1_name	 . ": " . $attachment->user_field_1;
+				$text .= " | " . $user_field_1_name	 . ": " . stripslashes($attachment->user_field_1);
 				}
 			if ( $user_field_2 && (JString::strlen($attachment->user_field_2) > 0) ) {
-				$text .= " | " . $user_field_2_name	 . ": " . $attachment->user_field_2;
+				$text .= " | " . $user_field_2_name	 . ": " . stripslashes($attachment->user_field_2);
 				}
 			if ( $user_field_3 && (JString::strlen($attachment->user_field_3) > 0) ) {
-				$text .= " | " . $user_field_3_name	 . ": " . $attachment->user_field_3;
+				$text .= " | " . $user_field_3_name	 . ": " . stripslashes($attachment->user_field_3);
 				}
 			$attachment->text = $text;
-			$attachment->created = $attachment->created;
+			// ??? $attachment->created = $attachment->created;
 			$attachment->browsernav = 2;
 
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+			$attchment->parent_entity_name = $parent_entity_name;
+
 			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
 			$attachment->section = JText::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',

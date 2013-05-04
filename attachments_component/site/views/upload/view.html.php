@@ -36,6 +36,32 @@ class AttachmentsViewUpload extends AttachmentsFormView
 			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 63)' );
 			}
 
+		// For convenience below
+		$attachment = $this->attachment;
+		$parent = $this->parent;
+
+		// Set up for editing the access level
+		if ( $this->params->get('allow_frontend_access_editing', false) ) {
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
+			$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+			$this->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
+			}
+
+		// Set up publishing info
+		$user = JFactory::getUser();
+		$this->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
+																   $attachment->parent_entity, $user->id);
+		if ( $this->may_publish ) {
+			$this->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+			}
+
+		// Construct derived data
+		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
+		$attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
+
+		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
+		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
+
 		// Add the stylesheets for the form
 		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
 		$lang = JFactory::getLanguage();
@@ -43,6 +69,7 @@ class AttachmentsViewUpload extends AttachmentsFormView
 			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
+		// Display the upload form
 		parent::display($tpl);
 	}
 

@@ -142,13 +142,13 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
       <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
 	  <td class="at_access" align="center"><?php echo $access; ?></td>
 	  <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo $item->user_field_1; ?></td>
+		 <td class="at_user_field"><?php echo stripslashes($item->user_field_1); ?></td>
 	  <?php endif; ?>
 	  <?php if ( $params->get('user_field_2_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo $item->user_field_2; ?></td>
+		 <td class="at_user_field"><?php echo stripslashes($item->user_field_2); ?></td>
 	  <?php endif; ?>
 	  <?php if ( $params->get('user_field_3_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo $item->user_field_3; ?></td>
+		 <td class="at_user_field"><?php echo stripslashes($item->user_field_3); ?></td>
 	  <?php endif; ?>
 	  <td class="at_file_type"><?php echo $item->file_type; ?></td>
 	  <td class="at_file_size"><?php echo $size_kb; ?></td>

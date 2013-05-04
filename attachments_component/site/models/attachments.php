@@ -176,7 +176,8 @@ class AttachmentsModelAttachments extends JModelLegacy
 	{
 		if ( $this->_parent_type == null ) {
 			$errmsg = JText::_('ATTACH_ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 51)';
-			JError::raiseError(500, $errmsg);
+			throw Exception($errmsg);
+			// JError::raiseError(500, $errmsg);
 			}
 		return $this->_parent_type;
 	}

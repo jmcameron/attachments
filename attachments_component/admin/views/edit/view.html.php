@@ -27,6 +27,9 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 /** Load the Attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
+/** Include the Attachments javascript classes */
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
+
 
 /**
  * HTML View class for editing new attachments
@@ -40,12 +43,55 @@ class AttachmentsViewEdit extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
+		// For convenience
+		$attachment = $this->attachment;
+
 		// Prevent unallowed editing
-		if (!$this->attachment->parent->userMayEditAttachment($this->attachment))
+		if (!$this->attachment->parent->userMayEditAttachment($attachment))
 		{
 			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT');
 			return JError::raiseError(403, $errmsg . ' (ERR 177)');
 		}
+
+		// Construct derived data
+		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
+		if (!isset($attachment->modifier_name))
+		{
+			AttachmentsHelper::addAttachmentUserNames($attachment);
+		}
+
+		// Compute the attachment size in KB
+		$attachment->size_kb = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
+
+		// set up lists for form controls
+		$this->lists = array();
+		$this->lists['published'] = JHtml::_('select.booleanlist', 'state',
+									   'class="inputbox"', $attachment->state);
+		$this->lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
+									   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
+									   $attachment->url_valid);
+
+		// Construct the drop-down list for legal icon filenames
+		$icon_filenames = array();
+		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
+		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname)
+		{
+			$icon_filenames[] = JHtml::_('select.option', $ifname);
+		}
+		$this->lists['icon_filenames'] =JHtml::_('select.genericlist',	 $icon_filenames,
+												 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
+												 $attachment->icon_filename);
+
+		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
+		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
+
+		// Set up some tooltips
+		$this->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
+		$this->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+		$this->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
+
+		// Set up mootools/modal
+		AttachmentsJavascript::setupModalJavascript();
 
 		// Add the style sheets
 		JHtml::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
@@ -53,14 +99,6 @@ class AttachmentsViewEdit extends JViewLegacy
 		if ( $lang->isRTL() ) {
 			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
 			}
-
-		// Construct derived data
-		$this->url_relative_checked = $this->attachment->url_relative ? 'checked="yes"' : '';
-		$this->verify_url_checked = $this->attachment->url_verify ? 'checked="yes"' : '';
-		if (!isset($this->attachment->modifier_name))
-		{
-			AttachmentsHelper::addAttachmentUserNames($this->attachment);
-		}
 
 		// Set the toolbar
 		$this->addToolBar();

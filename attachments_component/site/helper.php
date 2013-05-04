@@ -385,8 +385,8 @@ class AttachmentsHelper
 			}
 
 		// Get the new filename
-		//	 (Note: The following replacement is necessary to allow
-		//			single quotes in filenames to work correctly.)
+		// (Note: The following replacement is necessary to allow
+		//        single quotes in filenames to work correctly.)
 		$filename = JString::str_ireplace("\'", "'", $_FILES['upload']['name']);
 		$ftype = $_FILES['upload']['type'];
 
@@ -499,62 +499,18 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
+
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
 				$view->update = JRequest::getWord('update');
-
-				// Set up the selection lists
-				$lists = array();
-				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
-											   $attachment->url_valid);
-
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
-					}
-
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->lists = $lists;
-				$view->attachment = $attachment;
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
+
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
-												 $attachment->parent_type, $attachment_id, null, $from);
-
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
-					}
-
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->uri_type		= $attachment->uri_type;
-				$view->url			= $attachment->url;
-				$view->parent_id	= $attachment->parent_id;
-				$view->parent_type	= $attachment->parent_type;
-				$view->description	= $attachment->description;
-				$view->user_field_1 = $attachment->user_field_1;
-				$view->user_field_2 = $attachment->user_field_2;
-				$view->user_field_3 = $attachment->user_field_3;
+												 $attachment->parent_type, null, $from);
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -562,18 +518,16 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
-					$display_name = '';
+					$attachment->display_name = '';
 					}
 				}
 
 			// Set up the view
-			$view->parent_entity = $attachment->parent_entity;
-			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title = $parent->title;
+			$view->attachment = $attachment;
+
 			$view->new_parent = $parent->new;
 
-			$view->display_name = $display_name;
-
+			$view->parent = $parent;
 			$view->params = $params;
 
 			$view->from = $from;
@@ -590,7 +544,7 @@ class AttachmentsHelper
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
 		$cmparams = JComponentHelper::getParams('com_media');
 
-		// First check to make sure the extension is allowed
+		// Check to make sure the extension is allowed
 		jimport('joomla.filesystem.file');
 		$allowable = explode( ',', $cmparams->get( 'upload_extensions' ));
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ));
@@ -633,62 +587,18 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
+
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
 				$view->update = JRequest::getWord('update');
-
-				// Set up the selection lists
-				$lists = array();
-				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
-											   $attachment->url_valid);
-
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
-					}
-
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->lists = $lists;
-				$view->attachment = $attachment;
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
+
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
-
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
-					}
-
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->uri_type =		 $attachment->uri_type;
-				$view->url =				 $attachment->url;
-				$view->parent_id = $attachment->parent_id;
-				$view->parent_type =		 $attachment->parent_type;
-				$view->description =		 $attachment->description;
-				$view->user_field_1 =	 $attachment->user_field_1;
-				$view->user_field_2 =	 $attachment->user_field_2;
-				$view->user_field_3 =	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
@@ -696,33 +606,17 @@ class AttachmentsHelper
 			if ( $save_type == 'update' ) {
 				$new_uri_type = JRequest::getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
-					$display_name = '';
+					$attachment->display_name = '';
 					}
 				}
 
 			// Set up the view
-			$view->parent_entity =	 $attachment->parent_entity;
-			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title =	 $parent->title;
+			$view->attachment = $attachment;
+
 			$view->new_parent = $parent->new;
 
-			$view->display_name = $display_name;
-
+			$view->parent = $parent;
 			$view->params = $params;
-
-			// Set up publishing info
-			$view->may_publish = $may_publish;
-			if ( $may_publish ) {
-				$default_state = $params->get('publish_default', false);
-				$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
-				}
-
-			// Set up the access levels
-			if ( $params->get('allow_frontend_access_editing', false) ) {
-				require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-				$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
-				$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-				}
 
 			$view->from = $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
@@ -811,38 +705,16 @@ class AttachmentsHelper
 			$view = new AttachmentsViewUpload();
 			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 											 $attachment->parent_type, null, $from);
-
 			// Set up the view
-			$view->uri_type =		 $attachment->uri_type;
-			$view->url =				 $attachment->url;
-			$view->parent_id = $attachment->parent_id;
-			$view->parent_type =		 $attachment->parent_type;
-			$view->parent_entity =	 $attachment->parent_entity;
-			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title =	 $parent->title;
+			$view->attachment = $attachment;
+
 			$view->new_parent = $parent->new;
-			$view->description =		 $attachment->description;
-			$view->display_name =	 $attachment->display_name;
-			$view->user_field_1 =	 $attachment->user_field_1;
-			$view->user_field_2 =	 $attachment->user_field_2;
-			$view->user_field_3 =	 $attachment->user_field_3;
-			$view->from =			 $from;
+
+			$view->parent = $parent;
+			$view->params =	$params;
+
+			$view->from = $from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
-			$view->params =				 $params;
-
-			// Set up publishing info
-			$view->may_publish = $may_publish;
-			if ( $may_publish ) {
-				$default_state = $params->get('publish_default', false);
-				$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
-				}
-
-			// Set up the access levels
-			if ( $params->get('allow_frontend_access_editing', false) ) {
-				require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-				$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
-				$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-				}
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -1079,44 +951,6 @@ class AttachmentsHelper
 			}
 
 		return $result;
-	}
-
-
-	/**
-	 * Add the user names for creator and modifier to an attachment
-	 *
-	 * This is needed for attachments that are created from scratch
-	 * (eg, via form processing)
-	 *
-	 * Note: This function does not check to make sure the current user has
-	 *       necessary permissions to access the attachment.
-	 *
-	 * @param  object  $attachment  the attachment to add the names to
-	 */
-	public static function addAttachmentUserNames(&$attachment)
-	{
-		// Get the names of the users from the database item for this attachment
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		
-		$query->select('a.id');
-		$query->from('#__attachments as a');
-
-		$query->select('u1.name as creator_name');
-		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
-
-		$query->select('u2.name as modifier_name');
-		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
-
-		$query->where('a.id = '.(int)$attachment->id);
-
-		// Do the query and get the result
-		$db->setQuery($query, 0, 1);
-		$result = $db->loadObject();
-
-		// Copy the names to this attachment object
-		$attachment->creator_name = $result->creator_name;
-		$attachment->modifier_name = $result->modifier_name;
 	}
 
 
@@ -1359,15 +1193,15 @@ class AttachmentsHelper
 			$old_display_name = JRequest::getString('old_display_name', null);
 			}
 
-		// Set up the entity name for display
-		$parent_entity = $attachment->parent_entity;
-		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-
 		// Check to make sure the URL is valid
 		$from = JRequest::getWord('from');
 
 		// Get the info from the url
 		$result = AttachmentsHelper::get_url_info($attachment->url, $attachment, $verify, $relative_url);
+
+		// Save the info about the URL flags
+		$attachment->url_verify = $verify;
+		$attachment->url_relative = $relative_url;
 
 		// If there was an error, bow out
 		if ( $result !== true ) {
@@ -1383,82 +1217,33 @@ class AttachmentsHelper
 			if ( $update ) {
 				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 				$view = new AttachmentsViewUpdate();
-				AttachmentsHelper::add_view_urls($view, 'update',
-												 $attachment->parent_id, $attachment->parent_type,
-												 $attachment_id, $from);
 
+				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
+												 $attachment->parent_type, $attachment_id, $from);
 				$view->update = $update_form;
-
-				// Set up the selection lists
-				$lists = array();
-				$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
-											   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
-											   $attachment->url_valid);
-
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
-					}
-
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->lists = $lists;
-				$view->attachment = $attachment;
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
 				$view = new AttachmentsViewUpload();
-				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id, $attachment->parent_type, null, $from);
 
-				// Set up publishing info
-				$view->may_publish = $may_publish;
-				if ( $may_publish ) {
-					$default_state = $params->get('publish_default', false);
-					$view->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $default_state);
-					}
+				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
+												 $attachment->parent_type, null, $from);
 
-				// Set up for editing the access level
-				if ( $params->get('allow_frontend_access_editing', false) ) {
-					require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-					$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-					$view->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-					}
-
-				$view->uri_type =		 $attachment->uri_type;
-				$view->url =			 $attachment->url;
-				$view->parent_id =       $attachment->parent_id;
-				$view->parent_type =	 $attachment->parent_type;
-				$view->description =	 $attachment->description;
-				$view->user_field_1 =	 $attachment->user_field_1;
-				$view->user_field_2 =	 $attachment->user_field_2;
-				$view->user_field_3 =	 $attachment->user_field_3;
 				}
 
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
 			if ( $update && (($update == 'file') || ($update != $attachment->uri_type)) ) {
-				$display_name = '';
+				$attachment->display_name = '';
 				}
 
 			// Set up the view
+			$view->attachment = $attachment;
 
-			// Set up the selection lists
-			$view->parent_entity =	   $attachment->parent_entity;
-			$view->parent_entity_name = $parent_entity_name;
-			$view->parent_title =	   $parent->title;
 			$view->new_parent = $parent->new;
 
-			$view->description =	 $attachment->description;
-			$view->display_name =	   $display_name;
-
-			$view->params =		$params;
+			$view->parent = $parent;
+			$view->params = $params;
 
 			$view->from =	$from;
 			$view->Itemid = JRequest::getInt('Itemid', 1);
@@ -1728,7 +1513,7 @@ class AttachmentsHelper
 	 * @return '' if successful, else an error message
 	 */
 	public static function switch_parent(&$attachment, $old_parent_id, $new_parent_id,
-								  $new_parent_type=null, $new_parent_entity=null)
+										 $new_parent_type=null, $new_parent_entity=null)
 	{
 		// Switch the parent as specified, renaming the file as necessary
 		// Return success status
@@ -1798,6 +1583,8 @@ class AttachmentsHelper
 
 		// Save the changes to the attachment record immediately
 		$attachment->parent_id = $new_parent_id;
+		$attachment->parent_entity = $parent_entity;
+		$attachment->parent_entity_name = $parent_entity_name;	
 		$attachment->filename_sys = $new_filename_sys;
 		$attachment->url = $new_url;
 
@@ -1805,6 +1592,44 @@ class AttachmentsHelper
 		AttachmentsHelper::clean_directory($old_filename_sys);
 
 		return '';
+	}
+
+
+	/**
+	 * Add the user names for creator and modifier to an attachment
+	 *
+	 * This is needed for attachments that are created from scratch
+	 * (eg, via form processing)
+	 *
+	 * Note: This function does not check to make sure the current user has
+	 *       necessary permissions to access the attachment.
+	 *
+	 * @param  object  $attachment  the attachment to add the names to
+	 */
+	public static function addAttachmentUserNames(&$attachment)
+	{
+		// Get the names of the users from the database item for this attachment
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$query->select('a.id');
+		$query->from('#__attachments as a');
+
+		$query->select('u1.name as creator_name');
+		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
+
+		$query->select('u2.name as modifier_name');
+		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
+
+		$query->where('a.id = '.(int)$attachment->id);
+
+		// Do the query and get the result
+		$db->setQuery($query, 0, 1);
+		$result = $db->loadObject();
+
+		// Copy the names to this attachment object
+		$attachment->creator_name = $result->creator_name;
+		$attachment->modifier_name = $result->modifier_name;
 	}
 
 
@@ -1831,7 +1656,10 @@ class AttachmentsHelper
 		$user	= JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
-		// Generate the HTML for the attachments for the specified parent
+		// Make sure there are some potentially accessible attachments for
+		// this parent before proceeding.  Note that this check is not as
+		// careful as the check in the Attachments model which is used by
+		// the 'Attachments' view which is invoked below.
 		$alist = '';
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -1847,6 +1675,7 @@ class AttachmentsHelper
 			JError::raiseError(500, $errmsg);
 			}
 
+		// Generate the HTML for the attachments for the specified parent
 		if ( $total > 0 ) {
 
 			// Get the component parameters

@@ -191,7 +191,11 @@ class AttachmentsTableAttachment extends JTable
 	{
 		// make sure the display name and description are escaped since they may contain quotes
 		$this->display_name = $this->_db->escape($this->display_name);
-		$this->description = $this->_db->escape($this->description);
+		$this->description  = $this->_db->escape($this->description);
+
+		$this->user_field_1 = $this->_db->escape($this->user_field_1);
+		$this->user_field_2 = $this->_db->escape($this->user_field_2);
+		$this->user_field_3 = $this->_db->escape($this->user_field_3);
 
 		// Let the parent class do the real work!
 		return parent::store($updateNulls);

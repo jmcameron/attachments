@@ -203,8 +203,8 @@ class plgContentAttachments extends JPlugin
 		$html = '';
 		$attachments_list = false;
 		$add_attachement_btn = false;
-		$attachments_list =
-			$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+		$attachments_list = $this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity,
+														$user_can_add, $Itemid, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
@@ -230,8 +230,8 @@ class plgContentAttachments extends JPlugin
 		// Construct the add-attachments button, if appropriate
 		$hide_add_attachments_link = $attachParams->get('hide_add_attachments_link', 0);
 		if ( $user_can_add && !$hide_add_attachments_link ) {
-			$add_attachments_btn =
-				$this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
+			$add_attachments_btn = $this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity,
+																 $Itemid, $from);
 			$html .= $add_attachments_btn;
 			}
 
@@ -437,8 +437,8 @@ class plgContentAttachments extends JPlugin
 		$html = '';
 		$attachments_list = false;
 		$add_attachement_btn = false;
-		$attachments_list =
-			$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity, $user_can_add, $Itemid, $from);
+		$attachments_list =	$this->_attachmentsListHTML($parent_type, $parent_id, $parent_entity,
+														$user_can_add, $Itemid, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ( $attachments_list == '' ) {
@@ -464,8 +464,8 @@ class plgContentAttachments extends JPlugin
 		// Construct the add-attachments button, if appropriate
 		$hide_add_attachments_link = $attachParams->get('hide_add_attachments_link', 0);
 		if ( $user_can_add && !$hide_add_attachments_link ) {
-			$add_attachments_btn =
-				$this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from);
+			$add_attachments_btn = $this->_attachmentButtonsHTML($parent_type, $parent_id, $parent_entity,
+																 $Itemid, $from);
 			$html .= $add_attachments_btn;
 			}
 

@@ -213,7 +213,7 @@ class AttachmentsImport
 				}
 
 			// Do any necessary overrides
-			$attachment->parent_entity = $parent_entity;
+			$attachment->parent_entity = $parent_entity;  // ??? what about p_e_name?
 			$attachment->access = $default_access_level;
 			$attachment->file_size = (int)$adata[$field['file_size']];
 

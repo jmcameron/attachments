@@ -17,6 +17,9 @@ defined('_JEXEC') or die('Restricted access');
 // Load the tooltip behavior.
 JHtml::_('behavior.tooltip');
 
+// Disable the main menu
+// ??? JRequest::setVar( 'hidemainmenu', 1 );
+
 // Add the plugins stylesheet to style the list of attachments
 $user = JFactory::getUser();
 $document = JFactory::getDocument();
@@ -50,9 +53,8 @@ $mdate->setTimezone($tz);
 $modified = $mdate->format("Y-m-d H:i", true);
 
 $update = $this->update;
-$uri_type = $attachment->uri_type;
 
-$show_download_count = $secure && ($uri_type == 'file');
+$show_download_count = $secure && ($attachment->uri_type == 'file');
 if ( $show_download_count ) {
 	$download_count_tooltip = JText::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' . JText::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
 	}
@@ -75,6 +77,7 @@ else
 	  name="adminForm" id="adminForm">
 <fieldset class="adminform">
 <table class="admintable">
+<tbody>
   <tr>
 <?php if ( $this->change_parent ): ?>
 	  <td class="key"><label for="parent_id"><b><?php
@@ -128,17 +131,17 @@ else
 
 <?php endif; ?>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_ATTACHMENT_TYPE'); ?></label></td>
-  <td colspan="5"><?php echo JText::_('ATTACH_' . JString::strtoupper($uri_type));?>
-  <?php if ( ($uri_type == 'file') && ( $update != 'url' ) ): ?>
+  <td colspan="5"><?php echo JText::_('ATTACH_' . JString::strtoupper($attachment->uri_type));?>
+  <?php if ( ($attachment->uri_type == 'file') && ( $update != 'url' ) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_url_url ?>"
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_URL') . '::' . JText::_('ATTACH_CHANGE_TO_URL_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_CHANGE_TO_URL') ?></a>
-  <?php elseif ( ($uri_type == 'url') && ($update != 'file') ): ?>
+  <?php elseif ( ($attachment->uri_type == 'url') && ($update != 'file') ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_file_url ?>"
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_FILE') . '::' . JText::_('ATTACH_CHANGE_TO_FILE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_CHANGE_TO_FILE') ?></a>
-  <?php elseif ( (($uri_type == 'file') && ($update != 'file')) ||
-				 (($uri_type == 'url') && ($update != 'url')) ): ?>
+  <?php elseif ( (($attachment->uri_type == 'file') && ($update != 'file')) ||
+				 (($attachment->uri_type == 'url') && ($update != 'url')) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->normal_update_url ?>"
 		 title="<?php echo JText::_('ATTACH_NORMAL_UPDATE') . '::' . JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		 ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a>
@@ -163,18 +166,18 @@ else
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	 &nbsp;&nbsp;&nbsp;&nbsp;
 	 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->url_relative_checked ?>
+	 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->relative_url_checked ?>
 			title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		 <br />
 		 <input type="text" name="url" id="upload"
 			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
-			 value="<?php if ( $uri_type == 'url' ) { echo $attachment->url; } ?>" />
+			 value="<?php if ( $attachment->uri_type == 'url' ) { echo $attachment->url; } ?>" />
 		 <br />
 		 <?php echo JText::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?>
 	  </td>
   </tr>
 <?php else: ?>
-   <?php if ( $uri_type == 'file' ): ?>
+   <?php if ( $attachment->uri_type == 'file' ): ?>
    <tr>
 	  <td class="key"><label><?php echo JText::_('ATTACH_FILENAME'); ?></label></td>
 	  <td colspan="5"><?php echo $attachment->filename; ?>
@@ -189,10 +192,10 @@ else
   <tr><td class="key"><label><?php echo JText::_('ATTACH_URL_COLON'); ?></label></td>
 	  <td colspan="5"><?php echo $attachment->url; ?></td>
   </tr>
-   <?php elseif ( $uri_type == 'url' ): ?>
+   <?php elseif ( $attachment->uri_type == 'url' ): ?>
   <tr>
 	  <td class="key"><label for="upload"><?php
-	if ( $uri_type == 'file' ) {
+	if ( $attachment->uri_type == 'file' ) {
 	echo JText::_('ATTACH_ENTER_NEW_URL_COLON');
 		}
 	else {
@@ -203,14 +206,14 @@ else
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 		 <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
-	 &nbsp;&nbsp;&nbsp;&nbsp;
+	     &nbsp;&nbsp;&nbsp;&nbsp;
 		 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->url_relative_checked ?>
-			title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
-	  <br />
-	  <input type="text" name="url" id="upload" value="<?php echo $attachment->url; ?>"
-			 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />
-	  <input type="hidden" name="old_url" value="<?php echo $attachment->url; ?>" />
+	     <input type="checkbox" name="url_relative" value="relative" <?php echo $this->relative_url_checked ?>
+		        title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+	     <br />
+		 <input type="text" name="url" id="upload" value="<?php echo $attachment->url; ?>"
+		 		 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />
+		 <input type="hidden" name="old_url" value="<?php echo $attachment->url; ?>" />
 	  </td>
    </tr>
    <tr>
@@ -220,24 +223,24 @@ else
    <?php endif; ?>
 <?php endif; ?>
 
-<?php if ( (($uri_type == 'file') AND ($update == '')) OR ($update == 'file') ): ?>
+<?php if ( (($attachment->uri_type == 'file') AND ($update == '')) OR ($update == 'file') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo $this->display_filename_tooltip; ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
 	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
-				 value="<?php echo $this->display_name;?>"
+				 value="<?php echo $attachment->display_name;?>"
 				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?></td>
   </tr>
-<?php elseif ( (($uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
+<?php elseif ( (($attachment->uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
   <tr><td class="key"><label class="hasTip" for="display_name"
 							 title="<?php echo $this->display_url_tooltip; ?>"
 							 ><?php echo JText::_('ATTACH_DISPLAY_URL'); ?></label></td>
 	  <td colspan="5"><input class="text hasTip" type="text" name="display_name"
 				 id="display_name" size="80" maxlength="80"
 				 title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
-				 value="<?php echo $this->display_name;?>"
+				 value="<?php echo $attachment->display_name;?>"
 				 />&nbsp;&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?></td>
   </tr>
 <?php endif; ?>
@@ -248,7 +251,7 @@ else
 	  <td colspan="5"><input class="text hasTip" type="text" name="description"
 			 title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 				 id="description" size="80" maxlength="255"
-				 value="<?php echo $this->description;?>" /></td>
+				 value="<?php echo stripslashes($attachment->description);?>" /></td>
   </tr>
 <?php if ( $this->may_publish ): ?>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
@@ -262,28 +265,34 @@ else
   <tr><td class="key"><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?></label></td>
 	  <td colspan="5"><input class="text" type="text" name="user_field_1"
 		 id="user_field_1" size="80" maxlength="100"
-		 value="<?php echo $attachment->user_field_1;?>" /></td>
+		 value="<?php echo stripslashes($attachment->user_field_1); ?>" /></td>
   </tr>
   <?php endif; ?>
   <?php if ( $params->get('user_field_2_name', '') != '' ): ?>
   <tr><td class="key"><label for="user_field_2"><?php echo $params->get('user_field_2_name'); ?></label></td>
 	  <td colspan="5"><input class="text" type="text" name="user_field_2"
 		 id="user_field_2" size="80" maxlength="100"
-		 value="<?php echo $attachment->user_field_2;?>" /></td>
+		 value="<?php echo stripslashes($attachment->user_field_2); ?>" /></td>
   </tr>
   <?php endif; ?>
   <?php if ( $params->get('user_field_3_name', '') != '' ): ?>
   <tr><td class="key"><label for="user_field_3"><?php echo $params->get('user_field_3_name'); ?></label></td>
 	  <td colspan="5"><input class="text" type="text" name="user_field_3"
 		 id="user_field_3" size="80" maxlength="100"
-		 value="<?php echo $attachment->user_field_3;?>" /></td>
+		 value="<?php echo stripslashes($attachment->user_field_3); ?>" /></td>
   </tr>
   <?php endif; ?>
   <tr>
 	  <td class="key"><label for="icon_filename"><?php echo JText::_('ATTACH_ICON_FILENAME'); ?></label></td>
 	  <td><?php echo $this->lists['icon_filenames']; ?></td>
 	  <td class="key2"><label><?php echo JText::_('ATTACH_FILE_TYPE'); ?></label></td>
-	  <td colspan="3"><?php echo $attachment->file_type; ?></td>
+	  <?php if ($secure) { $ncols = 1; } else { $ncols = 3; }; ?>
+	  <td colspan="<?php echo $ncols ?>"><?php echo $attachment->file_type; ?></td>
+	  <?php if ($secure): ?>
+	  <td class="key hasTip" title="<?php echo $download_count_tooltip; ?>">
+		  <label for="download_count"><?php echo JText::_('ATTACH_NUMBER_OF_DOWNLOADS'); ?></label></td>
+	  <td class="hasTip" name="download_count" title="<?php echo $download_count_tooltip; ?>"><?php echo $attachment->download_count ?></td>
+	  <?php endif; ?>
   </tr>
   <tr>
 	  <td class="key"><label><?php echo JText::_('ATTACH_FILE_SIZE'); ?></label></td?>
@@ -301,18 +310,12 @@ else
 	  <td class="key2"><label><?php echo JText::_('JGLOBAL_FIELD_MODIFIED_BY_LABEL'); ?></label></td>
 	  <td><?php echo $attachment->modifier_name;?></td>
   </tr>
-<?php if ( $show_download_count ): ?>
-  <tr>
-	<td class="key"><label class="hasTip" title="<?php echo $download_count_tooltip; ?>"><?php echo JText::_('ATTACH_NUMBER_OF_DOWNLOADS'); ?></label></td>
-	<td colspan="5" class="hasTip" title="<?php echo $download_count_tooltip; ?>"><?php echo $attachment->download_count; ?></td>
-  </tr>
-<?php endif; ?>
-
+</tbody>
 </table>
 </fieldset>
 <input type="hidden" name="id" value="<?php echo $attachment->id; ?>" />
 <input type="hidden" name="update" value="<?php echo $update; ?>" />
-<input type="hidden" name="uri_type" value="<?php echo $uri_type; ?>" />
+<input type="hidden" name="uri_type" value="<?php echo $attachment->uri_type; ?>" />
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $parent_id; ?>" />
 <input type="hidden" name="parent_type" id="parent_type" value="<?php echo $attachment->parent_type; ?>" />
 <input type="hidden" name="parent_entity" id="parent_entity" value="<?php echo $attachment->parent_entity; ?>" />
@@ -321,7 +324,7 @@ else
 <input type="hidden" name="old_parent_entity" value="<?php echo $attachment->parent_entity ?>" />
 <input type="hidden" name="new_parent_type" id="new_parent_type" value="<?php echo $this->new_parent_type; ?>" />
 <input type="hidden" name="new_parent_entity" id="new_parent_entity" value="<?php echo $this->new_parent_entity; ?>" />
-<input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
+<input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 <input type="hidden" name="option" value="<?php echo $this->option;?>" />
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />
 <input type="hidden" name="task" value="attachment.edit" />

@@ -129,9 +129,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				}
 			}
 
-		// Set up mootools/modal
-		AttachmentsJavascript::setupModalJavascript();
-
 		// Set up the "select parent" button
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
@@ -201,113 +198,39 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/add/view.html.php');
 		$view = new AttachmentsViewAdd();
 
-		$view->uri_type		 = $uri_type;
-		$view->url			 = '';
-		$view->state		 = $params->get('publish_default', false);
+		AttachmentsControllerAttachment::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
+		// ??? Move the add_view_urls function to attachments base view class
+
+		// We do not have a real attachment yet so fake it
+		$attachment = new JObject();
+
+		$attachment->uri_type = $uri_type;
+		$attachment->state  = $params->get('publish_default', false);
+		$attachment->url = '';
+		$attachment->url_relative = false;
+		$attachment->url_verify = true;
+		$attachment->display_name = '';
+		$attachment->description = '';
+		$attachment->user_field_1 = '';
+		$attachment->user_field_2 = '';
+		$attachment->user_field_3 = '';
+		$attachment->parent_id     = $parent_id;
+		$attachment->parent_type   = $parent_type;
+		$attachment->parent_entity = $parent_entity;
+		$attachment->parent_title  = $parent_title;
+
+		$view->attachment = $attachment;
 
 		$view->parent		 = $parent;
-		$view->parent_id	 = $parent_id;
-		$view->parent_type	 = $parent_type;
-		$view->parent_entity = $parent_entity;
-		$view->parent_entity_name =	 $parent_entity_name;
-		$view->parent_title	 = $parent_title;
 		$view->new_parent	 = $new_parent;
 		$view->may_publish	 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		$view->entity_info	 = $entity_info;
 		$view->option		 = $this->option;
 		$view->from			 = $from;
 
-		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
-		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
-		$view->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
+		$view->params        = $params;
 
-		// Add the published selection
-		$lists = Array();
-		$lists['published'] = JHtml::_('select.booleanlist', 'state',
-									   'class="inputbox"', $view->state);
-
-		$view->lists = $lists;
-
-		// Set up the access field
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-		$view->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
-
-		// Handle user field 1
-		$show_user_field_1 = false;
-		$user_field_1_name = $params->get('user_field_1_name', '');
-		if ( $user_field_1_name != '' ) {
-			$show_user_field_1 = true;
-			$view->user_field_1_name =	$user_field_1_name;
-			}
-		$view->show_user_field_1 =	$show_user_field_1;
-
-		// Handle user field 2
-		$show_user_field_2 = false;
-		$user_field_2_name = $params->get('user_field_2_name', '');
-		if ( $user_field_2_name != '' ) {
-			$show_user_field_2 = true;
-			$view->user_field_2_name =	$user_field_2_name;
-			}
-		$view->show_user_field_2 =	$show_user_field_2;
-
-		// Handle user field 3
-		$show_user_field_3 = false;
-		$user_field_3_name = $params->get('user_field_3_name', '');
-		if ( $user_field_3_name != '' ) {
-			$show_user_field_3 = true;
-			$view->user_field_3_name =	$user_field_3_name;
-			}
-		$view->show_user_field_3 =	$show_user_field_3;
-
-		// Set up to toggle between uploading file/urls
-		AttachmentsControllerAttachment::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
-		if ( $uri_type == 'file' ) {
-			$upload_toggle_button_text = JText::_('ATTACH_ENTER_URL_INSTEAD');
-			$upload_toggle_tooltip = JText::_('ATTACH_ENTER_URL_INSTEAD_TOOLTIP');
-			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=url';
-			}
-		else {
-			$upload_toggle_button_text = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
-			$upload_toggle_tooltip = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD_TOOLTIP');
-			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=file';
-			}
-		if ( $from == 'closeme' ) {
-			$upload_toggle_url .= '&amp;tmpl=component';
-			}
-		if ( $from ) {
-			$upload_toggle_url .= '&amp;from=' . $from;
-			}
-
-		// Update the toggle URL to not forget if the parent is not simply an article
-		if ( !( ($parent_type == 'com_content') && ($parent_entity == 'default')) ) {
-			$upload_toggle_url .= "&amp;parent_type=$parent_type";
-			if ( $parent_entity != 'default' ) {
-				$upload_toggle_url .= ".$parent_entity";
-				}
-			}
-
-		// If this is for an existing content item, modify the URL appropriately
-		if ( $new_parent ) {
-			$upload_toggle_url .= "&amp;parent_id=0,new";
-			}
-		elseif ( $parent_id && ($parent_id != -1) ) {
-			$upload_toggle_url .= "&amp;parent_id=$parent_id";
-			}
-		if ( JRequest::getWord('editor') ) {
-			$upload_toggle_url .= "&amp;editor=" . JRequest::getWord('editor');
-			}
-
-		$view->upload_toggle_button_text =	$upload_toggle_button_text;
-		$view->upload_toggle_url =		  $upload_toggle_url;
-		$view->upload_toggle_tooltip =	  $upload_toggle_tooltip;
-
-		// Set up the 'select parent' button
-		$view->selpar_label =  JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
-		$view->selpar_btn_text =  '&nbsp;' . JText::sprintf('ATTACH_SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
-		$view->selpar_btn_tooltip =	 JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
-		$view->selpar_btn_url =	 $parent->getSelectEntityURL($parent_entity);
-
+		// Display the add form
 		$view->display();
 	}
 
@@ -421,8 +344,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			}
 
 		// Update the url checkbox fields
-		$attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
-		$attachment->url_verify = JRequest::getWord('verify_url') == 'verify';
+		$attachment->url_relative = $relative_url;
+		$attachment->url_verify = $verify_url;
 
 		// Update create/modify info
 		$attachment->created_by = $user->get('id');
@@ -598,31 +521,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$from = JRequest::getWord('from');
 		$layout = JRequest::getWord('tmpl');
 
-		// Set up mootools/modal
-		AttachmentsJavascript::setupModalJavascript();
-
-		// set up lists for form controls
-		$lists = array();
-		$lists['published'] = JHtml::_('select.booleanlist', 'state',
-									   'class="inputbox"', $attachment->state);
-		$lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
-									   'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
-									   $attachment->url_valid);
-
-		// Construct the drop-down list for legal icon filenames
-		$icon_filenames = array();
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
-		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
-			$icon_filenames[] = JHtml::_('select.option', $ifname);
-			}
-		$lists['icon_filenames'] =
-			JHtml::_('select.genericlist',	 $icon_filenames,
-					 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
-					 $attachment->icon_filename);
-
-		// Compute the attachment size in KB
-		$attachment->size_kb = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
-
+		// Fix the URL for files
 		if ( $attachment->uri_type == 'file' ) {
 			$attachment->url = $uri->root(true) . '/' . $attachment->url;
 			}
@@ -643,11 +542,12 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Get the parent info
-		$attachment->parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 		$parent_title = $parent->getTitle($parent_id, $parent_entity);
 		if ( !$parent_title ) {
-			$parent_title = JText::sprintf('ATTACH_NO_PARENT_S', $attachment->parent_entity_name);
+			$parent_title = JText::sprintf('ATTACH_NO_PARENT_S', $parent_entity_name);
 			}
+		$attachment->parent_entity_name = $parent_entity_name;
 		$attachment->parent_title = $parent_title;
 		$attachment->parent_published = $parent->isParentPublished($parent_id, $parent_entity);
 		$update = JRequest::getWord('update');
@@ -666,8 +566,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		   };";
 			$document->addScriptDeclaration($js);
 			}
-
-		JRequest::setVar( 'hidemainmenu', 1 );
 
 		// See if a new type of parent was requested
 		$new_parent_type = '';
@@ -746,11 +644,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		// Suppress the display filename if we are switching from file to url
 		$display_name = $attachment->display_name;
 		if ( $update && ($update != $attachment->uri_type) ) {
-			$display_name = '';
+			$attachment->display_name = '';
 			}
-
-// ??? 		// Handle the relative URL checkbox
-// ??? 		$view->url_relative_checked = $attachment->url_relative ? 'checked="yes"' : '';
 
 		// Handle iframe popup requests
 		$known_froms = array('editor', 'closeme');
@@ -775,21 +670,16 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->new_parent_type	 = $new_parent_type;
 		$view->new_parent_entity = $new_parent_entity;
 		$view->change_parent_url = $change_parent_url;
-		$view->display_name		 = stripslashes($display_name);
-		$view->description		 = stripslashes($attachment->description);
 		$view->entity_info		 = $entity_info;
 		$view->may_publish		 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 
-		$view->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
-		$view->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
-		$view->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
-
-		$view->lists	  = $lists;
-		$view->attachment = $attachment;
-		$view->params	  = $params;
-
 		$view->from		  = $from;
 		$view->option	  = $this->option;
+
+		$view->attachment = $attachment;
+
+		$view->parent     = $parent;
+		$view->params	  = $params;
 
 		// Set up for selecting a new type of parent
 		if ( $change_parent ) {
@@ -1044,8 +934,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if ( $attachment->uri_type == 'url' ) {
 
 				// Update the url_relative field
-				// ??? $attachment->url_relative = JRequest::getWord('url_relative') == 'relative';
-				// ??? $attachment->url_verify = JRequest::getWord('verify_url') == 'verify';
 				$attachment->url_relative = $relative_url;
 				$attachment->url_verify = $verify_url;
 				}
@@ -1097,16 +985,16 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if ( $parent_changed ) {
 				$parent_type = $old_parent_type;
 				$parent_entity = $old_parent_entity;
-				$pid = $old_parent_id;
+				$parent_id = $old_parent_id;
 				}
 			else {
-				$pid = (int)$attachment->parent_id;
+				$parent_id = (int)$attachment->parent_id;
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $from);
 			exit();
 			}
 

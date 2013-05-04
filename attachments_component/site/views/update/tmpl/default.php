@@ -22,11 +22,10 @@ $uri = JFactory::getURI();
 
 $lang = JFactory::getLanguage();
 
+// For convenience
 $attachment = $this->attachment;
 $params = $this->params;
-
 $update = $this->update;
-$uri_type = $attachment->uri_type;
 
 $parent_id = $attachment->parent_id;
 if ( $parent_id === null ) {
@@ -88,7 +87,7 @@ $uri = JFactory::getURI();
 
 AttachmentsJavascript::setupJavascript();
 
-if ( $uri_type == 'file' ) {
+if ( $attachment->uri_type == 'file' ) {
 	$header_msg = JText::sprintf('ATTACH_UPDATE_ATTACHMENT_FILE_S', $filename);
 	}
 else {
@@ -108,7 +107,7 @@ if ( $this->error )
 	  action="<?php echo $this->save_url; ?>" method="post">
 	<fieldset>
 		<legend><?php echo JText::sprintf('ATTACH_UPDATE_ATTACHMENT_FOR_PARENT_S_COLON_S',
-										  $this->parent_entity_name, $this->parent_title); ?></legend>
+										  $attachment->parent_entity_name, $attachment->parent_title); ?></legend>
 		<?php if ( $this->error_msg ): ?>
 		<div class="formWarning" id="formWarning"><?php echo $this->error_msg; ?></div>
 		<?php endif; ?>
@@ -129,8 +128,8 @@ if ( $this->error )
 			   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-		<input type="checkbox" name="relative_url" value="relative"
-               <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+		<input type="checkbox" name="relative_url" value="relative" <?php echo $this->relative_url_checked ?>
+               title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		<a class="changeButton" href="<?php echo $this->normal_update_url ?>"
 		   title="<?php echo JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a> <br />
@@ -140,7 +139,7 @@ if ( $this->error )
 		echo JText::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?>
 		</p>
 <?php else: ?>
-<?php if ( $uri_type == 'file' ): ?>
+<?php if ( $attachment->uri_type == 'file' ): ?>
 		<p><label><?php echo JText::_('ATTACH_FILENAME_COLON'); ?></label> <?php echo $filename; ?>
 		<a class="changeButton" href="<?php echo $this->change_file_url ?>"
 		   title="<?php echo JText::_('ATTACH_CHANGE_FILE_TOOLTIP'); ?>"
@@ -149,7 +148,7 @@ if ( $this->error )
 		   title="<?php echo JText::_('ATTACH_CHANGE_TO_URL_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_CHANGE_TO_URL') ?></a>
 		</p>
-<?php elseif ( $uri_type == 'url' ): ?>
+<?php elseif ( $attachment->uri_type == 'url' ): ?>
 <p><label for="<?php echo $update_id; ?>"><?php echo JText::_('ATTACH_ENTER_NEW_URL_COLON') ?></label>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
@@ -157,8 +156,8 @@ if ( $this->error )
 			   title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-		<input type="checkbox" name="relative_url" value="relative"
-					 <?php echo $this->url_relative_checked ?> title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+		<input type="checkbox" name="relative_url" value="relative" <?php echo $this->relative_url_checked ?>
+			   title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		<a class="changeButton" href="<?php echo $this->change_file_url ?>"
 		   title="<?php echo JText::_('ATTACH_CHANGE_TO_FILE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_CHANGE_TO_FILE') ?></a> </p>
@@ -174,30 +173,30 @@ if ( $this->error )
 </p>
 <?php endif; ?>
 <?php endif; ?>
-<?php if ( (($uri_type == 'file') AND ($update == '') ) OR ($update == 'file') ): ?>
+<?php if ( (($attachment->uri_type == 'file') AND ($update == '') ) OR ($update == 'file') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME_OPTIONAL_COLON'); ?></label>
    <input type="text" name="display_name" id="display_name"
 		  size="70" maxlength="80"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP'); ?>"
-		  value="<?php echo $this->display_name; ?>" />
-   <input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
+		  value="<?php echo $attachment->display_name; ?>" />
+   <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 </p>
-<?php elseif ( (($uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
+<?php elseif ( (($attachment->uri_type == 'url') AND ($update == '')) OR ($update == 'url') ): ?>
 <p class="display_name"><label for="display_name"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
 		  ><?php echo JText::_('ATTACH_DISPLAY_URL_COLON'); ?></label>
    <input type="text" name="display_name" id="display_name"
 		  size="70" maxlength="80"
 		  title="<?php echo JText::_('ATTACH_DISPLAY_URL_TOOLTIP'); ?>"
-		  value="<?php echo $this->display_name; ?>" />
-   <input type="hidden" name="old_display_name" value="<?php echo $this->display_name; ?>" />
+		  value="<?php echo $attachment->display_name; ?>" />
+   <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 </p>
 <?php endif; ?>
 		<p><label for="description"><?php echo JText::_('ATTACH_DESCRIPTION_COLON'); ?></label>
 		   <input type="text" name="description" id="description"
-				  size="70" maxlength="255" value="<?php echo $this->description; ?>" /></p>
+				  size="70" maxlength="255" value="<?php echo stripslashes($attachment->description) ?>" /></p>
 <?php if ( $this->may_publish ): ?>
 		<div class="at_control"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></div>
 <?php endif; ?>
@@ -208,17 +207,17 @@ if ( $this->error )
 		<?php if ( $params->get('user_field_1_name') ): ?>
 		<p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
 		   <input type="text" name="user_field_1" id="user_field_1" size="70" maxlength="100"
-				  value="<?php echo $attachment->user_field_1; ?>" /></p>
+				  value="<?php echo stripslashes($attachment->user_field_1); ?>" /></p>
 		<?php endif; ?>
 		<?php if ( $params->get('user_field_2_name') ): ?>
 		<p><label for="user_field_2"><?php echo $params->get('user_field_2_name'); ?>:</label>
 		   <input type="text" name="user_field_2" id="user_field_2" size="70" maxlength="100"
-				  value="<?php echo $attachment->user_field_2; ?>" /></p>
+				  value="<?php echo stripslashes($attachment->user_field_2); ?>" /></p>
 		<?php endif; ?>
 		<?php if ( $params->get('user_field_3_name') ): ?>
 		<p><label for="user_field_3"><?php echo $params->get('user_field_3_name'); ?>:</label>
 		   <input type="text" name="user_field_3" id="user_field_3" size="70" maxlength="100"
-				  value="<?php echo $attachment->user_field_3; ?>" /></p>
+				  value="<?php echo stripslashes($attachment->user_field_3); ?>" /></p>
 		<?php endif; ?>
 		<p><?php echo JText::sprintf('ATTACH_LAST_MODIFIED_ON_D_BY_S',
 									 $last_modified, $attachment->modifier_name); ?></p>
@@ -228,11 +227,11 @@ if ( $this->error )
 	<input type="hidden" name="id" value="<?php echo $attachment->id; ?>" />
 	<input type="hidden" name="save_type" value="update" />
 	<input type="hidden" name="update" value="<?php echo $update; ?>" />
-	<input type="hidden" name="uri_type" value="<?php echo $uri_type; ?>" />
+	<input type="hidden" name="uri_type" value="<?php echo $attachment->uri_type; ?>" />
 	<input type="hidden" name="new_parent" value="<?php echo $this->new_parent; ?>" />
 	<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
 	<input type="hidden" name="parent_type" value="<?php echo $attachment->parent_type; ?>" />
-	<input type="hidden" name="parent_entity" value="<?php echo $this->parent_entity; ?>" />
+	<input type="hidden" name="parent_entity" value="<?php echo $attachment->parent_entity; ?>" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
 	<?php echo JHtml::_( 'form.token' ); ?>
@@ -248,10 +247,10 @@ if ( $this->error )
 <?php
 
 // Generate the list of existing attachments
-if ( ($update == 'file') || ($uri_type == 'file') ) {
+if ( ($update == 'file') || ($attachment->uri_type == 'file') ) {
 	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 	$controller = new AttachmentsControllerAttachments();
-	$controller->display($parent_id, $attachment->parent_type, $this->parent_entity,
+	$controller->display($parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'ATTACH_EXISTING_ATTACHMENTS',
 						 false, false, true, $this->from);
 	}
