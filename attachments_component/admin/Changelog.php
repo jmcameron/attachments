@@ -94,6 +94,9 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2012-04-19 Converted help page to use a view with template and translation tokens.
 	- 2012-05-03 Refactored/cleaned up add/edit/update/upload views and controller/helper
 	   code that invokes the views.
+	- 2012-05-04 Refactored and straightened out onPrepareContent callbacks to use fixes
+	   in Joomla 2.5.10+ and Joomla 3.1+.
+	- 2012-05-05 Small improvements to help view coding.
 
 2012-09-07: Release 3.0.4
 	- 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
