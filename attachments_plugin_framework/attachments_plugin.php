@@ -14,6 +14,8 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
+/** Load the attachments helper */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /**
  * Plugins for Attachments
@@ -50,7 +52,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note that this name will be used for a directory for attachments entries
 	 * and should not contain any spaces.  It should correspond to the default
-	 * entity.	For com_content, it will be 'article';
+	 * entity.	For instance, for com_content, it will be 'article';
 	 */
 	var $_default_entity = null;
 
@@ -179,6 +181,46 @@ class AttachmentsPlugin extends JPlugin
 
 
 	/**
+	 * Return the name of the field with the content item text
+	 *
+	 * During the display of content items (eg, articles, categories), the
+	 * onContentPrepare (etc) callbacks are used to insert attachments lists.
+	 * The second argument of the onContentPrepare() function is an object
+	 * (usually $row) for the content item (eg, article).  This function will
+	 * return the appropriate field for the text of the content item.  In some
+	 * cases it is 'text', in others, 'introtext'.  Attachments plugins can
+	 * override this function to provide the field name more intelligently.
+	 *
+	 * Note: returns null if the text field is unknown/not present.
+	 *
+	 * @param &object &$row the content object (eg, article) being displayed
+	 * @param string  $parent_entity the type of entity for this content item.
+	 *
+	 * @return string name of the text field of this content item object.
+	 */
+	protected function getTextFieldName(&$row, $parent_entity)
+	{
+		$text_field_name = null;
+
+		// Ignore items without the normal 'text' field
+		if ( isset($row->text) )
+		{
+			$text_field_name = 'text';
+		}
+		elseif (isset($row->fulltext))
+		{
+			$text_field_name = 'fulltext';
+		}
+		elseif ( isset($row->introtext) )
+		{
+			$text_field_name = 'introtext';
+		}
+
+		return $text_field_name;
+	}
+
+
+	/**
 	 * Return the array of entity IDs for all content items supported by this parent object
 	 *
 	 * @return the array of entities supported by this parent object
@@ -228,7 +270,7 @@ class AttachmentsPlugin extends JPlugin
 			$lang = JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
-									 $parent_entity, $parent_type) . ' (ERR 300)';
+									 $parent_entity, $this->_parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);
 			}
 	}
@@ -747,5 +789,165 @@ class AttachmentsPlugin extends JPlugin
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
 
+
+	/** Insert the attachments list into the content text (for front end)
+	 *
+	 * @param  object  $content  the text of the content item (eg, article text)
+	 * @param  string  $text_name_field name of the field of $content that has the text
+	 * @param  int     $parent_id the ID for the parent object
+	 * @param  string  $parent_entity the type of entity for this parent type
+	 * @param  string  $params  the Attachments parameter
+	 *
+	 * @return string  the modified content text (false for failure)
+	 */
+	public function insertAttachmentsList(&$content, $parent_id, $parent_entity, &$params)
+	{
+		// Get the desired placement
+		$attachments_placement = $params->get('attachments_placement', 'end');
+		if ( $attachments_placement == 'disabled_nofilter' )
+		{
+			return false;
+		}
+
+		// Determine where we are
+		$from = JRequest::getCmd('view');
+		$Itemid = JRequest::getInt( 'Itemid', 1);
+
+		// See whether we can display the links to add attachments
+		$user_can_add = $this->userMayAddAttachment($parent_id, $parent_entity);
+
+		// Get the field name for the content item's text
+		$text_field_name = $this->getTextFieldName($content, $parent_entity);
+		if ($text_field_name === null) {
+			return false;
+			}
+
+		// Get the attachments tag, if present
+		$attachments_tag = '';
+		$attachments_tag_args = '';
+		$match = false;
+		if ( JString::strpos($content->$text_field_name, '{attachments') ) {
+			if ( preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
+							$content->$text_field_name, $match) ) {
+				$attachments_tag = true;
+				}
+			if ( isset($match[1]) && $match[1] ) {
+				$attachments_tag_args_raw = $match[1];
+				$attachments_tag_args = ltrim($attachments_tag_args_raw, ' :');
+				}
+			if ( $attachments_tag ) {
+				$attachments_tag = $match[0];
+				}
+			}
+
+		// Check the security status
+		$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$secure = $params->get('secure', false);
+		$hta_filename = $attach_dir.'/.htaccess';
+		if ( ($secure && !file_exists($hta_filename)) ||
+			 (!$secure && file_exists($hta_filename)) ) {
+			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
+			}
+
+		// Construct the attachment list (if appropriate)
+		$html = '';
+		$attachments_list = false;
+		$add_attachement_btn = false;
+
+		// Get the html for the attachments list
+		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
+		$controller = new AttachmentsControllerAttachments();
+		$attachments_list = $controller->displayString($parent_id, $this->_parent_type, $parent_entity,
+													   null, true, true, false, $from);
+
+		// If the attachments list is empty, insert an empty div for it
+		if ( $attachments_list == '' ) {
+			$class_name = $params->get('attachments_table_style', 'attachmentsList');
+			$div_id = 'attachmentsList' . '_' . $this->_parent_type . '_' . $parent_entity  . '_' . (string)$parent_id;
+			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
+			}
+
+		$html .= $attachments_list;
+
+		if ( $html || $user_can_add ) {
+
+			// Add the style sheet
+			JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
+
+			// Handle RTL styling (if necessary)
+			$lang = JFactory::getLanguage();
+			if ( $lang->isRTL() ) {
+				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
+				}
+			}
+
+		// Construct the add-attachments button, if appropriate
+		$hide_add_attachments_link = $params->get('hide_add_attachments_link', 0);
+		if ( $user_can_add && !$hide_add_attachments_link ) {
+			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->_parent_type,
+																			$parent_id, $parent_entity,
+																			$Itemid, $from);
+			$html .= $add_attachments_btn;
+			}
+
+		// Wrap both list and the Add Attachments button in another div
+		if ( $html ) {
+			$html = "<div class=\"attachmentsContainer\">\n" . $html . "\n</div>";
+			}
+
+		// Finally, add the attachments
+
+		// NOTE: Hope str_replace() below is UTF8 safe (since the token being replaced is UTF8)...
+
+		switch ( $attachments_placement ) {
+
+		case 'beginning':
+			// Put the attachments list at the beginning
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$content->$text_field_name = $html . $content->$text_field_name;
+					}
+				else {
+					$content->$text_field_name = $html . str_replace($attachments_tag, '', $content->$text_field_name);
+					}
+				}
+			break;
+
+		case 'custom':
+			// Insert the attachments at the desired location
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$content->$text_field_name = str_replace($attachments_tag, $html, $content->$text_field_name);
+					}
+				else {
+					// If there is no tag, insert the attachments at the end
+					$content->$text_field_name .= $html;
+					}
+				}
+			break;
+
+		case 'disabled_filter':
+			// Disable and strip out any attachments tags
+			if ( $attachments_tag ) {
+				$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name);
+				}
+			break;
+
+		default:
+			// Add the attachments to the end
+			if ( $attachments_list || $user_can_add ) {
+				if ( $attachments_tag ) {
+					$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name) . $html;
+					}
+				else {
+					$content->$text_field_name .= $html;
+					}
+				}
+			break;
+			}
+
+		return $content;
+	}
+										  
 
 }

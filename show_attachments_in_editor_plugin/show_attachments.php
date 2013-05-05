@@ -69,6 +69,12 @@ class plgSystemShow_attachments extends JPlugin
             // that the headers have already been rendered, so we cannot go
 			// go back and add headers (easily)
 
+			// Not necessary in more recent versions of Joomla since it can
+			// handled by the normal Attachments onContentPrepare callback
+			if (version_compare(JVERSION, '3.1', 'ge') OR version_compare(JVERSION, '2.5.10', 'ge')) {
+				return;
+				}
+
 			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			AttachmentsJavascript::setupJavascript();
@@ -264,26 +270,26 @@ class plgSystemShow_attachments extends JPlugin
 
 		elseif ( $parent_id && ($view == 'category') ) {
 
-			// Display attachments lists for category descriptions!
-
-			$parent_entity = 'category';
-
 			// Only dislay this in the front end
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
 				return;
 				}
 
-			// ??? Temporary check.  Once Joomla bug is fixed this will no longer be necessary
-			if ( AttachmentsDefines::$USE_ON_CONTENT_PREPARE_FOR_CATEGORY ) {
+			// More recent versions of Joomla allow this to be handled better
+			// by the normal Attachments onContentPrepare callback
+			if (version_compare(JVERSION, '3.1', 'ge') OR
+				(version_compare(JVERSION, '2.5.10', 'ge') AND version_compare(JVERSION, '3.0', 'lt'))) {
 				return;
 				}
+
+			// Display attachments lists for category descriptions
+			$parent_entity = 'category';
 
 			// Add the refresh Javascript
 			$uri = JFactory::getURI();
 			$base_url = $uri->root(true);
 			$doc = JFactory::getDocument();
-
 
 			// Get the article/parent handler
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -318,7 +324,7 @@ class plgSystemShow_attachments extends JPlugin
 			// Insert the attachments after the category description
 			$reptag = '<div class="clr"></div>';
 			$body = JResponse::getBody();
-			$body = str_replace($reptag, $attachments . $reptag, $body);
+			$body = str_replace($reptag, $attachments . $reptag, $body) . ' [SA]'; // ???
 			JResponse::setBody($body);
 			}
 	}

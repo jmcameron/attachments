@@ -95,11 +95,4 @@ class AttachmentsDefines
 	 */
 	static $ATTACHMENTS_SUBDIR = 'attachments';
 
-	/**
-	 * Temporary option for category attachments display
-	 *
-	 * Necessary until a Joomla bug is fixed.
-	 */
-	static $USE_ON_CONTENT_PREPARE_FOR_CATEGORY = false;
-
 }

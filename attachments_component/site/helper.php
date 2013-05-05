@@ -16,6 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 /** Load the Attachments defines */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
+/** Load the attachments javascript helper */
+require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
+
 
 /**
  * A class for attachments helper functions
@@ -1716,4 +1719,46 @@ class AttachmentsHelper
 		return $alist;
 	}
 
+	/**
+	 * Return the HTML for the "Add Attachments" link
+	 *
+	 * @param int $parent_id ID of the parent object
+	 * @param string $parent_entity type of the entity involved
+	 * @param int $Itemid the menu item id for the display
+	 * @param string $from where the control should return to
+	 *
+	 * @return the HTML for the "Add Attachments" link
+	 */
+	public static function attachmentButtonsHTML($parent_type, $parent_id, $parent_entity, $Itemid, $from)
+	{
+		AttachmentsJavascript::setupModalJavascript();
+
+		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
+		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
+			$url = "index.php?option=com_attachments&task=upload&article_id=$parent_id&tmpl=component";
+			}
+		else {
+			if ( $parent_entity != 'default' ) {
+				$parent_type .= ':'.$parent_entity;
+				}
+			$url = "index.php?option=com_attachments&task=upload" .
+				"&parent_id=$parent_id&parent_type=$parent_type&tmpl=component";
+			}
+		if ( $from ) {
+			// Add a var to give a hint of where to return to
+			// $url .= "&from=$from";
+			$url .= "&from=closeme";
+			}
+		$url = JRoute::_($url);
+
+		$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
+		$icon = JHtml::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
+		$ahead .= "rel=\"{handler: 'iframe', size: {x: 950, y: 550}}\">";
+		$links = $ahead . $icon . "</a>";
+		$links .= $ahead . $add_attachment_txt . "</a>";
+		return "\n<div class=\"addattach\">$links</div>\n";
+	}
+	
+	
 }

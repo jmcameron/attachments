@@ -95,6 +95,44 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 
 
 	/**
+	 * Return the name of the field with the content item text
+	 *
+	 * During the display of content items (eg, articles, categories), the
+	 * onContentPrepare (etc) callbacks are used to insert attachments lists.
+	 * The second argument of the onContentPrepare() function is an object
+	 * (usually $row) for the content item (eg, article).  This function will
+	 * return the appropriate field for the text of the content item.  In some
+	 * cases it is 'text', in others, 'introtext'.  Attachments plugins can
+	 * override this function to provide the field name more intelligently.
+	 *
+	 * Note: returns null if the text field is unknown/not present.
+	 *
+	 * @param &object &$row the content object (eg, article) being displayed
+	 * @param string  $parent_entity the type of entity for this content item.
+	 *
+	 * @return string name of the text field of this content item object.
+	 */
+	protected function getTextFieldName(&$row, $parent_entity)
+	{
+		$text_field_name = parent::getTextFieldName($row, $parent_entity);
+
+		// In the case of a blog, we know what text_field_name should be
+		if ( isset($row->introtext) AND (JRequest::getCmd('layout') == 'blog') ) {
+			$text_field_name = 'introtext';
+			}
+
+		// Featured also uses 'introtext'
+		if (isset($row->introtext) AND (JRequest::getCmd('view') == 'featured'))
+		{
+			$text_field_name = 'introtext';
+		}
+
+
+		return $text_field_name;
+	}
+	
+
+	/**
 	 * Return the URL that can be called to select a specific content item.
 	 *
 	 * @param string $parent_entity the type of entity to select from
