@@ -36,7 +36,7 @@ class HelpView extends JViewLegacy
 	 * Should be initialized in the view or templage to contain an array of
 	 * arrays of information about the sections like this:
 	 *
-	 * $this->sections = Array( 1  => Array( 'id' => 'introduction',
+	 * $this->_sections = Array( 1  => Array( 'id' => 'introduction',
 	 *						   'code' =>		   'SECTION_TITLE_1',
 	 *						   'title' => JText::_('SECTION_TITLE_1'),
 	 *						   ...
@@ -45,7 +45,20 @@ class HelpView extends JViewLegacy
 	 * where the 'SECTION_TITLE_1' is the language token for the title of
 	 * section 1.
 	 */
-	protected $sections = null;
+	protected $_sections = null;
+
+
+	/**
+	 * Add the information about a section to the $sections data
+	 *
+	 * @param  int     $sectnum  the section number (constant)
+	 * @param  string  $id       the section ID string (unique name to be used as anchor target)
+	 * @param  string  $code     the language code for this section title
+	 */
+	protected function saveSectionInfo($sectnum, $id, $code)
+	{
+		$this->_sections[$sectnum] = Array('id' => $id, 'code' => $code, 'title' => JText::_($code));
+	}
 
 
 	/**
@@ -57,8 +70,8 @@ class HelpView extends JViewLegacy
 	 */
 	protected function sectionLink($sect_num)
 	{
-		$id = $this->sections[$sect_num]['id'];
-		$title = $this->sections[$sect_num]['title'];
+		$id = $this->_sections[$sect_num]['id'];
+		$title = $this->_sections[$sect_num]['title'];
 		return "<a class=\"reference internal\" href=\"#$id\">$title</a>";
 	}
 
@@ -103,7 +116,7 @@ class HelpView extends JViewLegacy
 		$html  = "<div class=\"$class\" id=\"contents\">\n";
 		$html .= "	 <p class=\"topic-title first\">" . $title . $code . "</p>\n";
 		$html .= "	 <ul class=\"$class\">\n";
-		foreach ($this->sections as $sect_num => $sdata)
+		foreach ($this->_sections as $sect_num => $sdata)
 		{
 			$html .= '		' . $this->sectionTOC($sect_num);
 		}
@@ -122,7 +135,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function sectionTOC($sect_num)
 	{
-		$sect_data = $this->sections[$sect_num];
+		$sect_data = $this->_sections[$sect_num];
 		$sid = $sect_data['id'];
 		$stitle = $sect_data['title'];
 		return "<li><a class=\"reference internal\" href=\"#$sid\" id=\"id$sect_num\">$stitle</a></li>\n";
@@ -136,7 +149,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function startSection($sect_num)
 	{
-		$sect_data = $this->sections[$sect_num];
+		$sect_data = $this->_sections[$sect_num];
 		$sid = $sect_data['id'];
 		$text_code = $sect_data['code'];
 		$stitle = $sect_data['title'];
@@ -476,7 +489,7 @@ class HelpView extends JViewLegacy
 	 *         [base]/media/com_attachments/images/en-GB/test1.png
 	 *    Use:
 	 *         $this->image('com_attachments/test1.png')
-	 * 
+	 *
 	 *
 	 * @return string image URL (or null if the image was not found)
 	 */

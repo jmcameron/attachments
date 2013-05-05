@@ -20,6 +20,13 @@ JHtml::_('behavior.tooltip');
 // Add the CSS for the attachments list (whether we need it or not)
 JHtml::stylesheet('com_attachments/attachments_help.css', array(), true);
 
+// If the user specifies 'show=codes' in the url, the language item codes will
+// be shown by default.  Note that they can still be toggled with the toggles
+// at the top right and bottom right of the page.
+if (JRequest::getCmd('show') == 'codes') {
+	JHtml::stylesheet('com_attachments/attachments_help_show_codes.css', array(), true);
+	}
+
 // Define the section constants
 define('SECT_INTRO',   1);
 define('SECT_NEW_V3',  2);
@@ -42,72 +49,31 @@ define('SECT_TRANS',  18);
 define('SECT_ACKNOW', 19);
 define('SECT_CONTCT', 20);
 
-$this->sections = Array(
-    SECT_INTRO  => Array( 'id' => 'introduction',
-						  'code' =>           'ATTACH_HELP_010000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_010000_SECTION_TITLE')),
-    SECT_NEW_V3 => Array( 'id' => 'v3-features',
-						  'code' =>           'ATTACH_HELP_020000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_020000_SECTION_TITLE')),
-	SECT_FEAT   => Array( 'id' => 'features',
-						  'code' =>           'ATTACH_HELP_030000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_030000_SECTION_TITLE')),
-	SECT_UPLOAD => Array( 'id' => 'uploading',
-						  'code' =>           'ATTACH_HELP_040000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_040000_SECTION_TITLE')),
-	SECT_SETNGS => Array( 'id' => 'settings',
-						  'code' =>           'ATTACH_HELP_050000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_050000_SECTION_TITLE')),
-	SECT_PERMS  => Array( 'id' => 'permissions',
-						  'code' =>           'ATTACH_HELP_060000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_060000_SECTION_TITLE')),
-	SECT_ACCESS => Array( 'id' => 'access-levels',
-						  'code' =>           'ATTACH_HELP_070000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_070000_SECTION_TITLE')),
-	SECT_DISPLY => Array( 'id' => 'display-filenames',
-						  'code' =>           'ATTACH_HELP_080000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_080000_SECTION_TITLE')),
-	SECT_ATTACH => Array( 'id' => 'attaching-urls',
-						  'code' =>           'ATTACH_HELP_090000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_090000_SECTION_TITLE')),
-	SECT_FILES  => Array( 'id' => 'attached-to-what',
-						  'code' =>           'ATTACH_HELP_100000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_100000_SECTION_TITLE')),
-	SECT_STYLE  => Array( 'id' => 'css-styling',
-						  'code' =>           'ATTACH_HELP_110000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_110000_SECTION_TITLE')),
-	SECT_ICONS  => Array( 'id' => 'file-type-icons',
-						  'code' =>           'ATTACH_HELP_120000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_120000_SECTION_TITLE')),
-	SECT_UTILS  => Array( 'id' => 'admin-utilities',
-						  'code' =>           'ATTACH_HELP_130000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_130000_SECTION_TITLE')),
-	SECT_WARN   => Array( 'id' => 'warnings',
-						  'code' =>           'ATTACH_HELP_140000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_140000_SECTION_TITLE')),
-	SECT_UPGRAD => Array( 'id' => 'upgrading',
-						  'code' =>           'ATTACH_HELP_150000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_150000_SECTION_TITLE')),
-	SECT_UNINST => Array( 'id' => 'uninstalling',
-						  'code' =>           'ATTACH_HELP_160000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_160000_SECTION_TITLE')),
-	SECT_MIGRAT => Array( 'id' => 'migration',
-						  'code' =>           'ATTACH_HELP_170000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_170000_SECTION_TITLE')),
-	SECT_TRANS  => Array( 'id' => 'translations',
-						  'code' =>           'ATTACH_HELP_180000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_180000_SECTION_TITLE')),
-	SECT_ACKNOW => Array( 'id' => 'acknowledgments',
-						  'code' =>           'ATTACH_HELP_190000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_190000_SECTION_TITLE')),
-	SECT_CONTCT => Array( 'id' => 'contact',
-						  'code' =>           'ATTACH_HELP_200000_SECTION_TITLE',
-						  'title' => JText::_('ATTACH_HELP_200000_SECTION_TITLE')),
-    );
+$this->saveSectionInfo(SECT_INTRO,  'introduction',      'ATTACH_HELP_010000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_NEW_V3, 'v3-features',       'ATTACH_HELP_020000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_FEAT,   'features',          'ATTACH_HELP_030000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_UPLOAD, 'uploading',         'ATTACH_HELP_040000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_SETNGS, 'settings',          'ATTACH_HELP_050000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_PERMS,  'permissions',       'ATTACH_HELP_060000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_ACCESS, 'access-levels',     'ATTACH_HELP_070000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_DISPLY, 'display-filenames', 'ATTACH_HELP_080000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_ATTACH, 'attaching-urls',    'ATTACH_HELP_090000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_FILES,  'attached-to-what',  'ATTACH_HELP_100000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_STYLE,  'css-styling',       'ATTACH_HELP_110000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_ICONS,  'file-type-icons',   'ATTACH_HELP_120000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_UTILS,  'admin-utilities',   'ATTACH_HELP_130000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_WARN,   'warnings',          'ATTACH_HELP_140000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_UPGRAD, 'upgrading',         'ATTACH_HELP_150000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_UNINST, 'uninstalling',      'ATTACH_HELP_160000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_MIGRAT, 'migration',         'ATTACH_HELP_170000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_TRANS,  'translations',      'ATTACH_HELP_180000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_ACKNOW, 'acknowledgments',   'ATTACH_HELP_190000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_CONTCT, 'contact',           'ATTACH_HELP_200000_SECTION_TITLE');
+
 
 // A few other miscellaneous items
 
-$tlc = JText::_('ATTACH_HELP_TOGGLE_CODES');
+$tlc = JText::_('ATTACH_HELP_TOGGLE_LANGUAGE_CODES');
 
 $onContentPrepare = "<tt class=\"docutils literal\">'onPrepareContent'</tt>";
 
