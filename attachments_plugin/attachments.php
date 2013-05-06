@@ -63,6 +63,12 @@ class plgContentAttachments extends JPlugin
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
+		// Enable the following four diagnostic lines to see if a component uses onContentPrepare
+		// $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
+		// $row->text .= $msg;
+		// $row->introtext .= $msg;
+		// return;
+
 		// Set the parent info from the context
 		list ($parent_type, $parent_entity) = explode('.', $context, 2);
 
@@ -136,12 +142,6 @@ class plgContentAttachments extends JPlugin
 
 		$row->text .= " [AP text $context]"; // ???
 		$row->introtext .= " [AP introtext $context]"; // ???
-
-		// Enable the following four diagnostic lines to see if your component uses onContentPrepare
-		// $msg = "<br/>CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
-		// $row->text .= $msg;
-		// $row->introtext .= $msg;
-		// return;
 
 		return true;
 	}
