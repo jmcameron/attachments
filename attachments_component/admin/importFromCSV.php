@@ -213,7 +213,7 @@ class ImportFromCSV
 				}
 			}
 		if ( count($missing_fields) > 0 ) {
-			return JText::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_s', implode(',', $missing_fields)) . ' (ERR 98)';
+			return JText::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_S', implode(',', $missing_fields)) . ' (ERR 98)';
 			}
 
 		return true;
@@ -332,10 +332,10 @@ class ImportFromCSV
 		$db->setQuery($query, 0, 1);
 		$actual_username = $db->loadResult();
 		if ( empty($actual_username) || $db->getErrorNum() ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_ID_S', $user_id, $expected_username) . ' (ERR 101)';
+			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 101)';
 			}
 		if ( strtolower($expected_username) != strtolower($actual_username) ) {
-			return JText::sprintf('ATTACH_ERROR_USERNAME_MISMATCH_ID_S_S',
+			return JText::sprintf('ATTACH_ERROR_USERNAME_MISMATCH_ID_N_S_S',
 								  $user_id, $expected_username, $actual_username) . ' (ERR 102)';
 			}
 
