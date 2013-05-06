@@ -264,7 +264,6 @@ class plgSearchAttachments extends JPlugin
 				$text .= " | " . $user_field_3_name	 . ": " . stripslashes($attachment->user_field_3);
 				}
 			$attachment->text = $text;
-			// ??? $attachment->created = $attachment->created;
 			$attachment->browsernav = 2;
 
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);

@@ -324,7 +324,7 @@ class plgSystemShow_attachments extends JPlugin
 			// Insert the attachments after the category description
 			$reptag = '<div class="clr"></div>';
 			$body = JResponse::getBody();
-			$body = str_replace($reptag, $attachments . $reptag, $body) . ' [SA]'; // ???
+			$body = str_replace($reptag, $attachments . $reptag, $body);
 			JResponse::setBody($body);
 			}
 	}

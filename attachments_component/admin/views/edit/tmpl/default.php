@@ -17,9 +17,6 @@ defined('_JEXEC') or die('Restricted access');
 // Load the tooltip behavior.
 JHtml::_('behavior.tooltip');
 
-// Disable the main menu
-// ??? JRequest::setVar( 'hidemainmenu', 1 );
-
 // Add the plugins stylesheet to style the list of attachments
 $user = JFactory::getUser();
 $document = JFactory::getDocument();

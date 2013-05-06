@@ -140,8 +140,8 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity, $attachParams);
 
-		$row->text .= " [AP text $context]"; // ???
-		$row->introtext .= " [AP introtext $context]"; // ???
+		// ??? $row->text .= " [AP text $context]";
+		// ??? $row->introtext .= " [AP introtext $context]";
 
 		return true;
 	}
@@ -225,8 +225,8 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity, $attachParams);
 
-		$row->text .= " [OCBD text $context]"; // ???
-		$row->introtext .= " [OCBD introtext $context]"; // ???
+		// ??? $row->text .= " [OCBD text $context]";
+		// ??? $row->introtext .= " [OCBD introtext $context]";
 
 		return;
 	}
