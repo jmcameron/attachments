@@ -403,6 +403,73 @@ trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_searc
 type = INI
 
 
+[joomla-attachments-3.plg_quickicon_attachments_ini]
+source_file = attachments_quickicon_plugin/language/en-GB/en-GB.plg_quickicon_attachments.ini
+source_lang = en_GB
+minimum_perc = 100
+trans.ca_ES = ../translations-j1.6/attachments-Catalan-ca-ES/attachments_quickicon_plugin/ca-ES.plg_quickicon_attachments.ini
+trans.zh_CN = ../translations-j1.6/attachments-Chinese-zh-CN/attachments_quickicon_plugin/zh-CN.plg_quickicon_attachments.ini
+trans.zh_TW = ../translations-j1.6/attachments-Chinese-zh-TW/attachments_quickicon_plugin/zh-TW.plg_quickicon_attachments.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_quickicon_plugin/hr-HR.plg_quickicon_attachments.ini
+trans.da_DK = ../translations-j1.6/attachments-Danish-da-DK/attachments_quickicon_plugin/da-DK.plg_quickicon_attachments.ini
+trans.nl_NL = ../translations-j1.6/attachments-Dutch-nl-NL/attachments_quickicon_plugin/nl-NL.plg_quickicon_attachments.ini
+trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_quickicon_plugin/et-EE.plg_quickicon_attachments.ini
+trans.fi_FI = ../translations-j1.6/attachments-Finnish-fi-FI/attachments_quickicon_plugin/fi-FI.plg_quickicon_attachments.ini
+trans.fr_FR = ../translations-j1.6/attachments-French-fr-FR/attachments_quickicon_plugin/fr-FR.plg_quickicon_attachments.ini
+trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_quickicon_plugin/de-DE.plg_quickicon_attachments.ini
+trans.el_GR = ../translations-j1.6/attachments-Greek-el-GR/attachments_quickicon_plugin/el-GR.plg_quickicon_attachments.ini
+trans.hu_HI = ../translations-j1.6/attachments-Hungarian-hu-HI/attachments_quickicon_plugin/hu-HI.plg_quickicon_attachments.ini
+trans.hu_HU = ../translations-j1.6/attachments-Hungarian-hu-HU/attachments_quickicon_plugin/hu-HU.plg_quickicon_attachments.ini
+trans.id_ID = ../translations-j1.6/attachments-Indonesian-id-ID/attachments_quickicon_plugin/id-ID.plg_quickicon_attachments.ini
+trans.it_IT = ../translations-j1.6/attachments-Italian-it-IT/attachments_quickicon_plugin/it-IT.plg_quickicon_attachments.ini
+trans.nb_NO = ../translations-j1.6/attachments-Norwegian-nb-NO/attachments_quickicon_plugin/nb-NO.plg_quickicon_attachments.ini
+trans.pl_PL = ../translations-j1.6/attachments-Polish-pl-PL/attachments_quickicon_plugin/pl-PL.plg_quickicon_attachments.ini
+trans.pt_BR = ../translations-j1.6/attachments-Portuguese-pt-BR/attachments_quickicon_plugin/pt-BR.plg_quickicon_attachments.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_quickicon_plugin/pt-PT.plg_quickicon_attachments.ini
+trans.ro_RO = ../translations-j1.6/attachments-Romanian-ro-RO/attachments_quickicon_plugin/ro-RO.plg_quickicon_attachments.ini
+trans.ru_RU = ../translations-j1.6/attachments-Russian-ru-RU/attachments_quickicon_plugin/ru-RU.plg_quickicon_attachments.ini
+trans.sl_SI = ../translations-j1.6/attachments-Slovenian-sl-SI/attachments_quickicon_plugin/sl-SI.plg_quickicon_attachments.ini
+trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_quickicon_plugin/es-ES.plg_quickicon_attachments.ini
+trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_quickicon_plugin/sv-SE.plg_quickicon_attachments.ini
+trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_quickicon_plugin/tr-TR.plg_quickicon_attachments.ini
+trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_quickicon_plugin/uk-UA.plg_quickicon_attachments.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_quickicon_plugin/qq-ZZ.plg_quickicon_attachments.ini
+type = INI
+
+[joomla-attachments-3.plg_quickicon_attachments_sys_ini]
+source_file = attachments_quickicon_plugin/language/en-GB/en-GB.plg_quickicon_attachments.sys.ini
+source_lang = en_GB
+minimum_perc = 100
+trans.ca_ES = ../translations-j1.6/attachments-Catalan-ca-ES/attachments_quickicon_plugin/ca-ES.plg_quickicon_attachments.sys.ini
+trans.zh_CN = ../translations-j1.6/attachments-Chinese-zh-CN/attachments_quickicon_plugin/zh-CN.plg_quickicon_attachments.sys.ini
+trans.zh_TW = ../translations-j1.6/attachments-Chinese-zh-TW/attachments_quickicon_plugin/zh-TW.plg_quickicon_attachments.sys.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/attachments_quickicon_plugin/hr-HR.plg_quickicon_attachments.sys.ini
+trans.da_DK = ../translations-j1.6/attachments-Danish-da-DK/attachments_quickicon_plugin/da-DK.plg_quickicon_attachments.sys.ini
+trans.nl_NL = ../translations-j1.6/attachments-Dutch-nl-NL/attachments_quickicon_plugin/nl-NL.plg_quickicon_attachments.sys.ini
+trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/attachments_quickicon_plugin/et-EE.plg_quickicon_attachments.sys.ini
+trans.fi_FI = ../translations-j1.6/attachments-Finnish-fi-FI/attachments_quickicon_plugin/fi-FI.plg_quickicon_attachments.sys.ini
+trans.fr_FR = ../translations-j1.6/attachments-French-fr-FR/attachments_quickicon_plugin/fr-FR.plg_quickicon_attachments.sys.ini
+trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_quickicon_plugin/de-DE.plg_quickicon_attachments.sys.ini
+trans.el_GR = ../translations-j1.6/attachments-Greek-el-GR/attachments_quickicon_plugin/el-GR.plg_quickicon_attachments.sys.ini
+trans.hu_HI = ../translations-j1.6/attachments-Hungarian-hu-HI/attachments_quickicon_plugin/hu-HI.plg_quickicon_attachments.sys.ini
+trans.hu_HU = ../translations-j1.6/attachments-Hungarian-hu-HU/attachments_quickicon_plugin/hu-HU.plg_quickicon_attachments.sys.ini
+trans.id_ID = ../translations-j1.6/attachments-Indonesian-id-ID/attachments_quickicon_plugin/id-ID.plg_quickicon_attachments.sys.ini
+trans.it_IT = ../translations-j1.6/attachments-Italian-it-IT/attachments_quickicon_plugin/it-IT.plg_quickicon_attachments.sys.ini
+trans.nb_NO = ../translations-j1.6/attachments-Norwegian-nb-NO/attachments_quickicon_plugin/nb-NO.plg_quickicon_attachments.sys.ini
+trans.pl_PL = ../translations-j1.6/attachments-Polish-pl-PL/attachments_quickicon_plugin/pl-PL.plg_quickicon_attachments.sys.ini
+trans.pt_BR = ../translations-j1.6/attachments-Portuguese-pt-BR/attachments_quickicon_plugin/pt-BR.plg_quickicon_attachments.sys.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/attachments_quickicon_plugin/pt-PT.plg_quickicon_attachments.sys.ini
+trans.ro_RO = ../translations-j1.6/attachments-Romanian-ro-RO/attachments_quickicon_plugin/ro-RO.plg_quickicon_attachments.sys.ini
+trans.ru_RU = ../translations-j1.6/attachments-Russian-ru-RU/attachments_quickicon_plugin/ru-RU.plg_quickicon_attachments.sys.ini
+trans.sl_SI = ../translations-j1.6/attachments-Slovenian-sl-SI/attachments_quickicon_plugin/sl-SI.plg_quickicon_attachments.sys.ini
+trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_quickicon_plugin/es-ES.plg_quickicon_attachments.sys.ini
+trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_quickicon_plugin/sv-SE.plg_quickicon_attachments.sys.ini
+trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_quickicon_plugin/tr-TR.plg_quickicon_attachments.sys.ini
+trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_quickicon_plugin/uk-UA.plg_quickicon_attachments.sys.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_quickicon_plugin/qq-ZZ.plg_quickicon_attachments.sys.ini
+type = INI
+
+
 [joomla-attachments-3.insert_attachments_token_btn_ini]
 source_file = insert_attachments_token_btn_plugin/language/en-GB/en-GB.plg_editors-xtd_insert_attachments_token.ini
 source_lang = en_GB
