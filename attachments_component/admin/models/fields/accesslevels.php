@@ -69,6 +69,7 @@ class JFormFieldAccessLevels extends JFormField
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
+		// Get the access levels this user is permitted
 		$query->select('a.*');
 		$query->from('#__viewlevels AS a');
 		if ( !$user->authorise('core.admin') ) {
@@ -77,15 +78,12 @@ class JFormFieldAccessLevels extends JFormField
 			}
 		$query->order('a.ordering ASC');
 		$query->order($query->qn('title') . ' ASC');
-
-		// Get the levels
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 115)';
 			JError::raiseError(500, $errmsg);
 			}
-		$num_levels = (int)count($levels);
 
 		// Make sure there is a $level_value
 		if ( $level_value === null ) {
@@ -94,30 +92,49 @@ class JFormFieldAccessLevels extends JFormField
 			$level_value = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
 			}
 
-		// Make sure the $level_value is in the user's authorised levels
+		// Make sure the $level_value is in an array
 		if (!is_array($level_value)) {
-			if ( !in_array($level_value, $user_access_levels) ) {
-				// If not, set $level_value to the lowest legal value
-				$registered = 2;
-				if ( in_array($registered, $user_access_levels) ) {
-					$level_value = $registered;
+			$level_value = Array($level_value);
+			}
+
+		// Make sure the $level_value is in the user's authorised levels (except for super-user)
+		if ( !$user->authorise('core.admin') ) {
+
+			// Filter out any non-permitted access levels
+			$ok_access_levels = Array();
+			foreach ($level_value as $lval) {
+				if (in_array($lval, $user_access_levels)) {
+					$ok_access_levels[] = $lval;
 					}
-				else {
-					$sorted_access_levels = sort($user_access_levels, SORT_NUMERIC);
-					$level_value = $sorted_access_levels[0];
-					}
+				}
+
+			// Make sure there is at least one access level left
+			if (empty($ok_access_levels)) {
+				// pick one arbitrarily
+				$sorted_access_levels = sort($user_access_levels, SORT_NUMERIC);
+				$level_value = Array($sorted_access_levels[0]);
+				}
+			else {
+				$level_value = $ok_access_levels;
 				}
 			}
 
-		// Make sure Public is always selected, if desired
-		if (is_array($level_value) AND ($options !== null) AND $options->always_public) {
-			if ( !in_array('1', $level_value) ) {
-				array_unshift($level_value, '1');
+		// Deal with multiple vs non-multiple selections
+		if (isset($options->multiple) and $options->multiple) {
+
+			// Make sure Public is always selected, if desired
+			$public = AttachmentsDefines::$PUBLIC_ACCESS_LEVEL_ID;
+			if ($options->always_public) {
+				if ( !in_array($public, $level_value) ) {
+					array_unshift($level_value, $public);
+					}
 				}
 			}
 		else {
-			if ( $level_value != '1' ) {
-				$level_value = Array('1', $level_value);
+			if (count($level_value) > 1) {
+				// If not multiple, only one selection is allowed, arbitrarily pick the first one
+				// (Not sure this will every be necessary)
+				$level_value = Array($level_value[0]);
 				}
 			}
 
@@ -132,7 +149,7 @@ class JFormFieldAccessLevels extends JFormField
 			$attr .= $options->element['size'] ? ' size="' . (int) $options->element['size'] . '"' : '';
 			$attr .= $options->multiple ? ' multiple="multiple"' : '';
 			}
-			
+
 		// Construct the list
 		$level_options = Array();
 		foreach ( $levels as $level ) {

@@ -48,7 +48,11 @@ class AttachmentsDefines
 	 * 1 = Public
 	 * 2 = Registered
 	 */
-	public static $DEFAULT_ACCESS_LEVEL_ID = 2;
+	public static $DEFAULT_ACCESS_LEVEL_ID = '2';
+
+	/** Default 'Public' access level (in case it is different on this system)
+	 */
+	public static $PUBLIC_ACCESS_LEVEL_ID = '1';
 
 	/** Default permissions for new attachments rules
 	 *
