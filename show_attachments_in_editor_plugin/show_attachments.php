@@ -267,7 +267,6 @@ class plgSystemShow_attachments extends JPlugin
 			JResponse::setBody($body);
 			}
 
-
 		elseif ( $parent_id && ($view == 'category') ) {
 
 			// Only dislay this in the front end
@@ -291,8 +290,11 @@ class plgSystemShow_attachments extends JPlugin
 			$base_url = $uri->root(true);
 			$doc = JFactory::getDocument();
 
-			// Get the article/parent handler
-			$parent = $apm->getAttachmentsPlugin($parent_type);
+			// Allow remapping of parent ID (eg, for Joomfish)
+			if (jimport('attachments_remapper.remapper'))
+			{
+				$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+			}
 
 			// Figure out if the attachments list should be visible for this category
 			jimport('joomla.application.component.helper');
@@ -304,18 +306,19 @@ class plgSystemShow_attachments extends JPlugin
 				return;
 				}
 
-			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
+			// Get the article/parent handler
+			$parent = $apm->getAttachmentsPlugin($parent_type);
 
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
 			$from = 'frontpage';
+			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
 																 $user_can_add, $Itemid, $from, true, $user_can_add);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
 				jimport('joomla.application.component.helper');
-				$params = JComponentHelper::getParams('com_attachments');
 				$class_name = $params->get('attachments_table_style', 'attachmentsList');
 				$div_id = 'attachmentsList' . '_' . $parent_type . '_' . $parent_entity	 . '_' . (string)$parent_id;
 				$attachments = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";

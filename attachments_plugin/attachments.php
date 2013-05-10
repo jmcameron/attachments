@@ -121,14 +121,19 @@ class plgContentAttachments extends JPlugin
 			return false;
 			}
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$attachParams = JComponentHelper::getParams('com_attachments');
+		// Allow remapping of parent ID (eg, for Joomfish)
+		if (jimport('attachments_remapper.remapper')) {
+			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+			}
 
 		// Exit if we should not display attachments for this parent
 		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity) ) {
 			return false;
 			}
+
+		// Get the component parameters
+		jimport('joomla.application.component.helper');
+		$attachParams = JComponentHelper::getParams('com_attachments');
 
 		// Make sure we should be showing the category attachments
 		$always_show_category_attachments = $attachParams->get('always_show_category_attachments', false);
@@ -198,10 +203,6 @@ class plgContentAttachments extends JPlugin
 			return false;
 		}
 
-		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$attachParams = JComponentHelper::getParams('com_attachments');
-
 		// Get the parent ID
 		$parent_id = null;
 		if (isset( $row->id ) && ($row->id > 0)) {
@@ -214,6 +215,12 @@ class plgContentAttachments extends JPlugin
 		if ($parent_id === false)
 		{
 			return false;
+		}
+
+		// Allow remapping of parent ID (eg, for Joomfish)
+		if (jimport('attachments_remapper.remapper'))
+		{
+			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
 		}
 
 		// Exit if we should not display attachments for this parent
