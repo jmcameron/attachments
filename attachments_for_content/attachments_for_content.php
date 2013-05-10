@@ -642,14 +642,13 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 	 * @param &object &$parent The object for the parent that onPrepareContent gives
 	 * @param int $parent_id The ID of the parent the attachment is attached to
 	 * @param string $parent_entity the type of entity for this parent type
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
-	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
+	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{
 		// Check for generic options
-		if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity, $params) ) {
+		if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity) ) {
 			return true;
 			}
 		$pclass = get_class($parent);
@@ -670,6 +669,7 @@ class AttachmentsPlugin_com_content extends AttachmentsPlugin
 			}
 
 		// Check to see if it should be hidden with readmore
+		$params = $this->params();
 		$hide_with_readmore = $params->get('hide_with_readmore', false);
 		if( $hide_with_readmore && isset($parent->readmore) && $parent->readmore ) {
 			return true;

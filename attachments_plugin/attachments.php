@@ -126,7 +126,7 @@ class plgContentAttachments extends JPlugin
 		$attachParams = JComponentHelper::getParams('com_attachments');
 
 		// Exit if we should not display attachments for this parent
-		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams) ) {
+		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity) ) {
 			return false;
 			}
 
@@ -138,7 +138,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Add the attachments list
-		$parent->insertAttachmentsList($row, $parent_id, $parent_entity, $attachParams);
+		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
 		// ??? $row->text .= " [AP text $context]";
 		// ??? $row->introtext .= " [AP introtext $context]";
@@ -217,13 +217,13 @@ class plgContentAttachments extends JPlugin
 		}
 
 		// Exit if we should not display attachments for this parent
-		if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity, $attachParams))
+		if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity))
 		{
 			return false;
 		}
 
 		// Add the attachments list
-		$parent->insertAttachmentsList($row, $parent_id, $parent_entity, $attachParams);
+		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
 		// ??? $row->text .= " [OCBD text $context]";
 		// ??? $row->introtext .= " [OCBD introtext $context]";

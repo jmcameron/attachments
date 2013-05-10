@@ -103,6 +103,10 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	var $_title_cache = Array();
 
+	/** Cache for parent titles
+	 */
+	var $_params = null;
+
 
 	/**
 	 * Constructor
@@ -118,6 +122,23 @@ class AttachmentsPlugin extends JPlugin
 
 		// Save the plugin type
 		$this->_type = 'attachments';
+	}
+
+
+	/**
+	 * Get the attachments parameter object
+	 *
+	 * @return  object  com_attachments parameter object
+	 */
+	public function params()
+	{
+		if ( $this->_params == null )
+		{
+			jimport('joomla.application.component.helper');
+			$this->_params = JComponentHelper::getParams('com_attachments');
+		}
+
+		return $this->_params;
 	}
 
 
@@ -532,14 +553,14 @@ class AttachmentsPlugin extends JPlugin
 	 * Get the title for the attachments list for this parent
 	 *
 	 * @param string $title The untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE' or 'ATTACH_EXISTING_ATTACHMENTS')
-	 * @param &object &$params The Attachments component parameters object
 	 * @param int $parent_id the ID for the parent entity object (null if the parent does not exist)
 	 * @param string $parent_entity the type of entity for this parent type
 	 *
 	 * @return the translated title string
 	 */
-	public function attachmentsListTitle($title, &$params, $parent_id, $parent_entity='default')
+	public function attachmentsListTitle($title, $parent_id, $parent_entity='default')
 	{
+		$params = $this->params();
 		$rtitle_str = $params->get('attachments_titles', '');
 		if ( ($title != 'ATTACH_EXISTING_ATTACHMENTS') && ($rtitle_str != '') ) {
 			$rtitle_list = preg_split("[\n|\r]", $rtitle_str);
@@ -672,7 +693,6 @@ class AttachmentsPlugin extends JPlugin
 	 * @param &object &$parent The object for the parent that onPrepareContent gives
 	 * @param int $parent_id The ID of the parent the attachment is attached to
 	 * @param string $parent_entity the type of entity for this parent type
-	 * @param &object &$params The Attachments component parameters object
 	 *
 	 * Note: this generic version only implements the 'frontpage' option.  All
 	 *		 other options should be handled by the derived classes for other
@@ -680,9 +700,10 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
-	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
+	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{
 		$layout = JRequest::getCmd('layout');
+		$params = $this->params();
 
 		// Check to see whether the attachments should be hidden on the front page
 		$hide_on_frontpage = $params->get('hide_on_frontpage', false);
@@ -796,12 +817,13 @@ class AttachmentsPlugin extends JPlugin
 	 * @param  string  $text_name_field name of the field of $content that has the text
 	 * @param  int     $parent_id the ID for the parent object
 	 * @param  string  $parent_entity the type of entity for this parent type
-	 * @param  string  $params  the Attachments parameter
 	 *
 	 * @return string  the modified content text (false for failure)
 	 */
-	public function insertAttachmentsList(&$content, $parent_id, $parent_entity, &$params)
+	public function insertAttachmentsList(&$content, $parent_id, $parent_entity)
 	{
+		$params = $this->params();
+
 		// Get the desired placement
 		$attachments_placement = $params->get('attachments_placement', 'end');
 		if ( $attachments_placement == 'disabled_nofilter' )

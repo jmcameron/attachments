@@ -199,7 +199,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 			$title = 'ATTACH_ATTACHMENTS_TITLE';
 			}
 		$parent = $model->getParentClass();
-		$title = $parent->attachmentsListTitle($title, $params, $parent_id, $parent_entity);
+		$title = $parent->attachmentsListTitle($title, $parent_id, $parent_entity);
 		$this->title = $title; // Note: assume it is translated
 
 		// Construct the path for the icons
