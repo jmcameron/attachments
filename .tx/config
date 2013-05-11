@@ -469,7 +469,6 @@ trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/attachments_quick
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/attachments_quickicon_plugin/qq-ZZ.plg_quickicon_attachments.sys.ini
 type = INI
 
-
 [joomla-attachments-3.insert_attachments_token_btn_ini]
 source_file = insert_attachments_token_btn_plugin/language/en-GB/en-GB.plg_editors-xtd_insert_attachments_token.ini
 source_lang = en_GB
