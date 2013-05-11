@@ -669,31 +669,35 @@ trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/show_attachments_
 # trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/show_attachments_in_editor_plugin/qq-ZZ.plg_system_show_attachments.sys.ini
 type = INI
 
-
-# [joomla-attachments-3.Spanish_es_ES_language_pack_sys_ini]
-# source_file = ../translations-j1.6/attachments-Spanish-es-ES/language/en-GB/en-GB.files_attachments_es_es_language_pack.sys.ini
-# source_lang = en_GB
-# minimum_perc = 100
-# trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/language/es-ES/es-ES.files_attachments_es_es_language_pack.sys.ini
-# type = INI
-#
-# [joomla-attachments-3.Swedish_sv_SE_language_pack_sys_ini]
-# source_file = ../translations-j1.6/attachments-Swedish-sv-SE/language/en-GB/en-GB.files_attachments_sv_se_language_pack.sys.ini
-# source_lang = en_GB
-# minimum_perc = 100
-# trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/language/sv-SE/sv-SE.files_attachments_sv_se_language_pack.sys.ini
-# type = INI
-#
-# [joomla-attachments-3.Portuguse_pt_PT_language_pack_sys_ini]
-# source_file = ../translations-j1.6/attachments-Portuguese-pt-PT/language/en-GB/en-GB.files_attachments_pt_pt_language_pack.sys.ini
-# source_lang = en_GB
-# minimum_perc = 100
-# trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/language/pt-PT/pt-PT.files_attachments_pt_pt_language_pack.sys.ini
-# type = INI
-#
-# [joomla-attachments-3.Estonian_et_EE_language_pack_sys_ini]
-# source_file = ../translations-j1.6/attachments-Estonian-et-EE/language/en-GB/en-GB.files_attachments_et_ee_language_pack.sys.ini
-# source_lang = en_GB
-# minimum_perc = 100
-# trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/language/et-EE/et-EE.files_attachments_et_ee_language_pack.sys.ini
-# type = INI
+[joomla-attachments-3.files_attachments_language_pack_install_ini]
+source_file = ../translations-j1.6/attachments-English-en-GB/language/en-GB/en-GB.files_attachments_language_pack.install.ini
+source_lang = en_GB
+minimum_perc = 100
+trans.ca_ES = ../translations-j1.6/attachments-Catalan-ca-ES/language/ca-ES/ca-ES.files_attachments_language_pack.install.ini
+trans.zh_CN = ../translations-j1.6/attachments-Chinese-zh-CN/language/zh-CN/zh-CN.files_attachments_language_pack.install.ini
+trans.zh_TW = ../translations-j1.6/attachments-Chinese-zh-TW/language/zh-TW/zh-TW.files_attachments_language_pack.install.ini
+trans.hr_HR = ../translations-j1.6/attachments-Croatian-hr-HR/language/hr-HR/hr-HR.files_attachments_language_pack.install.ini
+trans.da_DK = ../translations-j1.6/attachments-Danish-da-DK/language/da-DK/da-DK.files_attachments_language_pack.install.ini
+trans.nl_NL = ../translations-j1.6/attachments-Dutch-nl-NL/language/nl-NL/nl-NL.files_attachments_language_pack.install.ini
+trans.et_EE = ../translations-j1.6/attachments-Estonian-et-EE/language/et-EE/et-EE.files_attachments_language_pack.install.ini
+trans.fi_FI = ../translations-j1.6/attachments-Finnish-fi-FI/language/fi-FI/fi-FI.files_attachments_language_pack.install.ini
+trans.fr_FR = ../translations-j1.6/attachments-French-fr-FR/language/fr-FR/fr-FR.files_attachments_language_pack.install.ini
+trans.de_DE = ../translations-j1.6/attachments-German-de-DE/language/de-DE/de-DE.files_attachments_language_pack.install.ini
+trans.el_GR = ../translations-j1.6/attachments-Greek-el-GR/language/el-GR/el-GR.files_attachments_language_pack.install.ini
+trans.hu_HI = ../translations-j1.6/attachments-Hungarian-hu-HI/language/hu-HI/hu-HI.files_attachments_language_pack.install.ini
+trans.hu_HU = ../translations-j1.6/attachments-Hungarian-hu-HU/language/hu-HU/hu-HU.files_attachments_language_pack.install.ini
+trans.id_ID = ../translations-j1.6/attachments-Indonesian-id-ID/language/id-ID/id-ID.files_attachments_language_pack.install.ini
+trans.it_IT = ../translations-j1.6/attachments-Italian-it-IT/language/it-IT/it-IT.files_attachments_language_pack.install.ini
+trans.nb_NO = ../translations-j1.6/attachments-Norwegian-nb-NO/language/nb-NO/nb-NO.files_attachments_language_pack.install.ini
+trans.pl_PL = ../translations-j1.6/attachments-Polish-pl-PL/language/pl-PL/pl-PL.files_attachments_language_pack.install.ini
+trans.pt_BR = ../translations-j1.6/attachments-Portuguese-pt-BR/language/pt-BR/pt-BR.files_attachments_language_pack.install.ini
+trans.pt_PT = ../translations-j1.6/attachments-Portuguese-pt-PT/language/pt-PT/pt-PT.files_attachments_language_pack.install.ini
+trans.ro_RO = ../translations-j1.6/attachments-Romanian-ro-RO/language/ro-RO/ro-RO.files_attachments_language_pack.install.ini
+trans.ru_RU = ../translations-j1.6/attachments-Russian-ru-RU/language/ru-RU/ru-RU.files_attachments_language_pack.install.ini
+trans.sl_SI = ../translations-j1.6/attachments-Slovenian-sl-SI/language/sl-SI/sl-SI.files_attachments_language_pack.install.ini
+trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/language/es-ES/es-ES.files_attachments_language_pack.install.ini
+trans.sv_SE = ../translations-j1.6/attachments-Swedish-sv-SE/language/sv-SE/sv-SE.files_attachments_language_pack.install.ini
+trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/language/tr-TR/tr-TR.files_attachments_language_pack.install.ini
+trans.uk_UA = ../translations-j1.6/attachments-Ukrainian-uk-UA/language/uk-UA/uk-UA.files_attachments_language_pack.install.ini
+# trans.qq_ZZ = ../translations-j1.6/attachments-Language-qq-ZZ/language/qq-ZZ/qq-ZZ.files_attachments_language_pack.install.ini
+type = INI

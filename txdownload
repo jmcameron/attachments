@@ -12,24 +12,24 @@ endif
 
 echo "Downloading updates for $1"
 
-tx pull -f -r joomla-attachments-3.com_attachments_admin-com_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.com_attachments_site-com_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.com_attachments_install-com_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.add_attachment_btn_ini -l "$1"
-tx pull -f -r joomla-attachments-3.add_attachment_btn_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.insert_attachments_token_btn_ini -l "$1"
-tx pull -f -r joomla-attachments-3.insert_attachments_token_btn_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_attachments_for_content_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_attachments_for_content_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_attachments_plugin_framework_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_attachments_plugin_framework_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_content_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_content_attachments_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_quickicon_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_quickicon_attachments_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_search_attachments_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_search_attachments_sys_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini -l "$1"
-tx pull -f -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini -l "$1"
-
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_admin-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_site-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_install-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.add_attachment_btn_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.add_attachment_btn_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.insert_attachments_token_btn_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.insert_attachments_token_btn_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_for_content_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_for_content_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_plugin_framework_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_plugin_framework_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_content_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_content_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_quickicon_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_quickicon_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.files_attachments_language_pack_install_ini
