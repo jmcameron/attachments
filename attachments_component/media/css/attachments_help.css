@@ -37,8 +37,16 @@ a#tc_toggle {
     font-size: 70%;
     color: #88F;
     float: right;
-    margin: 0 2em 0.5em 0;
 }
+
+div.header a#tc_toggle {
+    margin: 0.5em 2.5em 0 0;
+}
+
+div.main a#tc_toggle {
+    margin: 0 0 1em 0;
+}
+
 
 a#tc_toggle:hover {
     color: #33F;
@@ -318,3 +326,4 @@ div.help-document a:link    { color : #003366; text-decoration: none; }
 div.help-document a:visited { color : #003366; text-decoration: none; }
 div.help-document a:hover   { color : #FF0000; text-decoration: none; }
 div.help-document a:active  { color : #003366; text-decoration: none; }
+

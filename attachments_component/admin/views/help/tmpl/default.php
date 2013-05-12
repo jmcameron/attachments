@@ -15,7 +15,7 @@
 defined('_JEXEC') or die();
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+// JHtml::_('behavior.tooltip');
 
 // Add the CSS for the attachments list (whether we need it or not)
 JHtml::stylesheet('com_attachments/attachments_help.css', array(), true);
@@ -77,23 +77,22 @@ $tlc = JText::_('ATTACH_HELP_TOGGLE_LANGUAGE_CODES');
 
 $onContentPrepare = "<tt class=\"docutils literal\">'onPrepareContent'</tt>";
 
-$title_ctid    = $this->textCodeSpan('ATTACH_HELP_000000_MAIN_TITLE');
-$vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
+$main_title_tooltip = $this->constructTooltip('ATTACH_HELP_000000_MAIN_TITLE');
+$main_version_tooltip = $this->constructTooltip('ATTACH_HELP_000100_MAIN_VERSION');
+
+$toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 
 ?>
 <div class="help-document">
-
 <div class="header">
-	<a id="tc_toggle" title="<? echo $tlc ?>" href="#"
-	   onClick="$(document.body).getElements('span[class=text_code]').toggle()">A</a>
-	<h1 class="title"><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') . ' ' . $title_ctid; ?></h1>
-   <hr class="header"/>
+	<a id="tc_toggle" title="<? echo $tlc ?>" href="<?php echo $this->toggledURL() ?>"><img src="<?php echo $toggle_img ?>"></a>
+	<h1 class="title" <?php echo $main_title_tooltip ?>><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') ?></h1>
+    <hr class="header"/>
 </div>
-
 <div class="main">
 
 <p class="version"><strong><?php echo $this->version . ' - ' . $this->date ?></strong></p>
-<p><strong><?php echo JText::_('ATTACH_HELP_000100_MAIN_VERSION') . $vers_ctid ?></strong></p>
+<p><strong<?php echo $main_version_tooltip ?>><?php echo JText::_('ATTACH_HELP_000100_MAIN_VERSION') ?></strong></p>
 
 <?php
    // ------------------------------------------------------------
@@ -158,10 +157,11 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->addParagraph('ATTACH_HELP_050100_TEXT');
 
       // Basic Options
-      $sstitle = JText::_('ATTACH_HELP_050200_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'basic-options', 'title' => $sstitle));
-         echo $this->image('options-basic.png', $sstitle, 'class="float-right"') . "\n";
-         $this->startList();
+      $this->startSubSection(Array( 'id' => 'basic-options',
+									'code' => 'ATTACH_HELP_050200_SUBSECTION_TITLE'));
+      echo $this->image('options-basic.png', 'ATTACH_HELP_050200_SUBSECTION_TITLE',
+						'class="float-right"') . "\n";
+      $this->startList();
             $this->addListElement('ATTACH_HELP_050300_TEXT');
             $this->addListElement('ATTACH_HELP_050400_TEXT');
             $this->addListElement('ATTACH_HELP_050500_TEXT');
@@ -189,9 +189,10 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->endSubSection('basic-options');
 
       // Formatting options
-      $sstitle = JText::_('ATTACH_HELP_052000_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'formatting-options', 'title' => $sstitle));
-         echo $this->image('options-formatting.png', $sstitle, 'class="float-right"') . "\n";
+      $this->startSubSection(Array( 'id' => 'formatting-options',
+									'code' => 'ATTACH_HELP_052000_SUBSECTION_TITLE'));
+         echo $this->image('options-formatting.png', 'ATTACH_HELP_052000_SUBSECTION_TITLE',
+						   'class="float-right"') . "\n";
          $this->startList();
             $this->addListElement('ATTACH_HELP_052100_TEXT');
             $this->addListElement('ATTACH_HELP_052200_TEXT');
@@ -224,10 +225,11 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->endSubSection('formatting-options');
 
       // Visibilty Options
-      $sstitle = JText::_('ATTACH_HELP_055000_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'visibility-options', 'title' => $sstitle));
+      $this->startSubSection(Array( 'id' => 'visibility-options',
+									'code' => 'ATTACH_HELP_055000_SUBSECTION_TITLE'));
          $this->addParagraph('ATTACH_HELP_055100_TEXT');
-         echo $this->image('options-visibility.png', $sstitle, 'class="float-right"') . "\n";
+         echo $this->image('options-visibility.png', 'ATTACH_HELP_055000_SUBSECTION_TITLE',
+						   'class="float-right"') . "\n";
          $this->startList();
              $this->addListElement('ATTACH_HELP_055200_TEXT');
              $this->addListElement('ATTACH_HELP_055300_TEXT');
@@ -244,9 +246,10 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->endSubSection('visibility-options');
 
       // Advanced Options
-      $sstitle = JText::_('ATTACH_HELP_057000_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'advanced-options', 'title' => $sstitle));
-         echo $this->image('options-advanced.png', $sstitle, 'class="float-right"') . "\n";
+      $this->startSubSection(Array( 'id' => 'advanced-options',
+									'code' => 'ATTACH_HELP_057000_SUBSECTION_TITLE'));
+         echo $this->image('options-advanced.png', 'ATTACH_HELP_057000_SUBSECTION_TITLE',
+						   'class="float-right"') . "\n";
          $this->startList();
              $this->addListElement('ATTACH_HELP_057100_TEXT');
              $this->addListElement('ATTACH_HELP_057200_TEXT', Array( '{SECT_STYLE}' => $this->sectionLink(SECT_STYLE) ));
@@ -264,9 +267,10 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->endSubSection('advanced-options');
 
       // Security Options
-      $sstitle = JText::_('ATTACH_HELP_058000_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'security-options', 'title' => $sstitle));
-         echo $this->image('options-security.png', $sstitle, 'class="float-right"') . "\n";
+      $this->startSubSection(Array( 'id' => 'security-options',
+									'code' => 'ATTACH_HELP_058000_SUBSECTION_TITLE'));
+         echo $this->image('options-security.png', 'ATTACH_HELP_058000_SUBSECTION_TITLE',
+						   'class="float-right"') . "\n";
          $this->startList();
              $this->addListElement(Array('ATTACH_HELP_058100_TEXT',
 										 'ATTACH_HELP_058200_TEXT',
@@ -284,8 +288,9 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
       $this->endSubSection('security-options');
 
       // Permissions Options
-      $sstitle = JText::_('ATTACH_HELP_059000_SUBSECTION_TITLE');
-      $this->startSubSection(Array( 'id' => 'permissions-options', 'title' => $sstitle));
+// ??? $sstitle = JText::_('ATTACH_HELP_059000_SUBSECTION_TITLE');
+      $this->startSubSection(Array( 'id' => 'permissions-options',
+									'code' => 'ATTACH_HELP_059000_SUBSECTION_TITLE'));
            $this->addParagraph('ATTACH_HELP_059100_TEXT', Array( '{SECT_PERMS}' => $this->sectionLink(SECT_PERMS) ));
       $this->endSubSection('permissions-options');
 
@@ -333,8 +338,8 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
    $this->endPermissionsTable();
 
    // Default permissions
-   $sstitle = JText::_('ATTACH_HELP_062000_SUBSECTION_TITLE');
-   $this->startSubSection(Array( 'id' => 'default-permissions', 'title' => $sstitle));
+   $this->startSubSection(Array( 'id' => 'default-permissions',
+								 'code' => 'ATTACH_HELP_062000_SUBSECTION_TITLE'));
       $this->addParagraph('ATTACH_HELP_062100_TEXT');
       $this->addAdmonition('important hide-title', 'ATTACH_HELP_IMPORTANT',
 						   'ATTACH_HELP_062200_IMPORTANT', null, false);
@@ -349,8 +354,8 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
    $this->endSubSection('default-permissions');
 
    // Permissions for common scenarios
-   $sstitle = JText::_('ATTACH_HELP_063000_SUBSECTION_TITLE');
-   $this->startSubSection(Array( 'id' => 'common-permissions-scenarios', 'title' => $sstitle));
+   $this->startSubSection(Array( 'id' => 'common-permissions-scenarios',
+								 'code' => 'ATTACH_HELP_063000_SUBSECTION_TITLE'));
       $this->addParagraph('ATTACH_HELP_063100_TEXT');
       $this->startList();
           $this->addListElement('ATTACH_HELP_063200_TEXT', null, false);
@@ -370,8 +375,9 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
    $this->endSubSection('common-permissions-scenarios');
 
    // Permissions for common scenarios
-   $sstitle = JText::_('ATTACH_HELP_065000_SUBSECTION_TITLE');
-   $this->startSubSection(Array( 'id' => 'other-notes-on-permissions', 'title' => $sstitle));
+// ??? $sstitle = JText::_('ATTACH_HELP_065000_SUBSECTION_TITLE');
+   $this->startSubSection(Array( 'id' => 'other-notes-on-permissions',
+								 'code' => 'ATTACH_HELP_065000_SUBSECTION_TITLE'));
       $this->startList();
            $this->addListElement('ATTACH_HELP_065100_TEXT');
       $this->endList();
@@ -625,7 +631,6 @@ $vers_ctid     = $this->textCodeSpan('ATTACH_HELP_000100_MAIN_VERSION');
 
 ?>
 
-<a id="tc_toggle" href="#" title="<?php echo $tlc ?>"
-   onClick="$(document.body).getElements('span[class=text_code]').toggle()"><?php echo $tlc ?></a>   
+<a id="tc_toggle" href="<?php echo $this->toggledURL() ?>" title="<?php echo $tlc ?>"><img src="<?php echo $toggle_img ?>"></a>   
 </div><!-- end div.main -->
 </div><!-- end div.document -->

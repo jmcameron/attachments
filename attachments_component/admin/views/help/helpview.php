@@ -47,6 +47,26 @@ class HelpView extends JViewLegacy
 	 */
 	protected $_sections = null;
 
+	/**
+	 * Flag to show codes
+	 *
+	 */
+	protected $_show_codes = null;
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param array  $config  An optional associative array of configuration settings.
+	 */
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+
+		// Save the plugin type
+		$this->_show_codes = JRequest::getCmd('show') == 'codes';
+	}
+
 
 	/**
 	 * Add the information about a section to the $sections data
@@ -58,6 +78,45 @@ class HelpView extends JViewLegacy
 	protected function saveSectionInfo($sectnum, $id, $code)
 	{
 		$this->_sections[$sectnum] = Array('id' => $id, 'code' => $code, 'title' => JText::_($code));
+	}
+
+
+	/**
+	 * Construct a tooltip if tooltips are supposed to be shown
+	 *
+	 * @param  string  $code  Language code for the tooltip
+	 *
+	 * @return the tooltip to insert in the html
+	 */
+	protected function constructTooltip($code)
+	{
+		$tooltip = '';
+		if ($this->_show_codes)
+		{
+			$tooltip = " title=\"$code\"";
+		}
+
+		return $tooltip;
+	}
+
+
+	/**
+	 * Construct the URL with show=codes toggled
+	 */
+	protected function toggledURL()
+	{
+		$uri = JRequest::getURI();
+
+		if ($this->_show_codes)
+		{
+			$uri = str_replace('&show=codes', '', $uri);
+		}
+		else
+		{
+			$uri .= '&show=codes';
+		}
+
+		return $uri;
 	}
 
 
@@ -111,10 +170,10 @@ class HelpView extends JViewLegacy
 	protected function tableOfContents($title_code, $class = 'contents topic')
 	{
 		$title = JText::_($title_code);
-		$code = $this->textCodeSpan($title_code);
+		$tooltip = $this->constructTooltip($title_code);
 
 		$html  = "<div class=\"$class\" id=\"contents\">\n";
-		$html .= "	 <p class=\"topic-title first\">" . $title . $code . "</p>\n";
+		$html .= "	 <p class=\"topic-title first\" $tooltip>$title</p>\n";
 		$html .= "	 <ul class=\"$class\">\n";
 		foreach ($this->_sections as $sect_num => $sdata)
 		{
@@ -136,9 +195,11 @@ class HelpView extends JViewLegacy
 	protected function sectionTOC($sect_num)
 	{
 		$sect_data = $this->_sections[$sect_num];
-		$sid = $sect_data['id'];
-		$stitle = $sect_data['title'];
-		return "<li><a class=\"reference internal\" href=\"#$sid\" id=\"id$sect_num\">$stitle</a></li>\n";
+		$id = $sect_data['id'];
+		$title = $sect_data['title'];
+		$tooltip = $this->constructTooltip($sect_data['code']);
+
+		return "<li><a class=\"reference internal\" href=\"#$id\" id=\"id$sect_num\" $tooltip>$title</a></li>\n";
 	}
 
 
@@ -150,13 +211,13 @@ class HelpView extends JViewLegacy
 	protected function startSection($sect_num)
 	{
 		$sect_data = $this->_sections[$sect_num];
-		$sid = $sect_data['id'];
+		$id = $sect_data['id'];
 		$text_code = $sect_data['code'];
-		$stitle = $sect_data['title'];
-		$tcid = "<span class=\"text_code\">[$text_code]</span>";
+		$tooltip = $this->constructTooltip($sect_data['code']);
+		$title = $sect_data['title'];
 		$hclass = 'class="toc-backref"';
-		$html =	 "<div class=\"section\" id=\"$sid\">\n";
-		$html .= "<h1><a $hclass href=\"#id$sect_num\">$stitle$tcid</a></h1>\n";
+		$html =	 "<div class=\"section\" id=\"$id\">\n";
+		$html .= "<h1><a $hclass href=\"#id$sect_num\" $tooltip>$title</a></h1>\n";
 		echo $html;
 	}
 
@@ -179,10 +240,13 @@ class HelpView extends JViewLegacy
 	 */
 	protected function startSubSection($sect_data)
 	{
-		$sid = $sect_data['id'];
-		$stitle = $sect_data['title'];
-		$html =	 "<div class=\"section\" id=\"$sid\">\n";
-		$html .= "<h2>$stitle</h2>\n";
+		$id = $sect_data['id'];
+		$code = $sect_data['code'];
+		$title = JText::_($code);
+		$tooltip = $this->constructTooltip($code);
+
+		$html =	 "<div class=\"section\" id=\"$id\">\n";
+		$html .= "<h2 $tooltip>$title</h2>\n";
 		echo $html;
 	}
 
@@ -211,19 +275,21 @@ class HelpView extends JViewLegacy
 	 */
 	protected function addAdmonition($type, $type_code, $text_codes, $replacements = null, $terminate = true)
 	{
-		$title = JText::_($type_code);
 		if (!is_array($text_codes))
 		{
 			$text_codes = Array($text_codes);
 		}
 
+		$title = JText::_($type_code);
+		$tooltip = $this->constructTooltip($type_code);
+
 		$html  = "<div class=\"$type\">\n";
-		$html .= "	 <p class=\"first admonition-title\">$title</p>\n";
+		$html .= "	 <p class=\"first admonition-title\" $tooltip>$title</p>\n";
 		foreach ($text_codes as $text_code)
 		{
-			$tcid = "<span class=\"text_code\">[$text_code]</span>";
 			$text = $this->replace(JText::_($text_code), $replacements);
-			$html .= "	 <p class=\"last\">" . $text . $tcid . "</p>\n";
+			$tooltip = $this->constructTooltip($text_code);
+			$html .= "	 <p class=\"last\" $tooltip>$text</p>\n";
 		}
 		if ( $terminate )
 		{
@@ -308,18 +374,19 @@ class HelpView extends JViewLegacy
 		{
 			$text_codes = Array($text_codes);
 		}
+
 		$html = '';
 		foreach ($text_codes as $text_code)
 		{
-			$tcid = "<span class=\"text_code\">[$text_code]</span>";
-			$text = $this->replace(JText::_($text_code), $replacements) . $tcid;
+			$text = $this->replace(JText::_($text_code), $replacements);
+			$tooltip = $this->constructTooltip($text_code);
 			if ($pclass)
 			{
-				$html .= "<p class=\"$pclass\">" . $text . "</p>\n";
+				$html .= "<p class=\"$pclass\" $tooltip>" . $text . "</p>\n";
 			}
 			else
 			{
-				$html .= '<p>' . $text . "</p>\n";
+				$html .= "<p class=\"hasTip\" $tooltip>" . $text . "</p>\n";
 			}
 		}
 
@@ -372,9 +439,9 @@ class HelpView extends JViewLegacy
 
 		foreach ($text_codes as $text_code)
 		{
-			$tcid = "<span class=\"text_code\">[$text_code]</span>";
 			$text = $this->replace(JText::_($text_code), $replacements);
-			$html .= "<p>" . $text . $tcid . "</p>\n";
+			$tooltip = $this->constructTooltip($text_code);
+			$html .= "<p class=\"hasTip\" $tooltip>$text</p>\n";
 		}
 
 		if ($terminate)
@@ -403,9 +470,9 @@ class HelpView extends JViewLegacy
 	 */
 	protected function addListElementLink($url, $text_code)
 	{
-		$tcid = "<span class=\"text_code\">[$text_code]</span>";
 		$text = $this->replace(JText::_($text_code), Array('{LINK}' => $url));
-		echo "<li><a class=\"reference external\" href=\"$url\">$text$tcid</a></li>\n";
+		$tooltip = $this->constructTooltip($text_code);
+		echo "<li><a class=\"reference external\" $tooltip href=\"$url\">$text</a></li>\n";
 	}
 
 
@@ -441,17 +508,6 @@ class HelpView extends JViewLegacy
 
 
 	/**
-	 * Add a hidden span containing the Language token for the preceeding text
-	 *
-	 * @param  string  $text_code  The language code to insert in the hidden span (raw)
-	 */
-	protected function textCodeSpan($text_code)
-	{
-		return "<span class=\"text_code\">[$text_code]</span>";
-	}
-
-
-	/**
 	 * Add a figure: and image with an optional caption
 	 *
 	 * @param  string  $filename  Filename for the image (full path)
@@ -462,10 +518,10 @@ class HelpView extends JViewLegacy
 	protected function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure')
 	{
 		$html = "<div class=\"$dclass\">\n";
-		$html .= $this->image($filename, JText::_($alt_code)) . "\n";
+		$html .= $this->image($filename, $alt_code) . "\n";
 		if ( $caption_code )
 		{
-			$html .= '<p class="caption">' . JText::_($caption_code) . "</p>\n";
+			$html .= "<p class=\"caption\" title=\"$caption_code\">" . JText::_($caption_code) . "</p>\n";
 		}
 		$html .= '</div>';
 		echo $html;
@@ -477,7 +533,7 @@ class HelpView extends JViewLegacy
 	 * Return an image URL if the file is found
 	 *
 	 * @param  string  $filename  Filename for the image in the media folder (more below)
-	 * @param  string  $alt		  Text to be inserted into the alt='text' attribute
+	 * @param  string  $alt_code  Language code for text to be inserted into the alt='text' attribute
 	 * @param  array   $attribs	  Attributes to be added to the image URL
 	 *
 	 * The file location uses the JHtml::image() function call which expects
@@ -493,9 +549,14 @@ class HelpView extends JViewLegacy
 	 *
 	 * @return string image URL (or null if the image was not found)
 	 */
-	protected function image($filename, $alt, $attribs = Array())
+	protected function image($filename, $alt_code, $attribs = Array())
 	{
 		$lcode = $this->lang->getDefault();
+		$alt = '';
+		if ($alt_code)
+		{
+			$alt = JText::_($alt_code);
+		}
 
 		// First try the current language
 		$img = JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true);
