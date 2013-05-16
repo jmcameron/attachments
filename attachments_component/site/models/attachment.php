@@ -113,7 +113,9 @@ class AttachmentsModelAttachment extends JModelLegacy
 			$query->select('a.*, a.id as id');
 			$query->from('#__attachments as a');
 			$query->where('a.id = '.(int)$this->_id);
-			$query->where('a.access in ('.$user_levels.')');
+			if ( !$user->authorise('core.admin') ) {
+				$query->where('a.access in ('.$user_levels.')');
+				}
 			$db->setQuery($query, 0, 1);
 			$this->_attachment = $db->loadObject();
 			if ( empty($this->_attachment) ) {
