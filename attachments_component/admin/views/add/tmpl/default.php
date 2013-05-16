@@ -36,10 +36,11 @@ if ( !in_array($editor, $exceptions) ) {
 
 	// Add a footer section with buttons to attach files to the supported content types/entities
 	$alt_parent_html .= '<div id="attachmentsPotentialParents">';
+	$alt_parent_html .= '<p>';
 
 	// For normal LTR, put the label on the left
 	if ( !$lang->isRTL() ) {
-		$alt_parent_html .= '<div>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</div> ';
+		$alt_parent_html .= '<span>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</span> ';
 		}
 
 	// Create all the buttons
@@ -63,9 +64,10 @@ if ( !in_array($editor, $exceptions) ) {
 
 	// For normal RTL, put the label on the right
 	if ( $lang->isRTL() ) {
-		$alt_parent_html .= '<b>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</b>';
+		$alt_parent_html .= '<span>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</span>';
 		}
 
+	$alt_parent_html .= '</p>';
 	$alt_parent_html .= '</div>';
 	}
 

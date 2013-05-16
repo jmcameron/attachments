@@ -461,11 +461,19 @@ div#attachmentsPotentialParents {
 	max-width: 40%;
 }
 
-div#attachmentsPotentialParents div {
+div#attachmentsPotentialParents p {
+    padding-left: 2em;
+}
+
+div#attachmentsPotentialParents span:first-letter
+{
+    margin-left: -2em;
+}
+
+div#attachmentsPotentialParents span {
         font-weight: bold;
 	font-size: 1.1em;
 	margin: 0;
-	display: inline;
 }
 
 div#attachmentsPotentialParents a.changeButton {
@@ -647,4 +655,5 @@ div#utilsList h2 {
 .icon-16-attachments  { background-image: url(../images/attachments.png); }
 
 .icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
+
 
