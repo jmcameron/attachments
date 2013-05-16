@@ -25,6 +25,51 @@ $attachment = $this->attachment;
 
 $upload_id = 'upload';
 
+
+// Show buttons for adding the attachments to other entitites (if appropriate)
+$alt_parent_html = '';
+$editor = JRequest::getWord('editor');
+$exceptions = Array('article', 'category', 'add_to_parent');
+if ( !in_array($editor, $exceptions) ) {
+
+	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=attachment.add";
+
+	// Add a footer section with buttons to attach files to the supported content types/entities
+	$alt_parent_html .= '<div id="attachmentsPotentialParents">';
+
+	// For normal LTR, put the label on the left
+	if ( !$lang->isRTL() ) {
+		$alt_parent_html .= '<div>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</div> ';
+		}
+
+	// Create all the buttons
+	foreach ($this->entity_info as $einfo) {
+		$parent_type = $einfo['parent_type'];
+		$centity = $einfo['id'];
+		$cename = $einfo['name'];
+		if ( ($parent_type != $attachment->parent_type) || ($centity != $attachment->parent_entity) ) {
+			$url = $base_url . "&amp;parent_type=" . $parent_type;
+			$tooltip = JText::sprintf('ATTACH_ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
+									  $cename, $attachment->parent_entity_name);
+			if ( $centity != 'default' ) {
+				$url .= '.' . $centity;
+				}
+			if ( $attachment->uri_type == 'url' ) {
+				$url .= '&amp;uri=url';
+				}
+			$alt_parent_html .= " <a class=\"changeButton\" href=\"$url\" title=\"$tooltip\">$cename</a>";
+			}
+		}
+
+	// For normal RTL, put the label on the right
+	if ( $lang->isRTL() ) {
+		$alt_parent_html .= '<b>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</b>';
+		}
+
+	$alt_parent_html .= '</div>';
+	}
+
+
 if ( $attachment->parent_title ) {
 	echo "<h1>" . JText::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
 	}
@@ -39,7 +84,8 @@ if ( $attachment->parent_title ) {
 <?php if ( !$this->new_parent && !$attachment->parent_id ): ?>
   <tr>
 	<td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
-	<td><input id="parent_title" value="<?php echo $attachment->parent_title ?>" disabled="disabled" type="text" size="60" />&nbsp;
+	<td><?php echo $alt_parent_html; ?>
+      <input id="parent_title" value="<?php echo $attachment->parent_title ?>" disabled="disabled" type="text" size="60" />&nbsp;
 	  <a class="modal-button" type="button"
 		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
 		 rel="{handler: 'iframe', size: {x: 800, y: 450}}"><?php echo $this->selpar_btn_text ?></a>
@@ -173,45 +219,3 @@ if ( ($attachment->uri_type == 'file') && $attachment->parent_id ) {
 	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }
-
-// Show buttons for adding the attachments to other entitites (if appropriate)
-$editor = JRequest::getWord('editor');
-$exceptions = Array('article', 'category', 'add_to_parent');
-if ( !in_array($editor, $exceptions) ) {
-
-	$base_url = $uri->base(true) . "/index.php?option=com_attachments&amp;task=attachment.add";
-
-	// Add a footer section with buttons to attach files to the supported content types/entities
-	echo '<div id="attachmentsPotentialParents">';
-
-	// For normal LTR, put the label on the left
-	if ( !$lang->isRTL() ) {
-		echo '<b>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</b>';
-		}
-
-	// Create all the buttons
-	foreach ($this->entity_info as $einfo) {
-		$parent_type = $einfo['parent_type'];
-		$centity = $einfo['id'];
-		$cename = $einfo['name'];
-		if ( ($parent_type != $attachment->parent_type) || ($centity != $attachment->parent_entity) ) {
-			$url = $base_url . "&amp;parent_type=" . $parent_type;
-			$tooltip = JText::sprintf('ATTACH_ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
-									  $cename, $attachment->parent_entity_name);
-			if ( $centity != 'default' ) {
-				$url .= '.' . $centity;
-				}
-			if ( $attachment->uri_type == 'url' ) {
-				$url .= '&amp;uri=url';
-				}
-			echo "<a class=\"changeButton\" href=\"$url\" title=\"$tooltip\">$cename</a>";
-			}
-		}
-
-	// For normal RTL, put the label on the right
-	if ( $lang->isRTL() ) {
-		echo '<b>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</b>';
-		}
-
-	echo '</div>';
-	}

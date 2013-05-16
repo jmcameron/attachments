@@ -354,6 +354,7 @@ form.attachmentsBackend input[type="text"] {
 form.attachmentsBackend input#parent_title {
 	background-color: #BBB;
 	color: #555;
+	width: 45%;
 }
 
 form.attachmentsBackend input[type="button"], 
@@ -403,7 +404,7 @@ form.attachmentsBackend table.admintable td.key,
 form.attachmentsBackend table.admintable td.key2 {
 	background-color: #DADAF0;
 	color: #444;
-	width: 12em;
+	width: 8em;
 	padding: 0 4px 0 4px;
 	margin: 2px 0 2px 0;
 	vertical-align: middle;
@@ -453,10 +454,24 @@ input#upload, input#upload_warning {
 }
 
 div#attachmentsPotentialParents {
-	margin: 2em 0 0 0;
-	font-size: 1.2em;
+	font-size: 1.0em;
+	line-height: 1.5em;
+	padding: 0 0 6px 0;
+	float: right;
+	max-width: 40%;
 }
 
+div#attachmentsPotentialParents div {
+        font-weight: bold;
+	font-size: 1.1em;
+	margin: 0;
+	display: inline;
+}
+
+div#attachmentsPotentialParents a.changeButton {
+    margin-left: 0;
+    margin-right: 0;
+}
 
 /* Small fixes for form to edit parameters */
 
@@ -632,3 +647,4 @@ div#utilsList h2 {
 .icon-16-attachments  { background-image: url(../images/attachments.png); }
 
 .icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
+
