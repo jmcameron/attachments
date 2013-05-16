@@ -418,7 +418,9 @@ class AttachmentsModelAttachments extends JModelLegacy
 			}
 
 		$query->where('a.parent_type=' . $db->quote($parent_type) . ' AND a.parent_entity=' . $db->quote($parent_entity));
-		$query->where('a.access IN ('.$user_levels.')');
+		if ( !$user->authorise('core.admin') ) {
+			$query->where('a.access IN ('.$user_levels.')');
+			}
 		$query->order($this->_sort_order);
 
 		// Do the query

@@ -178,8 +178,10 @@ class AttachmentsModelAttachments extends JModelList
 
 		// Make sure the user can only see the attachments they may access
 		$user	= JFactory::getUser();
-		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
-		$where[] = 'a.access in ('.$user_levels.')';
+		if ( !$user->authorise('core.admin') ) {
+			$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
+			$where[] = 'a.access in ('.$user_levels.')';
+			}
 
 		// Construct the WHERE clause
 		$where = (count($where) ? implode(' AND ', $where) : '');

@@ -171,7 +171,9 @@ class plgSearchAttachments extends JPlugin
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments AS a');
 		$query->where("( $where ) AND a.state = 1");
-		$query->where('a.access in ('.$user_levels.')');
+		if ( !$user->authorise('core.admin') ) {
+			$query->where('a.access in ('.$user_levels.')');
+			}
 		$query->order($order);
 		$db->setQuery( $query, 0, $limit );
 		$attachments = $db->loadObjectList();
