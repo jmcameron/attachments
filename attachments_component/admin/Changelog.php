@@ -97,6 +97,8 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2012-05-04 Refactored and straightened out onPrepareContent callbacks to use fixes
 	   in Joomla 2.5.10+ and Joomla 3.1+.
 	- 2012-05-05 Small improvements to help view coding.
+    - 2013-05-14 In admin add dialog, moved alt parents selctor to top right.
+	- 2013-05-15 Policy change: let super-user see attachments for all access levels.
 
 2012-09-07: Release 3.0.4
 	- 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
