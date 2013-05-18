@@ -86,7 +86,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 <div class="help-document">
 <div class="header">
 	<a id="tc_toggle" title="<? echo $tlc ?>" href="<?php echo $this->toggledURL() ?>"><img src="<?php echo $toggle_img ?>"></a>
-	<h1 class="title" <?php echo $main_title_tooltip ?>><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') ?></h1>
+	<h1 class="title" <?php echo $main_title_tooltip ?>><?php echo $this->logo_img ?><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') ?></h1>
 	<hr class="header"/>
 </div>
 <div class="main">

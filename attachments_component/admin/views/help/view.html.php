@@ -36,8 +36,10 @@ class AttachmentsViewHelp extends HelpView
 	 */
 	public function display($tpl = null)
 	{
+		$this->logo_img = JHtml::image('com_attachments/attachments_help_logo32.png','',null, true);
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
-		$this->date = AttachmentsDefines::$ATTACHMENTS_VERSION_DATE;
+		$rdate = new JDate(AttachmentsDefines::$ATTACHMENTS_VERSION_DATE);
+		$this->date = JHtml::_('date', $rdate, JText::_('DATE_FORMAT_LC1'));
 
 		parent::display($tpl);
 	}
