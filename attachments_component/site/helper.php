@@ -1670,7 +1670,9 @@ class AttachmentsHelper
 		$query->where('((parent_id='.(int)$parent_id . ') OR (parent_id is NULL))'.
 					  ' AND parent_type=' . $db->quote($parent_type) .
 					  ' AND parent_entity=' . $db->quote($parent_entity));
-		$query->where('access in ('.$user_levels.')');
+		if ( !$user->authorise('core.admin') ) {
+			$query->where('access in ('.$user_levels.')');
+			}
 		$db->setQuery($query);
 		$total = $db->loadResult();
 		if ( $db->getErrorNum() ) {
