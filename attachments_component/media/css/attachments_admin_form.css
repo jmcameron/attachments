@@ -533,8 +533,8 @@ ul#attachments-options > li select {
 }
 
 ul#attachments-options > li > label {
-	min-width: 20em;
-	width: 20em;
+	min-width: 21em;
+	width: 21em;
 	text-align: right;
 	padding: 0 8px 0 0;
 	margin: 0 2px 4px 0;
@@ -655,5 +655,6 @@ div#utilsList h2 {
 .icon-16-attachments  { background-image: url(../images/attachments.png); }
 
 .icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
+
 
 

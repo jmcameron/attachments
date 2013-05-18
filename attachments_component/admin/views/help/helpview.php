@@ -134,6 +134,20 @@ class HelpView extends JViewLegacy
 		return "<a class=\"reference internal\" href=\"#$id\">$title</a>";
 	}
 
+	/**
+	 * Construct a link
+	 *
+	 * @param string  $url  The URL for the link
+	 * @param string  $label_code  The code for the link label
+	 *
+	 * @return string an html link 
+	 */
+	protected function link($url, $label_code, $class='')
+	{
+		$label = JText::_($label_code);
+		return "<a $class href=\"$url\">$label</a>";
+	}
+
 
 	/**
 	 * Replace a series of items from the html using an array of replacements
@@ -382,7 +396,7 @@ class HelpView extends JViewLegacy
 			$tooltip = $this->constructTooltip($text_code);
 			if ($pclass)
 			{
-				$html .= "<p class=\"$pclass\" $tooltip>" . $text . "</p>\n";
+				$html .= "<p class=\"$pclass hasTip\" $tooltip>" . $text . "</p>\n";
 			}
 			else
 			{
@@ -515,10 +529,10 @@ class HelpView extends JViewLegacy
 	 * @parma  string  $caption_code  Language token for the text to use for the caption (OPTIONAL)
 	 * @param  string  $dclass	  Class for the figure <div>
 	 */
-	protected function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure')
+	protected function addFigure($filename, $alt_code, $caption_code = null, $dclass = 'figure', $img_attribs=array())
 	{
 		$html = "<div class=\"$dclass\">\n";
-		$html .= $this->image($filename, $alt_code) . "\n";
+		$html .= $this->image($filename, $alt_code, $img_attribs) . "\n";
 		if ( $caption_code )
 		{
 			$html .= "<p class=\"caption\" title=\"$caption_code\">" . JText::_($caption_code) . "</p>\n";

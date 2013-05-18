@@ -71,8 +71,15 @@ div.help-document span.text_code
 }
 
 div.help-document p {
-    margin-left: 0;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div.help-document img.drop-shadow {
+    margin: 4px 0 12px 6px;
+    box-shadow: 10px 10px 5px #444;
+    -moz-box-shadow: 10px 10px 5px #444;
+    -webkit-box-shadow: 10px 10px 5px #444;
 }
 
 div.help-document ul { 
@@ -80,7 +87,8 @@ div.help-document ul {
 }
 
 div.help-document p {
-    margin-top: 6px;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 div.help-document ul li {
@@ -93,6 +101,10 @@ div.help-document ol li {
 
 div.help-document li p {
     display: inline;
+}
+
+div.help-document li p.paragraph {
+    display: block;
 }
 
 div.help-document h1 {
@@ -168,31 +180,34 @@ div.help-document a.display {
 
 
 /* Style warning blocks (partially from Sphinx) */
+div.help-document div.note,
+div.help-document div.hint,
+div.help-document div.warning,
+div.help-document div.important
+{
+    border: 1px solid #666;
+    width: 80%;
+    margin: 4px 10px 4px 20px;
+    padding: 6px 6px 2px 6px;
+}
 div.help-document div.warning {
     background-color: #ffe4e4;
     border: 1px solid #f66;
-    width: 80%;
-    margin: 8px 10px 0px 20px;
-    padding: 6px;
 }
 div.help-document div.important {
     background-color: #e4ffe4;
     border: 1px solid #6f6;
-    width: 80%;
-    margin: 4px 10px 0px 20px;
-    padding: 6px;
 }
 div.help-document div.note,
 div.help-document div.hint {
     background-color: #DDF;
     border: 1px solid #66F;
-    width: 80%;
-    margin: 4px 10px 0px 20px;
-    padding: 6px;
 }
+
 div.help-document p.admonition-title {
     display: inline;
     font-weight: bold;
+    margin-bottom: 4px;
 }
 div.help-document p.admonition-title:after {
     content: ":";
@@ -222,9 +237,11 @@ div.help-document div#contents {
 div.help-document ul,
 div.help-document ol {
     padding-left: 1.5em;
+    margin: 0.2em 0 0.5em 0;
 }
 
-div.help-document div#contents ul {
+div.help-document div#contents ul,
+div.help-document div#contents ol {
     margin: 6px 0 0 0;
     padding: 0 0.5em 0.5em 2em;
 }
@@ -331,5 +348,6 @@ div.help-document a:link    { color : #003366; text-decoration: none; }
 div.help-document a:visited { color : #003366; text-decoration: none; }
 div.help-document a:hover   { color : #FF0000; text-decoration: none; }
 div.help-document a:active  { color : #003366; text-decoration: none; }
+
 
 
