@@ -27,7 +27,6 @@ if ( !JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework')
  */
 class AttachmentsPlugin_com_content extends AttachmentsPlugin
 {
-
 	/**
 	 * Constructor
 	 *
