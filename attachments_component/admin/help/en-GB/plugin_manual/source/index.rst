@@ -14,8 +14,8 @@ Copyright (C) 2010-2013 Jonathan M. Cameron, All Rights Reserved
    This manual has been updated for Attachments 3x for Joomla 2.5x but has not
    been tested for correctness.  If you follow this manual and have any
    difficulties creating an attachments plugin, please email your corrections,
-   additions, or suggestions to the the author (see the email at the end of
-   this document).   2012-11-14
+   additions, or suggestions to the the author (see the email addressat the
+   end of this document).  2013-05-19
 
 .. contents:: Contents
    :depth: 2
@@ -196,10 +196,10 @@ The next thing you need to do is create the basic set of files you need for
 your new Attachments plugin.  First, create a directory for your files and
 create a set of files like this inside that directory::
 
-    attachments_for_newcomp.php
     attachments_for_newcomp.xml
+    attachments_for_newcomp.php
     en-GB.plg_attachments_attachments_for_newcomp.ini
-    plugins/com_newcomp.php
+    en-GB.plg_attachments_attachments_for_newcomp.sys.ini
 
 where you should replace all occurrences of ``newcomp`` with the name of your
 component (the part after the ``com_`` prefix) you are building the Attachments
@@ -227,13 +227,9 @@ Here is what the installation file **attachments_for_newcomp.xml** should contai
 	<description>ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED</description>
 	<files>
 	    <filename plugin="attachments_for_newcomp">attachments_for_newcomp.php</filename>
-	    <filename>plugins/com_newcomp.php</filename> 
-	    <filename>plugins/com_newcomp.ini</filename> 
+	    <filename>index.html</filename>
+	    <folder>language</folder>
 	</files>
-	<languages>
-	    <language tag="en-GB">en-GB.plg_attachments_attachments_for_newcomp.ini</language>
-	</languages>
-	<params/>
     </extension>
 
 where you should fill in for all of the ``???`` items as well as change all
@@ -245,26 +241,188 @@ description field is a translation token and should include no spaces.
 File: ``attachments_for_newcomp.php``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The second file is the **attachments_for_newcomp.php** file:
+The main code for the plugin is in the file ``attachments_for_newcomp.php``:
 
 .. code-block:: php
+   :linenos:
 
     <?php
 
-      // no direct access
-      defined( '_JEXEC' ) or die( 'Restricted access' );
+    // no direct access
+    defined('_JEXEC') or die('Restricted access');
 
+    // Load the attachments plugin class
+    if (!JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
+    {
+	// Fail gracefully if the Attachments plugin framework plugin is disabled
+	return;
+    }
+
+    class AttachmentsPlugin_Com_Newcomp extends AttachmentsPlugin
+    {
+	/**
+	 * Constructor
+	 */
+        public function __construct(&$subject, $config = array())
+        {
+            parent::__construct($subject, $config);
+
+            // Configure the plugin
+            $this->_name          = 'attachments_for_newcomp';
+
+            // Set basic attachments defaults
+            $this->parent_type    = 'com_newcomp';
+            $this->default_entity = 'thing';
+
+            // Add the information about the default entity (thing)
+            $this->entities[]                  = 'thing';
+            $this->entity_name['thing']        = 'thing';
+            $this->entity_name['default']      = 'thing';
+            $this->entity_table['thing']       = 'things';
+            $this->entity_id_field['thing']    = 'id';
+            $this->entity_title_field['thing'] = 'title';
+
+	    // Configure additional entities
+	    ...
+
+            // Always load the language
+            $this->loadLanguage();
+        }
+
+        ... OTHER FUNCTIONS DESCRIBED IN APPENDEX A BELOW
+    }
+
+    // Register this attachments type
+    $apm = getAttachmentsPluginManager();
+    $apm->addParentType('com_newcomp');
     ?>
 
-This is basically a placeholder file needed for the installation.  The real
-code for the attachment plugin is in the ``com_newcomp.php`` (shown later).
+where many functions have been omitted for clarity.  Each function that may
+need implementing is described in :ref:`Appendix A <implement-functionality-appendix>`.
+Replace ``newcomp`` with the appropriate component name for your component
+throughout this code.  The configuration code in the constructor will be
+described in the next section.
+
+Notice lines 48-49 at the end of the file.  These two lines are necessary in
+order to automatically register your new plugin with the Attachments plugin
+framework.  **Do not leave them out!**
+
+You can refer to the the ``com_content`` component configuration file
+``plugins/attachments/attachments_for_content/attachments_for_content.php``
+for a more involved example with multiple blocks and aliases.  (Check after
+the Attachments extension is installed).
+
+.. index:: class;AttachmentsPlugin
+
+Your new class extends the AttachmentsPlugin class that can be found in the file: 
+
+  * ``plugins/attachments/attachments_plugin_framework/attachments_plugin.php``
+
+in your Joomla! installation.
+
+
+Plugin constructor code description
++++++++++++++++++++++++++++++++++++
+
+Now consider the code in the constructor.  It is important to get the
+constructor exactly right in order for the plugin to work properly.
+
+Lines 22-27 configure the new plugin as a whole.  In line 23, define the name
+component. Simply replace 'newcomp' with the name of your component (with the
+``com_`` prefix):
+
+.. code-block:: php
+
+   $this->_name = 'attachments_for_newcomp';
+   
+In line 26, set the name of the component to be supported (use the form with
+the ``com_`` prefix):
+
+.. code-block:: php
+
+   $this->_parent_type = 'com_newcomp';
+
+In line 18, set the name for the default entity.  This is the raw,
+untranslated entity name in lowercase:
+
+.. code-block:: php
+
+   $this->_default_entity = 'thing';
+
+As was mentioned before, every entity name (including this one) **must be a
+single alphanumeric token without spaces** (because it may be used in
+URLs). The same token entity token is used in all languages.
+
+The next section of code (lines 29-35), configures the information about the
+default entity.  For most of these lines, simply replace 'thing' with the name
+of your entity.  
+
+In line 33, define the name of the database table where the entities can be
+looked up (remove the leading ``#__`` prefix).  We will refer to this as the
+``entity_table``.
+
+.. code-block:: php
+
+   $this->_entity_table['thing'] = 'things';
+
+For example, if your site uses ``jos_`` as the table prefix, then the full
+``entity_table`` name would be ``jos_things`` and you would strip off the
+``jos_`` prefix to get the entity table name used in this line.
+
+In line 34, define which field in the ``entity_table`` contains the
+primary ID.  This is normally 'id', but some components may use a different
+name for the primary ID field:
+
+.. code-block:: php
+ 
+   $this->_entity_id_field['thing'] = 'id';
+
+.. note::
+
+   By default, the AttachmentsPlugin base class (which your code will extend)
+   supports content items that appear in database tables, which usually means
+   that they are defined in Joomla! components.  If your entity is not defined
+   in a Joomla!  database table, you will have to override several of the base
+   class functions, particularly the function to retrieve a content item's
+   title.
+
+In the next line, 35, define which field in the ``entity_table`` contains the
+entity title (or comparable name of the entity):
+
+.. code-block:: php
+
+   $this->_entity_title_field['thing'] = 'title';
+
+Finally, if there is more than one entity, a block of code similar to lines
+29-35 would be added where lines 37-38 currently are for a different entity
+name (if only one entity is supported, you may delete lines 37-38).  
+
+Note that secondary (non-default) entities must not include a line like line
+32 since there can only be one default entity.  For blocks describing
+secondary entities, replace 'thing' with the appropriate entity name and
+update the database table name and the entity ID and title fields.
+
+You can refer to the the ``com_content`` component configuration file
+``plugins/attachments/plugins/com_content.ini`` for a more involved example
+with multiple blocks and aliases.  (Check after the Attachments extension is
+installed).
+
+Additional plugin functions
++++++++++++++++++++++++++++
+
+In the code above, line 44 is a placeholder for several functions that will
+need to be added before the plugin can be functional.
+
+Please see :ref:`Appendix A <implement-functionality-appendix>` for a listing
+of which functions need to be implemented.
+
 
 .. index:: file;en-GB.plg_attachments_attachments_for_newcomp.ini
 
 File: ``en-GB.plg_attachments_attachments_for_newcomp.ini``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The translations ``.ini`` file should look like this:
+The main translations ``.ini`` file should look like this:
 
 .. code-block:: ini
 
@@ -297,234 +455,37 @@ that may include spaces, etc.
 Don't forget to add translation items for any error messages you may include
 in the code our write.
 
-.. index:: file;plugin/com_newcomp.ini
+.. tip::
 
-File: ``plugin/com_newcomp.ini``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   It is correct that 'attachments' appears twice in the ``.ini`` filename.
 
-Next we look at the two files in the plugin directory.  First consider the
-configuration file ``plugin/com_newcomp.ini``:
+
+.. index:: file;en-GB.plg_attachments_attachments_for_newcomp.sys.ini
+
+File: ``en-GB.plg_attachments_attachments_for_newcomp.sys.ini``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The system translations ``.ini`` file should look like this:
 
 .. code-block:: ini
-   :linenos:
 
-    [default]
-    alias = item
-    entity = THING
-    entity_table = newcomp_thing
-    entity_id_field = id
-    entity_title_field = title
+    # en-GB.plg_attachments_for_newcomp.sys.ini
+    # Attachments for Joomla! newcomp extension 
+    # Copyright (C) ??? ???, All rights reserved.
+    # License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+    # Note : All ini files need to be saved as UTF-8 - No BOM
 
+    # English translation
 
-This file should contain a series of blocks for each entity, separated by a
-blank line.  The first line of each block must contain the name of the entity
-in square brackets as shown.  In this example there is only one block, but the
-file could contain as many blocks as needed.  There will be a separate block
-like this for every entity that is supported by the component.  The 'default'
-one, usually the main one, should be called *default* (as shown here) and
-should appear first.
+    ATTACH_ATTACHMENTS_FOR_NEWCOMP_PLUGIN_DESCRIPTION="The Attachments for newcomp plugin enables adding attachments to newcomp things."
+    PLG_ATTACHMENTS_FOR_NEWCOMP="Attachments - For Newcomp"
 
-These files are standard configuration files.  All of the lines after the
-first line of each block have assignments.  Only the part to the right of the
-equals sign should be changed.
-
-Now consider each of the lines above.  
-
-  **Line 1**
-     is the name of the parent entity type in lower case in square brackets.
-     **This name must be a single alphanumeric token without spaces** (because
-     it may be used in URLs).  Always use 'default' for the default entity for
-     a component.  The first line for the rest of the blocks should contain
-     the entity name in square brackets; [default] must appear only once per
-     component.
-
-  **Line 2**
-     gives a comma-separated list of alternate names (or aliases) in lower
-     case that can be used in the code for this entity.  If there are no
-     aliases, this line can be omitted.  It is possible that several aliases
-     will be needed for the same entity, as you should see from the diagnostic
-     output (see section :ref:`diagnostic-section`).
-
-  **Line 3**
-     is the formal name of the entity in upper case; the the term to the right
-     of the equals sign here is a translation item for this entity and must be
-     translated in the translation file.  Note that the translation file must
-     also translate a pluralized version of this name (the upper case name
-     with an appended 'S').
-
-  **Line 4**
-     is the name of the database table in which the parent entity is found
-     (without the leading ``#__`` prefix).  
-
-  **Line 5**
-     is the name of the id field for the parent entity in the database
-     table ``entity_table``.  This line is optional; it may be ommited if the
-     id field is 'id';
-
-  **Line 6**
-     is the name of the title field for the parent entity in the database
-     table ``entity_table``.  
+These are the 'system' language tokens for displaying information about your
+new attachments plugin in the extension manager and plugin manager.
 
 .. note::
 
-   By default, the AttachmentsPlugin base class (which your code will extend)
-   supports content items that appear in database tables, which usually means
-   that they are defined in Joomla! components.  If your entity is not defined
-   in a Joomla!  database table, you will have to override several of the base
-   class functions, particularly the function to retrieve a content item's
-   title.
-
-You can refer to the the ``com_content`` component configuration file
-``plugins/attachments/plugins/com_content.ini`` for a more involved example
-with multiple blocks and aliases.  (Check after the Attachments extension is
-installed).
-
-
-.. index:: file;plugin/com_newcomp.php
-
-File: ``plugin/com_newcomp.php``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Finally, the main code for the plugin is in ``plugin/com_newcomp.php``:
-
-.. code-block:: php
-   :linenos:
-
-    <?php
-
-    // no direct access
-    defined( '_JEXEC' ) or die( 'Restricted access' );
-
-    class AttachmentsPlugin_com_newcomp extends AttachmentsPlugin
-    {
-	/**
-	 * Constructor
-	 */
-        public function __construct(&$subject, $config = array())
-        {
-            parent::__construct($subject, $config);
-
-            // Set basic defaults
-            $this->_name = 'attachments_for_newcomp';
-            $this->_parent_type = 'com_newcomp';
-            $this->_default_entity = 'thing';
-
-            // Add the information about the default entity (thing)
-            $this->_entities[] = 'thing';
-            $this->_entity_name['thing'] = 'thing';
-            $this->_entity_name['default'] = 'thing';
-            $this->_entity_table['thing'] = 'things';
-            $this->_entity_id_field['thing'] = 'id';
-            $this->_entity_title_field['thing'] = 'title';
-
-	    // Configure additional entities
-	    ...
-
-            // Always load the language
-            $this->loadLanguage();
-        }
-
-        ... OTHER FUNCTIONS DESCRIBED IN APPENDEX A BELOW
-    }
-
-    // Register this attachments type
-    $apm = getAttachmentsPluginManager();
-    $apm->addParentType('com_content');
-
-    ?>
-
-where many functions have been omitted for clarity.  Each function that may
-need implementing is described in :ref:`implement-functionality-appendix`.
-Replace ``newcomp`` with the appropriate component name for your component
-throughout this code.  The configuration code in the constructor will be
-described in the next section.
-
-Notice lines 39-40 at the end of the file.  These two lines are necessary in
-order to automatically register your new plugin with the Attachments plugin
-framework.  **Do not leave them out!**
-
-You can refer to the the ``com_content`` component configuration file
-``plugins/attachments/attachments_for_content/attachments_for_content.php``
-for a more involved example with multiple blocks and aliases.  (Check after
-the Attachments extension is installed).
-
-.. index:: class;AttachmentsPlugin
-
-Your new class extends the AttachmentsPlugin class that can be found in the file: 
-
-  * ``plugins/attachments/attachments_plugin_framework/attachments_plugin.php``
-
-in your Joomla! installation.
-
-Plugin constructor code description
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Now consider the code in the constructor.  It is important to get the
-constructor exactly right in order for the plugin to work properly.
-
-Lines 15-18 configure the new plugin as a whole.  In line 16, define the name
-component. Simply replace 'newcomp' with the name of your component (with the
-``com_`` prefix):
-
-.. code-block:: php
-
-   $this->_name = 'attachments_for_newcomp';
-   
-In line 17, set the name of the component to be supported (use the form with
-the ``com_`` prefix):
-
-.. code-block:: php
-
-   $this->_parent_type = 'com_newcomp';
-
-In line 18, set the name for the default entity.  This is the raw,
-untranslated entity name in lowercase:
-
-.. code-block:: php
-
-   $this->_default_entity = 'thing';
-
-As was mentioned before, every entity name (including this one) **must be a
-single alphanumeric token without spaces** (because it may be used in
-URLs). The same token entity token is used in all languages.
-
-The next section of code (lines 20-26), configures the information about the
-default entity.  For most of these lines, simply replace 'thing' with the name
-of your entity.  
-
-In line 24, define the name of the database table where the entities can be
-looked up (remove the leading ``#__`` prefix).  We will refer to this as the
-``entity_table``.
-
-.. code-block:: php
-
-   $this->_entity_table['thing'] = 'things';
-
-For example, if your site uses ``jos_`` as the table prefix, then the full
-``entity_table`` name would be ``jos_things`` and you would strip off the
-``jos_`` prefix to get the entity table name used in this line.
-
-In line 25, define which field in the ``entity_table`` contains the
-primary ID.  This is normally 'id', but some components may use a different
-name for the primary ID field:
-
-.. code-block:: php
- 
-   $this->_entity_id_field['thing'] = 'id';
-
-In the next line, 26, define which field in the ``entity_table`` contains the
-entity title (or comparable name of the entity):
-
-.. code-block:: php
-
-   $this->_entity_title_field['thing'] = 'title';
-
-Finally, if there is more than one entity, a block of code similar to lines
-20-26 would be added where lines 28-29 currently are for a different entity
-name.  Note that secondary (non-default) entities must not include the line
-like line 23 since there can only be one default entity.  For blocks
-describing secondary entities, replace 'thing' with the appropriate entity
-name and update the database table name and the entity ID and title fields.
+   The translation on the right side of each language token must be in double-quotes and must be all one one line (no matter how long).
 
 
 Create the plugin installation file
@@ -536,17 +497,22 @@ installation.  Use your favorite zip tool to create a zip file with the 4
 files.  Note that top level files and hierarchy of the zip file should look
 like this::
 
-    .
-    |-- en-GB.plg_attachments_attachments_for_newcomp.ini
-    |
-    |-- attachments_for_newcomp.php 
-    |-- attachments_for_newcomp.xml
-    `-- plugins
-	`-- com_newcomp.php
+    ├── attachments_for_newcomp.php
+    ├── attachments_for_newcomp.xml
+    ├── index.html
+    └── language
+	├── en-GB
+	│   ├── en-GB.plg_attachments_attachments_for_newcomp.ini
+	│   ├── en-GB.plg_attachments_attachments_for_newcomp.sys.ini
+	│   └── index.html
+	└── index.html
 
 These files should appear in the zip file directly as shown and not in a
-nested directory.
+nested directory.  Notice the added empty index.html files to prevent
+directory browsing.
 
+To see where these files go when installed, please see
+:ref:`Appendix B <file-paths-appendix>`.
 
 Install and test
 ----------------
@@ -579,8 +545,8 @@ Once an attachment has been added to a content item, the usual functions to
 edit, delete, download, *etc.*, should work properly.
 
 If your new code does not work properly, you will need to review the functions
-described in section :ref:`implement-functionality-appendix`.  You may need to
-fix the code or add functions that you may have omitted.
+described in section :ref:`Appendix A <implement-functionality-appendix>`.
+You may need to fix the code or add functions that you may have omitted.
 
 You may wish to implement simplified versions of the permission checking
 functions first (*e.g.*, ``userMayAddAttachment()``,
@@ -611,15 +577,15 @@ function getEntityViewURL()
 
 .. code-block:: php
 
-    /**
-     * Get a URL to view the entity
-     *
-     * @param int $parent_id the ID for this parent object
-     * @param string $parent_entity the type of entity for this parent type
-     *
-     * @return a URL to view the entity (non-SEF form)
-     */
-    function getEntityViewURL($id, $parent_entity='default')
+   /**
+    * Get a URL to view the entity
+    *
+    * @param   int     $parent_id      the ID for this parent object
+    * @param   string  $parent_entity  the type of entity for this parent type
+    *
+    * @return a URL to view the entity (non-SEF form)
+    */
+    public function getEntityViewURL($parent_id, $parent_entity = 'default')
     {
       ...
     }
@@ -643,18 +609,19 @@ function checkAttachmentsListTitle()
     /**
      * Check to see if a custom title applies to this parent
      *
-     * Note: this function assumes that the parent_id's match
+     * Note: this public function assumes that the parent_id's match
      *
-     * @param string $parent_entity parent entity for the parent of the list
-     * @param string $rtitle_parent_entity the entity of the candidate attachment list title (from params)
+     * @param   string  $parent_entity         the parent entity for the parent of the list
+     * @param   string  $rtitle_parent_entity  the entity of the candidate attachment list title (from params)
      *
      * @return true if the custom title should be used
      */
-    function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
+    public function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
     {
-	if ( $rtitle_parent_entity == 'newcomp' ) {
+	if ( $rtitle_parent_entity == 'newcomp' ) 
+	{
 	    return true;
-	    }
+	}
 
 	return false;
     }
@@ -662,7 +629,7 @@ function checkAttachmentsListTitle()
 This function checks to see if custom titles for attachments list might apply to
 this parent.  In the options, there is a 'custom titles for attachments lists'
 option that allows the admin to define custom titles for attachments lists on
-a system wide level or on a entity by entity basis (eg, for a specific article
+a system wide level or on a entity-by-entity basis (eg, for a specific article
 with 'article:23').  When this function is called, rtitle_parent_entity will
 be 'article' (or an what ever entity name you specify to the left of the colon
 in the custom title list).
@@ -674,8 +641,8 @@ component attachments.
 
 The code shown above is typical if only one type of parent entity is supported
 for the new content type.  If more are supported, your function will need to
-be more sophisticated; see the attachments ``com_content.php`` plugin file for
-an example.
+be more sophisticated; see the attachments ``attachments_for_content`` plugin
+file for an example.
 
 **You should implement this function.**
 
@@ -690,19 +657,19 @@ function isParentPublished()
     /**
      * Check to see if the parent is published
      *
-     * @param int $parent_id the ID for this parent object
-     * @param string $parent_entity the type of entity for this parent type
+     * @param   int     $parent_id      the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
      *
      * @return true if the parent is published
      */
-    function isParentPublished($id, $parent_entity='default')
+    public function isParentPublished($parent_id, $parent_entity = 'default')
     {
       ...
     }
 
-This function checks to see if the parent entity should be published.  Your
-code will need to check the component tables for the parent entity to see if
-it is published.
+This function checks to see if the parent entity is published.  Your code will
+need to check the component tables for the parent entity to see if it is
+published and return `true` if it is (and false if not)
 
 **You will need to implement this function.**
 
@@ -717,12 +684,21 @@ function userMayViewparent()
     /**
      * May the parent be viewed by the user?
      *
-     * @param int $parent_id the ID for this parent object
-     * @param string $parent_entity the type of entity for this parent type
+     * This public function should be called by derived class functions.
+     *
+     * Note that this base class function only determines necessary
+     * conditions. If this function returns FALSE, then viewing is definitely
+     * not permitted. If this function returns TRUE, then the derived classes
+     * also need to check whether viewing the specific content item (eg,
+     * article) is permitted.
+     *
+     * @param   int     $parent_id      the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   object  $user_id        the user_id to check (optional, primarily for testing)
      *
      * @return true if the parent may be viewed by the user
      */
-    function userMayViewParent($parent_id, $parent_entity='default')
+    public function userMayViewParent($parent_id, $parent_entity = 'default', $user_id = null)
     {
       ...
     }
@@ -746,23 +722,23 @@ function attachmentsHiddenForParent()
 
     /** Return true if the attachments should be hidden for this parent
      *
-     * @param &object &$parent The object for the parent that onPrepareContent gives
-     * @param int $parent_id The ID of the parent the attachment is attached to
-     * @param string $parent_entity the type of entity for this parent type
-     * @param &object &$params The Attachments component parameters object
+     * @param   &object  &$parent        the object for the parent that onPrepareContent gives
+     * @param   int      $parent_id      the ID of the parent the attachment is attached to
+     * @param   string   $parent_entity  the type of entity for this parent type
      *
      * Note: this generic version only implements the 'frontpage' option.  All
-     *       other options should be handled by the derived classes for other
-     *       content types.
+     *         other options should be handled by the derived classes for other
+     *         content types.
      *
      * @return true if the attachments should be hidden for this parent
      */
-    function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity, &$params)
+    public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
     {
     	// Check for generic options
-	if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity, $params) ) {
+	if ( parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity) )
+	{
 	    return true;
-	    }
+	}
 
         ...
     }
@@ -787,15 +763,16 @@ function userMayAddAttachment()
      * Return true if the user may add an attachment to this parent
      *
      * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-     *	It is up to the caller to validate these objects before calling this function.)
+     *    It is up to the caller to validate these objects before calling this function.)
      *
-     * @param int $parent_id The ID of the parent the attachment is attached to
-     * @param string $parent_entity the type of entity for this parent type
-     * @param bool $new_parent If true, the parent is being created and does not exist yet
+     * @param   int     $parent_id      the ID of the parent the attachment is attached to
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   bool    $new_parent     if true, the parent is being created and does not exist yet
+     * @param   object  $user_id        the user_id to check (optional, primarily for testing)
      *
      * @return true if this user add attachments to this parent
      */
-    function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false)
+    public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
     {
       ...
     }
@@ -822,18 +799,18 @@ function userMayEditAttachment()
 
 .. code-block:: php
 
-    /* Return true if this user may edit (modify/update/delete) this attachment for this parent
+    /**
+     * Return true if this user may edit (modify/delete/update) this attachment for this parent
      *
      * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-     *	It is up to the caller to validate the arguments before calling this function.)
+     *    It is up to the caller to validate the arguments before calling this function.)
      *
-     * @param record $attachment database record for the attachment
-     * @param int $parent_id The ID of the parent the attachment is attached to
-     * @param $params The Attachments component parameters object
+     * @param   &record  &$attachment  database record for the attachment
+     * @param   object   $user_id      the user_id to check (optional, primarily for testing)
      *
      * @return true if this user may edit this attachment
      */
-    function userMayEditAttachment(&$attachment, $parent_id, &$params)
+    public function userMayEditAttachment(&$attachment, $user_id = null)
     {
       ...
     }
@@ -863,11 +840,12 @@ function userMayAccessAttachment()
 
     /** Check to see if the user may access (see/download) the attachments
      *
-     * @param &record &$attachment database record for the attachment
+     * @param   &record  &$attachment  database record for the attachment
+     * @param   object   $user_id      the user_id to check (optional, primarily for testing)
      *
      * @return true if access is okay (false if not)
      */
-    function userMayAccessAttachment( &$attachment )
+    public function userMayAccessAttachment(&$attachment, $user_id = null)
     {
       ...
     }
@@ -887,7 +865,6 @@ used elsewhere in the Attachments plugin in the future.
 **You will need to implement this function.**
 
 
-
 .. index:: function;determineParentEntity
 
 function determineParentEntity()
@@ -901,13 +878,13 @@ function determineParentEntity()
      * From the view and the class of the parent (row of onPrepareContent plugin),
      * determine what the entity type is for this entity.
      *
-     * Derived classes must overrride this if they support more than 'default' entities.
+     * Derived classes MUST overrride this
      *
-     * @param &object &$parent The object for the parent (row) that onPrepareContent gets
+     * @param   &object  &$parent  The object for the parent (row) that onPrepareContent gets
      *
-     * @return the correct entity (eg, 'default', 'section', etc) or false if this entity should not be displayed.
+     * @return the correct entity (eg, 'default', 'category', etc) or false if this entity should not be displayed.
      */
-    function determineParentEntity(&$parent)
+    public function determineParentEntity(&$parent)
     {
       ...
     }
@@ -919,15 +896,16 @@ fine.
 **If there is more than one type of entity**, you will need to write code here to
 distinguish them based on the OBJ and VIEW values you determined for each
 entity in the diagnostic section :ref:`diagnostic-section`.  See the
-attachments ``com_content.php`` plugin file for an example.
+attachments ``attachments_for_content`` plugin file for an example.
+
 
 .. _section-optional-function:
 
 Functions you may not need to implement
 ---------------------------------------
 
-In your attachments plugin file ``com_newcomp.php``, you may not need to
-implement the following functions:
+In your attachments plugin file ``attachments_for_newcomp.php``, you may not
+need to implement the following functions:
 
 .. index:: function;getParentId
 
@@ -940,13 +918,13 @@ function getParentId()
      * Return the parent entity / row ID
      *
      * This will only be called by the main attachments 'onPrepareContent'
-     * plugin if $row does not have an id
-     * 
-     * @param object &row the article or content item (potential attachment parent)
+     * plugin if $attachment does not have an id
+     *
+     * @param   object  &$attachment  the attachment
      *
      * @return id if found, false if this is not a valid parent
      */
-    function getParentId(&$row)
+    public function getParentId(&$attachment)
     {
 	...
     }
@@ -957,7 +935,7 @@ content item is passed in as $row.  Normally $row has an ID field $row->id.
 If your component has the field $row->id, then you will probably not need to
 implement this function.  If $row does not have an $row->id field, the ID
 should be some field of the $row object.  This function should extract the
-entity ID and return it.  Note that the `onPrepareContent` call back function
+entity ID and return it.  Note that the `onPrepareContent` callback function
 may be invoked several times for each entity on the page.  You may need to
 examine the other data about the entity (retrieved in the diagnostic section
 :ref:`diagnostic-section`) to determine which call you want to process and
@@ -975,19 +953,19 @@ function parentExists()
     /**
      * Does the parent exist?
      *
-     * @param int $parent_id the ID for this parent object
-     * @param string $parent_entity the type of entity for this parent type
+     * @param   int     $parent_id      the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
      *
      * @return true if the parent exists
      */
-    function parentExists($id, $parent_entity='default')
+    public function parentExists($parent_id, $parent_entity = 'default')
     {
       ...
     }
 
 This function checks to see if the parent entity exists.  If you have defined
-a table for the entity in the configuration file, you probably will not need
-to redefine this function.
+a table for the entity in the configuration, you probably will not need to
+redefine this function.
 
 
 .. index:: function;getEntityAddUrl
@@ -1000,13 +978,13 @@ function getEntityAddUrl()
     /**
      * Get a URL to add an attachment to a specific entity
      *
-     * @param int $parent_id the ID for the parent entity object (null if the parent does not exist)
-     * @param string $parent_entity the type of entity for this parent type
-     * @param string $from where the call should return to
+     * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   string  $from           where the call should return to
      *
      * @return the url to add a new attachments to the specified entity
      */
-    function getEntityAddUrl($id, $parent_entity='default', $from='closeme')
+    public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
     {
       ...
     }
@@ -1027,13 +1005,13 @@ function getAttachmentPath()
      *
      * Note that this does not include the base directory for attachments.
      *
-     * @param string $parent_entity the type of entity for this parent type
-     * @param int $parent_id the ID for the parent object
-     * @param int $attachment_id the ID for the attachment
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   int     $parent_id      the ID for the parent object
+     * @param   int     $attachment_id  the ID for the attachment
      *
-     * @return string the directory name for this entity (with trailing DS!)
+     * @return string the directory name for this entity (with trailing '/'!)
      */
-    function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
+    public function getAttachmentPath($parent_entity, $parent_id, $attachment_id)
     {
       ...
     }
@@ -1041,7 +1019,7 @@ function getAttachmentPath()
 This function constructs the path for a newly uploaded attachment file.
 
 You probably will not need to define this function.  If you are satisfied with
-the default attachment file path scheme (see :ref:`attachment-paths-appendix`
+the default attachment file path scheme (see :ref:`Appendix C <attachment-paths-appendix>`
 for details), then you can use the version already defined in the
 AttachmentsPlugin base class.
 
@@ -1056,53 +1034,23 @@ function getSelectEntityURL()
     /**
      * Return the URL that can be called to select a specific content item.
      *
-     * @param string $parent_entity the type of entity to select from
+     * @param   string  $parent_entity  the type of entity to select from
      *
      * @return the URL that can be called to select a specific content item
      */
-    function getSelectEntityURL($parent_entity='default')
+    public function getSelectEntityURL($parent_entity = 'default')
     {
       ...
     }
 
-This function builds and returns URL that will construct a list of a
+This function builds and returns a URL that will construct a list of a
 particular type of entity and allow the user to select a specific one from the
 list.  For example, in the Joomla! base component com_content, this is the
 function that allows users to select an article.  
 
 You probably will not need to implement this function.
 
-
-.. index:: function;addPermissions
-
-function addPermissions()
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: php
-
-    /**
-     * Add the permissions to the array of attachments data
-     *
-     * @param &array &$attachments An array of attachments for an parent from a DB query.
-     * @param int $parent_id the id of the parent
-     *
-     * @return true if some attachments should be visible, false if none should be visible
-     *
-     * This function adds the following boolean fields to each attachment row:
-     *	   - 'user_may_see'
-     *	   - 'user_may_edit'
-     */
-    function addPermissions( &$attachments, $parent_id )
-    {
-      ...
-    }
-
-Add the see/edit permissions to each row (attachment) of the array of
-attachments.  This function makes use of the permissions functions and should
-need reimplementation.
-
-You probably will not need to implement this function.
-
+.. _file-paths-appendix:
 
 Appendix B - Where the plugin files go when installed in Joomla!
 ================================================================
@@ -1110,16 +1058,16 @@ Appendix B - Where the plugin files go when installed in Joomla!
 Once these files are installed in your Joomla! installation, they will go into
 the following locations::
 
-    .
-    |-- administrator/language/en-GB/en-GB.plg_attachments_attachments_for_newcomp.ini
-    |
-    '-- plugins
-        `-- attachments
-            |-- attachments_for_newcomp.php 
-            |-- attachments_for_newcomp.xml
-            `-- plugins
-                |-- com_newcomp.ini
-                `-- com_newcomp.php
+    plugins/attachments/atttachments_for_newcomp
+	├── attachments_for_newcomp.php
+	├── attachments_for_newcomp.xml
+	├── index.html
+	└── language
+	    ├── en-GB
+	    │   ├── en-GB.plg_attachments_attachments_for_newcomp.ini
+	    │   ├── en-GB.plg_attachments_attachments_for_newcomp.sys.ini
+	    │   └── index.html
+	    └── index.html
 
 
 .. _attachment-paths-appendix:
@@ -1150,6 +1098,7 @@ where:
 So for an article, the path might look like this::
 
    <joomla>/attachments/article/23/attachmentFile.txt
+
 
 Contact
 =======
