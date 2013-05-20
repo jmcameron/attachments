@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 /** Load the attachments helper */
 require_once JPATH_SITE . '/components/com_attachments/helper.php';
 
+
 /**
  * Plugins for Attachments
  *
@@ -24,7 +25,7 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * attaching files to various types of content entities
  *
  * The derived attachments plugin class must be in the main PHP file for that
- * plugin.	For instance for content articles or categories, the parent type
+ * plugin.    For instance for content articles or categories, the parent type
  * is 'com_content'.  The parent type is simply the name of the component
  * involved (eg, 'com_content').  The derived attachments plugin class (such
  * as 'AttachmentsPlugin_com_content') should be defined in the main file for
@@ -34,8 +35,8 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * code after the class definition to register the derived class with the
  * Attachments plugin manager:
  *
- *	 $apm = getAttachmentsPluginManager();
- *	 $apm->addParentType('com_content');
+ *     $apm = getAttachmentsPluginManager();
+ *     $apm->addParentType('com_content');
  *
  * where 'com_content' should be replaced by the name of the appropriate
  * parent type (component).
@@ -53,7 +54,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note that this name will be used for a directory for attachments entries
 	 * and should not contain any spaces.  It should correspond to the default
-	 * entity.	For instance, for com_content, it will be 'article';
+	 * entity.    For instance, for com_content, it will be 'article';
 	 */
 	var $_default_entity = null;
 
@@ -63,15 +64,15 @@ class AttachmentsPlugin extends JPlugin
 
 	/** An associative array of entity names
 	 *
-	 *	For each type of attachments plugin, there will be a default
-	 *	entity types.  For com_content, the default is 'article'.  If
-	 *	the $default value for the function calls below is omitted,
-	 *	the entity is assumed to be 'article'.	In some cases, the
-	 *	actual proper name of the entity will be available and will be
-	 *	passed in to the $default argument.	 It is important that the
-	 *	plugin code recognizes that the entity 'default' is an alias
-	 *	for 'article'.	This array allows a simple associative array
-	 *	lookup to transform 'default' to 'article'.
+	 *    For each type of attachments plugin, there will be a default
+	 *    entity types.  For com_content, the default is 'article'.  If
+	 *    the $default value for the function calls below is omitted,
+	 *    the entity is assumed to be 'article'.    In some cases, the
+	 *    actual proper name of the entity will be available and will be
+	 *    passed in to the $default argument.     It is important that the
+	 *    plugin code recognizes that the entity 'default' is an alias
+	 *    for 'article'.    This array allows a simple associative array
+	 *    lookup to transform 'default' to 'article'.
 	 */
 	var $_entity_name = Array();
 
@@ -80,7 +81,7 @@ class AttachmentsPlugin extends JPlugin
 	var $_entity_table = Array();
 
 	/** An associative array of entity id fields
-	 *	(in same table as the title)
+	 *    (in same table as the title)
 	 */
 	var $_entity_id_field = Array();
 
@@ -318,7 +319,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the name or title for the specified object
 	 */
-	public function getTitle($parent_id, $parent_entity='default')
+	public function getTitle($parent_id, $parent_entity = 'default')
 	{
 		// Short-circuit if there is no parent ID
 		if (!is_numeric($parent_id))
@@ -335,9 +336,9 @@ class AttachmentsPlugin extends JPlugin
 			return $this->_title_cache[$cache_key];
 		}
 
-		$entity_table = $this->_entity_table[$parent_entity];
+		$entity_table       = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
-		$entity_id_field = $this->_entity_id_field[$parent_entity];
+		$entity_id_field    = $this->_entity_id_field[$parent_entity];
 
 		// Make sure the parent exists
 		if (!$this->parentExists($parent_id, $parent_entity))
@@ -350,7 +351,7 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Look up the title
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
@@ -359,9 +360,7 @@ class AttachmentsPlugin extends JPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
-									 $parent_entity_name, $parent_id
-									 ) . ' (ERR 301)';
+			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N', $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 		}
 
@@ -378,23 +377,23 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the array of entity id,title pairs
 	 */
-	public function getEntityItems($parent_entity='default', $filter='')
+	public function getEntityItems($parent_entity = 'default', $filter = '')
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$entity_table = $this->_entity_table[$parent_entity];
+		$entity_table       = $this->_entity_table[$parent_entity];
 		$entity_title_field = $this->_entity_title_field[$parent_entity];
-		$entity_id_field = $this->_entity_id_field[$parent_entity];
+		$entity_id_field    = $this->_entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app = JFactory::getApplication();
-		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
-												   'filter_order',		'', 'cmd');
+		$app       = JFactory::getApplication();
+		$order     = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+												   'filter_order', '', 'cmd');
 		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
-												   'filter_order_Dir',	'', 'word');
+												   'filter_order_Dir', '', 'word');
 
 		// Get all the items
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from("#__$entity_table");
@@ -425,9 +424,7 @@ class AttachmentsPlugin extends JPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
-									 $parent_entity_name
-									 ) . ' (ERR 302)';
+			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
 		}
 		else
@@ -468,7 +465,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the URL that can be called to select a specific content item
 	 */
-	public function getSelectEntityURL($parent_entity='default')
+	public function getSelectEntityURL($parent_entity = 'default')
 	{
 		// Add on the parent type and entity
 		$entity = "&amp;parent_type=" . $this->_parent_type;
@@ -489,7 +486,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return creators id if found, 0 otherwise
 	 */
-	public function getParentCreatorId($parent_id, $parent_entity='default')
+	public function getParentCreatorId($parent_id, $parent_entity = 'default')
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -502,7 +499,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return a URL to view the entity (non-SEF form)
 	 */
-	public function getEntityViewURL($parent_id, $parent_entity='default')
+	public function getEntityViewURL($parent_id, $parent_entity = 'default')
 	{
 		return null;
 	}
@@ -516,7 +513,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the url to add a new attachments to the specified entity
 	 */
-	public function getEntityAddUrl($parent_id, $parent_entity='default', $from='closeme')
+	public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
 	{
 		$app = JFactory::getApplication();
 
@@ -568,9 +565,9 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return the translated title string
 	 */
-	public function attachmentsListTitle($title, $parent_id, $parent_entity='default')
+	public function attachmentsListTitle($title, $parent_id, $parent_entity = 'default')
 	{
-		$params = $this->params();
+		$params     = $this->params();
 		$rtitle_str = $params->get('attachments_titles', '');
 		if (($title != 'ATTACH_EXISTING_ATTACHMENTS') && ($rtitle_str != ''))
 		{
@@ -580,22 +577,21 @@ class AttachmentsPlugin extends JPlugin
 			{
 				if (preg_match('|^([0-9]+)\s*([^$]+)$|', $rtitle, $match))
 				{
-					// Process:	 3 new title
+					// Process:     3 new title
 					// NOTE: This form only applies to articles and will be ignored for anything else
 					if ((int) $parent_id != (int) $match[1])
 					{
 						continue;
 					}
 
-					if (($this->_parent_type == 'com_content')
-						&& (($parent_entity == 'default') || ($parent_entity == 'article')))
+					if (($this->_parent_type == 'com_content') && (($parent_entity == 'default') || ($parent_entity == 'article')))
 					{
 						$title = $match[2];
 					}
 				}
 				elseif (preg_match('|^([a-zA-Z0-9_/-]+):([0-9]+)\s*([^$]+)$|', $rtitle, $match))
 				{
-					// Process:	  entity:3 new title
+					// Process:      entity:3 new title
 					if ((int) $parent_id != (int) $match[2])
 					{
 						continue;
@@ -629,7 +625,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent exists
 	 */
-	public function parentExists($parent_id, $parent_entity='default')
+	public function parentExists($parent_id, $parent_entity = 'default')
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
@@ -641,10 +637,10 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// First time, so look up the parent
-		$entity_table = $this->_entity_table[$parent_entity];
+		$entity_table    = $this->_entity_table[$parent_entity];
 		$entity_id_field = $this->_entity_id_field[$parent_entity];
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
+		$db              = JFactory::getDBO();
+		$query           = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
 		$db->setQuery($query, 0, 1);
@@ -669,7 +665,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent is published
 	 */
-	public function isParentPublished($parent_id, $parent_entity='default')
+	public function isParentPublished($parent_id, $parent_entity = 'default')
 	{
 		return false;
 	}
@@ -682,7 +678,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent is archived
 	 */
-	public function isParentArchived($parent_id, $parent_entity='default')
+	public function isParentArchived($parent_id, $parent_entity = 'default')
 	{
 		return false;
 	}
@@ -704,7 +700,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
-	public function userMayViewParent($parent_id, $parent_entity='default', $user_id=null)
+	public function userMayViewParent($parent_id, $parent_entity = 'default', $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -716,8 +712,8 @@ class AttachmentsPlugin extends JPlugin
 	 * @param   string   $parent_entity  the type of entity for this parent type
 	 *
 	 * Note: this generic version only implements the 'frontpage' option.  All
-	 *		 other options should be handled by the derived classes for other
-	 *		 content types.
+	 *         other options should be handled by the derived classes for other
+	 *         content types.
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
@@ -747,7 +743,7 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if the user may add an attachment to this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *	It is up to the caller to validate these objects before calling this function.)
+	 *    It is up to the caller to validate these objects before calling this function.)
 	 *
 	 * @param   int     $parent_id      the ID of the parent the attachment is attached to
 	 * @param   string  $parent_entity  the type of entity for this parent type
@@ -756,7 +752,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if this user add attachments to this parent
 	 */
-	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent=false, $user_id=null)
+	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -765,14 +761,14 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may edit (modify/delete/update) this attachment for this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *    It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param   &record  &$attachment  database record for the attachment
 	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may edit this attachment
 	 */
-	public function userMayEditAttachment(&$attachment, $user_id=null)
+	public function userMayEditAttachment(&$attachment, $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -781,14 +777,14 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may delete this attachment for this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *    It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param   &record  &$attachment  database record for the attachment
 	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may delete this attachment
 	 */
-	public function userMayDeleteAttachment(&$attachment, $user_id=null)
+	public function userMayDeleteAttachment(&$attachment, $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -797,7 +793,7 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may change the state of this attachment
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *	It is up to the caller to validate the arguments before calling this function.)
+	 *    It is up to the caller to validate the arguments before calling this function.)
 	 *
 	 * @param   int     $parent_id              the ID for the parent object
 	 * @param   string  $parent_entity          the type of entity for this parent type
@@ -806,8 +802,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
-	public function userMayChangeAttachmentState(
-		$parent_id, $parent_entity, $attachment_creator_id, $user_id=null)
+	public function userMayChangeAttachmentState($parent_id, $parent_entity, $attachment_creator_id, $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -819,7 +814,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return true if access is okay (false if not)
 	 */
-	public function userMayAccessAttachment(&$attachment, $user_id=null)
+	public function userMayAccessAttachment(&$attachment, $user_id = null)
 	{
 		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
 	}
@@ -844,7 +839,7 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Determine where we are
-		$from = JRequest::getCmd('view');
+		$from   = JRequest::getCmd('view');
 		$Itemid = JRequest::getInt('Itemid', 1);
 
 		// See whether we can display the links to add attachments
@@ -858,14 +853,12 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Get the attachments tag, if present
-		$attachments_tag = '';
+		$attachments_tag      = '';
 		$attachments_tag_args = '';
-		$match = false;
+		$match                = false;
 		if (JString::strpos($content->$text_field_name, '{attachments'))
 		{
-			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@',
-						   $content->$text_field_name, $match
-						   ))
+			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
 			{
 				$attachments_tag = true;
 			}
@@ -873,7 +866,7 @@ class AttachmentsPlugin extends JPlugin
 			if (isset($match[1]) && $match[1])
 			{
 				$attachments_tag_args_raw = $match[1];
-				$attachments_tag_args = ltrim($attachments_tag_args_raw, ' :');
+				$attachments_tag_args     = ltrim($attachments_tag_args_raw, ' :');
 			}
 
 			if ($attachments_tag)
@@ -883,8 +876,8 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Check the security status
-		$attach_dir = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$secure = $params->get('secure', false);
+		$attach_dir   = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$secure       = $params->get('secure', false);
 		$hta_filename = $attach_dir . '/ . htaccess';
 		if (($secure && !file_exists($hta_filename)) || (!$secure && file_exists($hta_filename)))
 		{
@@ -892,22 +885,20 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Construct the attachment list (if appropriate)
-		$html = '';
-		$attachments_list = false;
+		$html                = '';
+		$attachments_list    = false;
 		$add_attachement_btn = false;
 
 		// Get the html for the attachments list
 		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
-		$controller = new AttachmentsControllerAttachments;
-		$attachments_list = $controller->displayString(
-			$parent_id, $this->_parent_type, $parent_entity, null, true, true, false, $from
-													   );
+		$controller       = new AttachmentsControllerAttachments;
+		$attachments_list = $controller->displayString($parent_id, $this->_parent_type, $parent_entity, null, true, true, false, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ($attachments_list == '')
 		{
-			$class_name = $params->get('attachments_table_style', 'attachmentsList');
-			$div_id = 'attachmentsList' . '_' . $this->_parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
+			$class_name       = $params->get('attachments_table_style', 'attachmentsList');
+			$div_id           = 'attachmentsList' . '_' . $this->_parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 		}
 
@@ -930,9 +921,7 @@ class AttachmentsPlugin extends JPlugin
 		$hide_add_attachments_link = $params->get('hide_add_attachments_link', 0);
 		if ($user_can_add && !$hide_add_attachments_link)
 		{
-			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML(
-				$this->_parent_type, $parent_id, $parent_entity, $Itemid, $from
-																			);
+			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->_parent_type, $parent_id, $parent_entity, $Itemid, $from);
 			$html .= $add_attachments_btn;
 		}
 
@@ -948,59 +937,59 @@ class AttachmentsPlugin extends JPlugin
 
 		switch ($attachments_placement)
 		{
-		case 'beginning':
-			// Put the attachments list at the beginning
-			if ($attachments_list || $user_can_add)
-			{
+			case 'beginning':
+				// Put the attachments list at the beginning
+				if ($attachments_list || $user_can_add)
+				{
+					if ($attachments_tag)
+					{
+						$content->$text_field_name = $html . $content->$text_field_name;
+					}
+					else
+					{
+						$content->$text_field_name = $html . str_replace($attachments_tag, '', $content->$text_field_name);
+					}
+				}
+				break;
+
+			case 'custom':
+				// Insert the attachments at the desired location
+				if ($attachments_list || $user_can_add)
+				{
+					if ($attachments_tag)
+					{
+						$content->$text_field_name = str_replace($attachments_tag, $html, $content->$text_field_name);
+					}
+					else
+					{
+						// If there is no tag, insert the attachments at the end
+						$content->$text_field_name .= $html;
+					}
+				}
+				break;
+
+			case 'disabled_filter':
+				// Disable and strip out any attachments tags
 				if ($attachments_tag)
 				{
-					$content->$text_field_name = $html . $content->$text_field_name;
+					$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name);
 				}
-				else
-				{
-					$content->$text_field_name = $html . str_replace($attachments_tag, '', $content->$text_field_name);
-				}
-			}
-			break;
+				break;
 
-		case 'custom':
-			// Insert the attachments at the desired location
-			if ($attachments_list || $user_can_add)
-			{
-				if ($attachments_tag)
+			default:
+				// Add the attachments to the end
+				if ($attachments_list || $user_can_add)
 				{
-					$content->$text_field_name = str_replace($attachments_tag, $html, $content->$text_field_name);
+					if ($attachments_tag)
+					{
+						$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name) . $html;
+					}
+					else
+					{
+						$content->$text_field_name .= $html;
+					}
 				}
-				else
-				{
-					// If there is no tag, insert the attachments at the end
-					$content->$text_field_name .= $html;
-				}
-			}
-			break;
-
-		case 'disabled_filter':
-			// Disable and strip out any attachments tags
-			if ($attachments_tag)
-			{
-				$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name);
-			}
-			break;
-
-		default:
-			// Add the attachments to the end
-			if ($attachments_list || $user_can_add)
-			{
-				if ($attachments_tag)
-				{
-					$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name) . $html;
-				}
-				else
-				{
-					$content->$text_field_name .= $html;
-				}
-			}
-			break;
+				break;
 		}
 
 		return $content;
