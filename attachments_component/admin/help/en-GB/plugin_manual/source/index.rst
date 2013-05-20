@@ -4,7 +4,7 @@
     
 By: Jonathan M. Cameron
 
-Copyright (C) 2010 Jonathan M. Cameron, All Rights Reserved
+Copyright (C) 2010-2013 Jonathan M. Cameron, All Rights Reserved
    License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
 .. warning::
@@ -37,8 +37,8 @@ Content items correspond to a component.  For instance, articles are part of
 the ``com_content`` component.  Plugins for the Attachments extension provide the
 necessary functions to allow attaching files to new types of content items.
 
-The purpose of this manual is describe how to create new Attachments
-plugins. There are several steps involved in the process.  First, you need to
+The purpose of this manual is describe how to create a new Attachments
+plugin. There are several steps involved in the process.  First, you need to
 create a set of files for the plugin.  A template is provided that includes
 the necessary files.  The files need to be adapted to the new component
 including adding appropriate functionality.  Then the plugin can be installed
@@ -60,7 +60,7 @@ Terminology
 
     **Content Item**
         Any item that can be displayed in the front end of a Joomla! website.
-        Familiar examples include *articles*, *sections*, and *categories*
+        Familiar examples include *articles* and *category descriptions*
         supported by the built-in Joomla! component ``com_content``.  Other
         types of content items might include things like user profiles, event
         descriptions, product descriptions, *etc.*, that are provided by
@@ -68,7 +68,8 @@ Terminology
 
     **Parent Type**
 	This is the name of the component for the content item of interest
-	(*e.g.* ``com_content``).  
+	(*e.g.* ``com_content``).  Each attachment is attached to one specific
+	content item (its 'parent').
 
     **Parent Entity**
 	The name of the specific type of content items that you want to attach
@@ -76,7 +77,7 @@ Terminology
 	would be *article*.  In many cases in the rest of this document, we
 	will just refer to this as the *Entity*.  It is possible for there to
 	be more than one entity for a component.  In the ``com_content``
-	component, there are three: *articles*, *sections*, and *categories*.
+	component, there are two: *articles* and *category descriptions*.
 	Depending on the context, the term *entity* may be used in two ways:
 	(1) the type of entity to which files may be attached, and (2) a
 	specific entity to which a file is attached.  The distinction should
@@ -103,7 +104,7 @@ Make sure an attachment plugin will work
 
 In order to add attachments to a content item, the content item must invoke
 the Joomla! content plugin 'onPrepareContent' when that item is rendered.  To
-determine if this is the case, we need to do a little diagnostic work.
+determine if that is the case, we need to do a little diagnostic work.
 Install the Attachments extension and temporarily edit the main attachments
 plugin file:
 
@@ -120,7 +121,9 @@ after the line:
     return true;
 
 where the 'PC' tag is for the *Parent Component*, 'OBJ' is the class of the
-the content item, and 'VIEW' is the name of the view.
+the content item, and 'VIEW' is the name of the view.  Note that some versions
+of Attachments have these lines aready present, but commented out.  Just
+uncomment these lines.
 
 Refresh the frontpage (or whichever page contains the content item).  Look for
 the diagnostic line beginning with 'PC' just after your content item.  Make a
@@ -153,14 +156,16 @@ parent entities that you intend to handle in the new Attachments plugin.
 From the diagnostic display you saw in the previous step, you can clearly
 identify the parent type as the component name to the right of the 'PC:' just
 after the item you want to attach files to.  It should look something like
-``com_newcomp``. (Obviously, you would replace the 'newcomp' part with the
-actual name of your component.)  This may not come as a surprise since this
-should correspond to the type of content you are interested in.
+``com_newcomp``. (Obviously, the 'newcomp' would be replaced with the actual
+name of your component.)  This may not come as a surprise since this should
+correspond to the type of content you are interested in.
 
 If you are interested in only one type of content item for the new component,
 then this phase is complete.  The parent type is ``com_newcomp``.  The entity
 corresponds to the name of type of content item.  It will also be the default
-one, called ``default``.
+one, called ``default``.  So the default entity will have two names:
+``default`` and whatever entity name you want for the content item (in
+com_content, this was ``article``).
 
 If there is more than one type of entity that you wish to handle for the
 component, pay special attention to the other two items (OBJ and VIEW) for
@@ -173,10 +178,9 @@ can use the translation file to create alternate names that have spaces and
 capitalization.
 
 For instance, for the basic Joomla! content, the parent type is
-``com_content`` and the entities are ``article`` (or ``default`` for
-articles), and ``section`` and ``category``.  These are all basic Joomla!
-content items that can have descriptions or textual content associated with
-them.
+``com_content`` and the entities are ``article`` (and ``default`` for
+articles), and ``category``.  These are all basic Joomla!  content items that
+can have descriptions or textual content associated with them.
 
 .. warning::
 
@@ -195,7 +199,6 @@ create a set of files like this inside that directory::
     attachments_for_newcomp.php
     attachments_for_newcomp.xml
     en-GB.plg_attachments_attachments_for_newcomp.ini
-    plugins/com_newcomp.ini
     plugins/com_newcomp.php
 
 where you should replace all occurrences of ``newcomp`` with the name of your
@@ -212,8 +215,7 @@ Here is what the installation file **attachments_for_newcomp.xml** should contai
 .. code-block:: xml
 
     <?xml version="1.0" encoding="utf-8"?>
-    <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
-    <install type="plugin" group="attachments" version="1.5" method="upgrade">
+    <extension type="plugin" group="attachments" version="2.5" method="upgrade">
 	<name>Attachments - For Newcomp</name>
 	<creationDate>???</creationDate>
 	<author>???</author>
@@ -232,7 +234,7 @@ Here is what the installation file **attachments_for_newcomp.xml** should contai
 	    <language tag="en-GB">en-GB.plg_attachments_attachments_for_newcomp.ini</language>
 	</languages>
 	<params/>
-    </install>
+    </extension>
 
 where you should fill in for all of the ``???`` items as well as change all
 occurrences of 'newcomp' to the name of your new component.  Note that the
@@ -279,17 +281,17 @@ The translations ``.ini`` file should look like this:
     THING=Thing
     THINGS=Things
 
-This file should define any translation item created in this plugin.  Note that
-the item ``ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED`` must be exactly the same
-as the one in the ``<description>`` item in the installation ``.xml`` file.
-We have also added a translation item for "thing", the basic entity of
+This file should define any translation item created in this plugin.  Note
+that the item ``ATTACHMENTS_FOR_NEWCOMP_PLUGIN_INSTALLED`` must be exactly the
+same as the one in the ``<description>`` item in the installation ``.xml``
+file.  We have also added a translation item for "thing", the basic entity of
 com_newcomp as well as its pluralized version.  Note that the pluralization in
-the translation item on the left is always done by simply adding a 'S' on the
-end of the translation item; the translation on the right can be spelled
-appropriately.  All translation keys (on the left of the equals sign) must be
-alphanumeric without spaces.
+the translation item token on the left is always done by simply adding a 'S'
+on the end of the translation item; the translation on the right can be
+spelled appropriately.  All translation keys (on the left of the equals sign)
+must be alphanumeric without spaces.
 
-Each entity name supported should be given with an appropriate translation
+Each supported entity name should be given with an appropriate translation
 that may include spaces, etc.
 
 Don't forget to add translation items for any error messages you may include
@@ -386,6 +388,7 @@ File: ``plugin/com_newcomp.php``
 Finally, the main code for the plugin is in ``plugin/com_newcomp.php``:
 
 .. code-block:: php
+   :linenos:
 
     <?php
 
@@ -397,28 +400,131 @@ Finally, the main code for the plugin is in ``plugin/com_newcomp.php``:
 	/**
 	 * Constructor
 	 */
-	function __construct()
-	{
-	    parent::__construct('attachments_for_newcomp', 'com_newcomp', 'newcomp');
-	}
+        public function __construct(&$subject, $config = array())
+        {
+            parent::__construct($subject, $config);
 
-        ... OTHER FUNCTIONS DESCRIBED IN SECTION APPENDEX A BELOW
+            // Set basic defaults
+            $this->_name = 'attachments_for_newcomp';
+            $this->_parent_type = 'com_newcomp';
+            $this->_default_entity = 'thing';
+
+            // Add the information about the default entity (thing)
+            $this->_entities[] = 'thing';
+            $this->_entity_name['thing'] = 'thing';
+            $this->_entity_name['default'] = 'thing';
+            $this->_entity_table['thing'] = 'things';
+            $this->_entity_id_field['thing'] = 'id';
+            $this->_entity_title_field['thing'] = 'title';
+
+	    // Configure additional entities
+	    ...
+
+            // Always load the language
+            $this->loadLanguage();
+        }
+
+        ... OTHER FUNCTIONS DESCRIBED IN APPENDEX A BELOW
     }
+
+    // Register this attachments type
+    $apm = getAttachmentsPluginManager();
+    $apm->addParentType('com_content');
 
     ?>
 
 where many functions have been omitted for clarity.  Each function that may
 need implementing is described in :ref:`implement-functionality-appendix`.
-Replace ``newcom`` with the appropriate component name for your component
-throughout this code.
+Replace ``newcomp`` with the appropriate component name for your component
+throughout this code.  The configuration code in the constructor will be
+described in the next section.
+
+Notice lines 39-40 at the end of the file.  These two lines are necessary in
+order to automatically register your new plugin with the Attachments plugin
+framework.  **Do not leave them out!**
+
+You can refer to the the ``com_content`` component configuration file
+``plugins/attachments/attachments_for_content/attachments_for_content.php``
+for a more involved example with multiple blocks and aliases.  (Check after
+the Attachments extension is installed).
 
 .. index:: class;AttachmentsPlugin
 
 Your new class extends the AttachmentsPlugin class that can be found in the file: 
 
-  * ``plugins/attachments/attachments_plugin.php``
+  * ``plugins/attachments/attachments_plugin_framework/attachments_plugin.php``
 
 in your Joomla! installation.
+
+Plugin constructor code description
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now consider the code in the constructor.  It is important to get the
+constructor exactly right in order for the plugin to work properly.
+
+Lines 15-18 configure the new plugin as a whole.  In line 16, define the name
+component. Simply replace 'newcomp' with the name of your component (with the
+``com_`` prefix):
+
+.. code-block:: php
+
+   $this->_name = 'attachments_for_newcomp';
+   
+In line 17, set the name of the component to be supported (use the form with
+the ``com_`` prefix):
+
+.. code-block:: php
+
+   $this->_parent_type = 'com_newcomp';
+
+In line 18, set the name for the default entity.  This is the raw,
+untranslated entity name in lowercase:
+
+.. code-block:: php
+
+   $this->_default_entity = 'thing';
+
+As was mentioned before, every entity name (including this one) **must be a
+single alphanumeric token without spaces** (because it may be used in
+URLs). The same token entity token is used in all languages.
+
+The next section of code (lines 20-26), configures the information about the
+default entity.  For most of these lines, simply replace 'thing' with the name
+of your entity.  
+
+In line 24, define the name of the database table where the entities can be
+looked up (remove the leading ``#__`` prefix).  We will refer to this as the
+``entity_table``.
+
+.. code-block:: php
+
+   $this->_entity_table['thing'] = 'things';
+
+For example, if your site uses ``jos_`` as the table prefix, then the full
+``entity_table`` name would be ``jos_things`` and you would strip off the
+``jos_`` prefix to get the entity table name used in this line.
+
+In line 25, define which field in the ``entity_table`` contains the
+primary ID.  This is normally 'id', but some components may use a different
+name for the primary ID field:
+
+.. code-block:: php
+ 
+   $this->_entity_id_field['thing'] = 'id';
+
+In the next line, 26, define which field in the ``entity_table`` contains the
+entity title (or comparable name of the entity):
+
+.. code-block:: php
+
+   $this->_entity_title_field['thing'] = 'title';
+
+Finally, if there is more than one entity, a block of code similar to lines
+20-26 would be added where lines 28-29 currently are for a different entity
+name.  Note that secondary (non-default) entities must not include the line
+like line 23 since there can only be one default entity.  For blocks
+describing secondary entities, replace 'thing' with the appropriate entity
+name and update the database table name and the entity ID and title fields.
 
 
 Create the plugin installation file
@@ -426,7 +532,7 @@ Create the plugin installation file
 
 Once the files have been created (see :ref:`fileset-section`) and edited to
 provide the necessary functionality, you will need to create a zip file for
-installation.  Use your favorite zip tool to create a zip file with the 5
+installation.  Use your favorite zip tool to create a zip file with the 4
 files.  Note that top level files and hierarchy of the zip file should look
 like this::
 
@@ -436,7 +542,6 @@ like this::
     |-- attachments_for_newcomp.php 
     |-- attachments_for_newcomp.xml
     `-- plugins
-	|-- com_newcomp.ini
 	`-- com_newcomp.php
 
 These files should appear in the zip file directly as shown and not in a
@@ -463,12 +568,12 @@ works.
 
 You should also try adding an attachment to a content item in the
 administrative back end.  Click on the 'Attachments' item under the Components
-menu.  Then click on the [New] button on the task bar.  Near the bottom of the
-form, you will see a row of buttons corresponding to the supported types of
-content entities.  Click on the one corresponding to your new content entity.
-Then click on the [Select] entity button at the right end of the first field
-in the form.  You should see a list of the entities.  Select one and try
-adding the attachment to it.
+menu.  Then click on the [New] button on the task bar.  On the top right of
+the form, you will see a row of buttons corresponding to the supported types
+of content entities.  Click on the one corresponding to your new content
+entity.  Then click on the [Select] entity button at the right end of the
+first field in the form.  You should see a list of the entities.  Select one
+and try adding the attachment to it.
 
 Once an attachment has been added to a content item, the usual functions to
 edit, delete, download, *etc.*, should work properly.
@@ -498,7 +603,6 @@ Functions you probably will need to implement
 
 In your attachments plugin file ``com_newcomp.php``, you will probably need to
 implement some or all of the following functions.
-
 
 .. index:: function;getEntityViewURL
 
