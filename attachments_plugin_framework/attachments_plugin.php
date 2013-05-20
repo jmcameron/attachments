@@ -48,7 +48,7 @@ class AttachmentsPlugin extends JPlugin
 {
 	/** Parent_type: com_content, com_quickfaq, etc
 	 */
-	var $_parent_type = null;
+	protected $parent_type = null;
 
 	/** Name for the default parent_entity type
 	 *
@@ -56,11 +56,11 @@ class AttachmentsPlugin extends JPlugin
 	 * and should not contain any spaces.  It should correspond to the default
 	 * entity.    For instance, for com_content, it will be 'article';
 	 */
-	var $_default_entity = null;
+	protected $default_entity = null;
 
 	/** known entities
 	 */
-	var $_entities = null;
+	protected $entities = null;
 
 	/** An associative array of entity names
 	 *
@@ -74,40 +74,40 @@ class AttachmentsPlugin extends JPlugin
 	 *    for 'article'.    This array allows a simple associative array
 	 *    lookup to transform 'default' to 'article'.
 	 */
-	var $_entity_name = Array();
+	protected $entity_name = Array();
 
 	/** An associative array of entity tables
 	 */
-	var $_entity_table = Array();
+	protected $entity_table = Array();
 
 	/** An associative array of entity id fields
 	 *    (in same table as the title)
 	 */
-	var $_entity_id_field = Array();
+	protected $entity_id_field = Array();
 
 	/** An associative array of entity title fields
 	 */
-	var $_entity_title_field = Array();
+	protected $entity_title_field = Array();
 
 	/** An associative array of parent creator user ID fields
 	 */
-	var $_parent_creator_id_field = Array();
+	protected $parent_creator_id_field = Array();
 
 	/** Flag indicating if the language file haas been loaded
 	 */
-	var $_language_loaded = false;
+	protected $language_loaded = false;
 
 	/** Cache for parentExists check
 	 */
-	var $_parent_exists_cache = Array();
+	protected $parent_exists_cache = Array();
 
 	/** Cache for parent titles
 	 */
-	var $_title_cache = Array();
+	protected $title_cache = Array();
 
-	/** Cache for parent titles
+	/** Cache for parameters for the com_attachments component
 	 */
-	var $_params = null;
+	private $com_attachments_params = null;
 
 	/**
 	 * Constructor
@@ -130,15 +130,15 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * @return   object  com_attachments parameter object
 	 */
-	public function params()
+	public function attachmentsParams()
 	{
-		if ($this->_params == null)
+		if ($this->com_attachments_params == null)
 		{
 			jimport('joomla.application.component.helper');
-			$this->_params = JComponentHelper::getParams('com_attachments');
+			$this->com_attachments_params = JComponentHelper::getParams('com_attachments');
 		}
 
-		return $this->_params;
+		return $this->com_attachments_params;
 	}
 
 	/**
@@ -163,7 +163,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentType()
 	{
-		return $this->_parent_type;
+		return $this->parent_type;
 	}
 
 	/**
@@ -242,7 +242,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getEntities()
 	{
-		return $this->_entities;
+		return $this->entities;
 	}
 
 	/**
@@ -252,7 +252,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getDefaultEntity()
 	{
-		return $this->_default_entity;
+		return $this->default_entity;
 	}
 
 	/**
@@ -272,21 +272,21 @@ class AttachmentsPlugin extends JPlugin
 	public function getCanonicalEntityId($parent_entity)
 	{
 		// It it is a known entity, just return it
-		if (in_array($parent_entity, $this->_entities))
+		if (in_array($parent_entity, $this->entities))
 		{
 			return $parent_entity;
 		}
 
 		// Check aliases
-		if (array_key_exists($parent_entity, $this->_entity_name))
+		if (array_key_exists($parent_entity, $this->entity_name))
 		{
-			return $this->_entity_name[$parent_entity];
+			return $this->entity_name[$parent_entity];
 		}
 		else
 		{
 			$lang = JFactory::getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->_parent_type) . ' (ERR 300)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
 			JError::raiseError(500, $errmsg);
 		}
 	}
@@ -331,14 +331,14 @@ class AttachmentsPlugin extends JPlugin
 
 		// Check the cache first
 		$cache_key = $parent_entity . (int) $parent_id;
-		if (array_key_exists($cache_key, $this->_title_cache))
+		if (array_key_exists($cache_key, $this->title_cache))
 		{
-			return $this->_title_cache[$cache_key];
+			return $this->title_cache[$cache_key];
 		}
 
-		$entity_table       = $this->_entity_table[$parent_entity];
-		$entity_title_field = $this->_entity_title_field[$parent_entity];
-		$entity_id_field    = $this->_entity_id_field[$parent_entity];
+		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_title_field = $this->entity_title_field[$parent_entity];
+		$entity_id_field    = $this->entity_id_field[$parent_entity];
 
 		// Make sure the parent exists
 		if (!$this->parentExists($parent_id, $parent_entity))
@@ -364,9 +364,9 @@ class AttachmentsPlugin extends JPlugin
 			JError::raiseError(500, $errmsg);
 		}
 
-		$this->_title_cache[$cache_key] = $title;
+		$this->title_cache[$cache_key] = $title;
 
-		return $this->_title_cache[$cache_key];
+		return $this->title_cache[$cache_key];
 	}
 
 	/**
@@ -381,9 +381,9 @@ class AttachmentsPlugin extends JPlugin
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$entity_table       = $this->_entity_table[$parent_entity];
-		$entity_title_field = $this->_entity_title_field[$parent_entity];
-		$entity_id_field    = $this->_entity_id_field[$parent_entity];
+		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_title_field = $this->entity_title_field[$parent_entity];
+		$entity_id_field    = $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
 		$app       = JFactory::getApplication();
@@ -468,7 +468,7 @@ class AttachmentsPlugin extends JPlugin
 	public function getSelectEntityURL($parent_entity = 'default')
 	{
 		// Add on the parent type and entity
-		$entity = "&amp;parent_type=" . $this->_parent_type;
+		$entity = "&amp;parent_type=" . $this->parent_type;
 
 		if ($parent_entity != 'default')
 		{
@@ -536,7 +536,7 @@ class AttachmentsPlugin extends JPlugin
 			$url .= "&parent_id=$parent_id";
 		}
 
-		$url .= "&parent_type=" . $this->_parent_type . "&from=$from";
+		$url .= "&parent_type=" . $this->parent_type . "&from=$from";
 
 		return $url;
 	}
@@ -567,8 +567,8 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function attachmentsListTitle($title, $parent_id, $parent_entity = 'default')
 	{
-		$params     = $this->params();
-		$rtitle_str = $params->get('attachments_titles', '');
+		$aparams     = $this->attachmentsParams();
+		$rtitle_str = $aparams->get('attachments_titles', '');
 		if (($title != 'ATTACH_EXISTING_ATTACHMENTS') && ($rtitle_str != ''))
 		{
 			$rtitle_list = preg_split("[\n|\r]", $rtitle_str);
@@ -584,7 +584,7 @@ class AttachmentsPlugin extends JPlugin
 						continue;
 					}
 
-					if (($this->_parent_type == 'com_content') && (($parent_entity == 'default') || ($parent_entity == 'article')))
+					if (($this->parent_type == 'com_content') && (($parent_entity == 'default') || ($parent_entity == 'article')))
 					{
 						$title = $match[2];
 					}
@@ -631,14 +631,14 @@ class AttachmentsPlugin extends JPlugin
 
 		// Check the cache first
 		$cache_key = $parent_entity . (int) $parent_id;
-		if (array_key_exists($cache_key, $this->_parent_exists_cache))
+		if (array_key_exists($cache_key, $this->parent_exists_cache))
 		{
-			return $this->_parent_exists_cache[$cache_key];
+			return $this->parent_exists_cache[$cache_key];
 		}
 
 		// First time, so look up the parent
-		$entity_table    = $this->_entity_table[$parent_entity];
-		$entity_id_field = $this->_entity_id_field[$parent_entity];
+		$entity_table    = $this->entity_table[$parent_entity];
+		$entity_id_field = $this->entity_id_field[$parent_entity];
 		$db              = JFactory::getDBO();
 		$query           = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
@@ -647,14 +647,14 @@ class AttachmentsPlugin extends JPlugin
 		$result = $db->loadResult();
 		if ($result === null)
 		{
-			$this->_parent_exists_cache[$cache_key] = false;
+			$this->parent_exists_cache[$cache_key] = false;
 		}
 		else
 		{
-			$this->_parent_exists_cache[$cache_key] = (int) $parent_id == (int) $result;
+			$this->parent_exists_cache[$cache_key] = (int) $parent_id == (int) $result;
 		}
 
-		return $this->_parent_exists_cache[$cache_key];
+		return $this->parent_exists_cache[$cache_key];
 	}
 
 	/**
@@ -720,17 +720,17 @@ class AttachmentsPlugin extends JPlugin
 	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{
 		$layout = JRequest::getCmd('layout');
-		$params = $this->params();
+		$aparams = $this->attachmentsParams();
 
 		// Check to see whether the attachments should be hidden on the front page
-		$hide_on_frontpage = $params->get('hide_on_frontpage', false);
+		$hide_on_frontpage = $aparams->get('hide_on_frontpage', false);
 		if ($hide_on_frontpage && (JRequest::getVar('view') == 'featured'))
 		{
 			return true;
 		}
 
 		// Hide on blog pages?
-		$hide_on_blogs = $params->get('hide_on_blogs', false);
+		$hide_on_blogs = $aparams->get('hide_on_blogs', false);
 		if ($hide_on_blogs && ($layout == 'blog'))
 		{
 			return true;
@@ -829,10 +829,10 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function insertAttachmentsList(&$content, $parent_id, $parent_entity)
 	{
-		$params = $this->params();
+		$aparams = $this->attachmentsParams();
 
 		// Get the desired placement
-		$attachments_placement = $params->get('attachments_placement', 'end');
+		$attachments_placement = $aparams->get('attachments_placement', 'end');
 		if ($attachments_placement == 'disabled_nofilter')
 		{
 			return false;
@@ -877,7 +877,7 @@ class AttachmentsPlugin extends JPlugin
 
 		// Check the security status
 		$attach_dir   = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$secure       = $params->get('secure', false);
+		$secure       = $aparams->get('secure', false);
 		$hta_filename = $attach_dir . '/ . htaccess';
 		if (($secure && !file_exists($hta_filename)) || (!$secure && file_exists($hta_filename)))
 		{
@@ -892,13 +892,13 @@ class AttachmentsPlugin extends JPlugin
 		// Get the html for the attachments list
 		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
 		$controller       = new AttachmentsControllerAttachments;
-		$attachments_list = $controller->displayString($parent_id, $this->_parent_type, $parent_entity, null, true, true, false, $from);
+		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ($attachments_list == '')
 		{
-			$class_name       = $params->get('attachments_table_style', 'attachmentsList');
-			$div_id           = 'attachmentsList' . '_' . $this->_parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
+			$class_name       = $aparams->get('attachments_table_style', 'attachmentsList');
+			$div_id           = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 		}
 
@@ -918,10 +918,10 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Construct the add-attachments button, if appropriate
-		$hide_add_attachments_link = $params->get('hide_add_attachments_link', 0);
+		$hide_add_attachments_link = $aparams->get('hide_add_attachments_link', 0);
 		if ($user_can_add && !$hide_add_attachments_link)
 		{
-			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->_parent_type, $parent_id, $parent_entity, $Itemid, $from);
+			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->parent_type, $parent_id, $parent_entity, $Itemid, $from);
 			$html .= $add_attachments_btn;
 		}
 

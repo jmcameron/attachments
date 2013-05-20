@@ -43,25 +43,27 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		parent::__construct($subject, $config);
 
-		// Set basic defaults
-		$this->_name           = 'attachments_for_content';
-		$this->_parent_type    = 'com_content';
-		$this->_default_entity = 'article';
+		// Configure the plugin
+		$this->_name          = 'attachments_for_content';
+
+		// Set basic attachments defaults
+		$this->parent_type    = 'com_content';
+		$this->default_entity = 'article';
 
 		// Add the information about the default entity (article)
-		$this->_entities[]                    = 'article';
-		$this->_entity_name['article']        = 'article';
-		$this->_entity_name['default']        = 'article';
-		$this->_entity_table['article']       = 'content';
-		$this->_entity_id_field['article']    = 'id';
-		$this->_entity_title_field['article'] = 'title';
+		$this->entities[]                    = 'article';
+		$this->entity_name['article']        = 'article';
+		$this->entity_name['default']        = 'article';
+		$this->entity_table['article']       = 'content';
+		$this->entity_id_field['article']    = 'id';
+		$this->entity_title_field['article'] = 'title';
 
-		// Add information about the category entity
-		$this->_entities[]                     = 'category';
-		$this->_entity_name['category']        = 'category';
-		$this->_entity_table['category']       = 'categories';
-		$this->_entity_id_field['category']    = 'id';
-		$this->_entity_title_field['category'] = 'title';
+		// Add information about the category description entity
+		$this->entities[]                     = 'category';
+		$this->entity_name['category']        = 'category';
+		$this->entity_table['category']       = 'categories';
+		$this->entity_id_field['category']    = 'id';
+		$this->entity_title_field['category'] = 'title';
 
 		// Always load the language
 		$this->loadLanguage();
@@ -179,9 +181,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			JError::raiseError(500, $errmsg);
 		}
 
-		$entity_table       = $this->_entity_table[$parent_entity];
-		$entity_title_field = $this->_entity_title_field[$parent_entity];
-		$entity_id_field    = $this->_entity_id_field[$parent_entity];
+		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_title_field = $this->entity_title_field[$parent_entity];
+		$entity_id_field    = $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
 		$app       = JFactory::getApplication();
@@ -404,7 +406,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		{
 
 			case 'category':
-				$entity_table = $this->_entity_table[$parent_entity];
+				$entity_table = $this->entity_table[$parent_entity];
 				$query        = $db->getQuery(true);
 				$query->select('published')->from("#__$entity_table")->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
@@ -705,15 +707,15 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		}
 
 		// Check to see if it should be hidden with readmore
-		$params             = $this->params();
-		$hide_with_readmore = $params->get('hide_with_readmore', false);
+		$aparams = $this->attachmentsParams();
+		$hide_with_readmore = $aparams->get('hide_with_readmore', false);
 		if ($hide_with_readmore && isset($parent->readmore) && $parent->readmore)
 		{
 			return true;
 		}
 
 		// Get the options
-		$all_but_article_views = $params->get('hide_except_article_views', false);
+		$all_but_article_views = $aparams->get('hide_except_article_views', false);
 
 		// Make sure the parent is valid and get info about it
 		$db = JFactory::getDBO();
@@ -722,7 +724,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		{
 
 			// Handle categories
-			$always_show_category_attachments = $params->get('always_show_category_attachments', false);
+			$always_show_category_attachments = $aparams->get('always_show_category_attachments', false);
 			if ($always_show_category_attachments)
 			{
 				return false;
@@ -733,7 +735,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			}
 
 			// Check to see whether the attachments should be hidden for this category
-			$hide_attachments_for_categories = $params->get('hide_attachments_for_categories', Array());
+			$hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', Array());
 			if (in_array($parent_id, $hide_attachments_for_categories))
 			{
 				return true;
@@ -786,7 +788,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			$catid      = (int) $attachments[0]->catid;
 
 			// First, check to see whether the attachments should be hidden for this parent
-			$hide_attachments_for_categories = $params->get('hide_attachments_for_categories', Array());
+			$hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', Array());
 			if (in_array($catid, $hide_attachments_for_categories))
 			{
 				return true;
