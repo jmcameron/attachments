@@ -9,13 +9,20 @@ Copyright (C) 2010-2013 Jonathan M. Cameron, All Rights Reserved
 
 .. warning::
 
-   THIS IS A DRAFT. 
+   This manual has been updated for Attachments 3.1 for Joomla 2.5.11+ but has
+   not been tested for correctness.  
 
-   This manual has been updated for Attachments 3x for Joomla 2.5x but has not
-   been tested for correctness.  If you follow this manual and have any
-   difficulties creating an attachments plugin, please email your corrections,
-   additions, or suggestions to the the author (see the email addressat the
-   end of this document).  2013-05-19
+   This version includes updates for some API changes in the attachments
+   plugin framework.  The manual is specific to Attachments version 3.1 or
+   later (which should be released by the end of May; contact the author for a
+   pre-release version).
+
+   If you follow this manual and have difficulties creating an attachments
+   plugin, or have any suggestions for improving this manual, please email
+   your corrections, additions, or suggestions to the the author (see the
+   email address at the end of this document).
+
+   2013-05-19
 
 .. contents:: Contents
    :depth: 2
