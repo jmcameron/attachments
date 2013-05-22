@@ -707,4 +707,5 @@ source_file = attachments_component/admin/language/en-GB/en-GB.com_attachments.h
 source_lang = en_GB
 minimum_perc = 0
 trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_component/admin/de-DE.com_attachments.help.ini
+trans.sv = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.help.ini
 type = INI
