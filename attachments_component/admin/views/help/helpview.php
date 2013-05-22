@@ -594,7 +594,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function image($filename, $alt_code, $attribs = Array())
 	{
-		$lcode = $this->lang->getDefault();
+		$lcode = $this->lang->getTag();
 		$alt = '';
 
 		if ($alt_code)

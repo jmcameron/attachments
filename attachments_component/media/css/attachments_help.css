@@ -74,6 +74,7 @@ div.help-document p {
 
 div.help-document img.drop-shadow {
     margin: 4px 0 12px 6px;
+    border: 1px solid #000;
     box-shadow: 10px 10px 5px #444;
     -moz-box-shadow: 10px 10px 5px #444;
     -webkit-box-shadow: 10px 10px 5px #444;
