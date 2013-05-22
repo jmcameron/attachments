@@ -705,6 +705,6 @@ type = INI
 [joomla-attachments-3-help.attachments_help_ini]
 source_file = attachments_component/admin/language/en-GB/en-GB.com_attachments.help.ini
 source_lang = en_GB
-minimum_perc = 100
-# trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_component/admin/de-DE.com_attachments.help.ini
+minimum_perc = 0
+trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_component/admin/de-DE.com_attachments.help.ini
 type = INI
