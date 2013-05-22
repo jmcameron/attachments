@@ -603,11 +603,11 @@ class HelpView extends JViewLegacy
 		}
 
 		// First try the current language
-		$img = JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true);
+		$found = JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true, true);
 
-		if ($img)
+		if ($found)
 		{
-			return $img;
+			return JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true);
 		}
 
 		// If that fails, return the English/en-GB image
