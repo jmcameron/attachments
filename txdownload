@@ -33,3 +33,5 @@ tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_sys_ini
 tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini 
 tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini 
 tx pull -f  -l "$1" -r joomla-attachments-3.files_attachments_language_pack_install_ini
+
+# tx pull -f  -l "$1" -r joomla-attachments-3-help.attachments_help_ini
