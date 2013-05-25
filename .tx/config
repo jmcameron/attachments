@@ -710,4 +710,5 @@ trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_componen
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.help.ini
 trans.ru    = ../translations-j1.6/attachments-Russian-ru-RU/attachments_component/admin/ru-RU.com_attachments.help.ini
 trans.sv    = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.help.ini
+trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/admin/tr-TR.com_attachments.help.ini
 type = INI
