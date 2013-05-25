@@ -708,6 +708,7 @@ source_lang = en_GB
 minimum_perc = 0
 trans.de_DE = ../translations-j1.6/attachments-German-de-DE/attachments_component/admin/de-DE.com_attachments.help.ini
 trans.es_ES = ../translations-j1.6/attachments-Spanish-es-ES/attachments_component/admin/es-ES.com_attachments.help.ini
+trans.nb_NO = ../translations-j1.6/attachments-Norwegian-nb-NO/attachments_component/admin/nb-NO.com_attachments.help.ini
 trans.ru    = ../translations-j1.6/attachments-Russian-ru-RU/attachments_component/admin/ru-RU.com_attachments.help.ini
 trans.sv    = ../translations-j1.6/attachments-Swedish-sv-SE/attachments_component/admin/sv-SE.com_attachments.help.ini
 trans.tr_TR = ../translations-j1.6/attachments-Turkish-tr-TR/attachments_component/admin/tr-TR.com_attachments.help.ini
