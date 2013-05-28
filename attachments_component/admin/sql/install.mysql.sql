@@ -29,4 +29,4 @@ CREATE TABLE IF NOT EXISTS `#__attachments`
 
      PRIMARY KEY (`id`)
 
-) DEFAULT CHARSET=utf8 ;
+) DEFAULT CHARSET=utf8;
