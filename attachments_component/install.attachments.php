@@ -254,6 +254,22 @@ class com_AttachmentsInstallerScript {
 				}
 			}
 
+		// If needed, add the 'url_verify' column (may be needed because of SQL update issues)
+		$attachments_table = '#__attachments';
+		$cols = $db->getTableColumns($attachments_table);
+		if ( !array_key_exists('url_verify', $cols))
+		{
+			$query = "ALTER TABLE " . $db->quoteName($attachments_table);
+			$query .= " ADD COLUMN " . $db->quoteName('url_verify');
+			$query .= " TINYINT(1) UNSIGNED NOT NULL DEFAULT '1'";
+			$query .= " AFTER " . $db->quoteName('url_relative');
+			$db->setQuery($query);
+			if ( !$db->query() ) {
+				// Ignore any DB errors (may require manual DB mods)
+				// ??? $errmsg = $db->stderr();
+				}
+		}
+
 		// Check to see if we should be in secure mode
 		jimport('joomla.filesystem.file');
 		$htaccess_file = $attachdir . '/.htaccess';
