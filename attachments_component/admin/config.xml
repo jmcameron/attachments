@@ -117,8 +117,11 @@
       <option value="modified_desc">ATTACH_SORT_MODIFICATION_DATE_DESCENDING</option>
       <option value="id">ATTACH_SORT_ATTACHMENT_ID</option>
       <option value="user_field_1">ATTACH_USER_DEFINED_FIELD_1</option>
+      <option value="user_field_1_desc">ATTACH_SORT_USER_DEFINED_FIELD_1_DESC</option>
       <option value="user_field_2">ATTACH_USER_DEFINED_FIELD_2</option>
+      <option value="user_field_2_desc">ATTACH_SORT_USER_DEFINED_FIELD_2_DESC</option>
       <option value="user_field_3">ATTACH_USER_DEFINED_FIELD_3</option>
+      <option value="user_field_3_desc">ATTACH_SORT_USER_DEFINED_FIELD_3_DESC</option>
     </field>
   </fieldset>
 

@@ -289,39 +289,45 @@ class AttachmentsModelAttachments extends JModelLegacy
 	public function setSortOrder($new_sort_order)
 	{
 		if ( $new_sort_order == 'filename' )
-			$order_by = "filename";
+			$order_by = 'filename';
 		else if ( $new_sort_order == 'filename_desc' )
-			$order_by = "filename DESC";
+			$order_by = 'filename DESC';
 		else if ( $new_sort_order == 'file_size' )
-			$order_by = "file_size";
+			$order_by = 'file_size';
 		else if ( $new_sort_order == 'file_size_desc' )
-			$order_by = "file_size DESC";
+			$order_by = 'file_size DESC';
 		else if ( $new_sort_order == 'description' )
-			$order_by = "description";
+			$order_by = 'description';
 		else if ( $new_sort_order == 'description_desc' )
-			$order_by = "description DESC";
+			$order_by = 'description DESC';
 		else if ( $new_sort_order == 'display_name' )
-			$order_by = "display_name, filename";
+			$order_by = 'display_name, filename';
 		else if ( $new_sort_order == 'display_name_desc' )
-			$order_by = "display_name DESC, filename";
+			$order_by = 'display_name DESC, filename';
 		else if ( $new_sort_order == 'created' )
-			$order_by = "created";
+			$order_by = 'created';
 		else if ( $new_sort_order == 'created_desc' )
-			$order_by = "created DESC";
+			$order_by = 'created DESC';
 		else if ( $new_sort_order == 'modified' )
-			$order_by = "modified";
+			$order_by = 'modified';
 		else if ( $new_sort_order == 'modified_desc' )
-			$order_by = "modified DESC";
+			$order_by = 'modified DESC';
 		else if ( $new_sort_order == 'user_field_1' )
-			$order_by = "user_field_1";
+			$order_by = 'user_field_1';
+		else if ( $new_sort_order == 'user_field_1_desc' )
+			$order_by = 'user_field_1 DESC';
 		else if ( $new_sort_order == 'user_field_2' )
-			$order_by = "user_field_2";
+			$order_by = 'user_field_2';
+		else if ( $new_sort_order == 'user_field_2_desc' )
+			$order_by = 'user_field_2 DESC';
 		else if ( $new_sort_order == 'user_field_3' )
-			$order_by = "user_field_3";
+			$order_by = 'user_field_3';
+		else if ( $new_sort_order == 'user_field_3_desc' )
+			$order_by = 'user_field_3 DESC';
 		else if ( $new_sort_order == 'id' )
-			$order_by = "id";
+			$order_by = 'id';
 		else
-			$order_by = "filename";
+			$order_by = 'filename';
 
 		$this->_sort_order = $order_by;
 	}
