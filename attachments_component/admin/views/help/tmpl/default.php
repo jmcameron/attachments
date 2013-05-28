@@ -142,7 +142,9 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 			   $this->addListElement('ATTACH_HELP_031000_TEXT');
 			   $this->addListElement('ATTACH_HELP_031100_TEXT');
 			   $this->addListElement('ATTACH_HELP_031200_TEXT');
-			   $this->addListElement('ATTACH_HELP_031300_TEXT', Array( '{SECT_FILES}' => $this->sectionLink(SECT_FILES) ));
+			   $this->addListElement('ATTACH_HELP_031300_TEXT',
+									 Array( '{SECT_FILES}' => $this->sectionLink(SECT_FILES),
+											'{ONCONTENTPREPARE}' => '<tt class="docutils literal">onContentPrepare</tt>'));
 			$this->endList();
 	  $this->endList();
    $this->endSection(SECT_FEAT);
