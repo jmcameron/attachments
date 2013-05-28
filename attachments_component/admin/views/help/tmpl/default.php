@@ -75,7 +75,7 @@ $this->saveSectionInfo(SECT_CONTCT, 'contact',           'ATTACH_HELP_200000_SEC
 
 $tlc = JText::_('ATTACH_HELP_TOGGLE_LANGUAGE_CODES');
 
-$onContentPrepare = "<tt class=\"docutils literal\">'onPrepareContent'</tt>";
+$onContentPrepare = "<tt class=\"docutils literal\">'onContentPrepare'</tt>";
 
 $main_title_tooltip = $this->constructTooltip('ATTACH_HELP_000000_MAIN_TITLE');
 $main_version_tooltip = $this->constructTooltip('ATTACH_HELP_000100_MAIN_VERSION');
@@ -144,7 +144,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 			   $this->addListElement('ATTACH_HELP_031200_TEXT');
 			   $this->addListElement('ATTACH_HELP_031300_TEXT',
 									 Array( '{SECT_FILES}' => $this->sectionLink(SECT_FILES),
-											'{ONCONTENTPREPARE}' => '<tt class="docutils literal">onContentPrepare</tt>'));
+											'{ONCONTENTPREPARE}' => $onContentPrepare));
 			$this->endList();
 	  $this->endList();
    $this->endSection(SECT_FEAT);
@@ -454,7 +454,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
    // What Can Files Be Attached To?
    $this->startSection(SECT_FILES);
 	  $this->addParagraph('ATTACH_HELP_100100_TEXT',
-						  Array('{ONPREPARECONTENT}' => $onContentPrepare) );
+						  Array('{ONCONTENTPREPARE}' => $onContentPrepare) );
 	  $this->addWarning(  'ATTACH_HELP_100200_WARNING');
 	  $this->addParagraph('ATTACH_HELP_100300_TEXT');
 	  $this->startList();
