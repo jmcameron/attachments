@@ -1332,6 +1332,12 @@ class AttachmentsHelper
 		$attachment->modified = $attachment->created;
 		$attachment->uri_type = 'url';
 
+		// Check the URL length
+		if (strlen($attachment->url) > AttachmentsDefines::$MAXIMUM_URL_LENGTH) {
+			$errmsg = "URL is too long! (". strlen($attachment->url) .")";  // ??? Convert to translated error message
+			JError::raiseError(500, $errmsg);
+			}
+
 		// Save the updated attachment
 		if (!$attachment->store()) {
 			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 39)';
