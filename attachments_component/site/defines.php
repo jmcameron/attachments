@@ -75,6 +75,10 @@ class AttachmentsDefines
 	 */
 	public static $MAXIMUM_FILENAME_SYS_LENGTH = 512;
 
+	/** Maximum URL length (MUST match the `url` SQL definition)
+	 */
+	public static $MAXIMUM_URL_LENGTH = 1024;
+
 	/** Attachments subdirectory
 	 *
 	 * NOTE: If you have any existing attachments, follow one of these procedures
