@@ -152,7 +152,7 @@ class plgButtonAdd_attachment extends JPlugin
 			$button->set('name', 'add_attachment_frontend');
 			}
 		$button->set('link', $link);
-		$button->set('options', "{handler: 'iframe', size: {x: 950, y: 530}}");
+		$button->set('options', "{handler: 'iframe', size: {x: 920, y: 530}, iframeOptions: {scrolling: 'no'}}");
 
 		return $button;
 	}

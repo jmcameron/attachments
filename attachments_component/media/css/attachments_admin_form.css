@@ -2,7 +2,7 @@
 
 body.component {
 	padding-top: 0;
-	margin-right: 10px;
+	margin: 4px 6px 0 6px;
 }
 
 form.attachmentsBackend * {

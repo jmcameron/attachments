@@ -1,14 +1,24 @@
 /* Styles for the upload and update pages */
+
+body.contentpane {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div#main {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 div#uploadAttachmentsPage {
     width: 95%;
-    margin: 10px auto 6px auto;
+    margin: 6px auto 6px auto;
     text-align: left;
 }
 
 div#uploadAttachmentsPage h1 {
     font-size: 150%;
     color: #000;
-    margin: 6px 0;
 }
 
 div#uploadAttachmentsPage h2 {
@@ -48,7 +58,7 @@ div#uploadAttachmentsPage div.at_control div.controls label {
 
 
 div#uploadAttachmentsPage form.attachments fieldset {
-    padding: 15px 10px 4px 10px;
+    padding: 15px 10px 4px 0;
 }
 
 div#uploadAttachmentsPage legend {
