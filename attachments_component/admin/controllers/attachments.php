@@ -65,7 +65,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 163)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -89,7 +89,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 164)';
+			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
 			JError::raiseError(500, $errmsg);
 			}
 		$view->setModel($model);

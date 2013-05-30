@@ -53,7 +53,7 @@ class AttachmentsController extends JControllerLegacy
 		$parent_type = JRequest::getCmd('parent_type');
 		if ( !$parent_type ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
-				$db->getErrorMsg() . ' (ERR 64)';
+				$db->getErrorMsg() . ' (ERR 65)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -121,7 +121,7 @@ class AttachmentsController extends JControllerLegacy
 	{
 		// Access check
 		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 65)');
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)');
 			}
 
 		// Set up the tooltip behavior
@@ -262,7 +262,7 @@ class AttachmentsController extends JControllerLegacy
 		// Call parent to display
 		$view->display();
 	}
-	
+
 
 }
 

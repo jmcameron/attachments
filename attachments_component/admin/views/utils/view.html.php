@@ -20,7 +20,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
 
 /**
  * View for the utils controller
- * 
+ *
  * @package Attachments
  */
 class AttachmentsViewUtils extends JViewLegacy

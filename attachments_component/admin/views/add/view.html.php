@@ -47,15 +47,15 @@ class AttachmentsViewAdd extends JViewLegacy
 		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
 		$parent_entity_name = $attachment->parent_entity_name;
 		$params = $this->params;
-		
+
 		// Prevent unallowed editing PID PE
 		if (!$this->parent->userMayAddAttachment($parent_id, $parent_entity, $this->new_parent))
 		{
 			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S',
 									 $attachment->parent_entity_name);
-			return JError::raiseError(403, $errmsg . ' (ERR 178)');
+			return JError::raiseError(403, $errmsg . ' (ERR 173)');
 		}
-		
+
 		// Construct derived data
 		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
 		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';

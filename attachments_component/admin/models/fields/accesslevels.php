@@ -81,7 +81,7 @@ class JFormFieldAccessLevels extends JFormField
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 115)';
+			$errmsg = $db->stderr() . ' (ERR 116)';
 			JError::raiseError(500, $errmsg);
 			}
 

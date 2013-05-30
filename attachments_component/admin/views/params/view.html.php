@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 173)');
+	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 174)');
 	}
 
 /** Define the legacy classes, if necessary */

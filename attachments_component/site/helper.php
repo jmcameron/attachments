@@ -667,7 +667,7 @@ class AttachmentsHelper
 			$errmsg = JText::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
 									 JString::strlen($filename_sys),
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
-									 $filename) . '(ERR 179)';
+									 $filename) . '(ERR 35)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -759,7 +759,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERR 35)';
+					$errmsg = $db->stderr() . ' (ERR 36)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
@@ -782,7 +782,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 36)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -810,7 +810,7 @@ class AttachmentsHelper
 			$db->setQuery($query);
 			$result = $db->query();
 			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 37)';
+				$errmsg = $db->stderr() . ' (ERR 38)';
 				JError::raiseError(500, $errmsg);
 				}
 			$msg = JText::_('ATTACH_ERROR_MOVING_FILE')
@@ -1319,7 +1319,7 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERR 38)';
+					$errmsg = $db->stderr() . ' (ERR 39)';
 					JError::raiseError(500, $errmsg);
 					}
 				$attachment->state = $old_state;
@@ -1340,7 +1340,7 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 39)';
+			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1377,7 +1377,7 @@ class AttachmentsHelper
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 40)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 41)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent_id = $attachment->parent_id;
@@ -1388,7 +1388,7 @@ class AttachmentsHelper
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 41)';
+			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
 			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -1412,7 +1412,7 @@ class AttachmentsHelper
 				}
 
 			// Otherwise, just error out
-			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 42)';
+			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 43)';
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1428,7 +1428,7 @@ class AttachmentsHelper
 			// Make sure the file exists
 			jimport('joomla.filesystem.file');
 			if ( !JFile::exists($filename_sys) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 43)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 44)';
 				JError::raiseError(500, $errmsg);
 				}
 			$file_size = filesize($filename_sys);
@@ -1471,7 +1471,7 @@ class AttachmentsHelper
 				header("Content-Type: $content_type");
 				header("Content-Length: ".(string)($file_size));
 			}
- 
+
 			// Force the download
 			header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
 			header('Content-Transfer-Encoding: binary');
@@ -1593,7 +1593,7 @@ class AttachmentsHelper
 		// Save the changes to the attachment record immediately
 		$attachment->parent_id = $new_parent_id;
 		$attachment->parent_entity = $parent_entity;
-		$attachment->parent_entity_name = $parent_entity_name;	
+		$attachment->parent_entity_name = $parent_entity_name;
 		$attachment->filename_sys = $new_filename_sys;
 		$attachment->url = $new_url;
 
@@ -1620,7 +1620,7 @@ class AttachmentsHelper
 		// Get the names of the users from the database item for this attachment
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		
+
 		$query->select('a.id');
 		$query->from('#__attachments as a');
 
@@ -1767,6 +1767,6 @@ class AttachmentsHelper
 		$links .= $ahead . $add_attachment_txt . "</a>";
 		return "\n<div class=\"addattach\">$links</div>\n";
 	}
-	
-	
+
+
 }

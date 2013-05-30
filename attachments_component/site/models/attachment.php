@@ -107,7 +107,7 @@ class AttachmentsModelAttachment extends JModelLegacy
 				}
 			$user_levels = implode(',', array_unique($user_levels));
 
-			// Load the attachment data and make sure this user has access 
+			// Load the attachment data and make sure this user has access
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
 			$query->select('a.*, a.id as id');
@@ -207,7 +207,7 @@ class AttachmentsModelAttachment extends JModelLegacy
 		$query->where('id = ' .(int)$this->_id);
 		$db->setQuery($query);
 		if ( !$db->query() ) {
-			$errmsg = $db->stderr() . ' (ERR 44)';
+			$errmsg = $db->stderr() . ' (ERR 49)';
 			JError::raiseError(500, $errmsg);
 			}
 	}

@@ -33,7 +33,7 @@ class AttachmentsViewUpload extends AttachmentsFormView
 	{
 		// Access check.
 		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 63)' );
+			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 64)' );
 			}
 
 		// For convenience below

@@ -47,7 +47,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors) . ' (ERR 174)');
+			JError::raiseError(500, implode("\n", $errors) . ' (ERR 175)');
 			return false;
 		}
 
@@ -63,7 +63,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 175)';
+			$errmsg = $db->stderr() . ' (ERR 176)';
 			JError::raiseError(500, $errmsg);
 			}
 		$level_name = Array();
@@ -201,7 +201,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 			}
 
 		JToolBarHelper::divider();
-		
+
 		// Manually add a help button for the help view
 		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
 		$help = JText::_('JTOOLBAR_HELP');

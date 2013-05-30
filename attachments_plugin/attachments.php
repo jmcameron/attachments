@@ -81,7 +81,7 @@ class plgContentAttachments extends JPlugin
 				return false;
 				}
 			$parent_entity = 'category';
-		
+
 			// Older versions of Joomla do not deal well with category lists and
 			// it is necessary to use the show_attachments callback to display
 			// category descriptions in those cases.

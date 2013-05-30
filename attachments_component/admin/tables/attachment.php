@@ -90,7 +90,7 @@ class AttachmentsTableAttachment extends JTable
 			$this->_db->setQuery($query);
 			$attachment = $this->_db->loadObject();
 			if ( $this->_db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 107)';
+				$errmsg = $db->stderr() . ' (ERR 108)';
 				JError::raiseError(500, $errmsg);
 				}
 
@@ -99,7 +99,7 @@ class AttachmentsTableAttachment extends JTable
 			$parent_entity = $attachment->parent_entity;
 
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 108)';
+				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 109)';
 				JError::raiseError(500, $errmsg);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -115,7 +115,7 @@ class AttachmentsTableAttachment extends JTable
 				$app = JFactory::getApplication();
 				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 				$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_PUBLISH_S_ATTACHMENT_S_ID_N',
-										 $parent_entity, $attachment->filename, $id) . ' (ERR 109)';
+										 $parent_entity, $attachment->filename, $id) . ' (ERR 110)';
 				$app->enqueueMessage($errmsg, 'error');
 			}
 		}
@@ -152,7 +152,7 @@ class AttachmentsTableAttachment extends JTable
 		// Check for a database error.
 		if (!$this->_db->query()) {
 			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
-											   get_class($this), $this->_db->getErrorMsg()) . ' (ERR 110)');
+											   get_class($this), $this->_db->getErrorMsg()) . ' (ERR 111)');
 			$this->setError($e);
 			return false;
 		}
@@ -177,8 +177,8 @@ class AttachmentsTableAttachment extends JTable
 
 
 	/**
-	 * Store the attachment into the database 
-	 * 
+	 * Store the attachment into the database
+	 *
 	 * Extend base class function to encode description and display_name safely
 	 *
 	 * @param	boolean	 $updateNulls  True to update fields even if they are null.
@@ -200,6 +200,6 @@ class AttachmentsTableAttachment extends JTable
 		// Let the parent class do the real work!
 		return parent::store($updateNulls);
 	}
-	
+
 }
 
