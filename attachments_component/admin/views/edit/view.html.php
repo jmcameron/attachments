@@ -82,6 +82,12 @@ class AttachmentsViewEdit extends JViewLegacy
 												 'icon_filename', 'class="inputbox" size="1"', 'value', 'text',
 												 $attachment->icon_filename);
 
+		// If switching from article to URL default url_verify to true
+		if (($attachment->uri_type == 'file') AND ($this->update == 'url')) {
+			$attachment->url_verify = true;
+			}
+
+		// Set up for checkboxes
 		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
 		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
@@ -89,6 +95,7 @@ class AttachmentsViewEdit extends JViewLegacy
 		$this->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
 		$this->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
 		$this->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
+		$this->download_count_tooltip = JText::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' . JText::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
 
 		// Set up mootools/modal
 		AttachmentsJavascript::setupModalJavascript();

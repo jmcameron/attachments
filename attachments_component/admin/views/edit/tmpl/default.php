@@ -51,15 +51,10 @@ $modified = $mdate->format("Y-m-d H:i", true);
 
 $update = $this->update;
 
-$show_download_count = $secure && ($attachment->uri_type == 'file');
-if ( $show_download_count ) {
-	$download_count_tooltip = JText::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' . JText::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
-	}
-
 $change_entity_tooltip = JText::sprintf('ATTACH_CHANGE_ENTITY_S_TOOLTIP',$attachment->parent_entity_name) . '::' .
 	JText::_('ATTACH_CHANGE_ENTITY_TOOLTIP2');
 
-if ( $this->update == 'file' )
+if ( $update == 'file' )
 	$enctype = "enctype=\"multipart/form-data\"";
 else
 	$enctype = '';
@@ -286,9 +281,9 @@ else
 	  <?php if ($secure) { $ncols = 1; } else { $ncols = 3; }; ?>
 	  <td colspan="<?php echo $ncols ?>"><?php echo $attachment->file_type; ?></td>
 	  <?php if ($secure): ?>
-	  <td class="key hasTip" title="<?php echo $download_count_tooltip; ?>">
+	  <td class="key hasTip" title="<?php echo $this->download_count_tooltip; ?>">
 		  <label for="download_count"><?php echo JText::_('ATTACH_NUMBER_OF_DOWNLOADS'); ?></label></td>
-	  <td class="hasTip" name="download_count" title="<?php echo $download_count_tooltip; ?>"><?php echo $attachment->download_count ?></td>
+	  <td class="hasTip" name="download_count" title="<?php echo $this->download_count_tooltip; ?>"><?php echo $attachment->download_count ?></td>
 	  <?php endif; ?>
   </tr>
   <tr>
@@ -337,7 +332,7 @@ else
 <?php
 
 // Show the existing attachments (if any)
-if ( $attachment->parent_id AND ($this->update == 'file') )
+if ( $attachment->parent_id AND ($update == 'file') )
 {
 	/** Get the attachments controller class */
 	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
