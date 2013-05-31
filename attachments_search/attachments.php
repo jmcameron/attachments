@@ -269,7 +269,7 @@ class plgSearchAttachments extends JPlugin
 			$attachment->browsernav = 2;
 
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$attchment->parent_entity_name = $parent_entity_name;
+			$attachment->parent_entity_name = $parent_entity_name;
 
 			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
