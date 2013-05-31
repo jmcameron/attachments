@@ -43,6 +43,7 @@ div#uploadAttachmentsPage div.at_control label.at_control_label {
 }
 
 div#uploadAttachmentsPage div.at_control {
+    margin-top: 4px;
     display: inline-block;
 }
 
