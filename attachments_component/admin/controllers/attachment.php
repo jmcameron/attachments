@@ -938,6 +938,11 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$attachment->url_verify = $verify_url;
 				}
 
+			// Remove any extraneous fields
+			if (isset($attachment->parent_entity_name)) {
+				unset($attachment->parent_entity_name);
+				}
+
 			// Save the updated attachment info
 			if ( !$attachment->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 142)';
