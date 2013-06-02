@@ -256,8 +256,8 @@ class AttachmentsController extends JControllerLegacy
 		}
 
 		// Load current language
-		$view->lang->load('com_attachments', dirname(__FILE__));
-		$view->lang->load('com_attachments.help', dirname(__FILE__));
+		$view->lang->load('com_attachments', dirname(__FILE__), null, true);
+		$view->lang->load('com_attachments.help', dirname(__FILE__), null, true);
 
 		// Call parent to display
 		$view->display();
