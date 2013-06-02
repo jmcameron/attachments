@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 3.1-RC2 - June  1, 2013**
+**Version 3.1-RC3 - June  2, 2013**
 
 **This version is for Joomla 1.7/2.5+**
 
