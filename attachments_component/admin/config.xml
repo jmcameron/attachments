@@ -95,7 +95,7 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
-    <field name="date_format" type="text" default="Y-m-d H:M"
+    <field name="date_format" type="text" default="Y-m-d H:i"
            label="ATTACH_FORMAT_STRING_FOR_DATES" size="30"
            description="ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION">
     </field>
