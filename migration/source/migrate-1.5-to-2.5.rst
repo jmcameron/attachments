@@ -65,7 +65,7 @@ Export the attachments information from your Joomla 1.5 site
  3.  Assuming your Joomla 1.5 site uses Attachments version 2.2, download this
      file:
 
-	 :download:`special.php.txt <special.php.txt>`
+	 :download:`special.php.txt <special.php.txt>`  <--- *This is a link!*
 
      Rename the file to 'special.php' on your local computer and upload it to
      your Joomla 1.5 site to replace the file::
@@ -156,10 +156,9 @@ Importing your old Attachments to your Joomla 2.5+ site
 
         where 'emacs' should be replaced by the name of your text editor.
 
-	DO NOT USE a spreadsheet program like **'Excel'** since there is a
-	good chance that it will insert extra characters and leave the file in
-	a state where the PHP import function will not be able to read it
-	properly.
+	**DO NOT USE** a spreadsheet program like **'Excel'** since there is a
+	good chance it will add extra characters and result in errors when you
+	try to use it to import the attachments.
 
      Until processing this file works without error, you should definitely
      use the '&dry_run=true' option on the command so nothing is changed.
