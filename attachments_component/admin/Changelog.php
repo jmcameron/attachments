@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 2.5+
 
-2012-??: Release 3.1
+2012-06-08: Release 3.1
 	- 2012-08-18 Added attachments list sort option: description (reversed, z-a).
 	- 2012-09-08 Several updates to support upgrade to Joomla 3.0:
 	   - Updated deprecated classes/functions (JRules->JAccessRules,
@@ -102,7 +102,7 @@ Attachments 3.x Extension for Joomla 2.5+
     - 2013-05-17 Updated help page for Attachments 3.1 release.
     - 2013-05-19 Cleaned up code for attachments plugin framework and attachments_for_content.
 	- 2013-05-31 Fixed a few minor issues that came up in testing.  
-		Tested on Linux (Firefox), Windows (Firefox, IE, Chrome).
+		Tested on Joomla 2.5.11 on Linux (Firefox), Windows (Firefox, IE, Chrome).
 
 2012-09-07: Release 3.0.4
 	- 2012-09-07 Fixed bug causing crashes when component (only) is uninstalled.
