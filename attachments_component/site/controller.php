@@ -702,7 +702,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Set up the entity name for display
-		$parent_entity_name = JText::_('ATTACH_' . $parent_entity); // ???
+		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Verify that this user may add attachments to this parent
 		$user = JFactory::getUser();

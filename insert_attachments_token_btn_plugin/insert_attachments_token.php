@@ -104,12 +104,12 @@ class plgButtonInsert_attachments_token extends JPlugin
 		$doc->addScriptDeclaration($js);
 
 		// Add the regular css file
-		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);  // ??? WHY?
+		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
 		JHtml::stylesheet('com_attachments/insert_attachments_token_button.css', Array(), true);
 
 		// Handle RTL styling (if necessary)
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true); // ??? WHY?
+			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
 			JHtml::stylesheet('com_attachments/insert_attachments_token_button_rtl.css', Array(), true);
 			}
 

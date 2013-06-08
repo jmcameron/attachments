@@ -121,13 +121,13 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Add the regular css file
-		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true); // ??? WHY?
+		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
 		JHtml::stylesheet('com_attachments/add_attachment_button.css', Array(), true);
 
 		// Handle RTL styling (if necessary)
 		$lang = JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true); // ??? WHY?
+			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
 			JHtml::stylesheet('com_attachments/add_attachment_button_rtl.css', Array(), true);
 			}
 
