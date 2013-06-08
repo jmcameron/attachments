@@ -1,9 +1,9 @@
 How to Migrate Attachments from Joomla 1.5 to Joomla 2.5+
-=============================================================
+=========================================================
 
 This file describes how to migrate your attachments from your Joomla 1.5 site
-to a Joomla 2.5+ site.  Note this procedure applies to Joomla 2.5+ and 3.x
-equally.
+to a Joomla 2.5+ or 3.x site.  Note this procedure applies to Joomla 2.5+ and
+3.x equally.
 
 The process involves creating a Comma-Separated-File (CSV) migration file
 containing the data for the attachments on the Joomla 1.5 system.  The CSV
@@ -18,7 +18,7 @@ Necessary Conditions for Successful Attachments Migration
 
  * The Joomla version for your 2.5+ site should be 2.5.7 or later.
 
- * You should install a released version of Attachments 3.0.4 (or later) on
+ * You should install a released version of Attachments 3.0.5 (or later) on
    your Joomla 2.5+ system before proceeding.  
 
    .. warning::
@@ -35,12 +35,14 @@ Necessary Conditions for Successful Attachments Migration
    will need to be edited manually.  It is particularly important that the
    article/parent ID's are the same since these are embedded in the attachment
    file paths.  If the article ID's are different, the parent directories for
-   the attachments files will need to be renamed on the Joomla 2.5 side.
+   the attachments files will need to be renamed on the Joomla 2.5+ side.
 
  * The user ID and username of the users that created the Attachments on the
    Joomla 1.5 system must be the same as those on the Joomla 2.5+ system.
    If there are differences, the migration file will need to be edited
    manually.
+
+ * The attachment files must exist for all the attachments.  
  
 Migrating the Attachments Data
 ------------------------------
@@ -52,10 +54,13 @@ The process to migrate the data for the Attachments involves several steps:
       Joomla 2.5+ site before proceeding.  You may also want to back up
       your Joomla 1.5 site.
 
+
 Export the attachments information from your Joomla 1.5 site
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- 2.  Delete any Joomla 1.5 attachments you do not want to migrate
+ 2.  Delete any Joomla 1.5 attachments you do not want to migrate.  It is very
+     important that all attachments have one attachment file associated with
+     them!
 
  3.  Assuming your Joomla 1.5 site uses Attachments version 2.2, download this
      file:
@@ -93,16 +98,15 @@ Importing your old Attachments to your Joomla 2.5+ site
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  6.  Although not strictly necessary, it is probably a good idea to delete all
-     attachments on your Joomla 2.5 site.  If you do not do this, you will
-     probably want to carefully note all of the existing attachments on your
-     Joomla 2.5 site before proceeding.  Doing this step will make it
-     easier to delete any new attachments if the migration process does not go
-     smoothly.
+     attachments on your Joomla 2.5+ site.  If you do not do this, you will
+     want to carefully note all of the existing attachments on your Joomla
+     2.5+ site before proceeding.  Doing this step will make it easier to
+     delete any new attachments if the migration process does not go smoothly.
 
  7.  All the migrated attachments will be set to the same Access Level.
      Depending on your site, you may want this to be 'Public' or 'Registered'
      (or other access level).  To choose which access level should be set for
-     all the migrated attachments do this:
+     all the migrated attachments do this on the Joomla 2.5+ site:
 
 	* Go to the Attachments page in the back end (under Components),
 	* Click on the "Options" button on the toolbar,
@@ -110,24 +114,27 @@ Importing your old Attachments to your Joomla 2.5+ site
 	* Set the 'Default Access Level' to the desired access level.
 
  8.  Copy the archive (eg, zip file) of attachments files to your Joomla
-     2.5 site.  
+     2.5+ site.  
 
  9.  Upload or copy the migration file ('migrate_attachments.csv') to some
-     place on your Joomla 2.5 server file system.  **Note the exact location
+     place on your Joomla 2.5+ server file system.  **Note the exact location
      and path to the file on the server.** If the Joomla 1.5 site and the
-     Joomla 2.5 sites are on the same computer, simply note the full path to
+     Joomla 2.5+ sites are on the same computer, simply note the full path to
      the migration file.  
 
-     .. warning:: THIS IS IMPORTANT!  If your Joomla 2.5 is on some other
+     .. warning:: THIS IS IMPORTANT!  If your Joomla 2.5+ is on some other
         computer, such as a NAS web server, you must copy the migration file
         to that computer!  It will not be uploaded by the migration software!
 
- 10. Log into the back end of your Joomla 2.5 system as an administrator.
+ 10. Log into the back end of your Joomla 2.5+ system as an administrator.
 
  11. Go to the Attachments page and execute this command manually on your
-     Joomla 2.5 system (type in the full URL by hand)::
+     Joomla 2.5+ system (type in the full URL by hand)::
  
 	  http://<yoursite>/administrator/index.php?option=com_attachments&task=utils.installAttachmentsFromCsvFile&filename=/path/to/migrate_attachments.csv&dry_run=1
+
+     where '/path/to/migrate_attachments.csv' is the full path to the
+     'migrate_attachments.csv' file.
 
      .. note:: You must use the full path to the migration file on the server
         file system.  On a Windows system, this path may look like a Windows
@@ -148,6 +155,11 @@ Importing your old Attachments to your Joomla 2.5+ site
           eliminate byte order marker emacs
 
         where 'emacs' should be replaced by the name of your text editor.
+
+	DO NOT USE a spreadsheet program like **'Excel'** since there is a
+	good chance that it will insert extra characters and leave the file in
+	a state where the PHP import function will not be able to read it
+	properly.
 
      Until processing this file works without error, you should definitely
      use the '&dry_run=true' option on the command so nothing is changed.
@@ -176,22 +188,22 @@ Importing your old Attachments to your Joomla 2.5+ site
         fixes, empty the \*_attachments table and repeat the import process
         until all errors are eliminated.
 
- 12.  Unzip the attachments file in the same directory on your Joomla 2.5
+ 12.  Unzip the attachments file in the same directory on your Joomla 2.5+
       site as they were on your Joomla 1.5 site.  This step requires that the
-      article/parent IDs are identical between the 1.5 and 2.5 systems.
+      article/parent IDs are identical between the 1.5 and 2.5+ systems.
       If this is not true, some directory renaming will be necessary to ensure
       that the name of the parent directory above each attachment matches the
       article/parent ID.
 
       .. note:: 
 
-         If your web server is a Linux system, you may need to adust the user
+         If your web server is a Linux system, you may need to adjust the user
          and group ownership of the files so that your webserver process can
          access and updated them as needed.  Please consult a system
          adminstrator for your web server to determine what ownership is
          necessary.
 
- 13.  In the back end on the Joomla 2.5 site, go to the Attachments page
+ 13.  In the back end on the Joomla 2.5+ site, go to the Attachments page
       and execute the 'Utilities' command (on the right end of the toolbar).
       Click on the item:
 
