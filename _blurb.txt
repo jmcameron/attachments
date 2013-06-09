@@ -1,33 +1,30 @@
-The 'Attachments' extension for Joomla! allows files to be uploaded and attached to articles and other types of content. 'Attachments' includes the ability to attach and edit files from the front end as well as from the administrative back end. There are options to control who can see the attachments and who can upload them, along with many other options to increase its flexibility and usefulness. 
+The 'Attachments' extension for Joomla! allows files to be uploaded and attached to articles and other types of content.  URLs can also be attached.  'Attachments' includes the ability to attach files and edit attachments from the front end as well as from the administrative back end. There are options to control who can see the attachments and who can upload them, along with many other options to increase its flexibility and usefulness. 
 
 INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zip file. The component and all plugins are installed in a single step.  Attachments uses the Joomla "upgrade" capability and can be installed over previous versions of Attachments.
 
 There are two versions of Attachments:
 
-* Version 2.x for Joomla 1.5
-     -- The 2.x versions will NOT work on Joomla 1.6 and later
-     -- See demo video: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1
-     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments/frs/
-     -- FORUMS: http://joomlacode.org/gf/project/attachments/forum/
-
-* Version 3.x for Joomla 1.7/2.5+
+* Version 3.1 for Joomla 2.5.7+ or 3.x
      -- The 3.x versions will NOT work on Joomla 1.5
      -- See demo video: http://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
      -- DOWNLOAD: http://joomlacode.org/gf/project/attachments3/frs/
      -- FORUMS: http://joomlacode.org/gf/project/attachments3/forum/
 
+* Version 2.x for Joomla 1.5
+     -- The 2.x versions will NOT work on Joomla 2.5 and later
+     -- See demo video: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1
+     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments/frs/
+     -- FORUMS: http://joomlacode.org/gf/project/attachments/forum/
+
 If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
 
-Releases 2.2+ and 3.0+ give you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
+Releases 3.1+ and 2.2+ give you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
 
 If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
 
-NEW! Attachments 3.x for Joomla 1.7/2.5+
+NEW! Attachments 3.1 for Joomla 2.5+ and 3.x
 
-NOTE: The forums and the file download area for the Attachments 3.x version for Joomla 1.7+ are on a separate area on Joomlacode.org (http://joomlacode.org/gf/project/attachments3/).
-
-Attachments 3 includes many new features:
---- Improved permissions system give very flexible control on who can add, edit, or change the state of attachments.
---- All attachments can be assigned to any access level.  The improved ability to create access levels in Joomla 1.7+ means that you can control access to attachments to specific groups of people in a powerful way.
---- Improved ability to control which pages attachments are visible on.
---- Supports the new Joomla extension update system for simplified updates.
+Attachments 3.1 includes many new features:
+--- New option to display attachments to the public that require logging in to download.
+--- URL attachments are now handled in a secure way (download count works for both).
+--- Now supports Joomfish (with additional plugin)
