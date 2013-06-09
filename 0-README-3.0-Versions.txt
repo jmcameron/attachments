@@ -1,4 +1,16 @@
-Versions of Attachments-3.0 for Joomla 2.5
+Versions of Attachments-3.0 for Joomla 2.5 and 3.x
+
+3.1 - Released June 8, 2013
+   - Supports both Joomla 2.5.7+ and 3.x!
+   - Many fixes and improvements. See
+        administrator/components/com_attachments/Changelog.php
+   - Improved permissions handling for backend users with limited permissions.
+   - New option to display attachments to the public that require logging in to download.
+   - URL attachments are now handled in a secure way (download count works for both).
+   - Now supports Joomfish (with additional plugin).
+   - Refactored to allow template overrides of all CSS files and images.
+   - More robust file downloading.
+   - Many fixes and improvements.
 
 3.0.5 - Released April 25, 2013
    - Fixed bug causing problems when running on Joomla 2.5.10.
