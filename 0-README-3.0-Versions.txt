@@ -16,6 +16,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
    - Fixed bug causing problems when running on Joomla 2.5.10.
    - 1027 Uploads from attachments-3.0.4 release area before switching to
      attachments-3.0.5 release area on April 26, 2013.
+   - 10482 Downloads
 
 3.0.4 - Released September 7, 2012
    - Fixed bug causing crashes when component (only) is uninstalled.
