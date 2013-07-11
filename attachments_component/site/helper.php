@@ -339,6 +339,50 @@ class AttachmentsHelper
 
 
 	/**
+	 * Determine if a file is an image file
+	 *
+	 * Adapted from com_media
+	 *
+	 * @param string $filename  the filename to check
+	 *
+	 * @return true if it is an image file
+	 */
+	public static function is_image_file($filename)
+	{
+		// Partly based on PHP getimagesize documentation for PHP 5.3+
+		static $imageTypes = 'xcf|odg|gif|jpg|jpeg|png|bmp|psd|tiff|swc|iff|jpc|jp2|jpx|jb2|xbm|wbmp';
+		return preg_match("/\.(?:$imageTypes)$/i", $filename);
+	}
+
+
+	/**
+	 * Make sure this a valid image file
+	 *
+	 * @param string $filepath  the full path to the image file
+	 *
+	 * @return true if it is a valid image file
+	 */
+	public static function is_valid_image_file($filepath)
+	{
+		return getimagesize( $filepath ) !== false;
+	}
+
+
+	/**
+	 * Make sure a file is not a double-extension exploit
+	 *   See:  http://www.acunetix.com/websitesecurity/upload-forms-threat/
+	 *
+	 * @param string $filename  the filename
+	 *
+	 * @return true if it is an exploit file
+	 */
+	public static function is_double_extension_exploit($filename)
+	{
+		return preg_match("/\.php\.[a-z0-9]+$/i", $filename);
+	}
+	
+
+	/**
 	 * Upload the file
 	 *
 	 * @param &object &$attachment the partially constructed attachment object
@@ -448,6 +492,12 @@ class AttachmentsHelper
 				}
 			}
 
+		// Check for double-extension exploit
+		$bad_filename = false;
+		if (AttachmentsHelper::is_double_extension_exploit($filename)) {
+			$bad_filename = true;
+			}
+
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($attachment->parent_entity);
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
@@ -461,12 +511,23 @@ class AttachmentsHelper
 
 		// Make sure a file was successfully uploaded
 		if ( (($_FILES['upload']['size'] == 0) &&
-			  ($_FILES['upload']['tmp_name'] == '')) || $bad_chars ) {
+			  ($_FILES['upload']['tmp_name'] == '')) || $bad_chars || $bad_filename ) {
 
 			// Guess the type of error
 			if ( $bad_chars ) {
 				$error = 'bad_chars';
 				$error_msg = JText::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
+				if ( $app->isAdmin() ) {
+					$result = new JObject();
+					$result->error = true;
+					$result->error_msg = $error_msg;
+					return $result;
+					}
+				}
+			elseif ( $bad_filename ) {
+				$error = 'illegal_file_extension';
+				$format = JString::strtolower(JFile::getExt($filename));
+				$error_msg = JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " .php.$format";
 				if ( $app->isAdmin() ) {
 					$result = new JObject();
 					$result->error = true;
@@ -560,7 +621,7 @@ class AttachmentsHelper
 			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
 			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 			}
-
+		
 		// Check to make sure the mime type is okay
 		if ( $cmparams->get('restrict_uploads',true) ) {
 			if ( $cmparams->get('check_mime', true) ) {
@@ -573,6 +634,16 @@ class AttachmentsHelper
 					$error_msg .= ', ' . JText::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
 					$error_msg .= "	 <br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 					}
+				}
+			}
+
+		// If it is an image file, make sure it is a valid image file (and not some kind of exploit)
+		if (AttachmentsHelper::is_image_file($filename)) {
+			if (!AttachmentsHelper::is_valid_image_file($_FILES['upload']['tmp_name'])) {
+				$error = 'illegal_file_extension';
+				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " (corrupted image file)";
+				// ??? Need new error message
 				}
 			}
 
@@ -631,7 +702,7 @@ class AttachmentsHelper
 			$view->display();
 			exit();
 			}
-
+		
 		// Define where the attachments go
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$upload_dir = JPATH_SITE.'/'.$upload_url;
