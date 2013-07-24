@@ -439,7 +439,7 @@ class AttachmentsHelper
 
 		// Check the file size
 		$max_upload_size = (int)ini_get('upload_max_filesize');
-		$max_attachment_size = (int)$params->get('max_attachment_size', 10);
+		$max_attachment_size = (int)$params->get('max_attachment_size', 0);
 		if ($max_attachment_size == 0) {
 			$max_attachment_size = $max_upload_size;
 			}
