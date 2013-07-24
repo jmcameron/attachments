@@ -80,6 +80,7 @@ class AttachmentsImport
 		$db = JFactory::getDBO();
 
 		// Open the CSV file
+		$line_num = 0;
 		$f = @fopen($filename, 'r');
 		if ( !$f ) {
 			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 85)';
@@ -87,6 +88,7 @@ class AttachmentsImport
 
 		// Parse the first row to process field names and indeces
 		$field = AttachmentsImport::_parseFieldNames($f);
+		$line_num += 1;
 		if ( !is_array($field) ) {
 			return $field;
 			}
@@ -112,6 +114,8 @@ class AttachmentsImport
 
 			// Read the next line
 			$adata = fgetcsv($f);
+			$line_num += 1;
+			$line_str = '  [LINE: ' . $line_num . '] ';
 
 			// Skip blank lines
 			if ( !$adata ) {
@@ -121,7 +125,7 @@ class AttachmentsImport
 			// get the attachment ID
 			$attachment_id = $adata[$field['id']];
 			if ( !is_numeric($attachment_id) ) {
-				return JText::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . ' (ERR 86)';
+				return JText::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . $line_str . ' (ERR 86)';
 				}
 			$attachment_id = (int)$attachment_id;
 
@@ -131,7 +135,7 @@ class AttachmentsImport
 
 			// Get the attachment parent object
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 87)';
+				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -140,7 +144,7 @@ class AttachmentsImport
 
 				// Make sure a parent with the specified ID exists
 				if ( !$parent->parentExists($parent_id, $parent_entity) ) {
-					return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . ' (ERR 88)';
+					return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . $line_str . ' (ERR 88)';
 					}
 
 				// Double-check by comparing the title
@@ -148,7 +152,7 @@ class AttachmentsImport
 				$parent_title = $parent->getTitle($parent_id, $parent_entity);
 				if ( strtolower($parent_title) != strtolower($attachment_parent_title) ) {
 					return JText::sprintf('ATTACH_ERROR_PARENT_TITLE_MISMATCH_ID_N_TITLE_S_S', $parent_id,
-										  $parent_title, $attachment_parent_title) . ' (ERR 89)';
+										  $parent_title, $attachment_parent_title) . $line_str . ' (ERR 89)';
 					}
 				}
 
@@ -161,11 +165,11 @@ class AttachmentsImport
 			$creator_username = $db->loadResult();
 			if ( empty($creator_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
-									  $creator_id, $attachment_creator_username) . ' (ERR 90)';
+									  $creator_id, $attachment_creator_username) . $line_str . ' (ERR 90)';
 				}
 			if ( strtolower($creator_username) != strtolower($attachment_creator_username) ) {
 				return JText::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
-									  $creator_id, $attachment_creator_username, $creator_username) . ' (ERR 91)';
+									  $creator_id, $attachment_creator_username, $creator_username) . $line_str . ' (ERR 91)';
 				}
 
 			// Check the modifier name
@@ -177,11 +181,11 @@ class AttachmentsImport
 			$modifier_username = $db->loadResult();
 			if ( empty($modifier_username) || $db->getErrorNum() ) {
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
-									  $modifier_id, $attachment_modifier_username) . ' (ERR 92)';
+									  $modifier_id, $attachment_modifier_username) . $line_str . ' (ERR 92)';
 				}
 			if ( strtolower($modifier_username) != strtolower($attachment_modifier_username) ) {
 				return JText::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
-									  $modifier_id, $attachment_modifier_username, $modifier_username) . ' (ERR 93)';
+									  $modifier_id, $attachment_modifier_username, $modifier_username) . $line_str . ' (ERR 93)';
 				}
 
 			// Construct an attachments entry
@@ -192,7 +196,7 @@ class AttachmentsImport
 
 				// The attachment ID cannot be 0 for updating!
 				if ( $attachment_id == 0 ) {
-					return JText::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . ' (ERR 94)';
+					return JText::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . $line_str . ' (ERR 94)';
 					}
 
 				// Load the data from the attachment to be updated (or create new one)
