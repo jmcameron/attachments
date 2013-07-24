@@ -52,7 +52,7 @@ The process to migrate the data for the Attachments involves several steps:
   1.  This procedure should not affect your Joomla 1.5 site, but it will
       affect your Joomla 2.5+ site, so it is a good idea to back up your
       Joomla 2.5+ site before proceeding.  You may also want to back up
-      your Joomla 1.5 site.
+      your Joomla 1.5 site as well.
 
 
 Export the attachments information from your Joomla 1.5 site
@@ -105,8 +105,9 @@ Importing your old Attachments to your Joomla 2.5+ site
 
  7.  All the migrated attachments will be set to the same Access Level.
      Depending on your site, you may want this to be 'Public' or 'Registered'
-     (or other access level).  To choose which access level should be set for
-     all the migrated attachments do this on the Joomla 2.5+ site:
+     (or other access level of your choice).  The default is 'Registered'.  To
+     choose which access level should be set for all the migrated attachments
+     do this on the Joomla 2.5+ site:
 
 	* Go to the Attachments page in the back end (under Components),
 	* Click on the "Options" button on the toolbar,
