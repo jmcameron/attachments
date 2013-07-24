@@ -16,6 +16,10 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 2.5+
 
+2013-?: Release 3.1.2
+    - Fixed bug in max_attachments_size handling.
+    - Added line numbers to error messages for import (for migration).
+
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
 
