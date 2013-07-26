@@ -19,6 +19,8 @@ Attachments 3.x Extension for Joomla 2.5+
 2013-?: Release 3.1.2
     - Fixed bug in max_attachments_size handling.
     - Added line numbers to error messages for import (for migration).
+    - Fixed issue in main attachments plugin that may have caused warnings
+      (although it operated correctly).
 
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)

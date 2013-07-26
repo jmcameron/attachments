@@ -70,7 +70,15 @@ class plgContentAttachments extends JPlugin
 		// return;
 
 		// Set the parent info from the context
-		list ($parent_type, $parent_entity) = explode('.', $context, 2);
+		if (strpos($context, '.') === false)
+		{
+			$parent_type = $context;
+			$parent_entity = '';
+		}
+		else
+		{
+			list ($parent_type, $parent_entity) = explode('.', $context, 2);
+		}
 
 		// This callback handles everything but articles
 		if ( $parent_type == 'com_content' ) {
