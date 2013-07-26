@@ -115,6 +115,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 
 		$button = new JObject();
 		$button->set('modal', false);
+		$button->set('class', 'btn');
 		$button->set('onclick', 'insertAttachmentsToken(\''.$name.'\');return false;');
 		$button->set('text', JText::_('ATTACH_ATTACHMENTS_TOKEN'));
 		$button->set('title', JText::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION'));
