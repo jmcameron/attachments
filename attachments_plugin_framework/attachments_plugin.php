@@ -272,13 +272,13 @@ class AttachmentsPlugin extends JPlugin
 	public function getCanonicalEntityId($parent_entity)
 	{
 		// It it is a known entity, just return it
-		if (in_array($parent_entity, $this->entities))
+		if (is_array($this->entities) && in_array($parent_entity, $this->entities))
 		{
 			return $parent_entity;
 		}
 
 		// Check aliases
-		if (array_key_exists($parent_entity, $this->entity_name))
+		if (is_array($this->entities) && array_key_exists($parent_entity, $this->entity_name))
 		{
 			return $this->entity_name[$parent_entity];
 		}
