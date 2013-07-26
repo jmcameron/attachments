@@ -132,4 +132,19 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 		exit();
 	}
 
+	
+	/**
+	 * Show a list of all attachment IDs
+	 *
+	 * This is for system testing purposes only
+	 */
+	public function listKnownParentTypes()
+	{
+		// Get the article/parent handler
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+
+		$ptypes = $apm->getInstalledParentTypes();
+		echo implode($ptypes, '<br/>');
+	}
 }
