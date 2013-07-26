@@ -781,6 +781,7 @@ class AttachmentsHelper
 											 $attachment->parent_type, null, $from);
 			// Set up the view
 			$view->attachment = $attachment;
+			$view->save_url = $save_url;
 
 			$view->new_parent = $parent->new;
 
