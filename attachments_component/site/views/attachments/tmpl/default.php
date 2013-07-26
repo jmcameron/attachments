@@ -260,7 +260,12 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	// Add file size (maybe)
 	if ( $this->show_file_size ) {
-		$html .= "<td class=\"at_file_size\">$file_size Kb</td>";
+		$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
+		if ( $file_size_str == 'ATTACH_S_KB' ) {
+			// Work around until all translations are updated ???
+			$file_size_str = $file_size . ' KB';
+			}
+		$html .= '<td class="at_file_size">' . $file_size_str . '</td>';
 		}
 
 	// Show number of downloads (maybe)
