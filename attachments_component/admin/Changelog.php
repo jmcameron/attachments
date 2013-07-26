@@ -23,6 +23,9 @@ Attachments 3.x Extension for Joomla 2.5+
       (although it operated correctly).
     - Fixed issue with add-attachment button not showing correctly in
 	  Joomla 3.x.
+    - Robustness fixes for attachment plugins.
+    - Enabled scrolling on upload forms to ensure that all existing attachments 
+      can be seen, even when there are many.
 
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
