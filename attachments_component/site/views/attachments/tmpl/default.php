@@ -125,7 +125,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->show_file_size) {
 		$file_size = (int)( $attachment->file_size / 1024.0 );
 		if ( $file_size == 0 ) {
-			// For files less than 1K, show the fractional amount (in 1/10 KB)
+			// For files less than 1kB, show the fractional amount (in 1/10 kB)
 			$file_size = ( (int)( 10.0 * $attachment->file_size / 1024.0 ) / 10.0 );
 			}
 		}
@@ -263,7 +263,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
 		if ( $file_size_str == 'ATTACH_S_KB' ) {
 			// Work around until all translations are updated ???
-			$file_size_str = $file_size . ' KB';
+			$file_size_str = $file_size . ' kB';
 			}
 		$html .= '<td class="at_file_size">' . $file_size_str . '</td>';
 		}

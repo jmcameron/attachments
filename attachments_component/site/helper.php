@@ -869,12 +869,18 @@ class AttachmentsHelper
 		// Move the file
 		$msg = "";
 		if (JFile::upload($_FILES['upload']['tmp_name'], $filename_sys)) {
-			$size = (int)( $attachment->file_size / 1024.0 );
+			$file_size = (int)( $attachment->file_size / 1024.0 );
+			$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
+			if ( $file_size_str == 'ATTACH_S_KB' ) {
+				// Work around until all translations are updated ???
+				$file_size_str = $file_size . ' kB';
+				}
 			chmod($filename_sys, 0644);
+			// ??? The following items need to be updated for RTL
 			if ( $save_type == 'update' )
-				$msg = JText::_('ATTACH_UPDATED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
+				$msg = JText::_('ATTACH_UPDATED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
 			else
-				$msg = JText::_('ATTACH_UPLOADED_ATTACHMENT') . ' ' . $filename . " (" . $size . " Kb)!";
+				$msg = JText::_('ATTACH_UPLOADED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
 			}
 		else {
 			$query = $db->getQuery(true);

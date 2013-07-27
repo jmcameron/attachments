@@ -26,7 +26,8 @@ Attachments 3.x Extension for Joomla 2.5+
     - Robustness fixes for attachment plugins.
     - Enabled scrolling on upload forms to ensure that all existing attachments 
       can be seen, even when there are many.
-	- Fixed issue with missign 'KB' language item in attachments list.
+	- Fixed issue with missing 'KB' language item in attachments list.
+    - Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
 
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)

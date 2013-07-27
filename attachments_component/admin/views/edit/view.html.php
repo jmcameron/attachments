@@ -60,7 +60,7 @@ class AttachmentsViewEdit extends JViewLegacy
 			AttachmentsHelper::addAttachmentUserNames($attachment);
 		}
 
-		// Compute the attachment size in KB
+		// Compute the attachment size in kB
 		$attachment->size_kb = (int)( 10 * $attachment->file_size / 1024.0 ) / 10.0;
 
 		// set up lists for form controls
