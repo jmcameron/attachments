@@ -72,6 +72,7 @@ class plgContentAttachments extends JPlugin
 		// Set the parent info from the context
 		if (strpos($context, '.') === false)
 		{
+			// Assume the context is the parent_type
 			$parent_type = $context;
 			$parent_entity = '';
 		}
@@ -100,10 +101,19 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Get the parent ID
-		$parent_id = JRequest::getInt('id', null);
-		if ( $parent_id === null ) {
+		if(isset($row->id))
+		{
+			// If the $row has 'id', use it
+			$parent_id = (int)$row->id;
+		}
+		else
+		{
+			$parent_id = JRequest::getInt('id', null);
+		}
+		if ( $parent_id === null )
+		{
 			return false;
-			}
+		}
 
 		// Load the language
 		$lang = JFactory::getLanguage();
