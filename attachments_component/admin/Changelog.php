@@ -16,18 +16,19 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 2.5+
 
-2013-?: Release 3.1.2
-    - Fixed bug in max_attachments_size handling.
-    - Added line numbers to error messages for import (for migration).
-    - Fixed issue in main attachments plugin that may have caused warnings
-      (although it operated correctly).
-    - Fixed issue with add-attachment button not showing correctly in
-	  Joomla 3.x.
-    - Robustness fixes for attachment plugins.
-    - Enabled scrolling on upload forms to ensure that all existing attachments 
-      can be seen, even when there are many.
-	- Fixed issue with missing 'KB' language item in attachments list.
-    - Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
+2013-08-??: Release 3.1.2
+    - 2013-07-24 Fixed bug in max_attachments_size handling.
+    - 2013-07-25 Added line numbers to error messages for import (for migration).
+    - 2013-07-26 Fixed issue in main attachments plugin that may have caused
+	    warnings (although it operated correctly).
+    - 2013-07-26 Fixed issue with add-attachment button not showing correctly
+	    in Joomla 3.x.
+    - 2013-07-26 Robustness fixes for attachment plugins.
+    - 2013-07-27 Enabled scrolling on upload forms to ensure that all existing
+	    attachments can be seen, even when there are many.
+    - 2013-07-27 Fixed issue with missing 'KB' language item in attachments list.
+        Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
+    - 2013-07-30 Minor fixes for robustness
 
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
