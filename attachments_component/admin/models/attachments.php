@@ -146,7 +146,7 @@ class AttachmentsModelAttachments extends JModelList
 		$filter_parent_state = $this->getState('filter.parent_state', $filter_parent_state_default);
 		if ( $filter_parent_state != 'ALL' ) {
 
-			$fps_wheres = Array();
+			$fps_wheres = array();
 
 			// Get the contributions for all the known content types
 			JPluginHelper::importPlugin('attachments');
@@ -171,7 +171,7 @@ class AttachmentsModelAttachments extends JModelList
 				}
 
 			// Copy the new where clauses into our main list
-			if ( $fps_wheres) {
+			if ($fps_wheres) {
 				$where[] = $fps_wheres;
 				}
 			}
