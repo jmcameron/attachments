@@ -176,7 +176,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentPublishedFilter($parent_state, $filter_entity)
 	{
-		return '';
+		return array();
 	}
 
 	/**

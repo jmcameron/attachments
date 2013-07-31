@@ -525,7 +525,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// If we want all attachments, do no filtering
 		if ($parent_state == 'ALL')
 		{
-			return null;
+			return array();
 		}
 
 		$db = JFactory::getDBO();
