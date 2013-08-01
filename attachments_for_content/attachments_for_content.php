@@ -128,7 +128,15 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		}
 
 		// Featured also uses 'introtext'
-		if (isset($row->introtext) AND (JRequest::getCmd('view') == 'featured'))
+		$view = JRequest::getCmd('view');
+		if (isset($row->introtext) AND ($view == 'featured'))
+		{
+			$text_field_name = 'introtext';
+		}
+
+		// Check for non-menu category view
+		if (isset($row->introtext) AND  ($view == 'category') AND
+			(($parent_entity == 'default') OR ($parent_entity == 'article')))
 		{
 			$text_field_name = 'introtext';
 		}
