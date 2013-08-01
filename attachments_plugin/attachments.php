@@ -87,6 +87,7 @@ class plgContentAttachments extends JPlugin
 				return false;
 				}
 			if (($parent_entity == 'category') AND (isset($row->catid))) {
+				// Ignore the callback for articles on category blogs
 				return false;
 				}
 			$parent_entity = 'category';
