@@ -45,13 +45,17 @@ class AttachmentsViewLogin extends JViewLegacy
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
 
-		$register_url = $params->get('register_url', "index.php?option=com_users&view=registration");
+		$register_url = $params->get('register_url', 'index.php?option=com_users&view=registration');
 		$register_url = JRoute::_($register_url);
 		$this->register_url = $register_url;
 
-		$login_url = $params->get('login_url', "index.php?option=com_users&view=login");
-		$login_url = JRoute::_($login_url);
-		$this->login_url = $login_url;
+		// Construct the login URL
+		$return = '';
+		if ( $this->return_url ) {
+			$return = '&return=' . $this->return_url;
+			}
+		$login_url = $params->get('login_url', 'index.php?option=com_users&view=login') . $return;
+		$this->login_url = JRoute::_($login_url);
 		
 		// Get the warning message
 		$this->must_be_logged_in = JText::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');

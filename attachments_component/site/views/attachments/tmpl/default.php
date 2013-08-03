@@ -160,8 +160,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
 	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
 	// $filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
+
 	if ( $this->show_file_links ) {
 		if ( $attachment->uri_type == 'file' ) {
+			// Handle file attachments
 			if ( $this->secure ) {
 				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
@@ -174,6 +176,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
+			// Handle URL "attachments"
 			if ( $this->secure ) {
 				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
@@ -184,7 +187,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				if ( !$logged_in AND ($attachment->access != '1')) {
 					$guest_levels = $this->params->get('show_guest_access_levels', Array('1', '2'));
 					if ( in_array($attachment->access, $guest_levels) ) {
-						$url = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+						$app = JFactory::getApplication();
+						$return = $app->getUserState('com_attachments.current_url', '');
+						$url = JRoute::_('index.php?option=com_attachments&task=requestLogin' . $return);
+						$target = '';
 						}
 					}
 				if ( $url == '' ) {
@@ -204,7 +210,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				}
 			}
 		$html .= "</a>";
-		$html .= "<a class=\"at_url\" href=\"$url\"$target target=\"_blank\" title=\"$tooltip\">$filename</a>";
+		$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
 		}
 	else {
 		$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);

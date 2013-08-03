@@ -1483,7 +1483,10 @@ class AttachmentsHelper
 			if ( $user->get('username') == '' ) {
 				$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
 				if ( in_array($attachment->access, $guest_levels) ) {
-					$redirect_to = JRoute::_('index.php?option=com_attachments&task=requestLogin');
+					// Construct the login request with return URL
+					$app = JFactory::getApplication();
+					$return = $app->getUserState('com_attachments.current_url', '');
+					$redirect_to = JRoute::_('index.php?option=com_attachments&task=requestLogin' . $return);
 					$app = JFactory::getApplication();
 					$app->redirect($redirect_to );
 					}

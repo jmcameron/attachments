@@ -793,6 +793,7 @@ class AttachmentsController extends JControllerLegacy
 		$view = new AttachmentsViewLogin();
 
 		// Display the view
+		$view->return_url = JRequest::getString('return');
 		$view->display(null, false, false);
 	}
 

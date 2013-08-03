@@ -48,6 +48,13 @@ class plgContentAttachments extends JPlugin
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
+
+		// Save this page's URL
+		$uri= JFactory::getURI();
+		$return = '&return=' . urlencode(base64_encode(JUri::current() . '?' . $uri->getQuery()));
+		$app = JFactory::getApplication();
+		$app->setUserState('com_attachments.current_url', $return);
+
 		$this->loadLanguage();
 	}
 
