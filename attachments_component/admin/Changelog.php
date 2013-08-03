@@ -30,6 +30,7 @@ Attachments 3.x Extension for Joomla 2.5+
         Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
     - 2013-07-30 Minor fixes for robustness
     - 2013-07-31 Added fix to display attachments for non-menu category blog views.
+	- 2013-08-02 Fix to return user logging in to the prior page.
 
 2013-07-11: Release 3.1.1
     - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
