@@ -81,7 +81,7 @@ class plgContentAttachments extends JPlugin
 		{
 			// Assume the context is the parent_type
 			$parent_type = $context;
-			$parent_entity = '';
+			$parent_entity = 'default';
 		}
 		else
 		{
@@ -190,7 +190,17 @@ class plgContentAttachments extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
-		list ($parent_type, $parent_entity) = explode('.', $context, 2);
+		// Set the parent info from the context
+		if (strpos($context, '.') === false)
+		{
+			// Assume the context is the parent_type
+			$parent_type = $context;
+			$parent_entity = '';
+		}
+		else
+		{
+			list ($parent_type, $parent_entity) = explode('.', $context, 2);
+		}
 
 		// ??? Do we need to filter to ensure only articles use this callback?
 
