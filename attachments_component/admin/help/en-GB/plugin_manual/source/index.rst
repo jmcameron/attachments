@@ -115,7 +115,7 @@ determine if that is the case, we need to do a little diagnostic work.
 Install the Attachments extension and temporarily edit the main attachments
 plugin file:
 
-    ``plugins/content/attachments.php``
+    ``plugins/content/attachments/attachments.php``
 
 Edit this file and look for the `addAttachments()` function and look for the
 line containing ``global $option;`` at the beginning of the function.  In
