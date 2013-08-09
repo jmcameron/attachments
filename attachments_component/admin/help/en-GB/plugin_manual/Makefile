@@ -2,6 +2,14 @@
 
 all: html
 
+# Update procedure: 
+#    - Build here ('make html'), git commit results
+#    - sync with localhost version
+#    - git commit results
+#    - git push
+#    - ssh/cd to online site
+#    - git pull
+
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
