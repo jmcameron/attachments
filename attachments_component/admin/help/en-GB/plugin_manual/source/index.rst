@@ -110,32 +110,34 @@ Make sure an attachment plugin will work
 ----------------------------------------
 
 In order to add attachments to a content item, the content item must invoke
-the Joomla! content plugin 'onPrepareContent' when that item is rendered.  To
+the Joomla! content plugin 'onContentPrepare' when that item is rendered.  To
 determine if that is the case, we need to do a little diagnostic work.
 Install the Attachments extension and temporarily edit the main attachments
 plugin file:
 
     ``plugins/content/attachments/attachments.php``
 
-Edit this file and look for the `addAttachments()` function and look for the
-line containing ``global $option;`` at the beginning of the function.  In
-order to generate the necessary diagnostic output, insert the following line
-after the line:
+Edit this file and find the ``onContentPrepare`` function near the beginning
+of the file.  Uncomment several lines at the beginning of the function to
+generate some diagnostic output. The uncommented lines should look like this:
 
 .. code-block:: php
     
-    $row->text .= "<br/>PC: $option,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getString('view');
-    return true;
+    // Enable the following four diagnostic lines to see if a component uses onContentPrepare
+    $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
+    $row->text .= $msg;
+    $row->introtext .= $msg;
+    return;
 
-where the 'PC' tag is for the *Parent Component*, 'OBJ' is the class of the
-the content item, and 'VIEW' is the name of the view.  Note that some versions
-of Attachments have these lines aready present, but commented out.  Just
-uncomment these lines.
+where the 'CONTEXT' tag is for the *Parent Component* or *parent type*, 'OBJ'
+is the class of the the content item, and 'VIEW' is the name of the view.
+Note that some versions of Attachments have these lines aready present, but
+commented out.  Just uncomment these lines.
 
 Refresh the frontpage (or whichever page contains the content item).  Look for
-the diagnostic line beginning with 'PC' just after your content item.  Make a
-note of what appears after the PC, OBJ, and VIEW tags.  You may need it when
-you implement the ``getParentId()`` function (see section
+the diagnostic line beginning with 'CONTEXT' just after your content item.
+Make a note of what appears after the PC, OBJ, and VIEW tags.  You may need it
+when you implement the ``getParentId()`` function (see section
 :ref:`section-optional-function`).  It may be useful to insert a command to
 dump the entire $row object (*e.g.* var_dump($row); ).  Note that the display
 of any existing attachments will be superceded by this output; when these two
@@ -143,15 +145,15 @@ lines are removed the display of attachments will return to normal.
 
 If you do not see any output after your item, it may not be possible to attach
 files to your type of content items using the Attachemnts extension.  Note
-that some components have settings that control whether the 'onPrepareContent'
+that some components have settings that control whether the 'onContentPrepare'
 is called by the component code during the rendering process.  Check the
 extension's documentation.  Make sure the setting is enabled, if available.
 
 .. warning::
 
-    Once you have determined if the 'onPrepareContent' plugin is called for
-    your content item, don't forget to restore the `addAttachment()` function
-    to its normal operation!
+    Once you have determined if the 'onContentPrepare' plugin is called for
+    your content item, don't forget to restore the `onContentPrepare()`
+    function to its normal operation!
 
    
 Select the entity or entities to handle
@@ -729,7 +731,7 @@ function attachmentsHiddenForParent()
 
     /** Return true if the attachments should be hidden for this parent
      *
-     * @param   &object  &$parent        the object for the parent that onPrepareContent gives
+     * @param   &object  &$parent        the object for the parent that onContentPrepare gives
      * @param   int      $parent_id      the ID of the parent the attachment is attached to
      * @param   string   $parent_entity  the type of entity for this parent type
      *
@@ -882,12 +884,12 @@ function determineParentEntity()
     /**
      * Determine the parent entity
      *
-     * From the view and the class of the parent (row of onPrepareContent plugin),
+     * From the view and the class of the parent (row of onContentPrepare plugin),
      * determine what the entity type is for this entity.
      *
      * Derived classes MUST overrride this
      *
-     * @param   &object  &$parent  The object for the parent (row) that onPrepareContent gets
+     * @param   &object  &$parent  The object for the parent (row) that onContentPrepare gets
      *
      * @return the correct entity (eg, 'default', 'category', etc) or false if this entity should not be displayed.
      */
@@ -924,7 +926,7 @@ function getParentId()
     /**
      * Return the parent entity / row ID
      *
-     * This will only be called by the main attachments 'onPrepareContent'
+     * This will only be called by the main attachments 'onContentPrepare'
      * plugin if $attachment does not have an id
      *
      * @param   object  &$attachment  the attachment
@@ -937,12 +939,12 @@ function getParentId()
     }
 
 When the regular attachments plugin is called from the front end when the
-'onPrepareContent' plugin function is invoked, an object for the article or
+'onContentPrepare' plugin function is invoked, an object for the article or
 content item is passed in as $row.  Normally $row has an ID field $row->id.
 If your component has the field $row->id, then you will probably not need to
 implement this function.  If $row does not have an $row->id field, the ID
 should be some field of the $row object.  This function should extract the
-entity ID and return it.  Note that the `onPrepareContent` callback function
+entity ID and return it.  Note that the `onContentPrepare` callback function
 may be invoked several times for each entity on the page.  You may need to
 examine the other data about the entity (retrieved in the diagnostic section
 :ref:`diagnostic-section`) to determine which call you want to process and

@@ -145,42 +145,44 @@ extension for attaching files to new types of content items.</dd>
 <div class="section" id="make-sure-an-attachment-plugin-will-work">
 <span id="diagnostic-section"></span><h2><a class="toc-backref" href="#id4">3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</a><a class="headerlink" href="#make-sure-an-attachment-plugin-will-work" title="Permalink to this headline">¶</a></h2>
 <p>In order to add attachments to a content item, the content item must invoke
-the Joomla! content plugin &#8216;onPrepareContent&#8217; when that item is rendered.  To
+the Joomla! content plugin &#8216;onContentPrepare&#8217; when that item is rendered.  To
 determine if that is the case, we need to do a little diagnostic work.
 Install the Attachments extension and temporarily edit the main attachments
 plugin file:</p>
 <blockquote>
 <div><tt class="docutils literal"><span class="pre">plugins/content/attachments/attachments.php</span></tt></div></blockquote>
-<p>Edit this file and look for the <cite>addAttachments()</cite> function and look for the
-line containing <tt class="docutils literal"><span class="pre">global</span> <span class="pre">$option;</span></tt> at the beginning of the function.  In
-order to generate the necessary diagnostic output, insert the following line
-after the line:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$row-&gt;text .= &quot;&lt;br/&gt;PC: $option,  OBJ: &quot; . get_class($row) . &quot;, VIEW: &quot; . JRequest::getString(&#39;view&#39;);</span>
-<span class="x">return true;</span>
+<p>Edit this file and find the <tt class="docutils literal"><span class="pre">onContentPrepare</span></tt> function near the beginning
+of the file.  Uncomment several lines at the beginning of the function to
+generate some diagnostic output. The uncommented lines should look like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// Enable the following four diagnostic lines to see if a component uses onContentPrepare</span>
+<span class="x">$msg = &quot;&lt;br/&gt;onContentPrepare: CONTEXT: $context,  OBJ: &quot; . get_class($row) . &quot;, VIEW: &quot; . JRequest::getCmd(&#39;view&#39;);</span>
+<span class="x">$row-&gt;text .= $msg;</span>
+<span class="x">$row-&gt;introtext .= $msg;</span>
+<span class="x">return;</span>
 </pre></div>
 </div>
-<p>where the &#8216;PC&#8217; tag is for the <em>Parent Component</em>, &#8216;OBJ&#8217; is the class of the
-the content item, and &#8216;VIEW&#8217; is the name of the view.  Note that some versions
-of Attachments have these lines aready present, but commented out.  Just
-uncomment these lines.</p>
+<p>where the &#8216;CONTEXT&#8217; tag is for the <em>Parent Component</em> or <em>parent type</em>, &#8216;OBJ&#8217;
+is the class of the the content item, and &#8216;VIEW&#8217; is the name of the view.
+Note that some versions of Attachments have these lines aready present, but
+commented out.  Just uncomment these lines.</p>
 <p>Refresh the frontpage (or whichever page contains the content item).  Look for
-the diagnostic line beginning with &#8216;PC&#8217; just after your content item.  Make a
-note of what appears after the PC, OBJ, and VIEW tags.  You may need it when
-you implement the <tt class="docutils literal"><span class="pre">getParentId()</span></tt> function (see section
+the diagnostic line beginning with &#8216;CONTEXT&#8217; just after your content item.
+Make a note of what appears after the PC, OBJ, and VIEW tags.  You may need it
+when you implement the <tt class="docutils literal"><span class="pre">getParentId()</span></tt> function (see section
 <a class="reference internal" href="#section-optional-function"><em>4.2&nbsp;&nbsp;&nbsp;Functions you may not need to implement</em></a>).  It may be useful to insert a command to
 dump the entire $row object (<em>e.g.</em> var_dump($row); ).  Note that the display
 of any existing attachments will be superceded by this output; when these two
 lines are removed the display of attachments will return to normal.</p>
 <p>If you do not see any output after your item, it may not be possible to attach
 files to your type of content items using the Attachemnts extension.  Note
-that some components have settings that control whether the &#8216;onPrepareContent&#8217;
+that some components have settings that control whether the &#8216;onContentPrepare&#8217;
 is called by the component code during the rendering process.  Check the
 extension&#8217;s documentation.  Make sure the setting is enabled, if available.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Once you have determined if the &#8216;onPrepareContent&#8217; plugin is called for
-your content item, don&#8217;t forget to restore the <cite>addAttachment()</cite> function
-to its normal operation!</p>
+<p class="last">Once you have determined if the &#8216;onContentPrepare&#8217; plugin is called for
+your content item, don&#8217;t forget to restore the <cite>onContentPrepare()</cite>
+function to its normal operation!</p>
 </div>
 </div>
 <div class="section" id="select-the-entity-or-entities-to-handle">
@@ -698,7 +700,7 @@ this function.</p>
 <span id="index-9"></span><h3>4.1.5&nbsp;&nbsp;&nbsp;function attachmentsHiddenForParent()<a class="headerlink" href="#function-attachmentshiddenforparent" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">/** Return true if the attachments should be hidden for this parent</span>
 <span class="x"> *</span>
-<span class="x"> * @param   &amp;object  &amp;$parent        the object for the parent that onPrepareContent gives</span>
+<span class="x"> * @param   &amp;object  &amp;$parent        the object for the parent that onContentPrepare gives</span>
 <span class="x"> * @param   int      $parent_id      the ID of the parent the attachment is attached to</span>
 <span class="x"> * @param   string   $parent_entity  the type of entity for this parent type</span>
 <span class="x"> *</span>
@@ -821,12 +823,12 @@ used elsewhere in the Attachments plugin in the future.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
 <span class="x"> * Determine the parent entity</span>
 <span class="x"> *</span>
-<span class="x"> * From the view and the class of the parent (row of onPrepareContent plugin),</span>
+<span class="x"> * From the view and the class of the parent (row of onContentPrepare plugin),</span>
 <span class="x"> * determine what the entity type is for this entity.</span>
 <span class="x"> *</span>
 <span class="x"> * Derived classes MUST overrride this</span>
 <span class="x"> *</span>
-<span class="x"> * @param   &amp;object  &amp;$parent  The object for the parent (row) that onPrepareContent gets</span>
+<span class="x"> * @param   &amp;object  &amp;$parent  The object for the parent (row) that onContentPrepare gets</span>
 <span class="x"> *</span>
 <span class="x"> * @return the correct entity (eg, &#39;default&#39;, &#39;category&#39;, etc) or false if this entity should not be displayed.</span>
 <span class="x"> */</span>
@@ -854,7 +856,7 @@ need to implement the following functions:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">/**</span>
 <span class="x"> * Return the parent entity / row ID</span>
 <span class="x"> *</span>
-<span class="x"> * This will only be called by the main attachments &#39;onPrepareContent&#39;</span>
+<span class="x"> * This will only be called by the main attachments &#39;onContentPrepare&#39;</span>
 <span class="x"> * plugin if $attachment does not have an id</span>
 <span class="x"> *</span>
 <span class="x"> * @param   object  &amp;$attachment  the attachment</span>
@@ -868,12 +870,12 @@ need to implement the following functions:</p>
 </pre></div>
 </div>
 <p>When the regular attachments plugin is called from the front end when the
-&#8216;onPrepareContent&#8217; plugin function is invoked, an object for the article or
+&#8216;onContentPrepare&#8217; plugin function is invoked, an object for the article or
 content item is passed in as $row.  Normally $row has an ID field $row-&gt;id.
 If your component has the field $row-&gt;id, then you will probably not need to
 implement this function.  If $row does not have an $row-&gt;id field, the ID
 should be some field of the $row object.  This function should extract the
-entity ID and return it.  Note that the <cite>onPrepareContent</cite> callback function
+entity ID and return it.  Note that the <cite>onContentPrepare</cite> callback function
 may be invoked several times for each entity on the page.  You may need to
 examine the other data about the entity (retrieved in the diagnostic section
 <a class="reference internal" href="#diagnostic-section"><em>3.1&nbsp;&nbsp;&nbsp;Make sure an attachment plugin will work</em></a>) to determine which call you want to process and
@@ -1029,7 +1031,7 @@ following form</p>
     </div>
     <div class="footer">
       &copy; Copyright 2010-2013, Jonathan M. Cameron.
-      Last updated on Aug 09, 2013 at 01:24 pm.
+      Last updated on Aug 09, 2013 at 05:20 pm.
     </div>
   </body>
 </html>
