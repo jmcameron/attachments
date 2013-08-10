@@ -136,7 +136,7 @@ commented out.  Just uncomment these lines.
 
 Refresh the frontpage (or whichever page contains the content item).  Look for
 the diagnostic line beginning with 'CONTEXT' just after your content item.
-Make a note of what appears after the PC, OBJ, and VIEW tags.  You may need it
+Make a note of what appears after the CONTENT, OBJ, and VIEW tags.  You may need it
 when you implement the ``getParentId()`` function (see section
 :ref:`section-optional-function`).  It may be useful to insert a command to
 dump the entire $row object (*e.g.* var_dump($row); ).  Note that the display
@@ -163,11 +163,11 @@ The next step is to identify two things: (1) the parent type and (2) any
 parent entities that you intend to handle in the new Attachments plugin.
 
 From the diagnostic display you saw in the previous step, you can clearly
-identify the parent type as the component name to the right of the 'PC:' just
-after the item you want to attach files to.  It should look something like
-``com_newcomp``. (Obviously, the 'newcomp' would be replaced with the actual
-name of your component.)  This may not come as a surprise since this should
-correspond to the type of content you are interested in.
+identify the parent type as the component name to the right of the 'CONTENT:'
+just after the item you want to attach files to.  It should look something
+like ``com_newcomp``. (Obviously, the 'newcomp' would be replaced with the
+actual name of your component.)  This may not come as a surprise since this
+should correspond to the type of content you are interested in.
 
 If you are interested in only one type of content item for the new component,
 then this phase is complete.  The parent type is ``com_newcomp``.  The entity

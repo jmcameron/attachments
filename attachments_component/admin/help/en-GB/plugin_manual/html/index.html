@@ -167,7 +167,7 @@ Note that some versions of Attachments have these lines aready present, but
 commented out.  Just uncomment these lines.</p>
 <p>Refresh the frontpage (or whichever page contains the content item).  Look for
 the diagnostic line beginning with &#8216;CONTEXT&#8217; just after your content item.
-Make a note of what appears after the PC, OBJ, and VIEW tags.  You may need it
+Make a note of what appears after the CONTENT, OBJ, and VIEW tags.  You may need it
 when you implement the <tt class="docutils literal"><span class="pre">getParentId()</span></tt> function (see section
 <a class="reference internal" href="#section-optional-function"><em>4.2&nbsp;&nbsp;&nbsp;Functions you may not need to implement</em></a>).  It may be useful to insert a command to
 dump the entire $row object (<em>e.g.</em> var_dump($row); ).  Note that the display
@@ -190,11 +190,11 @@ function to its normal operation!</p>
 <p>The next step is to identify two things: (1) the parent type and (2) any
 parent entities that you intend to handle in the new Attachments plugin.</p>
 <p>From the diagnostic display you saw in the previous step, you can clearly
-identify the parent type as the component name to the right of the &#8216;PC:&#8217; just
-after the item you want to attach files to.  It should look something like
-<tt class="docutils literal"><span class="pre">com_newcomp</span></tt>. (Obviously, the &#8216;newcomp&#8217; would be replaced with the actual
-name of your component.)  This may not come as a surprise since this should
-correspond to the type of content you are interested in.</p>
+identify the parent type as the component name to the right of the &#8216;CONTENT:&#8217;
+just after the item you want to attach files to.  It should look something
+like <tt class="docutils literal"><span class="pre">com_newcomp</span></tt>. (Obviously, the &#8216;newcomp&#8217; would be replaced with the
+actual name of your component.)  This may not come as a surprise since this
+should correspond to the type of content you are interested in.</p>
 <p>If you are interested in only one type of content item for the new component,
 then this phase is complete.  The parent type is <tt class="docutils literal"><span class="pre">com_newcomp</span></tt>.  The entity
 corresponds to the name of type of content item.  It will also be the default
@@ -1031,7 +1031,7 @@ following form</p>
     </div>
     <div class="footer">
       &copy; Copyright 2010-2013, Jonathan M. Cameron.
-      Last updated on Aug 09, 2013 at 05:20 pm.
+      Last updated on Aug 09, 2013 at 09:15 pm.
     </div>
   </body>
 </html>
