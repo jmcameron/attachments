@@ -434,7 +434,8 @@ class AttachmentsHelper
 		// Get the new filename
 		// (Note: The following replacement is necessary to allow
 		//        single quotes in filenames to work correctly.)
-		$filename = JString::str_ireplace("\'", "'", $_FILES['upload']['name']);
+		// Trim of any trailing period (to avoid exploits)
+		$filename = rtrim(JString::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
 		$ftype = $_FILES['upload']['type'];
 
 		// Check the file size
@@ -619,7 +620,9 @@ class AttachmentsHelper
 			$error = 'illegal_file_extension';
 			$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
-			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+			if ($user->authorise('core.admin')) {
+				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+				}
 			}
 		
 		// Check to make sure the mime type is okay
@@ -632,7 +635,9 @@ class AttachmentsHelper
 					$error = 'illegal_mime_type';
 					$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 					$error_msg .= ', ' . JText::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
-					$error_msg .= "	 <br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+					if ($user->authorise('core.admin')) {
+						$error_msg .= "	 <br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+						}
 					}
 				}
 			}
