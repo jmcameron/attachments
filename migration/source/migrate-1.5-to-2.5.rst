@@ -18,7 +18,7 @@ Necessary Conditions for Successful Attachments Migration
 
  * The Joomla version for your 2.5+ site should be 2.5.7 or later.
 
- * You should install a released version of Attachments 3.0.5 (or later) on
+ * You should install a released version of Attachments 3.1 (or later) on
    your Joomla 2.5+ system before proceeding.  
 
    .. warning::
