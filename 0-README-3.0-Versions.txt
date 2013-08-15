@@ -1,8 +1,22 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+3.1.2 - Released August 14, 2013
+   - SECURITY RELEASE
+   - Fixed bug in max_attachments_size handling.
+   - Fixed issue with add-attachment button not showing correctly in Joomla 3.x.
+   - Robustness fixes for attachment plugins.
+   - Enabled scrolling on upload forms to ensure that all existing attachments
+     can be seen, even when there are many.
+   - Fixed issue with missing 'KB' language item in attachments list.  
+     Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
+   - Added fix to display attachments for non-menu category blog views.
+   - Fix to return user logging in to the prior page.
+   - Fix security issue with PHP files qqq.php.  (note trailing period)
+
 3.1.1 - Released July 11, 2013
    - SECURITY RELEASE
    - Prevent uploading image file exploits (Security Fix for VEL)
+   - 9000 Downloads
 
 3.1 - Released June 8, 2013
    - Supports both Joomla 2.5.7+ and 3.x!
