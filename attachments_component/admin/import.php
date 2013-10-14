@@ -133,6 +133,11 @@ class AttachmentsImport
 			$parent_entity = strtolower($adata[$field['parent_entity']]);
 			$parent_id = (int)$adata[$field['parent_id']];
 
+			// Make sure it is not a 'section' attachment
+			if ($parent_entity == 'section') {
+				return JText::sprintf('ATTACH_ERROR_SECTION_ATTACHMENT_NOT_ALLOWED_ID', $attachment_id) . $line_str . ' (ERR 86B)';
+				}
+
 			// Get the attachment parent object
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
