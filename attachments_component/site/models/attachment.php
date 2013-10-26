@@ -95,7 +95,7 @@ class AttachmentsModelAttachment extends JModelLegacy
 				$params = JComponentHelper::getParams('com_attachments');
 
 				// Add the specified access levels
-				$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
+				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
 				if (is_array($guest_levels)) {
 					foreach ($guest_levels as $glevel) {
 						$user_levels[] = $glevel;

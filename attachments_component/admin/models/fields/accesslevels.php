@@ -133,7 +133,7 @@ class JFormFieldAccessLevels extends JFormField
 		else {
 			if (count($level_value) > 1) {
 				// If not multiple, only one selection is allowed, arbitrarily pick the first one
-				// (Not sure this will every be necessary)
+				// (Not sure this will ever be necessary)
 				$level_value = Array($level_value[0]);
 				}
 			}

@@ -1486,7 +1486,7 @@ class AttachmentsHelper
 			// If not logged in, warn them to log in
 			$user	= JFactory::getUser();
 			if ( $user->get('username') == '' ) {
-				$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
+				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
 				if ( in_array($attachment->access, $guest_levels) ) {
 					// Construct the login request with return URL
 					$app = JFactory::getApplication();

@@ -185,7 +185,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				// Handle the link url if not logged in but link displayed for guests
 				$url = '';
 				if ( !$logged_in AND ($attachment->access != '1')) {
-					$guest_levels = $this->params->get('show_guest_access_levels', Array('1', '2'));
+					$guest_levels = $this->params->get('show_guest_access_levels', Array('1'));
 					if ( in_array($attachment->access, $guest_levels) ) {
 						$app = JFactory::getApplication();
 						$return = $app->getUserState('com_attachments.current_url', '');
