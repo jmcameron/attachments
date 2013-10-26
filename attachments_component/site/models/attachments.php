@@ -373,6 +373,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 		$secure = $params->get('secure', false);
 		$logged_in = $user->get('username') <> '';
 		if ( !$logged_in AND $secure ) {
+			$user_levels = Array(); // Override the authorised levels
 			$guest_levels = $params->get('show_guest_access_levels', Array('1', '2'));
 			if (is_array($guest_levels)) {
 				foreach ($guest_levels as $glevel) {
