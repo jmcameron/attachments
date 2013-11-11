@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 3.1.2-Beta5 - October 26, 2013**
+**Version 3.1.2-Beta6 - November 10, 2013**
 
 **This version is for Joomla 1.7/2.5+**
 
