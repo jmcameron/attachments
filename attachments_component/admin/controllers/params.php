@@ -17,6 +17,14 @@ defined('_JEXEC') or die('Restricted access');
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
 
+/** Load the class for the model component form and make it work for both 3.2 and less */
+if (version_compare(JVERSION, '3.2', 'ge'))
+{
+	require_once(JPATH_SITE . '/components/com_config/model/cms.php');
+	require_once(JPATH_SITE . '/components/com_config/model/form.php');
+}
+require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
+
 
 /**
  * Attachment Controller
@@ -41,11 +49,11 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the component model/table
-		require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 		$model = new ConfigModelComponent();
-		$model->setState('component.option', 'com_attachments');
-		$model->setState('component.path', JPATH_ADMINISTRATOR.'/components/com_attachments');
-
+		$state = $model->getState();
+		$state->set('component.option', 'com_attachments');
+		$state->set('component.path', JPATH_ADMINISTRATOR.'/components/com_attachments');
+		$model->setState($state);
 		$form = $model->getForm();
 		$component = JComponentHelper::getComponent('com_attachments');
 
@@ -93,7 +101,6 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
-		require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 		$model = new ConfigModelComponent();
 		$form	= $model->getForm();
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
