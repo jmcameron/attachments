@@ -1,5 +1,12 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+3.1.3 - Released November 15, 2013
+   - Joomla 3.2 Compatibility Release
+   - Allow display of attachments lists in editors for non-article
+   - Fixed migration importer handle obsolete 'section' attachments
+   - Fixed bug in 'Show attachments to non logged-in users' option
+   - Fixed issue with displaying options with Joomla 3.2.
+
 3.1.2 - Released August 14, 2013
    - SECURITY RELEASE
    - Fixed bug in max_attachments_size handling.
