@@ -25,11 +25,11 @@ class AttachmentsDefines
 {
 	/** The Attachments extension version number
 	 */
-	public static $ATTACHMENTS_VERSION = '3.1.2-Beta6';
+	public static $ATTACHMENTS_VERSION = '3.1.3';
 
 	/** The Attachments extension version date
 	 */
-	public static $ATTACHMENTS_VERSION_DATE = 'November 10, 2013';
+	public static $ATTACHMENTS_VERSION_DATE = 'November 15, 2013';
 
 	/** Project URL
 	 */
