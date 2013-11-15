@@ -16,6 +16,12 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 2.5+
 
+2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
+    - 2013-09-21 Allow display of attachments lists in editors for non-article
+    - 2013-10-13 Fixed migration importer handle obsolete 'section' attachments
+    - 2013-10-27 Fixed bug in 'Show attachments to non logged-in users' option
+    - 2013-11-11 Fixed issue with displaying options with Joomla 3.2.
+
 2013-08-14: Release 3.1.2 (Security Release)
     - 2013-07-24 Fixed bug in max_attachments_size handling.
     - 2013-07-25 Added line numbers to error messages for import (for migration).
