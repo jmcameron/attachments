@@ -19,6 +19,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
    - Added fix to display attachments for non-menu category blog views.
    - Fix to return user logging in to the prior page.
    - Fix security issue with PHP files qqq.php.  (note trailing period)
+   - 19457 Downloads
 
 3.1.1 - Released July 11, 2013
    - SECURITY RELEASE
