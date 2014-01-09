@@ -140,7 +140,16 @@ Importing your old Attachments to your Joomla 2.5+ site
      .. note:: You must use the full path to the migration file on the server
         file system.  On a Windows system, this path may look like a Windows
         path including a drive letter such as 'C:\\' at the beginning of the
-        path.
+        path.  The begining path on a Linux web server might look like this:
+        '/path/to/joomla' (no drive letter).  Note that this is NOT an URL
+        (starting with https: or ftp: ).
+
+	If the server has difficulty opening your migration file or you are
+        confused about this, log into the back end of your NEW 2.5+ webserver
+        as an administrator.  Go to the menu entry: Site\ >\ Global\ Configuration 
+	Click on the "Systems Settings" tab and look at the "Path to log
+        folder" entry to get the first part of the path -- assuming you put
+        the migration file along with the Joomla server files.
 
      If there are problems with the article/parent ID's, titles, or user IDs
      or usernames, the command will abort and alert you to the nature of the
