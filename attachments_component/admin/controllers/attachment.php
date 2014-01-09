@@ -563,7 +563,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;
 		   window.parent.SqueezeBox.close();
-		   };";
+		   };" ;
 			$document->addScriptDeclaration($js);
 			}
 
