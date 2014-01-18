@@ -59,6 +59,19 @@ class AttachmentsImport
 			   'created_by_username',
 			   'modified_by_username' );
 
+	/** 
+	 * Compare two UTF-8 strings
+	 * (disregards leading and trailing whitespace and case differences)
+	 *
+	 * @param string  $ustr1  UTF-8 string 1
+	 * @param string  $ustr2  UTF-8 string 2
+	 * @return true if the strings match
+	 */
+	static function utf8StringsEqual($ustr1, $ustr2)
+	{
+		return strncasecmp(trim($ustr1), trim($ustr2), 4096) == 0;
+	}
+
 
 	/**
 	 * Import attachment data from a CSV file
@@ -155,7 +168,7 @@ class AttachmentsImport
 				// Double-check by comparing the title
 				$attachment_parent_title = $adata[$field['parent_title']];
 				$parent_title = $parent->getTitle($parent_id, $parent_entity);
-				if ( strtolower($parent_title) != strtolower($attachment_parent_title) ) {
+				if ( !AttachmentsImport::utf8StringsEqual($parent_title, $attachment_parent_title) ) {
 					return JText::sprintf('ATTACH_ERROR_PARENT_TITLE_MISMATCH_ID_N_TITLE_S_S', $parent_id,
 										  $parent_title, $attachment_parent_title) . $line_str . ' (ERR 89)';
 					}
@@ -172,7 +185,7 @@ class AttachmentsImport
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
 									  $creator_id, $attachment_creator_username) . $line_str . ' (ERR 90)';
 				}
-			if ( strtolower($creator_username) != strtolower($attachment_creator_username) ) {
+			if ( !AttachmentsImport::utf8StringsEqual($creator_username, $attachment_creator_username) ) {
 				return JText::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
 									  $creator_id, $attachment_creator_username, $creator_username) . $line_str . ' (ERR 91)';
 				}
@@ -188,7 +201,7 @@ class AttachmentsImport
 				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
 									  $modifier_id, $attachment_modifier_username) . $line_str . ' (ERR 92)';
 				}
-			if ( strtolower($modifier_username) != strtolower($attachment_modifier_username) ) {
+			if ( !AttachmentsImport::utf8StringsEqual($modifier_username, $attachment_modifier_username) ) {
 				return JText::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
 									  $modifier_id, $attachment_modifier_username, $modifier_username) . $line_str . ' (ERR 93)';
 				}
