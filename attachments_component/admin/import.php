@@ -123,6 +123,9 @@ class AttachmentsImport
 			$ids_ok = Array();
 			}
 
+		iconv_set_encoding("internal_encoding", "UTF-8");
+		setlocale(LC_ALL, 'en_US.UTF-8');
+
 		while ( !feof($f) ) {
 
 			// Read the next line
