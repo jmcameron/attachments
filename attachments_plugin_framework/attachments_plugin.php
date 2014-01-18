@@ -1,6 +1,6 @@
 <?php
 /**
- * Attechments for extensions
+ * Attachments for extensions
  *
  * @package     Attachments
  * @subpackage  Attachments_Plugin_Framework
@@ -360,7 +360,8 @@ class AttachmentsPlugin extends JPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N', $parent_entity_name, $parent_id) . ' (ERR 301)';
+			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
+												 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 		}
 
