@@ -94,6 +94,10 @@ class plgContentAttachments extends JPlugin
 			if (in_array($parent_entity, Array('featured', 'article'))) {
 				return false;
 				}
+			if ($parent_entity == 'category.title') {
+				// Do not add attachments to categtory titles (Joomla 3 only)
+				return false;
+				}
 			if (($parent_entity == 'category') AND (isset($row->catid))) {
 				// Ignore the callback for articles on category blogs
 				return false;
@@ -107,13 +111,6 @@ class plgContentAttachments extends JPlugin
 				(version_compare(JVERSION, '3.0', 'ge') AND version_compare(JVERSION, '3.1', 'lt'))) {
 				return false;
 				}
-		}
-
-		// Disable showing attachments list for category titles
-		// (Requires small hack of Joomla 3 layouts/joomla/content/category_default.php)
-		if ( ($parent_type == 'com_content') AND ($parent_entity == 'category') AND ($params == 'title') )
-		{
-			return false;
 		}
 
 		// Get the parent ID
