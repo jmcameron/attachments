@@ -23,6 +23,7 @@ $uri = JFactory::getURI();
 
 // Add javascript
 AttachmentsJavascript::setupJavascript();
+AttachmentsJavascript::setupModalJavascript();
 
 // For convenience
 $attachment = $this->attachment;
