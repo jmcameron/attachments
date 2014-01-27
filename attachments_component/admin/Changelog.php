@@ -18,8 +18,9 @@ Attachments 3.x Extension for Joomla 2.5+
 
 2014-??-??: Release 3.1.4 (?)
     - 2014-01-18 Adjustment to migration importer to better handle UTF-8
-    - 2014-01-19 Hack to disable display of attachments on category list title
+    - 2014-01-19 Fix to disable attachments display on category list title (J3)
     - 2014-01-26 Fix to migration importer to strip of any leading BOM
+    - 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
 
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
     - 2013-09-21 Allow display of attachments lists in editors for non-article

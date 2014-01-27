@@ -149,6 +149,7 @@ class plgButtonAdd_attachment extends JPlugin
 			$button->set('name', 'add_attachment');
 			}
 		else {
+			// Needed for Joomal 2.5
 			$button->set('name', 'add_attachment_frontend');
 			}
 		$button->set('link', $link);
