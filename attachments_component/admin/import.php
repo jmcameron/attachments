@@ -275,6 +275,8 @@ class AttachmentsImport
 		// Load the field names from the file
 		$field = Array();
 		$header_line = fgetcsv($file);
+		// Strip of the leading BOM, if present
+		$header_line = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $header_line);
 		for ($i=0; $i < count($header_line); $i++) {
 			$field_name = trim(strtolower($header_line[$i]));
 			if ( in_array($field_name, AttachmentsImport::$field_names) ) {
