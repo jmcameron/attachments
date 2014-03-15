@@ -10,6 +10,13 @@ if ( "$1" == "--code") then
     exit
 endif
 
+if ( "$2" == "help" ) then
+    echo "Downloading $1 help file"
+    tx pull -f  -l "$1" -r joomla-attachments-3-help.attachments_help_ini
+    exit
+endif
+
+
 echo "Downloading updates for $1"
 
 tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_admin-com_attachments_ini 
@@ -33,5 +40,3 @@ tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_sys_ini
 tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini 
 tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini 
 tx pull -f  -l "$1" -r joomla-attachments-3.files_attachments_language_pack_install_ini
-
-# tx pull -f  -l "$1" -r joomla-attachments-3-help.attachments_help_ini
