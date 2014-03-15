@@ -159,7 +159,7 @@ Importing your old Attachments to your Joomla 2.5+ site
      .. warning:: 
         When you edit the migration CSV file, make very sure you use an
         editor that does not insert a Byte Order Marker (BOM).  On windows,
-        use a text editor such as notepad or pspad.  For suggestions on how
+        use a text editor such as notepad++ or pspad.  For suggestions on how
         to prevent or remove the BOM for other editors, try searching for::
 
           eliminate byte order marker emacs
@@ -169,6 +169,19 @@ Importing your old Attachments to your Joomla 2.5+ site
 	**DO NOT USE** a spreadsheet program like **'Excel'** since there is a
 	good chance it will add extra characters and result in errors when you
 	try to use it to import the attachments.
+
+	If you encounter an error like: 
+
+          **unrecognized field: id**
+
+	this is probably due to a BOM which may not be visible in your text
+	editor.
+
+	UPDATE: I have recently added an update to the importer to allow it to
+	ignore the BOM.  It will be in the next release (3.1.4).  If
+	Attachments 3.1.4 has not been released, please email me for an
+	updated version that may help with this and other import
+	issues. 2014-01-26
 
      Until processing this file works without error, you should definitely
      use the '&dry_run=true' option on the command so nothing is changed.
