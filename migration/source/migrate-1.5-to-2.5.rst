@@ -82,7 +82,8 @@ Export the attachments information from your Joomla 1.5 site
 	version 2.2, you will need to upgrade to version 2.2 or later.
 
  4.  Log into the back end of your Joomla 1.5 site as an administrator and
-     execute this command manually (by typing in the full URL)::
+     execute this command manually (by typing in the full URL into your
+     browsers address bar)::
 
 	http://<yoursite>/administrator/index.php?option=com_attachments&controller=special&task=export_attachments_to_csv_file
 
