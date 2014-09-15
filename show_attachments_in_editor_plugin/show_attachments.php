@@ -19,13 +19,13 @@ jimport('joomla.plugin.plugin');
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
 {
-	require_once(JPATH_SITE.'/components/com_attachments/defines.php');
-	require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-	require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
+	require_once(JPATH_SITE . '/components/com_attachments/defines.php');
+	require_once(JPATH_SITE . '/components/com_attachments/helper.php');
+	require_once(JPATH_SITE . '/components/com_attachments/javascript.php');
 }
 else
 {
-	// Exit quietly if the attachments component has been removed
+	// Exit quietly if the attachments component has been uninstalled or deleted
 	return;
 }
 
