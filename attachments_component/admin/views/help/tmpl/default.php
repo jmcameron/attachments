@@ -168,13 +168,18 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 	  echo $this->image('options-basic.png', 'ATTACH_HELP_050200_SUBSECTION_TITLE',
 						'class="float-right drop-shadow"') . "\n";
 	  $this->startList();
-			$this->addListElement('ATTACH_HELP_050300_TEXT');
-			$this->addListElement('ATTACH_HELP_050400_TEXT');
-			$this->addListElement('ATTACH_HELP_050500_TEXT');
+            $this->addDefinitionListElement('ATTACH_ATTACHMENTS_PUBLISHED_BY_DEFAULT',
+											'ATTACH_HELP_050300_TEXT');
+            $this->addDefinitionListElement('ATTACH_AUTO_PUBLISH_WARNING',
+											'ATTACH_HELP_050400_TEXT');
+            $this->addDefinitionListElement('ATTACH_DEFAULT_ACCESS_LEVEL',
+											'ATTACH_DEFAULT_ACCESS_LEVEL_DESCRIPTION');
 			$this->addListElement('ATTACH_HELP_050600_TEXT');
 			$this->addHint(       'ATTACH_HELP_050700_HINT_TEXT');
-			$this->addListElement('ATTACH_HELP_050800_TEXT');
-			$this->addListElement('ATTACH_HELP_050900_TEXT', null, false);
+			$this->addDefinitionListElement('ATTACH_MAX_FILENAME_URL_LENGTH', 
+											'ATTACH_HELP_050800_TEXT');
+			$this->addDefinitionListElement('ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED', 
+											'ATTACH_HELP_050900_TEXT', null, false);
 			   $this->startList();
 				  $this->addListElement('ATTACH_HELP_051000_TEXT');
 				  $this->addListElement('ATTACH_HELP_051100_TEXT');
@@ -190,7 +195,8 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 				  $this->endListElement();
 			   $this->endList();
 			$this->endListElement();
-			$this->addListElement('ATTACH_HELP_051900_TEXT');
+			$this->addDefinitionListElement('ATTACH_ALLOW_FRONTEND_ACCESS_LEVEL_EDITING', 
+											'ATTACH_ALLOW_FRONTEND_ACCESS_LEVEL_EDITING_DESCRIPTION');
 		 $this->endList();
 	  $this->endSubSection('basic-options');
 

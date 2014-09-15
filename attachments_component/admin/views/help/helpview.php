@@ -458,21 +458,60 @@ class HelpView extends JViewLegacy
 	 * Add a list element
 	 *
 	 * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs inside the list element)
-	 * @param   array  $replacements  Array of replacements to be applied to the text (see replace functin)
+	 * @param   array  $replacements  Array of replacements to be applied to the text (see replace function)
 	 * @param   bool   $terminate     Whether to terminatate the <li> that contains the text
 	 *
 	 * @return nothing
 	 */
 	protected function addListElement($text_codes, $replacements = null, $terminate = true)
 	{
+		$html = '<li>';
+
 		if (!is_array($text_codes))
 		{
 			$text_codes = Array($text_codes);
 		}
-
-		$html = '<li>';
-
 		foreach ($text_codes as $text_code)
+		{
+			$text = $this->replace(JText::_($text_code), $replacements);
+			$tooltip = $this->constructTooltip($text_code);
+			$html .= "<p class=\"hasTip\" $tooltip>$text</p>\n";
+		}
+
+		if ($terminate)
+		{
+			$html .= "</li>\n";
+		}
+
+		echo $html;
+	}
+
+	/**
+	 * Add a list element for a definition for a term (a word or phrase)
+	 *
+	 * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs inside the list element)
+	 * @param   array  $replacements  Array of replacements to be applied to the text (see replace function)
+	 * @param   bool   $terminate     Whether to terminatate the <li> that contains the text
+	 *
+	 * @return nothing
+	 */
+	protected function addDefinitionListElement($term_code, $definition_codes,
+												$replacements = null, $terminate = true)
+	{
+		// Set up the term
+		$term_tooltip = $this->constructTooltip($term_code);
+		if ($term_tooltip)
+		{
+			$term_tooltip = " class=\"hasTip\" ".$term_tooltip;
+		}
+		$html = "<li><strong $term_tooltip>".JText::_($term_code).':</strong> ';
+
+		// Add the definition
+		if (!is_array($definition_codes))
+		{
+			$definition_codes = Array($definition_codes);
+		}
+		foreach ($definition_codes as $text_code)
 		{
 			$text = $this->replace(JText::_($text_code), $replacements);
 			$tooltip = $this->constructTooltip($text_code);
