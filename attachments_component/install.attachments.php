@@ -42,7 +42,26 @@ $attachments_install_last_method = null;
  *
  * @package Attachments
  */
-class com_AttachmentsInstallerScript {
+class com_AttachmentsInstallerScript 
+{
+	/**
+	 * An array of supported database types
+	 *
+	 * @var    array
+	 */
+	protected $dbKnown = array('mysql' => 'MySQL',
+							   'mysqli' => 'MySQLi',
+							   'postgresql' => 'PostgreSQL',
+							   'sqlsrv' => 'MS SQL Server',
+							   'sqlazure' => 'MS SQL Azure');
+
+	/**
+	 * An array of supported database types
+	 *
+	 * @var    array
+	 */
+	protected $dbSupported = array('mysql', 'mysqli');
+
 
 	/**
 	 * name of moved attachments directory (if present)
@@ -136,7 +155,6 @@ class com_AttachmentsInstallerScript {
 		global $attachments_install_verbose, $attachments_install_last_method;
 
 		$app = JFactory::getApplication();
-		$app->enqueueMessage('<br/>', 'message');
 
 		if ( $attachments_install_last_method == 'update' ) {
 			$attachments_install_verbose = false;
@@ -159,6 +177,20 @@ class com_AttachmentsInstallerScript {
 			$lang->load('pkg_attachments.sys', dirname(__FILE__), null, true);
 			}
 
+		$app->enqueueMessage('<br/>', 'message');
+
+		// Check to see if the database type is supported
+		if (!in_array(JFactory::getDbo()->name, $this->dbSupported))
+		{
+			$db_name = $this->dbKnown[JFactory::getDbo()->name];
+			if (empty($db_name)) {
+				$db_name = JFactory::getDbo()->name;
+				}
+			$errmsg = JText::sprintf('ATTACH_ATTACHMENTS_ERROR_UNSUPPORTED_DB_S', $db_name);
+			$app->enqueueMessage($errmsg, 'error');
+			return false;
+		}
+
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
 		$this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
@@ -168,7 +200,7 @@ class com_AttachmentsInstallerScript {
 				$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 				$msg = str_replace('1.6', $this->minimum_joomla_release, $msg);
 				}
-			$app->enqueueMessage($msg, 'warning');
+			$app->enqueueMessage($msg, 'error');
 			return false;
 			}
 
