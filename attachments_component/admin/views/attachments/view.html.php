@@ -194,10 +194,9 @@ class AttachmentsViewAttachments extends JViewLegacy
 			JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
 			// Add a button for extra admin commands
-			$toolbar->appendButton( 'Popup', 'adminUtils', $alt='ATTACH_UTILITIES',
-									'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
-									$width='800', $height='500' );
-
+			$toolbar->appendButton('Popup', 'adminUtils', 'ATTACH_UTILITIES',
+								   'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
+								   800, 500);
 			}
 
 		JToolBarHelper::divider();
