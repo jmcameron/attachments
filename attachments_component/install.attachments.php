@@ -168,7 +168,6 @@ class com_AttachmentsInstallerScript {
 				$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 				$msg = str_replace('1.6', $this->minimum_joomla_release, $msg);
 				}
-			$app = JFactory::getApplication();
 			$app->enqueueMessage($msg, 'warning');
 			return false;
 			}
@@ -189,7 +188,6 @@ class com_AttachmentsInstallerScript {
 				JFolder::exists(JPATH_ROOT . '/administrator/components/com_attachments'))
 			{
 				$msg = JText::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
-				$app = JFactory::getApplication();
 				$app->enqueueMessage($msg, 'error');
 				return false;
 			}
@@ -198,7 +196,6 @@ class com_AttachmentsInstallerScript {
 		// Temporarily move the attachments directory out of the way to avoid conflicts
 		$attachdir = JPATH_ROOT.'/attachments';
 		if ( JFolder::exists($attachdir) ) {
-			$app = JFactory::getApplication();
 
 			// Move the attachments directory out of the way temporarily
 			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
