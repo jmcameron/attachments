@@ -17,37 +17,41 @@ defined('_JEXEC') or die('Restricted access');
 Attachments 3.x Extension for Joomla 2.5+
 
 2014-??-??: Release 3.1.4 (?)
-    - 2014-01-18 Adjustment to migration importer to better handle UTF-8
-    - 2014-01-19 Fix to disable attachments display on category list title (J3)
-    - 2014-01-26 Fix to migration importer to strip of any leading BOM
-    - 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
-    - 2014-05-30 Fixes to be more robust to partial/failed uninstalls
+	- 2014-01-18 Adjustment to migration importer to better handle UTF-8
+	- 2014-01-19 Fix to disable attachments display on category list title (J3)
+	- 2014-01-26 Fix to migration importer to strip of any leading BOM
+	- 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
+	- 2014-05-30 Fixes to be more robust to partial/failed uninstalls
+	- 2015-06-08 Uninstall all attachments plugins if component is uninstalled.
+		This should prevent problems when incorrectly uninstalling only the 
+	    component. To uninstall correctly, uninstall the Attachments Package;
+	    it will uninstall the component and all plugins.
 
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
-    - 2013-09-21 Allow display of attachments lists in editors for non-article
-    - 2013-10-13 Fixed migration importer handle obsolete 'section' attachments
-    - 2013-10-27 Fixed bug in 'Show attachments to non logged-in users' option
-    - 2013-11-11 Fixed issue with displaying options with Joomla 3.2.
+	- 2013-09-21 Allow display of attachments lists in editors for non-article
+	- 2013-10-13 Fixed migration importer handle obsolete 'section' attachments
+	- 2013-10-27 Fixed bug in 'Show attachments to non logged-in users' option
+	- 2013-11-11 Fixed issue with displaying options with Joomla 3.2.
 
 2013-08-14: Release 3.1.2 (Security Release)
-    - 2013-07-24 Fixed bug in max_attachments_size handling.
-    - 2013-07-25 Added line numbers to error messages for import (for migration).
-    - 2013-07-26 Fixed issue in main attachments plugin that may have caused
-	    warnings (although it operated correctly).
-    - 2013-07-26 Fixed issue with add-attachment button not showing correctly
-	    in Joomla 3.x.
-    - 2013-07-26 Robustness fixes for attachment plugins.
-    - 2013-07-27 Enabled scrolling on upload forms to ensure that all existing
-	    attachments can be seen, even when there are many.
-    - 2013-07-27 Fixed issue with missing 'KB' language item in attachments list.
-        Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
-    - 2013-07-30 Minor fixes for robustness
-    - 2013-07-31 Added fix to display attachments for non-menu category blog views.
+	- 2013-07-24 Fixed bug in max_attachments_size handling.
+	- 2013-07-25 Added line numbers to error messages for import (for migration).
+	- 2013-07-26 Fixed issue in main attachments plugin that may have caused
+		warnings (although it operated correctly).
+	- 2013-07-26 Fixed issue with add-attachment button not showing correctly
+		in Joomla 3.x.
+	- 2013-07-26 Robustness fixes for attachment plugins.
+	- 2013-07-27 Enabled scrolling on upload forms to ensure that all existing
+		attachments can be seen, even when there are many.
+	- 2013-07-27 Fixed issue with missing 'KB' language item in attachments list.
+		Changed 'KB' to 'kB' to match Wikipedia 'kilobyte' article
+	- 2013-07-30 Minor fixes for robustness
+	- 2013-07-31 Added fix to display attachments for non-menu category blog views.
 	- 2013-08-02 Fix to return user logging in to the prior page.
 	- 2013-08-14 Fix security issue with PHP files qqq.php.  (note trailing period)
 
 2013-07-11: Release 3.1.1 (Security Release)
-    - 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
+	- 2013-07-11 Prevent uploading image file exploits (Security Fix for VEL)
 
 2013-06-08: Release 3.1
 	- 2012-08-18 Added attachments list sort option: description (reversed, z-a).
@@ -130,10 +134,10 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2012-05-04 Refactored and straightened out onPrepareContent callbacks to use fixes
 	   in Joomla 2.5.10+ and Joomla 3.1+.
 	- 2012-05-05 Small improvements to help view coding.
-    - 2013-05-14 In admin add dialog, moved alt parents selector to top right.
+	- 2013-05-14 In admin add dialog, moved alt parents selector to top right.
 	- 2013-05-15 Policy change: let super-user see attachments for all access levels.
-    - 2013-05-17 Updated help page for Attachments 3.1 release.
-    - 2013-05-19 Cleaned up code for attachments plugin framework and attachments_for_content.
+	- 2013-05-17 Updated help page for Attachments 3.1 release.
+	- 2013-05-19 Cleaned up code for attachments plugin framework and attachments_for_content.
 	- 2013-05-31 Fixed a few minor issues that came up in testing.  
 		Tested on Joomla 2.5.11 on Linux (Firefox), Windows (Firefox, IE, Chrome).
 
