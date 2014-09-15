@@ -346,13 +346,17 @@ div.attachmentsWarning span.right {
 
 /* For utils command list */
 
+div#modal-adminUtils {
+	width: 700px;
+}
+
 div#modal-adminUtils div.modal-header {
-    /* Copied from 3.0 .subheader */
-    background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
-    border-bottom: 1px solid #D3D3D3;
-    color: #0C192E;
-    margin-bottom: 10px;
-    text-shadow: 0 1px 0 #FFFFFF;
+	/* Copied from 3.0 .subheader */
+	background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+	border-bottom: 1px solid #D3D3D3;
+	color: #0C192E;
+	margin-bottom: 10px;
+	text-shadow: 0 1px 0 #FFFFFF;
 }
 
 div#utilsList {
