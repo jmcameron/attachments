@@ -1152,6 +1152,60 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$user = JFactory::getUser($user_id);
 		return in_array($attachment->access, $user->getAuthorisedViewLevels());
 	}
+
+
+	/** See if the attachments list should be displayed in its content description editor
+	 *
+	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param   string  $view           the view
+	 * @param   string  $layout         the layout on the view
+	 *
+	 * @return  true if the attachments list should be added to the editor
+	 */
+	public function showAttachmentsInEditor($parent_entity, $view, $layout)
+	{
+		return ($layout =='edit') && (($view == 'form') || ($view == 'article') || ($view == 'category'));
+	}
+
+	/** Get the parent_id in the component content item editor
+	 *  (the article or category editor)
+	 *
+	 * @param  string  $parent_entity  the type of entity for this parent type
+	 *
+	 * @return the parent ID, null if the content item is being created, and false if there is no match
+	 *
+	 * @since    Attachments 3.2
+	 */
+	public function getParentIdInEditor($parent_entity, $view, $layout)
+	{
+		$app = JFactory::getApplication();
+		if ($app->isAdmin()) {
+			// The default works fine for the back end
+			return parent::getParentIdInEditor($parent_entity, $view, $layout);
+			}
+
+		// Note categories cannot be created or edited from the frontend
+		if ($parent_entity == 'category') {
+			return false;
+			}
+
+		// Deal with articles (in frontend)
+		$id = null;
+		if (($view == 'article') OR ($view == 'form')) {
+			$id = JRequest::getInt('a_id', $default=null);
+			}
+		else {
+			$id = false;
+			}
+
+		// If we got one, convert it to an int
+		if (is_numeric($id)) {
+			$id = (int)$id;
+			}
+
+		return $id;
+	}
+	
 }
 
 

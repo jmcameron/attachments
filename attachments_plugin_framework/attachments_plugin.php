@@ -995,4 +995,68 @@ class AttachmentsPlugin extends JPlugin
 
 		return $content;
 	}
+
+
+	/** Get the parent_id in the component content item editor
+	 *  (the article or category editor)
+	 *
+	 * @param  string  $parent_entity  the type of entity for this parent type
+	 *
+	 * @return the parent ID, null if the content item is being created, and false if there is no match
+	 *
+	 * @since    Attachments 3.2
+	 */
+	public function getParentIdInEditor($parent_entity, $view, $layout)
+	{
+		// This should work in the backend for most well-implemented content types--
+		// but not for all frontends, especially not com_content/articles
+		$id = null;
+		if ($view == $parent_entity) {
+			$id = JRequest::getInt('id', $default=null);
+			}
+		else {
+			$id = false;
+			}
+
+		// If we got one, convert it to an int
+		if (is_numeric($id)) {
+			$id = (int)$id;
+			}
+
+		return $id;
+	}
+
+
+	/** See if the attachments list should be displayed in its content description editor
+	 *
+	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param   string  $view           the view
+	 * @param   string  $layout         the layout on the view
+	 *
+	 * @return  true if the attachments list should be added to the editor
+	 */
+	public function showAttachmentsInEditor($parent_entity, $view, $layout)
+	{
+		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+	}
+
+
+	/** Insert the attachments list into the entity editor page
+	 *
+	 * @param   int     $parent_id      the ID for the parent object
+	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param   string  $attachments    the attachments list as a string
+	 * @param   string  $body           the editor page text
+	 *
+	 * @return  string  the modified editor page text (false for failure)
+	 */
+	public function insertAttachmentsListInEditor($parent_id, $parent_entity, $attachments, $body)
+	{
+		// Insert the attachments above the editor buttons
+		// NOTE: Assume that anyone editing the entity can see its attachments
+		$reptag = '<div id="editor-xtd-buttons"';
+		$body = str_replace($reptag, $attachments . $reptag, $body);
+		return $body;
+	}
+
 }

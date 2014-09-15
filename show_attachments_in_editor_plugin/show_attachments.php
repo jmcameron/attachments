@@ -92,6 +92,9 @@ class plgSystemShow_attachments extends JPlugin
 	/**
 	 * Inserts the attachments list above the row of xtd-buttons
 	 *
+	 * And in older versions, inserts the attachments list for category
+	 * descriptions.
+	 *
 	 * @access	public
 	 * @since	1.5
 	 */
@@ -124,13 +127,11 @@ class plgSystemShow_attachments extends JPlugin
 
 		// Handle attachments
 		$parent_entity = 'default';
-		$editor = 'article';
 
 		// Handle categories specially (since they are really com_content)
 		if ($parent_type == 'com_categories') {
 			$parent_type = 'com_content';
 			$parent_entity = 'category';
-			$editor = 'category';
 			}
 
 		// Get the article/parent handler
@@ -147,91 +148,20 @@ class plgSystemShow_attachments extends JPlugin
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return false;
 			}
-
-		// Get the article ID (strip off any SEF name appended with a colon)
-		$a_id = JRequest::getVar('a_id');
-		$parent_id = $a_id;
-		if ( empty($parent_id) AND ($view != 'category') ) {
-			$parent_id = JRequest::getVar('id');
-			}
-
-		if ( strpos($parent_id, ':') > 0 ) {
-			$parent_id = substr($parent_id,0,strpos($parent_id,':'));
-			if ( is_numeric($parent_id) ) {
-				$parent_id = (int)$parent_id;
-				}
-			else {
-				$parent_id = null;
-				}
-			}
-
-		// If that fails, try to get the id via 'cid'
-		if (!$parent_id) {
-			$cid = JRequest::getVar( 'cid' , array() , '' , 'array' );
-			@$parent_id = $cid[0];
-			if ( is_numeric($parent_id) ) {
-				$parent_id = (int)$parent_id;
-				}
-			else {
-				$parent_id = null;
-				}
-			}
-
-		// Check for the special case where we are creating an article from a category list
-		$item_id = JRequest::getInt('Itemid');
-		$application = JFactory::getApplication();
-		$menu = $application->getMenu();
-		$menu_item = $menu->getItem($item_id);
-		if ( $menu_item AND	 ($menu_item->query['view'] == 'category') AND empty($a_id) ) {
-			$parent_entity = 'article';
-			$parent_id = NULL;
-			}
-
-		// Deal with the case where are editing a category
-		if ( $view == 'category' AND $layout == 'edit' ) {
-			$parent_entity = 'category';
-			$parent_id = JRequest::getInt('id', null);
-			}
-
-		// Deal with the case where we are displaying a category blog or list
-		if ( $view == 'category' ) {
-			$parent_entity = 'category';
-			$parent_id = JRequest::getInt('id', null);
-			}
-
 		$parent = $apm->getAttachmentsPlugin($parent_type);
+
+		// Get the parent ID
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
+		$parent_id = $parent->getParentIdInEditor($parent_entity, $view, $layout);
 
-		// Front end:
-		//	  - Edit existing article:	com_content,view=form,layout=edit,a_id=#
-		//	  - Create new article: same but no a_id
+		// Exit if we do not have an parent (exiting or being created)
+		if ($parent_id === false) {
+			return;
+			}
 
-		// Back end
-		//	  - Edit existing article: com_content,view=article,layout=edit,id=#
-		//	  - Create new article: same but no id
-		///
-		//	  - Edit existing category: com_categories,view=category,layout=edit,id=#
-		//	  - Create new category: same but no id
-
-		if ( ($parent_type == 'com_content') && ($layout =='edit') &&
-			 (($view == 'form') || ($view == 'article') || ($view == 'category') ) ) {
-
-			// If we cannot determine the article ID
-			if (!$parent_id) {
-				if ( ($task == 'add') || (($view == 'article') && ( $layout=='edit'))
-					 || (($view == 'form') && ( $layout=='edit')) ) {
-					// If we are creating an article, note that
-					$parent_id = 0;
-					}
-				elseif ( ($view == 'category') && ($layout == 'edit') ) {
-					// If we are creating an category, note that
-					$parent_id = 0;
-					}
-				else {
-					// Otherwise do not show attachments
-					return;
-					}
-				}
+		// See if this type of content suports displaying attachments in its editor
+		if ($parent->showAttachmentsInEditor($parent_entity, $view, $layout))
+		{
 
 			// Get the article/parent handler
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
@@ -242,8 +172,7 @@ class plgSystemShow_attachments extends JPlugin
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
 																  $user_can_add, $Itemid, $from, true, true);
 
-			// Embed the username in liu of the parent_id (if the parent_id is missing)
-			// (eg, when articles are being created)
+			// Force the ID to zero when creating the entity
 			if ( !$parent_id ) {
 				$parent_id = 0;
 				}
@@ -259,14 +188,13 @@ class plgSystemShow_attachments extends JPlugin
 
 			// Insert the attachments above the editor buttons
 			// NOTE: Assume that anyone editing the article can see its attachments
-			$reptag = '<div id="editor-xtd-buttons"';
-			$body = JResponse::getBody();
-			$body = str_replace($reptag, $attachments . $reptag, $body);
+			$body = $parent->insertAttachmentsListInEditor($parent_id, $parent_entity,
+														   $attachments, JResponse::getBody());
 			JResponse::setBody($body);
-			}
+		}
 
-		elseif ( $parent_id && ($view == 'category') ) {
-
+		elseif ( $parent_id && ($view == 'category') )
+		{
 			// Only dislay this in the front end
 			$app = JFactory::getApplication();
 			if ( $app->isAdmin() ) {
@@ -304,15 +232,12 @@ class plgSystemShow_attachments extends JPlugin
 				return;
 				}
 
-			// Get the article/parent handler
-			$parent = $apm->getAttachmentsPlugin($parent_type);
-
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
 			$from = 'frontpage';
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
-																 $user_can_add, $Itemid, $from, true, $user_can_add);
+																  $user_can_add, $Itemid, $from, true, $user_can_add);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
@@ -327,6 +252,6 @@ class plgSystemShow_attachments extends JPlugin
 			$body = JResponse::getBody();
 			$body = str_replace($reptag, $attachments . $reptag, $body);
 			JResponse::setBody($body);
-			}
+		}
 	}
 }

@@ -144,7 +144,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 
 			$uri = JFactory::getURI();
 			$document = JFactory::getDocument();
-			$js = '
+			$js = ' 
 	   function jSelectArticle(id, title, catid, object) {
 		   document.id("parent_id").value = id;
 		   document.id("parent_title").value = title;
@@ -441,7 +441,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			break;
 			}
 
-		// If called from the editor, go back to it
+		// If called from the editor, go back to it 
 		if ($from == 'editor') {
 			// ??? This is probably obsolete
 			$link = 'index.php?option=com_content&task=edit&cid[]=' . $parent_id;
@@ -558,7 +558,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		// Set up view for changing parent
 		$document = JFactory::getDocument();
 		if ( $change_parent ) {
-			$js = "
+			$js = " 
 	   function jSelectArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;

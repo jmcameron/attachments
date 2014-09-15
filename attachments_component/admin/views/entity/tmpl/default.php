@@ -20,6 +20,12 @@ $uri = JFactory::getURI();
 
 $lists = $this->lists;
 
+// Handle both 2.5 and 3.x
+$row_num = JText::_( 'JGRID_HEADING_ROW_NUMBER' );
+if ($row_num == 'JGRID_HEADING_ROW_NUMBER') {
+	$row_num = '#';
+	}
+
 ?>
 <form class="attachmentsBackend" enctype="multipart/form-data"
 	  name="adminForm" id="adminForm"
@@ -37,7 +43,7 @@ $lists = $this->lists;
 	<table class="adminlist" cellspacing="1">
 	<thead>
 	   <tr>
-		 <th width="5"><?php echo JText::_( 'JGRID_HEADING_ROW_NUMBER' ); ?></th>
+		 <th width="5"><?php echo $row_num ?></th>
 		 <th class="title">
 			<?php echo JHtml::_('grid.sort', 'ATTACH_TITLE', 'title', @$lists['order_Dir'], @$lists['order'] ); ?>
 		 </th>
