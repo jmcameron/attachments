@@ -10,6 +10,8 @@
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <description>ATTACH_ATTACHMENTS_FOR_COMPONENTS_PLUGIN_FRAMEWORK_DESCRIPTION</description>
 
+    <scriptfile>install.php</scriptfile>
+
     <files>
         <filename plugin="attachments_plugin_framework">attachments_plugin_framework.php</filename>
         <filename>attachments_plugin.php</filename>

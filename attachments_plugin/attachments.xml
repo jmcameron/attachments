@@ -10,6 +10,8 @@
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <description>ATTACH_ATTACHMENTS_PLUGIN_DESCRIPTION</description>
 
+    <scriptfile>install.php</scriptfile>
+
     <files>
 	<filename plugin="attachments">attachments.php</filename>
 	<filename>index.html</filename>
