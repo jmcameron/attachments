@@ -1559,7 +1559,14 @@ class AttachmentsHelper
 			}
 
 			// Force the download
-			header("Content-Disposition: $download_mode; filename=\"$mod_filename\"");
+			if ($download_mode == 'attachment') {
+				// attachment
+				header("Content-Disposition: attachment; filename=\"$mod_filename\"");
+				}
+			else {
+				// inline
+				header("Content-Disposition: inline");
+				}
 			header('Content-Transfer-Encoding: binary');
 
 			// If x-sendfile is available, use it
@@ -1568,7 +1575,7 @@ class AttachmentsHelper
 				}
 			else if ( $file_size <= 1048576 ) {
 				// If the file size is one MB or less, use readfile
-				header("Content-Length: ".$file_size);
+				// ??? header("Content-Length: ".$file_size);
 				@readfile($filename_sys);
 				}
 			else {
