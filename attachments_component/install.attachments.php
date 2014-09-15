@@ -114,8 +114,8 @@ class com_AttachmentsInstallerScript {
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->update('#__extensions')
-			      ->set("enabled = 0")
-			      ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
+				  ->set("enabled = 0")
+				  ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
 			$db->setQuery($query);
 			$db->query();
 
@@ -153,7 +153,7 @@ class com_AttachmentsInstallerScript {
 		$lang->load('pkg_attachments.sys', dirname(__FILE__), 'en-GB');
 
 		// Now load the current language (if not English)
- 		if ( $lang->getTag() != 'en-GB' ) {
+		if ( $lang->getTag() != 'en-GB' ) {
 			// (Double-loading to fall back to Engish if a new term is missing)
 			$lang->load('com_attachments.sys', dirname(__FILE__), null, true);
 			$lang->load('pkg_attachments.sys', dirname(__FILE__), null, true);
@@ -390,7 +390,7 @@ class com_AttachmentsInstallerScript {
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__assets')
-				->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->nameQuote('id').' = '.$db->quote($id));
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -398,14 +398,14 @@ class com_AttachmentsInstallerScript {
 		// Fix broken #__extensions records
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
-			->from('#__extensions')
-			->where($db->nameQuote('element').' = '.$db->quote($extension_name));
+			  ->from('#__extensions')
+			  ->where($db->nameQuote('element').' = '.$db->quote($extension_name));
 		$db->setQuery($query);
 		$ids = $db->loadResultArray();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__extensions')
-				->where($db->nameQuote('extension_id').' = '.$db->quote($id));
+				  ->where($db->nameQuote('extension_id').' = '.$db->quote($id));
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -413,16 +413,16 @@ class com_AttachmentsInstallerScript {
 		// Fix broken #__menu records
 		$query = $db->getQuery(true);
 		$query->select('id')
-			->from('#__menu')
-			->where($db->nameQuote('type').' = '.$db->quote('component'))
-			->where($db->nameQuote('menutype').' = '.$db->quote('main'))
-			->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
+			  ->from('#__menu')
+			  ->where($db->nameQuote('type').' = '.$db->quote('component'))
+			  ->where($db->nameQuote('menutype').' = '.$db->quote('main'))
+			  ->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
 		$db->setQuery($query);
 		$ids = $db->loadResultArray();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__menu')
-				->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->nameQuote('id').' = '.$db->quote($id));
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -453,7 +453,7 @@ class com_AttachmentsInstallerScript {
 			foreach($ids as $id) {
 				$query = $db->getQuery(true);
 				$query->delete('#__extensions')
-					->where($db->nameQuote('extension_id').' = '.$db->quote($id));
+					  ->where($db->nameQuote('extension_id').' = '.$db->quote($id));
 				$db->setQuery($query);
 				$db->query();
 			}
@@ -462,9 +462,9 @@ class com_AttachmentsInstallerScript {
 		// If there are multiple assets records, delete all except the oldest one
 		$query = $db->getQuery(true);
 		$query->select('id')
-			->from('#__assets')
-			->where('name = '.$db->quote($extension_name));
-			// ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
+			  ->from('#__assets')
+			  ->where('name = '.$db->quote($extension_name));
+			  // ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
 		if(count($ids) > 1) {
@@ -474,7 +474,7 @@ class com_AttachmentsInstallerScript {
 			foreach($ids as $id) {
 				$query = $db->getQuery(true);
 				$query->delete('#__assets')
-					->where($db->nameQuote('id').' = '.$db->quote($id));
+					  ->where($db->nameQuote('id').' = '.$db->quote($id));
 				$db->setQuery($query);
 				$db->query();
 			}
@@ -483,16 +483,16 @@ class com_AttachmentsInstallerScript {
 		// Remove #__menu records for good measure!
 		$query = $db->getQuery(true);
 		$query->select('id')
-			->from('#__menu')
-			->where($db->nameQuote('type').' = '.$db->quote('component'))
-			->where($db->nameQuote('menutype').' = '.$db->quote('main'))
-			->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
+			  ->from('#__menu')
+			  ->where($db->nameQuote('type').' = '.$db->quote('component'))
+			  ->where($db->nameQuote('menutype').' = '.$db->quote('main'))
+			  ->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
 		$db->setQuery($query);
 		$ids = $db->loadResultArray();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__menu')
-				->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->nameQuote('id').' = '.$db->quote($id));
 			$db->setQuery($query);
 			$db->query();
 		}
