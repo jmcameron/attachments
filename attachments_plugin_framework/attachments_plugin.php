@@ -659,6 +659,21 @@ class AttachmentsPlugin extends JPlugin
 	}
 
 	/**
+	 * Is the parent new (based on the parent_id)
+	 *
+	 * @param   object  &$attachment  the attachment
+	 *
+	 * @return true if the parent is new (being created)
+	 */
+	public function newParent(&$attachment)
+	{
+		// Assume parent_id == 0 means the parent is new
+		// (NOTE: This may not be true for some components)
+		return $parent_id == 0;
+	}
+
+
+	/**
 	 * Check to see if the parent is published
 	 *
 	 * @param   int     $parent_id      the ID for this parent object
@@ -1057,6 +1072,19 @@ class AttachmentsPlugin extends JPlugin
 		$reptag = '<div id="editor-xtd-buttons"';
 		$body = str_replace($reptag, $attachments . $reptag, $body);
 		return $body;
+	}
+
+
+	/** Known from keywords
+	 *
+	 * Attachment pop-dialogs will be closed using javascript if they are called from pages of these 'from' types
+	 *
+	 * @retrun array  An array of known tokens (strings)
+	 */
+	public function knownFroms()
+	{
+		// Most components should recognize these
+		return Array('editor', 'closeme');
 	}
 
 }

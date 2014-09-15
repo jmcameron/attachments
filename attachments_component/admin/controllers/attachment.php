@@ -648,7 +648,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			}
 
 		// Handle iframe popup requests
-		$known_froms = array('editor', 'closeme');
+		$known_froms = $parent->knownFroms();
 		$in_popup = false;
 		$save_url = 'index.php';
 		if ( in_array( $from, $known_froms ) ) {
@@ -729,6 +729,15 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			JError::raiseError(500, $errmsg);
 			}
 
+		// Get the parent handler for this attachment
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
+			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
+			JError::raiseError(500, $errmsg);
+			}
+		$parent = $apm->getAttachmentsPlugin($attachment->parent_type);
+
 		// See if the parent ID has been changed
 		$parent_changed = false;
 		$old_parent_id = JRequest::getString('old_parent_id');
@@ -739,10 +748,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$old_parent_id = JRequest::getInt('old_parent_id');
 			}
 
-		// parent_id===0 is the same as null for articles
-		if ( ($attachment->parent_type == 'com_content') &&
-			 ($attachment->parent_entity == 'article') &&
-			 ($attachment->parent_id == 0) ) {
+		// Handle new parents (in process of creation)
+		if ($parent->newParent($attachment)) {
 			$attachment->parent_id = null;
 			}
 
@@ -841,12 +848,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		else {
 			$parent_type = JRequest::getCmd('parent_type', 'com_content');
 			$parent_entity = JRequest::getCmd('parent_entity', 'default');
-			}
-		JPluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
-		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 138)';
-			JError::raiseError(500, $errmsg);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -970,7 +971,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 
 		// If invoked from an iframe popup, close it and refresh the attachments list
 		$from = JRequest::getWord('from');
-		$known_froms = array('editor', 'closeme');
+		$known_froms = $parent->knownFroms();
 		if ( in_array( $from, $known_froms ) ) {
 
 			// If there has been a problem, alert the user and redisplay

@@ -287,18 +287,15 @@ class plgContentAttachments extends JPlugin
 	 * This method is called right after the content is saved.
 	 *
 	 * @param string The context of the content being passed to the plugin.
-	 * @param object $article A JTableContent object
+	 * @param object $item A JTableContent object
 	 * @param bool $isNew If the content is newly created
 	 *
 	 * @return	void
-	 *
-	 * NOTE: Currently this only supports attachment parents being articles since
-	 *		 this will only be invoked when articles are saved.
 	 */
-	function onContentAfterSave($context, $article, $isNew )
+	function onContentAfterSave($context, $item, $isNew )
 	{
 		if ( !$isNew ) {
-			// If the article is not new, this step is not needed
+			// If the item is not new, this step is not needed
 			return true;
 			}
 
@@ -311,9 +308,9 @@ class plgContentAttachments extends JPlugin
 			$parent_type = 'com_content';
 			}
 
-		// Get the attachments associated with this newly created object
+		// Get the attachments associated with this newly created item.
 		// NOTE: We assume that all attachments that have parent_id=null
-		//		 and are created by the current user are for this article.
+		//		 and are created by the current user are for this item.
 		$user = JFactory::getUser();
 		$user_id = $user->get('id');
 
@@ -333,14 +330,14 @@ class plgContentAttachments extends JPlugin
 			return true;
 			}
 
-		// Change the attachment to the new article!
+		// Change the attachment to the new content item!
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$atrow = JTable::getInstance('Attachment', 'AttachmentsTable');
 
 		foreach ($attachments as $attachment) {
 
 			// Change the filename/URL as necessary
-			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $article->id);
+			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $item->id);
 			if ( $error_msg != '' ) {
 				$errmsg = JText::_($error_msg) . ' (ERR 201)';
 				JError::raiseError(500, $errmsg);
@@ -348,7 +345,7 @@ class plgContentAttachments extends JPlugin
 
 			// Update the parent info
 			$atrow->load($attachment->id);
-			$atrow->parent_id = $article->id;
+			$atrow->parent_id = $item->id;
 			$atrow->parent_type = $parent_type;
 			$atrow->filename_sys = $attachment->filename_sys;
 			$atrow->url = $attachment->url;
@@ -361,5 +358,6 @@ class plgContentAttachments extends JPlugin
 
 		return true;
 	}
+
 
 }

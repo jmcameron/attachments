@@ -393,6 +393,32 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	}
 
 	/**
+	 * Is the parent new (based on the parent_id)
+	 *
+	 * @param   object  &$attachment  the attachment
+	 *
+	 * @return true if the parent is new (being created)
+	 */
+	public function newParent(&$attachment)
+	{
+		if ($attachment->parent_id != 0) {
+			return false;
+			}
+
+		if ($attachment->parent_entity == 'article') {
+			// Seems to be true for articles
+			return true;  
+			}
+
+		if ($attachment->parent_entity == 'category') {
+			// Assume this is true for category (but not sure)
+			return true;  
+			}
+
+		return false;
+	}
+
+	/**
 	 * Check to see if the parent is published
 	 *
 	 * @param   int     $parent_id      is the ID for this parent object
@@ -1205,7 +1231,19 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 		return $id;
 	}
-	
+
+
+	/** Known from keywords
+	 *
+	 * Attachment pop-dialogs will be closed using javascript if they are called from pages of these 'from' types
+	 *
+	 * @retrun array  An array of known tokens (strings)
+	 */
+	public function knownFroms()
+	{
+		return array_merge(parent::knownFroms(), Array('frontpage', 'featured', 'article', 'category', 'details'));
+	}
+
 }
 
 
