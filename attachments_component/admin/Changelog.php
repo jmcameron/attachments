@@ -27,6 +27,9 @@ Attachments 3.x Extension for Joomla 2.5+
 	    component. To uninstall correctly, uninstall the Attachments Package;
 	    it will uninstall the component and all plugins.
     - 2014-08-22 Refactored displaying attachments lists in editors
+	- 2014-08-23 Disable all attachments plugins if uninstalling
+        the Attachments content plugin, the Attachments plugin framework 
+		plugin, and the Attachments for content plugin. See 6-08 note.
 
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
 	- 2013-09-21 Allow display of attachments lists in editors for non-article
