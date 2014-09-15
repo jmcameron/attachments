@@ -22,10 +22,11 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2014-01-26 Fix to migration importer to strip of any leading BOM
 	- 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
 	- 2014-05-30 Fixes to be more robust to partial/failed uninstalls
-	- 2015-06-08 Uninstall all attachments plugins if component is uninstalled.
+	- 2015-06-08 Disable all attachments plugins if component is uninstalled.
 		This should prevent problems when incorrectly uninstalling only the 
 	    component. To uninstall correctly, uninstall the Attachments Package;
 	    it will uninstall the component and all plugins.
+    - 2014-08-22 Refactored displaying attachments lists in editors
 
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
 	- 2013-09-21 Allow display of attachments lists in editors for non-article
