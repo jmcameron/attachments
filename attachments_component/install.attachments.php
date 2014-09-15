@@ -147,8 +147,18 @@ class com_AttachmentsInstallerScript {
 
 		// Load the installation language
 		$lang = JFactory::getLanguage();
-		$lang->load('com_attachments.sys', dirname(__FILE__));
- 
+
+		// First load the English version
+		$lang->load('com_attachments.sys', dirname(__FILE__), 'en-GB');
+		$lang->load('pkg_attachments.sys', dirname(__FILE__), 'en-GB');
+
+		// Now load the current language (if not English)
+ 		if ( $lang->getTag() != 'en-GB' ) {
+			// (Double-loading to fall back to Engish if a new term is missing)
+			$lang->load('com_attachments.sys', dirname(__FILE__), null, true);
+			$lang->load('pkg_attachments.sys', dirname(__FILE__), null, true);
+			}
+
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
 		$this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
@@ -295,14 +305,19 @@ class com_AttachmentsInstallerScript {
 					}
 				}
 			}
+
+		// Add warning message about how to uninstall properly
+		$emphasis = 'font-size: 125%; font-weight: bold;';
+		$padding = 'padding: 0.5em 0;';
+		$pkg_name = JText::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS');
+		$pkg_uninstall = JText::sprintf('ATTACH_PACKAGE_NOTICE_UNINSTALL_PACKAGE_S', $pkg_name);
+		$app->enqueueMessage("<div style=\"$emphasis $padding\">$pkg_uninstall</div>", 'notice');
 		
 		// Ask the user for feedback
 		if ( $attachments_install_verbose ) {
-			$app->enqueueMessage('<br/>', 'message');
-			$app->enqueueMessage(JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
-												'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
-												), 'message');
-			$app->enqueueMessage('<br/>', 'message');
+			$msg = JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+								  '<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>');
+			$app->enqueueMessage("<div style=\"$emphasis $padding\">$msg</div>", 'message');
 			}
 
 		// Once postflight has run once, don't repeat the message if it runs again (eg, upgrade after install)
