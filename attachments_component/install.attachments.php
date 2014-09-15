@@ -107,6 +107,28 @@ class com_AttachmentsInstallerScript {
 	 */
 	public function uninstall($parent)
 	{
+		$app = JFactory::getApplication();
+		$db = JFactory::getDBO();
+
+		// Make sure the translations are available
+		$lang = JFactory::getLanguage();
+		$lang->load('com_attachments', JPATH_ADMINISTRATOR);
+
+		// disable all the plugins
+		foreach ($this->plugins as $plugin_name)
+		{
+			// Make the query to enable the plugin
+			$plugin_title = JText::_($plugin_name);
+			$query = $db->getQuery(true);
+			$query->update('#__extensions');
+			$query->set("enabled = 0");
+			$query->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
+			$db->setQuery($query);
+			$db->query();
+
+			// Do NOT complain if there was an error
+			// (in case any plugins are already uninstalled and this query fails)
+		}
 	}
 
 
