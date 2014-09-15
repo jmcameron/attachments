@@ -1008,7 +1008,7 @@ not available yet for Attachments 3.0.
 
 Thanks to these translators (available versions shown in parentheses):
 
-* **Bulgarian:** by Stefan Ilivanov (1.3.4)
+* **Bulgarian:** by Martin Hristov (3.1), Milen Cholashki (3.0.3), Miroslav Mitev (2.2, 3.0) and Stefan Ilivanov (1.3.4)
 * **Catalan:** by Jaume Jorba (2.2, 3.0)
 * **Chinese:** Traditional and simplified Chinese translations by baijianpeng (白建鹏) (1.3.4)
 * **Croatian:** Tanja Dragisic (3.0, 1.3.4)
