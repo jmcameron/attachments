@@ -70,8 +70,8 @@ class plgContentAttachments extends JPlugin
 	{
 		// Enable the following four diagnostic lines to see if a component uses onContentPrepare
 		// $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
-		// $row->text .= $msg;
-		// $row->introtext .= $msg;
+		// if (isset($row->text)) $row->text .= $msg;
+		// if (isset($row->introtext)) $row->introtext .= $msg;
 		// return;
 
 		// Set the parent info from the context
@@ -151,9 +151,10 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Allow remapping of parent ID (eg, for Joomfish)
-		if (jimport('attachments_remapper.remapper')) {
+		if (jimport('attachments_remapper.remapper'))
+		{
 			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-			}
+		}
 
 		// Exit if we should not display attachments for this parent
 		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity) ) {
@@ -174,8 +175,8 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
-		// ??? $row->text .= " [AP text $context]";
-		// ??? $row->introtext .= " [AP introtext $context]";
+		// if (isset($row->text)) $row->text .= " [AP text $context]";
+		// if (isset($row->introtext)) $row->introtext .= " [AP introtext $context]";
 
 		return true;
 	}
@@ -271,8 +272,8 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
-		// ??? $row->text .= " [OCBD text $context]";
-		// ??? $row->introtext .= " [OCBD introtext $context]";
+		// ??? if (isset($row->text)) $row->text .= " [OCBD text $context]";
+		// ??? if (isset($row->introtext)) $row->introtext .= " [OCBD introtext $context]";
 
 		return;
 	}

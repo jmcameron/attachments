@@ -162,9 +162,14 @@ class plgSystemShow_attachments extends JPlugin
 		// See if this type of content suports displaying attachments in its editor
 		if ($parent->showAttachmentsInEditor($parent_entity, $view, $layout))
 		{
-
 			// Get the article/parent handler
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
+
+			// Allow remapping of parent ID (eg, for Joomfish)
+			if (jimport('attachments_remapper.remapper'))
+			{
+				$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+			}
 
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
