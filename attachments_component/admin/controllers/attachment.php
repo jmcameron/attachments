@@ -474,7 +474,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			$lang = JRequest::getCmd('lang', '');
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 			}
 
@@ -1000,7 +1001,8 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			// Close the iframe and refresh the attachments list in the parent window
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $from);
+			$lang = JRequest::getCmd('lang', '');
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from);
 			exit();
 			}
 

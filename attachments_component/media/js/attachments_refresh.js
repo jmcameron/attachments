@@ -10,13 +10,15 @@
  * @param ptype string parent_type for the attachments list parent
  * @param pentity string parent_entity for the attachments list parent
  * @param pid integer parent_id for the attachments list parent
+ * @param lang the current language ('' if not specified)
  * @param from string the 'from' clause to pass in the request
  */
 
-function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
+function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
     var url = siteUrl + "/index.php?option=com_attachments&task=attachmentsList";
     url += "&parent_id=" + pid;
     url += "&parent_type=" + ptype + "&parent_entity=" + pentity;
+    url += "&lang=" + lang;
     url += "&from=" + from + "&tmpl=component&format=raw";
     id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid;
     var alist = document.getElementById(id);
@@ -46,3 +48,4 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, from) {
 
         }}).send();
 };
+

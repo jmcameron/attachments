@@ -226,6 +226,13 @@ class AttachmentsController extends JControllerLegacy
 			return '';
 			}
 
+		// Allow remapping of parent ID (eg, for Joomfish)
+		$lang = JRequest::getWord('lang', '');
+		if ($lang and jimport('attachments_remapper.remapper'))
+		{
+			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+		}
+
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 		$controller = new AttachmentsControllerList();
 		$response = $controller->displayString($parent_id, $parent_type, $parent_entity,

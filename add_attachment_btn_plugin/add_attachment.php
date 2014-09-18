@@ -120,6 +120,12 @@ class plgButtonAdd_attachment extends JPlugin
 			return;
 			}
 
+		// Allow remapping of parent ID (eg, for Joomfish)
+		if (jimport('attachments_remapper.remapper'))
+		{
+			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+		}
+
 		// Add the regular css file
 		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
 		JHtml::stylesheet('com_attachments/add_attachment_button.css', Array(), true);

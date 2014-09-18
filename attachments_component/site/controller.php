@@ -441,7 +441,8 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			$lang = JRequest::getCmd('lang', '');
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 			}
 
@@ -568,7 +569,8 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			$lang = JRequest::getCmd('lang', '');
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 			}
 		else {
@@ -770,6 +772,13 @@ class AttachmentsController extends JControllerLegacy
 		if ( ($parent_id === false) || ($parent_type == '') ) {
 			return '';
 			}
+
+		// Allow remapping of parent ID (eg, for Joomfish)
+		$lang = JRequest::getWord('lang', '');
+		if ($lang and jimport('attachments_remapper.remapper'))
+		{
+			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
+		}
 
 		require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
 		$controller = new AttachmentsControllerAttachments();

@@ -44,10 +44,10 @@ class AttachmentsJavascript
 	/**
 	 * Close the iframe
 	 */
-	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $from)
+	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from)
 	{
 		echo "<script type=\"text/javascript\">
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$from\");
+			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$lang\",\"$from\");
 			window.parent.SqueezeBox.close();
 			</script>";
 	}

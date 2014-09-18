@@ -250,7 +250,8 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 			$uri = JFactory::getURI();
 			$base_url = $uri->base(true);
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $from);
+			$lang = JRequest::getCmd('lang', '');
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 		}
 
