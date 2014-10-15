@@ -2,8 +2,8 @@
 <extension type="package" version="2.5.7">
     <name>pkg_attachments</name>
     <packagename>attachments</packagename>
-    <version>3.1.4-Beta8</version>
-    <creationDate>September 18, 2014</creationDate>
+    <version>3.1.4-Beta9</version>
+    <creationDate>October 14, 2014</creationDate>
     <copyright>(C) 2007-2013 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <author>Jonathan M. Cameron</author>
