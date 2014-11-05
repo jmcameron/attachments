@@ -32,7 +32,7 @@ Attachments 3.x Extension for Joomla 2.5+
 		plugin, and the Attachments for content plugin. See 2014-06-08 note.
     - 2014-08-23 Added checking for supported databases during installation.
     - 2014-09-14 Refactor of Attachments plugin API to better support
-		other componenents.
+		other components.
     - 2014-09-17 Fixed bug in joomfish/lanternfish handling
     - 2014-09-18 More updates for joomfish/lanternfish handling
     - 2014-10-14 Cleaned up Javascript of refresh function
