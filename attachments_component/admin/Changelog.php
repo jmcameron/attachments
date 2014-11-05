@@ -36,7 +36,8 @@ Attachments 3.x Extension for Joomla 2.5+
     - 2014-09-17 Fixed bug in joomfish/lanternfish handling
     - 2014-09-18 More updates for joomfish/lanternfish handling
     - 2014-10-14 Cleaned up Javascript of refresh function
-
+    - 2014-11-04 Fix for editor add-attachments button issue
+ 
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
 	- 2013-09-21 Allow display of attachments lists in editors for non-article
 	- 2013-10-13 Fixed migration importer handle obsolete 'section' attachments
