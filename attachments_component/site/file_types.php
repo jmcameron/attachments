@@ -199,6 +199,14 @@ class AttachmentsFileTypes {
 			   'zip' => 'application/x-zip'
 			   );
 
+	/** Array of known PDF mime types */
+	static $attachments_pdf_mime_types =
+		array('application/pdf',
+			  'binary/octet-stream',
+			  'application/x-pdf',
+			  'application/vdn.fdf'
+			  );
+
 
 	/**
 	 * Get the icon filename for a specific filename (or mime type)

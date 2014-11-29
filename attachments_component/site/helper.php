@@ -613,18 +613,18 @@ class AttachmentsHelper
 		jimport('joomla.filesystem.file');
 		$allowable = explode( ',', $cmparams->get( 'upload_extensions' ));
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ));
-		$format = JString::strtolower(JFile::getExt($filename));
+		$extension = JString::strtolower(JFile::getExt($filename));
 		$error = false;
 		$error_msg = false;
-		if (!in_array($format, $allowable) && !in_array($format,$ignored)) {
+		if (!in_array($extension, $allowable) && !in_array($extension,$ignored)) {
 			$error = 'illegal_file_extension';
 			$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $format";
+			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $extension";
 			if ($user->authorise('core.admin')) {
 				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 				}
 			}
-		
+
 		// Check to make sure the mime type is okay
 		if ( $cmparams->get('restrict_uploads',true) ) {
 			if ( $cmparams->get('check_mime', true) ) {
@@ -649,6 +649,14 @@ class AttachmentsHelper
 				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " (corrupted image file)";
 				// ??? Need new error message
+				}
+			}
+
+		// Handle PDF mime types
+		if ($extension == 'pdf') {
+			require_once(JPATH_COMPONENT_SITE.'/file_types.php');
+			if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mime_types)) {
+				$ftype = 'application/pdf';
 				}
 			}
 
