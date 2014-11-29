@@ -171,16 +171,16 @@ class plgSystemShow_attachments extends JPlugin
 				$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
 			}
 
+			// Force the ID to zero when creating the entity
+			if ( !$parent_id ) {
+				$parent_id = 0;
+				}
+
 			// Construct the attachment list
 			$Itemid = JRequest::getInt( 'Itemid', 1);
 			$from = 'editor';
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
 																  $user_can_add, $Itemid, $from, true, true);
-
-			// Force the ID to zero when creating the entity
-			if ( !$parent_id ) {
-				$parent_id = 0;
-				}
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
