@@ -204,7 +204,7 @@ class AttachmentsFileTypes {
 		array('application/pdf',
 			  'binary/octet-stream',
 			  'application/x-pdf',
-			  'application/vdn.fdf'
+			  'application/vnd.fdf'
 			  );
 
 
