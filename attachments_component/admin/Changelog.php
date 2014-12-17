@@ -39,6 +39,7 @@ Attachments 3.x Extension for Joomla 2.5+
     - 2014-11-04 Fix for editor add-attachments button issue
 	- 2014-11-16 Fixed bug when creating article from front end
     - 2014-11-28 Fix to better handle PDF mime type
+    - 2014-12-12 Fix for missing 'Add Attachment' button for Joomla 3.4
  
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
 	- 2013-09-21 Allow display of attachments lists in editors for non-article
