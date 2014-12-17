@@ -202,9 +202,10 @@ class AttachmentsFileTypes {
 	/** Array of known PDF mime types */
 	static $attachments_pdf_mime_types =
 		array('application/pdf',
-			  'binary/octet-stream',
 			  'application/x-pdf',
-			  'application/vnd.fdf'
+			  'application/vnd.fdf',
+			  'application/x-download',
+			  'binary/octet-stream'
 			  );
 
 
