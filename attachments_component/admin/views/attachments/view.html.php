@@ -193,8 +193,13 @@ class AttachmentsViewAttachments extends JViewLegacy
 			JToolBarHelper::divider();
 			JToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
+			$icon_name = 'adminUtils';
+			if (version_compare(JVERSION, '3.0', 'ge')) {
+				$icon_name = 'wrench';
+				}
+
 			// Add a button for extra admin commands
-			$toolbar->appendButton('Popup', 'adminUtils', 'ATTACH_UTILITIES',
+			$toolbar->appendButton('Popup', $icon_name, 'ATTACH_UTILITIES',
 								   'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
 								   800, 500);
 			}
@@ -203,7 +208,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Manually add a help button for the help view
 		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
-		$help = JText::_('JTOOLBAR_HELP');
+		$help = ' ' . JText::_('JTOOLBAR_HELP') . ' ';
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
 			$link = "<button class=\"btn btn-small\" rel=\"help\" href=\"#\" ";
