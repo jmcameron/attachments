@@ -1,0 +1,20 @@
+div.button2-left > div.add_attachment 
+{ 
+	background: url(../images/add_attachment_button.png) no-repeat scroll 100% 0;
+}
+
+div#editor-xtd-buttons i.icon-add_attachment 
+{
+	background: url(../images/add_attachment_button_small.png) no-repeat scroll 100% 0;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+}
+
+div#editor-xtd-buttons i.icon-add_attachment_frontend
+{
+	background: url(../images/add_attachment_button_small.png) no-repeat scroll 100% 0;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+}

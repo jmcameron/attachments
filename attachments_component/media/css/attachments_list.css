@@ -1,0 +1,255 @@
+/* Styles for lists of attachments */
+
+#main div.attachmentsContainer,
+div.attachmentsContainer {
+    clear: both;
+    margin: 0 0 0.5em 0;
+    background: transparent;
+}
+
+#main div.attachmentsList table,
+div.attachmentsList table {
+    background: transparent;
+    border: 1px solid #C0C0C0;
+    clear: both;
+    font-size: 90%;
+    font-weight: bold;
+    line-height: 160%;
+    margin-bottom: 4px;
+}
+
+#main div.attachmentsList caption,
+div.attachmentsList caption {
+    font-size: 110%;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 4px;
+}
+
+#main div.attachmentsList thead tr,
+div.attachmentsList thead tr {
+    background-color: #DADADA;
+}
+
+#main div.attachmentsList tbody,
+div.attachmentsList tbody {
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr,
+div.attachmentsList tbody tr {
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr.odd,
+#main div.attachmentsList table tbody tr.odd td,
+div.attachmentsList tbody tr.odd,
+div.attachmentsList table tbody tr.odd td
+{
+    background: transparent;
+}
+
+#main div.attachmentsList tbody tr.even,
+#main div.attachmentsList tbody tr.even td,
+div.attachmentsList tbody tr.even td,
+div.attachmentsList tbody tr.even
+{
+    background-color: #EEE;
+}
+
+#main div.attachmentsList  tr.unpublished,
+#main div.attachmentsList  tr.unpublished td,
+div.attachmentsList  tr.unpublished,
+div.attachmentsList  tr.unpublished td 
+{
+    background-color: #AAA;
+}
+
+#main div.attachmentsList table thead th,
+div.attachmentsList table thead th {
+    vertical-align: center;
+    background: transparent;
+    border: 1px solid #D0D0D0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#main div.attachmentsList table tbody td,
+div.attachmentsList table tbody td {
+    background: transparent;
+    vertical-align: center;
+    padding: 1px 3px 1px 3px;
+}
+
+#main div.attachmentsList table tbody tr.even td,
+div.attachmentsList table tbody tr.even td {
+    background-color: #EEE;
+}
+
+#main div.attachmentsList table tbody tr.unpublished td,
+div.attachmentsList table tbody tr.unpublished td {
+    background-color: #AAA;
+    color: #333;
+}
+
+
+#main div.attachmentsList table a,
+div.attachmentsList table a {
+    font-weight: bold;
+}
+
+#main div.attachmentsList table img,
+div.attachmentsList table img {
+    vertical-align: text-bottom;
+    border: 0;
+    margin: 0;
+}
+
+#main div.attachmentsList table a.modal-button,
+div.attachmentsList table a.modal-button {
+    background: transparent;
+    border: 0;
+}
+
+div.attachmentsList table td.at_edit a.modal-button {
+    float: none;
+    display: inline;
+}
+
+div.attachmentsList table td.at_edit a.modal-button img {
+    float: none;
+    display: inline;
+}
+
+#main div.attachmentsList img.link_overlay,
+div.attachmentsList img.link_overlay {
+    margin-left: -16px;
+}
+
+#main div.attachmentsList a.at_icon, 
+div.attachmentsList a.at_icon {
+    padding-right: 4px;
+}
+
+div.attachmentsList a.at_icon:link    { text-decoration: none; }
+div.attachmentsList a.at_icon:visited { text-decoration: none; }
+div.attachmentsList a.at_icon:hover   { text-decoration: none; color: #F00; background: transparent; }
+div.attachmentsList a.at_icon:active  { text-decoration: none; }
+
+div.attachmentsList a.at_url { background: none;  background-color: transparent; }
+div.attachmentsList a.at_url:link     { text-decoration: none; }
+div.attachmentsList a.at_url:visited  { text-decoration: none; }
+div.attachmentsList a.at_url:hover    { text-decoration: underline; color: #F00; background: transparent; }
+div.attachmentsList a.at_url:active   { text-decoration: none; }
+
+div.attachmentsList th.at_filename,
+div.attachmentsList td.at_filename { text-align: left; }
+
+div.attachmentsList td.at_file_size { text-align: right; }
+
+div.attachmentsList th.at_downloads { text-align: center; }
+div.attachmentsList td.at_downloads { text-align: center; }
+
+div.attachmentsList th.at_edit { text-align: center; }
+div.attachmentsList td.at_edit { text-align: center; background: transparent; }
+
+
+/* Style for the 'Add Attachment' link */
+
+#main div.addattach,
+div.addattach { 
+    margin-top: 4px; 
+    background: transparent;
+}
+
+
+div.addattach img,
+div.addattach a img {
+    background: transparent;
+    padding-right: 0px;
+    border: 0;
+}
+
+div.addattach a {
+    background: transparent;
+    border: 0;
+}
+
+div.addattach a:hover {
+    background: transparent;
+    color: #F00;
+    border: 0;
+}
+
+div.addattach a img { vertical-align: text-bottom; }
+
+div.addattach a.at_icon { background: transparent; border-width: 0; }
+div.addattach a.at_icon:link    { text-decoration: none; }
+div.addattach a.at_icon:visited { text-decoration: none; }
+div.addattach a.at_icon:hover   { text-decoration: none; background: transparent; }
+div.addattach a.at_icon:active  { text-decoration: none; }
+
+div.addattach a { background: transparent; border-width: 0; }
+div.addattach a:link    { color : red; text-decoration: none; }
+div.addattach a:visited { color : red; text-decoration: none; }
+div.addattach a:hover   { color : red; text-decoration: underline; color: #F00; background: transparent; }
+div.addattach a:active  { color : red; text-decoration: none; }
+
+div.addattach a.modal-button { 
+    background: transparent; 
+    border-width: 0 !important; 
+    padding: 2px !important; 
+}
+div.addattach a.modal-button:link { background: transparent; }
+div.addattach a.modal-button:visited { background: transparent; }
+div.addattach a.modal-button:hover { color: #F00; background: transparent; }
+div.addattach a.modal-button:active { background: transparent; }
+
+
+/* ---- Misc ----- */
+
+div#main div.requestLogin h1 {
+    color: #135cae;
+    font-size: 150%;
+    line-height: 150%;
+}
+
+div#main div.requestLogin h2 {
+    margin: 0;
+    padding: 4px 0 0 20px;
+    font-size: 100%;
+    line-height: 100%;
+}
+
+div#main div.requestLogin h2 a {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+/* Styles for warnings */
+div.uploadAttachmentsPage div.warning
+{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+div.uploadAttachmentsPage div.warning h1 {
+    line-height: normal;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+div.uploadAttachmentsPage div.warning h2 {
+    line-height: normal;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+/* Make sure the table background is white in forms in the back end */
+form.attachmentsBackend + div.attachmentsList table {
+    background-color: #FFF;
+}

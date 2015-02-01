@@ -1,0 +1,7 @@
+/* Quickicon rules */
+
+div.cpanel div#plg_quickicon_attachment span {
+    margin-left: 6px;  /* force line break */
+    margin-right: 6px;
+    line-height: 115%;
+}

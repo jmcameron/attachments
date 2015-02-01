@@ -1,0 +1,355 @@
+body,
+body.contentpane {
+    font-size: 0.95em;
+    margin: 0;
+    padding-top: 0;
+}
+
+div.help-document {
+    margin: 0;
+}
+
+div.help-document div.header {
+    width: 100%;
+    margin: 0;
+    color: #003366;
+    padding: 4px 0 6px 1em;
+    background-color: #BBBBFF;
+    border-bottom: 1px solid #0000FF;
+    background-image: none;
+}
+
+div.help-document hr.header {
+    display: none;
+}
+
+div.help-document p.version {
+    display: block;
+    margin: 15px 0 0 0;
+    padding: 0;
+    font-size: 105%;
+}
+
+a#tc_toggle {
+    font-size: 70%;
+    color: #88F;
+    float: right;
+}
+
+div.header a#tc_toggle {
+    margin: 0.5em 2.5em 0 0;
+}
+
+div.main a#tc_toggle {
+    margin: 0 0 1em 0;
+}
+
+
+a#tc_toggle:hover {
+    color: #33F;
+}
+
+a#tc_toggle img {
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+div.help-document div.main {
+    margin: 1em;
+}
+
+div.help-document span.text_code
+{
+    font-size: 80%;
+    font-weight: bold;
+    margin-left: 3px;
+    margin-right: 3px;
+    display: None;
+}
+
+div.help-document p {
+    margin: 0;
+    padding: 0;
+}
+
+div.help-document img.drop-shadow {
+    margin: 4px 0 12px 6px;
+    border: 1px solid #000;
+    box-shadow: 10px 10px 5px #444;
+    -moz-box-shadow: 10px 10px 5px #444;
+    -webkit-box-shadow: 10px 10px 5px #444;
+}
+
+div.help-document ul { 
+    margin: 0;
+}
+
+div.help-document p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+div.help-document ul li {
+    border-top: 8px solid transparent;
+}
+
+div.help-document ol li {
+    border-top: 4px solid transparent;
+}
+
+div.help-document li p {
+    display: inline;
+}
+
+div.help-document li p.paragraph {
+    display: block;
+}
+
+div.help-document h1 {
+    width: 100%;
+    font-size: 130%;
+    color: #003366;
+    margin: 0.6em 0 0 0;
+    border-bottom: 2px solid #024;
+}
+
+div.help-document div.header h1 img {
+    margin: 0 0.5em -0.25em 0;
+}
+
+div.help-document h1 a         { text-decoration: none; }
+div.help-document h1 a:link    { text-decoration: none; }
+div.help-document h1 a:visited { text-decoration: none; }
+div.help-document h1 a:hover   { text-decoration: none; }
+div.help-document h1 a:active  { text-decoration: none; }
+
+div.help-document h1.title {
+    font-size: 150%;
+    border: none;
+}
+
+div.help-document h2 {
+    width: 100%;
+    font-size: 110%;
+    color: #003366;
+    margin: 12px 0 0 0;
+    border-bottom: 1px solid #069;
+}
+
+div.help-document h3 {
+    width: 100%;
+    font-size: 105%;
+    color: #003366;
+    margin: 8px 0 0 0;
+}
+
+
+div.help-document ul {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+div.help-document pre {
+    padding: 5px 5px 5px 20px;
+    background-color: #DDDDFF;
+    color: #333333;
+    line-height: 120%;
+    border: 1px solid #ac9;
+    font-size: 90%;
+    width: 80%;
+}
+
+div.help-document pre.literal-block {
+    margin-left: 40px;
+}
+
+
+div.help-document tt {
+    background-color: #DDDDFF;
+    padding: 0 1px 0 1px;
+    font-size: 9pt;
+}
+
+div.help-document span.pre {
+    white-space: pre;
+}
+
+div.help-document a.display {
+    display: block;
+    margin: 10px 0 20px 40px;
+    font-size: 110%;
+}
+
+
+/* Style warning blocks (partially from Sphinx) */
+div.help-document div.note,
+div.help-document div.hint,
+div.help-document div.warning,
+div.help-document div.important
+{
+    border: 1px solid #666;
+    width: 80%;
+    margin: 4px 10px 4px 20px;
+    padding: 6px 6px 2px 6px;
+}
+div.help-document div.warning {
+    background-color: #ffe4e4;
+    border: 1px solid #f66;
+}
+div.help-document div.important {
+    background-color: #e4ffe4;
+    border: 1px solid #6f6;
+}
+div.help-document div.note,
+div.help-document div.hint {
+    background-color: #DDF;
+    border: 1px solid #66F;
+}
+
+div.help-document p.admonition-title {
+    display: inline;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+div.help-document p.admonition-title:after {
+    content: ":";
+}
+
+/* -- topics (from Sphinx) ------------------------------ */
+div.help-document div.topic {
+    border: 1px solid #ccc;
+    padding: 7px 7px 0 7px;
+    margin: 10px 0 10px 0;
+}
+div.help-document p.topic-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+div.help-document div#contents {
+    margin: 0.5em 0 1em 1em;
+    background-color: #BBBBFF;
+    border: 1px solid #003366;
+    width: 32em;
+}
+
+
+div.help-document ul,
+div.help-document ol {
+    padding-left: 1.5em;
+    margin: 0.2em 0 0.5em 0;
+}
+
+div.help-document div#contents ul,
+div.help-document div#contents ol {
+    margin: 6px 0 0 0;
+    padding: 0 0.5em 0.5em 2em;
+}
+
+div.help-document div#contents p.topic-title {
+    margin: 0;
+}
+
+
+/* Fix some margins */
+
+div.help-document div#contents li {
+    margin: 0;
+    padding: 0 0 4px 0;
+    border: 0;
+}
+
+div.help-document dl.docutils dt {
+    margin: 0;
+}
+
+div.help-document dl.docutils dd {
+    margin: 0;
+}
+
+div.help-document blockquote {
+    margin: 0;
+}
+
+div.help-document .first {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+}
+
+div.help-document p.last {
+    margin-left: 0 !important;
+}
+
+div.help-document .noindent {
+    margin-left: 0 !important;
+}
+
+div.help-document .float-right {
+    float: right;
+}
+
+div.help-document div.figure {
+    margin-left: 50px;
+}
+
+div.help-document div.width50 {  width: 50%; }
+div.help-document div.width100 {  width: 100%; }
+
+div.help-document p.caption {
+    display: block;
+    margin-top: 0;
+    font-size: 95%;
+    font-style: italic;
+}
+
+div.help-document div.small-figure {
+    margin-left: 70px;
+    width: 50%;
+}
+
+div.help-document div.small-figure p.caption {
+    margin-left: 10px;
+    width: 70%;
+}
+
+div.help-document table.permissions {
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1;
+    cellspacing: 0;
+    cellpadding: 2px;
+    background: transparent;    
+    border-collapse:collapse;
+}
+
+div.help-document table#permissions {
+    width: 95%;
+}
+
+div.help-document table#permissions th,
+div.help-document table#permissions td {
+    background: transparent; 
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #000;
+}
+
+div.help-document table#permissions th {
+    background-color: #DDD;
+    font-size: 105%;
+    font-weight: bold;
+}
+
+div.help-document div.hide-title p.admonition-title {
+    display: none;
+}
+
+/* Color the links (including sections) */
+div.help-document a:link    { color : #003366; text-decoration: none; }
+div.help-document a:visited { color : #003366; text-decoration: none; }
+div.help-document a:hover   { color : #FF0000; text-decoration: none; }
+div.help-document a:active  { color : #003366; text-decoration: none; }
+
+
+

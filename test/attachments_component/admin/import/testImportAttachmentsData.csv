@@ -1,0 +1,12 @@
+"testfiles/import_good.csv", 2, 0, 1
+"testfiles/import_badid.csv", "Error importing attachments CSV file; attachment ID is not an integer! (bad id)", 0, 1
+"testfiles/import_nofile.csv", "ERROR: Unable to open attachments CSV file '/home/jmcameron/src/attachments/work-j1.6/test/attachments_component/admin/import/testfiles/import_nofile.csv'!", 0, 1
+"testfiles/import_badparentid.csv", "Error importing attachments CSV file; unknown article/parent ID=-23!", 0, 1
+"testfiles/import_badtitle.csv", "Error importing attachments CSV file; title for article/parent ID=1 is 'Welcome' not '-BAD TITLE-' as specified in the CSV file!", 0, 1
+"testfiles/import_badcreatorid.csv", "Error importing attachments CSV file; unable to find creator with ID=-10 (username='admin')!", 0, 1
+"testfiles/import_badcreatorname.csv", "Error importing attachments CSV file; attachment creator user with id=42 has username 'QQQ', but CSV file expected 'admin'!", 0, 1
+"testfiles/import_badmodifierid.csv", "Error importing attachments CSV file; unable to find modifier with ID=-10 (username='admin')!", 0, 1
+"testfiles/import_badmodifiername.csv", "Error importing attachments CSV file; attachment modifier user with id=42 has username 'QQQ', but CSV file expected 'admin'!", 0, 1
+"testfiles/import_zeroid.csv", "Error importing attachments CSV file; cannot modify attachment with id=0!", 1, 1
+"testfiles/import_add1.csv", 1, 0, 0
+"testfiles/import_windows.csv", 1, 0, 0

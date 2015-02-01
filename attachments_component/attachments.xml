@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5.7" method="upgrade">
+    <name>com_attachments</name>
+    <version>3.1.4-Beta14</version>
+    <creationDate>January 24, 2015</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>
+    <copyright>(C) 2007-2013 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
+
+    <scriptfile>install.attachments.php</scriptfile>
+
+    <install>
+	<sql>
+	    <file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
+	</sql>
+    </install>
+
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <uninstall>
+	<sql>
+	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
+	</sql>
+    </uninstall>
+
+    <files folder="site">
+	<filename>attachments.php</filename>
+	<filename>controller.php</filename>
+	<filename>controllers/attachments.php</filename>
+	<filename>controllers/index.html</filename>
+	<filename>defines.php</filename>
+	<filename>file_types.php</filename>
+	<filename>helper.php</filename>
+	<filename>javascript.php</filename>
+	<filename>legacy/controller.php</filename>
+	<filename>legacy/controller_form.php</filename>
+	<filename>legacy/model.php</filename>
+	<filename>legacy/view.php</filename>
+	<filename>legacy/index.html</filename>
+	<filename>index.html</filename>
+	<filename>models/attachment.php</filename>
+	<filename>models/attachments.php</filename>
+	<filename>models/index.html</filename>
+	<filename>router.php</filename>
+	<filename>views/attachments/index.html</filename>
+	<filename>views/attachments/metadata.xml</filename>
+	<filename>views/attachments/tmpl/default.php</filename>
+	<filename>views/attachments/tmpl/default.xml</filename>
+	<filename>views/attachments/tmpl/index.html</filename>
+	<filename>views/attachments/view.html.php</filename>
+	<filename>views/attachments/view.raw.php</filename>
+	<filename>views/index.html</filename>
+	<filename>views/login/index.html</filename>
+	<filename>views/login/view.html.php</filename>
+	<filename>views/login/tmpl/index.html</filename>
+	<filename>views/login/tmpl/default.php</filename>
+	<filename>views/update/index.html</filename>
+	<filename>views/update/metadata.xml</filename>
+	<filename>views/update/view.html.php</filename>
+	<filename>views/update/tmpl/default.php</filename>
+	<filename>views/update/tmpl/index.html</filename>
+	<filename>views/upload/index.html</filename>
+	<filename>views/upload/metadata.xml</filename>
+	<filename>views/upload/view.html.php</filename>
+	<filename>views/upload/tmpl/default.php</filename>
+	<filename>views/upload/tmpl/index.html</filename>
+	<filename>views/warning/index.html</filename>
+	<filename>views/warning/tmpl/default.php</filename>
+	<filename>views/warning/tmpl/index.html</filename>
+	<filename>views/warning/view.html.php</filename>
+	<filename>views/view.php</filename>
+	<folder>language</folder>
+    </files>
+
+    <administration>
+	<menu img="../media/com_attachments/images/attachments.png">ATTACH_ATTACHMENTS</menu>
+	<submenu>
+	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
+	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
+	</submenu>
+
+	<files folder="admin">
+	    <filename>attachments.php</filename>
+	    <filename>access.xml</filename>
+	    <filename>config.xml</filename>
+	    <filename>controller.php</filename>
+	    <filename>controllers/attachment.php</filename>
+	    <filename>controllers/attachments.php</filename>
+	    <filename>controllers/index.html</filename>
+	    <filename>controllers/list.php</filename>
+	    <filename>controllers/params.php</filename>
+	    <filename>controllers/special.php</filename>
+	    <filename>controllers/utils.php</filename>
+	    <filename>import.php</filename>
+	    <filename>index.html</filename>
+	    <filename>models/attachment.php</filename>
+	    <filename>models/attachments.php</filename>
+	    <filename>models/fields/accesslevels.php</filename>
+	    <filename>models/fields/iconfilenames.php</filename>
+	    <filename>models/fields/index.html</filename>
+	    <filename>models/forms/attachment.xml</filename>
+	    <filename>models/forms/index.html</filename>
+	    <filename>models/index.html</filename>
+	    <filename>permissions.php</filename>
+	    <filename>sql/index.html</filename>
+	    <filename>sql/install.mysql.sql</filename>
+	    <filename>sql/uninstall.mysql.sql</filename>
+	    <filename>tables/attachment.php</filename>
+	    <filename>tables/index.html</filename>
+	    <filename>update.php</filename>
+	    <filename>views/add/index.html</filename>
+	    <filename>views/add/tmpl/default.php</filename>
+	    <filename>views/add/tmpl/index.html</filename>
+	    <filename>views/add/view.html.php</filename>
+	    <filename>views/attachments/index.html</filename>
+	    <filename>views/attachments/tmpl/default_body.php</filename>
+	    <filename>views/attachments/tmpl/default_filter.php</filename>
+	    <filename>views/attachments/tmpl/default_foot.php</filename>
+	    <filename>views/attachments/tmpl/default_head.php</filename>
+	    <filename>views/attachments/tmpl/default.php</filename>
+	    <filename>views/attachments/tmpl/index.html</filename>
+	    <filename>views/attachments/view.html.php</filename>
+	    <filename>views/edit/index.html</filename>
+	    <filename>views/edit/tmpl/default.php</filename>
+	    <filename>views/edit/tmpl/index.html</filename>
+	    <filename>views/edit/view.html.php</filename>
+	    <filename>views/entity/index.html</filename>
+	    <filename>views/entity/tmpl/default.php</filename>
+	    <filename>views/entity/tmpl/index.html</filename>
+	    <filename>views/entity/view.html.php</filename>
+	    <filename>views/help/index.html</filename>
+	    <filename>views/help/helpview.php</filename>
+	    <filename>views/help/tmpl/default.php</filename>
+	    <filename>views/help/tmpl/index.html</filename>
+	    <filename>views/help/view.html.php</filename>
+	    <filename>views/index.html</filename>
+	    <filename>views/params/index.html</filename>
+	    <filename>views/params/view.html.php</filename>
+	    <filename>views/params/tmpl/default.php</filename>
+	    <filename>views/params/tmpl/index.html</filename>
+	    <filename>views/utils/index.html</filename>
+	    <filename>views/utils/view.html.php</filename>
+	    <filename>views/utils/tmpl/default.php</filename>
+	    <filename>views/utils/tmpl/index.html</filename>
+	    <filename>views/warning/index.html</filename>
+	    <filename>views/warning/tmpl/default.php</filename>
+	    <filename>views/warning/tmpl/index.html</filename>
+	    <filename>views/warning/view.html.php</filename>
+	    <filename>Changelog.php</filename>
+	    <folder>sql/updates</folder>
+	    <folder>language</folder>
+	</files>
+    </administration>
+
+    <media destination="com_attachments" folder="media">
+       <filename>index.html</filename>
+       <filename>css/index.html</filename>
+       <filename>css/add_attachment_button.css</filename>
+       <filename>css/add_attachment_button_rtl.css</filename>
+       <filename>css/attachments_admin.css</filename>
+       <filename>css/attachments_admin_form.css</filename>
+       <filename>css/attachments_admin_form_rtl.css</filename>
+       <filename>css/attachments_admin_rtl.css</filename>
+       <filename>css/attachments_admin_utils.css</filename>
+       <filename>css/attachments_admin_utils_rtl.css</filename>
+       <filename>css/attachments_frontend_form.css</filename>
+       <filename>css/attachments_frontend_form_rtl.css</filename>
+       <filename>css/attachments_hide.css</filename>
+       <filename>css/attachments_help.css</filename>
+       <filename>css/attachments_list.css</filename>
+       <filename>css/attachments_list_rtl.css</filename>
+       <filename>css/attachments_quickicon.css</filename>
+       <filename>css/insert_attachments_token_button.css</filename>
+       <filename>css/insert_attachments_token_button_rtl.css</filename>
+       <filename>images/index.html</filename>
+       <filename>images/add_attachment.gif</filename>
+       <filename>images/add_attachment_button.png</filename>
+       <filename>images/add_attachment_button_rtl.png</filename>
+       <filename>images/add_attachment_button_small.png</filename>
+       <filename>images/add_attachment_button_small_rtl.png</filename>
+       <filename>images/attachment.gif</filename>
+       <filename>images/attachments.png</filename>
+       <filename>images/attachments_help_logo32.png</filename>
+       <filename>images/attachments_logo32.png</filename>
+       <filename>images/attachments_logo48.png</filename>
+       <filename>images/attachments_utils32.png</filename>
+       <filename>images/delete.gif</filename>
+       <filename>images/download.gif</filename>
+       <filename>images/insert_attachments_token_button.png</filename>
+       <filename>images/insert_attachments_token_button_rtl.png</filename>
+       <filename>images/insert_attachments_token_button_small.png</filename>
+       <filename>images/insert_attachments_token_button_small_rtl.png</filename>
+       <filename>images/pencil.gif</filename>
+       <filename>images/update.gif</filename>
+       <filename>js/index.html</filename>
+       <filename>js/attachments_caching.js</filename>
+       <filename>js/attachments_refresh.js</filename>
+       <folder>images/file_icons</folder>
+       <folder>images/help</folder>
+    </media>
+
+    <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
+    <languages folder="site">
+	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
+    </languages>
+
+</extension>

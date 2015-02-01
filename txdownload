@@ -1,0 +1,42 @@
+#!/bin/csh -f
+
+if ( "$1" == "" ) then
+    echo "Must specify the language code in transifex form (e.g.,  es_ES)"
+    exit
+endif
+
+if ( "$1" == "--code") then
+    echo "Do not use --code, just use the transifex lang token (e.g.,  es_ES)"
+    exit
+endif
+
+if ( "$2" == "help" ) then
+    echo "Downloading $1 help file"
+    tx pull -f  -l "$1" -r joomla-attachments-3-help.attachments_help_ini
+    exit
+endif
+
+
+echo "Downloading updates for $1"
+
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_admin-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_admin-com_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_site-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.com_attachments_install-com_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.add_attachment_btn_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.add_attachment_btn_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.insert_attachments_token_btn_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.insert_attachments_token_btn_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_for_content_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_for_content_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_plugin_framework_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_attachments_plugin_framework_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_content_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_content_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_quickicon_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_quickicon_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_search_attachments_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.plg_system_show_attachments_in_editor_sys_ini 
+tx pull -f  -l "$1" -r joomla-attachments-3.files_attachments_language_pack_install_ini

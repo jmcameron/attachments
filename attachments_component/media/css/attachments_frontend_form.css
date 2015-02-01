@@ -1,0 +1,223 @@
+/* Styles for the upload and update pages */
+
+body.contentpane {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div#main {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div#uploadAttachmentsPage {
+    width: 95%;
+    margin: 6px auto 6px auto;
+    text-align: left;
+}
+
+div#uploadAttachmentsPage h1 {
+    font-size: 150%;
+    color: #000;
+}
+
+div#uploadAttachmentsPage h2 {
+    width: 100%;
+    color: #000;
+}
+
+div#uploadAttachmentsPage p {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+}
+
+div#uploadAttachmentsPage label {
+    display: inline-block;
+    font-weight: bold;
+}
+
+div#uploadAttachmentsPage div.at_control label.at_control_label {
+    font-weight: bold;
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control {
+    margin-top: 4px;
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control div.controls {
+    margin-left: 5px;
+    display: inline-block;
+}
+
+div#uploadAttachmentsPage div.at_control div.controls label {
+    margin: 0 0 0 5px;
+    display: inline-block;
+}
+
+
+div#uploadAttachmentsPage form.attachments fieldset {
+    padding: 15px 10px 4px 0;
+}
+
+div#uploadAttachmentsPage legend {
+    padding: 3px 0;
+}
+
+
+div#uploadAttachmentsPage div.form_buttons {
+    background-color: #F4F4F4;
+    padding: 8px 20px 8px 20px;
+    text-align: center;
+}
+
+div#uploadAttachmentsPage div.form_buttons span.right {
+    margin-right: 20px;
+}
+
+/* For button-like links to change/switch */
+
+a.changeButton  {
+    padding: 1px 4px 1px 4px;
+    margin-left: 20px;
+    font-size: 90%;
+    color : #333333;
+    text-decoration: none;
+    background-color: #CCCCCC;
+    border: 1px solid #888888;
+}
+a.changeButton:link    { color : #333333; text-decoration: none; }
+a.changeButton:visited { color : #333333; text-decoration: none; }
+a.changeButton:hover   { color : #333333; text-decoration: none; background-color: #DDDDDD; }
+a.changeButton:active  { color : #333333; text-decoration: none; }
+
+
+/* Styles for upload form */
+
+input#description  { width: 100%; }
+input#upload       { width: 100%; }
+input#display_name { width: 100%; }
+
+div#uploadAttachmentsPage p.display_name {
+    margin-top: 6px;
+}
+
+input#upload, input#upload_warning {
+    margin-top: 4px;
+}
+
+form.attachments {
+    margin: 0;
+}
+
+form.attachments fieldset { 
+    margin: 0;
+}
+
+form.attachments legend {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+form.attachments div.formWarning {
+    width: 95%;
+    font-size: 140%;
+    font-weight: bold;
+    line-height: 120%;
+    padding: 8px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color: #0000CC;
+    background-color: #FFFF66;
+}
+
+form.attachments input#upload_warning {
+    background-color: #FFFF66;
+}
+
+form.attachments input[type=checkbox] {
+    vertical-align: middle;
+}
+
+form.attachments span.right {
+    float: right;
+}
+
+
+
+/* Styles for lists of attachments on upload/update forms */
+div.attachmentsList caption {
+    font-size: 110%;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+
+/* Styles for delete warnings */
+body.modal div.attachmentsWarning,
+#main div.attachmentsWarning {
+    padding: 10px;
+}
+
+body.modal div.attachmentsWarning h1,
+#main div.attachmentsWarning h1 {
+    line-height: normal;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+body.modal div.attachmentsWarning h2,
+#main div.attachmentsWarning h2 {
+    line-height: normal;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+}
+
+body.modal div.attachmentsWarning span.left,
+#main div.attachmentsWarning span.left {
+    width: 8em;
+    float: left;
+}
+
+body.modal div.attachmentsWarning span.right,
+#main div.attachmentsWarning span.right {
+    width: 8em;
+    float: right;
+}
+
+body.modal div.attachmentsWarning div.form_buttons,
+#main div.attachmentsWarning div.form_buttons {
+    background-color: #F4F4F4;
+     padding: 8px 20px 8px 20px;
+    text-align: center;
+}
+
+
+/* Some special overrides for redisplay of forms in the iframe */
+
+body#attachments_iframe
+{
+    font-size: 0.8em;
+}
+
+body#attachments_iframe div#uploadAttachmentsPage
+{
+    margin-top: 24px;
+}
+
+body#attachments_iframe h1
+{
+    padding-bottom: 4px;
+    border-bottom: 1px solid #BBB;
+}
+
+body#attachments_iframe fieldset
+{
+    border: none;
+}
+

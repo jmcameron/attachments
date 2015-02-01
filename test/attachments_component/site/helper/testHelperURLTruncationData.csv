@@ -1,0 +1,16 @@
+http://google.com,http://google.com,20
+http://google.com,http://google.com,10
+http://goog&#183;&#183;com,http://google.com,9
+http://goo&#183;&#183;com,http://google.com,8
+http://goo&#183;&#183;om,http://google.com,7
+http://jmcameron.net,http://jmcameron.net,20
+http://jmcameron&#183;&#183;obots.txt,http://jmcameron.net/rtm/robots.txt,20
+https://jmcameron&#183;&#183;obots.txt,https://jmcameron.net/rtm/robots.txt,20
+http://localhost/test,http://localhost/test,20
+http://localhost/test/,http://localhost/test/,20
+http://localhost&#183;&#183;/test.php,http://localhost/test/test.php,20
+http://localhost&#183;&#183;#myanchor,http://localhost/test/test.php#myanchor,20
+http://localhost&#183;&#183;/test.txt,http://localhost/test/test.txt,20
+http://localhost&#183;&#183;html?id=2,http://localhost/test/test.html?id=2,20
+http://localhost&#183;&#183;mmary.pdf,http://localhost/test/CMN_2007_Meeting_Summary.pdf,20
+http://localhost&#183;&#183;21.tar.gz,http://localhost/test/joomla-multi-install-2009-03-21.tar.gz,20

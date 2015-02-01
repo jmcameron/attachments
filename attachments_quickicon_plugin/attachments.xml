@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="quickicon" version="2.5" method="upgrade">
+	<name>plg_quickicon_attachments</name>
+	<version>3.1.4-Beta14</version>
+	<creationDate>January 24, 2015</creationDate>
+	<author>Jonathan M. Cameron</author>
+	<copyright>(C) 2007-2013 Jonathan M. Cameron. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>jmcameron@jmcameron.net</authorEmail>
+	<authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+	<description>PLG_QUICKICON_ATTACHMENTS_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="attachments">attachments.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="context"
+					type="text"
+					default="mod_quickicon"
+					description="PLG_QUICKICON_ATTACHMENTS_GROUP_DESC"
+					label="PLG_QUICKICON_ATTACHMENTS_GROUP_LABEL"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

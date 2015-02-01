@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<access component="com_attachments">
+	<section name="component">
+		<action name="core.admin" title="ATTACH_PERMISSION_ADMIN_COMPONENT"
+			description="ATTACH_PERMISSION_ADMIN_COMPONENT_DESC" />
+
+		<action name="core.manage" title="ATTACH_PERMISSION_MANAGE_COMPONENT"
+			description="ATTACH_PERMISSION_MANAGE_COMPONENT_DESC" />
+
+		<action name="core.create" title="ATTACH_PERMISSION_CREATE"
+			description="ATTACH_PERMISSION_CREATE_DESC" />
+
+		<action name="core.delete" title="ATTACH_PERMISSION_DELETE"
+			description="ATTACH_PERMISSION_DELETE_DESC" />
+
+		<action name="core.edit" title="ATTACH_PERMISSION_EDIT"
+			description="ATTACH_PERMISSION_EDIT_DESC" />
+
+		<action name="core.edit.state" title="ATTACH_PERMISSION_EDITSTATE"
+			description="ATTACH_PERMISSION_EDITSTATE_DESC" />
+
+		<action name="core.edit.own" title="ATTACH_PERMISSION_EDITOWN"
+			description="ATTACH_PERMISSION_EDITOWN_DESC" />
+
+		<action name="attachments.edit.state.own" title="ATTACH_PERMISSION_EDITSTATE_OWN"
+			description="ATTACH_PERMISSION_EDITSTATE_OWN_DESC" />
+
+		<action name="attachments.delete.own" title="ATTACH_PERMISSION_DELETEOWN"
+			description="ATTACH_PERMISSION_DELETEOWN_DESC" />
+
+		<action name="attachments.edit.ownparent" title="ATTACH_PERMISSION_EDIT_OWNPARENT"
+			description="ATTACH_PERMISSION_EDIT_OWNPARENT_DESC" />
+
+		<action name="attachments.edit.state.ownparent" title="ATTACH_PERMISSION_EDITSTATE_OWNPARENT"
+			description="ATTACH_PERMISSION_EDITSTATE_OWNPARENT_DESC" />
+
+		<action name="attachments.delete.ownparent" title="ATTACH_PERMISSION_DELETE_OWNPARENT"
+			description="ATTACH_PERMISSION_DELETE_OWNPARENT_DESC" />
+	</section>
+</access>

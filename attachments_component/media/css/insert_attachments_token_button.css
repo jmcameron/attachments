@@ -1,0 +1,17 @@
+div.button2-left > div.insert_attachments_token { 
+	background: url(../images/insert_attachments_token_button.png) no-repeat scroll 100% 0; 
+}
+
+div#editor-xtd-buttons div.btn-toolbar i.icon-insert_attachments_token {
+	background: url(../images/insert_attachments_token_button_small.png) no-repeat scroll 100% 0;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+}
+
+div#editor-xtd-buttons div.btn-toolbar i.icon-insert_attachments_token_frontend {
+	background: url(../images/insert_attachments_token_button_small.png) no-repeat scroll 100% 0;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+}

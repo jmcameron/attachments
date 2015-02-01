@@ -1,0 +1,10 @@
+.button2-left .insert_attachments_token { 
+	background: url(../images/insert_attachments_token_button_rtl.png) 0 0  no-repeat; 
+}
+
+div#editor-xtd-buttons div.btn-toolbar i.icon-insert_attachments_token {
+	background: url(../images/insert_attachments_token_button_small_rtl.png) 0 0 no-repeat;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+}

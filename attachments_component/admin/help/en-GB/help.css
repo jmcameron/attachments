@@ -1,0 +1,270 @@
+@import url("../../../../templates/khepri/css/general.css");
+
+body {
+    font-size: 10pt;
+    margin: 0;
+}
+
+div.document {
+    margin: 0 20px 0 15px;
+}
+
+ul { 
+    margin: 0;
+}
+
+p {
+    margin-top: 6px;
+}
+
+ul li {
+    border-top: 8px solid transparent;
+}
+
+ol li {
+    border-top: 4px solid transparent;
+}
+
+li p {
+    display: inline;
+}
+
+h1 {
+    width: 100%;
+    font-size: 125%;
+    color: #003366;
+    margin: 20px 0 0 0;
+    border-bottom: 2px solid #024;
+}
+
+h1 a         { text-decoration: none; }
+h1 a:link    { text-decoration: none; }
+h1 a:visited { text-decoration: none; }
+h1 a:hover   { text-decoration: none; }
+h1 a:active  { text-decoration: none; }
+
+h1.title {
+    font-size: 150%;
+    border: none;
+}
+
+h2 {
+    width: 100%;
+    font-size: 110%;
+    color: #003366;
+    margin: 12px 0 0 0;
+    border-bottom: 1px solid #069;
+}
+
+h3 {
+    width: 100%;
+    font-size: 105%;
+    color: #003366;
+    margin: 8px 0 0 0;
+}
+
+p.version {
+    display: block;
+    margin-top: 16px;
+    font-size: 105%;
+}
+
+
+ul {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+pre {
+    padding: 5px 5px 5px 20px;
+    background-color: #DDDDFF;
+    color: #333333;
+    line-height: 120%;
+    border: 1px solid #ac9;
+    font-size: 90%;
+    width: 80%;
+}
+
+pre.literal-block {
+    margin-left: 40px;
+}
+
+
+tt {
+    background-color: #DDDDFF;
+    padding: 0 1px 0 1px;
+    font-size: 9pt;
+}
+
+span.pre {
+    white-space: pre;
+}
+
+a.display {
+    display: block;
+    margin: 10px 0 20px 40px;
+    font-size: 110%;
+}
+
+
+/* Style warning blocks (partially from Sphinx) */
+div.warning {
+    background-color: #ffe4e4;
+    border: 1px solid #f66;
+    width: 60%;
+    margin: 8px 0px 0px 20px;
+    padding: 6px;
+}
+div.important {
+    background-color: #e4ffe4;
+    border: 1px solid #6f6;
+    width: 60%;
+    margin: 4px 0px 0px 20px;
+    padding: 6px;
+}
+div.note,
+div.hint {
+    background-color: #DDF;
+    border: 1px solid #66F;
+    width: 60%;
+    margin: 4px 0px 0px 20px;
+    padding: 6px;
+}
+p.admonition-title {
+    display: inline;
+    font-weight: bold;
+}
+p.admonition-title:after {
+    content: ":";
+}
+
+/* -- topics (from Sphinx) ------------------------------ */
+div.topic {
+    border: 1px solid #ccc;
+    padding: 7px 7px 0 7px;
+    margin: 10px 0 10px 0;
+}
+p.topic-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+div#contents {
+    margin: 0 0 20px 40px;
+    background-color: #BBBBFF;
+    border: 1px solid #003366;
+    width: 60%;
+}
+
+div#contents ul {
+    margin: 6px 0 0 0;
+}
+
+div#contents p.topic-title {
+    margin: 0;
+}
+
+div.header, div.footer {
+    margin: 0;
+    color: #003366;
+    background-color: #BBBBFF;
+}
+
+div.header {
+    padding: 4px 0 6px 10px;
+    border-bottom: 1px solid #0000FF;
+}
+
+div.footer {
+    padding: 6px 0 4px 10px;
+    border-top: 1px solid #0000FF;
+}
+
+
+hr.header, hr.footer {
+    display: none;
+}
+
+
+/* Fix some margins */
+
+div#contents li {
+    margin: 0;
+    padding: 0 0 4px 0;
+    border: 0;
+}
+
+dl.docutils dt {
+    margin: 0;
+}
+
+dl.docutils dd {
+    margin: 0;
+}
+
+blockquote {
+    margin: 0;
+}
+
+.first {
+    margin-top: 0 !important;
+}
+
+.float-right {
+    float: right;
+}
+
+div.figure {
+    margin-left: 50px;
+}
+
+p.caption {
+    margin-left: 50px;
+    font-size: 95%;
+    font-style: italic;
+}
+
+div.small-figure {
+    margin-left: 70px;
+    width: 50%;
+}
+
+div.small-figure p.caption {
+    margin-left: 10px;
+    width: 70%;
+}
+
+table.permissions {
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1;
+    cellspacing: 0;
+    cellpadding: 2px;
+    background: transparent;    
+    border-collapse:collapse;
+}
+
+table.permissions th,
+table.permissions td {
+    background: transparent; 
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #000;
+}
+
+table.permissions th {
+    background-color: #DDD;
+    font-size: 105%;
+    font-weight: bold;
+}
+
+div.hide-title p.admonition-title {
+    display: none;
+}
+
+/* Color the links (including sections) */
+a:link    { color : #003366; text-decoration: underline; }
+a:visited { color : #003366; text-decoration: underline; }
+a:hover   { color : #FF0000; text-decoration: underline; }
+a:active  { color : #003366; text-decoration: underline; }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+        <fieldset>
+                <field name="id" type="text" default="0"
+			label="ATTACH_ATTACHMENT_ID" description="ATTACH_ATTACHMENT_ID_DESCRIPTION"
+			readonly="true" class="readonly"
+                />
+                <field  name="state" type="radio" default="0"
+                        label="JPUBLISHED" description="" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="parent_type" type="text"
+                        label="ATTACH_PARENT_TYPE" description="ATTACH_PARENT_TYPE_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="parent_entity" type="text"
+                        label="ATTACH_PARENT_ENTITY" description="ATTACH_PARENT_ENTITY_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="parent_id" type="text"
+                        label="ATTACH_PARENT_ID" description="ATTACH_PARENT_ID_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="filename" type="file"
+                        label="ATTACH_FILENAME" description="ATTACH_FILENAME_DESCRIPTION"
+                />
+                <field  name="filename_sys" type="text"
+                        label="ATTACH_SYSTEM_FILENAME" description="ATTACH_SYSTEM_FILENAME_DESCRIPTION"
+		        readonly="true" class="readonly"
+                />
+                <field  name="file_type" type="text"
+                        label="ATTACH_FILE_TYPE" description="ATTACH_FILE_TYPE_DESCRIPTION"
+		        readonly="true" class="readonly"
+                        size="70"
+                />
+                <field  name="file_size" type="text"
+                        label="ATTACH_FILE_SIZE_KB" description=""
+		        readonly="true" class="readonly"
+                />
+		<field  name="icon_filename" type="Iconfilenames"
+                        label="ATTACH_ICON_FILENAME" description="ATTACH_ICON_FILENAME_DESCRIPTION"
+                />
+                <field  name="uri_type" type="text"
+                        label="ATTACH_ATTACHMENT_TYPE" description=""
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+                <field  name="url" type="text"
+		        readonly="true" class="readonly"
+                        label="ATTACH_URL" description="ATTACH_URL_DESCRIPTION"
+			size="70"
+                />
+                <field  name="url_valid" type="radio"
+                        label="ATTACH_URL_IS_VALID" description="ATTACH_URL_IS_VALID_TOOLTIP"
+			default="1" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="url_relative" type="radio"
+                        label="ATTACH_RELATIVE_URL" description="ATTACH_RELATIVE_URL_TOOLTIP"
+			default="0" >
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+                </field>
+                <field  name="display_name" type="text" class="inputbox"
+                        label="ATTACH_DISPLAY_NAME" description="ATTACH_DISPLAY_NAME_DESCRIPTION"
+                        size="80" maxlength="255"
+                        default=""
+                />
+                <field  name="user_field_1" type="text" class="inputbox"
+                        label="ATTACH_USER_DEFINED_FIELD_1" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="user_field_2" type="text" class="inputbox"
+                        label="ATTACH_USER_DEFINED_FIELD_2" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="user_field_3" type="text" class="inputbox"
+                        label="ATTACH_USER_DEFINED_FIELD_3" description=""
+                        size="80" maxlength="100"
+                        default=""
+                />
+                <field  name="description" type="text" class="inputbox"
+                        label="ATTACH_DESCRIPTION" description="ATTACH_DESCRIPTION_DESCRIPTION"
+                        size="80" maxlength="255"
+                        default=""
+                />
+		<field name="created" type="Date"
+			label="ATTACH_DATE_CREATED" description=""
+		        readonly="true" class="readonly"
+                />
+		<field name="modified" type="Date"
+			label="ATTACH_LAST_MODIFIED" description=""
+		        readonly="true" class="readonly"
+                />
+                <field  name="download_count" type="text"
+                        label="ATTACH_NUMBER_OF_DOWNLOADS" description="ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP"
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+                <field  name="created_by" type="text"
+                        label="ATTACH_CREATOR_ID" description=""
+		        readonly="true" class="readonly"
+                        size="10"
+                />
+        </fieldset>
+</form>
