@@ -53,6 +53,9 @@ updateweb:
 	@echo "Updating updates on jmcameron.net..."
 	@ssh jmcameron.net "cd webapps/jmcameron/attachments/updates; git pull"
 
+count:
+	@ssh jmcameron "cd logs/apache; grep attachments-3.2.0.zip access_jmcameron*.log* | wc -l"
+
 clean:
 	@find . -name '*~' -exec rm {} \;
 	@rm -f _tests.pdf
