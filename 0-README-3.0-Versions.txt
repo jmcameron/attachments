@@ -1,11 +1,40 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+3.2.0 - Released February 1, 2015
+   - 2014-01-18 Adjustment to migration importer to better handle UTF-8
+   - 2014-01-19 Fix to disable attachments display on category list title (J3)
+   - 2014-01-26 Fix to migration importer to strip of any leading BOM
+   - 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
+   - 2014-05-30 Fixes to be more robust to partial/failed uninstalls
+   - 2015-06-08 Disable all attachments plugins if component is uninstalled.
+       This should prevent problems when incorrectly uninstalling only the 
+       component. To uninstall correctly, uninstall the Attachments Package;
+       it will uninstall the component and all plugins.
+   - 2014-08-22 Refactored displaying attachments lists in editors
+   - 2014-08-23 Disable all attachments plugins if uninstalling
+       the Attachments content plugin, the Attachments plugin framework 
+       plugin, and the Attachments for content plugin. See 2014-06-08 note.
+   - 2014-08-23 Added checking for supported databases during installation.
+   - 2014-09-14 Refactor of Attachments plugin API to better support other components.
+   - 2014-09-17 Fixed bug in joomfish/lanternfish handling
+   - 2014-09-18 More updates for joomfish/lanternfish handling
+   - 2014-10-14 Cleaned up Javascript of refresh function
+   - 2014-11-04 Fix for editor add-attachments button issue
+   - 2014-11-16 Fixed bug when creating article from front end
+   - 2014-11-28 Fix to better handle PDF mime type
+   - 2014-12-12 Fix for missing 'Add Attachment' button for Joomla 3.4
+   - 2015-01-24 Fixed missing admin utils icon in Joomla 3.3.6
+   - 2015-02-01 Moved repos from joomlacode.org to github.com
+   - 2015-02-01 Switched to semver-compatible version numbering
+        (This version number is not quite semver compliant but future ones will be)
+
 3.1.3 - Released November 15, 2013
    - Joomla 3.2 Compatibility Release
    - Allow display of attachments lists in editors for non-article
    - Fixed migration importer handle obsolete 'section' attachments
    - Fixed bug in 'Show attachments to non logged-in users' option
    - Fixed issue with displaying options with Joomla 3.2.
+   - 58627 Downloads
 
 3.1.2 - Released August 14, 2013
    - SECURITY RELEASE
