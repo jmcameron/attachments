@@ -24,7 +24,7 @@ NAMES = $(INSTALLS) $(EXTRAS)
 
 ZIPS = $(NAMES:=.zip)
 
-ZIPIGNORES = -x "*.svn/*" -x ".svnignore" -x ".directory" -x "*.xcf" -x "*admin/help*"
+ZIPIGNORES = -x "*.git*" -x "*.svn*" -x ".directory" -x "*.xcf" -x "*admin/help*"
 
 parts: $(ZIPS)
 
@@ -51,7 +51,7 @@ upload:
 
 updateweb:
 	@echo "Updating updates on jmcameron.net..."
-	@ssh jmcameron.net "cd webapps/jmcameron/attachments/updates; svn update"
+	@ssh jmcameron.net "cd webapps/jmcameron/attachments/updates; git pull"
 
 clean:
 	@find . -name '*~' -exec rm {} \;
@@ -126,7 +126,7 @@ _tests.pdf: _tests.rst
 docs:
 	@echo "Generating documentation using PhpDocumentor..."
 	@echo " (Note: see docerrs.log for error log)"
-	@phpdoc -c /home/jmcameron/src/attachments/work-j1.6/docs.ini | egrep -v -e '(Ignored|File not parsed)' > docerrs.log
+	@phpdoc -c /home/jmcameron/src/attachments/attachments3/docs.ini | egrep -v -e '(Ignored|File not parsed)' > docerrs.log
 
 fixperms:
 	@find . -name '*.gif' -exec chmod -x {} \;
@@ -139,10 +139,10 @@ fixperms:
 	@find . -name '*.xml' -exec chmod -x {} \;
 
 watchfiles:
-	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch &
+	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/attachments3/watch &
 
 watchfiles25:
-	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/work-j1.6/watch25 &
+	@xterm -geometry 45x200+0+0 -T Attachments -e /home/jmcameron/src/attachments/attachments3/watch25 &
 
 # windmill:
 # 	$(eval APASS := `kdialog --password "Admin password:"`)
