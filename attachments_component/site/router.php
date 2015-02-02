@@ -46,7 +46,7 @@ function AttachmentsBuildRoute(&$query)
 	$app		= JFactory::getApplication();
 	$menu		= $app->getMenu();
 
-	// we need a menu item.  Either the one specified in the query, or the current active one if none specified
+	// we need a menu item.	 Either the one specified in the query, or the current active one if none specified
 	if (empty($query['Itemid'])) {
 		$menuItem = $menu->getActive();
 	}

@@ -28,7 +28,7 @@ class AttachmentsViewUtils extends JViewLegacy
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  A template file to load. [optional]
+	 * @param	string	$tpl  A template file to load. [optional]
 	 *
 	 */
 	public function display($tpl = null)

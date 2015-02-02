@@ -2,13 +2,13 @@
 /**
  * Attachments for extensions
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_Framework
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_Framework
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // No direct access
@@ -25,7 +25,7 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * attaching files to various types of content entities
  *
  * The derived attachments plugin class must be in the main PHP file for that
- * plugin.    For instance for content articles or categories, the parent type
+ * plugin.	  For instance for content articles or categories, the parent type
  * is 'com_content'.  The parent type is simply the name of the component
  * involved (eg, 'com_content').  The derived attachments plugin class (such
  * as 'AttachmentsPlugin_com_content') should be defined in the main file for
@@ -35,14 +35,14 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * code after the class definition to register the derived class with the
  * Attachments plugin manager:
  *
- *     $apm = getAttachmentsPluginManager();
- *     $apm->addParentType('com_content');
+ *	   $apm = getAttachmentsPluginManager();
+ *	   $apm->addParentType('com_content');
  *
  * where 'com_content' should be replaced by the name of the appropriate
  * parent type (component).
  *
- * @package  Attachments
- * @since    3.0
+ * @package	 Attachments
+ * @since	 3.0
  */
 class AttachmentsPlugin extends JPlugin
 {
@@ -54,7 +54,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note that this name will be used for a directory for attachments entries
 	 * and should not contain any spaces.  It should correspond to the default
-	 * entity.    For instance, for com_content, it will be 'article';
+	 * entity.	  For instance, for com_content, it will be 'article';
 	 */
 	protected $default_entity = null;
 
@@ -64,15 +64,15 @@ class AttachmentsPlugin extends JPlugin
 
 	/** An associative array of entity names
 	 *
-	 *    For each type of attachments plugin, there will be a default
-	 *    entity types.  For com_content, the default is 'article'.  If
-	 *    the $default value for the function calls below is omitted,
-	 *    the entity is assumed to be 'article'.    In some cases, the
-	 *    actual proper name of the entity will be available and will be
-	 *    passed in to the $default argument.     It is important that the
-	 *    plugin code recognizes that the entity 'default' is an alias
-	 *    for 'article'.    This array allows a simple associative array
-	 *    lookup to transform 'default' to 'article'.
+	 *	  For each type of attachments plugin, there will be a default
+	 *	  entity types.	 For com_content, the default is 'article'.	 If
+	 *	  the $default value for the function calls below is omitted,
+	 *	  the entity is assumed to be 'article'.	In some cases, the
+	 *	  actual proper name of the entity will be available and will be
+	 *	  passed in to the $default argument.	  It is important that the
+	 *	  plugin code recognizes that the entity 'default' is an alias
+	 *	  for 'article'.	This array allows a simple associative array
+	 *	  lookup to transform 'default' to 'article'.
 	 */
 	protected $entity_name = Array();
 
@@ -81,7 +81,7 @@ class AttachmentsPlugin extends JPlugin
 	protected $entity_table = Array();
 
 	/** An associative array of entity id fields
-	 *    (in same table as the title)
+	 *	  (in same table as the title)
 	 */
 	protected $entity_id_field = Array();
 
@@ -112,8 +112,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Constructor
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An optional associative array of configuration settings.
+	 * @param	object	&$subject  The object to observe
+	 * @param	array	$config	   An optional associative array of configuration settings.
 	 * Recognized key values include 'name', 'group', 'params', 'language'
 	 * (this list is not meant to be comprehensive).
 	 */
@@ -128,7 +128,7 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get the attachments parameter object
 	 *
-	 * @return   object  com_attachments parameter object
+	 * @return	 object	 com_attachments parameter object
 	 */
 	public function attachmentsParams()
 	{
@@ -147,7 +147,7 @@ class AttachmentsPlugin extends JPlugin
 	 * This will only be called by the main attachments 'onPrepareContent'
 	 * plugin if $attachment does not have an id
 	 *
-	 * @param   object  &$attachment  the attachment
+	 * @param	object	&$attachment  the attachment
 	 *
 	 * @return id if found, false if this is not a valid parent
 	 */
@@ -169,8 +169,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Return a string of the where clause for filtering the the backend list of attachments
 	 *
-	 * @param   string  $parent_state   the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
-	 * @param   string  $filter_entity  the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
+	 * @param	string	$parent_state	the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
+	 * @param	string	$filter_entity	the entity filter ('ALL', 'ARTICLE', 'CATEGORY', etc)
 	 *
 	 * @return an array of (join_clause, where_clause) items
 	 */
@@ -187,7 +187,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Derived classes MUST overrride this
 	 *
-	 * @param   &object  &$parent  The object for the parent (row) that onPrepareContent gets
+	 * @param	&object	 &$parent  The object for the parent (row) that onPrepareContent gets
 	 *
 	 * @return the correct entity (eg, 'default', 'category', etc) or false if this entity should not be displayed.
 	 */
@@ -204,13 +204,13 @@ class AttachmentsPlugin extends JPlugin
 	 * The second argument of the onContentPrepare() function is an object
 	 * (usually $row) for the content item (eg, article).  This function will
 	 * return the appropriate field for the text of the content item.  In some
-	 * cases it is 'text', in others, 'introtext'.  Attachments plugins can
+	 * cases it is 'text', in others, 'introtext'.	Attachments plugins can
 	 * override this function to provide the field name more intelligently.
 	 *
 	 * Note: returns null if the text field is unknown/not present.
 	 *
-	 * @param   &object  &$row           the content object (eg, article) being displayed
-	 * @param   string   $parent_entity  the type of entity for this content item.
+	 * @param	&object	 &$row			 the content object (eg, article) being displayed
+	 * @param	string	 $parent_entity	 the type of entity for this content item.
 	 *
 	 * @return string name of the text field of this content item object.
 	 */
@@ -265,7 +265,7 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note, for com_content, the default is 'article'
 	 *
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return the canonical extension entity
 	 */
@@ -296,9 +296,9 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note that this does not include the base directory for attachments.
 	 *
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   int     $parent_id      the ID for the parent object
-	 * @param   int     $attachment_id  the ID for the attachment
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for the parent object
+	 * @param	int		$attachment_id	the ID for the attachment
 	 *
 	 * @return string the directory name for this entity (with trailing '/'!)
 	 */
@@ -314,8 +314,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get the name or title for the specified object
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return the name or title for the specified object
 	 */
@@ -336,9 +336,9 @@ class AttachmentsPlugin extends JPlugin
 			return $this->title_cache[$cache_key];
 		}
 
-		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_table		= $this->entity_table[$parent_entity];
 		$entity_title_field = $this->entity_title_field[$parent_entity];
-		$entity_id_field    = $this->entity_id_field[$parent_entity];
+		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Make sure the parent exists
 		if (!$this->parentExists($parent_id, $parent_entity))
@@ -351,7 +351,7 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Look up the title
-		$db    = JFactory::getDBO();
+		$db	   = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
@@ -360,7 +360,7 @@ class AttachmentsPlugin extends JPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
+			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 												 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			JError::raiseError(500, $errmsg);
 		}
@@ -373,8 +373,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Return an array of entity items (with id,title pairs for each item)
 	 *
-	 * @param   string  $parent_entity  the type of entity to search for
-	 * @param   string  $filter         filter the results for matches for this filter string
+	 * @param	string	$parent_entity	the type of entity to search for
+	 * @param	string	$filter			filter the results for matches for this filter string
 	 *
 	 * @return the array of entity id,title pairs
 	 */
@@ -382,19 +382,19 @@ class AttachmentsPlugin extends JPlugin
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_table		= $this->entity_table[$parent_entity];
 		$entity_title_field = $this->entity_title_field[$parent_entity];
-		$entity_id_field    = $this->entity_id_field[$parent_entity];
+		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app       = JFactory::getApplication();
-		$order     = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+		$app	   = JFactory::getApplication();
+		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
 												   'filter_order', '', 'cmd');
 		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
 												   'filter_order_Dir', '', 'word');
 
 		// Get all the items
-		$db    = JFactory::getDBO();
+		$db	   = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from("#__$entity_table");
@@ -425,7 +425,7 @@ class AttachmentsPlugin extends JPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg             = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
+			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
 		}
 		else
@@ -462,7 +462,7 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Return the URL that can be called to select a specific content item.
 	 *
-	 * @param   string  $parent_entity  the type of entity to select from
+	 * @param	string	$parent_entity	the type of entity to select from
 	 *
 	 * @return the URL that can be called to select a specific content item
 	 */
@@ -482,8 +482,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Return the ID of the creator/owner of the parent entity
 	 *
-	 * @param   int     $parent_id      the ID for the parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for the parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return creators id if found, 0 otherwise
 	 */
@@ -495,8 +495,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get a URL to view the entity
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return a URL to view the entity (non-SEF form)
 	 */
@@ -508,9 +508,9 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get a URL to add an attachment to a specific entity
 	 *
-	 * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   string  $from           where the call should return to
+	 * @param	int		$parent_id		the ID for the parent entity object (null if the parent does not exist)
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	string	$from			where the call should return to
 	 *
 	 * @return the url to add a new attachments to the specified entity
 	 */
@@ -547,8 +547,8 @@ class AttachmentsPlugin extends JPlugin
 	 *
 	 * Note: this public function assumes that the parent_id's match
 	 *
-	 * @param   string  $parent_entity         the parent entity for the parent of the list
-	 * @param   string  $rtitle_parent_entity  the entity of the candidate attachment list title (from params)
+	 * @param	string	$parent_entity		   the parent entity for the parent of the list
+	 * @param	string	$rtitle_parent_entity  the entity of the candidate attachment list title (from params)
 	 *
 	 * @return true if the custom title should be used
 	 */
@@ -560,15 +560,15 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Get the title for the attachments list for this parent
 	 *
-	 * @param   string  $title          the untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE' or 'ATTACH_EXISTING_ATTACHMENTS')
-	 * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	string	$title			the untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE' or 'ATTACH_EXISTING_ATTACHMENTS')
+	 * @param	int		$parent_id		the ID for the parent entity object (null if the parent does not exist)
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return the translated title string
 	 */
 	public function attachmentsListTitle($title, $parent_id, $parent_entity = 'default')
 	{
-		$aparams     = $this->attachmentsParams();
+		$aparams	 = $this->attachmentsParams();
 		$rtitle_str = $aparams->get('attachments_titles', '');
 		if (($title != 'ATTACH_EXISTING_ATTACHMENTS') && ($rtitle_str != ''))
 		{
@@ -578,7 +578,7 @@ class AttachmentsPlugin extends JPlugin
 			{
 				if (preg_match('|^([0-9]+)\s*([^$]+)$|', $rtitle, $match))
 				{
-					// Process:     3 new title
+					// Process:		3 new title
 					// NOTE: This form only applies to articles and will be ignored for anything else
 					if ((int) $parent_id != (int) $match[1])
 					{
@@ -592,7 +592,7 @@ class AttachmentsPlugin extends JPlugin
 				}
 				elseif (preg_match('|^([a-zA-Z0-9_/-]+):([0-9]+)\s*([^$]+)$|', $rtitle, $match))
 				{
-					// Process:      entity:3 new title
+					// Process:		 entity:3 new title
 					if ((int) $parent_id != (int) $match[2])
 					{
 						continue;
@@ -621,8 +621,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Does the parent exist?
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return true if the parent exists
 	 */
@@ -638,10 +638,10 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// First time, so look up the parent
-		$entity_table    = $this->entity_table[$parent_entity];
+		$entity_table	 = $this->entity_table[$parent_entity];
 		$entity_id_field = $this->entity_id_field[$parent_entity];
-		$db              = JFactory::getDBO();
-		$query           = $db->getQuery(true);
+		$db				 = JFactory::getDBO();
+		$query			 = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
 		$db->setQuery($query, 0, 1);
@@ -661,7 +661,7 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Is the parent new (based on the parent_id)
 	 *
-	 * @param   object  &$attachment  the attachment
+	 * @param	object	&$attachment  the attachment
 	 *
 	 * @return true if the parent is new (being created)
 	 */
@@ -676,8 +676,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Check to see if the parent is published
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return true if the parent is published
 	 */
@@ -689,8 +689,8 @@ class AttachmentsPlugin extends JPlugin
 	/**
 	 * Check to see if the parent is archived
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return true if the parent is archived
 	 */
@@ -710,9 +710,9 @@ class AttachmentsPlugin extends JPlugin
 	 * also need to check whether viewing the specific content item (eg,
 	 * article) is permitted.
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	object	$user_id		the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
@@ -723,13 +723,13 @@ class AttachmentsPlugin extends JPlugin
 
 	/** Return true if the attachments should be hidden for this parent
 	 *
-	 * @param   &object  &$parent        the object for the parent that onPrepareContent gives
-	 * @param   int      $parent_id      the ID of the parent the attachment is attached to
-	 * @param   string   $parent_entity  the type of entity for this parent type
+	 * @param	&object	 &$parent		 the object for the parent that onPrepareContent gives
+	 * @param	int		 $parent_id		 the ID of the parent the attachment is attached to
+	 * @param	string	 $parent_entity	 the type of entity for this parent type
 	 *
 	 * Note: this generic version only implements the 'frontpage' option.  All
-	 *         other options should be handled by the derived classes for other
-	 *         content types.
+	 *		   other options should be handled by the derived classes for other
+	 *		   content types.
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
@@ -759,12 +759,12 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if the user may add an attachment to this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *    It is up to the caller to validate these objects before calling this function.)
+	 *	  It is up to the caller to validate these objects before calling this function.)
 	 *
-	 * @param   int     $parent_id      the ID of the parent the attachment is attached to
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   bool    $new_parent     if true, the parent is being created and does not exist yet
-	 * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id		the ID of the parent the attachment is attached to
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	bool	$new_parent		if true, the parent is being created and does not exist yet
+	 * @param	object	$user_id		the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user add attachments to this parent
 	 */
@@ -777,10 +777,10 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may edit (modify/delete/update) this attachment for this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *    It is up to the caller to validate the arguments before calling this function.)
+	 *	  It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param   &record  &$attachment  database record for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database record for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may edit this attachment
 	 */
@@ -793,10 +793,10 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may delete this attachment for this parent
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *    It is up to the caller to validate the arguments before calling this function.)
+	 *	  It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param   &record  &$attachment  database record for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database record for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may delete this attachment
 	 */
@@ -809,12 +809,12 @@ class AttachmentsPlugin extends JPlugin
 	 * Return true if this user may change the state of this attachment
 	 *
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
-	 *    It is up to the caller to validate the arguments before calling this function.)
+	 *	  It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param   int     $parent_id              the ID for the parent object
-	 * @param   string  $parent_entity          the type of entity for this parent type
-	 * @param   int     $attachment_creator_id  the ID of the creator of the attachment
-	 * @param   object  $user_id                the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id				the ID for the parent object
+	 * @param	string	$parent_entity			the type of entity for this parent type
+	 * @param	int		$attachment_creator_id	the ID of the creator of the attachment
+	 * @param	object	$user_id				the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
@@ -825,8 +825,8 @@ class AttachmentsPlugin extends JPlugin
 
 	/** Check to see if the user may access (see/download) the attachments
 	 *
-	 * @param   &record  &$attachment  database record for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database record for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if access is okay (false if not)
 	 */
@@ -837,11 +837,11 @@ class AttachmentsPlugin extends JPlugin
 
 	/** Insert the attachments list into the content text (for front end)
 	 *
-	 * @param   object  &$content       the text of the content item (eg, article text)
-	 * @param   int     $parent_id      the ID for the parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	object	&$content		the text of the content item (eg, article text)
+	 * @param	int		$parent_id		the ID for the parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
-	 * @return  string  the modified content text (false for failure)
+	 * @return	string	the modified content text (false for failure)
 	 */
 	public function insertAttachmentsList(&$content, $parent_id, $parent_entity)
 	{
@@ -855,7 +855,7 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Determine where we are
-		$from   = JRequest::getCmd('view');
+		$from	= JRequest::getCmd('view');
 		$Itemid = JRequest::getInt('Itemid', 1);
 
 		// See whether we can display the links to add attachments
@@ -869,9 +869,9 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Get the attachments tag, if present
-		$attachments_tag      = '';
+		$attachments_tag	  = '';
 		$attachments_tag_args = '';
-		$match                = false;
+		$match				  = false;
 		if (JString::strpos($content->$text_field_name, '{attachments'))
 		{
 			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
@@ -882,7 +882,7 @@ class AttachmentsPlugin extends JPlugin
 			if (isset($match[1]) && $match[1])
 			{
 				$attachments_tag_args_raw = $match[1];
-				$attachments_tag_args     = ltrim($attachments_tag_args_raw, ' :');
+				$attachments_tag_args	  = ltrim($attachments_tag_args_raw, ' :');
 			}
 
 			if ($attachments_tag)
@@ -892,8 +892,8 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Check the security status
-		$attach_dir   = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-		$secure       = $aparams->get('secure', false);
+		$attach_dir	  = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
+		$secure		  = $aparams->get('secure', false);
 		$hta_filename = $attach_dir . '/ . htaccess';
 		if (($secure && !file_exists($hta_filename)) || (!$secure && file_exists($hta_filename)))
 		{
@@ -901,20 +901,20 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Construct the attachment list (if appropriate)
-		$html                = '';
-		$attachments_list    = false;
+		$html				 = '';
+		$attachments_list	 = false;
 		$add_attachement_btn = false;
 
 		// Get the html for the attachments list
 		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
-		$controller       = new AttachmentsControllerAttachments;
+		$controller		  = new AttachmentsControllerAttachments;
 		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ($attachments_list == '')
 		{
-			$class_name       = $aparams->get('attachments_table_style', 'attachmentsList');
-			$div_id           = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
+			$class_name		  = $aparams->get('attachments_table_style', 'attachmentsList');
+			$div_id			  = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
 			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 		}
 
@@ -1013,13 +1013,13 @@ class AttachmentsPlugin extends JPlugin
 
 
 	/** Get the parent_id in the component content item editor
-	 *  (the article or category editor)
+	 *	(the article or category editor)
 	 *
 	 * @param  string  $parent_entity  the type of entity for this parent type
 	 *
 	 * @return the parent ID, null if the content item is being created, and false if there is no match
 	 *
-	 * @since    Attachments 3.2
+	 * @since	 Attachments 3.2
 	 */
 	public function getParentIdInEditor($parent_entity, $view, $layout)
 	{
@@ -1044,11 +1044,11 @@ class AttachmentsPlugin extends JPlugin
 
 	/** See if the attachments list should be displayed in its content description editor
 	 *
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   string  $view           the view
-	 * @param   string  $layout         the layout on the view
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	string	$view			the view
+	 * @param	string	$layout			the layout on the view
 	 *
-	 * @return  true if the attachments list should be added to the editor
+	 * @return	true if the attachments list should be added to the editor
 	 */
 	public function showAttachmentsInEditor($parent_entity, $view, $layout)
 	{
@@ -1058,12 +1058,12 @@ class AttachmentsPlugin extends JPlugin
 
 	/** Insert the attachments list into the entity editor page
 	 *
-	 * @param   int     $parent_id      the ID for the parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   string  $attachments    the attachments list as a string
-	 * @param   string  $body           the editor page text
+	 * @param	int		$parent_id		the ID for the parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	string	$attachments	the attachments list as a string
+	 * @param	string	$body			the editor page text
 	 *
-	 * @return  string  the modified editor page text (false for failure)
+	 * @return	string	the modified editor page text (false for failure)
 	 */
 	public function insertAttachmentsListInEditor($parent_id, $parent_entity, $attachments, $body)
 	{

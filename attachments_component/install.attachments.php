@@ -47,7 +47,7 @@ class com_AttachmentsInstallerScript
 	/**
 	 * An array of supported database types
 	 *
-	 * @var    array
+	 * @var	   array
 	 */
 	protected $dbKnown = array('mysql' => 'MySQL',
 							   'mysqli' => 'MySQLi',
@@ -58,7 +58,7 @@ class com_AttachmentsInstallerScript
 	/**
 	 * An array of supported database types
 	 *
-	 * @var    array
+	 * @var	   array
 	 */
 	protected $dbSupported = array('mysql', 'mysqli');
 
@@ -206,7 +206,7 @@ class com_AttachmentsInstallerScript
 
 		// If there is debris from a previous failed attempt to install Attachments, delete it
 		// NOTE: Creating custom query because using JComponentHelper::isEnabled insists on
-		//       printing a warning if the component is not installed
+		//		 printing a warning if the component is not installed
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('extension_id AS id, enabled');

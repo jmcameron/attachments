@@ -29,7 +29,7 @@ class plgSearchAttachments extends JPlugin
 	 *
 	 * @access		protected
 	 * @param		object	$subject The object to observe
-	 * @param		array	$config  An array that holds the plugin configuration
+	 * @param		array	$config	 An array that holds the plugin configuration
 	 * @since		1.5
 	 */
 	public function __construct(& $subject, $config)

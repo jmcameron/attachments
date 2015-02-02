@@ -69,7 +69,7 @@ class AttachmentsFileTypes {
 			   'txt' => 'text.gif',
 			   'vcf' => 'vcard.gif',
 			   'vrml' => '3d.gif',
-			   'wav' =>  'audio.gif',
+			   'wav' =>	 'audio.gif',
 			   'wma' => 'music.gif',
 			   'wmv' => 'video.gif',
 			   'wrl' => '3d.gif',

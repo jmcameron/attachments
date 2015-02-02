@@ -139,7 +139,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 		 title="<?php echo $access_attachment_title; ?>"
 		  ><?php echo JHtml::image('com_attachments/download.gif', $download_verb, null, true); ?></a>
 	  </td>
-      <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
+	  <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
 	  <td class="at_access" align="center"><?php echo $access; ?></td>
 	  <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
 		 <td class="at_user_field"><?php echo stripslashes($item->user_field_1); ?></td>

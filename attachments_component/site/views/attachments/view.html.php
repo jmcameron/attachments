@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted Access');
 
 /** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');  /* ??? Needed? */
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');	/* ??? Needed? */
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Define the legacy classes, if necessary */
@@ -85,7 +85,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$this->addTemplatePath($templateDir);
 
 		// Load the language files from the attachments plugin
-		$lang =  JFactory::getLanguage();
+		$lang =	 JFactory::getLanguage();
 		$lang->load('plg_content_attachments', JPATH_SITE.'/plugins/content/attachments');
 
 		// Get the component parameters

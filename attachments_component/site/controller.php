@@ -205,8 +205,8 @@ class AttachmentsController extends JControllerLegacy
 
 		$view->parent	  = $parent;
 		$view->new_parent = $new_parent;
-		$view->Itemid     = $Itemid;
-		$view->from       = $from;
+		$view->Itemid	  = $Itemid;
+		$view->from		  = $from;
 
 		$view->params = $params;
 
@@ -741,7 +741,7 @@ class AttachmentsController extends JControllerLegacy
 
 		$view->attachment = $attachment;
 
-		$view->parent     = $parent;
+		$view->parent	  = $parent;
 		$view->params	  = $params;
 
 		$view->from		  = $from;

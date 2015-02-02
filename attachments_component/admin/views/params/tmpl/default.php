@@ -52,7 +52,7 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 					foreach ($fieldSets as $name => $fieldSet) :
 						$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
 				?>
-					<li><a href="#<?php echo $name;?>" data-toggle="tab"><?php echo  JText::_($label);?></a></li>
+					<li><a href="#<?php echo $name;?>" data-toggle="tab"><?php echo	 JText::_($label);?></a></li>
 				<?php
 					endforeach;
 				?>

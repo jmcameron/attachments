@@ -129,7 +129,7 @@ if ( $this->error )
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
 		<input type="checkbox" name="relative_url" value="relative" <?php echo $this->relative_url_checked ?>
-               title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+			   title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		<a class="changeButton" href="<?php echo $this->normal_update_url ?>"
 		   title="<?php echo JText::_('ATTACH_NORMAL_UPDATE_TOOLTIP'); ?>"
 		   ><?php echo JText::_('ATTACH_NORMAL_UPDATE') ?></a> <br />

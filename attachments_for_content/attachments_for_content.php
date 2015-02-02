@@ -2,13 +2,13 @@
 /**
  * Attachments plugins for content
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_For_Content
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_For_Content
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // No direct access
@@ -25,16 +25,16 @@ if (!JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
 /**
  * The class for the Attachments plugin for regular Joomla! content (articles, categories)
  *
- * @package  Attachments
- * @since    3.0
+ * @package	 Attachments
+ * @since	 3.0
  */
 class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 {
 	/**
 	 * Constructor
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An optional associative array of configuration settings.
+	 * @param	object	&$subject  The object to observe
+	 * @param	array	$config	   An optional associative array of configuration settings.
 	 *
 	 * Recognized key values include 'name', 'group', 'params', 'language'
 	 * (this list is not meant to be comprehensive).
@@ -44,25 +44,25 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		parent::__construct($subject, $config);
 
 		// Configure the plugin
-		$this->_name          = 'attachments_for_content';
+		$this->_name		  = 'attachments_for_content';
 
 		// Set basic attachments defaults
-		$this->parent_type    = 'com_content';
+		$this->parent_type	  = 'com_content';
 		$this->default_entity = 'article';
 
 		// Add the information about the default entity (article)
-		$this->entities[]                    = 'article';
-		$this->entity_name['article']        = 'article';
-		$this->entity_name['default']        = 'article';
-		$this->entity_table['article']       = 'content';
-		$this->entity_id_field['article']    = 'id';
+		$this->entities[]					 = 'article';
+		$this->entity_name['article']		 = 'article';
+		$this->entity_name['default']		 = 'article';
+		$this->entity_table['article']		 = 'content';
+		$this->entity_id_field['article']	 = 'id';
 		$this->entity_title_field['article'] = 'title';
 
 		// Add information about the category description entity
-		$this->entities[]                     = 'category';
-		$this->entity_name['category']        = 'category';
-		$this->entity_table['category']       = 'categories';
-		$this->entity_id_field['category']    = 'id';
+		$this->entities[]					  = 'category';
+		$this->entity_name['category']		  = 'category';
+		$this->entity_table['category']		  = 'categories';
+		$this->entity_id_field['category']	  = 'id';
 		$this->entity_title_field['category'] = 'title';
 
 		// Always load the language
@@ -75,7 +75,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * From the view and the class of the parent (row of onPrepareContent plugin),
 	 * determine what the entity type is for this entity.
 	 *
-	 * @param   &object  &$parent  The object for the parent (row) that onPrepareContent gets
+	 * @param	&object	 &$parent  The object for the parent (row) that onPrepareContent gets
 	 *
 	 * @return the correct parent entity (eg, 'article', 'category')
 	 */
@@ -107,13 +107,13 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * The second argument of the onContentPrepare() function is an object
 	 * (usually $row) for the content item (eg, article).  This function will
 	 * return the appropriate field for the text of the content item.  In some
-	 * cases it is 'text', in others, 'introtext'.  Attachments plugins can
+	 * cases it is 'text', in others, 'introtext'.	Attachments plugins can
 	 * override this function to provide the field name more intelligently.
 	 *
 	 * Note: returns null if the text field is unknown/not present.
 	 *
-	 * @param   &object  &$row           the content object (eg, article) being displayed
-	 * @param   string   $parent_entity  the type of entity for this content item.
+	 * @param	&object	 &$row			 the content object (eg, article) being displayed
+	 * @param	string	 $parent_entity	 the type of entity for this content item.
 	 *
 	 * @return string name of the text field of this content item object.
 	 */
@@ -135,7 +135,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		}
 
 		// Check for non-menu category view
-		if (isset($row->introtext) AND  ($view == 'category') AND
+		if (isset($row->introtext) AND	($view == 'category') AND
 			(($parent_entity == 'default') OR ($parent_entity == 'article')))
 		{
 			$text_field_name = 'introtext';
@@ -147,7 +147,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Return the URL that can be called to select a specific content item.
 	 *
-	 * @param   string  $parent_entity  the type of entity to select from
+	 * @param	string	$parent_entity	the type of entity to select from
 	 *
 	 * @return the URL that can be called to select a specific content item
 	 */
@@ -170,8 +170,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Return an array of entity items (with id,title pairs for each item)
 	 *
-	 * @param   string  $parent_entity  the type of entity to search for
-	 * @param   string  $filter         filter the results for matches for this filter string
+	 * @param	string	$parent_entity	the type of entity to search for
+	 * @param	string	$filter			filter the results for matches for this filter string
 	 *
 	 * @return the array of entity id,title pairs
 	 */
@@ -179,7 +179,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		$db = JFactory::getDBO();
 
-		$parent_entity      = $this->getCanonicalEntityId($parent_entity);
+		$parent_entity		= $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Note that article is handled separately
@@ -189,13 +189,13 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			JError::raiseError(500, $errmsg);
 		}
 
-		$entity_table       = $this->entity_table[$parent_entity];
+		$entity_table		= $this->entity_table[$parent_entity];
 		$entity_title_field = $this->entity_title_field[$parent_entity];
-		$entity_id_field    = $this->entity_id_field[$parent_entity];
+		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app       = JFactory::getApplication();
-		$order     = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order', 'filter_order', '', 'cmd');
+		$app	   = JFactory::getApplication();
+		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order', 'filter_order', '', 'cmd');
 		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir', 'filter_order_Dir', '', 'word');
 
 		// Get all the items
@@ -230,7 +230,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// Set up the hierarchy indenting
 		foreach ($items as &$item)
 		{
-			$repeat      = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
+			$repeat		 = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
 			$item->title = str_repeat('- ', $repeat) . $item->title;
 		}
 
@@ -240,8 +240,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Return the ID of the creator/owner of the parent entity
 	 *
-	 * @param   int     $parent_id      the ID for the parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		the ID for the parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return creators id if found, 0 otherwise
 	 */
@@ -249,7 +249,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$db    = JFactory::getDBO();
+		$db	   = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
 		$result = 0;
@@ -291,8 +291,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Get a URL to view the content article
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of parent element/entity
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of parent element/entity
 	 *
 	 * @return a URL to view the entity (non-SEF form)
 	 */
@@ -318,9 +318,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Get a URL to add an attachment to a specific entity
 	 *
-	 * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   string  $from           where the call should return to
+	 * @param	int		$parent_id		the ID for the parent entity object (null if the parent does not exist)
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	string	$from			where the call should return to
 	 *
 	 * @return the url to add a new attachments to the specified entity
 	 */
@@ -371,8 +371,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 *
 	 * Note: this function assumes that the parent_id's match
 	 *
-	 * @param   string  $parent_entity         parent entity for the parent of the list
-	 * @param   string  $rtitle_parent_entity  the entity of the candidate attachment list title (from params)
+	 * @param	string	$parent_entity		   parent entity for the parent of the list
+	 * @param	string	$rtitle_parent_entity  the entity of the candidate attachment list title (from params)
 	 *
 	 * @return true if the custom title should be used
 	 */
@@ -395,7 +395,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Is the parent new (based on the parent_id)
 	 *
-	 * @param   object  &$attachment  the attachment
+	 * @param	object	&$attachment  the attachment
 	 *
 	 * @return true if the parent is new (being created)
 	 */
@@ -421,8 +421,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Check to see if the parent is published
 	 *
-	 * @param   int     $parent_id      is the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		is the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return true if the parent is published
 	 */
@@ -432,7 +432,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 		$published = false;
 
-		$parent_entity      = $this->getCanonicalEntityId($parent_entity);
+		$parent_entity		= $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Return the right thing for each entity
@@ -441,7 +441,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 			case 'category':
 				$entity_table = $this->entity_table[$parent_entity];
-				$query        = $db->getQuery(true);
+				$query		  = $db->getQuery(true);
 				$query->select('published')->from("#__$entity_table")->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$obj = $db->loadObject();
@@ -475,12 +475,12 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				}
 				else
 				{
-					$now      = JFactory::getDate()->toUnix();
+					$now	  = JFactory::getDate()->toUnix();
 					$nullDate = JFactory::getDate($db->getNullDate())->toUnix();
 
 					if ($article)
 					{
-						$publish_up   = JFactory::getDate($article->publish_up)->toUnix();
+						$publish_up	  = JFactory::getDate($article->publish_up)->toUnix();
 						$publish_down = JFactory::getDate($article->publish_down)->toUnix();
 
 						$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down == $nullDate) || ($now <= $publish_down)));
@@ -498,8 +498,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Check to see if the parent is archived
 	 *
-	 * @param   int     $parent_id      is the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
+	 * @param	int		$parent_id		is the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
 	 *
 	 * @return true if the parent is archived
 	 */
@@ -519,7 +519,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 			default:
 				// Articles
-				$db    = JFactory::getDBO();
+				$db	   = JFactory::getDBO();
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__content')->where(' id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
@@ -527,7 +527,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				if ($db->getErrorNum())
 				{
 					$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-					$errmsg             = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 406)';
+					$errmsg				= JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 406)';
 					JError::raiseError(500, $errmsg);
 				}
 				else
@@ -549,8 +549,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * Return a string of the where clause for filtering the the backend list of attachments
 	 *
-	 * @param   string  $parent_state   the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
-	 * @param   string  $filter_entity  the entity filter ('ALL', 'ARTICLE', 'CATEGORY')
+	 * @param	string	$parent_state	the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
+	 * @param	string	$filter_entity	the entity filter ('ALL', 'ARTICLE', 'CATEGORY')
 	 *
 	 * @return an array of where clauses
 	 */
@@ -575,7 +575,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 			if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE'))
 			{
-				$now      = JFactory::getDate()->toSql();
+				$now	  = JFactory::getDate()->toSql();
 				$nullDate = $db->getNullDate();
 				$where[]  = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND " .
@@ -659,9 +659,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	/**
 	 * May the parent be viewed by the user?
 	 *
-	 * @param   int     $parent_id      the ID for this parent object
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id		the ID for this parent object
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	object	$user_id		the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if the parent may be viewed by the user
 	 */
@@ -685,11 +685,11 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		}
 
 		// Get the user's permitted access levels
-		$user        = JFactory::getUser($user_id);
+		$user		 = JFactory::getUser($user_id);
 		$user_levels = array_unique($user->getAuthorisedViewLevels());
 
 		// See if the parent's access level is permitted for the user
-		$db    = JFactory::getDBO();
+		$db	   = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id')->from("#__$table");
 		$query->where('id = ' . (int) $parent_id . ' AND access in (' . implode(',', $user_levels) . ')');
@@ -698,7 +698,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg             = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 408)';
+			$errmsg				= JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 408)';
 			JError::raiseError(500, $errmsg);
 		}
 
@@ -707,9 +707,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 	/** Return true if the attachments should be hidden for this parent
 	 *
-	 * @param   &object  &$parent        the object for the parent that onPrepareContent gives
-	 * @param   int      $parent_id      the ID of the parent the attachment is attached to
-	 * @param   string   $parent_entity  the type of entity for this parent type
+	 * @param	&object	 &$parent		 the object for the parent that onPrepareContent gives
+	 * @param	int		 $parent_id		 the ID of the parent the attachment is attached to
+	 * @param	string	 $parent_entity	 the type of entity for this parent type
 	 *
 	 * @return true if the attachments should be hidden for this parent
 	 */
@@ -722,7 +722,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		}
 		$pclass = get_class($parent);
 
-		$parent_entity      = $this->getCanonicalEntityId($parent_entity);
+		$parent_entity		= $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
@@ -777,7 +777,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 			// Double-check that there is no mismatch of category ID (??? May not be necessary)
 			$description = $parent->text;
-			$query       = $db->getQuery(true);
+			$query		 = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
 			$query->where('description=' . $db->quote($description) . ' AND id = ' . (int) $parent_id);
 			$db->setQuery($query, 0, 1);
@@ -819,7 +819,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 			// See if the options apply to this article
 			$created_by = (int) $attachments[0]->created_by;
-			$catid      = (int) $attachments[0]->catid;
+			$catid		= (int) $attachments[0]->catid;
 
 			// First, check to see whether the attachments should be hidden for this parent
 			$hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', Array());
@@ -839,10 +839,10 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
 	 *	It is up to the caller to validate these objects before calling this function.)
 	 *
-	 * @param   int     $parent_id      the ID of the parent the attachment is attached to
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   bool    $new_parent     if true, the parent is being created and does not exist yet
-	 * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id		the ID of the parent the attachment is attached to
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	bool	$new_parent		if true, the parent is being created and does not exist yet
+	 * @param	object	$user_id		the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may add attachments to this parent
 	 */
@@ -894,8 +894,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
 	 *	It is up to the caller to validate these objects before calling this function.)
 	 *
-	 * @param   &record  &$attachment  database reocrd for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database reocrd for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may edit this attachment
 	 */
@@ -987,8 +987,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param   &record  &$attachment  database record for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database record for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may delete this attachment
 	 */
@@ -1077,10 +1077,10 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
 	 *	It is up to the caller to validate the arguments before calling this function.)
 	 *
-	 * @param   int     $parent_id              the ID for the parent object
-	 * @param   string  $parent_entity          the type of entity for this parent type
-	 * @param   int     $attachment_creator_id  the ID of the creator of the attachment
-	 * @param   object  $user_id                the user_id to check (optional, primarily for testing)
+	 * @param	int		$parent_id				the ID for the parent object
+	 * @param	string	$parent_entity			the type of entity for this parent type
+	 * @param	int		$attachment_creator_id	the ID of the creator of the attachment
+	 * @param	object	$user_id				the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if this user may change the state of this attachment
 	 */
@@ -1168,8 +1168,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 	/** Check to see if the user may access (see/download) the attachments
 	 *
-	 * @param   &record  &$attachment  database record for the attachment
-	 * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+	 * @param	&record	 &$attachment  database record for the attachment
+	 * @param	object	 $user_id	   the user_id to check (optional, primarily for testing)
 	 *
 	 * @return true if access is okay (false if not)
 	 */
@@ -1182,11 +1182,11 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 	/** See if the attachments list should be displayed in its content description editor
 	 *
-	 * @param   string  $parent_entity  the type of entity for this parent type
-	 * @param   string  $view           the view
-	 * @param   string  $layout         the layout on the view
+	 * @param	string	$parent_entity	the type of entity for this parent type
+	 * @param	string	$view			the view
+	 * @param	string	$layout			the layout on the view
 	 *
-	 * @return  true if the attachments list should be added to the editor
+	 * @return	true if the attachments list should be added to the editor
 	 */
 	public function showAttachmentsInEditor($parent_entity, $view, $layout)
 	{
@@ -1194,13 +1194,13 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	}
 
 	/** Get the parent_id in the component content item editor
-	 *  (the article or category editor)
+	 *	(the article or category editor)
 	 *
 	 * @param  string  $parent_entity  the type of entity for this parent type
 	 *
 	 * @return the parent ID, null if the content item is being created, and false if there is no match
 	 *
-	 * @since    Attachments 3.2
+	 * @since	 Attachments 3.2
 	 */
 	public function getParentIdInEditor($parent_entity, $view, $layout)
 	{

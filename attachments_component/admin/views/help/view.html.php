@@ -2,13 +2,13 @@
 /**
  * Attachments component
  *
- * @package     Attachments
- * @subpackage  Attachments_Component
+ * @package		Attachments
+ * @subpackage	Attachments_Component
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2007-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2007-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // Check to ensure this file is included in Joomla!
@@ -24,15 +24,15 @@ require_once JPATH_SITE . '/components/com_attachments/defines.php';
 /**
  * View for the help page
  *
- * @package  Attachments
- * @since    3.1
+ * @package	 Attachments
+ * @since	 3.1
  */
 class AttachmentsViewHelp extends HelpView
 {
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  A template file to load. [optional]
+	 * @param	string	$tpl  A template file to load. [optional]
 	 *
 	 * @return nothing
 	 */
@@ -49,9 +49,9 @@ class AttachmentsViewHelp extends HelpView
 	/**
 	 * Add the start of the permissions table including the header
 	 *
-	 * @param   string  $col1_code  Language token for column 1 (permission name)
-	 * @param   string  $col2_code  Language token for column 2 (permission note)
-	 * @param   string  $col3_code  Language token for column 3 (permission action)
+	 * @param	string	$col1_code	Language token for column 1 (permission name)
+	 * @param	string	$col2_code	Language token for column 2 (permission note)
+	 * @param	string	$col3_code	Language token for column 3 (permission action)
 	 *
 	 * @return nothing
 	 */
@@ -76,9 +76,9 @@ class AttachmentsViewHelp extends HelpView
 	/**
 	 * Add the a row of the permissions table
 	 *
-	 * @param   string  $col1_code  Language token for column 1 (permission name)
-	 * @param   string  $col2_code  Language token for column 2 (permission note)
-	 * @param   string  $col3_code  Language token for column 3 (permission action)
+	 * @param	string	$col1_code	Language token for column 1 (permission name)
+	 * @param	string	$col2_code	Language token for column 2 (permission note)
+	 * @param	string	$col3_code	Language token for column 3 (permission action)
 	 *
 	 * @return nothing
 	 */

@@ -263,9 +263,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	 * Method to publish a list of items
 	 * (Adapted from JControllerAdmin)
 	 *
-	 * @return  void
+	 * @return	void
 	 *
-	 * @since   11.1
+	 * @since	11.1
 	 */
 	public function publish()
 	{
@@ -314,7 +314,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				{
 					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
 				}
-				$this->setMessage(JText::plural($ntext,  $att_published));
+				$this->setMessage(JText::plural($ntext,	 $att_published));
 			}
 		}
 		$extension = JRequest::getCmd('extension');

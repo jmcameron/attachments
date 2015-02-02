@@ -2,8 +2,8 @@
 /**
  * Attachments plugins framework installation script
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_Framework
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_Framework
  *
  * @author Jonathan M. Cameron
  * @copyright Copyright (C) 2014-2015 Jonathan M. Cameron

@@ -2,13 +2,13 @@
 /**
  * Manager for plugins for Attachments
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_Framework
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_Framework
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // No direct access

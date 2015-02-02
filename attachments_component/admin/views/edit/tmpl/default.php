@@ -90,7 +90,7 @@ else
 		else {
 			echo $attachment->parent_title;
 			} ?>
-        <div class="right">
+		<div class="right">
 		<a class="changeButton hasTip" href="<?php echo $this->change_parent_url; ?>"
 		   title="<?php echo $change_entity_tooltip; ?>"
 		   ><?php echo JText::sprintf('ATTACH_CHANGE_ENTITY_S', $attachment->parent_entity_name) ?></a></div>
@@ -198,13 +198,13 @@ else
 		 <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 		 <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
 				title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
-	     &nbsp;&nbsp;&nbsp;&nbsp;
+		 &nbsp;&nbsp;&nbsp;&nbsp;
 		 <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	     <input type="checkbox" name="url_relative" value="relative" <?php echo $this->relative_url_checked ?>
-		        title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
-	     <br />
+		 <input type="checkbox" name="url_relative" value="relative" <?php echo $this->relative_url_checked ?>
+				title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+		 <br />
 		 <input type="text" name="url" id="upload" value="<?php echo $attachment->url; ?>"
-		 		 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />
+				 size="70" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>" />
 		 <input type="hidden" name="old_url" value="<?php echo $attachment->url; ?>" />
 	  </td>
    </tr>

@@ -343,7 +343,7 @@ class AttachmentsHelper
 	 *
 	 * Adapted from com_media
 	 *
-	 * @param string $filename  the filename to check
+	 * @param string $filename	the filename to check
 	 *
 	 * @return true if it is an image file
 	 */
@@ -358,7 +358,7 @@ class AttachmentsHelper
 	/**
 	 * Make sure this a valid image file
 	 *
-	 * @param string $filepath  the full path to the image file
+	 * @param string $filepath	the full path to the image file
 	 *
 	 * @return true if it is a valid image file
 	 */
@@ -370,9 +370,9 @@ class AttachmentsHelper
 
 	/**
 	 * Make sure a file is not a double-extension exploit
-	 *   See:  http://www.acunetix.com/websitesecurity/upload-forms-threat/
+	 *	 See:  http://www.acunetix.com/websitesecurity/upload-forms-threat/
 	 *
-	 * @param string $filename  the filename
+	 * @param string $filename	the filename
 	 *
 	 * @return true if it is an exploit file
 	 */
@@ -433,7 +433,7 @@ class AttachmentsHelper
 
 		// Get the new filename
 		// (Note: The following replacement is necessary to allow
-		//        single quotes in filenames to work correctly.)
+		//		  single quotes in filenames to work correctly.)
 		// Trim of any trailing period (to avoid exploits)
 		$filename = rtrim(JString::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
 		$ftype = $_FILES['upload']['type'];
@@ -1425,7 +1425,7 @@ class AttachmentsHelper
 
 		// Check the URL length
 		if (strlen($attachment->url) > AttachmentsDefines::$MAXIMUM_URL_LENGTH) {
-			$errmsg = "URL is too long! (". strlen($attachment->url) .")";  // ??? Convert to translated error message
+			$errmsg = "URL is too long! (". strlen($attachment->url) .")";	// ??? Convert to translated error message
 			JError::raiseError(500, $errmsg);
 			}
 
@@ -1712,9 +1712,9 @@ class AttachmentsHelper
 	 * (eg, via form processing)
 	 *
 	 * Note: This function does not check to make sure the current user has
-	 *       necessary permissions to access the attachment.
+	 *		 necessary permissions to access the attachment.
 	 *
-	 * @param  object  $attachment  the attachment to add the names to
+	 * @param  object  $attachment	the attachment to add the names to
 	 */
 	public static function addAttachmentUserNames(&$attachment)
 	{

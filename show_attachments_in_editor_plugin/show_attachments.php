@@ -61,10 +61,10 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			// Note if this is a category view, we must add attachment
-            // javascript and CSS whether we know there are going to be
+			// javascript and CSS whether we know there are going to be
 			// attachments later or not because when the attachments list is
-            // created it, it is in the onAfterRender() callback, which means
-            // that the headers have already been rendered, so we cannot go
+			// created it, it is in the onAfterRender() callback, which means
+			// that the headers have already been rendered, so we cannot go
 			// go back and add headers (easily)
 
 			// Not necessary in more recent versions of Joomla since it can

@@ -27,7 +27,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 	 * Constructor
 	 *
 	 * @param &object &$subject The object to observe
-	 * @param array  $config	An array that holds the plugin configuration
+	 * @param array	 $config	An array that holds the plugin configuration
 	 * @since 1.5
 	 */
 	public function __construct(&$subject, $config)
@@ -76,7 +76,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 
 		// Get ready for language things
-		$lang =  JFactory::getLanguage();
+		$lang =	 JFactory::getLanguage();
 		if ( !$lang->load('plg_editors-xtd_insert_attachments_token', dirname(__FILE__)) ) {
 			// If the desired translation is not available, at least load the English
 			$lang->load('plg_editors-xtd_insert_attachments_token', JPATH_ADMINISTRATOR, 'en-GB');

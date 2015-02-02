@@ -2,13 +2,13 @@
 /**
  * Manager for plugins for Attachments
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_Framework
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_Framework
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2009-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // No direct access
@@ -22,8 +22,8 @@ defined('_JEXEC') or die('Restricted access');
  * It knows how to create handlers for plugins for all
  * supported extensions.
  *
- * @package  Attachments
- * @since    3.0
+ * @package	 Attachments
+ * @since	 3.0
  */
 class AttachmentsPluginManager extends JObject
 {
@@ -60,7 +60,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * See if a particular plugin is installed (avaliable)
 	 *
-	 * @param   string  $parent_type  the name of the parent extension (eg, com_content)
+	 * @param	string	$parent_type  the name of the parent extension (eg, com_content)
 	 *
 	 * @return Boolean true if the plugin is available (false if not)
 	 */
@@ -72,7 +72,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Check to see if an attachments plugin is enabled
 	 *
-	 * @param   string  $parent_type  the name of the parent extension (eg, com_content)
+	 * @param	string	$parent_type  the name of the parent extension (eg, com_content)
 	 *
 	 * @return true if the attachment is enabled (false if disabled)
 	 */
@@ -93,7 +93,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Add a new parent type
 	 *
-	 * @param   string  $new_parent_type  the name of the new parent extension (eg, com_content)
+	 * @param	string	$new_parent_type  the name of the new parent extension (eg, com_content)
 	 *
 	 * @return nothing
 	 */
@@ -135,13 +135,13 @@ class AttachmentsPluginManager extends JObject
 			// Process all the parent types
 			foreach ($this->parent_types as $parent_type)
 			{
-				$parent   = $apm->getAttachmentsPlugin($parent_type);
+				$parent	  = $apm->getAttachmentsPlugin($parent_type);
 				$entities = $parent->getEntities();
 
 				// Process each entity for this parent type
 				foreach ($entities as $entity)
 				{
-					$centity             = $parent->getCanonicalEntityId($entity);
+					$centity			 = $parent->getCanonicalEntityId($entity);
 					$this->entity_info[] = array(
 						'id' => $centity,
 						'name' => JText::_('ATTACH_' . $centity),
@@ -177,7 +177,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Get the plugin (attachments parent handler object)
 	 *
-	 * @param   string  $parent_type  the name of the parent extension (eg, com_content)
+	 * @param	string	$parent_type  the name of the parent extension (eg, com_content)
 	 *
 	 * @return the parent handler object
 	 */
@@ -202,7 +202,7 @@ class AttachmentsPluginManager extends JObject
 	/**
 	 * Install the specified plugin
 	 *
-	 * @param   string  $parent_type  the name of the parent extension (eg, com_content)
+	 * @param	string	$parent_type  the name of the parent extension (eg, com_content)
 	 *
 	 * @return true if successful (false if not)
 	 */
@@ -215,8 +215,8 @@ class AttachmentsPluginManager extends JObject
 		}
 
 		// Install the plugin
-		$dispatcher                 = JDispatcher::getInstance();
-		$className                  = 'AttachmentsPlugin_' . $parent_type;
+		$dispatcher					= JDispatcher::getInstance();
+		$className					= 'AttachmentsPlugin_' . $parent_type;
 		$this->plugin[$parent_type] = new $className($dispatcher);
 
 		return is_object($this->plugin[$parent_type]);

@@ -116,8 +116,8 @@ if ( $this->error )
 					  title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
 	   &nbsp;&nbsp;&nbsp;&nbsp;
 			   <label for="relative_url"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
-	   <input type="checkbox" name="relative_url" value="relative"  <?php echo $this->relative_url_checked ?>
-		      title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+	   <input type="checkbox" name="relative_url" value="relative"	<?php echo $this->relative_url_checked ?>
+			  title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 		   <a class="changeButton" href="<?php echo $upload_toggle_url ?>"><?php
 			  echo $upload_toggle_button_text;?></a><br />
 			   <input type="text" name="url" id="<?php echo $upload_id; ?>"
@@ -141,7 +141,7 @@ if ( $this->error )
 <?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
 			&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
+			<div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo JText::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
 <?php endif; ?>
 			<?php if ( $params->get('user_field_1_name', false) ): ?>
 			<p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>

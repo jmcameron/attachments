@@ -29,10 +29,10 @@ class AttachmentsFormView extends JViewLegacy
 	 * Return the starting HTML for the page
 	 *
 	 * Note: When displaying a View directly from user code (not a conroller),
-	 *       it does not automatically create the HTML <html>, <body> and
-	 *       <head> tags.  This code fixes that.
+	 *		 it does not automatically create the HTML <html>, <body> and
+	 *		 <head> tags.  This code fixes that.
 	 *
-	 *       There is probably a better way to do this!
+	 *		 There is probably a better way to do this!
 	 */
 	protected function startHTML()
 	{
@@ -53,7 +53,7 @@ class AttachmentsFormView extends JViewLegacy
 
 		// Try to add the typical template stylesheets
 		$files = Array('template.css', 'position.css', 'layout.css', 'general.css');
-        foreach($files as $file) {
+		foreach($files as $file) {
 			$path = JPATH_SITE.'/templates/'.$this->template.'/css/'.$file;
 			if (JFile::exists($path)) {
 				$document->addStyleSheet($this->baseurl.'/templates/'.$this->template.'/css/'.$file);

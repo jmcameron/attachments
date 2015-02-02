@@ -21,22 +21,22 @@ jimport('joomla.plugin.plugin');
  * Attachments quickcion plugin class
  *
  * @package		Attachments
- * @subpackage  Attachments.Quickicon_Plugin
+ * @subpackage	Attachments.Quickicon_Plugin
  */
 class PlgQuickiconAttachments extends JPlugin
 {
-    /*
-     * Constructor.
+	/*
+	 * Constructor.
 	 *
 	 * @access		protected
 	 * @param		object	$subject The object to observe
-	 * @param		array	$config  An array that holds the plugin configuration
-     */
-    public function __construct(& $subject, $config)
+	 * @param		array	$config	 An array that holds the plugin configuration
+	 */
+	public function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
-    }
+	}
 
 
 	/**
@@ -44,12 +44,12 @@ class PlgQuickiconAttachments extends JPlugin
 	 * of icons. You can return an array which defines a single icon and it will
 	 * be rendered right after the stock Quick Icons.
 	 *
-	 * @param  $context  The calling context
+	 * @param  $context	 The calling context
 	 *
 	 * @return array A list of icon definition associative arrays, consisting of the
 	 *				 keys link, image, text and access.
 	 *
-	 * @since       2.5
+	 * @since		2.5
 	 */
 	public function onGetIcons($context)
 	{
@@ -83,5 +83,5 @@ class PlgQuickiconAttachments extends JPlugin
 					'icon' => $icon,
 					'text' => JText::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
 					'id' => 'plg_quickicon_attachment'));
-    }
+	}
 }

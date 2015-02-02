@@ -205,7 +205,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$attachment = new JObject();
 
 		$attachment->uri_type = $uri_type;
-		$attachment->state  = $params->get('publish_default', false);
+		$attachment->state	= $params->get('publish_default', false);
 		$attachment->url = '';
 		$attachment->url_relative = false;
 		$attachment->url_verify = true;
@@ -214,7 +214,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$attachment->user_field_1 = '';
 		$attachment->user_field_2 = '';
 		$attachment->user_field_3 = '';
-		$attachment->parent_id     = $parent_id;
+		$attachment->parent_id	   = $parent_id;
 		$attachment->parent_type   = $parent_type;
 		$attachment->parent_entity = $parent_entity;
 		$attachment->parent_title  = $parent_title;
@@ -228,7 +228,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->option		 = $this->option;
 		$view->from			 = $from;
 
-		$view->params        = $params;
+		$view->params		 = $params;
 
 		// Display the add form
 		$view->display();
@@ -679,7 +679,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 
 		$view->attachment = $attachment;
 
-		$view->parent     = $parent;
+		$view->parent	  = $parent;
 		$view->params	  = $params;
 
 		// Set up for selecting a new type of parent

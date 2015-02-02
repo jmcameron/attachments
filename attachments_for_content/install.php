@@ -2,8 +2,8 @@
 /**
  * Attachments plugins for content installation script
  *
- * @package     Attachments
- * @subpackage  Attachments_Plugin_For_Content
+ * @package		Attachments
+ * @subpackage	Attachments_Plugin_For_Content
  *
  * @author Jonathan M. Cameron
  * @copyright Copyright (C) 2014-2015 Jonathan M. Cameron

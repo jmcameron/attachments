@@ -2,13 +2,13 @@
 /**
  * Attachments component
  *
- * @package     Attachments
- * @subpackage  Attachments_Component
+ * @package		Attachments
+ * @subpackage	Attachments_Component
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2011-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2011-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 // No direct access.
@@ -17,9 +17,9 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Attachments extension definies
  *
- * @package  Attachments
+ * @package	 Attachments
  *
- * @since    2.2
+ * @since	 2.2
  */
 class AttachmentsDefines
 {

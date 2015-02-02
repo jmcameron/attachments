@@ -2,13 +2,13 @@
 /**
  * Attachments plugin for inserting attachments lists into content
  *
- * @package     Attachments
- * @subpackage  Main_Attachments_Plugin
+ * @package		Attachments
+ * @subpackage	Main_Attachments_Plugin
  *
- * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2007-2015 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright	Copyright (C) 2007-2015 Jonathan M. Cameron, All Rights Reserved
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
 defined('_JEXEC') or die('Restricted access');
@@ -30,18 +30,18 @@ else
 /**
  * Attachments plugin
  *
- * @package  Attachments
- * @since    1.3.4
+ * @package	 Attachments
+ * @since	 1.3.4
  */
 class plgContentAttachments extends JPlugin
 {
 	/**
 	 * Constructor
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An array that holds the plugin configuration
+	 * @param	object	&$subject  The object to observe
+	 * @param	array	$config	   An array that holds the plugin configuration
 	 *
-	 * @access  protected
+	 * @access	protected
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -185,10 +185,10 @@ class plgContentAttachments extends JPlugin
 	/**
 	 * The content plugin that inserts the attachments list into content items
 	 *
-	 * @param   string   $context  the context of the content being passed to the plugin.
-	 * @param   &object  &$row     the content object (eg, article) being displayed
-	 * @param   &object  &$params  the parameters
-	 * @param   int      $page     the 'page' number
+	 * @param	string	 $context  the context of the content being passed to the plugin.
+	 * @param	&object	 &$row	   the content object (eg, article) being displayed
+	 * @param	&object	 &$params  the parameters
+	 * @param	int		 $page	   the 'page' number
 	 *
 	 * @return true if anything has been inserted into the content object
 	 */

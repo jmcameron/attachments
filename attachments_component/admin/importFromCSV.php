@@ -261,7 +261,7 @@ class ImportFromCSV
 
 		// Bind any defaults (not already set in required or optional fields)
 		foreach ($this->_field_defaults as $field => $val) {
-			if ( (isset($record->$field) &&  ( $record->$field == '' )) ||
+			if ( (isset($record->$field) &&	 ( $record->$field == '' )) ||
 				 !isset($record->$field) ) {
 					$record->$field = $val;
 					}

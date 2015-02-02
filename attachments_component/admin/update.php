@@ -132,7 +132,7 @@ class AttachmentsUpdate
 				if (!$db->query()) {
 					$errmsg = JText::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
-					JError::raiseError(500, $errmsg  . $db->stderr() . ' (ERR 71)');
+					JError::raiseError(500, $errmsg	 . $db->stderr() . ' (ERR 71)');
 					}
 				$numUpdated++;
 				}

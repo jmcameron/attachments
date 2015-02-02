@@ -47,7 +47,7 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 		parent::setUpBeforeClass();
 
 		// Force loading the component language
-		$lang =  JFactory::getLanguage();
+		$lang =	 JFactory::getLanguage();
 		$lang->load('com_attachments', JPATH_BASE.'/administrator/components/com_attachments');
 	}
 

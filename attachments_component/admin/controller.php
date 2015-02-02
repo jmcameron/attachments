@@ -258,7 +258,7 @@ class AttachmentsController extends JControllerLegacy
 		if ( $view->lang->getTag() != 'en-GB' )
 		{
 			// First load English for any untranslated items
-		    $view->lang->load('com_attachments', dirname(__FILE__), 'en-GB');
+			$view->lang->load('com_attachments', dirname(__FILE__), 'en-GB');
 			$view->lang->load('com_attachments.help', dirname(__FILE__), 'en-GB');
 		}
 
