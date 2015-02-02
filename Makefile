@@ -54,7 +54,7 @@ updateweb:
 	@ssh jmcameron.net "cd webapps/jmcameron/attachments/updates; git pull"
 
 count:
-	@ssh jmcameron "cd logs/apache; grep attachments-3.2.0.zip access_jmcameron*.log* | wc -l"
+	@ssh jmcameron "cd logs/apache > /dev/null ; grep $(ZIPFILE) access_jmcameron*.log* | wc -l"
 
 clean:
 	@find . -name '*~' -exec rm {} \;
