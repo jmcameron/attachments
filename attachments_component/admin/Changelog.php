@@ -44,6 +44,7 @@ Attachments 3.x Extension for Joomla 2.5+
 	- 2015-02-01 Moved repos from joomlacode.org to github.com
 	- 2015-02-01 Switched to semver-compatible version numbering
 		(This version is not quite semver compliant but future ones will be)
+	- 2015-02-01 Tested with Joomla 3.3.6 and 2.5.28 on Ubuntu
  
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
 	- 2013-09-21 Allow display of attachments lists in editors for non-article
