@@ -29,7 +29,7 @@ class AttachmentsDefines
 
 	/** The Attachments extension version date
 	 */
-	public static $ATTACHMENTS_VERSION_DATE = 'February  1, 2015';
+	public static $ATTACHMENTS_VERSION_DATE = 'February 1, 2015';
 
 	/** Project URL
 	 */

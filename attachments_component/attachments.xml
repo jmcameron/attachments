@@ -2,7 +2,7 @@
 <extension type="component" version="2.5.7" method="upgrade">
     <name>com_attachments</name>
     <version>3.2.0</version>
-    <creationDate>February  1, 2015</creationDate>
+    <creationDate>February 1, 2015</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>
