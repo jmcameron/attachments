@@ -4,7 +4,7 @@
     
 By: Jonathan M. Cameron
 
-Copyright (C) 2010-2013 Jonathan M. Cameron, All Rights Reserved
+Copyright (C) 2010-2015 Jonathan M. Cameron, All Rights Reserved
    License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
 .. warning::
