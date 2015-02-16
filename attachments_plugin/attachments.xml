@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" version="2.5" method="upgrade">
     <name>plg_content_attachments</name>
-    <version>3.2.1-Beta</version>
+    <version>3.2.1</version>
     <creationDate>February 15, 2015</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
