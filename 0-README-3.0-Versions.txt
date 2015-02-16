@@ -1,5 +1,8 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+3.2.1 - Released February 15, 2015
+   - Fixed problem with filenames of the downloaded files
+
 3.2.0 - Released February 1, 2015
    - 2014-01-18 Adjustment to migration importer to better handle UTF-8
    - 2014-01-19 Fix to disable attachments display on category list title (J3)
@@ -28,6 +31,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
    - 2015-02-01 Switched to semver-compatible version numbering
         (This version number is not quite semver compliant but future ones will be)
    - 2015-02-01 Tested with Joomla 3.3.6 and 2.5.28 on Ubuntu
+   - 5000+ Downloads (estimate)
 
 3.1.3 - Released November 15, 2013
    - Joomla 3.2 Compatibility Release
