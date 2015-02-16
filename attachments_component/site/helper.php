@@ -1556,13 +1556,11 @@ class AttachmentsHelper
 				// Tweak the headers for MSIE
 				header('Pragma: private');
 				header('Cache-control: private, must-revalidate');
-				header("Content-Type: $content_type");
 				header("Content-Length: ".$file_size); // MUST be a number for IE
 			}
 			else
 			{
 				header('Cache-Control: private, max-age=0, must-revalidate, no-store');
-				header("Content-Type: $content_type");
 				header("Content-Length: ".(string)($file_size));
 			}
 
@@ -1573,9 +1571,10 @@ class AttachmentsHelper
 				}
 			else {
 				// inline
-				header("Content-Disposition: inline");
+				header("Content-Disposition: inline; filename=\"$mod_filename\"");
 				}
 			header('Content-Transfer-Encoding: binary');
+			header("Content-Type: $content_type");
 
 			// If x-sendfile is available, use it
 			if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
