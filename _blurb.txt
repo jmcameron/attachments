@@ -28,8 +28,11 @@ Releases 3.1+ and 2.2+ give you several ways to add, edit, and delete your attac
 
 If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
 
-Attachments 3.2 includes many features:
+Attachments 3.2.0 includes many features:
   --- Continues to support both Joomla 2.5.7+ and 3.x!
   --- Various fixes and improvements (see release notes on github).
   --- Tested with Joomla 3.3.6
   --- For more details, see: https://github.com/jmcameron/attachments/releases/tag/v3.2.0
+
+Attachments 3.2.1 includes many features:
+  --- Fixed problem with filenames of the downloaded files
