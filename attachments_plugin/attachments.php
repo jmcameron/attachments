@@ -111,16 +111,37 @@ class plgContentAttachments extends JPlugin
 				}
 		}
 
+		// Get the article/parent handler
+		JPluginHelper::importPlugin('attachments');
+		$apm = getAttachmentsPluginManager();
+		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
+			// Exit quietly if there is no Attachments plugin to handle this parent_type
+			return false;
+			}
+		$parent = $apm->getAttachmentsPlugin($parent_type);
+
+		// If this attachments plugin is disabled, skip it
+		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
+			return false;
+			}
+
 		// Get the parent ID
 		if(isset($row->id))
 		{
-			// If the $row has 'id', use it
+			// If the $row has 'id', just use it
 			$parent_id = (int)$row->id;
 		}
 		else
 		{
 			$parent_id = JRequest::getInt('id', null);
 		}
+
+		// Let the attachment pluging try to figure out the id
+		if ( $parent_id === null )
+		{
+			$parent_id = $parent->getParentId($row);
+		}
+
 		if ( $parent_id === null )
 		{
 			return false;
@@ -135,20 +156,6 @@ class plgContentAttachments extends JPlugin
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
 		JHtml::stylesheet('com_attachments/attachments_hide.css', Array(), true);
-
-		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
-		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			// Exit quietly if there is no Attachments plugin to handle this parent_type
-			return false;
-			}
-		$parent = $apm->getAttachmentsPlugin($parent_type);
-
-		// If this attachments plugin is disabled, skip it
-		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
-			return false;
-			}
 
 		// Allow remapping of parent ID (eg, for Joomfish)
 		if (jimport('attachments_remapper.remapper'))
