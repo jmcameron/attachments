@@ -16,6 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 <pre>
 Attachments 3.x Extension for Joomla 2.5+ and 3.x
 
+2015-02-??: Release 3.2.2
+    - Fixed some small issues related to supporting Attachments for JEvents
+
 2015-02-15: Release 3.2.1
     - Fixed problem with filenames of the downloaded files
 
