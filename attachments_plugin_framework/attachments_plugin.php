@@ -669,7 +669,7 @@ class AttachmentsPlugin extends JPlugin
 	{
 		// Assume parent_id == 0 means the parent is new
 		// (NOTE: This may not be true for some components)
-		return $parent_id == 0;
+		return $attachment->parent_id == 0;
 	}
 
 
