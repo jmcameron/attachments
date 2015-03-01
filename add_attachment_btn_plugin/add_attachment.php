@@ -115,6 +115,13 @@ class plgButtonAdd_attachment extends JPlugin
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 
+		if ( $parent_id == 0 ) {
+			# Last chance to get the id in extension editors
+			$view = JRequest::getWord('view');
+			$layout = JRequest::getWord('layout');
+			$parent_id = $parent->getParentIdInEditor($parent_entity, $view, $layout);
+			}
+
 		// Make sure we have permissions to add attachments to this article or category
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $parent_id == 0) ) {
 			return;
@@ -152,11 +159,19 @@ class plgButtonAdd_attachment extends JPlugin
 		$button->set('text', JText::_('ATTACH_ADD_ATTACHMENT'));
 
 		if ( $app->isAdmin() ) {
-			$button->set('name', 'add_attachment');
+			$button_name = 'add_attachment';
+			if (version_compare(JVERSION, '3.3', 'ge')) {
+				$button_name = 'paperclip';
+				}
+			$button->set('name', $button_name);
 			}
 		else {
 			// Needed for Joomal 2.5
-			$button->set('name', 'add_attachment_frontend');
+			$button_name = 'add_attachment_frontend';
+			if (version_compare(JVERSION, '3.3', 'ge')) {
+				$button_name = 'paperclip';
+				}
+			$button->set('name', $button_name);
 			}
 		$button->set('link', $link);
 		$button->set('options', "{handler: 'iframe', size: {x: 920, y: 530}}");

@@ -121,10 +121,18 @@ class plgButtonInsert_attachments_token extends JPlugin
 		$button->set('title', JText::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION'));
 
 		if ( $app->isAdmin() ) {
-			$button->set('name', 'insert_attachments_token');
+			$button_name = 'insert_attachments_token';
+			if (version_compare(JVERSION, '3.3', 'ge')) {
+				$button_name = 'paperclip';
+				}
+			$button->set('name', $button_name);
 			}
 		else {
-			$button->set('name', 'insert_attachments_token_frontend');
+			$button_name = 'insert_attachments_token_frontend';
+			if (version_compare(JVERSION, '3.3', 'ge')) {
+				$button_name = 'paperclip';
+				}
+			$button->set('name', $button_name);
 			}
 
 		// TODO: The button writer needs to take into account the javascript directive

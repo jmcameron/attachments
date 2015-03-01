@@ -145,7 +145,7 @@ class AttachmentsPlugin extends JPlugin
 	 * Return the parent entity / row ID
 	 *
 	 * This will only be called by the main attachments 'onPrepareContent'
-	 * plugin if $attachment does not have an id
+	 * plugin if $attachment ($row) does not have an id
 	 *
 	 * @param	object	&$attachment  the attachment
 	 *
@@ -669,7 +669,7 @@ class AttachmentsPlugin extends JPlugin
 	{
 		// Assume parent_id == 0 means the parent is new
 		// (NOTE: This may not be true for some components)
-		return $parent_id == 0;
+		return $attachment->parent_id == 0;
 	}
 
 
@@ -855,7 +855,7 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Determine where we are
-		$from	= JRequest::getCmd('view');
+		$from	= JRequest::getCmd('view', 'closeme');
 		$Itemid = JRequest::getInt('Itemid', 1);
 
 		// See whether we can display the links to add attachments
