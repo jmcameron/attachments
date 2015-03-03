@@ -19,6 +19,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
 2015-03-02: Release 3.2.2
     - 2015-02-20 Fixed some small issues related to supporting Attachments for JEvents
 	- 2015-02-22 Fixes for add/insert attachments editor button icons
+	- Tested with Joomla 2.5.28 and 3.4.0
 
 2015-02-15: Release 3.2.1
     - Fixed problem with filenames of the downloaded files
