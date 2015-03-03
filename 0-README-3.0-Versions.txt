@@ -1,5 +1,9 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+3.2.2 - Released March 2, 2015
+   - 2015-02-20 Fixed some small issues related to supporting Attachments for JEvents
+   - 2015-02-22 Fixes for add/insert attachments editor button icons
+
 3.2.1 - Released February 15, 2015
    - 2015-02-15 Fixed problem with filenames of the downloaded files
 
