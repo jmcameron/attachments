@@ -6,6 +6,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
 3.2.1 - Released February 15, 2015
    - 2015-02-15 Fixed problem with filenames of the downloaded files
+   - 7441 Downloads
 
 3.2.0 - Released February 1, 2015
    - 2014-01-18 Adjustment to migration importer to better handle UTF-8
