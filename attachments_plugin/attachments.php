@@ -344,6 +344,14 @@ class plgContentAttachments extends JPlugin
 
 		foreach ($attachments as $attachment) {
 
+			// Fix for odd issue; on some systems, something is changing the
+			// parent_type in or out of the database
+			if ( ($attachment->parent_type) == 'com_media' AND
+				 ($attachment->parent_entity) == 'article' ) {
+				// Override/fix the incorrect parent type
+				$attachment->parent_type = 'com_content';
+				}
+
 			// Change the filename/URL as necessary
 			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $item->id);
 			if ( $error_msg != '' ) {
