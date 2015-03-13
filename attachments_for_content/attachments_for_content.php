@@ -119,16 +119,18 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	protected function getTextFieldName(&$row, $parent_entity)
 	{
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+
 		$text_field_name = parent::getTextFieldName($row, $parent_entity);
 
 		// In the case of a blog, we know what text_field_name should be
-		if (isset($row->introtext) AND (JRequest::getCmd('layout') == 'blog'))
+		if (isset($row->introtext) AND ($layout == 'blog'))
 		{
 			$text_field_name = 'introtext';
 		}
 
 		// Featured also uses 'introtext'
-		$view = JRequest::getCmd('view');
 		if (isset($row->introtext) AND ($view == 'featured'))
 		{
 			$text_field_name = 'introtext';
@@ -139,6 +141,12 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			(($parent_entity == 'default') OR ($parent_entity == 'article')))
 		{
 			$text_field_name = 'introtext';
+		}
+
+		if (version_compare(JVERSION, '3.4.0', 'ge') AND
+			($view == 'category') AND ($layout == 'blog') AND ($parent_entity == 'article'))
+		{
+			$text_field_name = 'text';
 		}
 
 		return $text_field_name;
