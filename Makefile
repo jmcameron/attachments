@@ -1,4 +1,4 @@
-VERSION = "3.2.2"
+VERSION = "3.2.3-Beta2"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
 
