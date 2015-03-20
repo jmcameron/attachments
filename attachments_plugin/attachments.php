@@ -98,8 +98,11 @@ class plgContentAttachments extends JPlugin
 				}
 			if (($parent_entity == 'category') AND (isset($row->catid))) {
 				// Ignore the callback for articles on category blogs
-				return false;
+				if (version_compare(JVERSION, '3.4.0', 'lt')) {
+					return false;
+					}
 				}
+
 			$parent_entity = 'category';
 
 			// Older versions of Joomla do not deal well with category lists and
@@ -110,6 +113,16 @@ class plgContentAttachments extends JPlugin
 				return false;
 				}
 		}
+
+		# Handle category blog articles specially
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
+			if (!isset($row->id)) {
+				return false;
+				}
+			$parent_entity = 'article';
+			}
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -201,6 +214,13 @@ class plgContentAttachments extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
+			// Use onContentPrepare for category blog articles
+			return false;
+			}
+
 		// Set the parent info from the context
 		if (strpos($context, '.') === false)
 		{
