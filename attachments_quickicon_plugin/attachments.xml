@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="quickicon" version="2.5" method="upgrade">
 	<name>plg_quickicon_attachments</name>
-	<version>3.2.2</version>
-	<creationDate>March  2, 2015</creationDate>
+	<version>3.2.3</version>
+	<creationDate>March 20, 2015</creationDate>
 	<author>Jonathan M. Cameron</author>
 	<copyright>(C) 2007-2015 Jonathan M. Cameron. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
