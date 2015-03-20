@@ -217,8 +217,10 @@ class plgContentAttachments extends JPlugin
 		$view = JRequest::getCmd('view');
 		$layout = JRequest::getCmd('layout');
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
-			// Use onContentPrepare for category blog articles
-			return false;
+			// Use onContentPrepare for category blog articles for Joomla 3.4+
+			if (version_compare(JVERSION, '3.4', 'ge')) {
+				return false;
+				}
 			}
 
 		// Set the parent info from the context
