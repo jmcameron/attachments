@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="editors-xtd" version="2.5" method="upgrade">
     <name>plg_editors-xtd_insert_attachments_token_btn</name>
-    <version>3.2.3-Beta1</version>
-    <creationDate>March  8, 2015</creationDate>
+    <version>3.2.3</version>
+    <creationDate>March 20, 2015</creationDate>
     <author>Jonathan M. Cameron</author>
     <copyright>(C) 2007-2015 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
