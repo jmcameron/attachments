@@ -1,8 +1,14 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+2015-03-20: Release 3.2.3
+    - Fixed issue with category blog lists for Joomla 3.4
+    - Fixed article com_media confusion issue for Joomla 3.4
+    - Tested with Joomla 2.5.28 and 3.4.0
+
 3.2.2 - Released March 2, 2015
    - 2015-02-20 Fixed some small issues related to supporting Attachments for JEvents
    - 2015-02-22 Fixes for add/insert attachments editor button icons
+   - ? Downloads
 
 3.2.1 - Released February 15, 2015
    - 2015-02-15 Fixed problem with filenames of the downloaded files
