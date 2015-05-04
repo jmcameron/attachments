@@ -67,19 +67,19 @@ div.attachmentsList  tr.unpublished td
 
 #main div.attachmentsList table thead th,
 div.attachmentsList table thead th {
-    vertical-align: center;
+    vertical-align: middle;
     background: transparent;
     border: 1px solid #D0D0D0;
     padding-left: 3px;
     padding-right: 3px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 #main div.attachmentsList table tbody td,
 div.attachmentsList table tbody td {
     background: transparent;
-    vertical-align: center;
+    vertical-align: middle;
     padding: 1px 3px 1px 3px;
 }
 
@@ -168,7 +168,7 @@ div.addattach {
 div.addattach img,
 div.addattach a img {
     background: transparent;
-    padding-right: 0px;
+    padding-right: 0;
     border: 0;
 }
 
@@ -192,10 +192,10 @@ div.addattach a.at_icon:hover   { text-decoration: none; background: transparent
 div.addattach a.at_icon:active  { text-decoration: none; }
 
 div.addattach a { background: transparent; border-width: 0; }
-div.addattach a:link    { color : red; text-decoration: none; }
-div.addattach a:visited { color : red; text-decoration: none; }
-div.addattach a:hover   { color : red; text-decoration: underline; color: #F00; background: transparent; }
-div.addattach a:active  { color : red; text-decoration: none; }
+div.addattach a:link    { color: red; text-decoration: none; }
+div.addattach a:visited { color: red; text-decoration: none; }
+div.addattach a:hover   { color: red; text-decoration: underline; color: #F00; background: transparent; }
+div.addattach a:active  { color: red; text-decoration: none; }
 
 div.addattach a.modal-button { 
     background: transparent; 
