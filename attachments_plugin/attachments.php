@@ -86,9 +86,6 @@ class plgContentAttachments extends JPlugin
 			list ($parent_type, $parent_entity) = explode('.', $context, 2);
 		}
 
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getCmd('layout');
-
 		// This callback handles everything but articles
 		if ( $parent_type == 'com_content' ) 
 		{
@@ -116,18 +113,21 @@ class plgContentAttachments extends JPlugin
 				return false;
 				}
 		}
-		else if ( ($parent_type == 'mod_custom') AND ($parent_entity == 'content') AND ($view == 'category') )
+
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+
+		if ( ($parent_type == 'mod_custom') AND ($parent_entity == 'content') AND ($view == 'category') )
 		{
-			$parent_type = 'com_content';
-			$parent_entity = 'category';
+			// Do not add attachments to categtory titles (Joomla 3.4+)
+			return false;
 		}
 
-		# Handle category blog articles specially
+		// Handle category blog articles specially
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
-			if (!isset($row->id)) {
-				return false;
+			if (isset($row->id)) {
+				$parent_entity = 'article';
 				}
-			$parent_entity = 'article';
 			}
 
 		// Get the article/parent handler
@@ -150,9 +150,18 @@ class plgContentAttachments extends JPlugin
 			// If the $row has 'id', just use it
 			$parent_id = (int)$row->id;
 		}
-		else
+		else if ($parent_entity == 'category')
 		{
-			$parent_id = JRequest::getInt('id', null);
+			$db = JFactory::getDBO();
+			$description = $row->text;
+			$query = $db->getQuery(true);
+			$query->select('id')->from('#__categories');
+			$query->where('description=' . $db->quote($description));
+			$db->setQuery($query, 0, 1);
+			$result = $db->loadResult();
+			if ($result) {
+				$parent_id = (int)$result;
+				}
 		}
 
 		// Let the attachment pluging try to figure out the id
