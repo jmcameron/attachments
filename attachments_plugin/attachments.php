@@ -86,6 +86,9 @@ class plgContentAttachments extends JPlugin
 			list ($parent_type, $parent_entity) = explode('.', $context, 2);
 		}
 
+		$view = JRequest::getCmd('view');
+		$layout = JRequest::getCmd('layout');
+
 		// This callback handles everything but articles
 		if ( $parent_type == 'com_content' ) 
 		{
@@ -113,10 +116,13 @@ class plgContentAttachments extends JPlugin
 				return false;
 				}
 		}
+		else if ( ($parent_type == 'mod_custom') AND ($parent_entity == 'content') AND ($view == 'category') )
+		{
+			$parent_type = 'com_content';
+			$parent_entity = 'category';
+		}
 
 		# Handle category blog articles specially
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getCmd('layout');
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
 			if (!isset($row->id)) {
 				return false;

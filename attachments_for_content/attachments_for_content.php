@@ -764,7 +764,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 		if ($parent_entity == 'category')
 		{
-
 			// Handle categories
 			$always_show_category_attachments = $aparams->get('always_show_category_attachments', false);
 			if ($always_show_category_attachments)
@@ -783,13 +782,13 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				return true;
 			}
 
-			// Double-check that there is no mismatch of category ID (??? May not be necessary)
-			$description = $parent->text;
+			// Make sure a category with this ID exists
 			$query		 = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
-			$query->where('description=' . $db->quote($description) . ' AND id = ' . (int) $parent_id);
+			$query->where('id = ' . (int) $parent_id);
 			$db->setQuery($query, 0, 1);
-			if ((int) $parent_id != (int) $db->loadResult())
+			$result = (int) $db->loadResult();
+			if ((int) $parent_id != $result)
 			{
 				return true;
 			}
