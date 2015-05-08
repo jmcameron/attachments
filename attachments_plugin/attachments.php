@@ -163,6 +163,9 @@ class plgContentAttachments extends JPlugin
 				$parent_id = (int)$result;
 				}
 		}
+		else {
+			$parent_id = null;
+			}
 
 		// Let the attachment pluging try to figure out the id
 		if ( $parent_id === null )
