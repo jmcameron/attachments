@@ -125,7 +125,7 @@ class plgContentAttachments extends JPlugin
 
 		// Handle category blog articles specially
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
-			if (isset($row->id)) {
+			if (isset($row->id) and is_numeric($row->id)) {
 				$parent_entity = 'article';
 				}
 			}
@@ -145,7 +145,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Get the parent ID
-		if(isset($row->id))
+		if (isset($row->id) and is_numeric($row->id))
 		{
 			// If the $row has 'id', just use it
 			$parent_id = (int)$row->id;
