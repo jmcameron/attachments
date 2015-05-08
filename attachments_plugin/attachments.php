@@ -145,6 +145,7 @@ class plgContentAttachments extends JPlugin
 			}
 
 		// Get the parent ID
+		$parent_id = null;
 		if (isset($row->id) and is_numeric($row->id))
 		{
 			// If the $row has 'id', just use it
@@ -163,9 +164,6 @@ class plgContentAttachments extends JPlugin
 				$parent_id = (int)$result;
 				}
 		}
-		else {
-			$parent_id = null;
-			}
 
 		// Let the attachment pluging try to figure out the id
 		if ( $parent_id === null )
