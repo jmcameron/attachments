@@ -796,7 +796,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 		else
 		{
-
 			// Handle articles
 			if ($parent_id == 0)
 			{
