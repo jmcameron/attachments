@@ -204,7 +204,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Construct the path for the icons
 		$uri = JFactory::getURI();
-		$base_url = $uri->root(true) . '/';
+		$base_url = $uri->root(false);
 		$this->base_url = $base_url;
 		$this->icon_url_base = $base_url . 'components/com_attachments/media/icons/';
 

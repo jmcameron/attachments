@@ -279,7 +279,7 @@ class AttachmentsHelper
 	public static function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
-		$url_base = "index.php?option=com_attachments";
+		$url_base = JFactory::getURI()->base(false) . "index.php?option=com_attachments";
 
 		$template = '&tmpl=component';
 		$save_task = 'save';
@@ -740,6 +740,8 @@ class AttachmentsHelper
 
 		$url = $upload_url . '/' . $path . $filename;
 
+		$base_url = JFactory::getURI()->base(false);
+
 		// If we are on windows, fix the filename and URL
 		if ( DIRECTORY_SEPARATOR != '/' ) {
 			$filename_sys = str_replace('/', DIRECTORY_SEPARATOR, $filename_sys);
@@ -785,7 +787,7 @@ class AttachmentsHelper
 				return $result;
 				}
 
-			$save_url = JRoute::_("index.php?option=com_attachments&task=save&tmpl=component");
+			$save_url = JRoute::_($base_url . "index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
 			require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -1462,6 +1464,8 @@ class AttachmentsHelper
 	 */
 	public static function download_attachment($id)
 	{
+		$base_url = JFactory::getURI()->base(false);
+
 		// Get the info about the attachment
 		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
 		$model = new AttachmentsModelAttachment();
@@ -1499,7 +1503,7 @@ class AttachmentsHelper
 					// Construct the login request with return URL
 					$app = JFactory::getApplication();
 					$return = $app->getUserState('com_attachments.current_url', '');
-					$redirect_to = JRoute::_('index.php?option=com_attachments&task=requestLogin' . $return);
+					$redirect_to = JRoute::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
 					$app = JFactory::getApplication();
 					$app->redirect($redirect_to );
 					}
@@ -1577,7 +1581,9 @@ class AttachmentsHelper
 			header("Content-Type: $content_type");
 
 			// If x-sendfile is available, use it
-			if ( function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+			$using_ssl = strtolower(substr($base_url, 0, 5)) == 'https';
+			if ( !$using_ssl && function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+				// TODO: Figure out why mod_xsendfile does not work in ssl/https ???
 				header("X-Sendfile: $filename_sys");
 				}
 			else if ( $file_size <= 1048576 ) {
@@ -1842,15 +1848,15 @@ class AttachmentsHelper
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
+		$base = JFactory::getURI()->base(false) . "index.php?option=com_attachments&task=upload";
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
-			$url = "index.php?option=com_attachments&task=upload&article_id=$parent_id&tmpl=component";
+			$url = $base . "&article_id=$parent_id&tmpl=component";
 			}
 		else {
 			if ( $parent_entity != 'default' ) {
 				$parent_type .= ':'.$parent_entity;
 				}
-			$url = "index.php?option=com_attachments&task=upload" .
-				"&parent_id=$parent_id&parent_type=$parent_type&tmpl=component";
+			$url = $base . "&parent_id=$parent_id&parent_type=$parent_type&tmpl=component";
 			}
 		if ( $from ) {
 			// Add a var to give a hint of where to return to

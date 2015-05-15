@@ -165,7 +165,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		if ( $attachment->uri_type == 'file' ) {
 			// Handle file attachments
 			if ( $this->secure ) {
-				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+				$url = JRoute::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
 				$url = $base_url . $attachment->url;
@@ -178,7 +178,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		else {
 			// Handle URL "attachments"
 			if ( $this->secure ) {
-				$url = JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+				$url = JRoute::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
 				}
 			else {
@@ -189,7 +189,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 					if ( in_array($attachment->access, $guest_levels) ) {
 						$app = JFactory::getApplication();
 						$return = $app->getUserState('com_attachments.current_url', '');
-						$url = JRoute::_('index.php?option=com_attachments&task=requestLogin' . $return);
+						$url = JRoute::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
 						$target = '';
 						}
 					}

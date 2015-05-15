@@ -110,13 +110,14 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 		$view->setModel($model);
 
 		// Construct the update URL template
-		$update_url = "index.php?option=com_attachments&task=update&id=%d";
+		$base_url = JFactory::getURI()->base(false);
+		$update_url = $base_url . "index.php?option=com_attachments&task=update&id=%d";
 		$update_url .= "&from=$from&tmpl=component";
 		$update_url = JRoute::_($update_url);
 		$view->update_url = $update_url;
 
 		// Construct the delete URL template
-		$delete_url = "index.php?option=com_attachments&task=delete_warning&id=%d";
+		$delete_url = $base_url . "index.php?option=com_attachments&task=delete_warning&id=%d";
 		$delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
 		$delete_url .= "&from=$from&tmpl=component";
 		$delete_url = JRoute::_($delete_url);
