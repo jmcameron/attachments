@@ -28,7 +28,7 @@ $lists = $this->lists;
 	<button class="filter_button" onclick="this.form.submit();"><?php echo JText::_( 'JSEARCH_FILTER_SUBMIT' ); ?></button>
 	<button class="filter_button" onclick="document.id('filter_search').value='';this.form.submit();">
 	   <?php echo JText::_( 'JSEARCH_FILTER_CLEAR' ); ?></button>
-	<button class="filter_button" id="reset_order" onclick="javascript:tableOrdering('','asc','');">
+	<button class="filter_button" id="reset_order" onclick="Joomla.tableOrdering('','asc','');">
 	   <?php echo JText::_( 'ATTACH_RESET_ORDER' ); ?></button>
 	</td>
 	<td nowrap="nowrap">
