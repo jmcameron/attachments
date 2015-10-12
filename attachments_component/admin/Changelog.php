@@ -18,6 +18,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
 
 2015-09-??: Release 3.2.4 (NOT RELEASED YET)
     - 2015-09-05 Fixed admin [Reset Order] button
+    - 2015-10-11 Fixed issue with uploads in Joomla 3.4.4
 
 2015-03-20: Release 3.2.3
     - Fixed issue with category blog lists for Joomla 3.4
