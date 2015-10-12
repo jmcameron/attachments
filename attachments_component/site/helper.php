@@ -883,7 +883,16 @@ class AttachmentsHelper
 
 		// Move the file
 		$msg = "";
-		if (JFile::upload($_FILES['upload']['tmp_name'], $filename_sys)) {
+		$uploaded_ok = false;
+		if (version_compare(JVERSION, '3.4', 'ge')) {
+			$use_streams = false;
+			$allow_unsafe = true;
+			$uploaded_ok = JFile::upload($_FILES['upload']['tmp_name'], $filename_sys, $use_streams, $allow_unsafe);
+			}
+		else {
+			$uploaded_ok = JFile::upload($_FILES['upload']['tmp_name'], $filename_sys);
+			}
+		if ($uploaded_ok) {
 			$file_size = (int)( $attachment->file_size / 1024.0 );
 			$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
 			if ( $file_size_str == 'ATTACH_S_KB' ) {
