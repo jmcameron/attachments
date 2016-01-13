@@ -51,6 +51,7 @@ class com_AttachmentsInstallerScript
 	 */
 	protected $dbKnown = array('mysql' => 'MySQL',
 							   'mysqli' => 'MySQLi',
+							   'pdomysql' => 'PDO MySql',
 							   'postgresql' => 'PostgreSQL',
 							   'sqlsrv' => 'MS SQL Server',
 							   'sqlazure' => 'MS SQL Azure');
@@ -60,7 +61,7 @@ class com_AttachmentsInstallerScript
 	 *
 	 * @var	   array
 	 */
-	protected $dbSupported = array('mysql', 'mysqli');
+	protected $dbSupported = array('mysql', 'mysqli', 'pdomysql');
 
 
 	/**
