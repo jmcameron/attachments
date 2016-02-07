@@ -22,7 +22,9 @@
 	<file type="plugin" id="add_attachment"		       group="editors-xtd">add_attachment_btn_plugin.zip</file>
 	<file type="plugin" id="insert_attachments_token"      group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
 	<file type="plugin" id="attachments"	               group="quickicon">attachments_quickicon_plugin.zip</file>
-
+	<file type="plugin" id="attachment_finder"	       group="attachments">attachment_finder_plugin.zip</file>
+	<file type="plugin" id="finder_attachments"	       group="finder">finder_attachment_plugin.zip</file>
+	
 	<file type="component" id="com_attachments">attachments_component.zip</file>
     </files>
 

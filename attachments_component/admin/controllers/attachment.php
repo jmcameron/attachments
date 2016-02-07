@@ -367,6 +367,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$msgType = 'error';
 				}
 			else {
+				AttachmentsHelper::newEvent($attachment, 'onContentAfterSave');
 				$msg = $result;
 				}
 			}
@@ -387,6 +388,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$msgType = 'error';
 				}
 			else {
+				AttachmentsHelper::newEvent($attachment, 'onContentAfterSave');
 				$msg = $result;
 				}
 			}
@@ -909,6 +911,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$msgType = 'error';
 				}
 			else {
+				AttachmentsHelper::newEvent($attachment, 'onContentAfterSave');
 				$msg = $result;
 				}
 			// NOTE: store() is not needed if upload_file() is called since it does it
@@ -926,6 +929,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$msgType = 'error';
 				}
 			else {
+				AttachmentsHelper::newEvent($attachment, 'onContentAfterSave');
 				$msg = $result;
 				}
 			}
@@ -950,6 +954,10 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				$errmsg = $attachment->getError() . ' (ERR 142)';
 				JError::raiseError(500, $errmsg);
 				}
+			else {
+        			AttachmentsHelper::newEvent($attachment, 'onContentAfterSave');
+      				}
+      
 			}
 
 		switch ( $this->getTask() )	 {

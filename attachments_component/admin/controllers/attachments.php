@@ -187,6 +187,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 						AttachmentsHelper::clean_directory($attachment->filename_sys);
 					}
 					$deleted_ids[] = $id;
+					AttachmentsHelper::newEvent($attachment, 'onContentAfterDelete');
 				}
 				else
 				{
@@ -208,6 +209,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
 					JError::raiseError(500, $errmsg);
 					}
+				AttachmentsHelper::newEvent($attachment, 'onContentAfterDelete');	
 			}
 		}
 
@@ -292,6 +294,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 			// Publish the items.
 			$att_published = $model->publish($cid, $value);
+			AttachmentsHelper::eventChangeState($cid, $value);
 			if (($att_published == false) OR ($att_published == 0))
 			{
 				JError::raiseError(500, $model->getError());

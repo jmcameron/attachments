@@ -546,7 +546,7 @@ class AttachmentsController extends JControllerLegacy
 			$errmsg = $db->getErrorMsg() . ' (ERR 19)';
 			JError::raiseError(500, $errmsg);
 			}
-
+		AttachmentsHelper::newEvent($attachment, 'onContentAfterDelete');
 		// Clean up after ourselves
 		AttachmentsHelper::clean_directory($filename_sys);
 
