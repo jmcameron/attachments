@@ -1067,9 +1067,17 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function insertAttachmentsListInEditor($parent_id, $parent_entity, $attachments, $body)
 	{
+		// Figure out where to insert the attachments list
+		$reptag = '<div id="editor-xtd-buttons"';
+		if (version_compare(JVERSION, '3.5', 'ge')) {
+			if (JFactory::getEditor()->get('_name') == 'tinymce') {
+				# Hack because TinyMCE changed the structure
+				$reptag = '<div class="toggle-editor btn-toolbar pull-right clearfix"';
+				}
+			}
+
 		// Insert the attachments above the editor buttons
 		// NOTE: Assume that anyone editing the entity can see its attachments
-		$reptag = '<div id="editor-xtd-buttons"';
 		$body = str_replace($reptag, $attachments . $reptag, $body);
 		return $body;
 	}
