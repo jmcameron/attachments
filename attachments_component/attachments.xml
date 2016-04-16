@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5.7" method="upgrade">
     <name>com_attachments</name>
-    <version>3.2.4-Beta6</version>
-    <creationDate>November  9, 2015</creationDate>
+    <version>3.2.4-Beta7</version>
+    <creationDate>April 15, 2016</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>
