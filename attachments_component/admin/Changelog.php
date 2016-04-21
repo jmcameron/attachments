@@ -20,6 +20,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2015-09-05 Fixed admin [Reset Order] button
     - 2015-10-11 Fixed issue with uploads in Joomla 3.4.4
     - 2016-04-15 Fixed showing attachments in TinyMCE editor
+    - 2016-04-20 Fixed modal button issue with TinyMCE on J3.5.1
 
 2015-03-20: Release 3.2.3
     - Fixed issue with category blog lists for Joomla 3.4
