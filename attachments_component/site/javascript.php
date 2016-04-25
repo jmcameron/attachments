@@ -27,7 +27,8 @@ class AttachmentsJavascript
 	{
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
-			JHtml::_('behavior.framework');
+			JHtml::_('behavior.framework', true);
+			JHtml::_('behavior.modal', 'a.modal');
 		}
 		else
 		{
