@@ -1,8 +1,12 @@
 The 'Attachments' extension for Joomla! allows files to be uploaded and attached to articles and other types of content. URLs can also be attached. 'Attachments' includes the ability to attach files and edit attachments from the front end as well as from the administrative back end. There are options to control who can see the attachments and who can upload them, along with many other options to increase its flexibility and usefulness.
 
+Attachments gives you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
+
+If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
+
 INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zip file. The component and all plugins are installed in a single step. Attachments uses the Joomla "upgrade" capability and can be installed over previous versions of Attachments.  
 
-WARNING: To uninstall Attachments go to the extension manager and search for: "Package: Attachments for Joomla 2.5+".  Uninstall it and it will uninstall the Attachments component and all Attachments plugins.
+WARNING: To uninstall Attachments go to the extension manager and search for: "Package: Attachments for Joomla".  Uninstall it and it will uninstall the Attachments component and all Attachments plugins.
 
 There is only one supported version of Attachments:
 
@@ -15,21 +19,17 @@ There is only one supported version of Attachments:
 
 * Version 2.x for Joomla 1.5 is no longer supported
 
-NOTE These joomlacode.org sites will be migrating soon (check back here for updates)!
+NOTE: These joomlacode.org sites will be migrating soon (check back here for updates)!
 
 The Attachments extension files have been migrated from joomlacode.org to:
     -- Source code:   /https://github.com/jmcameron/attachments
     -- Translations:  /https://github.com/jmcameron/attachments_translations
 
-Releases 3.1+ gives you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
+If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
 
-If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
-
-Attachments 3.2.4 Release Notes:
+RELEASE NOTES for Attachments 3.2.4:
     -- Fixed admin [Reset Order] button
     -- Fixed issue with uploads in Joomla 3.4.4
     -- Fixed showing attachments in TinyMCE editor
     -- Fixed modal issues with TinyMCE editor on J3.5.1
     -- Tested on Joomla 3.4.8 and 3.5.1
-
-If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
