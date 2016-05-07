@@ -1,43 +1,35 @@
 The 'Attachments' extension for Joomla! allows files to be uploaded and attached to articles and other types of content. URLs can also be attached. 'Attachments' includes the ability to attach files and edit attachments from the front end as well as from the administrative back end. There are options to control who can see the attachments and who can upload them, along with many other options to increase its flexibility and usefulness.
 
-INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zip file. The component and all plugins are installed in a single step. Attachments uses the Joomla "upgrade" capability and can be installed over previous versions of Attachments.
+INSTALLATION IS SIMPLE: Use the Joomla installer with the single installation zip file. The component and all plugins are installed in a single step. Attachments uses the Joomla "upgrade" capability and can be installed over previous versions of Attachments.  
 
-There are two versions of Attachments:
+WARNING: To uninstall Attachments go to the extension manager and search for: "Package: Attachments for Joomla 2.5+".  Uninstall it and it will uninstall the Attachments component and all Attachments plugins.
 
-* Version 3.2+ for Joomla 2.5.7+ or 3.x
+There is only one supported version of Attachments:
+
+* Attachments version 3.2+ for Joomla 2.5.7+ or 3.x
+    -- The current version is 3.2.4
     -- The 3.x versions will NOT work on Joomla 1.5
     -- See demo video: http://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments3/frs/
     -- FORUMS: http://joomlacode.org/gf/project/attachments3/forum/
 
-* Version 2.x for Joomla 1.5
-    -- The 2.x versions will NOT work on Joomla 2.5 and later
-    -- See demo video: http://www.youtube.com/watch?v=-nCbRbfJ9io&hd=1
-    -- DOWNLOAD: http://joomlacode.org/gf/project/attachments/frs/
-    -- FORUMS: http://joomlacode.org/gf/project/attachments/forum/
+* Version 2.x for Joomla 1.5 is no longer supported
 
 NOTE These joomlacode.org sites will be migrating soon (check back here for updates)!
 
 The Attachments extension files have been migrated from joomlacode.org to:
-     -- Source code:   /https://github.com/jmcameron/attachments
-     -- Translations:  /https://github.com/jmcameron/attachments_translations
+    -- Source code:   /https://github.com/jmcameron/attachments
+    -- Translations:  /https://github.com/jmcameron/attachments_translations
 
-If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
-
-Releases 3.1+ and 2.2+ give you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
+Releases 3.1+ gives you several ways to add, edit, and delete your attachments on the front end, back end, and in article editors on the front and back ends (including during article creation).  There are many options to control who can see attachments.  When you add or edit attachments, page updates are done quickly without full page reloads.
 
 If you plan to use this extension for sensitive files, use the 'Secure' mode. This provides secure storage of attachment files and prevents access by anyone without logging in.
 
-Attachments 3.2.0 includes many features:
-  --- Continues to support both Joomla 2.5.7+ and 3.x!
-  --- Various fixes and improvements (see release notes on github).
-  --- For more details, see: https://github.com/jmcameron/attachments/releases/tag/v3.2.0
-  --- Tested with Joomla 3.3.6
+Attachments 3.2.4 Release Notes:
+    -- Fixed admin [Reset Order] button
+    -- Fixed issue with uploads in Joomla 3.4.4
+    -- Fixed showing attachments in TinyMCE editor
+    -- Fixed modal issues with TinyMCE editor on J3.5.1
+    -- Tested on Joomla 3.4.8 and 3.5.1
 
-Attachments 3.2.1:
-  --- Fixed problem with filenames of the downloaded files
-
-Attachments 3.2.2:
-  --- Fixed some small issues related to supporting Attachments for JEvents
-  --- Minor adjustments for Joomla 3.4
-  --- Tested with Joomla 2.5.8 and 3.4
+If you would like to subscribe to an email list for announcements about the Attachments extension, please visit: http://jmcameron.net/attachments/email-list.html
