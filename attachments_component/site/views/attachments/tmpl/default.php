@@ -298,7 +298,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$update_link = '';
 	$delete_link = '';
 
-	// Add the link to delete the parent, if requested
+	// Add the link to edit the attachment, if requested
 	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {
 
 		// Create the edit link
@@ -310,6 +310,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$update_link .= "</a>";
 		}
 
+	// Add the link to delete the attachment, if requested
 	if ( $this->some_attachments_modifiable && $attachment->user_may_delete && $this->allow_edit ) {
 
 		// Create the delete link
