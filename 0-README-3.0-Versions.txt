@@ -6,7 +6,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
     - 2016-04-15 Fixed showing attachments in TinyMCE editor
     - 2016-04-20 Fixed modal issue with TinyMCE on J3.5.1 on backend
     - 2016-04-24 Fixed modal issue with TinyMCE on J3.5.1 on frontend
-    - Tested on Joomla 3.4.7 and 3.5.1
+    - Tested on Joomla 3.4.8 and 3.5.1
 
 2015-03-20: Release 3.2.3
     - Fixed issue with category blog lists for Joomla 3.4
