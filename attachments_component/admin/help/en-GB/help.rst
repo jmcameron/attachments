@@ -6,7 +6,7 @@
 
 .. class:: version
 
-**Version 3.2.4-Beta9 - April 24, 2016**
+**Version 3.2.4 - May  7, 2016**
 
 **This version is for Joomla 1.7/2.5+**
 
