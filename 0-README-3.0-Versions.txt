@@ -1,17 +1,18 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
 2016-05-07: Release 3.2.4
-    - 2015-09-05 Fixed admin [Reset Order] button
-    - 2015-10-11 Fixed issue with uploads in Joomla 3.4.4
-    - 2016-04-15 Fixed showing attachments in TinyMCE editor
-    - 2016-04-20 Fixed modal issue with TinyMCE on J3.5.1 on backend
-    - 2016-04-24 Fixed modal issue with TinyMCE on J3.5.1 on frontend
-    - Tested on Joomla 3.4.8 and 3.5.1
+   - 2015-09-05 Fixed admin [Reset Order] button
+   - 2015-10-11 Fixed issue with uploads in Joomla 3.4.4
+   - 2016-04-15 Fixed showing attachments in TinyMCE editor
+   - 2016-04-20 Fixed modal issue with TinyMCE on J3.5.1 on backend
+   - 2016-04-24 Fixed modal issue with TinyMCE on J3.5.1 on frontend
+   - Tested on Joomla 3.4.8 and 3.5.1
 
 2015-03-20: Release 3.2.3
-    - Fixed issue with category blog lists for Joomla 3.4
-    - Fixed article com_media confusion issue for Joomla 3.4
-    - Tested with Joomla 2.5.28 and 3.4.0
+   - Fixed issue with category blog lists for Joomla 3.4
+   - Fixed article com_media confusion issue for Joomla 3.4
+   - Tested with Joomla 2.5.28 and 3.4.0
+   - 81225 Downloads
 
 3.2.2 - Released March 2, 2015
    - 2015-02-20 Fixed some small issues related to supporting Attachments for JEvents
