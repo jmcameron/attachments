@@ -65,6 +65,13 @@
       <option value="1">JYES</option>
       <option value="0">JNO</option>
     </field>
+    <field name="hide_brackets_if_empty" type="radio" default="0" class="btn-group"
+           label="ATTACH_HIDE_BRACKETS_IF_EMPTY"
+           description="ATTACH_HIDE_BRACKETS_IF_EMPTY_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
+
     <field name="show_creator_name" type="radio" default="0" class="btn-group"
            label="ATTACH_SHOW_ATTACHMENT_CREATOR"
            description="ATTACH_SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
@@ -224,7 +231,12 @@
            label="ATTACH_URL_TO_REGISTER" size="65"
            description="ATTACH_URL_TO_REGISTER_DESCRIPTION">
     </field>
-
+    <field name="alternative_search_results" type="radio" default="0" class="btn-group"
+           label="ATTACH_ALTERNATIVE_SEARCH_RESULTS"
+           description="ATTACH_ALTERNATIVE_SEARCH_RESULTS_DESC">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
   </fieldset>
 
   <fieldset name="security"
