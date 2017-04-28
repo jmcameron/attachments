@@ -76,7 +76,7 @@ else
 		  echo $this->selpar_label ?></b></label></td>
 	  <td colspan="5"><input id="parent_title" value="<?php echo $this->selpar_parent_title; ?>"
 				 disabled="disabled" type="text" size="60" />&nbsp;
-		 <a class="modal-button modal hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
+		 <a class="modal-button hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
 			href="<?php echo $this->selpar_btn_url ?>"
 			rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
 	  </td>
