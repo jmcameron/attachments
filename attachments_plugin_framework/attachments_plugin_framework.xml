@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="attachments" version="2.5" method="upgrade">
     <name>plg_attachments_plugin_framework</name>
-    <version>3.2.4</version>
-    <creationDate>May  7, 2016</creationDate>
+    <version>3.2.5</version>
+    <creationDate>April 30, 2017</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
