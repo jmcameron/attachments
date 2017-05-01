@@ -6,7 +6,7 @@
  * @subpackage Attachments_Plugin
  *
  * @author Jonathan M. Cameron
- * @copyright Copyright (C) 2014-2016 Jonathan M. Cameron
+ * @copyright Copyright (C) 2014-2017 Jonathan M. Cameron
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  */
