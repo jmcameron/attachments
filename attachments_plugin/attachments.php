@@ -131,16 +131,9 @@ class plgContentAttachments extends JPlugin
 			}
 		if (version_compare(JVERSION, '3.7.0'))
 		{
-			# For category blog menu item
-			if (($context == 'com_content.categories') AND ($view == 'category') AND ($layout == 'blog')) {
-				if (isset($row->id) and is_numeric($row->id)) {
-					$parent_entity = 'article';
-					}
-				}
-			# For category list menu item
-			if (($context == 'com_content.categories') AND ($view == 'category') AND ($layout == '')) {
+			# Ignore this for Joomla 3.7.0+ (seems to be new and category attachments are handled ok without it)
+			if ($context == 'com_content.categories')
 				return false;
-				}
 		}
 
 		// Get the article/parent handler
@@ -224,8 +217,9 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
-		// if (isset($row->text)) $row->text .= " [AP text $context]";
-		// if (isset($row->introtext)) $row->introtext .= " [AP introtext $context]";
+		// FOR DEBUGGING
+		// if (isset($row->text)) $row->text .= " [AP text CONTEXT($context) PE($parent_entity) ]";
+		// if (isset($row->introtext)) $row->introtext .= " [AP introtext CONTEXT($context) PE($parent_entity)]";
 
 		return true;
 	}
