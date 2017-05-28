@@ -131,10 +131,15 @@ class plgContentAttachments extends JPlugin
 			}
 		if (version_compare(JVERSION, '3.7.0'))
 		{
+			# For category blog menu item
 			if (($context == 'com_content.categories') AND ($view == 'category') AND ($layout == 'blog')) {
 				if (isset($row->id) and is_numeric($row->id)) {
 					$parent_entity = 'article';
 					}
+				}
+			# For category list menu item
+			if (($context == 'com_content.categories') AND ($view == 'category') AND ($layout == '')) {
+				return false;
 				}
 		}
 
