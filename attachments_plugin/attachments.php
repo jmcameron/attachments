@@ -129,6 +129,14 @@ class plgContentAttachments extends JPlugin
 				$parent_entity = 'article';
 				}
 			}
+		if (version_compare(JVERSION, '3.7.0'))
+		{
+			if (($context == 'com_content.categories') AND ($view == 'category') AND ($layout == 'blog')) {
+				if (isset($row->id) and is_numeric($row->id)) {
+					$parent_entity = 'article';
+					}
+				}
+		}
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
