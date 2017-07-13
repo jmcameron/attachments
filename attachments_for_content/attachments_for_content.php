@@ -171,7 +171,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				break;
 
 			default:
-				return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle";
+				return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParentArticle";
 		}
 	}
 

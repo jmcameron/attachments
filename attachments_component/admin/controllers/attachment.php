@@ -145,7 +145,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$uri = JFactory::getURI();
 			$document = JFactory::getDocument();
 			$js = ' 
-	   function jSelectArticle(id, title, catid, object) {
+	   function jSelectParentArticle(id, title, catid, object) {
 		   document.id("parent_id").value = id;
 		   document.id("parent_title").value = title;
 		   SqueezeBox.close();
@@ -560,7 +560,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$document = JFactory::getDocument();
 		if ( $change_parent ) {
 			$js = " 
-	   function jSelectArticle(id, title) {
+	   function jSelectParentArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;
 		   window.parent.SqueezeBox.close();

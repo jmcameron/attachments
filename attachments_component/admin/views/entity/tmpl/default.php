@@ -62,7 +62,7 @@ if ($row_num == 'JGRID_HEADING_ROW_NUMBER') {
 		<tr class="<?php echo "row$k" ?>">
 		   <td><?php echo $i ?></td>
 		   <td>
-			   <a style="cursor: pointer;" onclick="window.parent.jSelectArticle('<?php echo $item->id; ?>', '<?php echo str_replace(array("'", "\""), array("\\'", ""),$item->title); ?>', '<?php echo JRequest::getVar('object'); ?>');">
+			   <a style="cursor: pointer;" onclick="window.parent.jSelectParentArticle('<?php echo $item->id; ?>', '<?php echo str_replace(array("'", "\""), array("\\'", ""),$item->title); ?>', '<?php echo JRequest::getVar('object'); ?>');">
 			   <?php echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8'); ?></a>
 		   </td>
 		   <td><?php echo $item->id; ?></td>
