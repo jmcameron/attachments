@@ -59,14 +59,7 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			JHtml::_('behavior.modal', 'a.modal-button');
-		}
-		else
-		{
-			JHtml::_('behavior.modal', 'a.modal-button');
-		}
+		JHtml::_('behavior.modal', 'a.modal-button');
 	}
 
 
