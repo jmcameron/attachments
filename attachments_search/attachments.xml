@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="search" version="2.6" method="upgrade">
     <name>plg_search_attachments</name>
-    <version>3.2.5</version>
-    <creationDate>April 30, 2017</creationDate>
+    <version>3.2.6-Beta5</version>
+    <creationDate>March 25, 2018</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
