@@ -74,6 +74,9 @@ revertversions:
 	@echo "Reverting all install xml files"
 	@find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
 
+fixcopyrights:
+	@find . \( -name '*.php' -o -name '*.ini' \) -exec ./fixcopyright {} \;
+
 check: 
 	find . -type f -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual|coverage_|/temp/)'
 
