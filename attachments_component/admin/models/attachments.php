@@ -235,13 +235,13 @@ class AttachmentsModelAttachments extends JModelList
 		$this->setState('list.start', $limitstart);
 
 		// Load the filter state.
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', 'string');
+		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', null, 'string');
 		$this->setState('filter.search', $search);
 
-		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'word');
+		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'ALL', 'word');
 		$this->setState('filter.entity', $entity);
 
-		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', 'string');
+		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', null, 'string');
 		$this->setState('filter.parent_state', $parent_state);
 
 		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
