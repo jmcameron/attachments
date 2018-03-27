@@ -21,7 +21,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2017-05-28 Another fix for category article list menu item
     - 2017-07-12 Fixed issue with article selection
     - 2017-07-13 Fixed issue with admin attachment list popups not working
-    - 2018-03-25 Added fixes to clean any user inputs
+    - 2018-03-25 Added fixes to clean user inputs (fix SQL injection vulnerability)
     - Tested with Joomla 3.8.6
 
 2017-04-30: Release 3.2.5
