@@ -12,6 +12,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
    - 2016-05-13 Fix for problem with delete buttons
    - 2017-04-27 Fix for Jooma 3.7.0
    - Tested with Joomla 3.6.5 and 3.7.0
+   - 50066 Downloads
 
 2016-05-07: Release 3.2.4
    - 2015-09-05 Fixed admin [Reset Order] button
