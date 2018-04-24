@@ -169,7 +169,10 @@ class plgSearchAttachments extends JPlugin
 
 		// Construct and execute the query
 		$query = $db->getQuery(true);
-		$query->select('*')->from('#__attachments AS a');
+		if ($attachParams->get('alternative_search_results', 0))
+			$query->select('a.*, c.alias, c.catid')->from('#__attachments AS a')->join('LEFT', '#__content AS c ON a.parent_id = c.id');
+		else
+		    $query->select('*')->from('#__attachments AS a');
 		$query->where("( $where ) AND a.state = 1");
 		if ( !$user->authorise('core.admin') ) {
 			$query->where('a.access in ('.$user_levels.')');
@@ -273,8 +276,26 @@ class plgSearchAttachments extends JPlugin
 
 			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
-			$attachment->section = JText::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',
+			if ($attachParams->get('alternative_search_results', 0)) 
+				$attachment->section = '';
+			else
+			    $attachment->section = JText::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',
 										   $parent_entity_name, $parent_title);
+										   
+			if ($attachParams->get('alternative_search_results', 0)) {
+										   
+				$url = '';
+				switch($attachment->parent_entity) {
+					case 'category': 
+							$url =  ContentHelperRoute::getCategoryRoute($attachment->catid.':'.$attachment->alias);
+							break;
+					default: // case 'article': 
+							$url = ContentHelperRoute::getArticleRoute( $attachment->parent_id.':'.$attachment->alias, $attachment->catid);
+				}
+				$attachment->href = $url;
+				$attachment->title = $attachment->parent_title;
+			
+			}
 
 			$results[$k] = $attachment;
 			$k++;
