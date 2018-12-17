@@ -38,7 +38,6 @@ class AttachmentsFormView extends JViewLegacy
 	{
 		jimport('joomla.filesystem.file');
 
-		require_once JPATH_BASE.'/libraries/joomla/document/html/renderer/head.php';
 		$document = JFactory::getDocument();
 		$this->assignRef('document', $document);
 
