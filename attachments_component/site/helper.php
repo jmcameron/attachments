@@ -1086,6 +1086,9 @@ class AttachmentsHelper
 			return $u;
 			}
 
+		// workaround for a bug with Cyrillic file names: https://bugs.php.net/bug.php?id=64995&edit=1
+		setlocale(LC_ALL, 'en_US.UTF-8');
+
 		// Set up defaults for what we want to know
 		$filename = basename($u->path);
 		$file_size = 0;
@@ -1543,6 +1546,10 @@ class AttachmentsHelper
 			// Construct the downloaded filename
 			$filename_info = pathinfo($filename);
 			$extension = "." . $filename_info['extension'];
+
+			// workaround for a bug with Cyrillic file names: https://bugs.php.net/bug.php?id=64995&edit=1
+			setlocale(LC_ALL, 'en_US.UTF-8');
+
 			$basename = basename($filename, $extension);
 			// Modify the following line insert a string into
 			// the filename of the downloaded file, for example:
