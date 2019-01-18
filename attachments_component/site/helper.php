@@ -432,10 +432,7 @@ class AttachmentsHelper
 			}
 
 		// Get the new filename
-		// (Note: The following replacement is necessary to allow
-		//		  single quotes in filenames to work correctly.)
-		// Trim of any trailing period (to avoid exploits)
-		$filename = rtrim(JString::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
+		$filename = JFile::makeSafe(strtolower($_FILES['upload']['name']));
 		$ftype = $_FILES['upload']['type'];
 
 		// Check the file size
