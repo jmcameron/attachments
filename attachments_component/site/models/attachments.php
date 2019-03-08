@@ -339,7 +339,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 	 *
 	 * @return the list of attachments for this parent
 	 */
-	public function &getAttachmentsList()
+	public function &getAttachmentsList($attachmentid=null)
 	{
 		// Just return it if it has already been created
 		if ( $this->_list != null ) {
@@ -426,6 +426,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 			}
 
 		$query->where('a.parent_type=' . $db->quote($parent_type) . ' AND a.parent_entity=' . $db->quote($parent_entity));
+		if ($attachmentid != null) $query->where('a.id = ' . $attachmentid);
 		if ( !$user->authorise('core.admin') ) {
 			$query->where('a.access IN ('.$user_levels.')');
 			}
@@ -500,7 +501,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 	 *
 	 * @return true if there are attachments and some should be visible
 	 */
-	public function someVisible()
+	public function someVisible($attachmentid=null)
 	{
 		// See if the attachments list has been loaded
 		if ( $this->_list == null ) {
@@ -511,7 +512,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 				}
 
 			// Since the attachments have not been loaded, load them now
-			$this->getAttachmentsList();
+			$this->getAttachmentsList($attachmentid);
 			}
 
 		return $this->_some_visible;

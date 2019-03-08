@@ -872,16 +872,19 @@ class AttachmentsPlugin extends JPlugin
 		$attachments_tag	  = '';
 		$attachments_tag_args = '';
 		$match				  = false;
-		if (JString::strpos($content->$text_field_name, '{attachments'))
+		$offset = -1;
+		while ($offset != FALSE) {
+		if ($offset == -1) $offset = 0;
+		if ($offset = JString::strpos($content->$text_field_name, '{attachments', $offset))
 		{
 			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
 			{
 				$attachments_tag = true;
 			}
 
-			if (isset($match[1]) && $match[1])
+			if (isset($match[2]) && $match[2])
 			{
-				$attachments_tag_args_raw = $match[1];
+				$attachments_tag_args_raw = $match[2];
 				$attachments_tag_args	  = ltrim($attachments_tag_args_raw, ' :');
 			}
 
@@ -908,7 +911,7 @@ class AttachmentsPlugin extends JPlugin
 		// Get the html for the attachments list
 		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
 		$controller		  = new AttachmentsControllerAttachments;
-		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
+		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from, $attachments_tag_args);
 
 		// If the attachments list is empty, insert an empty div for it
 		if ($attachments_list == '')
@@ -1007,6 +1010,7 @@ class AttachmentsPlugin extends JPlugin
 				}
 				break;
 		}
+		} // while
 
 		return $content;
 	}

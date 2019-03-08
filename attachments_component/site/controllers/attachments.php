@@ -72,7 +72,7 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 	 */
 	public function displayString($parent_id, $parent_type, $parent_entity,
 								  $title=null, $show_file_links=true, $allow_edit=true,
-								  $echo=true, $from=null)
+								  $echo=true, $from=null, $attachmentid=null)
 	{
 		$document = JFactory::getDocument();
 
@@ -95,7 +95,7 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 		$model->setSortOrder($sort_order);
 
 		// If none of the attachments should be visible, exit now
-		if ( ! $model->someVisible() ) {
+		if ( ! $model->someVisible($attachmentid) ) {
 			return false;
 			}
 
