@@ -55,8 +55,9 @@ if ( $format != 'raw' ) {
 	$html .= "\n<div class=\"$this->style\" id=\"$div_id\">\n";
 	}
 
+$html .= "<h3>{$this->title}</h3>";
+
 $html .= "<table>\n";
-$html .= "<caption>{$this->title}</caption>\n";
 
 // Add the column titles, if requested
 if ( $this->show_column_titles ) {
@@ -199,7 +200,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 				}
 			}
-		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\">";
+		$html .= "<a class=\"at_icon\" title=\"icon\">";
 		$html .= JHtml::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
@@ -210,7 +211,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				}
 			}
 		$html .= "</a>";
-		$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
+		$newurl = str_replace(' ', '%20', $url);
+		$html .= "<a class=\"at_url\" href=\"$newurl\"$target title=\"$tooltip\">$filename</a>";
 		}
 	else {
 		$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
