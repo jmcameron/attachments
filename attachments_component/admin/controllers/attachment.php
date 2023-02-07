@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -145,7 +145,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$uri = JFactory::getURI();
 			$document = JFactory::getDocument();
 			$js = ' 
-	   function jSelectArticle(id, title, catid, object) {
+	   function jSelectParentArticle(id, title, catid, object) {
 		   document.id("parent_id").value = id;
 		   document.id("parent_title").value = title;
 		   SqueezeBox.close();
@@ -560,7 +560,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$document = JFactory::getDocument();
 		if ( $change_parent ) {
 			$js = " 
-	   function jSelectArticle(id, title) {
+	   function jSelectParentArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;
 		   window.parent.SqueezeBox.close();

@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments.Quickicon_Plugin
  *
- * @copyright Copyright (C) 2013-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2013-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron

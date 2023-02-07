@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -59,14 +59,7 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			JHtml::_('behavior.modal', 'a.modal-button');
-		}
-		else
-		{
-			JHtml::_('behavior.modal', 'a.modal-button');
-		}
+		JHtml::_('behavior.modal', 'a.modal-button');
 	}
 
 

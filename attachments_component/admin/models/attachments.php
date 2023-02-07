@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -226,29 +226,29 @@ class AttachmentsModelAttachments extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Set up the list limits (not sure why the base class version of this does not work)
-		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->getCfg('list_limit'));
+		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->getCfg('list_limit'), 'uint');
 		$limit = $value;
 		$this->setState('list.limit', $limit);
 
-		$value = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0);
+		$value = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0, 'uint');
 		$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
 		$this->setState('list.start', $limitstart);
 
 		// Load the filter state.
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', null, 'string');
 		$this->setState('filter.search', $search);
 
-		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'ALL');
+		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'ALL', 'word');
 		$this->setState('filter.entity', $entity);
 
-		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', 'ALL');
+		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', null, 'string');
 		$this->setState('filter.parent_state', $parent_state);
 
 		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
 		$this->setState('filter.state', $state);
 
 		// Check if the ordering field is in the white list, otherwise use the incoming value.
-		$value = $app->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering);
+		$value = $app->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering, 'string');
 		if (!in_array($value, $this->filter_fields)) {
 			$value = $ordering;
 			$app->setUserState($this->context.'.ordercol', $value);
@@ -256,7 +256,7 @@ class AttachmentsModelAttachments extends JModelList
 		$this->setState('list.ordering', $value);
 
 		// Check if the ordering direction is valid, otherwise use the incoming value.
-		$value = $app->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction);
+		$value = $app->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction, 'cmd');
 		if (!in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
 			$value = $direction;
 			$app->setUserState($this->context.'.orderdirn', $value);

@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -1876,7 +1876,7 @@ class AttachmentsHelper
 
 		$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
 		$icon = JHtml::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
-		$ahead = '<a class="modal-button modal" type="button" href="' . $url . '" ';
+		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
 		$ahead .= "rel=\"{handler: 'iframe', size: {x: 920, y: 550}}\">";
 		$links = $ahead . $icon . "</a>";
 		$links .= $ahead . $add_attachment_txt . "</a>";

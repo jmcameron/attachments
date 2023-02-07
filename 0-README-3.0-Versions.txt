@@ -1,5 +1,19 @@
 Versions of Attachments-3.0 for Joomla 2.5 and 3.x
 
+2018-03-26: Release 3.2.6
+   - 2017-05-27 Fixed category attachments for 3.7+ changes
+   - 2017-05-28 Another fix for category article list menu item
+   - 2017-07-12 Fixed issue with article selection
+   - 2017-07-13 Fixed issue with admin attachment list popups not working
+   - 2018-03-25 Added fixes to clean user inputs (fix SQL injection vulnerability)
+   - Tested with Joomla 3.8.6
+
+2017-04-30: Release 3.2.5
+   - 2016-05-13 Fix for problem with delete buttons
+   - 2017-04-27 Fix for Jooma 3.7.0
+   - Tested with Joomla 3.6.5 and 3.7.0
+   - 50066 Downloads
+
 2016-05-07: Release 3.2.4
    - 2015-09-05 Fixed admin [Reset Order] button
    - 2015-10-11 Fixed issue with uploads in Joomla 3.4.4
@@ -7,6 +21,7 @@ Versions of Attachments-3.0 for Joomla 2.5 and 3.x
    - 2016-04-20 Fixed modal issue with TinyMCE on J3.5.1 on backend
    - 2016-04-24 Fixed modal issue with TinyMCE on J3.5.1 on frontend
    - Tested on Joomla 3.4.8 and 3.5.1
+   - 62311 Downloads
 
 2015-03-20: Release 3.2.3
    - Fixed issue with category blog lists for Joomla 3.4

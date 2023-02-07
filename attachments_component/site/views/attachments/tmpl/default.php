@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -325,13 +325,18 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$update_link = '';
 	$delete_link = '';
 
+	$a_class = 'modal-button';
+	if ( $app->isAdmin() ) {
+		$a_class = 'modal';
+		}
+
 	// Add the link to edit the attachment, if requested
 	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {
 
 		// Create the edit link
 		$update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
 		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
-		$update_link = '<a class="modal-button modal" type="button" href="' . $update_url . '"';
+		$update_link = "<a class=\"$a_class\" type=\"button\" href=\"$update_url\"";
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 600}}\" title=\"$tooltip\">";
 		$update_link .= JHtml::image('com_attachments/pencil.gif', $tooltip, null, true);
 		$update_link .= "</a>";
@@ -343,7 +348,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		// Create the delete link
 		$delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
 		$tooltip = JText::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
-		$delete_link = '<a class="modal-button modal" type="button" href="' . $delete_url . '"';
+		$delete_link = "<a class=\"$a_class\" type=\"button\" href=\"$delete_url\"";
 		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 400}, iframeOptions: {scrolling: 'no'}}\" title=\"$tooltip\">";
 		$delete_link .= JHtml::image('com_attachments/delete.gif', $tooltip, null, true);
 		$delete_link .= "</a>";

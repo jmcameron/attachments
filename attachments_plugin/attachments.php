@@ -6,7 +6,7 @@
  * @subpackage	Main_Attachments_Plugin
  *
  * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright	Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright	Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
@@ -129,6 +129,12 @@ class plgContentAttachments extends JPlugin
 				$parent_entity = 'article';
 				}
 			}
+		if (version_compare(JVERSION, '3.7.0'))
+		{
+			# Ignore this for Joomla 3.7.0+ (seems to be new and category attachments are handled ok without it)
+			if ($context == 'com_content.categories')
+				return false;
+		}
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -211,8 +217,9 @@ class plgContentAttachments extends JPlugin
 		// Add the attachments list
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
-		// if (isset($row->text)) $row->text .= " [AP text $context]";
-		// if (isset($row->introtext)) $row->introtext .= " [AP introtext $context]";
+		// FOR DEBUGGING
+		// if (isset($row->text)) $row->text .= " [AP text CONTEXT($context) PE($parent_entity) ]";
+		// if (isset($row->introtext)) $row->introtext .= " [AP introtext CONTEXT($context) PE($parent_entity)]";
 
 		return true;
 	}

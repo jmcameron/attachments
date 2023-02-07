@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -88,7 +88,7 @@ if ( $attachment->parent_title ) {
 	<td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
 	<td><?php echo $alt_parent_html; ?>
 	  <input id="parent_title" value="<?php echo $attachment->parent_title ?>" disabled="disabled" type="text" size="60" />&nbsp;
-	  <a class="modal-button modal" type="button"
+	  <a class="modal-button" type="button"
 		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
 		 rel="{handler: 'iframe', size: {x: 800, y: 450}}"><?php echo $this->selpar_btn_text ?></a>
 	  <input id="parent_id" name="parent_id" value="-1" type="hidden" />

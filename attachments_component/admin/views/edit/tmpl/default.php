@@ -5,7 +5,7 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
@@ -76,7 +76,7 @@ else
 		  echo $this->selpar_label ?></b></label></td>
 	  <td colspan="5"><input id="parent_title" value="<?php echo $this->selpar_parent_title; ?>"
 				 disabled="disabled" type="text" size="60" />&nbsp;
-		 <a class="modal-button modal hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
+		 <a class="modal-button hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
 			href="<?php echo $this->selpar_btn_url ?>"
 			rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
 	  </td>

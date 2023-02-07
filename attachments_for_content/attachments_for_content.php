@@ -6,7 +6,7 @@
  * @subpackage	Attachments_Plugin_For_Content
  *
  * @author		Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright	Copyright (C) 2009-2016 Jonathan M. Cameron, All Rights Reserved
+ * @copyright	Copyright (C) 2009-2018 Jonathan M. Cameron, All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
@@ -171,7 +171,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				break;
 
 			default:
-				return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle";
+				return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParentArticle";
 		}
 	}
 
@@ -807,7 +807,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			$query->select('created_by, catid')->from('#__content')->where('id = ' . (int) $parent_id);
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
-			if ($db->getErrorNum() || (count($attachments) == 0))
+			if ($db->getErrorNum() || (count($attachments) === false))
 			{
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
 				JError::raiseError(500, $errmsg);
