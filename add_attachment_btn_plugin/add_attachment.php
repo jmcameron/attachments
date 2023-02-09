@@ -11,17 +11,23 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
+
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
-
-jimport('joomla.plugin.plugin');
 
 /**
  * Button that allows you to add attachments from the editor
  *
  * @package Attachments
  */
-class plgButtonAdd_attachment extends JPlugin
+class plgButtonAdd_attachment extends CMSPlugin
 {
 	/**
 	 * Constructor
@@ -41,16 +47,17 @@ class plgButtonAdd_attachment extends JPlugin
 	 *
 	 * @param string $name The name of the editor form
 	 * @param int $asset The asset ID for the entity being edited
-	 * @param int $authro The ID of the author of the entity
+	 * @param int $author The ID of the author of the entity
 	 *
 	 * @return a button
 	 */
 	public function onDisplay($name, $asset, $author)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
+		$input = $app->getInput();
 
 		// Avoid displaying the button for anything except for registered parents
-		$parent_type = JRequest::getCmd('option');
+		$parent_type = $input->getCmd('option');
 		if (!$parent_type) {
 			return;
 			}
@@ -66,26 +73,26 @@ class plgButtonAdd_attachment extends JPlugin
 
 		// Get the parent ID (id or first of cid array)
 		//	   NOTE: $parent_id=0 means no id (usually means creating a new entity)
-		$cid = JRequest::getVar('cid', array(0), '', 'array');
+		$cid = $input->get('cid', array(0), 'array');
 		$parent_id = 0;
 		if ( count($cid) > 0 ) {
 			$parent_id = (int)$cid[0];
 			}
 		if ( $parent_id == 0) {
-			$a_id = JRequest::getInt('a_id');
+			$a_id = $input->getInt('a_id');
 			if ( !is_null($a_id) ) {
 				$parent_id = (int)$a_id;
 				}
 			}
 		if ( $parent_id == 0) {
-			$nid = JRequest::getInt('id');
+			$nid = $input->getInt('id');
 			if ( !is_null($nid) ) {
 				$parent_id = (int)$nid;
 				}
 			}
 
 		// Check for the special case where we are creating an article from a category list
-		$item_id = JRequest::getInt('Itemid');
+		$item_id = $input->getInt('Itemid');
 		$menu = $app->getMenu();
 		$menu_item = $menu->getItem($item_id);
 		if ( $menu_item AND ($menu_item->query['view'] == 'category') AND empty($a_id) ) {
@@ -94,16 +101,15 @@ class plgButtonAdd_attachment extends JPlugin
 			}
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			return new JObject();
+			return new stdClass();
 			}
 		// Figure out where we are and construct the right link and set
-		$uri = JFactory::getURI();
-		$base_url = $uri->root(true);
-		if ( $app->isAdmin() ) {
+		$base_url = Uri::root(true);
+		if ( $app->isClient('administrator') ) {
 			$base_url = str_replace('/administrator','', $base_url);
 			}
 
@@ -117,8 +123,8 @@ class plgButtonAdd_attachment extends JPlugin
 
 		if ( $parent_id == 0 ) {
 			# Last chance to get the id in extension editors
-			$view = JRequest::getWord('view');
-			$layout = JRequest::getWord('layout');
+			$view = $input->getWord('view');
+			$layout = $input->getWord('layout');
 			$parent_id = $parent->getParentIdInEditor($parent_entity, $view, $layout);
 			}
 
@@ -127,6 +133,9 @@ class plgButtonAdd_attachment extends JPlugin
 			return;
 			}
 
+		// NOTE: I cannot find anything about AttachmentsRemapper class.
+		// Could it be old unnecessary code that needs deletion?
+		// ------------------------------------------------------
 		// Allow remapping of parent ID (eg, for Joomfish)
 		if (jimport('attachments_remapper.remapper'))
 		{
@@ -134,21 +143,21 @@ class plgButtonAdd_attachment extends JPlugin
 		}
 
 		// Add the regular css file
-		JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
-		JHtml::stylesheet('com_attachments/add_attachment_button.css', Array(), true);
+		HTMLHelper::stylesheet('com_attachments/attachments_list.css');
+		HTMLHelper::stylesheet('com_attachments/add_attachment_button.css');
 
 		// Handle RTL styling (if necessary)
-		$lang = JFactory::getLanguage();
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
-			JHtml::stylesheet('com_attachments/add_attachment_button_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_list_rtl.css');
+			HTMLHelper::stylesheet('com_attachments/add_attachment_button_rtl.css');
 			}
 
 		// Load the language file from the frontend
 		$lang->load('com_attachments', dirname(__FILE__));
 
 		// Create the [Add Attachment] button object
-		$button = new JObject();
+		$button = new Registry();
 
 		$link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
 		$link .= '&amp;editor=' . $editor;
@@ -156,23 +165,8 @@ class plgButtonAdd_attachment extends JPlugin
 		// Finalize the [Add Attachment] button info
 		$button->set('modal', true);
 		$button->set('class', 'btn');
-		$button->set('text', JText::_('ATTACH_ADD_ATTACHMENT'));
-
-		if ( $app->isAdmin() ) {
-			$button_name = 'add_attachment';
-			if (version_compare(JVERSION, '3.3', 'ge')) {
-				$button_name = 'paperclip';
-				}
-			$button->set('name', $button_name);
-			}
-		else {
-			// Needed for Joomal 2.5
-			$button_name = 'add_attachment_frontend';
-			if (version_compare(JVERSION, '3.3', 'ge')) {
-				$button_name = 'paperclip';
-				}
-			$button->set('name', $button_name);
-			}
+		$button->set('text', Text::_('ATTACH_ADD_ATTACHMENT'));
+		$button->set('name', 'paperclip');
 		$button->set('link', $link);
 		$button->set('options', "{handler: 'iframe', size: {x: 920, y: 530}}");
 
