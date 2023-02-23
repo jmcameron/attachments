@@ -11,18 +11,26 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Utilities\ArrayHelper;
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-// import Joomla controlleradmin library
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Attachments Controller
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachments extends JControllerAdmin
+class AttachmentsControllerAttachments extends AdminController
 {
 
 	/**
@@ -59,23 +67,24 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$document = JFactory::getDocument();
+		$app = Factory::getApplication();
+		$document = $app->getDocument();
 
 		// Get an instance of the model
 		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
-		// Set up to list the attachments for this artticle
+		// Set up to list the attachments for this article
 		$sort_order = $params->get('sort_order', 'filename');
 		$model->setSortOrder($sort_order);
 
@@ -89,8 +98,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
 		$view->setModel($model);
 
@@ -134,19 +144,19 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	public function delete()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get ready
-		$app = JFactory::getApplication();
-		jimport('joomla.filesystem.file');
+		$app = Factory::getApplication();
 		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 		// Get the attachments parent manager
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 
 		// Get attachments to remove from the request
-		$cid = JRequest::getVar('cid', array(), '', 'array');
+		$input = $app->getInput();
+		$cid = $input->get('cid', array(), 'array');
 		$deleted_ids = Array();
 
 		if (count($cid))
@@ -161,19 +171,21 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				// Load the attachment object
 				$id = (int)$attachment_id;
 				if ( ($id == 0) OR !$attachment->load($id) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
-					JError::raiseError(500, $errmsg);
+					$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
+					throw new ErrorException($errmsg, 500);
+					die;
 					}
 				$parent_id = $attachment->parent_id;
 				$parent_type = $attachment->parent_type;
 				$parent_entity = $attachment->parent_entity;
 
 				// Get the article/parent handler
-				JPluginHelper::importPlugin('attachments');
+				PluginHelper::importPlugin('attachments');
 				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
-					JError::raiseError(500, $errmsg);
+					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
+					throw new ErrorException($errmsg, 500);
+					die;
 					}
 				$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -181,9 +193,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				if ( $parent->userMayDeleteAttachment($attachment) )
 				{
 					// Delete the actual file
-					if ( JFile::exists($attachment->filename_sys) )
+					if ( File::exists($attachment->filename_sys) )
 					{
-						JFile::delete($attachment->filename_sys);
+						File::delete($attachment->filename_sys);
 						AttachmentsHelper::clean_directory($attachment->filename_sys);
 					}
 					$deleted_ids[] = $id;
@@ -191,7 +203,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				else
 				{
 					$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-					$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
+					$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
 											 $parent_entity, $attachment->filename, $id);
 					$app->enqueueMessage($errmsg, 'warning');
 				}
@@ -200,19 +212,20 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			// Delete entries in the attachments table for deleted attachments
 			if (!empty($deleted_ids))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->delete('#__attachments')->where("id IN (".implode(',', $deleted_ids).")");
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
-					JError::raiseError(500, $errmsg);
+					throw new ErrorException($errmsg, 500);
+					die;
 					}
 			}
 		}
 
 		// Figure out how to redirect
-		$from = JRequest::getWord('from');
+		$from = $input->getWord('from');
 		$known_froms = array('frontpage', 'article', 'editor', 'closeme');
 		if ( in_array( $from, $known_froms ) )
 		{
@@ -223,8 +236,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 			// Get the article/parent handler
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
-				JError::raiseError(500, $errmsg);
+				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
+				throw new ErrorException($errmsg, 500);
+				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -232,8 +246,8 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			// Make sure the parent exists
 			// NOTE: $parent_id===null means the parent is being created
 			if ( ($parent_id !== null) && !$parent->parentExists($parent_id, $parent_entity) ) {
-				$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-				$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
+				$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+				$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 170)';
 				JError::raiseError(500, $errmsg);
 				}
@@ -248,9 +262,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 			// Close the iframe and refresh the attachments list in the parent window
 			require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
-			$uri = JFactory::getURI();
+			$uri = Uri::getInstance();
 			$base_url = $uri->base(true);
-			$lang = JRequest::getCmd('lang', '');
+			$lang = $input->getCmd('lang', '');
 			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 		}
@@ -270,17 +284,20 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 	public function publish()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid = JRequest::getVar('cid', array(), '', 'array');
+		$app = Factory::getApplication();
+		$input = $app->getInput();
+		$cid = $input->get('cid', array(), 'array');
 		$data = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task = $this->getTask();
-		$value = JArrayHelper::getValue($data, $task, 0, 'int');
+		$value = ArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid))
 		{
-			JError::raiseError(500, JText::_($this->text_prefix . '_NO_ITEM_SELECTED'));
+			throw new ErrorException(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
+			die;
 		}
 		else
 		{
@@ -288,13 +305,14 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 
 			// Publish the items.
 			$att_published = $model->publish($cid, $value);
 			if (($att_published == false) OR ($att_published == 0))
 			{
-				JError::raiseError(500, $model->getError());
+				throw new ErrorException($model->getError(), 500);
+				die;
 			}
 			else
 			{
@@ -314,12 +332,12 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				{
 					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
 				}
-				$this->setMessage(JText::plural($ntext,	 $att_published));
+				$this->setMessage(Text::plural($ntext,	 $att_published));
 			}
 		}
-		$extension = JRequest::getCmd('extension');
-		$extensionURL = ($extension) ? '&extension=' . JRequest::getCmd('extension') : '';
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+		$extension = $input->getCmd('extension');
+		$extensionURL = ($extension) ? '&extension=' . $input->getCmd('extension') : '';
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
 	}
 
 }

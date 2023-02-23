@@ -11,18 +11,22 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\Component\Config\Administrator\Model\ComponentModel;
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
-
-/** Load the class for the model component form and make it work for both 3.2 and less */
-if (version_compare(JVERSION, '3.2', 'ge'))
-{
-	require_once(JPATH_SITE . '/components/com_config/model/cms.php');
-	require_once(JPATH_SITE . '/components/com_config/model/form.php');
-}
+require_once(JPATH_SITE . '/components/com_config/model/cms.php');
+require_once(JPATH_SITE . '/components/com_config/model/form.php');
 require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 
 
@@ -31,7 +35,7 @@ require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerParams extends JControllerFormLegacy
+class AttachmentsControllerParams extends FormController
 {
 
 	/**
@@ -40,26 +44,28 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 	public function edit($key = null, $urlVar = null)
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
+			return false;
 			}
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Get the component model/table
-		$model = new ConfigModelComponent();
+		$model = new ComponentModel();
 		$state = $model->getState();
 		$state->set('component.option', 'com_attachments');
 		$state->set('component.path', JPATH_ADMINISTRATOR.'/components/com_attachments');
 		$model->setState($state);
 		$form = $model->getForm();
-		$component = JComponentHelper::getComponent('com_attachments');
+		$component = ComponentHelper::getComponent('com_attachments');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors) . ' (ERR 118)');
+			throw new ErrorException(implode("\n", $errors) . ' (ERR 118)', 500);
 			return false;
 		}
 
@@ -87,33 +93,38 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
+		$input = $app->getInput();
 
 		// Get the old component parameters
-		jimport('joomla.application.component.helper');
-		$old_params = JComponentHelper::getParams('com_attachments');
-		$old_secure = JRequest::getInt('old_secure');
+		$old_params = ComponentHelper::getParams('com_attachments');
+		$old_secure = $input->getInt('old_secure');
 
 		// Set FTP credentials, if given.
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		ClientHelper::setCredentialsFromRequest('ftp');
 
-		// Initialise variables.
-		$model = new ConfigModelComponent();
+		// Initialize variables.
+		$model = new ComponentModel();
 		$form	= $model->getForm();
-		$data	= JRequest::getVar('jform', array(), 'post', 'array');
-		$id		= JRequest::getInt('id');
-		$option	= JRequest::getCmd('component');
+		if ($input->getMethod() == 'POST') {
+			$data	= $input->get('jform', array(), 'post', 'array');
+		} else {
+			$data = array();
+		}
+		$id		= $input->getInt('id');
+		$option	= $input->getCmd('component');
 
 		// Get the new component parameters
 		$new_secure = $data['secure'];
 
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('core.admin', $option))
+		$user = $app->getIdentity();
+		if ($user === null || !$user->authorise('core.admin', $option))
 		{
-			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'));
+			$this->redirect('index.php');
 			return;
 		}
 
@@ -128,18 +139,14 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				if ($errors[$i] instanceof Exception) {
-					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				} else {
-					$app->enqueueMessage($errors[$i], 'warning');
-				}
+				$app->enqueueMessage($errors[$i], 'warning');
 			}
 
 			// Save the data in the session.
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit', false));
+			$this->setRedirect(Route::_('index.php?option=com_attachments&task=params.edit', false));
 			return false;
 		}
 
@@ -158,8 +165,8 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Save failed, go back to the screen and display a notice.
-			$message = JText::sprintf('JERROR_SAVE_FAILED', $model->getError());
-			$this->setRedirect(JRoute::_('index.php?option=com_attachments&task=params.edit'), $message, 'error');
+			$message = Text::sprintf('JERROR_SAVE_FAILED', $model->getError());
+			$this->setRedirect(Route::_('index.php?option=com_attachments&task=params.edit'), $message, 'error');
 			return false;
 		}
 
@@ -171,10 +178,10 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 
-			$msg = JText::_('ATTACH_UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
+			$msg = Text::_('ATTACH_UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
 			}
 		else {
-			$msg = JText::_( 'ATTACH_UPDATED_ATTACHMENTS_PARAMETERS' );
+			$msg = Text::_( 'ATTACH_UPDATED_ATTACHMENTS_PARAMETERS' );
 			}
 
 		// Set the redirect based on the task.

@@ -11,11 +11,20 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\String\StringHelper;
+
 defined('_JEXEC') or die('Restricted access');
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)');
+$app = Factory::getApplication();
+$user = $app->getIdentity();
+if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+	throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
+	die;
 	}
 
 /** Define the legacy classes, if necessary */
@@ -28,7 +37,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerSpecial extends JControllerLegacy
+class AttachmentsControllerSpecial extends BaseController
 {
 	/**
 	 * Constructor.
@@ -47,7 +56,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 	 */
 	public function noop()
 	{
-		echo "<h1>" . JText::_('ATTACH_ERROR_NO_SPECIAL_FUNCTION_SPECIFIED') . "</h1>";
+		echo "<h1>" . Text::_('ATTACH_ERROR_NO_SPECIAL_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
 	}
 
@@ -59,7 +68,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 	 */
 	public function showSEF()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo "<html><head><title>SEF Status</title></head><body>";
 		echo "SEF: " . $app->getCfg('sef') . "<br />";
@@ -76,7 +85,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 	public function listAttachmentIDs()
 	{
 		// Get the article IDs
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('att.id,parent_id,parent_type,parent_entity,art.catid');
 		$query->from('#__attachments as att');
@@ -87,7 +96,8 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 148)';
-			JError::raiseError(500, $errmsg);
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
 
 		// Get the category IDs
@@ -101,7 +111,8 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 		$crows = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 149)';
-			JError::raiseError(500, $errmsg);
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
@@ -116,7 +127,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 			if ( empty($attachment->catid) ) {
 				$attachment->catid = '0';
 				}
-			$parent_entity = JString::strtolower($attachment->parent_entity);
+			$parent_entity = StringHelper::strtolower($attachment->parent_entity);
 			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
 				$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->catid . '<br/>';
 			}
@@ -124,7 +135,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 			if ( empty($attachment->id) ) {
 				$attachment->id = '0';
 				}
-			$parent_entity = JString::strtolower($attachment->parent_entity);
+			$parent_entity = StringHelper::strtolower($attachment->parent_entity);
 			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
 					$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->parent_id . '<br/>';
 			}
@@ -141,10 +152,10 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 	public function listKnownParentTypes()
 	{
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 
 		$ptypes = $apm->getInstalledParentTypes();
-		echo implode($ptypes, '<br/>');
+		echo implode('<br/>', $ptypes);
 	}
 }

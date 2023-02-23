@@ -11,6 +11,11 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+
 defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
@@ -22,7 +27,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerList extends JControllerLegacy
+class AttachmentsControllerList extends BaseController
 {
 	/**
 	 * Constructor.
@@ -42,8 +47,9 @@ class AttachmentsControllerList extends JControllerLegacy
 	 */
 	public function noop()
 	{
-		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 119)';
-		JError::raiseError(500, $errmsg);
+		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 119)';
+		throw new ErrorException( $errmsg, 500 );
+		die;
 	}
 
 
@@ -65,7 +71,8 @@ class AttachmentsControllerList extends JControllerLegacy
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$document = JFactory::getDocument();
+		$app = Factory::getApplication();
+		$document = $app->getDocument();
 
 		// Get an instance of the model
 		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
@@ -73,10 +80,9 @@ class AttachmentsControllerList extends JControllerLegacy
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
-		// Set up to list the attachments for this artticle
+		// Set up to list the attachments for this article
 		$sort_order = $params->get('sort_order', 'filename');
 		$model->setSortOrder($sort_order);
 
@@ -90,8 +96,9 @@ class AttachmentsControllerList extends JControllerLegacy
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
 		$view->setModel($model);
 

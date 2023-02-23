@@ -11,11 +11,18 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+
 defined('_JEXEC') or die('Restricted access');
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)');
+$app = Factory::getApplication();
+$user = $app->getIdentity();
+if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+	throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)', 404);
+	die;
 	}
 
 /** Define the legacy classes, if necessary */
@@ -31,7 +38,7 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerUtils extends JControllerLegacy
+class AttachmentsControllerUtils extends BaseController
 {
 	/**
 	 * Constructor.
@@ -50,7 +57,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	 */
 	public function noop()
 	{
-		echo "<h1>" . JText::_('ATTACH_ERROR_NO_UTILS_FUNCTION_SPECIFIED') . "</h1>";
+		echo "<h1>" . Text::_('ATTACH_ERROR_NO_UTILS_FUNCTION_SPECIFIED') . "</h1>";
 		exit();
 	}
 
@@ -70,12 +77,12 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	 */
 	protected function enqueueSystemMessage($msg, $type = 'message')
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$app->enqueueMessage($msg, $type);
 
 		// Not sure why I need the extra saving to the session below,
 		// but it it seems necessary because I'm doing it from an iframe.
-		$session = JFactory::getSession();
+		$session = $app->getSession();
 		$session->set('application.queue', $app->getMessageQueue());
 	}
 
@@ -87,8 +94,12 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function add_icon_filenames()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
@@ -104,14 +115,18 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function update_null_dates()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
-		$msg = JText::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
+		$msg = Text::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
 		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
 
@@ -124,19 +139,24 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function disable_sql_uninstall()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
@@ -152,19 +172,24 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function regenerate_system_filenames()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user ===null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
@@ -180,19 +205,24 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function remove_spaces_from_system_filenames()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
@@ -208,19 +238,24 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function update_file_sizes()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::update_file_sizes();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
@@ -236,15 +271,20 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function check_files()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::check_files_existance();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -263,15 +303,20 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function validate_urls()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 158)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::validate_urls();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -291,19 +336,24 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function reinstall_permissions()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::installAttachmentsPermissions();
 
-		if ( JRequest::getBool('close') ) {
+		$input = $app->getInput();
+		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
@@ -318,42 +368,51 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function installAttachmentsFromCsvFile()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)', 404);
+			die;
 			}
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/import.php');
 
-		$filename = JRequest::getString('filename', null);
+		$input = $app->getInput();
+		$filename = $input->getString('filename', null);
 		if ( $filename == null ) {
-			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 161)';
-			return JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 161)';
+			throw new ErrorException($errmsg, 500);
+			die;
 			}
-		$verify_parent = JRequest::getBool('verify_parent', true);
-		$update = JRequest::getBool('update', false);
-		$dry_run = JRequest::getBool('dry_run', false);
+		$verify_parent = $input->getBool('verify_parent', true);
+		$update = $input->getBool('update', false);
+		$dry_run = $input->getBool('dry_run', false);
 
 		$status = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
 																  $update,	$dry_run);
 
 		// Abort if it is an error message
 		if ( is_string($status) ) {
-			return JError::raiseError(500, $status);
+			throw new ErrorException($status, 500);
+			die;
 			}
 
 		// Otherwise, report the results
 		if ( is_array($status) ) {
-			$msg = JText::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($status));
+			$msg = Text::sprintf('ATTACH_ADDED_DATA_FOR_N_ATTACHMENTS', count($status));
 			$this->setRedirect('index.php?option=com_attachments', $msg);
 			}
 		else {
 			if ( $dry_run ) {
-				$msg = JText::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status) . ' (ERR 162)';
-				return JError::raiseNotice(200, $msg);
+				$msg = Text::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status) . ' (ERR 162)';
+				throw new ErrorException($msg, 500);
+				die;
 				}
 			else {
-				$errmsg = JText::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 163)';
-				return JError::raiseError(500, $errmsg);
+				$errmsg = Text::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 163)';
+				throw new ErrorException($errmsg, 500);
+				die;
 				}
 			}
 	}
@@ -365,8 +424,9 @@ class AttachmentsControllerUtils extends JControllerLegacy
 	public function test()
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR'));
+		if (!Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_attachments')) {
+			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR'), 404);
+			die;
 			}
 
 		echo "Test!";
