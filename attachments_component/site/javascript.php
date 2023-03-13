@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
@@ -27,17 +29,17 @@ class AttachmentsJavascript
 	{
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
-			JHtml::_('behavior.framework', true);
-			JHtml::_('behavior.modal', 'a.modal');
+			HTMLHelper::_('behavior.framework', true);
+			HTMLHelper::_('behavior.modal', 'a.modal');
 		}
 		else
 		{
 			// up the style sheet (to get the visual for the button working)
-			JHtml::_('behavior.mootools');
+			HTMLHelper::_('behavior.mootools');
 		}
 		if ($add_refresh_script)
 		{
-			JHtml::script('com_attachments/attachments_refresh.js', false, true);
+			HTMLHelper::script('com_attachments/attachments_refresh.js', false, true);
 		}
 	}
 
@@ -59,7 +61,7 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		JHtml::_('behavior.modal', 'a.modal-button');
+		HTMLHelper::_('behavior.modal', 'a.modal-button');
 	}
 
 

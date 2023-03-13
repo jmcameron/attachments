@@ -13,18 +13,3 @@
 
 // No direct access.
 defined('_JEXEC') or die('Restricted access');
-
-
-if (!class_exists('JModelLegacy', false))
-{
-	if (version_compare(JVERSION, '3.0', 'ge'))
-	{
-		// Joomla 3.0
-		jimport('legacy.model.legacy');
-	}
-	else if (version_compare(JVERSION, '2.5', 'ge'))
-	{
-		// Joomla 2.5
-		jimport('cms.model.legacy');
-	}
-}

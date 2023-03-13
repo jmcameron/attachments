@@ -11,6 +11,13 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
@@ -22,7 +29,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachments extends JControllerLegacy
+class AttachmentsControllerAttachments extends BaseController
 {
 	/**
 	 * Constructor
@@ -42,8 +49,8 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 	 */
 	public function noop()
 	{
-		$errmsg = JText::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 59)';
-		JError::raiseError(500, $errmsg);
+		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 59)';
+		throw new Exception( $errmsg, 500 );
 	}
 
 
@@ -74,21 +81,22 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$document = JFactory::getDocument();
+		$app = Factory::getApplication();
+		$document = $app->getDocument();
 
 		// Get an instance of the model
 		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
 		$model = new AttachmentsModelAttachments();
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Set up to list the attachments for this article/content item
 		$sort_order = $params->get('sort_order', 'filename');
@@ -104,23 +112,24 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 61)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 61)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 		$view->setModel($model);
 
 		// Construct the update URL template
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = Uri::base(false);
 		$update_url = $base_url . "index.php?option=com_attachments&task=update&id=%d";
 		$update_url .= "&from=$from&tmpl=component";
-		$update_url = JRoute::_($update_url);
+		$update_url = Route::_($update_url);
 		$view->update_url = $update_url;
 
 		// Construct the delete URL template
 		$delete_url = $base_url . "index.php?option=com_attachments&task=delete_warning&id=%d";
 		$delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
 		$delete_url .= "&from=$from&tmpl=component";
-		$delete_url = JRoute::_($delete_url);
+		$delete_url = Route::_($delete_url);
 		$view->delete_url = $delete_url;
 
 		// Set some display settings

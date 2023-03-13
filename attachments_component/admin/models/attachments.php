@@ -11,11 +11,17 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+use Joomla\Filter\OutputFilter;
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-// import the Joomla modellist library
-jimport('joomla.application.component.modellist');
 
 
 /**
@@ -23,7 +29,7 @@ jimport('joomla.application.component.modellist');
  *
  * @package Attachments
  */
-class AttachmentsModelAttachments extends JModelList
+class AttachmentsModelAttachments extends ListModel
 {
 	/**
 	 * Constructor
@@ -69,7 +75,7 @@ class AttachmentsModelAttachments extends JModelList
 	{
 
 		// Create a new query object.
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 
 		$query->select('a.*, a.id as id');
@@ -117,7 +123,7 @@ class AttachmentsModelAttachments extends JModelList
 				$where[] = 'a.id = ' . (int) $search . '';
 				}
 			else {
-				$db = $this->getDBO();
+				$db = Factory::getContainer()->get('DatabaseDriver');
 				$where[] = '(LOWER( a.filename ) LIKE ' .
 					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
 					' OR LOWER( a.description ) LIKE ' .
@@ -134,8 +140,7 @@ class AttachmentsModelAttachments extends JModelList
 			}
 
 		// Get the parent_state filter
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Get the desired state
 		$filter_parent_state_default = 'ALL';
@@ -149,7 +154,7 @@ class AttachmentsModelAttachments extends JModelList
 			$fps_wheres = array();
 
 			// Get the contributions for all the known content types
-			JPluginHelper::importPlugin('attachments');
+			PluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 			$known_parent_types = $apm->getInstalledParentTypes();
 			foreach ($known_parent_types as $parent_type) {
@@ -177,7 +182,7 @@ class AttachmentsModelAttachments extends JModelList
 			}
 
 		// Make sure the user can only see the attachments they may access
-		$user	= JFactory::getUser();
+		$user	= Factory::getApplication()->getIdentity();
 		if ( !$user->authorise('core.admin') ) {
 			$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 			$where[] = 'a.access in ('.$user_levels.')';
@@ -223,10 +228,10 @@ class AttachmentsModelAttachments extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = Factory::getApplication('administrator');
 
 		// Set up the list limits (not sure why the base class version of this does not work)
-		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->getCfg('list_limit'), 'uint');
+		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->get('list_limit'), 'uint');
 		$limit = $value;
 		$this->setState('list.limit', $limit);
 
@@ -264,7 +269,7 @@ class AttachmentsModelAttachments extends JModelList
 		$this->setState('list.direction', $value);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 		$this->setState('params', $params);
 	}
 
@@ -286,17 +291,17 @@ class AttachmentsModelAttachments extends JModelList
 		$good_items = Array();
 
 		// Update the attachments with information about thier parents
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		foreach ($items as $item) {
 			$parent_id = $item->parent_id;
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S',
+				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S',
 										 $parent_type . ':' . $parent_entity .
 										 ' (ID ' .(string)$item->id . ')') . ' (ERR 115)';
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($errmsg, 'warning');
 				continue;
 				}
@@ -305,16 +310,16 @@ class AttachmentsModelAttachments extends JModelList
 			if ( $parent ) {
 
 				// Handle the normal case
-				$item->parent_entity_type = JText::_('ATTACH_' . $parent_entity);
+				$item->parent_entity_type = Text::_('ATTACH_' . $parent_entity);
 				$title = $parent->getTitle($parent_id, $parent_entity);
 				$item->parent_exists = $parent->parentExists($parent_id, $parent_entity);
 				if ( $item->parent_exists && $title ) {
 					$item->parent_title = $title;
 					$item->parent_url =
-						JFilterOutput::ampReplace( $parent->getEntityViewURL($parent_id, $parent_entity) );
+						OutputFilter::ampReplace( $parent->getEntityViewURL($parent_id, $parent_entity) );
 					}
 				else {
-					$item->parent_title = JText::sprintf('ATTACH_NO_PARENT_S', $item->parent_entity_type);
+					$item->parent_title = Text::sprintf('ATTACH_NO_PARENT_S', $item->parent_entity_type);
 					$item->parent_url = '';
 					}
 				}
@@ -324,7 +329,7 @@ class AttachmentsModelAttachments extends JModelList
 				// (eg, deleted component)
 				$item->parent_exists = false;
 				$item->parent_entity_type = $parent_entity;
-				$item->parent_title = JText::_('ATTACH_UNKNOWN');
+				$item->parent_title = Text::_('ATTACH_UNKNOWN');
 				$item->parent_published = false;
 				$item->parent_archived = false;
 				$item->parent_url = '';
@@ -349,7 +354,7 @@ class AttachmentsModelAttachments extends JModelList
 	 */
 	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 
 
@@ -362,7 +367,7 @@ class AttachmentsModelAttachments extends JModelList
 	{
 		// Get the ids and make sure they are integers
 		$attachmentTable = $this->getTable();
-		$attachmentTable = JTable::getInstance('Attachment', 'AttachmentsTable');
+		$attachmentTable = Table::getInstance('Attachment', 'AttachmentsTable');
 
 		return $attachmentTable->publish($cid, $value);
 	}

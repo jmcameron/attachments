@@ -11,6 +11,12 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Document\Renderer\Html\HeadRenderer;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\MVC\View\HtmlView;
+
 // No direct access
 defined('_JEXEC') or die();
 
@@ -22,7 +28,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsFormView extends JViewLegacy
+class AttachmentsFormView extends HtmlView
 {
 
 	/**
@@ -36,18 +42,16 @@ class AttachmentsFormView extends JViewLegacy
 	 */
 	protected function startHTML()
 	{
-		jimport('joomla.filesystem.file');
-
 		require_once JPATH_BASE.'/libraries/joomla/document/html/renderer/head.php';
-		$document = JFactory::getDocument();
+		$app = Factory::getApplication();
+		$document = $app->getDocument();
 		$this->assignRef('document', $document);
 
-		$app = JFactory::getApplication();
 		$this->template = $app->getTemplate(true)->template;
 		$template_dir = $this->baseurl.'/templates/'.$this->template;
 
 		$file ='/templates/system/css/system.css';
-		if (JFile::exists(JPATH_SITE.$file)) {
+		if (File::exists(JPATH_SITE.$file)) {
 			$document->addStyleSheet($this->baseurl.$file);
 			}
 
@@ -55,20 +59,20 @@ class AttachmentsFormView extends JViewLegacy
 		$files = Array('template.css', 'position.css', 'layout.css', 'general.css');
 		foreach($files as $file) {
 			$path = JPATH_SITE.'/templates/'.$this->template.'/css/'.$file;
-			if (JFile::exists($path)) {
+			if (File::exists($path)) {
 				$document->addStyleSheet($this->baseurl.'/templates/'.$this->template.'/css/'.$file);
 				}
 			}
 
 		// Add the CSS for the attachments list (whether we need it or not)
-		JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
+		HTMLHelper::stylesheet('com_attachments/attachments_list.css', array(), true);
 
-		$head_renderer = new JDocumentRendererHead($document);
+		$head_renderer = new HeadRenderer($document);
 
 		$html = '';
 		$html .= "<html>\n";
 		$html .= "<head>\n";
-		$html .= $head_renderer->fetchHead($document);
+		$html .= $head_renderer->render('header');
 		$html .= "</head>\n";
 		$html .= "<body id=\"attachments_iframe\">\n";
 

@@ -11,10 +11,12 @@
  * @author Jonathan M. Cameron
  */
 
-defined('JPATH_BASE') or die;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
 
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
+defined('JPATH_BASE') or die;
 
 /** Load the Attachements defines */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
@@ -25,7 +27,7 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
  * @package Attachments
  * @subpackage Attachments_Component
  */
-class JFormFieldAccessLevels extends JFormField
+class JFormFieldAccessLevels extends FormField
 {
 	/**
 	 * The form field type.
@@ -46,7 +48,7 @@ class JFormFieldAccessLevels extends JFormField
 	 */
 	protected function getInput()
 	{
-		$options = new JObject();
+		$options = new stdClass();
 		$options->element = $this->element;
 		$options->multiple = $this->multiple;
 		$options->always_public = $this->fieldname == 'show_guest_access_levels';
@@ -63,10 +65,10 @@ class JFormFieldAccessLevels extends JFormField
 	 */
 	public static function getAccessLevels($for_id, $fieldname, $level_value=null, $options=null)
 	{
-		$user	= JFactory::getUser();
+		$user	= Factory::getApplication()->getIdentity();
 		$user_access_levels = array_unique($user->getAuthorisedViewLevels());
 
-		$db		= JFactory::getDbo();
+		$db		= Factory::getContainer()->get('DatabaseDriver');
 		$query	= $db->getQuery(true);
 
 		// Get the access levels this user is permitted
@@ -82,13 +84,13 @@ class JFormFieldAccessLevels extends JFormField
 		$levels = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 116)';
-			JError::raiseError(500, $errmsg);
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Make sure there is a $level_value
 		if ( $level_value === null ) {
-			jimport('joomla.application.component.helper');
-			$params = JComponentHelper::getParams('com_attachments');
+			$params = ComponentHelper::getParams('com_attachments');
 			$level_value = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
 			}
 
@@ -154,10 +156,10 @@ class JFormFieldAccessLevels extends JFormField
 		$level_options = Array();
 		foreach ( $levels as $level ) {
 			// NOTE: We do not translate the access level titles
-			$level_options[] = JHtml::_('select.option', $level->id, $level->title);
+			$level_options[] = HTMLHelper::_('select.option', $level->id, $level->title);
 			}
-		return JHtml::_('select.genericlist',  $level_options, $for_id,
-						$attr, 'value', 'text', $level_value, $fieldname
-						);
+		return HTMLHelper::_('select.genericlist',  $level_options, $for_id,
+							$attr, 'value', 'text', $level_value, $fieldname
+							);
 	}
 }

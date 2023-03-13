@@ -11,25 +11,32 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\String\StringHelper;
+
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the default controller */
 require_once( JPATH_COMPONENT.'/controller.php' );
 
 // Check for requests for named controller
-$controller = JRequest::getWord('controller', False);
+$app = Factory::getApplication();
+$input = $app->getInput();
+$controller = $input->getWord('controller', False);
 if ( $controller ) {
 	// Invoke the named controller, if it exists
 	$path = JPATH_COMPONENT.'/controllers/'.$controller.'.php';
-	$controller = JString::ucfirst($controller);
-	jimport('joomla.filesystem.file');
-	if ( JFile::exists($path) ) {
+	$controller = StringHelper::ucfirst($controller);
+	if ( File::exists($path) ) {
 		require_once( $path );
 		$classname	= 'AttachmentsController' . $controller;
 		}
 	else {
-		$errmsg = JText::_('ATTACH_UNKNOWN_CONTROLLER') . ' (ERR 48)';
-		JError::raiseError(500, $errmsg);
+		$errmsg = Text::_('ATTACH_UNKNOWN_CONTROLLER') . ' (ERR 48)';
+		throw new Exception($errmsg, 500);
+		die;
 		}
 	}
 else {
@@ -38,5 +45,5 @@ else {
 
 // Invoke the requested function of the controller
 $controller = new $classname( array('default_task' => 'noop') );
-$controller->execute( JRequest::getCmd('task') );
+$controller->execute( $input->getCmd('task') );
 $controller->redirect();

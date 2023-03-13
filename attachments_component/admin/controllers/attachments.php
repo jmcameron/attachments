@@ -75,7 +75,7 @@ class AttachmentsControllerAttachments extends AdminController
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 
@@ -99,7 +99,7 @@ class AttachmentsControllerAttachments extends AdminController
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 		$view->setModel($model);
@@ -172,7 +172,7 @@ class AttachmentsControllerAttachments extends AdminController
 				$id = (int)$attachment_id;
 				if ( ($id == 0) OR !$attachment->load($id) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
-					throw new ErrorException($errmsg, 500);
+					throw new Exception($errmsg, 500);
 					die;
 					}
 				$parent_id = $attachment->parent_id;
@@ -184,7 +184,7 @@ class AttachmentsControllerAttachments extends AdminController
 				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
-					throw new ErrorException($errmsg, 500);
+					throw new Exception($errmsg, 500);
 					die;
 					}
 				$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -218,7 +218,7 @@ class AttachmentsControllerAttachments extends AdminController
 				$db->setQuery($query);
 				if (!$db->query()) {
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
-					throw new ErrorException($errmsg, 500);
+					throw new Exception($errmsg, 500);
 					die;
 					}
 			}
@@ -237,7 +237,7 @@ class AttachmentsControllerAttachments extends AdminController
 			// Get the article/parent handler
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
-				throw new ErrorException($errmsg, 500);
+				throw new Exception($errmsg, 500);
 				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -296,7 +296,7 @@ class AttachmentsControllerAttachments extends AdminController
 
 		if (empty($cid))
 		{
-			throw new ErrorException(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
+			throw new Exception(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
 			die;
 		}
 		else
@@ -311,7 +311,7 @@ class AttachmentsControllerAttachments extends AdminController
 			$att_published = $model->publish($cid, $value);
 			if (($att_published == false) OR ($att_published == 0))
 			{
-				throw new ErrorException($model->getError(), 500);
+				throw new Exception($model->getError(), 500);
 				die;
 			}
 			else

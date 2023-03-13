@@ -11,13 +11,22 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 // no direct access
 
 defined( '_JEXEC' ) or die('Restricted access');
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)');
+$app = Factory::getApplication();
+$user = $app->getIdentity();
+if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
+	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
+	die;
 }
 
 /** Define the legacy classes, if necessary */
@@ -32,7 +41,7 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
  *
  * @package Attachments
  */
-class AttachmentsViewAdd extends JViewLegacy
+class AttachmentsViewAdd extends HtmlView
 {
 	/**
 	 * Display the add/create view
@@ -44,16 +53,17 @@ class AttachmentsViewAdd extends JViewLegacy
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
-		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
+		$attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
 		$parent_entity_name = $attachment->parent_entity_name;
 		$params = $this->params;
 
 		// Prevent unallowed editing PID PE
 		if (!$this->parent->userMayAddAttachment($parent_id, $parent_entity, $this->new_parent))
 		{
-			$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S',
+			$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S',
 									 $attachment->parent_entity_name);
-			return JError::raiseError(403, $errmsg . ' (ERR 173)');
+			throw new Exception($errmsg . ' (ERR 173)', 403);
+			die;
 		}
 
 		// Construct derived data
@@ -61,19 +71,19 @@ class AttachmentsViewAdd extends JViewLegacy
 		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
 		// Construct some tooltips
-		$this->enter_url_tooltip = JText::_('ATTACH_ENTER_URL') . '::' . JText::_('ATTACH_ENTER_URL_TOOLTIP');
-		$this->display_filename_tooltip = JText::_('ATTACH_DISPLAY_FILENAME') . '::' . JText::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
-		$this->display_url_tooltip = JText::_('ATTACH_DISPLAY_URL') . '::' . JText::_('ATTACH_DISPLAY_URL_TOOLTIP');
+		$this->enter_url_tooltip = Text::_('ATTACH_ENTER_URL') . '::' . Text::_('ATTACH_ENTER_URL_TOOLTIP');
+		$this->display_filename_tooltip = Text::_('ATTACH_DISPLAY_FILENAME') . '::' . Text::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+		$this->display_url_tooltip = Text::_('ATTACH_DISPLAY_URL') . '::' . Text::_('ATTACH_DISPLAY_URL_TOOLTIP');
 
 		// Add the published selection
 		$this->lists = Array();
-		$this->lists['published'] = JHtml::_('select.booleanlist', 'state',
+		$this->lists['published'] = HTMLHelper::_('select.booleanlist', 'state',
 											 'class="inputbox"', $attachment->state);
 
 		// Set up the access field
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 		$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-		$this->access_level_tooltip = JText::_('JFIELD_ACCESS_LABEL') . '::' . JText::_('JFIELD_ACCESS_DESC');
+		$this->access_level_tooltip = Text::_('JFIELD_ACCESS_LABEL') . '::' . Text::_('JFIELD_ACCESS_DESC');
 
 		// Handle user field 1
 		$show_user_field_1 = false;
@@ -104,13 +114,13 @@ class AttachmentsViewAdd extends JViewLegacy
 
 		// Set up to toggle between uploading file/urls
 		if ( $attachment->uri_type == 'file' ) {
-			$upload_toggle_button_text = JText::_('ATTACH_ENTER_URL_INSTEAD');
-			$upload_toggle_tooltip = JText::_('ATTACH_ENTER_URL_INSTEAD_TOOLTIP');
+			$upload_toggle_button_text = Text::_('ATTACH_ENTER_URL_INSTEAD');
+			$upload_toggle_tooltip = Text::_('ATTACH_ENTER_URL_INSTEAD_TOOLTIP');
 			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=url';
 			}
 		else {
-			$upload_toggle_button_text = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
-			$upload_toggle_tooltip = JText::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD_TOOLTIP');
+			$upload_toggle_button_text = Text::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
+			$upload_toggle_tooltip = Text::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD_TOOLTIP');
 			$upload_toggle_url = 'index.php?option=com_attachments&amp;task=attachment.add&amp;uri=file';
 			}
 		if ( $this->from == 'closeme' ) {
@@ -135,8 +145,11 @@ class AttachmentsViewAdd extends JViewLegacy
 		elseif ( $parent_id && ($parent_id != -1) ) {
 			$upload_toggle_url .= "&amp;parent_id=$parent_id";
 			}
-		if ( JRequest::getWord('editor') ) {
-			$upload_toggle_url .= "&amp;editor=" . JRequest::getWord('editor');
+
+		$app = Factory::getApplication();
+		$input = $app->getInput();
+		if ( $input->getWord('editor') ) {
+			$upload_toggle_url .= "&amp;editor=" . $input->getWord('editor');
 			}
 
 		$this->upload_toggle_button_text = $upload_toggle_button_text;
@@ -144,16 +157,16 @@ class AttachmentsViewAdd extends JViewLegacy
 		$this->upload_toggle_tooltip = $upload_toggle_tooltip;
 
 		// Set up the 'select parent' button
-		$this->selpar_label =  JText::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
-		$this->selpar_btn_text =  '&nbsp;' . JText::sprintf('ATTACH_SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
-		$this->selpar_btn_tooltip =	 JText::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
+		$this->selpar_label =  Text::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $parent_entity_name);
+		$this->selpar_btn_text =  '&nbsp;' . Text::sprintf('ATTACH_SELECT_ENTITY_S', $parent_entity_name) . '&nbsp;';
+		$this->selpar_btn_tooltip =	 Text::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $parent_entity_name);
 		$this->selpar_btn_url =	 $this->parent->getSelectEntityURL($parent_entity);
 
 		// Add the style sheets
-		JHtml::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
 			}
 
 		// Set up mootools/modal
@@ -171,13 +184,14 @@ class AttachmentsViewAdd extends JViewLegacy
 	 */
 	protected function addToolBar()
 	{
-		JRequest::setVar('hidemainmenu', true);
-		JToolBarHelper::title(JText::_('ATTACH_ADD_ATTACHMENT'));
+		$app = Factory::getApplication();
+		$app->getInput()->set('hidemainmenu', true);
+		ToolbarHelper::title(Text::_('ATTACH_ADD_ATTACHMENT'));
 
-		JToolBarHelper::apply('attachment.applyNew');
-		JToolBarHelper::save('attachment.saveNew');
-		JToolBarHelper::save2new('attachment.save2New');
+		ToolBarHelper::apply('attachment.applyNew');
+		ToolBarHelper::save('attachment.saveNew');
+		ToolBarHelper::save2new('attachment.save2New');
 
-		JToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
+		ToolBarHelper::cancel('attachment.cancel', 'JTOOLBAR_CANCEL');
 	}
 }

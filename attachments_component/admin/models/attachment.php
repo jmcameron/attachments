@@ -11,18 +11,21 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-// import Joomla modelform library
-jimport('joomla.application.component.modeladmin');
 
 /**
  * Attachment Model
  *
  * @package Attachments
  */
-class AttachmentsModelAttachment extends JModelAdmin
+class AttachmentsModelAttachment extends AdminModel
 {
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -30,12 +33,12 @@ class AttachmentsModelAttachment extends JModelAdmin
 	 * @param		type	The table type to instantiate
 	 * @param		string	A prefix for the table class name. Optional.
 	 * @param		array	Configuration array for model. Optional.
-	 * @return		JTable	A database object
+	 * @return		Table	A database object
 	 * @since		1.6
 	 */
 	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 
 
@@ -53,7 +56,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 		if ( $item->id != 0 ) {
 
 			// If the item exists, get more info
-			$db = $this->getDbo();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 
 			// Get the creator name
 			$query = $db->getQuery(true);
@@ -62,7 +65,8 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$item->creator_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 112)';
-				JError::raiseError(500, $errmsg);
+				throw new Exception($errmsg, 500);
+				die;
 				}
 
 			// Get the modifier name
@@ -72,17 +76,19 @@ class AttachmentsModelAttachment extends JModelAdmin
 			$item->modifier_name = $db->loadResult();
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 113)';
-				JError::raiseError(500, $errmsg);
+				throw new Exception($errmsg, 500);
+				die;
 				}
 
 			// Get the parent info (??? Do we really need this?)
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
-			JPluginHelper::importPlugin('attachments');
+			PluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 114)';
-				JError::raiseError(500, $errmsg);
+				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 114)';
+				throw new Exception($errmsg, 500);
+				die;
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -121,7 +127,7 @@ class AttachmentsModelAttachment extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_attachments.edit.attachment.data', array());
+		$data = Factory::getApplication()->getUserState('com_attachments.edit.attachment.data', array());
 		if (empty($data))
 		{
 			$data = $this->getItem();

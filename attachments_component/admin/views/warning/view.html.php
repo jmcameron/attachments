@@ -11,6 +11,10 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\MVC\View\HtmlView;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
@@ -24,7 +28,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewWarning extends JViewLegacy
+class AttachmentsViewWarning extends HtmlView
 {
 	/**
 	 * Display the view
@@ -32,10 +36,10 @@ class AttachmentsViewWarning extends JViewLegacy
 	public function display($tpl = null)
 	{
 		// Add the style sheets
-		JHtml::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
+		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
 			}
 
 		parent::display($tpl);

@@ -11,6 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
@@ -22,7 +25,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
  *
  * @package Attachments
  */
-class AttachmentsModelAttachment extends JModelLegacy
+class AttachmentsModelAttachment extends BaseDatabaseModel
 {
 
 	/**
@@ -47,14 +50,15 @@ class AttachmentsModelAttachment extends JModelLegacy
 		parent::__construct();
 
 		// Get the cid array from the request
-		$cid = JRequest::getVar('cid', false, 'DEFAULT', 'array');
+		$input = Factory::getApplication()->getInput();
+		$cid = $input->get('cid', 'DEFAULT', 'array');
 
 		if ($cid) {
 			// Accept only the first id from the array
 			$id = $cid[0];
 			}
 		else {
-			$id = JRequest::getInt('id',0);
+			$id = $input->getInt('id',0);
 			}
 
 		$this->setId($id);

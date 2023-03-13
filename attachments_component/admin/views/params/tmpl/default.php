@@ -11,22 +11,29 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-$template = JFactory::getApplication()->getTemplate();
+$app = Factory::getApplication();
+$template = $app->getTemplate();
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.formvalidation');
 
 if (version_compare(JVERSION, '3.0', 'ge'))
 {
-	JHtml::_('formbehavior.chosen', 'select');
+	HTMLHelper::_('formbehavior.chosen', 'select');
 }
 
-$document = JFactory::getDocument();
-$uri = JFactory::getURI();
+$document = $app->getDocument();
+$uri = Uri::getInstance();
 
 ?>
 <script type="text/javascript">
@@ -43,7 +50,7 @@ $uri = JFactory::getURI();
 if (version_compare(JVERSION, '3.0', 'ge'))
 {
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
+<form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
 	<div class="row-fluid">
 		<div class="span10">
 			<ul class="nav nav-tabs" id="configTabs">
@@ -52,7 +59,7 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 					foreach ($fieldSets as $name => $fieldSet) :
 						$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
 				?>
-					<li><a href="#<?php echo $name;?>" data-toggle="tab"><?php echo	 JText::_($label);?></a></li>
+					<li><a href="#<?php echo $name;?>" data-toggle="tab"><?php echo	 Text::_($label);?></a></li>
 				<?php
 					endforeach;
 				?>
@@ -65,7 +72,7 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 					<div class="tab-pane" id="<?php echo $name;?>">
 						<?php
 							if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-								echo '<p class="tab-description">'.JText::_($fieldSet->description).'</p>';
+								echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
 							endif;
 							foreach ($this->form->getFieldset($name) as $field):
 						?>
@@ -95,7 +102,7 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 		<input type="hidden" name="component" value="com_attachments" />
 		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
 		<input type="hidden" name="task" value="params.edit" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 </form>
 <script type="text/javascript">
@@ -106,15 +113,15 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 else
 {
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
 	<?php
-	echo JHtml::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
+	echo HTMLHelper::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
 		$fieldSets = $this->form->getFieldsets();
 		foreach ($fieldSets as $name => $fieldSet) :
 			$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
-			echo JHtml::_('tabs.panel',JText::_($label), 'publishing-details');
+			echo HTMLHelper::_('tabs.panel',Text::_($label), 'publishing-details');
 			if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-				echo '<p class="tab-description">'.JText::_($fieldSet->description).'</p>';
+				echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
 			endif;
 	?>
 			<ul class="config-option-list" id="attachments-options">
@@ -136,7 +143,7 @@ else
 	<div class="clr"></div>
 	<?php
 		endforeach;
-	echo JHtml::_('tabs.end');
+	echo HTMLHelper::_('tabs.end');
 	?>
 	<div>
 		<input type="hidden" name="id" value="<?php echo $this->component->id;?>" />
@@ -144,7 +151,7 @@ else
 		<input type="hidden" name="component" value="com_attachments" />
 		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
 		<input type="hidden" name="task" value="params.edit" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 </form>
 <?php

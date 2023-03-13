@@ -11,6 +11,10 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die('Restricted access');
 
 
@@ -29,8 +33,8 @@ class AttachmentsPermissions
 	 */
 	public static function getActions($user_id = null)
 	{
-		$user	= JFactory::getUser($user_id);
-		$result	= new JObject;
+		$user	= Factory::getUser($user_id);
+		$result	= new Registry();
 
 		$assetName = 'com_attachments';
 
@@ -65,7 +69,7 @@ class AttachmentsPermissions
 	 */
 	public static function userMayEditCategory($category_id, $user_id = null)
 	{
-		$user = JFactory::getUser($user_id);
+		$user = Factory::getUser($user_id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
@@ -82,16 +86,17 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.category.'.$category_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the category
-			$db = JFactory::getDBO();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
 			$query->where('id = '.(int)$category_id.' AND created_user_id = '.(int)$user->id);
 			$db->setQuery($query, 0, 1);
-			$results = $db->loadObject();
-			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 106)';
-				JError::raiseError(500, $errmsg);
-				}
+			try {
+				$results = $db->loadObject();
+			} catch (Exception $e) {
+				$errmsg = Text::_('ATTACH_ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 106)';
+				throw new Exception($errmsg, 500);
+			}
 
 			if ( !empty($results) ) {
 				// The user did actually create the category
@@ -114,7 +119,7 @@ class AttachmentsPermissions
 	 */
 	public static function userMayEditArticle($article_id, $user_id = null)
 	{
-		$user = JFactory::getUser($user_id);
+		$user = Factory::getUser($user_id);
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
@@ -137,16 +142,17 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.article.'.$article_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the article
-			$db = JFactory::getDBO();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__content');
 			$query->where('id = '.(int)$article_id.' AND created_by = '.(int)$user->id);
 			$db->setQuery($query, 0, 1);
-			$results = $db->loadObject();
-			if ($db->getErrorNum()) {
-				$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 107)';
-				JError::raiseError(500, $errmsg);
-				}
+			try {
+				$results = $db->loadObject();
+			} catch (Exception $e) {
+				$errmsg = Text::_('ATTACH_ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 107)';
+				throw new Exception($errmsg, 500);
+			}
 
 			if ( !empty($results) ) {
 				// The user did actually create the article

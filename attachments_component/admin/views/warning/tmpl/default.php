@@ -11,16 +11,22 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-$template = JFactory::getApplication()->getTemplate();
+$app = Factory::getApplication();
+$template = $app->getTemplate();
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+HTMLHelper::_('behavior.tooltip');
 
-$uri = JFactory::getURI();
-$document = JFactory::getDocument();
+$uri = Uri::getInstance();
+$document = $app->getDocument();
 
 // Hide the vertical scrollbar using javascript
 $hide_scrollbar = "window.addEvent('domready', function() {
@@ -37,13 +43,13 @@ $document->addScriptDeclaration($hide_scrollbar);
 	   <span class="left">&nbsp;</span>
 	   <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
 	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo JText::_('ATTACH_CANCEL'); ?>"
+		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.SqueezeBox.close();" />
 	   </span>
 	</div>
 	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
 	<input type="hidden" name="from" value="<?php echo $this->from;?>" />
 
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo HTMLHelper::_( 'form.token' ); ?>
   </form>
  </div>

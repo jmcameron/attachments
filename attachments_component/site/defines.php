@@ -15,7 +15,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Attachments extension definies
+ * Attachments extension defines
  *
  * @package	 Attachments
  *
@@ -59,7 +59,7 @@ class AttachmentsDefines
 	 * These are the default settings for the custom ACL permissions for the
 	 * Attachments extension.
 	 * 
-	 * Be careul if you edit this to conform to the proper json syntax!
+	 * Be careful if you edit this to conform to the proper json syntax!
 	 *
 	 * NB: Unfortunately, the syntax for setting a static variable does not
 	 *	   allow breaking the string up with dots to join the parts to make

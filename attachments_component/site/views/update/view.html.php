@@ -11,6 +11,10 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 // No direct access
 defined('_JEXEC') or die();
 
@@ -34,9 +38,13 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 	public function display($tpl=null)
 	{
 		// Access check.
-		if ( !(JFactory::getUser()->authorise('core.edit', 'com_attachments') OR
-			   JFactory::getUser()->authorise('core.edit.own', 'com_attachments')) ) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)');
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		if ( $user === null OR
+			 !($user->authorise('core.edit', 'com_attachments') OR
+			 $user->authorise('core.edit.own', 'com_attachments')) ) {
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
+			die;
 			}
 
 		// For convenience
@@ -44,7 +52,7 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 		$parent = $this->parent;
 
 		// Construct derived data
-		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
+		$attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
 		$attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
 		if (!isset($attachment->modifier_name))
 		{
@@ -61,24 +69,24 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 
 		// Set up some HTML for display in the form
 		$this->lists = Array();
-		$this->lists['published'] = JHtml::_('select.booleanlist', 'state',
+		$this->lists['published'] = HTMLHelper::_('select.booleanlist', 'state',
 											 'class="inputbox"', $attachment->state);
-		$this->lists['url_valid'] = JHtml::_('select.booleanlist', 'url_valid',
-											 'class="inputbox" title="' . JText::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
+		$this->lists['url_valid'] = HTMLHelper::_('select.booleanlist', 'url_valid',
+											 'class="inputbox" title="' . Text::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
 											 $attachment->url_valid);
 
 		// Set up for editing the access level
 		if ( $this->params->get('allow_frontend_access_editing', false) ) {
 			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 			$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
-			$this->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
+			$this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 			}
 
 		// Add the stylesheets
-		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
 		// Display the form

@@ -11,6 +11,14 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
@@ -23,7 +31,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewLogin extends JViewLegacy
+class AttachmentsViewLogin extends HtmlView
 {
 	/**
 	 * Display the login view
@@ -31,23 +39,23 @@ class AttachmentsViewLogin extends JViewLegacy
 	public function display($tpl = null)
 	{
 		// Add the stylesheets
-		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$app = Factory::getApplication();
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
 		// Is the user already logged in?
-		$user = JFactory::getUser();
+		$user = $app->getIdentity();
 		$this->logged_in = $user->get('username') <> '';
 
 		// Get the component parameters for the registration and login URL
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = Uri::base(false);
 		$register_url = $params->get('register_url', 'index.php?option=com_users&view=registration');
-		$register_url = JRoute::_($base_url . $register_url);
+		$register_url = Route::_($base_url . $register_url);
 		$this->register_url = $register_url;
 
 		// Construct the login URL
@@ -55,19 +63,19 @@ class AttachmentsViewLogin extends JViewLegacy
 		if ( $this->return_url ) {
 			$return = '&return=' . $this->return_url;
 			}
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = Uri::base(false);
 		$login_url = $params->get('login_url', 'index.php?option=com_users&view=login') . $return;
-		$this->login_url = JRoute::_($base_url . $login_url);
+		$this->login_url = Route::_($base_url . $login_url);
 		
 		// Get the warning message
-		$this->must_be_logged_in = JText::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
+		$this->must_be_logged_in = Text::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
 
 		// Get a phrase from the login module to create the account
 		$lang->load('com_users');
-		$register = JText::_('COM_USERS_REGISTER_DEFAULT_LABEL');
+		$register = Text::_('COM_USERS_REGISTER_DEFAULT_LABEL');
 		$this->register_label = $register;
 
-		$login = JText::_('JLOGIN');
+		$login = Text::_('JLOGIN');
 		$this->login_label = $login;
 
 		parent::display($tpl);

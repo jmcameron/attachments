@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\String\StringHelper;
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
@@ -239,10 +241,10 @@ class AttachmentsFileTypes {
 			$path_info = pathinfo($filename);
 
 			// Try the extension first
-			$extension = JString::strtolower($path_info['extension']);
+			$extension = StringHelper::strtolower($path_info['extension']);
 			if ( array_key_exists( $extension, AttachmentsFileTypes::$attachments_icon_from_file_extension ) ) {
 				$iconf = AttachmentsFileTypes::$attachments_icon_from_file_extension[$extension];
-				if ( JString::strlen($iconf) > 0 )	{
+				if ( StringHelper::strlen($iconf) > 0 )	{
 					return $iconf;
 					}
 				}
@@ -253,7 +255,7 @@ class AttachmentsFileTypes {
 			// Try the mime type
 			if ( array_key_exists( $mime_type, AttachmentsFileTypes::$attachments_icon_from_mime_type ) ) {
 				$iconf = AttachmentsFileTypes::$attachments_icon_from_mime_type[$mime_type];
-				if ( $iconf && (JString::strlen($iconf) > 0) ) {
+				if ( $iconf && (StringHelper::strlen($iconf) > 0) ) {
 					return $iconf;
 					}
 				}

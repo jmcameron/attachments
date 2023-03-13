@@ -11,17 +11,17 @@
  * @author Jonathan M. Cameron
  */
 
-defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
 
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
+defined('JPATH_BASE') or die;
 
 /**
  * Supports an HTML select list of icon filenames
  *
  * @package		Attachments
  */
-class JFormFieldIconfilenames extends JFormField
+class JFormFieldIconfilenames extends FormField
 {
 	/**
 	 * The form field type.
@@ -46,12 +46,12 @@ class JFormFieldIconfilenames extends JFormField
 		$icon_filenames = array();
 		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
-			$icon_filenames[] = JHtml::_('select.option', $ifname);
+			$icon_filenames[] = HTMLHelper::_('select.option', $ifname);
 			}
-		$icon_list = JHtml::_('select.genericlist',	 $icon_filenames, 'jform[icon_filename]',
-							  'class="inputbox" size="1"', 'value', 'text', $this->value,
-							  'jform_icon_filename'
-							  );
+		$icon_list = HTMLHelper::_('select.genericlist',	 $icon_filenames, 'jform[icon_filename]',
+									'class="inputbox" size="1"', 'value', 'text', $this->value,
+							  		'jform_icon_filename'
+							  	);
 
 		// Is it readonly?
 		if ((string) $this->element['readonly'] == 'true') {

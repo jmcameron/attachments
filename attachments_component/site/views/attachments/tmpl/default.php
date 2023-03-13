@@ -11,6 +11,13 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -18,11 +25,11 @@ defined('_JEXEC') or die('Restricted access');
 require_once(JPATH_SITE.'/components/com_attachments/helper.php'); /* ??? Needed? */
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
-$user = JFactory::getUser();
+$app = Factory::getApplication();
+$user = $app->getIdentity();
 $logged_in = $user->get('username') <> '';
 
-$app = JFactory::getApplication();
-$uri = JFactory::getURI();
+$uri = Uri::getInstance();
 
 // Set a few variables for convenience
 $attachments = $this->list;
@@ -32,7 +39,8 @@ $parent_entity = $this->parent_entity;
 
 $base_url = $this->base_url;
 
-$format = JRequest::getWord('format', '');
+$input = $app->getInput();
+$format = $input->getWord('format', '');
 
 $html = '';
 
@@ -63,7 +71,7 @@ if ( $this->show_column_titles ) {
 	$html .= "<thead>\n<tr>";
 	$html .= "<th class=\"at_filename\">" . $this->file_url_title . "</th>";
 	if ( $this->show_description ) {
-		$html .= "<th class=\"at_description\">" . JText::_('ATTACH_DESCRIPTION') . "</th>";
+		$html .= "<th class=\"at_description\">" . Text::_('ATTACH_DESCRIPTION') . "</th>";
 		}
 	if ( $this->show_user_field_1 ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_1_name . "</th>";
@@ -75,19 +83,19 @@ if ( $this->show_column_titles ) {
 		$html .= "<th class=\"at_user_field\">" . $this->user_field_3_name . "</th>";
 		}
 	if ( $this->show_creator_name ) {
-		$html .= "<th class=\"at_creator_name\">" . JText::_('ATTACH_CREATOR') . "</th>";
+		$html .= "<th class=\"at_creator_name\">" . Text::_('ATTACH_CREATOR') . "</th>";
 		}
 	if ( $this->show_file_size ) {
-		$html .= "<th class=\"at_file_size\">" . JText::_('ATTACH_FILE_SIZE') . "</th>";
+		$html .= "<th class=\"at_file_size\">" . Text::_('ATTACH_FILE_SIZE') . "</th>";
 		}
 	if ( $this->secure && $this->show_downloads ) {
-		$html .= "<th class=\"at_downloads\">" . JText::_('ATTACH_DOWNLOADS') . "</th>";
+		$html .= "<th class=\"at_downloads\">" . Text::_('ATTACH_DOWNLOADS') . "</th>";
 		}
 	if ( $this->show_created_date ) {
-		$html .= "<th class=\"at_created_date\">" . JText::_('ATTACH_CREATED') . "</th>";
+		$html .= "<th class=\"at_created_date\">" . Text::_('ATTACH_CREATED') . "</th>";
 		}
 	if ( $this->show_modified_date ) {
-		$html .= "<th class=\"at_mod_date\">" . JText::_('ATTACH_LAST_MODIFIED') . "</th>";
+		$html .= "<th class=\"at_mod_date\">" . Text::_('ATTACH_LAST_MODIFIED') . "</th>";
 		}
 	if ( $this->some_attachments_modifiable && $this->allow_edit ) {
 		$html .= "<th class=\"at_edit\">&nbsp;</th>";
@@ -117,7 +125,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$html .= '<tr class="'.$row_class.'">';
 		
 	// Construct some display items
-	if ( JString::strlen($attachment->icon_filename) > 0 )
+	if ( StringHelper::strlen($attachment->icon_filename) > 0 )
 		$icon = $attachment->icon_filename;
 	else
 		$icon = 'generic.gif';
@@ -131,18 +139,17 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 
 	if ( $this->show_created_date OR $this->show_modified_date ) {
-		jimport( 'joomla.utilities.date' );
-		$tz = new DateTimeZone( $user->getParam('timezone', $app->getCfg('offset')) );
+		$tz = new DateTimeZone( $user->getParam('timezone', $app->get('offset')) );
 		}
 
 	if ( $this->show_created_date ) {
-		$date = JFactory::getDate($attachment->created);
+		$date = Factory::getDate($attachment->created);
 		$date->setTimezone($tz);
 		$created = $date->format($this->date_format, true);
 		}
 
 	if ( $this->show_modified_date ) {
-		$date = JFactory::getDate($attachment->modified);
+		$date = Factory::getDate($attachment->modified);
 		$date->setTimezone($tz);
 		$last_modified = $date->format($this->date_format, true);
 		}
@@ -152,20 +159,20 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->file_link_open_mode == 'new_window')
 		$target = ' target="_blank"';
 	$html .= '<td class="at_filename">';
-	if ( JString::strlen($attachment->display_name) == 0 )
+	if ( StringHelper::strlen($attachment->display_name) == 0 )
 		$filename = $attachment->filename;
 	else
 		$filename = htmlspecialchars(stripslashes($attachment->display_name));
 	$actual_filename = $attachment->filename;
 	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
-	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
-	// $filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
+	// $actual_filename = StringHelper::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
+	// $filename = StringHelper::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
 
 	if ( $this->show_file_links ) {
 		if ( $attachment->uri_type == 'file' ) {
 			// Handle file attachments
 			if ( $this->secure ) {
-				$url = JRoute::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+				$url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
 				$url = $base_url . $attachment->url;
@@ -173,13 +180,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 					$url = utf8_encode($url);
 					}
 				}
-			$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+			$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
 			}
 		else {
 			// Handle URL "attachments"
 			if ( $this->secure ) {
-				$url = JRoute::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
-				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
+				$url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+				$tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
 				}
 			else {
 				// Handle the link url if not logged in but link displayed for guests
@@ -187,34 +194,34 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				if ( !$logged_in AND ($attachment->access != '1')) {
 					$guest_levels = $this->params->get('show_guest_access_levels', Array('1'));
 					if ( in_array($attachment->access, $guest_levels) ) {
-						$app = JFactory::getApplication();
+						$app = Factory::getApplication();
 						$return = $app->getUserState('com_attachments.current_url', '');
-						$url = JRoute::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
+						$url = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
 						$target = '';
 						}
 					}
 				if ( $url == '' ) {
 					$url = $attachment->url;
 					}
-				$tooltip = JText::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
+				$tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 				}
 			}
 		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\">";
-		$html .= JHtml::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+		$html .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
-				$html .= JHtml::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+				$html .= HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
 				}
 			else {
-				$html .= JHtml::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+				$html .= HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
 				}
 			}
 		$html .= "</a>";
 		$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
 		}
 	else {
-		$tooltip = JText::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
-		$html .= JHtml::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+		$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+		$html .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
 		$html .= '&nbsp;' . $filename;
 		}
 	$html .= "</td>";
@@ -222,7 +229,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Add description (maybe)
 	if ( $this->show_description ) {
 		$description = htmlspecialchars(stripslashes($attachment->description));
-		if ( JString::strlen($description) == 0)
+		if ( StringHelper::strlen($description) == 0)
 			$description = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_description\">$description</td>";
@@ -233,7 +240,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Show the USER DEFINED FIELDs (maybe)
 	if ( $this->show_user_field_1 ) {
 		$user_field = stripslashes($attachment->user_field_1);
-		if ( JString::strlen($user_field) == 0 )
+		if ( StringHelper::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -242,7 +249,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 	if ( $this->show_user_field_2 ) {
 		$user_field = stripslashes($attachment->user_field_2);
-		if ( JString::strlen($user_field) == 0 )
+		if ( StringHelper::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -251,7 +258,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 	if ( $this->show_user_field_3 ) {
 		$user_field = stripslashes($attachment->user_field_3);
-		if ( JString::strlen($user_field) == 0 )
+		if ( StringHelper::strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -266,7 +273,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 	// Add file size (maybe)
 	if ( $this->show_file_size ) {
-		$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
+		$file_size_str = Text::sprintf('ATTACH_S_KB', $file_size);
 		if ( $file_size_str == 'ATTACH_S_KB' ) {
 			// Work around until all translations are updated ???
 			$file_size_str = $file_size . ' kB';
@@ -280,9 +287,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$label = '';
 		if ( ! $this->show_column_titles ) {
 			if ( $num_downloads == 1 )
-				$label = '&nbsp;' . JText::_('ATTACH_DOWNLOAD_NOUN');
+				$label = '&nbsp;' . Text::_('ATTACH_DOWNLOAD_NOUN');
 			else
-				$label = '&nbsp;' . JText::_('ATTACH_DOWNLOADS');
+				$label = '&nbsp;' . Text::_('ATTACH_DOWNLOADS');
 			}
 		$html .= '<td class="at_downloads">'. $num_downloads.$label.'</td>';
 		}
@@ -299,7 +306,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$delete_link = '';
 
 	$a_class = 'modal-button';
-	if ( $app->isAdmin() ) {
+	if ( $app->isClient('admin') ) {
 		$a_class = 'modal';
 		}
 
@@ -308,10 +315,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 		// Create the edit link
 		$update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
-		$tooltip = JText::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
+		$tooltip = Text::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$update_link = "<a class=\"$a_class\" type=\"button\" href=\"$update_url\"";
 		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 600}}\" title=\"$tooltip\">";
-		$update_link .= JHtml::image('com_attachments/pencil.gif', $tooltip, null, true);
+		$update_link .= HTMLHelper::image('com_attachments/pencil.gif', $tooltip, null, true);
 		$update_link .= "</a>";
 		}
 
@@ -320,10 +327,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 		// Create the delete link
 		$delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
-		$tooltip = JText::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
+		$tooltip = Text::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 		$delete_link = "<a class=\"$a_class\" type=\"button\" href=\"$delete_url\"";
 		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 400}, iframeOptions: {scrolling: 'no'}}\" title=\"$tooltip\">";
-		$delete_link .= JHtml::image('com_attachments/delete.gif', $tooltip, null, true);
+		$delete_link .= HTMLHelper::image('com_attachments/delete.gif', $tooltip, null, true);
 		$delete_link .= "</a>";
 		}
 

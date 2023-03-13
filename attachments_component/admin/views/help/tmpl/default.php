@@ -11,6 +11,11 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
@@ -18,13 +23,14 @@ defined('_JEXEC') or die();
 // JHtml::_('behavior.tooltip');
 
 // Add the CSS for the attachments list (whether we need it or not)
-JHtml::stylesheet('com_attachments/attachments_help.css', array(), true);
+HTMLHelper::stylesheet('com_attachments/attachments_help.css', array(), true);
 
 // If the user specifies 'show=codes' in the url, the language item codes will
 // be shown by default.	 Note that they can still be toggled with the toggles
 // at the top right and bottom right of the page.
-if (JRequest::getCmd('show') == 'codes') {
-	JHtml::stylesheet('com_attachments/attachments_help_show_codes.css', array(), true);
+$app = Factory::getApplication();
+if ($app->getInput()->getCmd('show') == 'codes') {
+	HTMLHelper::stylesheet('com_attachments/attachments_help_show_codes.css', array(), true);
 	}
 
 // Define the section constants
@@ -73,26 +79,26 @@ $this->saveSectionInfo(SECT_CONTCT, 'contact',			 'ATTACH_HELP_200000_SECTION_TI
 
 // A few other miscellaneous items
 
-$tlc = JText::_('ATTACH_HELP_TOGGLE_LANGUAGE_CODES');
+$tlc = Text::_('ATTACH_HELP_TOGGLE_LANGUAGE_CODES');
 
 $onContentPrepare = "<tt class=\"docutils literal\">'onContentPrepare'</tt>";
 
 $main_title_tooltip = $this->constructTooltip('ATTACH_HELP_000000_MAIN_TITLE');
 $main_version_tooltip = $this->constructTooltip('ATTACH_HELP_000100_MAIN_VERSION');
 
-$toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
+$toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 
 ?>
 <div class="help-document">
 <div class="header">
 	<a id="tc_toggle" title="<? echo $tlc ?>" href="<?php echo $this->toggledURL() ?>"><img src="<?php echo $toggle_img ?>"></a>
-	<h1 class="title" <?php echo $main_title_tooltip ?>><?php echo $this->logo_img ?><?php echo JText::_('ATTACH_HELP_000000_MAIN_TITLE') ?></h1>
+	<h1 class="title" <?php echo $main_title_tooltip ?>><?php echo $this->logo_img ?><?php echo Text::_('ATTACH_HELP_000000_MAIN_TITLE') ?></h1>
 	<hr class="header"/>
 </div>
 <div class="main">
 
 <p class="version"><strong><?php echo $this->version . ' - ' . $this->date ?></strong></p>
-<p><strong<?php echo $main_version_tooltip ?>><?php echo JText::_('ATTACH_HELP_000100_MAIN_VERSION') ?></strong></p>
+<p><strong<?php echo $main_version_tooltip ?>><?php echo Text::_('ATTACH_HELP_000100_MAIN_VERSION') ?></strong></p>
 
 <?php
    // ------------------------------------------------------------
@@ -109,7 +115,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 	  $this->addParagraph('ATTACH_HELP_010500_TEXT');
 	  $this->startList();
 		 $email_list_url = 'http://jmcameron.net/attachments/email-list.html';
-		 $email_list_text = JText::sprintf('ATTACH_HELP_010600_TEXT', $email_list_url);
+		 $email_list_text = Text::sprintf('ATTACH_HELP_010600_TEXT', $email_list_url);
 		 $this->addListElementHtml("<a class=\"reference external\" href=\"$email_list_url\">$email_list_text</a>");
 	  $this->endList();
    $this->endSection(SECT_INTRO);
@@ -216,43 +222,43 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 			$this->addListElement('ATTACH_HELP_052650_TEXT');
 			$this->addListElement('ATTACH_HELP_052700_TEXT');
 			$this->addListElement('ATTACH_HELP_052800_TEXT',
-								  Array('{DESC}' => JText::_('ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION')));
+								  Array('{DESC}' => Text::_('ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION')));
 			$this->addListElement('ATTACH_HELP_052900_TEXT', null, false);
 				$this->startList('ol', 'arabic simple');
 					$this->addListElement('ATTACH_HELP_053000_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_FILENAME')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILENAME')));
 					$this->addListElement('ATTACH_HELP_053100_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_FILENAME_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILENAME_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_053200_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_FILE_SIZE')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILE_SIZE')));
 					$this->addListElement('ATTACH_HELP_053300_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_FILE_SIZE_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILE_SIZE_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_053400_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_DESCRIPTION')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_DESCRIPTION')));
 					$this->addListElement('ATTACH_HELP_053500_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_DESCRIPTION_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_DESCRIPTION_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_053600_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_DISPLAY_FILENAME_OR_URL')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_DISPLAY_FILENAME_OR_URL')));
 					$this->addListElement('ATTACH_HELP_053700_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_DISPLAY_FILENAME_OR_URL_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_DISPLAY_FILENAME_OR_URL_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_053800_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_CREATOR')));
+										  Array('{LABEL}' => Text::_('ATTACH_CREATOR')));
 					$this->addListElement('ATTACH_HELP_053900_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_CREATED_DATE')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_CREATED_DATE')));
 					$this->addListElement('ATTACH_HELP_054000_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_CREATED_DATE_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_CREATED_DATE_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_054100_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_MODIFICATION_DATE')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_MODIFICATION_DATE')));
 					$this->addListElement('ATTACH_HELP_054200_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_MODIFICATION_DATE_DESCENDING')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_MODIFICATION_DATE_DESCENDING')));
 					$this->addListElement('ATTACH_HELP_054300_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_SORT_ATTACHMENT_ID')));
+										  Array('{LABEL}' => Text::_('ATTACH_SORT_ATTACHMENT_ID')));
 					$this->addListElement('ATTACH_HELP_054400_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_USER_DEFINED_FIELD_1')));
+										  Array('{LABEL}' => Text::_('ATTACH_USER_DEFINED_FIELD_1')));
 					$this->addListElement('ATTACH_HELP_054500_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_USER_DEFINED_FIELD_2')));
+										  Array('{LABEL}' => Text::_('ATTACH_USER_DEFINED_FIELD_2')));
 					$this->addListElement('ATTACH_HELP_054600_TEXT',
-										  Array('{LABEL}' => JText::_('ATTACH_USER_DEFINED_FIELD_3')));
+										  Array('{LABEL}' => Text::_('ATTACH_USER_DEFINED_FIELD_3')));
 				$this->endList();
 			$this->endListElement();
 		 $this->endList();
@@ -272,7 +278,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 			 $this->addListElement('ATTACH_HELP_055600_TEXT');
 			 $this->addListElement('ATTACH_HELP_055700_TEXT');
 			 $this->addListElement('ATTACH_HELP_055800_TEXT',
-				  Array('{DESCRIPTION}' => JText::_('ATTACH_SHOW_GUEST_ACCESS_LEVELS_DESCRIPTION')));
+				  Array('{DESCRIPTION}' => Text::_('ATTACH_SHOW_GUEST_ACCESS_LEVELS_DESCRIPTION')));
 			 $this->addListElement('ATTACH_HELP_055900_TEXT');
 		 $this->endList();
 	  $this->endSubSection('visibility-options');
@@ -284,7 +290,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 						   'class="float-right drop-shadow"') . "\n";
 		 $this->startList();
 			 $this->addListElement('ATTACH_HELP_057050_TEXT',
-								   Array('{DESCRIPTION}' => JText::_('ATTACH_MAX_ATTACHMENT_SIZE_DESCRIPTION'),
+								   Array('{DESCRIPTION}' => Text::_('ATTACH_MAX_ATTACHMENT_SIZE_DESCRIPTION'),
 										 '{SECT_WARN}' => $this->sectionLink(SECT_WARN)));
 			 $this->addListElement('ATTACH_HELP_057100_TEXT');
 			 $this->addListElement('ATTACH_HELP_057200_TEXT', Array( '{SECT_STYLE}' => $this->sectionLink(SECT_STYLE) ));
@@ -299,9 +305,9 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 			 $this->addListElement('ATTACH_HELP_057800_TEXT');
 			 $this->addListElement('ATTACH_HELP_057900_TEXT');
 			 $this->addListElement('ATTACH_HELP_057940_TEXT',
-								   Array('{DESCRIPTION}' => JText::_('ATTACH_URL_TO_LOGIN_DESCRIPTION')));
+								   Array('{DESCRIPTION}' => Text::_('ATTACH_URL_TO_LOGIN_DESCRIPTION')));
 			 $this->addListElement('ATTACH_HELP_057960_TEXT',
-								   Array('{DESCRIPTION}' => JText::_('ATTACH_URL_TO_REGISTER_DESCRIPTION')));
+								   Array('{DESCRIPTION}' => Text::_('ATTACH_URL_TO_REGISTER_DESCRIPTION')));
 		 $this->endList();
 	  $this->endSubSection('advanced-options');
 
@@ -465,7 +471,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 	  $this->addParagraph('ATTACH_HELP_100300_TEXT');
 	  $this->startList();
 		 $manual_url = 'http://jmcameron.net/attachments/';
-		 $manual_url_text = JText::sprintf('ATTACH_HELP_100400_TEXT', $manual_url);
+		 $manual_url_text = Text::sprintf('ATTACH_HELP_100400_TEXT', $manual_url);
 		 $this->addListElementHtml("<a class=\"reference external\" href=\"$manual_url\">$manual_url_text</a>");
 	  $this->endList();
 	  $this->addWarning(  'ATTACH_HELP_100500_WARNING');
@@ -527,7 +533,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 				  $this->addListElement('ATTACH_HELP_140500_TEXT');
 				  $this->addListElement('ATTACH_HELP_140600_TEXT');
 				  $this->addListElement('ATTACH_HELP_140700_TEXT',
-										ARRAY('{DEFACCLEVEL}' => JText::_('ATTACH_DEFAULT_ACCESS_LEVEL')));
+										ARRAY('{DEFACCLEVEL}' => Text::_('ATTACH_DEFAULT_ACCESS_LEVEL')));
 				  $this->addListElement('ATTACH_HELP_140800_TEXT');
 				  $this->addListElement('ATTACH_HELP_140900_TEXT');
 				  $this->addListElement('ATTACH_HELP_141000_TEXT');
@@ -550,7 +556,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 		  $this->addListElement('ATTACH_HELP_141800_TEXT', null, false);
 			 $this->startList();
 				$forums_url = 'http://joomlacode.org/gf/project/attachments3/forum/';
-				$forums_url_text = $this->replace(JText::sprintf('ATTACH_HELP_141900_TEXT', $forums_url),
+				$forums_url_text = $this->replace(Text::sprintf('ATTACH_HELP_141900_TEXT', $forums_url),
 												  Array('{FORUMS}' => $forums_url));
 				$this->addListElementHtml("<a class=\"reference external\" href=\"$forums_url\">$forums_url_text</a>");
 			 $this->endList();
@@ -578,11 +584,11 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 								Array('{ATTACH_DIR}' => "attachments",
 									  '{ATTACH_TBL}' => "#_attachments",
 									  '{SECT_UTILS}' =>	 $this->sectionLink(SECT_UTILS),
-									  '{DISABLE_SQL}' => JText::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION'),
+									  '{DISABLE_SQL}' => Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION'),
 									  ));
 		  $this->addListElement('ATTACH_HELP_160200_TEXT');
 		  $this->addListElement('ATTACH_HELP_160300_TEXT', null, false);
-			 $this->addPreBlock(JText::_('ATTACH_HELP_160400_TEXT'));
+			 $this->addPreBlock(Text::_('ATTACH_HELP_160400_TEXT'));
 			 $this->addParagraph('ATTACH_HELP_160500_TEXT');
 		  $this->endListElement();
 	  $this->endList();
@@ -594,7 +600,7 @@ $toggle_img = JURI::root(true).'/media/system/images/tooltip.png';
 	  $this->addParagraph('ATTACH_HELP_170100_TEXT');
 	  $this->startList();
 		 $migrate_url = 'http://jmcameron.net/attachments/';
-		 $migrate_url_text = JText::sprintf('ATTACH_HELP_170000_SECTION_TITLE', $migrate_url);
+		 $migrate_url_text = Text::sprintf('ATTACH_HELP_170000_SECTION_TITLE', $migrate_url);
 		 $this->addListElementHtml("<a class=\"reference external\" href=\"$migrate_url\">$migrate_url_text</a>");
 	  $this->endList();
    $this->endSection(SECT_MIGRAT);

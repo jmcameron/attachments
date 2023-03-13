@@ -23,7 +23,7 @@ defined('_JEXEC') or die('Restricted access');
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-	throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
+	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
 	die;
 	}
 
@@ -96,7 +96,7 @@ class AttachmentsControllerSpecial extends BaseController
 		$attachments = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 148)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 
@@ -111,7 +111,7 @@ class AttachmentsControllerSpecial extends BaseController
 		$crows = $db->loadObjectList();
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 149)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 

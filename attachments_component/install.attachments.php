@@ -11,14 +11,15 @@
  * @link http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.folder');
-
 // Define some global variables to help figure out whether log messages.
 //
-//	Note: Apparently with Joomala 2.5+, the installer behavior has changed.
+//	Note: Apparently with Joomla 2.5+, the installer behavior has changed.
 //		  If the extension is being installed the first time, it first does the
 //		  install() method and the the update() method of this install script class.
 //		  Similarly when upgrading a previously installed component, it does the
@@ -26,7 +27,7 @@ jimport('joomla.filesystem.folder');
 //		  error in this extension.	In any case, these flags are used to eliminate
 //		  the duplicate user information messages (about enabled plugins, etc).
 //		  The second time through the postFlight() function does not hurt anything,
-//		  so there is no point in repeating the inforamtional messages to the user.
+//		  so there is no point in repeating the informational messages to the user.
 
 /** Flag whether the informational messages should be emitted (warnings always go).
  */
@@ -94,8 +95,8 @@ class com_AttachmentsInstallerScript
 		$attachments_install_verbose = true;
 		$attachments_install_last_method = 'install';
 
-		$app = JFactory::getApplication();
-		$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
+		$app = Factory::getApplication();
+		$app->enqueueMessage(Text::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
 
 		com_AttachmentsInstallerScript::installPermissions();
 	}
@@ -112,8 +113,8 @@ class com_AttachmentsInstallerScript
 		$attachments_install_last_method = 'update';
 
 		if ( $attachments_install_verbose ) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage(JText::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
+			$app = Factory::getApplication();
+			$app->enqueueMessage(Text::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_UPGRADED'), 'message');
 			}
 
 		com_AttachmentsInstallerScript::installPermissions();
@@ -187,7 +188,7 @@ class com_AttachmentsInstallerScript
 			if (empty($db_name)) {
 				$db_name = JFactory::getDbo()->name;
 				}
-			$errmsg = JText::sprintf('ATTACH_ATTACHMENTS_ERROR_UNSUPPORTED_DB_S', $db_name);
+			$errmsg = Text::sprintf('ATTACH_ATTACHMENTS_ERROR_UNSUPPORTED_DB_S', $db_name);
 			$app->enqueueMessage($errmsg, 'error');
 			return false;
 		}
@@ -195,10 +196,10 @@ class com_AttachmentsInstallerScript
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
 		$this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
-			$msg = JText::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
+			$msg = Text::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
 			if ( $msg == 'ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP' ) {
 				// Handle unupdated languages
-				$msg = JText::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
+				$msg = Text::_('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_16UP');
 				$msg = str_replace('1.6', $this->minimum_joomla_release, $msg);
 				}
 			$app->enqueueMessage($msg, 'error');
@@ -220,7 +221,7 @@ class com_AttachmentsInstallerScript
 			if (JFolder::exists(JPATH_ROOT . '/components/com_attachments') OR
 				JFolder::exists(JPATH_ROOT . '/administrator/components/com_attachments'))
 			{
-				$msg = JText::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
+				$msg = Text::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
 				$app->enqueueMessage($msg, 'error');
 				return false;
 			}
@@ -233,13 +234,13 @@ class com_AttachmentsInstallerScript
 			// Move the attachments directory out of the way temporarily
 			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
 			if ( JFolder::move($attachdir, $this->moved_attachments_dir) !== true ) {
-				$msg = JText::sprintf('ATTACH_ERROR_MOVING_ATTACHMENTS_DIR');
+				$msg = Text::sprintf('ATTACH_ERROR_MOVING_ATTACHMENTS_DIR');
 				$app->enqueueMessage($msg, 'error');
 				return false;
 				}
 
 			if ( $attachments_install_verbose ) {
-				$msg = JText::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
+				$msg = Text::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
 				$app->enqueueMessage($msg, 'message');
 				}
 			}
@@ -275,7 +276,7 @@ class com_AttachmentsInstallerScript
 		foreach ($this->plugins as $plugin_name)
 		{
 			// Make the query to enable the plugin
-			$plugin_title = JText::_($plugin_name);
+			$plugin_title = Text::_($plugin_name);
 			$query = $db->getQuery(true);
 			$query->update('#__extensions');
 			$query->set("enabled = 1");
@@ -285,19 +286,19 @@ class com_AttachmentsInstallerScript
 
 			// Complain if there was an error
 			if ( $db->getErrorNum() ) {
-				$errmsg = JText::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
+				$errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
 				$errmsg .= $db->getErrorMsg();
 				$app->enqueueMessage($errmsg, 'error');
 				return false;
 				}
 
 			if ( $attachments_install_verbose ) {
-				$app->enqueueMessage(JText::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
+				$app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
 				}
 		}
 
 		if ( $attachments_install_verbose ) {
-			$app->enqueueMessage(JText::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
+			$app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
 			}
 
 		// Restore the attachments directory (if renamed)
@@ -305,7 +306,7 @@ class com_AttachmentsInstallerScript
 		if ( $this->moved_attachments_dir && JFolder::exists($this->moved_attachments_dir) ) {
 			JFolder::move($this->moved_attachments_dir, $attachdir);
 			if ( $attachments_install_verbose ) {
-				$app->enqueueMessage(JText::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
+				$app->enqueueMessage(Text::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 				}
 			}
 
@@ -331,7 +332,7 @@ class com_AttachmentsInstallerScript
 		if ( JFile::exists($htaccess_file) ) {
 			if ( com_AttachmentsInstallerScript::setSecureMode() ) {
 				if ( $attachments_install_verbose ) {
-					$app->enqueueMessage(JText::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
+					$app->enqueueMessage(Text::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
 					}
 				}
 			}
@@ -339,13 +340,13 @@ class com_AttachmentsInstallerScript
 		// Add warning message about how to uninstall properly
 		$emphasis = 'font-size: 125%; font-weight: bold;';
 		$padding = 'padding: 0.5em 0;';
-		$pkg_name = JText::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS');
-		$pkg_uninstall = JText::sprintf('ATTACH_PACKAGE_NOTICE_UNINSTALL_PACKAGE_S', $pkg_name);
+		$pkg_name = Text::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS');
+		$pkg_uninstall = Text::sprintf('ATTACH_PACKAGE_NOTICE_UNINSTALL_PACKAGE_S', $pkg_name);
 		$app->enqueueMessage("<div style=\"$emphasis $padding\">$pkg_uninstall</div>", 'notice');
 		
 		// Ask the user for feedback
 		if ( $attachments_install_verbose ) {
-			$msg = JText::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+			$msg = Text::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
 								  '<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>');
 			$app->enqueueMessage("<div style=\"$emphasis $padding\">$msg</div>", 'message');
 			}

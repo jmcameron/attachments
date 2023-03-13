@@ -11,6 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die('Restricted access');
 
 
@@ -120,7 +123,7 @@ class ImportFromCSV
 		$this->_file = null;
 		$this->_line_number = null;
 		$this->_data = null;
-		$this->_fields = $fields;
+		$this->_fields = $required_fields;
 		$this->_optional_fields = $optional_fields;
 		$this->_field_default = $field_default;
 		$this->_extra_fields = $extra_fields;
@@ -144,7 +147,7 @@ class ImportFromCSV
 		// Open the CSV file
 		$this->_file = @fopen($csv_filename, 'r');
 		if ( ! $this->_file ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 98)';
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 98)';
 			}
 
 		// Parse the first row to process field names and indeces
@@ -213,7 +216,7 @@ class ImportFromCSV
 				}
 			}
 		if ( count($missing_fields) > 0 ) {
-			return JText::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_S', implode(',', $missing_fields)) . ' (ERR 99)';
+			return Text::sprintf('ATTACH_ERROR_MISSING_EXTRA_FIELDS_S', implode(',', $missing_fields)) . ' (ERR 99)';
 			}
 
 		return true;
@@ -260,7 +263,7 @@ class ImportFromCSV
 			}
 
 		// Bind any defaults (not already set in required or optional fields)
-		foreach ($this->_field_defaults as $field => $val) {
+		foreach ($this->_field_default as $field => $val) {
 			if ( (isset($record->$field) &&	 ( $record->$field == '' )) ||
 				 !isset($record->$field) ) {
 					$record->$field = $val;
@@ -296,7 +299,7 @@ class ImportFromCSV
 			}
 		if ( count($bad_fields) > 0 ) {
 			// Warn if there were unrecognized field names
-			return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERR 100)';
+			return Text::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', implode(', ', $bad_fields)) . ' (ERR 100)';
 			}
 
 		// Make sure all required field names were found
@@ -308,7 +311,8 @@ class ImportFromCSV
 			}
 		if ( count($missing) > 0 ) {
 			// Warn if there were missing required field names
-			return JError::raiseError(500, JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 101)');
+			throw new Exception(Text::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 101)', 500);
+			return;
 			}
 
 		return true;
@@ -325,17 +329,21 @@ class ImportFromCSV
 	 */
 	protected function _verifyUser($user_id, $expected_username)
 	{
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
 		$query->select('username')->from('#__users')->where('id = ' . (int)$user_id);
-		$db->setQuery($query, 0, 1);
-		$actual_username = $db->loadResult();
-		if ( empty($actual_username) || $db->getErrorNum() ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
+		try {
+			$db->setQuery($query, 0, 1);
+			$actual_username = $db->loadResult();
+		} catch (Exception $e) {
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
+		}
+		if ( empty($actual_username) ) {
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
 			}
 		if ( strtolower($expected_username) != strtolower($actual_username) ) {
-			return JText::sprintf('ATTACH_ERROR_USERNAME_MISMATCH_ID_N_S_S',
+			return Text::sprintf('ATTACH_ERROR_USERNAME_MISMATCH_ID_N_S_S',
 								  $user_id, $expected_username, $actual_username) . ' (ERR 103)';
 			}
 
@@ -353,17 +361,21 @@ class ImportFromCSV
 	 */
 	protected function _verifyCategory($category_id, $expected_category_title)
 	{
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
 		$query->select('title')->from('#__categories')->where('id = ' . (int)$category_id);
-		$db->setQuery($query, 0, 1);
-		$actual_category_title = $db->loadResult();
+		try {
+			$db->setQuery($query, 0, 1);
+			$actual_category_title = $db->loadResult();
+		} catch (Exception $e) {
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
+		}
 		if ( empty($actual_category_title) || $db->getErrorNum() ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
 			}
 		if ( strtolower($expected_category_title) != strtolower($actual_category_title) ) {
-			return JText::sprintf('ATTACH_ERROR_CATEGORY_TITLE_MISMATCH_ID_S_S',
+			return Text::sprintf('ATTACH_ERROR_CATEGORY_TITLE_MISMATCH_ID_S_S',
 								  $category_id, $expected_category_title, $actual_category_title) . ' (ERR 105)';
 			}
 

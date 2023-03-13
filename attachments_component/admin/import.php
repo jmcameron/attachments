@@ -11,6 +11,11 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+
 defined('_JEXEC') or die('Restricted access');
 
 
@@ -83,7 +88,7 @@ class AttachmentsImport
 	 * @param bool $update if true, if the attachment exists, update it (or create a new one)
 	 * @param bool $dry_run do everything except actually add entries to attachment table in the database
 	 *
-	 * @return array of IDs of the imported attachemnts (if $dry_run, number that would have been imported), or error message
+	 * @return array of IDs of the imported attachments (if $dry_run, number that would have been imported), or error message
 	 */
 	public static function importAttachmentsFromCSVFile($filename,
 														$verify_parent=true,
@@ -96,7 +101,7 @@ class AttachmentsImport
 		$line_num = 0;
 		$f = @fopen($filename, 'r');
 		if ( !$f ) {
-			return JText::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 85)';
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 85)';
 			}
 
 		// Parse the first row to process field names and indeces
@@ -107,12 +112,11 @@ class AttachmentsImport
 			}
 
 		// Get the default access level from the Attachments options
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 		$default_access_level = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
 
-		// Load the attachents parent manager
-		JPluginHelper::importPlugin('attachments');
+		// Load the attachments parent manager
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 
 		// Process the CSV data
@@ -141,7 +145,7 @@ class AttachmentsImport
 			// get the attachment ID
 			$attachment_id = $adata[$field['id']];
 			if ( !is_numeric($attachment_id) ) {
-				return JText::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . $line_str . ' (ERR 86)';
+				return Text::sprintf('ATTACH_ERROR_BAD_ATTACHMENT_ID_S', $attachment_id) . $line_str . ' (ERR 86)';
 				}
 			$attachment_id = (int)$attachment_id;
 
@@ -151,12 +155,12 @@ class AttachmentsImport
 
 			// Make sure it is not a 'section' attachment
 			if ($parent_entity == 'section') {
-				return JText::sprintf('ATTACH_ERROR_SECTION_ATTACHMENT_NOT_ALLOWED_ID', $attachment_id) . $line_str . ' (ERR 86B)';
+				return Text::sprintf('ATTACH_ERROR_SECTION_ATTACHMENT_NOT_ALLOWED_ID', $attachment_id) . $line_str . ' (ERR 86B)';
 				}
 
 			// Get the attachment parent object
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
+				return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -165,14 +169,14 @@ class AttachmentsImport
 
 				// Make sure a parent with the specified ID exists
 				if ( !$parent->parentExists($parent_id, $parent_entity) ) {
-					return JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . $line_str . ' (ERR 88)';
+					return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . $line_str . ' (ERR 88)';
 					}
 
 				// Double-check by comparing the title
 				$attachment_parent_title = $adata[$field['parent_title']];
 				$parent_title = $parent->getTitle($parent_id, $parent_entity);
 				if ( !AttachmentsImport::utf8StringsEqual($parent_title, $attachment_parent_title) ) {
-					return JText::sprintf('ATTACH_ERROR_PARENT_TITLE_MISMATCH_ID_N_TITLE_S_S', $parent_id,
+					return Text::sprintf('ATTACH_ERROR_PARENT_TITLE_MISMATCH_ID_N_TITLE_S_S', $parent_id,
 										  $parent_title, $attachment_parent_title) . $line_str . ' (ERR 89)';
 					}
 				}
@@ -182,14 +186,19 @@ class AttachmentsImport
 			$attachment_creator_username = $adata[$field['created_by_username']];
 			$query = $db->getQuery(true);
 			$query->select('username')->from('#__users')->where('id = ' . (int)$creator_id);
-			$db->setQuery($query, 0, 1);
-			$creator_username = $db->loadResult();
-			if ( empty($creator_username) || $db->getErrorNum() ) {
-				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
+			try {
+				$db->setQuery($query, 0, 1);
+				$creator_username = $db->loadResult();
+			} catch (Exception $e) {
+				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
+					$creator_id, $attachment_creator_username) . $line_str . ' (ERR 90)';
+			}
+			if ( empty($creator_username)) {
+				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
 									  $creator_id, $attachment_creator_username) . $line_str . ' (ERR 90)';
 				}
 			if ( !AttachmentsImport::utf8StringsEqual($creator_username, $attachment_creator_username) ) {
-				return JText::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
+				return Text::sprintf('ATTACH_ERROR_CREATOR_USERNAME_MISMATCH_ID_S_S',
 									  $creator_id, $attachment_creator_username, $creator_username) . $line_str . ' (ERR 91)';
 				}
 
@@ -198,26 +207,31 @@ class AttachmentsImport
 			$attachment_modifier_username = $adata[$field['modified_by_username']];
 			$query = $db->getQuery(true);
 			$query->select('username')->from('#__users')->where('id = ' . (int)$modifier_id);
-			$db->setQuery($query, 0, 1);
-			$modifier_username = $db->loadResult();
-			if ( empty($modifier_username) || $db->getErrorNum() ) {
-				return JText::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
+			try {
+				$db->setQuery($query, 0, 1);
+				$modifier_username = $db->loadResult();				
+			} catch (Exception $e) {
+				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
+									  $modifier_id, $attachment_modifier_username) . $line_str . ' (ERR 92)';
+			}
+			if ( empty($modifier_username) ) {
+				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
 									  $modifier_id, $attachment_modifier_username) . $line_str . ' (ERR 92)';
 				}
 			if ( !AttachmentsImport::utf8StringsEqual($modifier_username, $attachment_modifier_username) ) {
-				return JText::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
+				return Text::sprintf('ATTACH_ERROR_MODIFIER_USERNAME_MISMATCH_ID_S_S',
 									  $modifier_id, $attachment_modifier_username, $modifier_username) . $line_str . ' (ERR 93)';
 				}
 
 			// Construct an attachments entry
-			JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-			$attachment = JTable::getInstance('Attachment', 'AttachmentsTable');
+			Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
+			$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
 
 			if ( $update ) {
 
 				// The attachment ID cannot be 0 for updating!
 				if ( $attachment_id == 0 ) {
-					return JText::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . $line_str . ' (ERR 94)';
+					return Text::_('ATTACH_ERROR_CANNOT_MODIFY_ATTACHMENT_ZERO_ID') . $line_str . ' (ERR 94)';
 					}
 
 				// Load the data from the attachment to be updated (or create new one)
@@ -251,7 +265,7 @@ class AttachmentsImport
 					$ids_ok[] = $attachment->getDbo()->insertid();
 					}
 				else {
-					return JText::sprintf('ATTACH_ERROR_STORING_ATTACHMENT_S', $attachment->getError()) . ' (ERR 95)';
+					return Text::sprintf('ATTACH_ERROR_STORING_ATTACHMENT_S', $attachment->getError()) . ' (ERR 95)';
 					}
 				}
 			}
@@ -283,7 +297,7 @@ class AttachmentsImport
 				$field[$field_name] = $i;
 				}
 			else {
-				return JText::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', $field_name) . ' (ERR 96)';
+				return Text::sprintf('ATTACH_ERROR_UNRECOGNIZED_FIELD_S', $field_name) . ' (ERR 96)';
 				}
 			}
 
@@ -296,7 +310,7 @@ class AttachmentsImport
 					$missing[] = $fname;
 					}
 				}
-			return JText::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(',',$missing)) . ' (ERR 97)';
+			return Text::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(',',$missing)) . ' (ERR 97)';
 			}
 
 		return $field;

@@ -47,7 +47,7 @@ class AttachmentsControllerParams extends FormController
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
 			return false;
 			}
 
@@ -65,7 +65,7 @@ class AttachmentsControllerParams extends FormController
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new ErrorException(implode("\n", $errors) . ' (ERR 118)', 500);
+			throw new Exception(implode("\n", $errors) . ' (ERR 118)', 500);
 			return false;
 		}
 

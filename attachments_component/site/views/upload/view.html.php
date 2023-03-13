@@ -11,6 +11,10 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 // No direct access
 defined('_JEXEC') or die();
 
@@ -32,8 +36,11 @@ class AttachmentsViewUpload extends AttachmentsFormView
 	public function display($tpl=null)
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.create', 'com_attachments')) {
-			return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 64)' );
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		if ($user === null OR !$user->authorise('core.create', 'com_attachments')) {
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 64)', 404);
+			return;
 			}
 
 		// For convenience below
@@ -44,29 +51,28 @@ class AttachmentsViewUpload extends AttachmentsFormView
 		if ( $this->params->get('allow_frontend_access_editing', false) ) {
 			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 			$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
-			$this->access_level_tooltip = JText::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
+			$this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 			}
 
 		// Set up publishing info
-		$user = JFactory::getUser();
 		$this->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
 																   $attachment->parent_entity, $user->id);
 		if ( $this->may_publish ) {
-			$this->publish = JHtml::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+			$this->publish = HTMLHelper::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
 			}
 
 		// Construct derived data
-		$attachment->parent_entity_name = JText::_('ATTACH_' . $attachment->parent_entity);
+		$attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
 		$attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
 
 		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
 		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
 		// Add the stylesheets for the form
-		JHtml::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
 			}
 
 		// Display the upload form

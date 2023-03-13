@@ -48,7 +48,7 @@ class AttachmentsControllerList extends BaseController
 	public function noop()
 	{
 		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 119)';
-		throw new ErrorException( $errmsg, 500 );
+		throw new Exception( $errmsg, 500 );
 		die;
 	}
 
@@ -97,7 +97,7 @@ class AttachmentsControllerList extends BaseController
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 		$view->setModel($model);

@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-	throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)', 404);
+	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)', 404);
 	die;
 	}
 
@@ -98,7 +98,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
 			die;
 			}
 
@@ -119,7 +119,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
 			die;
 			}
 
@@ -143,7 +143,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
 			die;
 			}
 
@@ -176,7 +176,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user ===null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
 			die;
 			}
 
@@ -209,7 +209,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
 			die;
 			}
 
@@ -242,7 +242,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
 			die;
 			}
 
@@ -275,7 +275,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
 			die;
 			}
 
@@ -307,7 +307,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
 			die;
 			}
 
@@ -340,7 +340,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)', 404);
 			die;
 			}
 
@@ -372,7 +372,7 @@ class AttachmentsControllerUtils extends BaseController
 		$user = $app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)', 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)', 404);
 			die;
 			}
 
@@ -382,7 +382,7 @@ class AttachmentsControllerUtils extends BaseController
 		$filename = $input->getString('filename', null);
 		if ( $filename == null ) {
 			$errmsg = Text::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 161)';
-			throw new ErrorException($errmsg, 500);
+			throw new Exception($errmsg, 500);
 			die;
 			}
 		$verify_parent = $input->getBool('verify_parent', true);
@@ -394,7 +394,7 @@ class AttachmentsControllerUtils extends BaseController
 
 		// Abort if it is an error message
 		if ( is_string($status) ) {
-			throw new ErrorException($status, 500);
+			throw new Exception($status, 500);
 			die;
 			}
 
@@ -406,12 +406,12 @@ class AttachmentsControllerUtils extends BaseController
 		else {
 			if ( $dry_run ) {
 				$msg = Text::sprintf('ATTACH_DATA_FOR_N_ATTACHMENTS_OK', $status) . ' (ERR 162)';
-				throw new ErrorException($msg, 500);
+				throw new Exception($msg, 500);
 				die;
 				}
 			else {
 				$errmsg = Text::sprintf('ATTACH_ERROR_IMPORTING_ATTACHMENTS_S', $status) . ' (ERR 163)';
-				throw new ErrorException($errmsg, 500);
+				throw new Exception($errmsg, 500);
 				die;
 				}
 			}
@@ -425,7 +425,7 @@ class AttachmentsControllerUtils extends BaseController
 	{
 		// Access check.
 		if (!Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_attachments')) {
-			throw new ErrorException(Text::_('JERROR_ALERTNOAUTHOR'), 404);
+			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 			die;
 			}
 

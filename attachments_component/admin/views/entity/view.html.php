@@ -10,7 +10,11 @@
  * @link http://joomlacode.org/gf/project/attachments/frs/
  * @author Jonathan M. Cameron
  */
- 
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\MVC\View\HtmlView;
+
 // no direct access
 
 defined( '_JEXEC' ) or die('Restricted access');
@@ -24,7 +28,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewEntity extends JViewLegacy
+class AttachmentsViewEntity extends HtmlView
 {
 	/**
 	 * Display the entity view
@@ -32,10 +36,10 @@ class AttachmentsViewEntity extends JViewLegacy
 	public function display($tpl = null)
 	{
 		// Add the style sheets
-		JHtml::stylesheet('com_attachments/attachments_admin.css', Array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_admin.css', Array(), true);
+		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_admin_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_admin_rtl.css', Array(), true);
 			}
 
 		parent::display($tpl);

@@ -11,6 +11,10 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
@@ -38,10 +42,10 @@ class AttachmentsViewHelp extends HelpView
 	 */
 	public function display($tpl = null)
 	{
-		$this->logo_img = JHtml::image('com_attachments/attachments_help_logo32.png', '', null, true);
+		$this->logo_img = HTMLHelper::image('com_attachments/attachments_help_logo32.png', '', null, true);
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
-		$rdate = new JDate(AttachmentsDefines::$ATTACHMENTS_VERSION_DATE);
-		$this->date = JHtml::_('date', $rdate, JText::_('DATE_FORMAT_LC1'));
+		$rdate = new Date(AttachmentsDefines::$ATTACHMENTS_VERSION_DATE);
+		$this->date = HTMLHelper::_('date', $rdate, Text::_('DATE_FORMAT_LC1'));
 
 		parent::display($tpl);
 	}
@@ -65,9 +69,9 @@ class AttachmentsViewHelp extends HelpView
 		echo "</colgroup>\n";
 		echo "<thead>\n";
 		echo "  <tr>\n";
-		echo "     <th class=\"head\">" . JText::_($col1_code) . "</th>\n";
-		echo "     <th class=\"head\">" . JText::_($col2_code) . "</th>\n";
-		echo "     <th class=\"head\">" . JText::_($col3_code) . "</th>\n";
+		echo "     <th class=\"head\">" . Text::_($col1_code) . "</th>\n";
+		echo "     <th class=\"head\">" . Text::_($col2_code) . "</th>\n";
+		echo "     <th class=\"head\">" . Text::_($col3_code) . "</th>\n";
 		echo "  </tr>\n";
 		echo "</thead>\n";
 		echo "<tbody>\n";
@@ -85,9 +89,9 @@ class AttachmentsViewHelp extends HelpView
 	protected function addPermissionsTableRow($col1_code, $col2_code, $col3_code)
 	{
 		echo "  <tr>\n";
-		echo "     <td>" . JText::_($col1_code) . "</td>\n";
-		echo "     <td>" . JText::_($col2_code) . "</td>\n";
-		echo "     <td>" . JText::_($col3_code) . "</td>\n";
+		echo "     <td>" . Text::_($col1_code) . "</td>\n";
+		echo "     <td>" . Text::_($col2_code) . "</td>\n";
+		echo "     <td>" . Text::_($col3_code) . "</td>\n";
 		echo "  </tr>\n";
 	}
 

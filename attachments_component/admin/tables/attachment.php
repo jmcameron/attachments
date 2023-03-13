@@ -11,11 +11,15 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Utilities\ArrayHelper;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-// import Joomla table library
-jimport('joomla.database.table');
 
 /** Load the Attachments helper */
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
@@ -26,14 +30,14 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
  *
  * @package Attachments
  */
-class AttachmentsTableAttachment extends JTable
+class AttachmentsTableAttachment extends Table
 {
 	/**
 	 * Constructor
 	 *
 	 * @param object Database connector object
 	 */
-	public function __construct(&$db)
+	public function __construct(DatabaseDriver &$db)
 	{
 		parent::__construct('#__attachments', 'id', $db);
 	}
@@ -58,7 +62,7 @@ class AttachmentsTableAttachment extends JTable
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
-		JArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($pks);
 		$userId = (int) $userId;
 		$state	= (int) $state;
 
@@ -69,14 +73,13 @@ class AttachmentsTableAttachment extends JTable
 			}
 			// Nothing to set publishing state on, return false.
 			else {
-				$e = new JException(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
-				$this->setError($e);
+				throw new Exception(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
 				return false;
 			}
 		}
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 
 		// Remove any attachments that the user may not publish/unpublish
@@ -88,19 +91,21 @@ class AttachmentsTableAttachment extends JTable
 			$query->select('*')->from($this->_tbl);
 			$query->where('id='.(int)$id);
 			$this->_db->setQuery($query);
-			$attachment = $this->_db->loadObject();
-			if ( $this->_db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 108)';
-				JError::raiseError(500, $errmsg);
-				}
+			try {
+				$attachment = $this->_db->loadObject();
+			} catch (Exception $e) {
+				throw new Exception($e->getMessage() . ' (ERR 108)');
+				die;
+			}
 
 			$parent_id = $attachment->parent_id;
 			$parent_type = $attachment->parent_type;
 			$parent_entity = $attachment->parent_entity;
 
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 109)';
-				JError::raiseError(500, $errmsg);
+				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 109)';
+				throw new Exception($errmsg, 500);
+				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -112,9 +117,9 @@ class AttachmentsTableAttachment extends JTable
 				$bad_ids[] = $id;
 
 				// If the user is not authorized, complain
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-				$errmsg = JText::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_PUBLISH_S_ATTACHMENT_S_ID_N',
+				$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_PUBLISH_S_ATTACHMENT_S_ID_N',
 										 $parent_entity, $attachment->filename, $id) . ' (ERR 110)';
 				$app->enqueueMessage($errmsg, 'error');
 			}
@@ -150,10 +155,11 @@ class AttachmentsTableAttachment extends JTable
 		$this->_db->setQuery($query);
 
 		// Check for a database error.
-		if (!$this->_db->query()) {
-			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
-											   get_class($this), $this->_db->getErrorMsg()) . ' (ERR 111)');
-			$this->setError($e);
+		try {
+			$this->_db->execute();
+		} catch (Exception $e) {
+			throw new Exception(Text::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
+													get_class($this), $e->getMessage()) . ' (ERR 111)');
 			return false;
 		}
 
@@ -171,7 +177,6 @@ class AttachmentsTableAttachment extends JTable
 			$this->state = $state;
 		}
 
-		$this->setError('');
 		return count($pks);
 	}
 

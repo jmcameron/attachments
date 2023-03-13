@@ -11,6 +11,14 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
+
 // No direct access
 defined('_JEXEC') or die('Restricted Access');
 
@@ -27,7 +35,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewAttachments extends JViewLegacy
+class AttachmentsViewAttachments extends HtmlView
 {
 	/**
 	 * Construct the output for the view/template.
@@ -43,23 +51,24 @@ class AttachmentsViewAttachments extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		jimport('joomla.application.component.helper');
-
-		$document = JFactory::getDocument();
-		if ( JRequest::getWord('format', '') == 'raw' ) {
+		$app = Factory::getApplication();
+		$document = $app->getDocument();
+		$input = $app->getInput();
+		if ( $input->getWord('format', '') == 'raw' ) {
 			// Choose raw text even though it is actually html
 			$document->setMimeEncoding('text/plain');
 			}
 
 		// Add javascript
-		$uri = JFactory::getURI();
+		$uri = Uri::getInstance();
 		AttachmentsJavascript::setupJavascript();
 
 		// Get the model
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
-			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 63)';
-			JError::raiseError( 500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 63)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// See if there are any attachments
@@ -69,10 +78,10 @@ class AttachmentsViewAttachments extends JViewLegacy
 			}
 
 		// if we have attachments, add the stylesheets for the attachments list
-		JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
-		$lang = JFactory::getLanguage();
+		HTMLHelper::stylesheet('com_attachments/attachments_list.css', array(), true);
+		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			JHtml::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
 			}
 
 		// Add the default path
@@ -80,24 +89,24 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Set up the correct path for template overloads
 		// (Do this after previous addTemplatePath so that template overrides actually override)
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$templateDir = JPATH_SITE.'/templates/'.$app->getTemplate().'/html/com_attachments/attachments';
 		$this->addTemplatePath($templateDir);
 
 		// Load the language files from the attachments plugin
-		$lang =	 JFactory::getLanguage();
+		$lang =	 $app->getLanguage();
 		$lang->load('plg_content_attachments', JPATH_SITE.'/plugins/content/attachments');
 
 		// Get the component parameters
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// See whether the user-defined fields should be shown
-		$from = JRequest::getWord('from', 'closeme');
-		$layout = JRequest::getWord('layout');
-		$tmpl = JRequest::getWord('tmpl');
-		$task = JRequest::getWord('task');
+		$from = $input->getWord('from', 'closeme');
+		$layout = $input->getWord('layout');
+		$tmpl = $input->getWord('tmpl');
+		$task = $input->getWord('task');
 		$show_hidden_user_fields = false;
-		if ( $app->isAdmin() || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
+		if ( $app->isClient('admin') || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
 			$show_hidden_user_fields = true;
 			}
 		if ( $task == 'attachmentsList' ) {
@@ -109,7 +118,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$show_user_field_1 = false;
 		$user_field_1_name = $params->get('user_field_1_name');
 		if ( $user_field_1_name ) {
-			if ( $show_hidden_user_fields || ($user_field_1_name[JString::strlen($user_field_1_name)-1] != '*') ) {
+			if ( $show_hidden_user_fields || ($user_field_1_name[StringHelper::strlen($user_field_1_name)-1] != '*') ) {
 				$show_user_field_1 = true;
 				$this->user_field_1_name = $user_field_1_name;
 				}
@@ -120,7 +129,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$show_user_field_2 = false;
 		$user_field_2_name = $params->get('user_field_2_name');
 		if ( $user_field_2_name ) {
-			if ( $show_hidden_user_fields || ($user_field_2_name[JString::strlen($user_field_2_name)-1] != '*') ) {
+			if ( $show_hidden_user_fields || ($user_field_2_name[StringHelper::strlen($user_field_2_name)-1] != '*') ) {
 				$show_user_field_2 = true;
 				$this->user_field_2_name = $user_field_2_name;
 				}
@@ -131,7 +140,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$show_user_field_3 = false;
 		$user_field_3_name = $params->get('user_field_3_name');
 		if ( $user_field_3_name ) {
-			if ( $show_hidden_user_fields || ($user_field_3_name[JString::strlen($user_field_3_name)-1] != '*') ) {
+			if ( $show_hidden_user_fields || ($user_field_3_name[StringHelper::strlen($user_field_3_name)-1] != '*') ) {
 				$show_user_field_3 = true;
 				$this->user_field_3_name = $user_field_3_name;
 				}
@@ -141,7 +150,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		// Set up for the template
 		$parent_id = $model->getParentId();
 		$parent_type = $model->getParentType();
-		$parent_entity = JString::strtolower($model->getParentEntity());
+		$parent_entity = StringHelper::strtolower($model->getParentEntity());
 		// ?? fix this!
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$parent_entity = 'article';
@@ -179,13 +188,13 @@ class AttachmentsViewAttachments extends JViewLegacy
 		if ( $this->show_column_titles ) {
 			switch ( $model->types() ) {
 			case 'file':
-				$this->file_url_title = JText::_('ATTACH_FILE');
+				$this->file_url_title = Text::_('ATTACH_FILE');
 				break;
 			case 'url':
-				$this->file_url_title = JText::_('ATTACH_URL');
+				$this->file_url_title = Text::_('ATTACH_URL');
 				break;
 			default:
-				$this->file_url_title = JText::_('ATTACH_FILE_URL');
+				$this->file_url_title = Text::_('ATTACH_FILE_URL');
 				}
 			}
 
@@ -195,7 +204,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 
 		// Get the attachments list title
 		$title = $this->title;
-		if ( !$title || (JString::strlen($title) == 0) ) {
+		if ( !$title || (StringHelper::strlen($title) == 0) ) {
 			$title = 'ATTACH_ATTACHMENTS_TITLE';
 			}
 		$parent = $model->getParentClass();
@@ -203,18 +212,14 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$this->title = $title; // Note: assume it is translated
 
 		// Construct the path for the icons
-		$uri = JFactory::getURI();
+		$uri = Uri::getInstance();
 		$base_url = $uri->root(false);
 		$this->base_url = $base_url;
 		$this->icon_url_base = $base_url . 'components/com_attachments/media/icons/';
 
 		// Get the output of the template
 		$result = $this->loadTemplate($tpl);
-		if (JError::isError($result)) {
-			return $result;
-			}
-
-		return true;
+		return $result;
 	}
 
 	/**

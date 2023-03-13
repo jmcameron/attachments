@@ -78,7 +78,8 @@ class ImportAttachments extends ImportFromCSV
 		// Open the file
 		$open_ok = $self->open($filename);
 		if ( $open_ok !== true ) {
-			return JError::raiseError(500, $open_ok);
+			throw new Exception($open_ok, 500);
+			return;
 			}
 
 		// Read the data and import the attachments

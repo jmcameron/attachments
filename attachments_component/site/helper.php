@@ -11,6 +11,18 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Environment\Browser;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
+
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines */
@@ -52,13 +64,13 @@ class AttachmentsHelper
 			$extension = $filename_info['extension'];
 			}
 
-		if ( JString::strlen($extension) > 0 ) {
-			$maxlen = max( $maxlen - (JString::strlen($extension) + 2), 1);
-			return JString::substr($filename, 0, $maxlen) . '~.' . $extension;
+		if ( StringHelper::strlen($extension) > 0 ) {
+			$maxlen = max( $maxlen - (StringHelper::strlen($extension) + 2), 1);
+			return StringHelper::substr($filename, 0, $maxlen) . '~.' . $extension;
 			}
 		else {
 			$maxlen = max( $maxlen - 1, 1);
-			return JString::substr($filename, 0, $maxlen) . '~';
+			return StringHelper::substr($filename, 0, $maxlen) . '~';
 			}
 	}
 
@@ -121,16 +133,14 @@ class AttachmentsHelper
 	 */
 	public static function write_empty_index_html($dir)
 	{
-		jimport('joomla.filesystem.file');
-
 		$index_fname = $dir.'/index.html';
-		if ( JFile::exists($index_fname) ) {
+		if ( File::exists($index_fname) ) {
 			return true;
 			}
 		$contents = "<html><body><br /><h2 align=\"center\">Access denied.</h2></body></html>";
-		JFile::write($index_fname, $contents);
+		File::write($index_fname, $contents);
 
-		return JFile::exists($index_fname);
+		return File::exists($index_fname);
 	}
 
 
@@ -142,12 +152,10 @@ class AttachmentsHelper
 	 */
 	public static function clean_directory($filename)
 	{
-		jimport('joomla.filesystem.folder');
-
 		// Assume anything with a trailing DS or '/' is a directory
 		if ( ($filename[strlen($filename)-1] == DIRECTORY_SEPARATOR) || ($filename[strlen($filename)-1] == '/') ) {
 
-			if ( !JFolder::exists($filename) ) {
+			if ( !Folder::exists($filename) ) {
 				return;
 				}
 
@@ -157,7 +165,7 @@ class AttachmentsHelper
 		else {
 			// This might be a file or directory
 
-			if ( JFolder::exists($filename) ) {
+			if ( Folder::exists($filename) ) {
 				$dirname = $filename;
 				}
 			else {
@@ -167,15 +175,14 @@ class AttachmentsHelper
 				}
 			}
 
-		// If the directory does not exist, quitely ignore the request
-		if ( !JFolder::exists($dirname) ) {
+		// If the directory does not exist, quietly ignore the request
+		if ( !Folder::exists($dirname) ) {
 			return;
 			}
 
 		// If the directory is the top-level attachments directory, ignore the request
 		// (This can occur when upgrading pre-2.0 attachments (with prefixes) since
 		// they were all saved in the top-level directory.)
-		jimport('joomla.application.component.helper');
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$dirend_chars = DIRECTORY_SEPARATOR.'/';
 		if ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(rtrim($dirname,$dirend_chars)) ) {
@@ -183,11 +190,11 @@ class AttachmentsHelper
 			}
 
 		// See how many files exist in the directory
-		$files = JFolder::files($dirname);
+		$files = Folder::files($dirname);
 
 		// If there are no files left (or only the index.html file is left), delete the directory
 		if ( (count($files) == 0) || ( (count($files) == 1) && ($files[0] == 'index.html') ) ) {
-			JFolder::delete($dirname);
+			Folder::delete($dirname);
 			}
 	}
 
@@ -208,17 +215,17 @@ class AttachmentsHelper
 		$dirend_chars = DIRECTORY_SEPARATOR.'/';
 		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) ||
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Create the subdirectory (if necessary)
-		jimport( 'joomla.filesystem.folder' );
-		if ( JFolder::exists( $upload_dir ) ) {
+		if ( Folder::exists( $upload_dir ) ) {
 			$subdir_ok = true;
 			}
 		else {
-			if ( JFolder::create( $upload_dir )) {
+			if ( Folder::create( $upload_dir )) {
 				// ??? Change to 2775 if files are owned by you but webserver runs as group
 				// ??? (Should the permission be an option?)
 				chmod($upload_dir, 0775);
@@ -226,39 +233,41 @@ class AttachmentsHelper
 				}
 			}
 
-		if ( !$subdir_ok || !JFolder::exists($upload_dir) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 30)';
-			JError::raiseError(500, $errmsg);
+		if ( !$subdir_ok || !Folder::exists($upload_dir) ) {
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 30)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Add a simple index.html file to the upload directory to prevent browsing
 		$index_ok = false;
 		$index_fname = $upload_dir.'/index.html';
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// If this is secure, create the .htindex file, if necessary
 		$hta_fname = $upload_dir.'/.htaccess';
-		jimport('joomla.filesystem.file');
 		if ( $secure ) {
 			$hta_ok = false;
 
 			$line = "order deny,allow\ndeny from all\n";
-			JFile::write($hta_fname, $line);
-			if ( JFile::exists($hta_fname) ) {
+			File::write($hta_fname, $line);
+			if ( File::exists($hta_fname) ) {
 				$hta_ok = true;
 				}
 			if ( ! $hta_ok ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 32)';
-				JError::raiseError(500, $errmsg);
+				$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 32)';
+				throw new Exception($errmsg, 500);
+				die;
 				}
 			}
 		else {
-			if ( JFile::exists( $hta_fname ) ) {
+			if ( File::exists( $hta_fname ) ) {
 				// If the htaccess file exists, delete it so normal access can occur
-				JFile::delete($hta_fname);
+				File::delete($hta_fname);
 				}
 			}
 
@@ -279,7 +288,7 @@ class AttachmentsHelper
 	public static function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
-		$url_base = JFactory::getURI()->base(false) . "index.php?option=com_attachments";
+		$url_base = Uri::base(false) . "index.php?option=com_attachments";
 
 		$template = '&tmpl=component';
 		$save_task = 'save';
@@ -291,8 +300,8 @@ class AttachmentsHelper
 			$parentinfo = "&parent_id=$parent_id&parent_type=$parent_type";
 			}
 
-		$app = JFactory::getApplication();
-		if ( $app->isAdmin() ) {
+		$app = Factory::getApplication();
+		if ( $app->isClient('admin') ) {
 			$upload_task = 'add';
 			$update_task = 'edit';
 			if ( $save_type == 'upload' ) {
@@ -305,7 +314,7 @@ class AttachmentsHelper
 		// Handle the main save URL
 		$save_url = $url_base . "&task=" . $save_task . $template;
 		$save_url .= "&from=$from";
-		$view->save_url = JRoute::_($save_url);
+		$view->save_url = Route::_($save_url);
 
 		// Construct the URL to upload a URL instead of a file
 		if ( $save_type == 'upload' ) {
@@ -316,8 +325,8 @@ class AttachmentsHelper
 			$upload_url_url .= "&from=$from";
 
 			// Add the URL
-			$view->upload_file_url = JRoute::_($upload_file_url);
-			$view->upload_url_url = JRoute::_($upload_url_url);
+			$view->upload_file_url = Route::_($upload_file_url);
+			$view->upload_url_url = Route::_($upload_url_url);
 			}
 
 		elseif ( $save_type == 'update' ) {
@@ -331,9 +340,9 @@ class AttachmentsHelper
 			$normal_update_url .= "&from=$from";
 
 			// Add the URLs
-			$view->change_file_url = JRoute::_($change_file_url);
-			$view->change_url_url =		   JRoute::_($change_url_url);
-			$view->normal_update_url = JRoute::_($normal_update_url);
+			$view->change_file_url = Route::_($change_file_url);
+			$view->change_url_url =		   Route::_($change_url_url);
+			$view->normal_update_url = Route::_($normal_update_url);
 			}
 	}
 
@@ -393,17 +402,19 @@ class AttachmentsHelper
 	 * @param int $attachment_id false if this is a new attachment
 	 * @param string $save_type 'update' or 'update'
 	 *
-	 * @return a message indicating succes or failure
+	 * @return a message indicating success or failure
 	 *
 	 * NOTE: The caller should set up all the parent info in the record before calling this
 	 *		 (see $parent->* below for necessary items)
 	 */
 	public static function upload_file(&$attachment, &$parent, $attachment_id=false, $save_type='update')
 	{
-		$user = JFactory::getUser();
-		$db = JFactory::getDBO();
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
-		$from = JRequest::getWord('from');
+		$input = $app->getInput();
+		$from = $input->getWord('from');
 
 		// Figure out if the user may publish this attachment
 		$may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
@@ -411,15 +422,15 @@ class AttachmentsHelper
 															 $attachment->created_by);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Make sure the attachments directory exists
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// If we are updating, note the name of the old filename
@@ -435,7 +446,7 @@ class AttachmentsHelper
 		// (Note: The following replacement is necessary to allow
 		//		  single quotes in filenames to work correctly.)
 		// Trim of any trailing period (to avoid exploits)
-		$filename = rtrim(JString::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
+		$filename = rtrim(StringHelper::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
 		$ftype = $_FILES['upload']['type'];
 
 		// Check the file size
@@ -447,9 +458,9 @@ class AttachmentsHelper
 		$max_size = min($max_upload_size, $max_attachment_size);
 		$file_size = filesize($_FILES['upload']['tmp_name']) / 1048576.0;
 		if ( $file_size > $max_size ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_TOO_BIG_N_N_N', $filename,
+			$errmsg = Text::sprintf('ATTACH_ERROR_FILE_S_TOO_BIG_N_N_N', $filename,
 									 $file_size, $max_attachment_size, $max_upload_size);
-			JError::raiseError(500, '<b>' . $errmsg . '</b>');
+			throw new Exception($errmsg, 500);
 			}
 
 		// Get the maximum allowed filename length (for the filename display)
@@ -462,12 +473,12 @@ class AttachmentsHelper
 			}
 
 		// Truncate the filename, if necessary and alert the user
-		if (JString::strlen($filename) > $max_filename_length) {
+		if (StringHelper::strlen($filename) > $max_filename_length) {
 			$filename = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
-			$msg = JText::_('ATTACH_WARNING_FILENAME_TRUNCATED');
-			$app = JFactory::getApplication();
-			if ( $app->isAdmin() ) {
-				$lang = JFactory::getLanguage();
+			$msg = Text::_('ATTACH_WARNING_FILENAME_TRUNCATED');
+			$app = Factory::getApplication();
+			if ( $app->isClient('admin') ) {
+				$lang = $app->getLanguage();
 				if ( $lang->isRTL() ) {
 					$msg = "'$filename' " . $msg;
 					}
@@ -501,12 +512,12 @@ class AttachmentsHelper
 
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($attachment->parent_entity);
-		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+		$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 
 		// A little formatting
 		$msgbreak = '<br />';
-		$app = JFactory::getApplication();
-		if ( $app->isAdmin() ) {
+		$app = Factory::getApplication();
+		if ( $app->isClient('admin') ) {
 			$msgbreak = '';
 			}
 
@@ -517,9 +528,9 @@ class AttachmentsHelper
 			// Guess the type of error
 			if ( $bad_chars ) {
 				$error = 'bad_chars';
-				$error_msg = JText::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
-				if ( $app->isAdmin() ) {
-					$result = new JObject();
+				$error_msg = Text::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
+				if ( $app->isClient('admin') ) {
+					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -527,10 +538,10 @@ class AttachmentsHelper
 				}
 			elseif ( $bad_filename ) {
 				$error = 'illegal_file_extension';
-				$format = JString::strtolower(JFile::getExt($filename));
-				$error_msg = JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " .php.$format";
-				if ( $app->isAdmin() ) {
-					$result = new JObject();
+				$format = StringHelper::strtolower(File::getExt($filename));
+				$error_msg = Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " .php.$format";
+				if ( $app->isClient('admin') ) {
+					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -538,10 +549,10 @@ class AttachmentsHelper
 				}
 			elseif ( $filename == '' ) {
 				$error = 'no_file';
-				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-				$error_msg .= $msgbreak . ' (' . JText::_('ATTACH_YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
-				if ( $app->isAdmin() ) {
-					$result = new JObject();
+				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= $msgbreak . ' (' . Text::_('ATTACH_YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
+				if ( $app->isClient('admin') ) {
+					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -549,11 +560,11 @@ class AttachmentsHelper
 				}
 			else {
 				$error = 'file_too_big';
-				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-				$error_msg .= $msgbreak . '(' . JText::_('ATTACH_ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
+				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= $msgbreak . '(' . Text::_('ATTACH_ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
 				$error_msg .= get_cfg_var('upload_max_filesize') . ')';
-				if ( $app->isAdmin() ) {
-					$result = new JObject();
+				if ( $app->isClient('admin') ) {
+					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -568,7 +579,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
-				$view->update = JRequest::getWord('update');
+				$view->update = $input->getWord('update');
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -581,7 +592,7 @@ class AttachmentsHelper
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
-				$new_uri_type = JRequest::getWord('update');
+				$new_uri_type = $input->getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$attachment->display_name = '';
 					}
@@ -596,7 +607,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = $input->getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -607,21 +618,20 @@ class AttachmentsHelper
 			}
 
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
-		$cmparams = JComponentHelper::getParams('com_media');
+		$cmparams = ComponentHelper::getParams('com_media');
 
 		// Check to make sure the extension is allowed
-		jimport('joomla.filesystem.file');
 		$allowable = explode( ',', $cmparams->get( 'upload_extensions' ));
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ));
-		$extension = JString::strtolower(JFile::getExt($filename));
+		$extension = StringHelper::strtolower(File::getExt($filename));
 		$error = false;
 		$error_msg = false;
 		if (!in_array($extension, $allowable) && !in_array($extension,$ignored)) {
 			$error = 'illegal_file_extension';
-			$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-			$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $extension";
+			$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+			$error_msg .= "<br />" . Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $extension";
 			if ($user->authorise('core.admin')) {
-				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+				$error_msg .= "<br />" . Text::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 				}
 			}
 
@@ -630,13 +640,13 @@ class AttachmentsHelper
 			if ( $cmparams->get('check_mime', true) ) {
 				$allowed_mime = explode(',', $cmparams->get('upload_mime'));
 				$illegal_mime = explode(',', $cmparams->get('upload_mime_illegal'));
-				if ( JString::strlen($ftype) && !in_array($ftype, $allowed_mime) &&
+				if ( StringHelper::strlen($ftype) && !in_array($ftype, $allowed_mime) &&
 					 in_array($ftype, $illegal_mime) ) {
 					$error = 'illegal_mime_type';
-					$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-					$error_msg .= ', ' . JText::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
+					$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+					$error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
 					if ($user->authorise('core.admin')) {
-						$error_msg .= "	 <br />" . JText::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
+						$error_msg .= "	 <br />" . Text::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 						}
 					}
 				}
@@ -646,8 +656,8 @@ class AttachmentsHelper
 		if (AttachmentsHelper::is_image_file($filename)) {
 			if (!AttachmentsHelper::is_valid_image_file($_FILES['upload']['tmp_name'])) {
 				$error = 'illegal_file_extension';
-				$error_msg = JText::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-				$error_msg .= "<br />" . JText::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " (corrupted image file)";
+				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
+				$error_msg .= "<br />" . Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " (corrupted image file)";
 				// ??? Need new error message
 				}
 			}
@@ -663,8 +673,8 @@ class AttachmentsHelper
 		// If there was an error, refresh the form with a warning
 		if ( $error ) {
 
-			if ( $app->isAdmin() ) {
-				$result = new JObject();
+			if ( $app->isClient('admin') ) {
+				$result = new stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
 				return $result;
@@ -678,7 +688,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
-				$view->update = JRequest::getWord('update');
+				$view->update = $input->getWord('update');
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -691,7 +701,7 @@ class AttachmentsHelper
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
-				$new_uri_type = JRequest::getWord('update');
+				$new_uri_type = $input->getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$attachment->display_name = '';
 					}
@@ -706,7 +716,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = $input->getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -726,11 +736,11 @@ class AttachmentsHelper
 		$fullpath = $upload_dir.'/'.$path;
 
 		// Make sure the directory exists
-		if ( !JFile::exists($fullpath) ) {
-			jimport( 'joomla.filesystem.folder' );
-			if ( !JFolder::create($fullpath) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
-				JError::raiseError(500, $errmsg);
+		if ( !File::exists($fullpath) ) {
+			if ( !Folder::create($fullpath) ) {
+				$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
+				throw new Exception($errmsg, 500);
+				die;
 				}
 			AttachmentsHelper::write_empty_index_html($fullpath);
 			}
@@ -740,7 +750,7 @@ class AttachmentsHelper
 
 		$url = $upload_url . '/' . $path . $filename;
 
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = Uri::base(false);
 
 		// If we are on windows, fix the filename and URL
 		if ( DIRECTORY_SEPARATOR != '/' ) {
@@ -749,22 +759,23 @@ class AttachmentsHelper
 			}
 
 		// Check on length of filename_sys
-		if (JString::strlen($filename_sys) > AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
-									 JString::strlen($filename_sys),
+		if (StringHelper::strlen($filename_sys) > AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH) {
+			$errmsg = Text::sprintf('ATTACH_ERROR_FILEPATH_TOO_LONG_N_N_S',
+									 StringHelper::strlen($filename_sys),
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
 									 $filename) . '(ERR 35)';
-			JError::raiseError(500, $errmsg);
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Make sure the system filename doesn't already exist
 		$error = false;
 		$duplicate_filename = false;
-		if ( ($save_type == 'upload') && JFile::exists($filename_sys) ) {
+		if ( ($save_type == 'upload') && File::exists($filename_sys) ) {
 			// Cannot overwrite an existing file when creating a new attachment!
 			$duplicate_filename = true;
 			}
-		if ( ($save_type == 'update') && JFile::exists($filename_sys) ) {
+		if ( ($save_type == 'update') && File::exists($filename_sys) ) {
 			// If updating, we may replace the existing file but may not overwrite any other existing file
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__attachments');
@@ -778,16 +789,16 @@ class AttachmentsHelper
 		// Handle duplicate filename error
 		if ( $duplicate_filename ) {
 			$error = 'file_already_on_server';
-			$error_msg = JText::sprintf('ATTACH_ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
+			$error_msg = Text::sprintf('ATTACH_ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
-			if ( $app->isAdmin() ) {
-				$result = new JObject();
+			if ( $app->isClient('admin') ) {
+				$result = new stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
 				return $result;
 				}
 
-			$save_url = JRoute::_($base_url . "index.php?option=com_attachments&task=save&tmpl=component");
+			$save_url = Route::_($base_url . "index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
 			require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -804,7 +815,7 @@ class AttachmentsHelper
 			$view->params =	$params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = $input->getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -816,8 +827,8 @@ class AttachmentsHelper
 
 		// Create a display filename, if needed (for long filenames)
 		if ( ($max_filename_length > 0) &&
-			 ( JString::strlen($attachment->display_name) == 0 ) &&
-			 ( JString::strlen($filename) > $max_filename_length ) ) {
+			 ( StringHelper::strlen($attachment->display_name) == 0 ) &&
+			 ( StringHelper::strlen($filename) > $max_filename_length ) ) {
 			$attachment->display_name = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			}
 
@@ -834,27 +845,26 @@ class AttachmentsHelper
 		if ( !$may_publish ) {
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state (ignore form info)
-				jimport('joomla.application.component.helper');
-				$params = JComponentHelper::getParams('com_attachments');
+				$params = ComponentHelper::getParams('com_attachments');
 				$attachment->state = $params->get('publish_default', false);
 				}
 			else {
 				// Restore the old state (ignore form info)
-				$db = JFactory::getDBO();
+				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
 				$db->setQuery($query, 0, 1);
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
 					$errmsg = $db->stderr() . ' (ERR 36)';
-					JError::raiseError(500, $errmsg);
+					die;
 					}
 				$attachment->state = $old_state;
 				}
 			}
 
 		// Set the create/modify dates
-		$now = JFactory::getDate();
+		$now = Factory::getDate();
 		$now = $now->toSql();
 
 		// Update the create/modify info
@@ -869,8 +879,9 @@ class AttachmentsHelper
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Get the attachment id
@@ -884,17 +895,13 @@ class AttachmentsHelper
 		// Move the file
 		$msg = "";
 		$uploaded_ok = false;
-		if (version_compare(JVERSION, '3.4', 'ge')) {
-			$use_streams = false;
-			$allow_unsafe = true;
-			$uploaded_ok = JFile::upload($_FILES['upload']['tmp_name'], $filename_sys, $use_streams, $allow_unsafe);
-			}
-		else {
-			$uploaded_ok = JFile::upload($_FILES['upload']['tmp_name'], $filename_sys);
-			}
+		$use_streams = false;
+		$allow_unsafe = true;
+		$uploaded_ok = File::upload($_FILES['upload']['tmp_name'], $filename_sys, $use_streams, $allow_unsafe);
+
 		if ($uploaded_ok) {
 			$file_size = (int)( $attachment->file_size / 1024.0 );
-			$file_size_str = JText::sprintf('ATTACH_S_KB', $file_size);
+			$file_size_str = Text::sprintf('ATTACH_S_KB', $file_size);
 			if ( $file_size_str == 'ATTACH_S_KB' ) {
 				// Work around until all translations are updated ???
 				$file_size_str = $file_size . ' kB';
@@ -902,9 +909,9 @@ class AttachmentsHelper
 			chmod($filename_sys, 0644);
 			// ??? The following items need to be updated for RTL
 			if ( $save_type == 'update' )
-				$msg = JText::_('ATTACH_UPDATED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
+				$msg = Text::_('ATTACH_UPDATED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
 			else
-				$msg = JText::_('ATTACH_UPLOADED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
+				$msg = Text::_('ATTACH_UPLOADED_ATTACHMENT') . ' ' . $filename . ' (' . $file_size_str . ')!';
 			}
 		else {
 			$query = $db->getQuery(true);
@@ -913,16 +920,17 @@ class AttachmentsHelper
 			$result = $db->query();
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 38)';
-				JError::raiseError(500, $errmsg);
+				throw new Exception($errmsg, 500);
+				die;
 				}
-			$msg = JText::_('ATTACH_ERROR_MOVING_FILE')
+			$msg = Text::_('ATTACH_ERROR_MOVING_FILE')
 				. " {$_FILES['upload']['tmp_name']} -> {$filename_sys})";
 			}
 
 		// If we are updating, we may need to delete the old file
 		if ($save_type == 'update') {
-			if ( ($filename_sys != $old_filename_sys) && JFile::exists($old_filename_sys) ) {
-				JFile::delete($old_filename_sys);
+			if ( ($filename_sys != $old_filename_sys) && File::exists($old_filename_sys) ) {
+				File::delete($old_filename_sys);
 				AttachmentsHelper::clean_directory($old_filename_sys);
 				}
 			}
@@ -943,14 +951,14 @@ class AttachmentsHelper
 	private static function parse_url(&$raw_url, $relative_url)
 	{
 		// Set up the return object
-		$result = new JObject();
+		$result = new stdClass();
 		$result->error = false;
 		$result->relative = $relative_url;
 
 		// Handle relative URLs
 		$url = $raw_url;
 		if ( $relative_url ) {
-			$uri = JFactory::getURI();
+			$uri = Uri::getInstance();
 			$url = $uri->base(true) . "/" . $raw_url;
 			}
 
@@ -967,7 +975,7 @@ class AttachmentsHelper
 			// Get the protocol (if any)
 			$protocol = '';
 			if ( isset($match['protocol']) && $match['protocol'] ) {
-				$protocol = JString::rtrim($match['protocol'], '/:');
+				$protocol = StringHelper::rtrim($match['protocol'], '/:');
 				}
 
 			// Get the domain (if any)
@@ -995,7 +1003,7 @@ class AttachmentsHelper
 				$result->error = true;
 				$result->error_code = 'url_unknown_protocol';
 				$result->error_msg =
-					JText::sprintf('ATTACH_ERROR_UNKNOWN_PROTCOL_S_IN_URL_S', $protocol, $raw_url);
+					Text::sprintf('ATTACH_ERROR_UNKNOWN_PROTCOL_S_IN_URL_S', $protocol, $raw_url);
 				return $result;
 				}
 			// Override the port if specified
@@ -1028,7 +1036,7 @@ class AttachmentsHelper
 				// Do nothing
 				}
 			else {
-				// If it is not a relative URL, make sure we have a protocl and domain
+				// If it is not a relative URL, make sure we have a protocol and domain
 				if ( $protocol == '' ) {
 					$protocol = 'http';
 					}
@@ -1036,7 +1044,7 @@ class AttachmentsHelper
 					// Reject bad url syntax
 					$result->error = true;
 					$result->error_code = 'url_no_domain';
-					$result->error_msg = JText::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
+					$result->error_msg = Text::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
 					}
 				}
 
@@ -1052,7 +1060,7 @@ class AttachmentsHelper
 			// Reject bad url syntax
 			$result->error = true;
 			$result->error_code = 'url_bad_syntax';
-			$result->error_msg = JText::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
+			$result->error_msg = Text::sprintf('ATTACH_ERROR_IN_URL_SYNTAX_S', $raw_url);
 			}
 
 		return $result;
@@ -1064,7 +1072,7 @@ class AttachmentsHelper
 	 *
 	 * @param string $raw_url the raw url to parse
 	 * @param &object &$attachment the attachment object
-	 * @param bool $verify whether the existance of the URL should be checked
+	 * @param bool $verify whether the existence of the URL should be checked
 	 * @param bool $relative_url allow relative URLs
 	 *
 	 * @return true if the URL is okay, or an error object if not
@@ -1077,7 +1085,7 @@ class AttachmentsHelper
 		// * Get 'file_type'
 		// * Get 'filename' (for display)
 		//
-		// * Rename all occurances of 'display_name' to 'display_name'
+		// * Rename all occurrences of 'display_name' to 'display_name'
 
 		$u = AttachmentsHelper::parse_url($raw_url, $relative_url);
 
@@ -1093,13 +1101,12 @@ class AttachmentsHelper
 		$found = false;
 
 		// Set the defaults
-		$attachment->filename = JString::trim($filename);
+		$attachment->filename = StringHelper::trim($filename);
 		$attachment->file_size = $file_size;
 		$attachment->url_valid = false;
 
 		// Get parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 		$overlay = $params->get('superimpose_url_link_icons', true);
 
 		// Get the timeout
@@ -1115,13 +1122,14 @@ class AttachmentsHelper
 		$errstr = null;
 		$fp = false;
 
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		if ( $timeout > 0 ) {
 
 			// Set up error handler in case it times out or some other error occurs
-			set_error_handler(create_function('$a, $b, $c, $d',
-				'throw new Exception("fsockopen error");'), E_ALL);
+			set_error_handler(function($a, $b, $c, $d) {
+				throw new Exception("fsockopen error");
+			}, E_ALL);
 			try {
 				$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
 				restore_error_handler();
@@ -1136,9 +1144,9 @@ class AttachmentsHelper
 				}
 
 			if ( $u->error ) {
-				$error_msg = JText::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
-				if ( $app->isAdmin() ) {
-					$result = new JObject();
+				$error_msg = Text::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
+				if ( $app->isClient('admin') ) {
+					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -1183,7 +1191,7 @@ class AttachmentsHelper
 			if ( !$found && $verify ) {
 				$u->error = true;
 				$u->error_code = 'url_not_found';
-				$u->error_msg = JText::sprintf('ATTACH_ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
+				$u->error_msg = Text::sprintf('ATTACH_ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
 				return $u;
 				}
 			}
@@ -1192,7 +1200,7 @@ class AttachmentsHelper
 				// Error connecting
 				$u->error = true;
 				$u->error_code = 'url_error_connecting';
-				$error_msg = JText::sprintf('ATTACH_ERROR_CONNECTING_TO_URL_S', $raw_url)
+				$error_msg = Text::sprintf('ATTACH_ERROR_CONNECTING_TO_URL_S', $raw_url)
 					. "<br /> (" . $errstr . ")";
 				$u->error_msg = $error_msg;
 				return $u;
@@ -1211,7 +1219,7 @@ class AttachmentsHelper
 
 
 		// Update the record
-		$attachment->filename = JString::trim($filename);
+		$attachment->filename = StringHelper::trim($filename);
 		$attachment->file_size = $file_size;
 		$attachment->url_valid = $found;
 
@@ -1221,7 +1229,7 @@ class AttachmentsHelper
 			$mime_type = AttachmentsFileTypes::mime_type($filename);
 			}
 		if ( $mime_type ) {
-			$attachment->file_type = JString::trim($mime_type);
+			$attachment->file_type = StringHelper::trim($mime_type);
 			}
 		else {
 			if ( $overlay ) {
@@ -1257,11 +1265,11 @@ class AttachmentsHelper
 
 
 	/**
-	 * Add the infomation about the URL to the attaachment record and then save it
+	 * Add the information about the URL to the attachment record and then save it
 	 *
 	 * @param &object &$attachment the attachment object
 	 * @param &object &$parent the attachments parent object
-	 * @param bool $verify whether the existance of the URL should be checked
+	 * @param bool $verify whether the existence of the URL should be checked
 	 * @param bool $relative_url allow relative URLs
 	 * @param string $update the type of update (or false if it is not an update)
 	 * @param int $attachment_id the attachment ID, false if this is a new attachment
@@ -1271,11 +1279,11 @@ class AttachmentsHelper
 	public static function add_url(&$attachment, &$parent, $verify, $relative_url=false,
 								   $update=false, $attachment_id=false)
 	{
-		$user = JFactory::getUser();
+		$app = Factory::getApplication();
+		$input = $app->getInput();
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Get the auto-publish setting
 		$auto_publish = $params->get('publish_default', false);
@@ -1295,11 +1303,11 @@ class AttachmentsHelper
 				$old_filename = $attachment->filename;
 				$old_filename_sys = $attachment->filename_sys;
 				}
-			$old_display_name = JRequest::getString('old_display_name', null);
+			$old_display_name = $input->getString('old_display_name', null);
 			}
 
 		// Check to make sure the URL is valid
-		$from = JRequest::getWord('from');
+		$from = $input->getWord('from');
 
 		// Get the info from the url
 		$result = AttachmentsHelper::get_url_info($attachment->url, $attachment, $verify, $relative_url);
@@ -1311,12 +1319,12 @@ class AttachmentsHelper
 		// If there was an error, bow out
 		if ( $result !== true ) {
 
-			$app = JFactory::getApplication();
-			if ( $app->isAdmin() ) {
+			$app = Factory::getApplication();
+			if ( $app->isClient('admin') ) {
 				return $result;
 				}
 
-			$update_form = JRequest::getWord('update');
+			$update_form = $input->getWord('update');
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
@@ -1351,7 +1359,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from =	$from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = $input->getInt('Itemid', 1);
 
 			$view->error = $result->error;
 			$view->error_msg = $result->error_msg;
@@ -1362,9 +1370,9 @@ class AttachmentsHelper
 			}
 
 		// Clear out the display_name if the URL has changed
-		$old_url = JRequest::getString('old_url');
+		$old_url = $input->getString('old_url');
 		if ( $attachment->display_name && ( $attachment->url != $old_url ) ) {
-			$old_display_name = JRequest::getString('old_display_name');
+			$old_display_name = $input->getString('old_display_name');
 			if ( $old_display_name == $attachment->display_name ) {
 				$attachment->display_name = '';
 				}
@@ -1406,30 +1414,31 @@ class AttachmentsHelper
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is set correctly.
 		if ( !$may_publish ) {
-			$save_type = JString::strtolower(JRequest::getWord('save_type', 'update'));
+			$save_type = StringHelper::strtolower($input->getWord('save_type', 'update'));
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
-				jimport('joomla.application.component.helper');
-				$params = JComponentHelper::getParams('com_attachments');
+				$params = ComponentHelper::getParams('com_attachments');
 				$attachment->state = $params->get('publish_default', false);
 				}
 			else {
 				// Restore the old state
-				$db = JFactory::getDBO();
+				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
 				$db->setQuery($query, 0, 1);
-				$old_state = $db->loadResult();
-				if ( $db->getErrorNum() ) {
+				try {
+					$old_state = $db->loadResult();
+				} catch (Exception $e) {
 					$errmsg = $db->stderr() . ' (ERR 39)';
-					JError::raiseError(500, $errmsg);
-					}
+					throw new Exception($errmsg, 500);
+					die;
+				}
 				$attachment->state = $old_state;
 				}
 			}
 
 		// Set the create/modify dates
-		$now = JFactory::getDate();
+		$now = Factory::getDate();
 		$attachment->created = $now->toSql();
 		$attachment->modified = $attachment->created;
 		$attachment->uri_type = 'url';
@@ -1437,29 +1446,30 @@ class AttachmentsHelper
 		// Check the URL length
 		if (strlen($attachment->url) > AttachmentsDefines::$MAXIMUM_URL_LENGTH) {
 			$errmsg = "URL is too long! (". strlen($attachment->url) .")";	// ??? Convert to translated error message
-			JError::raiseError(500, $errmsg);
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
-			$errmsg = JText::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Delete any old attachment file
 		if ( $old_filename_sys ) {
-			jimport('joomla.filesystem.file');
-			if ( JFile::exists($old_filename_sys) ) {
-				JFile::delete($old_filename_sys);
+			if ( File::exists($old_filename_sys) ) {
+				File::delete($old_filename_sys);
 				AttachmentsHelper::clean_directory($old_filename_sys);
 				}
 			}
 
 		if ( $update ) {
-			$msg = JText::_('ATTACH_ATTACHMENT_UPDATED');
+			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
 		else {
-			$msg = JText::_('ATTACH_ATTACHMENT_SAVED');
+			$msg = Text::_('ATTACH_ATTACHMENT_SAVED');
 			}
 
 		return $msg;
@@ -1473,7 +1483,7 @@ class AttachmentsHelper
 	 */
 	public static function download_attachment($id)
 	{
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = Uri::base(false);
 
 		// Get the info about the attachment
 		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
@@ -1481,46 +1491,48 @@ class AttachmentsHelper
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 41)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 41)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
 		$parent_entity = $attachment->parent_entity;
 
 		// Get the article/parent handler
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Make sure that the user can access the attachment
 		if ( !$parent->userMayAccessAttachment( $attachment ) ) {
 
 			// If not logged in, warn them to log in
-			$user	= JFactory::getUser();
+			$user	= Factory::getApplication()->getIdentity();
 			if ( $user->get('username') == '' ) {
 				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
 				if ( in_array($attachment->access, $guest_levels) ) {
 					// Construct the login request with return URL
-					$app = JFactory::getApplication();
+					$app = Factory::getApplication();
 					$return = $app->getUserState('com_attachments.current_url', '');
-					$redirect_to = JRoute::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
-					$app = JFactory::getApplication();
+					$redirect_to = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
+					$app = Factory::getApplication();
 					$app->redirect($redirect_to );
 					}
 				}
 
 			// Otherwise, just error out
-			$errmsg = JText::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 43)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 43)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Get the other info about the attachment
@@ -1533,10 +1545,10 @@ class AttachmentsHelper
 			$filename_sys = $attachment->filename_sys;
 
 			// Make sure the file exists
-			jimport('joomla.filesystem.file');
-			if ( !JFile::exists($filename_sys) ) {
-				$errmsg = JText::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 44)';
-				JError::raiseError(500, $errmsg);
+			if ( !File::exists($filename_sys) ) {
+				$errmsg = Text::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 44)';
+				throw new Exception($errmsg, 500);
+				die;
 				}
 			$file_size = filesize($filename_sys);
 
@@ -1555,8 +1567,7 @@ class AttachmentsHelper
 			ob_clean(); // Clear any previously written headers in the output buffer
 
 			// Handle MSIE differently...
-			jimport('joomla.environment.browser');
-			$browser = JBrowser::getInstance();
+			$browser = Browser::getInstance();
 			$browserType = $browser->getBrowser();
 			$browserVersion = $browser->getMajor();
 
@@ -1656,21 +1667,21 @@ class AttachmentsHelper
 			$parent_type = $attachment->parent_type;
 			$parent_entity = $attachment->parent_entity;
 			}
-		JPluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// Set up the entity name for display
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
-		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+		$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams('com_attachments');
+		$params = ComponentHelper::getParams('com_attachments');
 
 		// Define where the attachments move to
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -1681,26 +1692,25 @@ class AttachmentsHelper
 		$new_fullpath = $upload_dir.'/'.$new_path;
 
 		// Make sure the new directory exists
-		jimport('joomla.filesystem.folder');
-		if ( !JFolder::create($new_fullpath) ) {
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 46)';
-			JError::raiseError(500, $errmsg);
+		if ( !Folder::create($new_fullpath) ) {
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 46)';
+			throw new Exception($errmsg, 500);
+			die;
 			}
 
 		// Construct the new filename and URL
 		$old_filename_sys = $attachment->filename_sys;
 		$new_filename_sys = $new_fullpath . $attachment->filename;
-		$new_url = JString::str_ireplace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $new_path . $attachment->filename);
+		$new_url = StringHelper::str_ireplace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $new_path . $attachment->filename);
 
 		// Rename the file
-		jimport('joomla.filesystem.file');
-		if ( JFile::exists($new_filename_sys) ) {
-			return JText::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
+		if ( File::exists($new_filename_sys) ) {
+			return Text::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
 								  $parent_entity_name, $attachment->filename);
 			}
-		if ( !JFile::move($old_filename_sys, $new_filename_sys) ) {
+		if ( !File::move($old_filename_sys, $new_filename_sys) ) {
 			$new_filename = $new_path . $attachment->filename;
-			return JText::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
+			return Text::sprintf('ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
 								  $parent_entity_name, $new_filename);
 			}
 		AttachmentsHelper::write_empty_index_html($new_fullpath);
@@ -1733,7 +1743,7 @@ class AttachmentsHelper
 	public static function addAttachmentUserNames(&$attachment)
 	{
 		// Get the names of the users from the database item for this attachment
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 
 		$query->select('a.id');
@@ -1775,9 +1785,9 @@ class AttachmentsHelper
 											   $user_can_add, $Itemid, $from,
 											   $show_file_links=true, $allow_edit=true)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
-		$user	= JFactory::getUser();
+		$user	= $app->getIdentity();
 		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		// Make sure there are some potentially accessible attachments for
@@ -1785,7 +1795,7 @@ class AttachmentsHelper
 		// careful as the check in the Attachments model which is used by
 		// the 'Attachments' view which is invoked below.
 		$alist = '';
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('count(*)')->from('#__attachments');
 		$query->where('((parent_id='.(int)$parent_id . ') OR (parent_id is NULL))'.
@@ -1795,18 +1805,19 @@ class AttachmentsHelper
 			$query->where('access in ('.$user_levels.')');
 			}
 		$db->setQuery($query);
-		$total = $db->loadResult();
-		if ( $db->getErrorNum() ) {
+		try {
+			$total = $db->loadResult();
+		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 47)';
-			JError::raiseError(500, $errmsg);
-			}
+			throw new Exception($errmsg, 500);
+			die;
+		}
 
 		// Generate the HTML for the attachments for the specified parent
 		if ( $total > 0 ) {
 
 			// Get the component parameters
-			jimport('joomla.application.component.helper');
-			$params = JComponentHelper::getParams('com_attachments');
+			$params = ComponentHelper::getParams('com_attachments');
 
 			// Check the security status
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
@@ -1818,7 +1829,7 @@ class AttachmentsHelper
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}
 
-			if ( $app->isAdmin() ) {
+			if ( $app->isClient('admin') ) {
 				// Get the html for the attachments list
 				require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 
@@ -1857,7 +1868,7 @@ class AttachmentsHelper
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
-		$base = JFactory::getURI()->base(false) . "index.php?option=com_attachments&task=upload";
+		$base = Uri::base(false) . "index.php?option=com_attachments&task=upload";
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$url = $base . "&article_id=$parent_id&tmpl=component";
 			}
@@ -1872,10 +1883,10 @@ class AttachmentsHelper
 			// $url .= "&from=$from";
 			$url .= "&from=closeme";
 			}
-		$url = JRoute::_($url);
+		$url = Route::_($url);
 
-		$add_attachment_txt = JText::_('ATTACH_ADD_ATTACHMENT');
-		$icon = JHtml::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+		$add_attachment_txt = Text::_('ATTACH_ADD_ATTACHMENT');
+		$icon = HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
 		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
 		$ahead .= "rel=\"{handler: 'iframe', size: {x: 920, y: 550}}\">";
 		$links = $ahead . $icon . "</a>";

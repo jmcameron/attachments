@@ -11,15 +11,21 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+HTMLHelper::_('behavior.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
-$document = JFactory::getDocument();
-$uri = JFactory::getURI();
+$app = Factory::getApplication();
+$document = $app->getDocument();
+$uri = Uri::getInstance();
 
 $attachment = $this->attachment;
 
@@ -28,7 +34,7 @@ $upload_id = 'upload';
 
 // Show buttons for adding the attachments to other entitites (if appropriate)
 $alt_parent_html = '';
-$editor = JRequest::getWord('editor');
+$editor = $app->getInput()->getWord('editor');
 $exceptions = Array('article', 'category', 'add_to_parent');
 if ( !in_array($editor, $exceptions) ) {
 
@@ -40,7 +46,7 @@ if ( !in_array($editor, $exceptions) ) {
 
 	// For normal LTR, put the label on the left
 	if ( !$lang->isRTL() ) {
-		$alt_parent_html .= '<span>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</span> ';
+		$alt_parent_html .= '<span>' . Text::_('ATTACH_ADD_ATTACHMENT_TO') . '</span> ';
 		}
 
 	// Create all the buttons
@@ -50,7 +56,7 @@ if ( !in_array($editor, $exceptions) ) {
 		$cename = $einfo['name'];
 		if ( ($parent_type != $attachment->parent_type) || ($centity != $attachment->parent_entity) ) {
 			$url = $base_url . "&amp;parent_type=" . $parent_type;
-			$tooltip = JText::sprintf('ATTACH_ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
+			$tooltip = Text::sprintf('ATTACH_ADD_ATTACHMENT_TO_S_INSTEAD_OF_S_TOOLTIP',
 									  $cename, $attachment->parent_entity_name);
 			if ( $centity != 'default' ) {
 				$url .= '.' . $centity;
@@ -64,7 +70,7 @@ if ( !in_array($editor, $exceptions) ) {
 
 	// For normal RTL, put the label on the right
 	if ( $lang->isRTL() ) {
-		$alt_parent_html .= '<span>' . JText::_('ATTACH_ADD_ATTACHMENT_TO') . '</span>';
+		$alt_parent_html .= '<span>' . Text::_('ATTACH_ADD_ATTACHMENT_TO') . '</span>';
 		}
 
 	$alt_parent_html .= '</p>';
@@ -73,7 +79,7 @@ if ( !in_array($editor, $exceptions) ) {
 
 
 if ( $attachment->parent_title ) {
-	echo "<h1>" . JText::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
+	echo "<h1>" . Text::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
 	}
 
 ?>
@@ -81,7 +87,7 @@ if ( $attachment->parent_title ) {
 	  name="adminForm" id="adminForm"
 	  action="<?php echo $this->save_url; ?>" method="post">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_('ATTACH_ADD_ATTACHMENT'); ?></legend>
+		<legend><?php echo Text::_('ATTACH_ADD_ATTACHMENT'); ?></legend>
 <table class="admintable">
 <?php if ( !$this->new_parent && !$attachment->parent_id ): ?>
   <tr>
@@ -97,7 +103,7 @@ if ( $attachment->parent_title ) {
 <?php endif; ?>
 <?php if ( $attachment->uri_type == 'file' ): ?>
   <tr>
-	<td class="key"><label for="upload" id="upload_file_label"><?php echo JText::_('ATTACH_ATTACH_FILE_COLON') ?></label></td>
+	<td class="key"><label for="upload" id="upload_file_label"><?php echo Text::_('ATTACH_ATTACH_FILE_COLON') ?></label></td>
 	<td>
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
@@ -108,61 +114,61 @@ if ( $attachment->parent_title ) {
   </tr>
   <tr>
 	<td class="key"><label for="display_name" class="hasTip" title="<?php echo $this->display_filename_tooltip; ?>"
-			  ><?php echo JText::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
+			  ><?php echo Text::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
 	<td>
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo $this->display_filename_tooltip; ?>" class="hasTip"
-			  value="<?php echo $attachment->display_name ?>" /><span class="optional"><?php echo JText::_('ATTACH_OPTIONAL'); ?></span>
+			  value="<?php echo $attachment->display_name ?>" /><span class="optional"><?php echo Text::_('ATTACH_OPTIONAL'); ?></span>
    </td>
 <?php else: ?>
   <tr>
 	<td class="key"><label for="upload" class="hasTip"
-		title="<?php echo $this->enter_url_tooltip ?>"><?php echo JText::_('ATTACH_ENTER_URL') ?></label></td>
+		title="<?php echo $this->enter_url_tooltip ?>"><?php echo Text::_('ATTACH_ENTER_URL') ?></label></td>
 	<td>
-	  <label for="verify_url"><?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
+	  <label for="verify_url"><?php echo Text::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
 	  <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
-			 title="<?php echo JText::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
-	  <label for="url_relative"><?php echo JText::_('ATTACH_RELATIVE_URL') ?></label>
+			 title="<?php echo Text::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
+	  <label for="url_relative"><?php echo Text::_('ATTACH_RELATIVE_URL') ?></label>
 	  <input type="checkbox" name="url_relative" value="relative"  <?php echo $this->relative_url_checked ?>
-			 title="<?php echo JText::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
+			 title="<?php echo Text::_('ATTACH_RELATIVE_URL_TOOLTIP'); ?>" />
 	  <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
 		 title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
 		 echo $this->upload_toggle_button_text;?></a><br />
 
 	  <input type="text" name="url" id="<?php echo $upload_id; ?>"
-		 size="86" title="<?php echo JText::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
+		 size="86" title="<?php echo Text::_('ATTACH_ENTER_URL_TOOLTIP'); ?>"
 		 value="<?php echo $attachment->url; ?>" /><br /><?php
-	  echo JText::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?>
+	  echo Text::_('ATTACH_NOTE_ENTER_URL_WITH_HTTP'); ?>
 	</td>
  </tr>
  <tr>
 	<td class="key"><label for="display_name" title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
-			  ><?php echo JText::_('ATTACH_DISPLAY_URL'); ?></label></td>
+			  ><?php echo Text::_('ATTACH_DISPLAY_URL'); ?></label></td>
 	<td>
 	   <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
 			  title="<?php echo $this->display_url_tooltip; ?>" class="hasTip"
-			  value="<?php echo $attachment->display_name ?>" />&nbsp;<?php echo JText::_('ATTACH_OPTIONAL'); ?>
+			  value="<?php echo $attachment->display_name ?>" />&nbsp;<?php echo Text::_('ATTACH_OPTIONAL'); ?>
 	</td>
  </tr>
 <?php endif; ?>
   <tr>
 	<td class="key"><label for="description"
-			  title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
-		  ><?php echo JText::_('ATTACH_DESCRIPTION'); ?></label></td>
+			  title="<?php echo Text::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
+		  ><?php echo Text::_('ATTACH_DESCRIPTION'); ?></label></td>
 	<td>
 	   <input type="text" name="description" id="description"
-		  title="<?php echo JText::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
+		  title="<?php echo Text::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
 		  size="75" maxlength="255" value="<?php echo stripslashes($attachment->description) ?>" />
 	</td>
   </tr>
 <?php if ( $this->may_publish ): ?>
   <tr>
-	<td class="key"><label><?php echo JText::_('ATTACH_PUBLISHED'); ?></label></td>
+	<td class="key"><label><?php echo Text::_('ATTACH_PUBLISHED'); ?></label></td>
 	<td><?php echo $this->lists['published']; ?></td>
   </tr>
 <?php endif; ?>
   <tr>
-	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo JText::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+	<td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo Text::_('JFIELD_ACCESS_LABEL'); ?></label></td>
 	<td><?php echo $this->access_level; ?></td>
   </tr>
 <?php if ( $this->show_user_field_1 ): ?>
@@ -202,9 +208,9 @@ if ( $attachment->parent_title ) {
 	<div class="form_buttons" align="center">
 	   <input type="submit" name="Submit" class="button"
 			  onclick="javascript: submitbutton('attachment.saveNew')"
-			  value="<?php echo JText::_('ATTACH_UPLOAD_VERB'); ?>" />
+			  value="<?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>" />
 	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo JText::_('ATTACH_CANCEL'); ?>"
+		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.SqueezeBox.close();" />
 	   </span>
 	</div>

@@ -11,6 +11,12 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Uri\Uri;
+
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
@@ -23,22 +29,22 @@ require_once JPATH_SITE . '/components/com_attachments/legacy/view.php';
  * The goal is to provide a PHP programmatic interface to create a help page
  * using primarily PHP function calls in the view/template.	 The styling is
  * base on styling of Restructured Text documents rendered into HTML using
- * converion tools such as docutils.
+ * conversion tools such as docutils.
  *
  * @package	 Attachments
  * @since	 3.1
  */
-class HelpView extends JViewLegacy
+class HelpView extends HtmlView
 {
 	/**
 	 * Data about each of the document section headers
 	 *
-	 * Should be initialized in the view or templage to contain an array of
+	 * Should be initialized in the view or template to contain an array of
 	 * arrays of information about the sections like this:
 	 *
 	 * $this->sections = Array( 1  => Array( 'id' => 'introduction',
 	 *						   'code' =>		   'SECTION_TITLE_1',
-	 *						   'title' => JText::_('SECTION_TITLE_1'),
+	 *						   'title' => Text::_('SECTION_TITLE_1'),
 	 *						   ...
 	 *						   ),
 	 *
@@ -63,7 +69,8 @@ class HelpView extends JViewLegacy
 		parent::__construct($config);
 
 		// Save the plugin type
-		$this->show_codes = JRequest::getCmd('show') == 'codes';
+		$app = Factory::getApplication();
+		$this->show_codes = $app->getInput()->getCmd('show') == 'codes';
 	}
 
 	/**
@@ -77,7 +84,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function saveSectionInfo($sectnum, $id, $code)
 	{
-		$this->sections[$sectnum] = Array('id' => $id, 'code' => $code, 'title' => JText::_($code));
+		$this->sections[$sectnum] = Array('id' => $id, 'code' => $code, 'title' => Text::_($code));
 	}
 
 	/**
@@ -106,7 +113,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function toggledURL()
 	{
-		$uri = JRequest::getURI();
+		$uri = Uri::getInstance();
 
 		if ($this->show_codes)
 		{
@@ -146,7 +153,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function link($url, $label_code, $class='')
 	{
-		$label = JText::_($label_code);
+		$label = Text::_($label_code);
 
 		return "<a $class href=\"$url\">$label</a>";
 	}
@@ -160,7 +167,7 @@ class HelpView extends JViewLegacy
 	 *	  <span>MyTest-23</span>
 	 *
 	 * @param	string	$html		   The original HTML string to be modified
-	 * @param	array	$replacements  Array of textual replacments
+	 * @param	array	$replacements  Array of textual replacements
 	 *
 	 * @return	string	the original HTML with the replacements performed
 	 */
@@ -187,7 +194,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function tableOfContents($title_code, $class = 'contents topic')
 	{
-		$title = JText::_($title_code);
+		$title = Text::_($title_code);
 		$tooltip = $this->constructTooltip($title_code);
 
 		$html  = "<div class=\"$class\" id=\"contents\">\n";
@@ -209,7 +216,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param	int	 $sect_num	The section number to echo (as a list element)
 	 *
-	 * @return string  the table-of-conents list item
+	 * @return string  the table-of-contents list item
 	 */
 	protected function sectionTOC($sect_num)
 	{
@@ -264,7 +271,7 @@ class HelpView extends JViewLegacy
 	{
 		$id = $sect_data['id'];
 		$code = $sect_data['code'];
-		$title = JText::_($code);
+		$title = Text::_($code);
 		$tooltip = $this->constructTooltip($code);
 
 		$html  = "<div class=\"section\" id=\"$id\">\n";
@@ -290,8 +297,8 @@ class HelpView extends JViewLegacy
 	 * @param	string	$type		   The type of admonition (hint, note, important, warning)
 	 * @param	string	$type_code	   Language token for the name of the admonition (eg, $type)
 	 * @param	array	$text_codes	   Array of Language tokens for the body text (as separate paragraphs in the admonition)
-	 * @param	array	$replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param	bool	$terminate	   Whether to terminatate the <div> that contains the note
+	 * @param	array	$replacements  Array of replacements to be applied to the body text (see replace function)
+	 * @param	bool	$terminate	   Whether to terminate the <div> that contains the note
 	 *
 	 * @return nothing
 	 */
@@ -302,7 +309,7 @@ class HelpView extends JViewLegacy
 			$text_codes = Array($text_codes);
 		}
 
-		$title = JText::_($type_code);
+		$title = Text::_($type_code);
 		$tooltip = $this->constructTooltip($type_code);
 
 		$html  = "<div class=\"$type\">\n";
@@ -310,7 +317,7 @@ class HelpView extends JViewLegacy
 
 		foreach ($text_codes as $text_code)
 		{
-			$text = $this->replace(JText::_($text_code), $replacements);
+			$text = $this->replace(Text::_($text_code), $replacements);
 			$tooltip = $this->constructTooltip($text_code);
 			$html .= "   <p class=\"last\" $tooltip>$text</p>\n";
 		}
@@ -337,8 +344,8 @@ class HelpView extends JViewLegacy
 	 * Add a 'hint' admonition
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
-	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param	bool   $terminate	  Whether to terminatate the <div> that contains the note
+	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace function)
+	 * @param	bool   $terminate	  Whether to terminate the <div> that contains the note
 	 *
 	 * @return nothing
 	 */
@@ -351,8 +358,8 @@ class HelpView extends JViewLegacy
 	 * Add an 'important' admonition
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
-	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param	bool   $terminate	  Whether to terminatate the <div> that contains the note
+	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace function)
+	 * @param	bool   $terminate	  Whether to terminate the <div> that contains the note
 	 *
 	 * @return nothing
 	 */
@@ -365,8 +372,8 @@ class HelpView extends JViewLegacy
 	 * Add a 'note' admonition
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
-	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param	bool   $terminate	  Whether to terminatate the <div> that contains the note
+	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace function)
+	 * @param	bool   $terminate	  Whether to terminate the <div> that contains the note
 	 *
 	 * @return nothing
 	 */
@@ -379,8 +386,8 @@ class HelpView extends JViewLegacy
 	 * Add a 'warning' admonition
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs in the admonition)
-	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace functin)
-	 * @param	bool   $terminate	  Whether to terminatate the <div> that contains the note
+	 * @param	array  $replacements  Array of replacements to be applied to the body text (see replace function)
+	 * @param	bool   $terminate	  Whether to terminate the <div> that contains the note
 	 *
 	 * @return nothing
 	 */
@@ -393,7 +400,7 @@ class HelpView extends JViewLegacy
 	 * Add a paragraph
 	 *
 	 * @param	array	$text_codes	   Array of Language tokens for the body text (as separate paragraphs)
-	 * @param	array	$replacements  Array of replacements to be applied to the text (see replace functin)
+	 * @param	array	$replacements  Array of replacements to be applied to the text (see replace function)
 	 * @param	string	$pclass		   The class for the paragraph HTML <p> element
 	 *
 	 * @return nothing
@@ -409,7 +416,7 @@ class HelpView extends JViewLegacy
 
 		foreach ($text_codes as $text_code)
 		{
-			$text = $this->replace(JText::_($text_code), $replacements);
+			$text = $this->replace(Text::_($text_code), $replacements);
 			$tooltip = $this->constructTooltip($text_code);
 
 			if ($pclass)
@@ -459,7 +466,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs inside the list element)
 	 * @param	array  $replacements  Array of replacements to be applied to the text (see replace function)
-	 * @param	bool   $terminate	  Whether to terminatate the <li> that contains the text
+	 * @param	bool   $terminate	  Whether to terminate the <li> that contains the text
 	 *
 	 * @return nothing
 	 */
@@ -473,7 +480,7 @@ class HelpView extends JViewLegacy
 		}
 		foreach ($text_codes as $text_code)
 		{
-			$text = $this->replace(JText::_($text_code), $replacements);
+			$text = $this->replace(Text::_($text_code), $replacements);
 			$tooltip = $this->constructTooltip($text_code);
 			$html .= "<p class=\"hasTip\" $tooltip>$text</p>\n";
 		}
@@ -491,7 +498,7 @@ class HelpView extends JViewLegacy
 	 *
 	 * @param	array  $text_codes	  Array of Language tokens for the body text (as separate paragraphs inside the list element)
 	 * @param	array  $replacements  Array of replacements to be applied to the text (see replace function)
-	 * @param	bool   $terminate	  Whether to terminatate the <li> that contains the text
+	 * @param	bool   $terminate	  Whether to terminate the <li> that contains the text
 	 *
 	 * @return nothing
 	 */
@@ -504,7 +511,7 @@ class HelpView extends JViewLegacy
 		{
 			$term_tooltip = " class=\"hasTip\" ".$term_tooltip;
 		}
-		$html = "<li><strong $term_tooltip>".JText::_($term_code).':</strong> ';
+		$html = "<li><strong $term_tooltip>".Text::_($term_code).':</strong> ';
 
 		// Add the definition
 		if (!is_array($definition_codes))
@@ -513,7 +520,7 @@ class HelpView extends JViewLegacy
 		}
 		foreach ($definition_codes as $text_code)
 		{
-			$text = $this->replace(JText::_($text_code), $replacements);
+			$text = $this->replace(Text::_($text_code), $replacements);
 			$tooltip = $this->constructTooltip($text_code);
 			$html .= "<p class=\"hasTip\" $tooltip>$text</p>\n";
 		}
@@ -546,13 +553,13 @@ class HelpView extends JViewLegacy
 	 */
 	protected function addListElementLink($url, $text_code)
 	{
-		$text = $this->replace(JText::_($text_code), Array('{LINK}' => $url));
+		$text = $this->replace(Text::_($text_code), Array('{LINK}' => $url));
 		$tooltip = $this->constructTooltip($text_code);
 		echo "<li><a class=\"reference external\" $tooltip href=\"$url\">$text</a></li>\n";
 	}
 
 	/**
-	 * Add a list elment with raw HTML
+	 * Add a list element with raw HTML
 	 *
 	 * @param	string	$html  The HTML to insert into the list element
 	 *
@@ -603,7 +610,7 @@ class HelpView extends JViewLegacy
 
 		if ( $caption_code )
 		{
-			$html .= "<p class=\"caption\" title=\"$caption_code\">" . JText::_($caption_code) . "</p>\n";
+			$html .= "<p class=\"caption\" title=\"$caption_code\">" . Text::_($caption_code) . "</p>\n";
 		}
 
 		$html .= '</div>';
@@ -638,21 +645,21 @@ class HelpView extends JViewLegacy
 
 		if ($alt_code)
 		{
-			$alt = JText::_($alt_code);
+			$alt = Text::_($alt_code);
 		}
 
 		// First try the current language
-		$found = JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true, true);
+		$found = HTMLHelper::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true, true);
 
 		if ($found)
 		{
-			return JHtml::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true);
+			return HTMLHelper::image('com_attachments/help/' . $lcode . '/' . $filename, $alt, $attribs, true);
 		}
 
 		// If that fails, return the English/en-GB image
 		if ( $lcode != 'en-GB' )
 		{
-			return JHtml::image('com_attachments/help/en-GB/' . $filename, $alt, $attribs, true);
+			return HTMLHelper::image('com_attachments/help/en-GB/' . $filename, $alt, $attribs, true);
 		}
 
 		// The image was not found for either language so return nothing
