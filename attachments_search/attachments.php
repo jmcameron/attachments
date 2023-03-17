@@ -109,7 +109,7 @@ class plgSearchAttachments extends CMSPlugin
 		$wheres = array();
 
 		// Create the search query
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		switch ($phrase)  {
 
