@@ -11,6 +11,11 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\Event;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -25,7 +30,7 @@ defined('_JEXEC') or die('Restricted access');
  * @package	 Attachments
  * @since	 3.0
  */
-class AttachmentsPluginManager extends JObject
+class AttachmentsPluginManager
 {
 	/** A list of known parent_type names
 	 */
@@ -53,12 +58,11 @@ class AttachmentsPluginManager extends JObject
 	 */
 	public function __construct()
 	{
-		parent::__construct();
 		$this->loadLanguage();
 	}
 
 	/**
-	 * See if a particular plugin is installed (avaliable)
+	 * See if a particular plugin is installed (available)
 	 *
 	 * @param	string	$parent_type  the name of the parent extension (eg, com_content)
 	 *
@@ -83,7 +87,7 @@ class AttachmentsPluginManager extends JObject
 		{
 			$name = substr($parent_type, 4);
 
-			return JPluginHelper::isEnabled('attachments', "attachments_for_$name");
+			return PluginHelper::isEnabled('attachments', "attachments_for_$name");
 		}
 
 		// If the parent type does not conform to the naming convention, assume it is not enabled
@@ -129,7 +133,7 @@ class AttachmentsPluginManager extends JObject
 		if (count($this->entity_info) == 0)
 		{
 			// Add an option for each entity
-			JPluginHelper::importPlugin('attachments');
+			PluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 
 			// Process all the parent types
@@ -144,8 +148,8 @@ class AttachmentsPluginManager extends JObject
 					$centity			 = $parent->getCanonicalEntityId($entity);
 					$this->entity_info[] = array(
 						'id' => $centity,
-						'name' => JText::_('ATTACH_' . $centity),
-						'name_plural' => JText::_('ATTACH_' . $centity . 's'),
+						'name' => Text::_('ATTACH_' . $centity),
+						'name_plural' => Text::_('ATTACH_' . $centity . 's'),
 						'parent_type' => $parent_type
 					);
 				}
@@ -156,9 +160,9 @@ class AttachmentsPluginManager extends JObject
 	}
 
 	/**
-	 * Load the langauge for this parent type
+	 * Load the language for this parent type
 	 *
-	 * @return true of the language was loaded successfullly
+	 * @return true of the language was loaded successfully
 	 */
 	public function loadLanguage()
 	{
@@ -167,7 +171,7 @@ class AttachmentsPluginManager extends JObject
 			return true;
 		}
 
-		$lang = JFactory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		$this->language_loaded = $lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 
@@ -186,8 +190,9 @@ class AttachmentsPluginManager extends JObject
 		// Make sure the parent type is valid
 		if (!in_array($parent_type, $this->parent_types))
 		{
-			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
-			JError::raiseError(406, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
+			throw new Exception($errmsg, 406);
+			die;
 		}
 
 		// Instantiate the plugin object, if we have not already done it
@@ -215,7 +220,7 @@ class AttachmentsPluginManager extends JObject
 		}
 
 		// Install the plugin
-		$dispatcher					= JDispatcher::getInstance();
+		$dispatcher					= Factory::getApplication()->getDispatcher();
 		$className					= 'AttachmentsPlugin_' . $parent_type;
 		$this->plugin[$parent_type] = new $className($dispatcher);
 

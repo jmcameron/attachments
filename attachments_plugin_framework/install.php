@@ -11,6 +11,8 @@
  * @link http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Factory;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -45,7 +47,7 @@ class plgAttachmentsAttachments_plugin_frameworkInstallerScript
 		foreach ($plugins as $plugin_name)
 		{
 			// Make the query to enable the plugin
-			$db = JFactory::getDBO();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->update('#__extensions') 
 				  ->set("enabled = 0")

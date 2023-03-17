@@ -11,6 +11,14 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Editor\Editor;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\String\StringHelper;
+
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -29,7 +37,7 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * is 'com_content'.  The parent type is simply the name of the component
  * involved (eg, 'com_content').  The derived attachments plugin class (such
  * as 'AttachmentsPlugin_com_content') should be defined in the main file for
- * the plugin (eg, attachments_for_conent.php).
+ * the plugin (eg, attachments_for_content.php).
  *
  * Derived attachments plugin classes must also include the following lines of
  * code after the class definition to register the derived class with the
@@ -44,7 +52,7 @@ require_once JPATH_SITE . '/components/com_attachments/helper.php';
  * @package	 Attachments
  * @since	 3.0
  */
-class AttachmentsPlugin extends JPlugin
+class AttachmentsPlugin extends CMSPlugin
 {
 	/** Parent_type: com_content, com_quickfaq, etc
 	 */
@@ -134,8 +142,7 @@ class AttachmentsPlugin extends JPlugin
 	{
 		if ($this->com_attachments_params == null)
 		{
-			jimport('joomla.application.component.helper');
-			$this->com_attachments_params = JComponentHelper::getParams('com_attachments');
+			$this->com_attachments_params = ComponentHelper::getParams('com_attachments');
 		}
 
 		return $this->com_attachments_params;
@@ -153,7 +160,8 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentId(&$attachment)
 	{
-		return JRequest::getInt('id', false);
+		$input = Factory::getApplication()->getInput();
+		return $input->getInt('id', false);
 	}
 
 	/**
@@ -185,7 +193,7 @@ class AttachmentsPlugin extends JPlugin
 	 * From the view and the class of the parent (row of onPrepareContent plugin),
 	 * determine what the entity type is for this entity.
 	 *
-	 * Derived classes MUST overrride this
+	 * Derived classes MUST override this
 	 *
 	 * @param	&object	 &$parent  The object for the parent (row) that onPrepareContent gets
 	 *
@@ -284,10 +292,10 @@ class AttachmentsPlugin extends JPlugin
 		}
 		else
 		{
-			$lang = JFactory::getLanguage();
+			$lang = Factory::getApplication()->getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
-			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
-			JError::raiseError(500, $errmsg);
+			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
+			throw new Exception($errmsg, 500);
 		}
 	}
 
@@ -351,18 +359,19 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Look up the title
-		$db	   = JFactory::getDBO();
+		$db	   = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
 		$db->setQuery($query);
-		$title = $db->loadResult();
-		if ($db->getErrorNum())
-		{
-			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
+		try {
+			$title = $db->loadResult();
+		} catch (Exception $e) {
+			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 												 $parent_entity_name, $parent_id) . ' (ERR 301)';
-			JError::raiseError(500, $errmsg);
+			throw new Exception($errmsg, 500);
+			die;
 		}
 
 		$this->title_cache[$cache_key] = $title;
@@ -387,14 +396,14 @@ class AttachmentsPlugin extends JPlugin
 		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app	   = JFactory::getApplication();
+		$app	   = Factory::getApplication();
 		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
 												   'filter_order', '', 'cmd');
 		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
 												   'filter_order_Dir', '', 'word');
 
 		// Get all the items
-		$db	   = JFactory::getDBO();
+		$db	   = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from("#__$entity_table");
@@ -422,15 +431,13 @@ class AttachmentsPlugin extends JPlugin
 
 		// Do the query
 		$db->setQuery($query);
-		if ($db->getErrorNum())
-		{
-			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
-			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
-			JError::raiseError(500, $errmsg);
-		}
-		else
-		{
+		try {
 			$items = $db->loadObjectList();
+		} catch (Exception $e) {
+			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
+			throw new Exception($errmsg, 500);
+			die;
 		}
 
 		if ($items == null)
@@ -489,7 +496,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentCreatorId($parent_id, $parent_entity = 'default')
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -516,9 +523,9 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
-		if ($app->isAdmin())
+		if ($app->isClient("admin"))
 		{
 			$task = 'add';
 		}
@@ -615,7 +622,7 @@ class AttachmentsPlugin extends JPlugin
 			}
 		}
 
-		return JText::_($title);
+		return Text::_($title);
 	}
 
 	/**
@@ -640,7 +647,7 @@ class AttachmentsPlugin extends JPlugin
 		// First time, so look up the parent
 		$entity_table	 = $this->entity_table[$parent_entity];
 		$entity_id_field = $this->entity_id_field[$parent_entity];
-		$db				 = JFactory::getDBO();
+		$db				 = Factory::getContainer()->get('DatabaseDriver');
 		$query			 = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
@@ -718,7 +725,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity = 'default', $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Return true if the attachments should be hidden for this parent
@@ -735,12 +742,13 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{
-		$layout = JRequest::getCmd('layout');
+		$input = Factory::getApplication()->getInput();
+		$layout = $input->getCmd('layout');
 		$aparams = $this->attachmentsParams();
 
 		// Check to see whether the attachments should be hidden on the front page
 		$hide_on_frontpage = $aparams->get('hide_on_frontpage', false);
-		if ($hide_on_frontpage && (JRequest::getVar('view') == 'featured'))
+		if ($hide_on_frontpage && ($input->getVar('view') == 'featured'))
 		{
 			return true;
 		}
@@ -770,7 +778,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -786,7 +794,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayEditAttachment(&$attachment, $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -802,7 +810,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayDeleteAttachment(&$attachment, $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -820,7 +828,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayChangeAttachmentState($parent_id, $parent_entity, $attachment_creator_id, $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Check to see if the user may access (see/download) the attachments
@@ -832,7 +840,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function userMayAccessAttachment(&$attachment, $user_id = null)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Insert the attachments list into the content text (for front end)
@@ -855,8 +863,9 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Determine where we are
-		$from	= JRequest::getCmd('view', 'closeme');
-		$Itemid = JRequest::getInt('Itemid', 1);
+		$input = Factory::getApplication()->getInput();
+		$from	= $input->getCmd('view', 'closeme');
+		$Itemid = $input->getInt('Itemid', 1);
 
 		// See whether we can display the links to add attachments
 		$user_can_add = $this->userMayAddAttachment($parent_id, $parent_entity);
@@ -872,7 +881,7 @@ class AttachmentsPlugin extends JPlugin
 		$attachments_tag	  = '';
 		$attachments_tag_args = '';
 		$match				  = false;
-		if (JString::strpos($content->$text_field_name, '{attachments'))
+		if (StringHelper::strpos($content->$text_field_name, '{attachments'))
 		{
 			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
 			{
@@ -903,7 +912,7 @@ class AttachmentsPlugin extends JPlugin
 		// Construct the attachment list (if appropriate)
 		$html				 = '';
 		$attachments_list	 = false;
-		$add_attachement_btn = false;
+		$add_attachment_btn  = false;
 
 		// Get the html for the attachments list
 		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
@@ -923,13 +932,13 @@ class AttachmentsPlugin extends JPlugin
 		if ($html || $user_can_add)
 		{
 			// Add the style sheet
-			JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
+			HTMLHelper::stylesheet('com_attachments/attachments_list.css', Array(), true);
 
 			// Handle RTL styling (if necessary)
-			$lang = JFactory::getLanguage();
+			$lang = Factory::getApplication()->getLanguage();
 			if ($lang->isRTL())
 			{
-				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
+				HTMLHelper::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
 			}
 		}
 
@@ -1027,7 +1036,8 @@ class AttachmentsPlugin extends JPlugin
 		// but not for all frontends, especially not com_content/articles
 		$id = null;
 		if ($view == $parent_entity) {
-			$id = JRequest::getInt('id', $default=null);
+			$input = Factory::getApplication()->getInput();
+			$id = $input->getInt('id', $default=null);
 			}
 		else {
 			$id = false;
@@ -1052,7 +1062,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function showAttachmentsInEditor($parent_entity, $view, $layout)
 	{
-		JError::raiseError(501, JText::_('ATTACH_NOT_IMPLEMENTED'));
+		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 
@@ -1069,11 +1079,11 @@ class AttachmentsPlugin extends JPlugin
 	{
 		// Figure out where to insert the attachments list
 		$reptag = '<div id="editor-xtd-buttons"';
-		if (version_compare(JVERSION, '3.5', 'ge')) {
-			if (JFactory::getEditor()->get('_name') == 'tinymce') {
-				# Hack because TinyMCE changed the structure
-				$reptag = '<div class="toggle-editor btn-toolbar pull-right clearfix"';
-				}
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		if ($user->getParam('editor', $app->get('editor')) == 'tinymce') {
+			# Hack because TinyMCE changed the structure
+			$reptag = '<div class="toggle-editor btn-toolbar pull-right clearfix"';
 			}
 
 		// Insert the attachments above the editor buttons
