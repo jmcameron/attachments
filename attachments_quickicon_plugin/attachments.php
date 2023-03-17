@@ -11,19 +11,22 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Uri\Uri;
+
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-jimport('joomla.plugin.plugin');
-
-
 /**
- * Attachments quickcion plugin class
+ * Attachments quickicon plugin class
  *
  * @package		Attachments
  * @subpackage	Attachments.Quickicon_Plugin
  */
-class PlgQuickiconAttachments extends JPlugin
+class PlgQuickiconAttachments extends CMSPlugin
 {
 	/*
 	 * Constructor.
@@ -53,26 +56,20 @@ class PlgQuickiconAttachments extends JPlugin
 	 */
 	public function onGetIcons($context)
 	{
+		$user = Factory::getApplication()->getIdentity();
 		// See if we should show the icon
 		if ($context != $this->params->get('context', 'mod_quickicon') ||
-			!JFactory::getUser()->authorise('core.manage', 'com_attachments'))
+			$user === null ||
+			!$user->authorise('core.manage', 'com_attachments'))
 		{
 			return;
 		}
 
 		// Add the CSS file
-		JHtml::stylesheet('com_attachments/attachments_quickicon.css', array(), true);
+		HTMLHelper::stylesheet('com_attachments/attachments_quickicon.css', array(), true);
 
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			$image = 'flag-2';
-			$icon = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
-		}
-		else
-		{
-			$image = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
-			$icon = '';
-		}
+		$image = 'flag-2';
+		$icon = Uri::root() . '/media/com_attachments/images/attachments_logo48.png';
 
 		// Return the icon info for the quickicon system
 		return
@@ -81,7 +78,7 @@ class PlgQuickiconAttachments extends JPlugin
 					'link' => 'index.php?option=com_attachments',
 					'image' => $image,
 					'icon' => $icon,
-					'text' => JText::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
+					'text' => Text::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
 					'id' => 'plg_quickicon_attachment'));
 	}
 }
