@@ -217,7 +217,6 @@ class AttachmentsHelper
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Create the subdirectory (if necessary)
@@ -236,7 +235,6 @@ class AttachmentsHelper
 		if ( !$subdir_ok || !Folder::exists($upload_dir) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 30)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Add a simple index.html file to the upload directory to prevent browsing
@@ -245,7 +243,6 @@ class AttachmentsHelper
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// If this is secure, create the .htindex file, if necessary
@@ -261,7 +258,6 @@ class AttachmentsHelper
 			if ( ! $hta_ok ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 32)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			}
 		else {
@@ -430,7 +426,6 @@ class AttachmentsHelper
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// If we are updating, note the name of the old filename
@@ -740,7 +735,6 @@ class AttachmentsHelper
 			if ( !Folder::create($fullpath) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			AttachmentsHelper::write_empty_index_html($fullpath);
 			}
@@ -765,7 +759,6 @@ class AttachmentsHelper
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
 									 $filename) . '(ERR 35)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Make sure the system filename doesn't already exist
@@ -857,7 +850,6 @@ class AttachmentsHelper
 				$old_state = $db->loadResult();
 				if ( $db->getErrorNum() ) {
 					$errmsg = $db->stderr() . ' (ERR 36)';
-					die;
 					}
 				$attachment->state = $old_state;
 				}
@@ -881,7 +873,6 @@ class AttachmentsHelper
 		if (!$attachment->store()) {
 			$errmsg = Text::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Get the attachment id
@@ -921,7 +912,6 @@ class AttachmentsHelper
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 38)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$msg = Text::_('ATTACH_ERROR_MOVING_FILE')
 				. " {$_FILES['upload']['tmp_name']} -> {$filename_sys})";
@@ -1431,7 +1421,6 @@ class AttachmentsHelper
 				} catch (Exception $e) {
 					$errmsg = $db->stderr() . ' (ERR 39)';
 					throw new Exception($errmsg, 500);
-					die;
 				}
 				$attachment->state = $old_state;
 				}
@@ -1447,14 +1436,12 @@ class AttachmentsHelper
 		if (strlen($attachment->url) > AttachmentsDefines::$MAXIMUM_URL_LENGTH) {
 			$errmsg = "URL is too long! (". strlen($attachment->url) .")";	// ??? Convert to translated error message
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
 			$errmsg = Text::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Delete any old attachment file
@@ -1493,7 +1480,6 @@ class AttachmentsHelper
 		if ( !$attachment ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 41)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
@@ -1505,7 +1491,6 @@ class AttachmentsHelper
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -1532,7 +1517,6 @@ class AttachmentsHelper
 			// Otherwise, just error out
 			$errmsg = Text::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 43)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Get the other info about the attachment
@@ -1548,7 +1532,6 @@ class AttachmentsHelper
 			if ( !File::exists($filename_sys) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 44)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$file_size = filesize($filename_sys);
 
@@ -1672,7 +1655,6 @@ class AttachmentsHelper
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -1695,7 +1677,6 @@ class AttachmentsHelper
 		if ( !Folder::create($new_fullpath) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 46)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Construct the new filename and URL
@@ -1810,7 +1791,6 @@ class AttachmentsHelper
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 47)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 
 		// Generate the HTML for the attachments for the specified parent

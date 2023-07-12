@@ -66,7 +66,6 @@ class AttachmentsModelAttachment extends AdminModel
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 112)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			// Get the modifier name
@@ -77,7 +76,6 @@ class AttachmentsModelAttachment extends AdminModel
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 113)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			// Get the parent info (??? Do we really need this?)
@@ -88,7 +86,6 @@ class AttachmentsModelAttachment extends AdminModel
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 114)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);
 

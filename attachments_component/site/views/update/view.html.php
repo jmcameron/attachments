@@ -44,7 +44,6 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 			 !($user->authorise('core.edit', 'com_attachments') OR
 			 $user->authorise('core.edit.own', 'com_attachments')) ) {
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
-			die;
 			}
 
 		// For convenience

@@ -192,7 +192,6 @@ class AttachmentsPluginManager
 		{
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
 			throw new Exception($errmsg, 406);
-			die;
 		}
 
 		// Instantiate the plugin object, if we have not already done it

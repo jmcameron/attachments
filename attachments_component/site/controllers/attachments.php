@@ -90,7 +90,6 @@ class AttachmentsControllerAttachments extends BaseController
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
@@ -114,7 +113,6 @@ class AttachmentsControllerAttachments extends BaseController
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 61)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$view->setModel($model);
 

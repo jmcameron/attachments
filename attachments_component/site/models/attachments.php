@@ -135,7 +135,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 				if ( $parent_id == null ) {
 					$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 50)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 				}
 			}
@@ -169,7 +168,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		if ( $this->_parent_id === null ) {
 			$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 51)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		return $this->_parent_id;
 	}
@@ -185,7 +183,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		if ( $this->_parent_type == null ) {
 			$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 52)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		return $this->_parent_type;
 	}
@@ -201,7 +198,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		if ( $this->_parent_entity == null ) {
 			$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERR 53)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Make sure we have a good parent_entity value
@@ -224,7 +220,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		if ( $this->_parent_type == null ) {
 			$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 54)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		if ( $this->_parent_class == null ) {
@@ -235,7 +230,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 55)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$this->_parent_class = $apm->getAttachmentsPlugin($this->_parent_type);
 			}
@@ -260,7 +254,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 			if ( $this->_parent_id === null ) {
 				$errmsg = Text::_('ATTACH_ERROR_UNKNOWN_PARENT_ID') . ' (ERR 56)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			$this->_parent_title = $parent->getTitle( $this->_parent_id, $this->_parent_entity );
@@ -284,7 +277,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 			if ( $this->_parent_id === null ) {
 				$errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 57)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			$this->_parent_entity_name = Text::_('ATTACH_' . $this->getParentEntity());
@@ -451,7 +443,6 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 58)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		$this->_some_visible = false;

@@ -49,7 +49,6 @@ class AttachmentsControllerList extends BaseController
 	{
 		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 119)';
 		throw new Exception( $errmsg, 500 );
-		die;
 	}
 
 
@@ -98,7 +97,6 @@ class AttachmentsControllerList extends BaseController
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$view->setModel($model);
 

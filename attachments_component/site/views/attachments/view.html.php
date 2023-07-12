@@ -68,7 +68,6 @@ class AttachmentsViewAttachments extends HtmlView
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 63)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// See if there are any attachments

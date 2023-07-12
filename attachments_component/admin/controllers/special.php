@@ -24,7 +24,6 @@ $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
-	die;
 	}
 
 /** Define the legacy classes, if necessary */
@@ -97,7 +96,6 @@ class AttachmentsControllerSpecial extends BaseController
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 148)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Get the category IDs
@@ -112,7 +110,6 @@ class AttachmentsControllerSpecial extends BaseController
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 149)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';

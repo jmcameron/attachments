@@ -76,7 +76,6 @@ class AttachmentsControllerAttachments extends AdminController
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
@@ -100,7 +99,6 @@ class AttachmentsControllerAttachments extends AdminController
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$view->setModel($model);
 
@@ -173,7 +171,6 @@ class AttachmentsControllerAttachments extends AdminController
 				if ( ($id == 0) OR !$attachment->load($id) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 				$parent_id = $attachment->parent_id;
 				$parent_type = $attachment->parent_type;
@@ -185,7 +182,6 @@ class AttachmentsControllerAttachments extends AdminController
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 				$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -219,7 +215,6 @@ class AttachmentsControllerAttachments extends AdminController
 				if (!$db->query()) {
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 			}
 		}
@@ -238,7 +233,6 @@ class AttachmentsControllerAttachments extends AdminController
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -297,7 +291,6 @@ class AttachmentsControllerAttachments extends AdminController
 		if (empty($cid))
 		{
 			throw new Exception(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
-			die;
 		}
 		else
 		{
@@ -312,7 +305,6 @@ class AttachmentsControllerAttachments extends AdminController
 			if (($att_published == false) OR ($att_published == 0))
 			{
 				throw new Exception($model->getError(), 500);
-				die;
 			}
 			else
 			{

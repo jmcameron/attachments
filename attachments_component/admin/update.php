@@ -113,7 +113,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 70)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return 0;
@@ -149,7 +148,6 @@ class AttachmentsUpdate
 					$errmsg = Text::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
 					throw new Exception($errmsg . $db->stderr() . ' (ERR 71)', 500);
-					die;
 					}
 				$numUpdated++;
 				}
@@ -295,7 +293,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 72)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -331,7 +328,6 @@ class AttachmentsUpdate
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $attachment->parent_entity,  $parent_id) . ' (ERR 73)';
 				throw new Exception($errmsg, 500);
-				die;
 			}
 
 			// Construct the updated system filename
@@ -386,7 +382,6 @@ class AttachmentsUpdate
 					if ( !Folder::create($new_path) ) {
 						$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 74)';
 						throw new Exception($errmsg, 500);
-						die;
 						}
 					AttachmentsHelper::write_empty_index_html($new_path);
 					}
@@ -396,7 +391,6 @@ class AttachmentsUpdate
 					$errmsg = Text::sprintf('ATTACH_ERROR_RENAMING_FILE_S_TO_S',
 											 $old_filename_sys, $new_filename_sys) . ' (ERR 75)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 
 				// Verify the new system filename exists!
@@ -404,7 +398,6 @@ class AttachmentsUpdate
 					$errmsg = Text::sprintf('ATTACH_ERROR_NEW_SYSTEM_FILENAME_S_NOT_FOUND',
 											 $new_filename_sys) . ' (ERR 76)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 
 				// Update the record
@@ -413,7 +406,6 @@ class AttachmentsUpdate
 				if (!$attachment->store()) {
 					$errmsg = $attachment->getError() . ' (ERR 77)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 
 				$numUpdated++;
@@ -453,7 +445,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 78)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -513,7 +504,6 @@ class AttachmentsUpdate
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 79)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			$numUpdated++;
@@ -544,7 +534,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 80)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -569,7 +558,6 @@ class AttachmentsUpdate
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 81)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			$numUpdated++;
@@ -598,7 +586,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 82)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -654,7 +641,6 @@ class AttachmentsUpdate
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 83)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_URLS');
@@ -691,7 +677,6 @@ class AttachmentsUpdate
 				if (!$attachment->store()) {
 					$errmsg = $attachment->getError() . ' (ERR 84)';
 					throw new Exception($errmsg, 500);
-					die;
 					}
 				$numUpdated++;
 				}

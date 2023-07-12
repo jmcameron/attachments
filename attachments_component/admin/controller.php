@@ -66,7 +66,6 @@ class AttachmentsController extends BaseController
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
 				$db->getErrorMsg() . ' (ERR 65)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Parse the parent type and entity
@@ -134,7 +133,6 @@ class AttachmentsController extends BaseController
 		$user = Factory::getApplication()->getIdentity();
 		if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)', 404);
-			die;
 			}
 
 		// Set up the tooltip behavior

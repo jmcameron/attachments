@@ -85,7 +85,6 @@ class JFormFieldAccessLevels extends FormField
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 116)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Make sure there is a $level_value

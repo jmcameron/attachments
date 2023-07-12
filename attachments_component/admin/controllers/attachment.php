@@ -166,7 +166,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if ( !is_numeric($parent_id) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_ID_S', $parent_id) . ' (ERR 122)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			}
 
@@ -189,7 +188,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 				// Exit if there is no Attachments plugin to handle this parent_type
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 123)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_title = $parent->getTitle($parent_id, $parent_entity);
@@ -260,14 +258,12 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$user = $app->getIdentity();
 		if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 124)', 403);
-			die;
 			}
 
 		// Make sure we have a user
 		if ( $user->get('username') == '' ) {
 			$errmsg = Text::_('ATTACH_ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 125)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Get the article/parent handler
@@ -287,7 +283,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 126)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -310,7 +305,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 127)';
 			throw new Exception($errmsg, 403);
-			die;
 			}
 
 		// Set up the new record
@@ -320,7 +314,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if (!$attachment->bind($input->get('post'))) {
 			$errmsg = $attachment->getError() . ' (ERR 128)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 		$attachment->parent_type = $parent_type;
 		$parent->new = $new_parent;
@@ -418,7 +411,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 131)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
@@ -521,7 +513,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
 			throw new Exception(Text::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT') . ' (ERR 132)', 403);
-			die;
 			}
 
 		$uri = Uri::getInstance();
@@ -557,7 +548,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			// Exit if there is no Attachments plugin to handle this parent_type
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 133)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$entity_info = $apm->getInstalledEntityInfo();
 		$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -729,7 +719,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 134)', 403);
-			die;
 			}
 
 		$model		= $this->getModel();
@@ -741,7 +730,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $attachment_id) . ' (ERR 135)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Note the old uri type
@@ -751,7 +739,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if (!$attachment->bind($input->get('post'))) {
 			$errmsg = $attachment->getError() . ' (ERR 136)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Get the parent handler for this attachment
@@ -760,7 +747,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$parent = $apm->getAttachmentsPlugin($attachment->parent_type);
 
@@ -892,7 +878,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$parent->userMayEditAttachment($attachment) ) {
 			// ??? Add better error message
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 139)', 403);
-			die;
 			}
 
 		// Double-check to see if the URL changed
@@ -974,7 +959,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			if ( !$attachment->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 142)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			}
 
@@ -1143,7 +1127,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( $user === null OR !( $user->authorise('core.delete', 'com_attachments') OR
 				$user->authorise('attachments.delete.own', 'com_attachments') ) ) {
 			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 144)', 403);
-			die;
 			}
 
 		// Make sure we have a valid attachment ID
@@ -1155,7 +1138,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		else {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 145)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Load the attachment
@@ -1167,7 +1149,6 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 146)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 
 		// Set up the view

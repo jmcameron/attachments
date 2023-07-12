@@ -75,7 +75,6 @@ class AttachmentsViewAttachments extends HtmlView
 		if ( $db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 176)';
 			throw new Exception($errmsg, 500);
-			die;
 			}
 		$level_name = Array();
 		foreach ($levels as $level) {

@@ -373,7 +373,6 @@ class plgContentAttachments extends CMSPlugin
 		} catch (Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 200)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 
 		// Exit if there are no new attachments
@@ -400,7 +399,6 @@ class plgContentAttachments extends CMSPlugin
 			if ( $error_msg != '' ) {
 				$errmsg = Text::_($error_msg) . ' (ERR 201)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 
 			// Update the parent info
@@ -413,7 +411,6 @@ class plgContentAttachments extends CMSPlugin
 			if ( !$atrow->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 202)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			}
 

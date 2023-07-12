@@ -371,7 +371,6 @@ class AttachmentsPlugin extends CMSPlugin
 			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 												 $parent_entity_name, $parent_id) . ' (ERR 301)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 
 		$this->title_cache[$cache_key] = $title;
@@ -437,7 +436,6 @@ class AttachmentsPlugin extends CMSPlugin
 			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
 			throw new Exception($errmsg, 500);
-			die;
 		}
 
 		if ($items == null)

@@ -26,7 +26,6 @@ $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
 	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
-	die;
 }
 
 /** Define the legacy classes, if necessary */
@@ -63,7 +62,6 @@ class AttachmentsViewAdd extends HtmlView
 			$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S',
 									 $attachment->parent_entity_name);
 			throw new Exception($errmsg . ' (ERR 173)', 403);
-			die;
 		}
 
 		// Construct derived data

@@ -95,7 +95,6 @@ class AttachmentsTableAttachment extends Table
 				$attachment = $this->_db->loadObject();
 			} catch (Exception $e) {
 				throw new Exception($e->getMessage() . ' (ERR 108)');
-				die;
 			}
 
 			$parent_id = $attachment->parent_id;
@@ -105,7 +104,6 @@ class AttachmentsTableAttachment extends Table
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 109)';
 				throw new Exception($errmsg, 500);
-				die;
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
