@@ -80,12 +80,13 @@ class JFormFieldAccessLevels extends FormField
 			}
 		$query->order('a.ordering ASC');
 		$query->order($query->qn('title') . ' ASC');
-		$db->setQuery($query);
-		$levels = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 116)';
+		try {
+			$db->setQuery($query);
+			$levels = $db->loadObjectList();
+		} catch (RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 116)';
 			throw new Exception($errmsg, 500);
-			}
+		}
 
 		// Make sure there is a $level_value
 		if ( $level_value === null ) {

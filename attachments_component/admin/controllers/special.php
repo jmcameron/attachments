@@ -91,12 +91,13 @@ class AttachmentsControllerSpecial extends BaseController
 		$query->leftJoin('#__content as art ON att.parent_id = art.id');
 		$query->where('att.parent_entity=' . $db->quote('article'));
 		$query->order('art.id');
-		$db->setQuery($query);
-		$attachments = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 148)';
+		try {
+			$db->setQuery($query);
+			$attachments = $db->loadObjectList();
+		} catch (RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 148)';
 			throw new Exception($errmsg, 500);
-			}
+		}
 
 		// Get the category IDs
 		$query = $db->getQuery(true);
@@ -105,12 +106,13 @@ class AttachmentsControllerSpecial extends BaseController
 		$query->leftJoin('#__categories as c ON att.parent_id = c.id');
 		$query->where('att.parent_entity=' . $db->quote('category'));
 		$query->order('c.id');
-		$db->setQuery($query);
-		$crows = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 149)';
+		try {
+			$db->setQuery($query);
+			$crows = $db->loadObjectList();
+		} catch (RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 149)';
 			throw new Exception($errmsg, 500);
-			}
+		}
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo '<html><head><title>Attachment IDs</title></head><body>';

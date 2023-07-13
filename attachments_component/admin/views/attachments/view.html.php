@@ -70,12 +70,14 @@ class AttachmentsViewAttachments extends HtmlView
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__viewlevels');
-		$db->setQuery($query);
-		$levels = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 176)';
+		try {
+			$db->setQuery($query);
+			$levels = $db->loadObjectList();
+		} catch (RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 176)';
 			throw new Exception($errmsg, 500);
-			}
+		}
+
 		$level_name = Array();
 		foreach ($levels as $level) {
 			// NOTE: We do not translate the access level title

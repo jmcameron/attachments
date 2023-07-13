@@ -61,23 +61,25 @@ class AttachmentsModelAttachment extends AdminModel
 			// Get the creator name
 			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->created_by);
-			$db->setQuery($query, 0, 1);
-			$item->creator_name = $db->loadResult();
-			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 112)';
+			try {
+				$db->setQuery($query, 0, 1);
+				$item->creator_name = $db->loadResult();
+			} catch (RuntimeException $e) {
+				$errmsg = $e->getMessage() . ' (ERR 112)';
 				throw new Exception($errmsg, 500);
-				}
+			}
 
 			// Get the modifier name
 			$query = $db->getQuery(true);
 			$query->select('name')->from('#__users')->where('id = ' . (int)$item->modified_by);
-			$db->setQuery($query, 0, 1);
-			$item->modifier_name = $db->loadResult();
-			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 113)';
+			try {
+				$db->setQuery($query, 0, 1);
+				$item->modifier_name = $db->loadResult();
+			} catch (RuntimeException $e) {
+				$errmsg = $e->getMessage() . ' (ERR 113)';
 				throw new Exception($errmsg, 500);
-				}
-
+			}
+			
 			// Get the parent info (??? Do we really need this?)
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;

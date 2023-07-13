@@ -438,12 +438,13 @@ class AttachmentsModelAttachments extends BaseDatabaseModel
 		$query->order($this->_sort_order);
 
 		// Do the query
-		$db->setQuery($query);
-		$attachments = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 58)';
+		try {
+			$db->setQuery($query);
+			$attachments = $db->loadObjectList();
+		} catch (RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 58)';
 			throw new Exception($errmsg, 500);
-			}
+		}
 
 		$this->_some_visible = false;
 		$this->_some_modifiable = false;

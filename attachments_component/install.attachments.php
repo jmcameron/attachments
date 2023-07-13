@@ -283,16 +283,16 @@ class com_AttachmentsInstallerScript
 			$query->update('#__extensions');
 			$query->set("enabled = 1");
 			$query->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
-			$db->setQuery($query);
-			$db->execute();
-
-			// Complain if there was an error
-			if ( $db->errorNum ) {
+			try {
+				$db->setQuery($query);
+				$db->execute();
+			} catch (RuntimeException $e) {
+				// Complain if there was an error
 				$errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
 				$errmsg .= $db->errorMsg;
 				$app->enqueueMessage($errmsg, 'error');
 				return false;
-				}
+			}
 
 			if ( $attachments_install_verbose ) {
 				$app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
@@ -381,24 +381,28 @@ class com_AttachmentsInstallerScript
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__extensions');
 		$query->where('type=' . $db->quote('component') . ' AND name=' . $db->quote('com_attachments'));
-		$db->setQuery($query, 0, 1);
-		$component = $db->loadObject();
-		if ( $db->getErrorNum() ) {
+		try {
+			$db->setQuery($query, 0, 1);
+			$component = $db->loadObject();
+		} catch (RuntimeException $e) {
 			return false;
-			}
+		}
+
 		if ( $component->params == '{}' ) {
 			// Fresh install, update the DB directly (otherwise, this should not be necessary)
 			$query = $db->getQuery(true);
 			$query->update('#__extensions');
 			$query->set('params=' . $db->quote('{\"secure\":\"1\"}'));
 			$query->where('type=' . $db->quote('component') . ' AND name=' . $db->quote('com_attachments'));
-			$db->setQuery($query);
-			$db->execute();
-			if ( $db->getErrorNum() ) {
+			try {
+				$db->setQuery($query);
+				$db->execute();
+			} catch (RuntimeException $e) {
 				return false;
-				}
-			return true;
 			}
+
+			return true;
+		}
 	}
 
 

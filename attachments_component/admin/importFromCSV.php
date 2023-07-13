@@ -371,7 +371,7 @@ class ImportFromCSV
 		} catch (Exception $e) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
 		}
-		if ( empty($actual_category_title) || $db->getErrorNum() ) {
+		if ( empty($actual_category_title) ) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
 			}
 		if ( strtolower($expected_category_title) != strtolower($actual_category_title) ) {

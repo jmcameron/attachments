@@ -846,11 +846,13 @@ class AttachmentsHelper
 				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
-				$db->setQuery($query, 0, 1);
-				$old_state = $db->loadResult();
-				if ( $db->getErrorNum() ) {
-					$errmsg = $db->stderr() . ' (ERR 36)';
-					}
+				try {
+					$db->setQuery($query, 0, 1);
+					$old_state = $db->loadResult();
+				} catch (RuntimeException $e) {
+					$errmsg = $e->getMessage() . ' (ERR 36)';
+					throw new Exception($errmsg, 500);
+				}
 				$attachment->state = $old_state;
 				}
 			}
@@ -907,12 +909,13 @@ class AttachmentsHelper
 		else {
 			$query = $db->getQuery(true);
 			$query->delete('#__attachments')->where('id = '.(int)$attachment_id);
-			$db->setQuery($query);
-			$result = $db->execute();
-			if ( $db->getErrorNum() ) {
-				$errmsg = $db->stderr() . ' (ERR 38)';
+			try {
+				$db->setQuery($query);
+				$result = $db->execute();
+			} catch (RuntimeException $e) {
+				$errmsg = $e->getMessage() . ' (ERR 38)';
 				throw new Exception($errmsg, 500);
-				}
+			}
 			$msg = Text::_('ATTACH_ERROR_MOVING_FILE')
 				. " {$_FILES['upload']['tmp_name']} -> {$filename_sys})";
 			}
