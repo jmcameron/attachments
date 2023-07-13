@@ -558,7 +558,7 @@ class AttachmentsController extends BaseController
 		$query = $db->getQuery(true);
 		$query->delete('#__attachments')->where('id = '.(int)$id);
 		$db->setQuery($query);
-		if (!$db->query()) {
+		if (!$db->execute()) {
 			$errmsg = $db->getErrorMsg() . ' (ERR 19)';
 			throw new Exception($errmsg, 500);
 			}

@@ -908,7 +908,7 @@ class AttachmentsHelper
 			$query = $db->getQuery(true);
 			$query->delete('#__attachments')->where('id = '.(int)$attachment_id);
 			$db->setQuery($query);
-			$result = $db->query();
+			$result = $db->execute();
 			if ( $db->getErrorNum() ) {
 				$errmsg = $db->stderr() . ' (ERR 38)';
 				throw new Exception($errmsg, 500);

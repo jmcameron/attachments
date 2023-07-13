@@ -144,7 +144,7 @@ class AttachmentsUpdate
 				$query->set('modified=' . $db->quote($mod_date) . ', created=' . $db->quote($created));
 				$query->where('id = ' . (int)$attachment->id);
 				$db->setQuery($query);
-				if (!$db->query()) {
+				if (!$db->execute()) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
 					throw new Exception($errmsg . $db->stderr() . ' (ERR 71)', 500);

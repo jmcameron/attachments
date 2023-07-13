@@ -53,7 +53,7 @@ class plgContentAttachmentsInstallerScript
 				  ->set("enabled = 0")
 				  ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			// NOTE: Do NOT complain if there was an error
 			// (in case any plugin is already uninstalled and this query fails)

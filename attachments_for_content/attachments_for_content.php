@@ -865,7 +865,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_attachments/permissions.php';
 
-		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+		$user = Factory::getApplication()->getIdentity();
 
 		// Handle each entity type
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);

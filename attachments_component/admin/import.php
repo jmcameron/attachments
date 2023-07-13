@@ -12,6 +12,7 @@
  */
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
@@ -95,7 +96,7 @@ class AttachmentsImport
 														$update=false,
 														$dry_run=false)
 	{
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Open the CSV file
 		$line_num = 0;

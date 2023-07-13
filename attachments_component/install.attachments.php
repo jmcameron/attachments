@@ -12,6 +12,8 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 
 // No direct access
@@ -132,13 +134,13 @@ class com_AttachmentsInstallerScript
 		foreach ($this->plugins as $plugin_name)
 		{
 			// Make the query to enable the plugin
-			$db = JFactory::getDBO();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->update('#__extensions')
 				  ->set("enabled = 0")
 				  ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			// NOTE: Do NOT complain if there was an error
 			// (in case any plugin is already uninstalled and this query fails)
@@ -156,7 +158,7 @@ class com_AttachmentsInstallerScript
 	{
 		global $attachments_install_verbose, $attachments_install_last_method;
 
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		if ( $attachments_install_last_method == 'update' ) {
 			$attachments_install_verbose = false;
@@ -166,7 +168,7 @@ class com_AttachmentsInstallerScript
 			}
 
 		// Load the installation language
-		$lang = JFactory::getLanguage();
+		$lang = $app->getLanguage();
 
 		// First load the English version
 		$lang->load('com_attachments.sys', dirname(__FILE__), 'en-GB');
@@ -194,7 +196,7 @@ class com_AttachmentsInstallerScript
 		}
 
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
-		$this->minimum_joomla_release = $parent->get( 'manifest' )->attributes()->version;		  
+		$this->minimum_joomla_release = $parent->getManifest()->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
 			$msg = Text::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
 			if ( $msg == 'ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP' ) {
@@ -209,7 +211,7 @@ class com_AttachmentsInstallerScript
 		// If there is debris from a previous failed attempt to install Attachments, delete it
 		// NOTE: Creating custom query because using JComponentHelper::isEnabled insists on
 		//		 printing a warning if the component is not installed
-		$db = JFactory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('extension_id AS id, enabled');
 		$query->from('#__extensions');
@@ -218,8 +220,8 @@ class com_AttachmentsInstallerScript
 		$db->setQuery($query);
 		if ( $db->loadResult() == 0 )
 		{
-			if (JFolder::exists(JPATH_ROOT . '/components/com_attachments') OR
-				JFolder::exists(JPATH_ROOT . '/administrator/components/com_attachments'))
+			if (Folder::exists(JPATH_ROOT . '/components/com_attachments') OR
+				Folder::exists(JPATH_ROOT . '/administrator/components/com_attachments'))
 			{
 				$msg = Text::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
 				$app->enqueueMessage($msg, 'error');
@@ -229,11 +231,11 @@ class com_AttachmentsInstallerScript
 
 		// Temporarily move the attachments directory out of the way to avoid conflicts
 		$attachdir = JPATH_ROOT.'/attachments';
-		if ( JFolder::exists($attachdir) ) {
+		if ( Folder::exists($attachdir) ) {
 
 			// Move the attachments directory out of the way temporarily
 			$this->moved_attachments_dir = JPATH_ROOT.'/temporarily_renamed_attachments_folder';
-			if ( JFolder::move($attachdir, $this->moved_attachments_dir) !== true ) {
+			if ( Folder::move($attachdir, $this->moved_attachments_dir) !== true ) {
 				$msg = Text::sprintf('ATTACH_ERROR_MOVING_ATTACHMENTS_DIR');
 				$app->enqueueMessage($msg, 'error');
 				return false;
@@ -265,11 +267,11 @@ class com_AttachmentsInstallerScript
 	{
 		global $attachments_install_verbose, $attachments_install_last_method;
 
-		$app = JFactory::getApplication();
-		$db = JFactory::getDBO();
+		$app = Factory::getApplication();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Make sure the translations are available
-		$lang = JFactory::getLanguage();
+		$lang = $app->getLanguage();
 		$lang->load('com_attachments', JPATH_ADMINISTRATOR);
 
 		// Enable all the plugins
@@ -282,12 +284,12 @@ class com_AttachmentsInstallerScript
 			$query->set("enabled = 1");
 			$query->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			// Complain if there was an error
-			if ( $db->getErrorNum() ) {
+			if ( $db->errorNum ) {
 				$errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
-				$errmsg .= $db->getErrorMsg();
+				$errmsg .= $db->errorMsg;
 				$app->enqueueMessage($errmsg, 'error');
 				return false;
 				}
@@ -303,8 +305,8 @@ class com_AttachmentsInstallerScript
 
 		// Restore the attachments directory (if renamed)
 		$attachdir = JPATH_ROOT.'/attachments';
-		if ( $this->moved_attachments_dir && JFolder::exists($this->moved_attachments_dir) ) {
-			JFolder::move($this->moved_attachments_dir, $attachdir);
+		if ( $this->moved_attachments_dir && Folder::exists($this->moved_attachments_dir) ) {
+			Folder::move($this->moved_attachments_dir, $attachdir);
 			if ( $attachments_install_verbose ) {
 				$app->enqueueMessage(Text::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 				}
@@ -320,16 +322,15 @@ class com_AttachmentsInstallerScript
 			$query .= " TINYINT(1) UNSIGNED NOT NULL DEFAULT '1'";
 			$query .= " AFTER " . $db->quoteName('url_relative');
 			$db->setQuery($query);
-			if ( !$db->query() ) {
+			if ( !$db->execute() ) {
 				// Ignore any DB errors (may require manual DB mods)
 				// ??? $errmsg = $db->stderr();
 				}
 		}
 
 		// Check to see if we should be in secure mode
-		jimport('joomla.filesystem.file');
 		$htaccess_file = $attachdir . '/.htaccess';
-		if ( JFile::exists($htaccess_file) ) {
+		if ( File::exists($htaccess_file) ) {
 			if ( com_AttachmentsInstallerScript::setSecureMode() ) {
 				if ( $attachments_install_verbose ) {
 					$app->enqueueMessage(Text::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
@@ -376,7 +377,7 @@ class com_AttachmentsInstallerScript
 	 */
 	protected function setSecureMode()
 	{
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__extensions');
 		$query->where('type=' . $db->quote('component') . ' AND name=' . $db->quote('com_attachments'));
@@ -392,7 +393,7 @@ class com_AttachmentsInstallerScript
 			$query->set('params=' . $db->quote('{\"secure\":\"1\"}'));
 			$query->where('type=' . $db->quote('component') . ' AND name=' . $db->quote('com_attachments'));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			if ( $db->getErrorNum() ) {
 				return false;
 				}
@@ -411,7 +412,7 @@ class com_AttachmentsInstallerScript
 	 */
 	private function _bugfixDBFunctionReturnedNoError($extension_name)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 			
 		// Fix broken #__assets records
 		$query = $db->getQuery(true);
@@ -420,45 +421,45 @@ class com_AttachmentsInstallerScript
 			->where('name = '.$db->quote($extension_name));
 			// ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadRow();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__assets')
-				  ->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->quoteName('id').' = '.$db->quote($id));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 
 		// Fix broken #__extensions records
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			  ->from('#__extensions')
-			  ->where($db->nameQuote('element').' = '.$db->quote($extension_name));
+			  ->where($db->quoteName('element').' = '.$db->quote($extension_name));
 		$db->setQuery($query);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadRow();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__extensions')
-				  ->where($db->nameQuote('extension_id').' = '.$db->quote($id));
+				  ->where($db->quoteName('extension_id').' = '.$db->quote($id));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 
 		// Fix broken #__menu records
 		$query = $db->getQuery(true);
 		$query->select('id')
 			  ->from('#__menu')
-			  ->where($db->nameQuote('type').' = '.$db->quote('component'))
-			  ->where($db->nameQuote('menutype').' = '.$db->quote('main'))
-			  ->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
+			  ->where($db->quoteName('type').' = '.$db->quote('component'))
+			  ->where($db->quoteName('menutype').' = '.$db->quote('main'))
+			  ->where($db->quoteName('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
 		$db->setQuery($query);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadRow();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__menu')
-				  ->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->quoteName('id').' = '.$db->quote($id));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 	}
 	
@@ -471,15 +472,15 @@ class com_AttachmentsInstallerScript
 	 */
 	private function _bugfixCantBuildAdminMenus($extension_name)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		
 		// If there are multiple #__extensions record, keep one of them
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from('#__extensions')
-			->where($db->nameQuote('element').' = '.$db->quote($extension_name));
+			->where($db->quoteName('element').' = '.$db->quote($extension_name));
 		$db->setQuery($query);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadRow();
 		if(count($ids) > 1) {
 			asort($ids);
 			$extension_id = array_shift($ids); // Keep the oldest id
@@ -487,9 +488,9 @@ class com_AttachmentsInstallerScript
 			foreach($ids as $id) {
 				$query = $db->getQuery(true);
 				$query->delete('#__extensions')
-					  ->where($db->nameQuote('extension_id').' = '.$db->quote($id));
+					  ->where($db->quoteName('extension_id').' = '.$db->quote($id));
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 			}
 		}
 		
@@ -508,9 +509,9 @@ class com_AttachmentsInstallerScript
 			foreach($ids as $id) {
 				$query = $db->getQuery(true);
 				$query->delete('#__assets')
-					  ->where($db->nameQuote('id').' = '.$db->quote($id));
+					  ->where($db->quoteName('id').' = '.$db->quote($id));
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 			}
 		}
 
@@ -518,17 +519,17 @@ class com_AttachmentsInstallerScript
 		$query = $db->getQuery(true);
 		$query->select('id')
 			  ->from('#__menu')
-			  ->where($db->nameQuote('type').' = '.$db->quote('component'))
-			  ->where($db->nameQuote('menutype').' = '.$db->quote('main'))
-			  ->where($db->nameQuote('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
+			  ->where($db->quoteName('type').' = '.$db->quote('component'))
+			  ->where($db->quoteName('menutype').' = '.$db->quote('main'))
+			  ->where($db->quoteName('link').' LIKE '.$db->quote('index.php?option='.$extension_name.'%'));
 		$db->setQuery($query);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadRow();
 		if(!empty($ids)) foreach($ids as $id) {
 			$query = $db->getQuery(true);
 			$query->delete('#__menu')
-				  ->where($db->nameQuote('id').' = '.$db->quote($id));
+				  ->where($db->quoteName('id').' = '.$db->quote($id));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 	}
 		

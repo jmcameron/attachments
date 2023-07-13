@@ -205,12 +205,12 @@ class AttachmentsModelAttachment extends BaseDatabaseModel
 	public function incrementDownloadCount()
 	{
 		// Update the download count
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->update('#__attachments')->set('download_count = (download_count + 1)');
 		$query->where('id = ' .(int)$this->_id);
 		$db->setQuery($query);
-		if ( !$db->query() ) {
+		if ( !$db->execute() ) {
 			$errmsg = $db->stderr() . ' (ERR 49)';
 			JError::raiseError(500, $errmsg);
 			}

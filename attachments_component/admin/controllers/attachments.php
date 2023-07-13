@@ -212,7 +212,7 @@ class AttachmentsControllerAttachments extends AdminController
 				$query = $db->getQuery(true);
 				$query->delete('#__attachments')->where("id IN (".implode(',', $deleted_ids).")");
 				$db->setQuery($query);
-				if (!$db->query()) {
+				if (!$db->execute()) {
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
 					throw new Exception($errmsg, 500);
 					}
