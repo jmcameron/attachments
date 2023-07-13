@@ -23,7 +23,7 @@ $app = Factory::getApplication();
 $template = $app->getTemplate();
 
 // Load the tooltip behavior.
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 $uri = Uri::getInstance();
 $document = $app->getDocument();

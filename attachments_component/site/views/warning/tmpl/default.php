@@ -22,7 +22,7 @@ defined('_JEXEC') or die();
 $template = Factory::getApplication()->getTemplate();
 
 // Load the tooltip behavior.
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 $uri = Uri::getInstance();
 $document = Factory::getApplication()->getDocument();

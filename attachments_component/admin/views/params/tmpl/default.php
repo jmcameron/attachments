@@ -24,8 +24,12 @@ $app = Factory::getApplication();
 $template = $app->getTemplate();
 
 // Load the tooltip behavior.
-HTMLHelper::_('behavior.tooltip');
-HTMLHelper::_('behavior.formvalidation');
+HTMLHelper::_('bootstrap.tooltip');
+
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('form.validate');
+
 
 if (version_compare(JVERSION, '3.0', 'ge'))
 {

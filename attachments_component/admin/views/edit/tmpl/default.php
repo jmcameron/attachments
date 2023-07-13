@@ -22,7 +22,7 @@ use Joomla\String\StringHelper;
 defined('_JEXEC') or die('Restricted access');
 
 // Load the tooltip behavior.
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
 $app = Factory::getApplication();

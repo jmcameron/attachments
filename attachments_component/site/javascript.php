@@ -53,7 +53,7 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		HTMLHelper::_('behavior.modal', 'a.modal-button');
+		HTMLHelper::_('bootstrap.modal', 'a.modal-button');
 	}
 
 

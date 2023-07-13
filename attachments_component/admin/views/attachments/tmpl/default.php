@@ -24,7 +24,7 @@ $document = Factory::getApplication()->getDocument();
 $uri = Uri::getInstance();
 
 // load tooltip behavior
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));

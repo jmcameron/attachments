@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 defined('_JEXEC') or die();
 
 // Load the tooltip behavior.
-HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 // Hide the vertical scrollbar using javascript
 $document = Factory::getApplication()->getDocument();

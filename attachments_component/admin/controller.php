@@ -137,7 +137,7 @@ class AttachmentsController extends BaseController
 
 		// Set up the tooltip behavior
 		$opts = Array( 'hideDelay' => 0, 'showDelay' => 0 );
-		HTMLHelper::_('behavior.tooltip', '.hasTip', $opts);
+		HTMLHelper::_('bootstrap.tooltip', '.hasTip', $opts);
 
 		// Set up url/link/tooltip for each command
 		$uri = Uri::getInstance();

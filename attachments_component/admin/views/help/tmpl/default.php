@@ -20,7 +20,7 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die();
 
 // Load the tooltip behavior.
-// JHtml::_('behavior.tooltip');
+// JHtml::_('bootstrap.tooltip');
 
 // Add the CSS for the attachments list (whether we need it or not)
 HTMLHelper::stylesheet('com_attachments/attachments_help.css', array(), true);
