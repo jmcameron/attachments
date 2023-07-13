@@ -27,16 +27,8 @@ class AttachmentsJavascript
 	 */
 	public static function setupJavascript($add_refresh_script = true)
 	{
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			HTMLHelper::_('behavior.framework', true);
-			HTMLHelper::_('behavior.modal', 'a.modal');
-		}
-		else
-		{
-			// up the style sheet (to get the visual for the button working)
-			HTMLHelper::_('behavior.mootools');
-		}
+		HTMLHelper::_('bootstrap.framework', true);
+
 		if ($add_refresh_script)
 		{
 			HTMLHelper::script('com_attachments/attachments_refresh.js', false, true);
