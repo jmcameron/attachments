@@ -14,10 +14,10 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Registry\Registry;
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -157,18 +157,18 @@ class plgButtonAdd_attachment extends CMSPlugin
 		$lang->load('com_attachments', dirname(__FILE__));
 
 		// Create the [Add Attachment] button object
-		$button = new Registry();
+		$button = new CMSObject();
 
 		$link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
 		$link .= '&amp;editor=' . $editor;
 
 		// Finalize the [Add Attachment] button info
-		$button->set('modal', true);
-		$button->set('class', 'btn');
-		$button->set('text', Text::_('ATTACH_ADD_ATTACHMENT'));
-		$button->set('name', 'paperclip');
-		$button->set('link', $link);
-		$button->set('options', "{handler: 'iframe', size: {x: 920, y: 530}}");
+		$button->modal = true;
+		$button->class = 'btn';
+		$button->text = Text::_('ATTACH_ADD_ATTACHMENT');
+		$button->name = 'paperclip';
+		$button->link = $link;
+		$button->options = "{handler: 'iframe', size: {x: 920, y: 530}}";
 
 		return $button;
 	}
