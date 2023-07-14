@@ -332,7 +332,7 @@ else
 			  onClick="window.parent.SqueezeBox.close();" /></span>
 </div>
 <?php endif; ?>
-<?php echo JHtml::_( 'form.token' ); ?>
+<?php echo HTMLHelper::_( 'form.token' ); ?>
 </form>
 <?php
 

@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -22,9 +23,6 @@ use Joomla\CMS\Uri\Uri;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
 
 /** Load the Attachments defines and helpers */
 require_once(JPATH_SITE.'/components/com_attachments/defines.php');
@@ -36,7 +34,7 @@ require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachment extends JControllerFormLegacy
+class AttachmentsControllerAttachment extends FormController
 {
 
 	/**
@@ -156,9 +154,10 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$document = $app->getDocument();
 			$js = ' 
 	   function jSelectParentArticle(id, title, catid, object) {
-		   document.id("parent_id").value = id;
-		   document.id("parent_title").value = title;
-		   SqueezeBox.close();
+		   document.getElementById("parent_id").value = id;
+		   document.getElementById("parent_title").value = title;
+		   let modal = bootstrap.Modal.getInstance(document.getElementById("modal-attachment"));
+		   modal.hide();
 		   }';
 			$document->addScriptDeclaration($js);
 			}
@@ -1176,5 +1175,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->display();
 	}
 
-
+	public function cancel() {
+		
+	}
 }

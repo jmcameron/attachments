@@ -43,7 +43,7 @@ $uri = Uri::getInstance();
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (document.formvalidator.isValid(document.id('component-form')))
+		if (document.formvalidator.isValid(document.getElementById('component-form')))
 		{
 			Joomla.submitform(task, document.getElementById('component-form'));
 		}

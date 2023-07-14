@@ -94,9 +94,21 @@ if ( $attachment->parent_title ) {
 	<td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
 	<td><?php echo $alt_parent_html; ?>
 	  <input id="parent_title" value="<?php echo $attachment->parent_title ?>" disabled="disabled" type="text" size="60" />&nbsp;
-	  <a class="modal-button" type="button"
-		 href="<?php echo $this->selpar_btn_url ?>" title="<?php echo $this->selpar_btn_tooltip ?>"
-		 rel="{handler: 'iframe', size: {x: 800, y: 450}}"><?php echo $this->selpar_btn_text ?></a>
+<?php
+	$modalId = 'attachment';
+	$modalParams['title']  = $this->escape($this->selpar_btn_tooltip);
+	$modalParams['url']    = $this->selpar_btn_url;
+	$modalParams['height'] = '100%';
+	$modalParams['width']  = '100%';
+	$modalParams['bodyHeight'] = 70;
+	$modalParams['modalWidth'] = 80;
+	echo HTMLHelper::_('bootstrap.renderModal', 'modal-' . $modalId, $modalParams);
+	
+	echo '<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal-' . $modalId . '">'
+		. $this->selpar_btn_text .
+	'</button>';
+
+?>
 	  <input id="parent_id" name="parent_id" value="-1" type="hidden" />
 	</td>
   </tr>
@@ -215,7 +227,7 @@ if ( $attachment->parent_title ) {
 	   </span>
 	</div>
 	<?php endif; ?>
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo HtmlHelper::_( 'form.token' ); ?>
 </form>
 <?php
 
