@@ -27,7 +27,7 @@ $template = $app->getTemplate();
 HTMLHelper::_('bootstrap.tooltip');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('form.validate');
 
 
