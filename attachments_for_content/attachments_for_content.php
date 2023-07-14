@@ -1103,7 +1103,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		// If the user generally has permissions to edit all content, they
 		// may change this attachment state (editor, publisher, admin, etc)
-		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+		$user = Factory::getApplication()->getIdentity();
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
