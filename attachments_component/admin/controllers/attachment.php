@@ -234,7 +234,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$view->new_parent	 = $new_parent;
 		$view->may_publish	 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		$view->entity_info	 = $entity_info;
-		$view->option		 = $this->option;
+		// $view->option		 = $this->option;
 		$view->from			 = $from;
 
 		$view->params		 = $params;
