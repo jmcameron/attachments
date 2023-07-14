@@ -25,9 +25,6 @@ defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
-require_once(JPATH_SITE . '/components/com_config/model/cms.php');
-require_once(JPATH_SITE . '/components/com_config/model/form.php');
-require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
 
 
 /**
@@ -62,12 +59,6 @@ class AttachmentsControllerParams extends FormController
 		$model->setState($state);
 		$form = $model->getForm();
 		$component = ComponentHelper::getComponent('com_attachments');
-
-		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors) . ' (ERR 118)', 500);
-			return false;
-		}
 
 		// Bind the form to the data.
 		if ($form && $component->params) {
