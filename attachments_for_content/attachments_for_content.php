@@ -346,7 +346,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Determine the task
-		if ($app->isClient("admin"))
+		if ($app->isClient("administrator"))
 		{
 			$task = 'attachment.add';
 		}
@@ -918,7 +918,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+		$user = Factory::getApplication()->getIdentity();
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
@@ -1011,7 +1011,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		// If the user generally has permissions to edit ALL content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+		$user = Factory::getApplication()->getIdentity();
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
@@ -1221,7 +1221,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	{
 		$app = Factory::getApplication();
 		$input = $app->getInput();
-		if ($app->isClient("admin")) {
+		if ($app->isClient("administrator")) {
 			// The default works fine for the back end
 			return parent::getParentIdInEditor($parent_entity, $view, $layout);
 			}

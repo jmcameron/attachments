@@ -105,7 +105,7 @@ class AttachmentsViewAttachments extends HtmlView
 		$tmpl = $input->getWord('tmpl');
 		$task = $input->getWord('task');
 		$show_hidden_user_fields = false;
-		if ( $app->isClient('admin') || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
+		if ( $app->isClient('administrator') || ($from == 'editor') || ($layout == 'edit') || ($tmpl == 'component') ) {
 			$show_hidden_user_fields = true;
 			}
 		if ( $task == 'attachmentsList' ) {

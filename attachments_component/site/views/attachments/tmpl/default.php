@@ -306,7 +306,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$delete_link = '';
 
 	$a_class = 'modal-button';
-	if ( $app->isClient('admin') ) {
+	if ( $app->isClient('administrator') ) {
 		$a_class = 'modal';
 		}
 

@@ -297,7 +297,7 @@ class AttachmentsHelper
 			}
 
 		$app = Factory::getApplication();
-		if ( $app->isClient('admin') ) {
+		if ( $app->isClient('administrator') ) {
 			$upload_task = 'add';
 			$update_task = 'edit';
 			if ( $save_type == 'upload' ) {
@@ -472,7 +472,7 @@ class AttachmentsHelper
 			$filename = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			$msg = Text::_('ATTACH_WARNING_FILENAME_TRUNCATED');
 			$app = Factory::getApplication();
-			if ( $app->isClient('admin') ) {
+			if ( $app->isClient('administrator') ) {
 				$lang = $app->getLanguage();
 				if ( $lang->isRTL() ) {
 					$msg = "'$filename' " . $msg;
@@ -512,7 +512,7 @@ class AttachmentsHelper
 		// A little formatting
 		$msgbreak = '<br />';
 		$app = Factory::getApplication();
-		if ( $app->isClient('admin') ) {
+		if ( $app->isClient('administrator') ) {
 			$msgbreak = '';
 			}
 
@@ -524,7 +524,7 @@ class AttachmentsHelper
 			if ( $bad_chars ) {
 				$error = 'bad_chars';
 				$error_msg = Text::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
-				if ( $app->isClient('admin') ) {
+				if ( $app->isClient('administrator') ) {
 					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -535,7 +535,7 @@ class AttachmentsHelper
 				$error = 'illegal_file_extension';
 				$format = StringHelper::strtolower(File::getExt($filename));
 				$error_msg = Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " .php.$format";
-				if ( $app->isClient('admin') ) {
+				if ( $app->isClient('administrator') ) {
 					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -546,7 +546,7 @@ class AttachmentsHelper
 				$error = 'no_file';
 				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . ' (' . Text::_('ATTACH_YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
-				if ( $app->isClient('admin') ) {
+				if ( $app->isClient('administrator') ) {
 					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -558,7 +558,7 @@ class AttachmentsHelper
 				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . '(' . Text::_('ATTACH_ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
 				$error_msg .= get_cfg_var('upload_max_filesize') . ')';
-				if ( $app->isClient('admin') ) {
+				if ( $app->isClient('administrator') ) {
 					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -668,7 +668,7 @@ class AttachmentsHelper
 		// If there was an error, refresh the form with a warning
 		if ( $error ) {
 
-			if ( $app->isClient('admin') ) {
+			if ( $app->isClient('administrator') ) {
 				$result = new stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
@@ -784,7 +784,7 @@ class AttachmentsHelper
 			$error = 'file_already_on_server';
 			$error_msg = Text::sprintf('ATTACH_ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
-			if ( $app->isClient('admin') ) {
+			if ( $app->isClient('administrator') ) {
 				$result = new stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
@@ -1138,7 +1138,7 @@ class AttachmentsHelper
 
 			if ( $u->error ) {
 				$error_msg = Text::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
-				if ( $app->isClient('admin') ) {
+				if ( $app->isClient('administrator') ) {
 					$result = new stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
@@ -1313,7 +1313,7 @@ class AttachmentsHelper
 		if ( $result !== true ) {
 
 			$app = Factory::getApplication();
-			if ( $app->isClient('admin') ) {
+			if ( $app->isClient('administrator') ) {
 				return $result;
 				}
 
@@ -1812,7 +1812,7 @@ class AttachmentsHelper
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}
 
-			if ( $app->isClient('admin') ) {
+			if ( $app->isClient('administrator') ) {
 				// Get the html for the attachments list
 				require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
 

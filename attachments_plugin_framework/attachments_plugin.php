@@ -523,7 +523,7 @@ class AttachmentsPlugin extends CMSPlugin
 	{
 		$app = Factory::getApplication();
 
-		if ($app->isClient("admin"))
+		if ($app->isClient("administrator"))
 		{
 			$task = 'add';
 		}
