@@ -27,8 +27,6 @@ class AttachmentsJavascript
 	 */
 	public static function setupJavascript($add_refresh_script = true)
 	{
-		HTMLHelper::_('bootstrap.framework', true);
-
 		if ($add_refresh_script)
 		{
 			HTMLHelper::script('com_attachments/attachments_refresh.js', false, true);
