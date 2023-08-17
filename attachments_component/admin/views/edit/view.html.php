@@ -111,10 +111,10 @@ class AttachmentsViewEdit extends HtmlView
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Add the style sheets
-		HTMLHelper::stylesheet('com_attachments/attachments_admin_form.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css', Array(), true);
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css', Array(), true);
 			}
 
 		// Set the toolbar

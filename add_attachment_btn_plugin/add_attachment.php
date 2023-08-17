@@ -143,14 +143,14 @@ class plgButtonAdd_attachment extends CMSPlugin
 		}
 
 		// Add the regular css file
-		HTMLHelper::stylesheet('com_attachments/attachments_list.css');
-		HTMLHelper::stylesheet('com_attachments/add_attachment_button.css');
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+		HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button.css');
 
 		// Handle RTL styling (if necessary)
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_list_rtl.css');
-			HTMLHelper::stylesheet('com_attachments/add_attachment_button_rtl.css');
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
+			HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button_rtl.css');
 			}
 
 		// Load the language file from the frontend

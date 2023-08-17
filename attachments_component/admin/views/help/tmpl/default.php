@@ -23,14 +23,14 @@ defined('_JEXEC') or die();
 // JHtml::_('bootstrap.tooltip');
 
 // Add the CSS for the attachments list (whether we need it or not)
-HTMLHelper::stylesheet('com_attachments/attachments_help.css', array(), true);
+HTMLHelper::stylesheet('media/com_attachments/css/attachments_help.css', array(), true);
 
 // If the user specifies 'show=codes' in the url, the language item codes will
 // be shown by default.	 Note that they can still be toggled with the toggles
 // at the top right and bottom right of the page.
 $app = Factory::getApplication();
 if ($app->getInput()->getCmd('show') == 'codes') {
-	HTMLHelper::stylesheet('com_attachments/attachments_help_show_codes.css', array(), true);
+	HTMLHelper::stylesheet('media/com_attachments/css/attachments_help_show_codes.css', array(), true);
 	}
 
 // Define the section constants

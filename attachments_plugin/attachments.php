@@ -183,7 +183,7 @@ class plgContentAttachments extends CMSPlugin
 		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		HTMLHelper::stylesheet('com_attachments/attachments_hide.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_hide.css', Array(), true);
 
 		// NOTE: I cannot find anything about AttachmentsRemapper class.
 		// Could it be old unnecessary code that needs deletion?
@@ -261,7 +261,7 @@ class plgContentAttachments extends CMSPlugin
 		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		HtmlHelper::stylesheet('com_attachments/attachments_hide.css', array(), true);
+		HtmlHelper::stylesheet('media/com_attachments/css/attachments_hide.css', array(), true);
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');

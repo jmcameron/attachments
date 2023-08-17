@@ -36,10 +36,10 @@ class AttachmentsViewEntity extends HtmlView
 	public function display($tpl = null)
 	{
 		// Add the style sheets
-		HTMLHelper::stylesheet('com_attachments/attachments_admin.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css', Array(), true);
 		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_admin_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css', Array(), true);
 			}
 
 		parent::display($tpl);

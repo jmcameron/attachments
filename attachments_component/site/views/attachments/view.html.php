@@ -77,10 +77,10 @@ class AttachmentsViewAttachments extends HtmlView
 			}
 
 		// if we have attachments, add the stylesheets for the attachments list
-		HTMLHelper::stylesheet('com_attachments/attachments_list.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_list_rtl.css', array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
 			}
 
 		// Add the default path

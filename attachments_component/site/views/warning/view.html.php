@@ -35,10 +35,10 @@ class AttachmentsViewWarning extends HtmlView
 	public function display($tpl = null)
 	{
 		// Add the stylesheets
-		HTMLHelper::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css', array(), true);
 		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css', array(), true);
 			}
 
 		parent::display($tpl);

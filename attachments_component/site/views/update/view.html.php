@@ -82,10 +82,10 @@ class AttachmentsViewUpdate extends AttachmentsFormView
 			}
 
 		// Add the stylesheets
-		HTMLHelper::stylesheet('com_attachments/attachments_frontend_form.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css', array(), true);
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css', array(), true);
 			}
 
 		// Display the form

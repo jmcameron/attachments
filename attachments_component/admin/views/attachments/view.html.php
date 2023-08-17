@@ -156,10 +156,10 @@ class AttachmentsViewAttachments extends HtmlView
 		$this->project_url = AttachmentsDefines::$PROJECT_URL;
 
 		// Add the style sheets
-		HTMLHelper::stylesheet('com_attachments/attachments_admin.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css', Array(), true);
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('com_attachments/attachments_admin_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css', Array(), true);
 			}
 
 		// Set the toolbar
