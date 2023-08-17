@@ -161,10 +161,10 @@ class AttachmentsViewAdd extends HtmlView
 		$this->selpar_btn_url =	 $this->parent->getSelectEntityURL($parent_entity);
 
 		// Add the style sheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css');
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
 			}
 
 		// Set up mootools/modal
