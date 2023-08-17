@@ -65,7 +65,7 @@ class AttachmentsFormView extends HtmlView
 			}
 
 		// Add the CSS for the attachments list (whether we need it or not)
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
 
 		$head_renderer = new HeadRenderer($document);
 

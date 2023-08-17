@@ -39,11 +39,11 @@ class AttachmentsViewLogin extends HtmlView
 	public function display($tpl = null)
 	{
 		// Add the stylesheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
 		$app = Factory::getApplication();
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
 			}
 
 		// Is the user already logged in?

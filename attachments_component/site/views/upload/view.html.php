@@ -69,10 +69,10 @@ class AttachmentsViewUpload extends AttachmentsFormView
 		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
 		// Add the stylesheets for the form
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css', array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
 			}
 
 		// Display the upload form

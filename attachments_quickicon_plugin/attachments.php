@@ -66,7 +66,7 @@ class PlgQuickiconAttachments extends CMSPlugin
 		}
 
 		// Add the CSS file
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_quickicon.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_quickicon.css');
 
 		$image = 'flag-2';
 		$icon = Uri::root() . '/media/com_attachments/images/attachments_logo48.png';

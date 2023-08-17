@@ -930,13 +930,13 @@ class AttachmentsPlugin extends CMSPlugin
 		if ($html || $user_can_add)
 		{
 			// Add the style sheet
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
 
 			// Handle RTL styling (if necessary)
 			$lang = Factory::getApplication()->getLanguage();
 			if ($lang->isRTL())
 			{
-				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css', Array(), true);
+				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
 			}
 		}
 

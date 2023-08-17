@@ -45,10 +45,10 @@ class AttachmentsViewParams extends HtmlView
 	public function display($tpl = null)
 	{
 		// Add the style sheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css', Array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css');
 		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css', Array(), true);
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
 			}
 
 		$this->addToolBar();
