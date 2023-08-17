@@ -323,7 +323,7 @@ class plgContentAttachments extends CMSPlugin
 		// ??? if (isset($row->text)) $row->text .= " [OCBD text $context]";
 		// ??? if (isset($row->introtext)) $row->introtext .= " [OCBD introtext $context]";
 
-		return;
+		return true;
 	}
 
 
