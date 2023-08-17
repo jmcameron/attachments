@@ -40,7 +40,6 @@
 	<filename>helper.php</filename>
 	<filename>javascript.php</filename>
 	<filename>legacy/controller.php</filename>
-	<filename>legacy/controller_form.php</filename>
 	<filename>legacy/model.php</filename>
 	<filename>legacy/view.php</filename>
 	<filename>legacy/index.html</filename>
