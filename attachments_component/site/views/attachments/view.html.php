@@ -217,8 +217,12 @@ class AttachmentsViewAttachments extends HtmlView
 		$this->icon_url_base = $base_url . 'components/com_attachments/media/icons/';
 
 		// Get the output of the template
-		$result = $this->loadTemplate($tpl);
-		return $result;
+		try {
+			$this->loadTemplate($tpl);
+			return true;
+		} catch (\Exception $e) {
+			return $e->getCode();
+		}
 	}
 
 	/**
