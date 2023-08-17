@@ -1175,7 +1175,7 @@ class AttachmentsControllerAttachment extends FormController
 		$view->display();
 	}
 
-	public function cancel() {
+	public function cancel($key = null) {
 		
 	}
 }
