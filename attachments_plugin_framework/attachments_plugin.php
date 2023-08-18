@@ -1081,7 +1081,7 @@ class AttachmentsPlugin extends CMSPlugin
 		$user = $app->getIdentity();
 		if ($user->getParam('editor', $app->get('editor')) == 'tinymce') {
 			# Hack because TinyMCE changed the structure
-			$reptag = '<div class="toggle-editor btn-toolbar pull-right clearfix"';
+			$reptag = '<div class="toggle-editor btn-toolbar float-end clearfix mt-3"';
 			}
 
 		// Insert the attachments above the editor buttons
