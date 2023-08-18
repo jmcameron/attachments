@@ -112,6 +112,7 @@ class AttachmentsViewEdit extends HtmlView
 
 		// Add the style sheets
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css');
+		$app = Factory::getApplication();
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
