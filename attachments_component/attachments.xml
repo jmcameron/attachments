@@ -30,6 +30,8 @@
 	</sql>
     </uninstall>
 
+	<namespace path="src/">JMCameron\Component\Attachments</namespace>
+
     <files folder="site">
 	<filename>attachments.php</filename>
 	<filename>controller.php</filename>
