@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\View;
+
 use Joomla\CMS\Document\Renderer\Html\HeadRenderer;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;

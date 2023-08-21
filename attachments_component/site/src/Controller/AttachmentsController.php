@@ -11,12 +11,15 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\Controller;
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -29,7 +32,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
  *
  * @package Attachments
  */
-class AttachmentsControllerAttachments extends BaseController
+class AttachmentsController extends BaseController
 {
 	/**
 	 * Constructor

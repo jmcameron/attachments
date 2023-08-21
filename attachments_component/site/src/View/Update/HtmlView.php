@@ -11,6 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\View\Update;
+
+use JMCameron\Component\Attachments\Site\View\AttachmentsFormView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -30,7 +33,7 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
  *
  * @package Attachments
  */
-class AttachmentsViewUpdate extends AttachmentsFormView
+class HtmlView extends AttachmentsFormView
 {
 	/**
 	 * Display the view

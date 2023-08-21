@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5.7" method="upgrade">
+<extension type="component" version="4.0" method="upgrade">
     <name>com_attachments</name>
     <version>3.2.6</version>
     <creationDate>March 26, 2018</creationDate>
@@ -46,37 +46,40 @@
 	<filename>legacy/view.php</filename>
 	<filename>legacy/index.html</filename>
 	<filename>index.html</filename>
-	<filename>models/attachment.php</filename>
-	<filename>models/attachments.php</filename>
-	<filename>models/index.html</filename>
 	<filename>router.php</filename>
-	<filename>views/attachments/index.html</filename>
-	<filename>views/attachments/metadata.xml</filename>
-	<filename>views/attachments/tmpl/default.php</filename>
-	<filename>views/attachments/tmpl/default.xml</filename>
-	<filename>views/attachments/tmpl/index.html</filename>
-	<filename>views/attachments/view.html.php</filename>
-	<filename>views/attachments/view.raw.php</filename>
-	<filename>views/index.html</filename>
-	<filename>views/login/index.html</filename>
-	<filename>views/login/view.html.php</filename>
-	<filename>views/login/tmpl/index.html</filename>
-	<filename>views/login/tmpl/default.php</filename>
-	<filename>views/update/index.html</filename>
-	<filename>views/update/metadata.xml</filename>
-	<filename>views/update/view.html.php</filename>
-	<filename>views/update/tmpl/default.php</filename>
-	<filename>views/update/tmpl/index.html</filename>
-	<filename>views/upload/index.html</filename>
-	<filename>views/upload/metadata.xml</filename>
-	<filename>views/upload/view.html.php</filename>
-	<filename>views/upload/tmpl/default.php</filename>
-	<filename>views/upload/tmpl/index.html</filename>
-	<filename>views/warning/index.html</filename>
-	<filename>views/warning/tmpl/default.php</filename>
-	<filename>views/warning/tmpl/index.html</filename>
-	<filename>views/warning/view.html.php</filename>
-	<filename>views/view.php</filename>
+	<filename>src/Model/AttachmentModel.php</filename>
+	<filename>src/Model/AttachmentsModel.php</filename>
+	<filename>src/Model/index.html</filename>
+	<filename>src/Controller/AttachmentsController.php</filename>
+	<filename>src/Controller/index.html</filename>
+	<filename>src/index.html</filename>
+	<filename>src/View/Warning/HtmlView.php</filename>
+	<filename>src/View/Warning/index.html</filename>
+	<filename>src/View/Upload/metadata.xml</filename>
+	<filename>src/View/Upload/HtmlView.php</filename>
+	<filename>src/View/Upload/index.html</filename>
+	<filename>src/View/Login/HtmlView.php</filename>
+	<filename>src/View/Login/index.html</filename>
+	<filename>src/View/AttachmentsFormView.php</filename>
+	<filename>src/View/Attachments/metadata.xml</filename>
+	<filename>src/View/Attachments/RawView.php</filename>
+	<filename>src/View/Attachments/HtmlView.php</filename>
+	<filename>src/View/Attachments/index.html</filename>
+	<filename>src/View/Update/metadata.xml</filename>
+	<filename>src/View/Update/HtmlView.php</filename>
+	<filename>src/View/Update/index.html</filename>
+	<filename>tmpl/attachments/default.xml</filename>
+	<filename>tmpl/attachments/index.html</filename>
+	<filename>tmpl/attachments/default.php</filename>
+	<filename>tmpl/login/index.html</filename>
+	<filename>tmpl/login/default.php</filename>
+	<filename>tmpl/index.html</filename>
+	<filename>tmpl/update/index.html</filename>
+	<filename>tmpl/update/default.php</filename>
+	<filename>tmpl/warning/index.html</filename>
+	<filename>tmpl/warning/default.php</filename>
+	<filename>tmpl/upload/index.html</filename>
+	<filename>tmpl/upload/default.php</filename>
 	<folder>language</folder>
     </files>
 
@@ -92,68 +95,68 @@
 	    <filename>access.xml</filename>
 	    <filename>config.xml</filename>
 	    <filename>controller.php</filename>
-	    <filename>controllers/attachment.php</filename>
-	    <filename>controllers/attachments.php</filename>
-	    <filename>controllers/index.html</filename>
-	    <filename>controllers/list.php</filename>
-	    <filename>controllers/params.php</filename>
-	    <filename>controllers/special.php</filename>
-	    <filename>controllers/utils.php</filename>
 	    <filename>import.php</filename>
 	    <filename>index.html</filename>
-	    <filename>models/attachment.php</filename>
-	    <filename>models/attachments.php</filename>
-	    <filename>models/fields/accesslevels.php</filename>
-	    <filename>models/fields/iconfilenames.php</filename>
-	    <filename>models/fields/index.html</filename>
-	    <filename>models/forms/attachment.xml</filename>
-	    <filename>models/forms/index.html</filename>
-	    <filename>models/index.html</filename>
 	    <filename>permissions.php</filename>
 	    <filename>sql/index.html</filename>
 	    <filename>sql/install.mysql.sql</filename>
 	    <filename>sql/uninstall.mysql.sql</filename>
-	    <filename>tables/attachment.php</filename>
-	    <filename>tables/index.html</filename>
+		<filename>services/provider.php</filename>
+		<filename>tmpl/utils/index.html</filename>
+		<filename>tmpl/utils/default.php</filename>
+		<filename>tmpl/attachments/default_body.php</filename>
+		<filename>tmpl/attachments/default_filter.php</filename>
+		<filename>tmpl/attachments/default_head.php</filename>
+		<filename>tmpl/attachments/index.html</filename>
+		<filename>tmpl/attachments/default_foot.php</filename>
+		<filename>tmpl/attachments/default.php</filename>
+		<filename>tmpl/entity/index.html</filename>
+		<filename>tmpl/entity/default.php</filename>
+		<filename>tmpl/params/index.html</filename>
+		<filename>tmpl/params/default.php</filename>
+		<filename>tmpl/index.html</filename>
+		<filename>tmpl/add/index.html</filename>
+		<filename>tmpl/add/default.php</filename>
+		<filename>tmpl/help/index.html</filename>
+		<filename>tmpl/help/default.php</filename>
+		<filename>tmpl/edit/index.html</filename>
+		<filename>tmpl/edit/default.php</filename>
+		<filename>tmpl/warning/index.html</filename>
+		<filename>tmpl/warning/default.php</filename>
+		<filename>src/Model/AttachmentModel.php</filename>
+		<filename>src/Model/AttachmentsModel.php</filename>
+		<filename>src/Model/index.html</filename>
+		<filename>src/Controller/SpecialController.php</filename>
+		<filename>src/Controller/AttachmentsController.php</filename>
+		<filename>src/Controller/ListController.php</filename>
+		<filename>src/Controller/ParamsController.php</filename>
+		<filename>src/Controller/AttachmentController.php</filename>
+		<filename>src/Controller/index.html</filename>
+		<filename>src/Controller/UtilsController.php</filename>
+		<filename>src/Field/IconfilenamesField.php</filename>
+		<filename>src/Field/AccessLevelsField.php</filename>
+		<filename>src/Field/index.html</filename>
+		<filename>src/index.html</filename>
+		<filename>src/Table/AttachmentTable.php</filename>
+		<filename>src/Table/index.html</filename>
+		<filename>src/View/Warning/HtmlView.php</filename>
+		<filename>src/View/Warning/index.html</filename>
+		<filename>src/View/Edit/HtmlView.php</filename>
+		<filename>src/View/Edit/index.html</filename>
+		<filename>src/View/Entity/HtmlView.php</filename>
+		<filename>src/View/Entity/index.html</filename>
+		<filename>src/View/Add/HtmlView.php</filename>
+		<filename>src/View/Add/index.html</filename>
+		<filename>src/View/Attachments/HtmlView.php</filename>
+		<filename>src/View/Attachments/index.html</filename>
+		<filename>src/View/Help/HtmlView.php</filename>
+		<filename>src/View/Help/index.html</filename>
+		<filename>src/View/Help/HelpView.php</filename>
+		<filename>src/View/Utils/HtmlView.php</filename>
+		<filename>src/View/Utils/index.html</filename>
+		<filename>src/View/Params/HtmlView.php</filename>
+		<filename>src/View/Params/index.html</filename>
 	    <filename>update.php</filename>
-	    <filename>views/add/index.html</filename>
-	    <filename>views/add/tmpl/default.php</filename>
-	    <filename>views/add/tmpl/index.html</filename>
-	    <filename>views/add/view.html.php</filename>
-	    <filename>views/attachments/index.html</filename>
-	    <filename>views/attachments/tmpl/default_body.php</filename>
-	    <filename>views/attachments/tmpl/default_filter.php</filename>
-	    <filename>views/attachments/tmpl/default_foot.php</filename>
-	    <filename>views/attachments/tmpl/default_head.php</filename>
-	    <filename>views/attachments/tmpl/default.php</filename>
-	    <filename>views/attachments/tmpl/index.html</filename>
-	    <filename>views/attachments/view.html.php</filename>
-	    <filename>views/edit/index.html</filename>
-	    <filename>views/edit/tmpl/default.php</filename>
-	    <filename>views/edit/tmpl/index.html</filename>
-	    <filename>views/edit/view.html.php</filename>
-	    <filename>views/entity/index.html</filename>
-	    <filename>views/entity/tmpl/default.php</filename>
-	    <filename>views/entity/tmpl/index.html</filename>
-	    <filename>views/entity/view.html.php</filename>
-	    <filename>views/help/index.html</filename>
-	    <filename>views/help/helpview.php</filename>
-	    <filename>views/help/tmpl/default.php</filename>
-	    <filename>views/help/tmpl/index.html</filename>
-	    <filename>views/help/view.html.php</filename>
-	    <filename>views/index.html</filename>
-	    <filename>views/params/index.html</filename>
-	    <filename>views/params/view.html.php</filename>
-	    <filename>views/params/tmpl/default.php</filename>
-	    <filename>views/params/tmpl/index.html</filename>
-	    <filename>views/utils/index.html</filename>
-	    <filename>views/utils/view.html.php</filename>
-	    <filename>views/utils/tmpl/default.php</filename>
-	    <filename>views/utils/tmpl/index.html</filename>
-	    <filename>views/warning/index.html</filename>
-	    <filename>views/warning/tmpl/default.php</filename>
-	    <filename>views/warning/tmpl/index.html</filename>
-	    <filename>views/warning/view.html.php</filename>
 	    <filename>Changelog.php</filename>
 	    <folder>sql/updates</folder>
 	    <folder>language</folder>

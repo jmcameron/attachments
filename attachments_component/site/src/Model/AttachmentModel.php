@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\Model;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
@@ -25,7 +27,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
  *
  * @package Attachments
  */
-class AttachmentsModelAttachment extends BaseDatabaseModel
+class AttachmentModel extends BaseDatabaseModel
 {
 
 	/**

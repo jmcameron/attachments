@@ -11,9 +11,11 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\View\Warning;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
@@ -27,7 +29,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  *
  * @package Attachments
  */
-class AttachmentsViewWarning extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	/**
 	 * Display the view

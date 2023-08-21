@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\Model; 
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -30,7 +32,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
  *
  * @package Attachments
  */
-class AttachmentsModelAttachments extends BaseDatabaseModel
+class AttachmentModel extends BaseDatabaseModel
 {
 	/**
 	 * ID of parent of the list of attachments
