@@ -13,6 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -46,7 +48,7 @@ class ParamsController extends FormController
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
 			return false;
 			}
 
@@ -68,8 +70,7 @@ class ParamsController extends FormController
 		}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/params/view.html.php');
-		$view = new AttachmentsViewParams( );
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Params\HtmlView();
 		$view->setModel($model);
 		$view->params = $params;
 
@@ -167,7 +168,6 @@ class ParamsController extends FormController
 		if ( $new_secure != $old_secure ) {
 
 			// Check/update the security status
-			require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 			$attach_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 			AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
 

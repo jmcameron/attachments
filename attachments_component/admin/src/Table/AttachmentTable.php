@@ -23,10 +23,6 @@ use Joomla\Utilities\ArrayHelper;
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
-
 /**
  * Attachments table class
  *
@@ -75,7 +71,7 @@ class AttachmentTable extends Table
 			}
 			// Nothing to set publishing state on, return false.
 			else {
-				throw new Exception(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+				throw new \Exception(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
 				return false;
 			}
 		}
@@ -95,8 +91,8 @@ class AttachmentTable extends Table
 			$this->_db->setQuery($query);
 			try {
 				$attachment = $this->_db->loadObject();
-			} catch (Exception $e) {
-				throw new Exception($e->getMessage() . ' (ERR 108)');
+			} catch (\Exception $e) {
+				throw new \Exception($e->getMessage() . ' (ERR 108)');
 			}
 
 			$parent_id = $attachment->parent_id;
@@ -105,7 +101,7 @@ class AttachmentTable extends Table
 
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 109)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -157,8 +153,8 @@ class AttachmentTable extends Table
 		// Check for a database error.
 		try {
 			$this->_db->execute();
-		} catch (Exception $e) {
-			throw new Exception(Text::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
+		} catch (\Exception $e) {
+			throw new \Exception(Text::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
 													get_class($this), $e->getMessage()) . ' (ERR 111)');
 			return false;
 		}

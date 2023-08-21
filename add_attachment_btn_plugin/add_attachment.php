@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -105,7 +106,7 @@ class plgButtonAdd_attachment extends CMSPlugin
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			return new stdClass();
+			return new \stdClass();
 			}
 		// Figure out where we are and construct the right link and set
 		$base_url = Uri::root(true);
@@ -114,7 +115,6 @@ class plgButtonAdd_attachment extends CMSPlugin
 			}
 
 		// Set up the Javascript framework
-		require_once JPATH_SITE . '/components/com_attachments/javascript.php';
 		AttachmentsJavascript::setupJavascript();
 
 		// Get the parent handler

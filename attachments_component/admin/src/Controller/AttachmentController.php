@@ -13,6 +13,10 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
+use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -25,11 +29,6 @@ use Joomla\CMS\Uri\Uri;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-/** Load the Attachments defines and helpers */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /**
  * Attachment Controller
@@ -166,7 +165,7 @@ class AttachmentController extends FormController
 		else {
 			if ( !is_numeric($parent_id) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_ID_S', $parent_id) . ' (ERR 122)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			}
 
@@ -188,7 +187,7 @@ class AttachmentController extends FormController
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				// Exit if there is no Attachments plugin to handle this parent_type
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 123)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_title = $parent->getTitle($parent_id, $parent_entity);
@@ -205,14 +204,13 @@ class AttachmentController extends FormController
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/add/view.html.php');
-		$view = new AttachmentsViewAdd();
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Add\HtmlView();
 
-		AttachmentsControllerAttachment::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
+		AttachmentController::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 		// ??? Move the add_view_urls function to attachments base view class
 
 		// We do not have a real attachment yet so fake it
-		$attachment = new stdClass();
+		$attachment = new \stdClass();
 
 		$attachment->uri_type = $uri_type;
 		$attachment->state	= $params->get('publish_default', false);
@@ -258,13 +256,13 @@ class AttachmentController extends FormController
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
 		if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 124)', 403);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 124)', 403);
 			}
 
 		// Make sure we have a user
 		if ( $user->get('username') == '' ) {
 			$errmsg = Text::_('ATTACH_ERROR_MUST_BE_LOGGED_IN_TO_UPLOAD_ATTACHMENT') . ' (ERR 125)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Get the article/parent handler
@@ -283,7 +281,7 @@ class AttachmentController extends FormController
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 126)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -305,7 +303,7 @@ class AttachmentController extends FormController
 		// Make sure this user has permission to upload
 		if ( !$parent->userMayAddAttachment($parent_id, $parent_entity, $new_parent) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S', $parent_entity_name) . ' (ERR 127)';
-			throw new Exception($errmsg, 403);
+			throw new \Exception($errmsg, 403);
 			}
 
 		// Set up the new record
@@ -314,7 +312,7 @@ class AttachmentController extends FormController
 
 		if (!$attachment->bind($input->get('post'))) {
 			$errmsg = $attachment->getError() . ' (ERR 128)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		$attachment->parent_type = $parent_type;
 		$parent->new = $new_parent;
@@ -411,7 +409,7 @@ class AttachmentController extends FormController
 			// Save the updated attachment info
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 131)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
@@ -513,7 +511,7 @@ class AttachmentController extends FormController
 		$user = $app->getIdentity();
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
-			throw new Exception(Text::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT') . ' (ERR 132)', 403);
+			throw new \Exception(Text::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT') . ' (ERR 132)', 403);
 			}
 
 		$uri = Uri::getInstance();
@@ -548,7 +546,7 @@ class AttachmentController extends FormController
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 133)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$entity_info = $apm->getInstalledEntityInfo();
 		$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -627,10 +625,9 @@ class AttachmentController extends FormController
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/edit/view.html.php');
-		$view = new AttachmentsViewEdit();
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Edit\HtmlView();
 
-		AttachmentsControllerAttachment::add_view_urls($view, 'update', $parent_id,
+		AttachmentController::add_view_urls($view, 'update', $parent_id,
 													   $parent_type, $attachment_id, $from);
 
 		// Update change URLS to remember if we want to change the parent
@@ -671,9 +668,8 @@ class AttachmentController extends FormController
 		$view->in_popup = $in_popup;
 
 		// Set up the access field
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
 		$view->access_level_tooltip = Text::_('JFIELD_ACCESS_LABEL') . '::' . Text::_('JFIELD_ACCESS_DESC');
-		$view->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+		$view->access_level = AccessLevelsField::getAccessLevels('access', 'access', $attachment->access);
 
 		// Set up view info
 		$view->update			 = $update;
@@ -719,7 +715,7 @@ class AttachmentController extends FormController
 		$user = $app->getIdentity();
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 134)', 403);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 134)', 403);
 			}
 
 		$model		= $this->getModel();
@@ -730,7 +726,7 @@ class AttachmentController extends FormController
 		$attachment_id = $input->getInt('id');
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $attachment_id) . ' (ERR 135)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Note the old uri type
@@ -739,7 +735,7 @@ class AttachmentController extends FormController
 		// Get the data from the form
 		if (!$attachment->bind($input->get('post'))) {
 			$errmsg = $attachment->getError() . ' (ERR 136)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Get the parent handler for this attachment
@@ -747,7 +743,7 @@ class AttachmentController extends FormController
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$parent = $apm->getAttachmentsPlugin($attachment->parent_type);
 
@@ -878,7 +874,7 @@ class AttachmentController extends FormController
 		// Check to make sure the user has permissions to edit the attachment
 		if ( !$parent->userMayEditAttachment($attachment) ) {
 			// ??? Add better error message
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 139)', 403);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 139)', 403);
 			}
 
 		// Double-check to see if the URL changed
@@ -959,7 +955,7 @@ class AttachmentController extends FormController
 			// Save the updated attachment info
 			if ( !$attachment->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 142)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			}
 
@@ -1107,7 +1103,7 @@ class AttachmentController extends FormController
 		$id = Factory::getApplication()->getInput()->getInt('id');
 		if ( !is_numeric($id) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 143)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// NOTE: AttachmentsHelper::download_attachment($id) checks access permission
@@ -1127,7 +1123,7 @@ class AttachmentController extends FormController
 		$user = $app->getIdentity();
 		if ( $user === null OR !( $user->authorise('core.delete', 'com_attachments') OR
 				$user->authorise('attachments.delete.own', 'com_attachments') ) ) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 144)', 403);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 144)', 403);
 			}
 
 		// Make sure we have a valid attachment ID
@@ -1138,7 +1134,7 @@ class AttachmentController extends FormController
 			}
 		else {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 145)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Load the attachment
@@ -1149,12 +1145,11 @@ class AttachmentController extends FormController
 		$attachment_id = $input->getInt('id');
 		if ( !$attachment->load($attachment_id) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 146)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/warning/view.html.php');
-		$view = new AttachmentsViewWarning( );
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Warning\HtmlView();
 		$view->parent_id = $attachment_id;
 		// $view->option = $input->getCmd('option'); // Protected variable is it really needed?
 		$view->from = $input->getWord('from');

@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Site\View\Attachments;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -23,10 +24,6 @@ use Joomla\String\StringHelper;
 
 // No direct access
 defined('_JEXEC') or die('Restricted Access');
-
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');	/* ??? Needed? */
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
@@ -69,7 +66,7 @@ class HtmlView extends BaseHtmlView
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 63)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// See if there are any attachments

@@ -11,6 +11,9 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
@@ -21,10 +24,6 @@ use Joomla\String\StringHelper;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-/** Load the attachments helper */
-require_once JPATH_SITE . '/components/com_attachments/helper.php';
-
 
 /**
  * Plugins for Attachments
@@ -295,7 +294,7 @@ class AttachmentsPlugin extends CMSPlugin
 			$lang = Factory::getApplication()->getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 	}
 
@@ -366,11 +365,11 @@ class AttachmentsPlugin extends CMSPlugin
 		$db->setQuery($query);
 		try {
 			$title = $db->loadResult();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
 												 $parent_entity_name, $parent_id) . ' (ERR 301)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		$this->title_cache[$cache_key] = $title;
@@ -432,10 +431,10 @@ class AttachmentsPlugin extends CMSPlugin
 		$db->setQuery($query);
 		try {
 			$items = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 			$errmsg				= Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		if ($items == null)
@@ -494,7 +493,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function getParentCreatorId($parent_id, $parent_entity = 'default')
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -723,7 +722,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayViewParent($parent_id, $parent_entity = 'default', $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Return true if the attachments should be hidden for this parent
@@ -776,7 +775,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -792,7 +791,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayEditAttachment(&$attachment, $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -808,7 +807,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayDeleteAttachment(&$attachment, $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/**
@@ -826,7 +825,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayChangeAttachmentState($parent_id, $parent_entity, $attachment_creator_id, $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Check to see if the user may access (see/download) the attachments
@@ -838,7 +837,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function userMayAccessAttachment(&$attachment, $user_id = null)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 	/** Insert the attachments list into the content text (for front end)
@@ -913,8 +912,7 @@ class AttachmentsPlugin extends CMSPlugin
 		$add_attachment_btn  = false;
 
 		// Get the html for the attachments list
-		require_once JPATH_SITE . '/components/com_attachments/controllers/attachments.php';
-		$controller		  = new AttachmentsControllerAttachments;
+		$controller		  = new AttachmentsController();
 		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
 
 		// If the attachments list is empty, insert an empty div for it
@@ -1060,7 +1058,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function showAttachmentsInEditor($parent_entity, $view, $layout)
 	{
-		throw new Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
+		throw new \Exception(Text::_('ATTACH_NOT_IMPLEMENTED'), 501);
 	}
 
 

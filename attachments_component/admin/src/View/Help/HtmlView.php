@@ -14,16 +14,13 @@
 namespace JMCameron\Component\Attachments\Administrator\View\Help;
 
 use JMCameron\Component\Attachments\Administrator\View\Help\HelpView;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
-
-// Load the Attachments defines
-require_once JPATH_SITE . '/components/com_attachments/defines.php';
-
 
 /**
  * View for the help page

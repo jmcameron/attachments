@@ -11,6 +11,8 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -23,13 +25,7 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines (if available) */
-if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
-{
-	require_once JPATH_SITE . '/components/com_attachments/defines.php';
-	require_once(JPATH_SITE . '/components/com_attachments/helper.php');
-	require_once(JPATH_SITE . '/components/com_attachments/javascript.php');
-}
-else
+if (!file_exists(JPATH_SITE . '/components/com_attachments/attachments.xml'))
 {
 	// Exit quietly if the attachments component has been uninstalled or deleted
 	return;
@@ -370,9 +366,9 @@ class plgContentAttachments extends CMSPlugin
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 200)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		// Exit if there are no new attachments
@@ -398,7 +394,7 @@ class plgContentAttachments extends CMSPlugin
 			$error_msg = AttachmentsHelper::switch_parent($attachment, null, $item->id);
 			if ( $error_msg != '' ) {
 				$errmsg = Text::_($error_msg) . ' (ERR 201)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 
 			// Update the parent info
@@ -410,7 +406,7 @@ class plgContentAttachments extends CMSPlugin
 
 			if ( !$atrow->store() ) {
 				$errmsg = $attachment->getError() . ' (ERR 202)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			}
 

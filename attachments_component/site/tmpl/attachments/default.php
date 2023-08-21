@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -21,10 +22,6 @@ use Joomla\String\StringHelper;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-// Load the Attachments helper
-require_once(JPATH_SITE.'/components/com_attachments/helper.php'); /* ??? Needed? */
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 $app = Factory::getApplication();
 $user = $app->getIdentity();

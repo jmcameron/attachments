@@ -35,12 +35,6 @@
     <files folder="site">
 	<filename>attachments.php</filename>
 	<filename>controller.php</filename>
-	<filename>controllers/attachments.php</filename>
-	<filename>controllers/index.html</filename>
-	<filename>defines.php</filename>
-	<filename>file_types.php</filename>
-	<filename>helper.php</filename>
-	<filename>javascript.php</filename>
 	<filename>legacy/controller.php</filename>
 	<filename>legacy/model.php</filename>
 	<filename>legacy/view.php</filename>
@@ -52,6 +46,10 @@
 	<filename>src/Model/index.html</filename>
 	<filename>src/Controller/AttachmentsController.php</filename>
 	<filename>src/Controller/index.html</filename>
+	<filename>src/Helper/AttachmentsDefines.php</filename>
+	<filename>src/Helper/AttachmentsHelper.php</filename>
+	<filename>src/Helper/AttachmentsJavascript.php</filename>
+	<filename>src/Helper/AttachmentsFileTypes.php</filename>
 	<filename>src/index.html</filename>
 	<filename>src/View/Warning/HtmlView.php</filename>
 	<filename>src/View/Warning/index.html</filename>

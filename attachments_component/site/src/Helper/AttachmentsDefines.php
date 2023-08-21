@@ -11,6 +11,8 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+namespace JMCameron\Component\Attachments\Site\Helper;
+
 // No direct access.
 defined('_JEXEC') or die('Restricted access');
 

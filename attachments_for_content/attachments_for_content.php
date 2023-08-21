@@ -201,7 +201,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		if (StringHelper::strtolower($parent_entity) != 'category')
 		{
 			$errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 400)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		$entity_table		= $this->entity_table[$parent_entity];
@@ -232,9 +232,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$db->setQuery($query);
 		try {
 			$items = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 401) <br/>' . $db->stderr();
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		if ($items == null)
@@ -278,9 +278,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$db->setQuery($query, 0, 1);
 				try {
 					$result = $db->loadResult();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$errmsg = Text::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERR 402)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 				break;
 
@@ -289,9 +289,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$db->setQuery($query, 0, 1);
 				try {
 					$result = $db->loadResult();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$errmsg = Text::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERR 403)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 		}
 
@@ -461,9 +461,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$db->setQuery($query, 0, 1);
 				try {
 					$obj = $db->loadObject();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 404)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 				if (is_object($obj))
 				{
@@ -484,9 +484,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$db->setQuery($query, 0, 1);
 				try {
 					$article = $db->loadObject();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 405)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 
 				$now	  = JFactory::getDate()->toUnix();
@@ -538,10 +538,10 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$db->setQuery($query, 0, 1);
 				try {
 					$article = $db->loadObject();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 					$errmsg				= Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 406)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 
 				if ($article)
@@ -661,7 +661,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		else
 		{
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 407)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		return $where;
@@ -707,10 +707,10 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$db->setQuery($query, 0, 1);
 		try {
 			$obj = $db->loadObject();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 			$errmsg				= Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 408)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		return !empty($obj);
@@ -748,7 +748,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			if (($parent_id == null) || ($parent_id == '') || !is_numeric($parent_id))
 			{
 				$errmsg = Text::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 409)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 		}
 
@@ -812,14 +812,14 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			$db->setQuery($query);
 			try {
 				$attachments = $db->loadObjectList();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 			if (count($attachments) === false)
 			{
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 
 			// Honor all_but_article_view option

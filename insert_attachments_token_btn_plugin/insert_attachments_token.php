@@ -79,7 +79,7 @@ class plgButtonInsert_attachments_token extends CMSPlugin
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			return new stdClass();
+			return new \stdClass();
 			}
 
 		// Get ready for language things

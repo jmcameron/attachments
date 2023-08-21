@@ -26,7 +26,7 @@ defined('_JEXEC') or die();
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 174)', 404);
+	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 174)', 404);
 	}
 
 /** Define the legacy classes, if necessary */

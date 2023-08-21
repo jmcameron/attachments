@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -20,13 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 defined( '_JEXEC' ) or die('Restricted access');
 
 /** Load the Attachments defines (if available) */
-if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
-{
-	require_once(JPATH_SITE . '/components/com_attachments/defines.php');
-	require_once(JPATH_SITE . '/components/com_attachments/helper.php');
-	require_once(JPATH_SITE . '/components/com_attachments/javascript.php');
-}
-else
+if (!file_exists(JPATH_SITE.'/components/com_attachments/attachments.xml'))
 {
 	// Exit quietly if the attachments component has been uninstalled or deleted
 	return;

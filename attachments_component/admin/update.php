@@ -11,6 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -27,12 +30,9 @@ defined('_JEXEC') or die('Restricted access');
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 67)', 404);
+	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 67)', 404);
 	return;
 	}
-
-/** Load the Attachments defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * A class for update functions
@@ -56,9 +56,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 68)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_FILE_TYPE_FIELDS_NEED_UPDATING');
@@ -85,7 +85,7 @@ class AttachmentsUpdate
 					if (!$attachment->store()) {
 						$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
 							' ' . $attachment->getError() . ' (ERR 69)';
-						throw new Exception($errmsg, 500);
+						throw new \Exception($errmsg, 500);
 						}
 					$numUpdated++;
 					}
@@ -110,9 +110,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 70)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return 0;
@@ -147,7 +147,7 @@ class AttachmentsUpdate
 				if (!$db->execute()) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
-					throw new Exception($errmsg . $db->stderr() . ' (ERR 71)', 500);
+					throw new \Exception($errmsg . $db->stderr() . ' (ERR 71)', 500);
 					}
 				$numUpdated++;
 				}
@@ -167,8 +167,6 @@ class AttachmentsUpdate
 	 */
 	public static function disable_sql_uninstall($dbtype = 'mysql')
 	{
-		jimport('joomla.filesystem.file');
-
 		// Construct the filenames
 		if ( $dbtype == 'mysqli' ) {
 			// Use the same MYSQL installation file for mysqli
@@ -213,7 +211,7 @@ class AttachmentsUpdate
 	 */
 	private static function checkFilename($filename)
 	{
-		$finfo = new StdClass();
+		$finfo = new \StdClass();
 
 		// If it is a windows filename, convert to Linux format for analysis
 		$winfile = false;
@@ -274,8 +272,6 @@ class AttachmentsUpdate
 	 */
 	public static function regenerate_system_filenames()
 	{
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
@@ -290,9 +286,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 72)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -324,10 +320,10 @@ class AttachmentsUpdate
 			$db->setQuery($query, 0, 1);
 			try {
 				$parent_id = $db->loadResult();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N',
 										 $attachment->parent_entity,  $parent_id) . ' (ERR 73)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 
 			// Construct the updated system filename
@@ -381,7 +377,7 @@ class AttachmentsUpdate
 				if ( !File::exists($new_path) ) {
 					if ( !Folder::create($new_path) ) {
 						$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 74)';
-						throw new Exception($errmsg, 500);
+						throw new \Exception($errmsg, 500);
 						}
 					AttachmentsHelper::write_empty_index_html($new_path);
 					}
@@ -390,14 +386,14 @@ class AttachmentsUpdate
 				if ( !File::move($current_filename_sys, $new_filename_sys) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_RENAMING_FILE_S_TO_S',
 											 $old_filename_sys, $new_filename_sys) . ' (ERR 75)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 
 				// Verify the new system filename exists!
 				if ( !File::exists($new_filename_sys) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_NEW_SYSTEM_FILENAME_S_NOT_FOUND',
 											 $new_filename_sys) . ' (ERR 76)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 
 				// Update the record
@@ -405,7 +401,7 @@ class AttachmentsUpdate
 				$attachment->url = $new_url;
 				if (!$attachment->store()) {
 					$errmsg = $attachment->getError() . ' (ERR 77)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 
 				$numUpdated++;
@@ -442,9 +438,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 78)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -503,7 +499,7 @@ class AttachmentsUpdate
 
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 79)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 
 			$numUpdated++;
@@ -531,9 +527,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 80)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -557,7 +553,7 @@ class AttachmentsUpdate
 			// Update the record
 			if (!$attachment->store()) {
 				$errmsg = $attachment->getError() . ' (ERR 81)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 
 			$numUpdated++;
@@ -583,9 +579,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 82)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_FILES');
@@ -638,9 +634,9 @@ class AttachmentsUpdate
 		$db->setQuery($query);
 		try {
 			$attachments = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 83)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
 			return Text::_('ATTACH_NO_ATTACHMENTS_WITH_URLS');
@@ -651,7 +647,6 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
 		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
 		$numUpdated = 0;
@@ -660,7 +655,7 @@ class AttachmentsUpdate
 
 			$attachment->load($id);
 
-			$a = new stdClass();
+			$a = new \stdClass();
 
 			AttachmentsHelper::get_url_info($attachment->url, $a, false, false);
 
@@ -676,7 +671,7 @@ class AttachmentsUpdate
 				// Update the record
 				if (!$attachment->store()) {
 					$errmsg = $attachment->getError() . ' (ERR 84)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 				$numUpdated++;
 				}

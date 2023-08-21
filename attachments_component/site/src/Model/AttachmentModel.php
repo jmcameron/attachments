@@ -13,8 +13,10 @@
 
 namespace JMCameron\Component\Attachments\Site\Model;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Plugin\PluginHelper;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -90,15 +92,14 @@ class AttachmentModel extends BaseDatabaseModel
 
 		if ( empty($this->_attachment) ) {
 
-			$user	= JFactory::getUser();
+			$user	= Factory::getApplication()->getIdentity();
 			$user_levels = $user->getAuthorisedViewLevels();
 
 			// If the user is not logged in, add extra view levels (if configured)
 			if ( $user->get('username') == '' ) {
 
 				// Get the component parameters
-				jimport('joomla.application.component.helper');
-				$params = JComponentHelper::getParams('com_attachments');
+				$params = ComponentHelper::getParams('com_attachments');
 
 				// Add the specified access levels
 				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
@@ -114,7 +115,7 @@ class AttachmentModel extends BaseDatabaseModel
 			$user_levels = implode(',', array_unique($user_levels));
 
 			// Load the attachment data and make sure this user has access
-			$db		= $this->getDbo();
+			$db		= Factory::getContainer()->get('DatabaseDriver');
 			$query	= $db->getQuery(true);
 			$query->select('a.*, a.id as id');
 			$query->from('#__attachments as a');
@@ -131,7 +132,7 @@ class AttachmentModel extends BaseDatabaseModel
 			// Retrieve the information about the parent
 			$parent_type = $this->_attachment->parent_type;
 			$parent_entity = $this->_attachment->parent_entity;
-			JPluginHelper::importPlugin('attachments');
+			PluginHelper::importPlugin('attachments');
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$this->_attachment->parent_type = false;
@@ -214,7 +215,7 @@ class AttachmentModel extends BaseDatabaseModel
 		$db->setQuery($query);
 		if ( !$db->execute() ) {
 			$errmsg = $db->stderr() . ' (ERR 49)';
-			JError::raiseError(500, $errmsg);
+			throw new \Exception($errmsg, 500);
 			}
 	}
 

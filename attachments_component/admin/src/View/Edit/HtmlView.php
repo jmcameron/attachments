@@ -13,6 +13,9 @@
 
 namespace JMCameron\Component\Attachments\Administrator\View\Edit;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -28,19 +31,12 @@ if ( $user === null OR
 	 !( $user->authorise('core.edit', 'com_attachments') OR
 		$user->authorise('core.edit.own', 'com_attachments') ) )
 {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 177)', 404);
+	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 177)', 404);
 	return;
 }
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
-/** Include the Attachments javascript classes */
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
-
 
 /**
  * HTML View class for editing new attachments
@@ -61,7 +57,7 @@ class HtmlView extends BaseHtmlView
 		if (!$this->attachment->parent->userMayEditAttachment($attachment))
 		{
 			$errmsg = Text::_('ATTACH_ERROR_NO_PERMISSION_TO_EDIT');
-			throw new Exception($errmsg . ' (ERR 178)', 403);
+			throw new \Exception($errmsg . ' (ERR 178)', 403);
 			return;
 		}
 
@@ -85,7 +81,6 @@ class HtmlView extends BaseHtmlView
 
 		// Construct the drop-down list for legal icon filenames
 		$icon_filenames = array();
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname)
 		{
 			$icon_filenames[] = HTMLHelper::_('select.option', $ifname);

@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Site\Controller;
 
+use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -53,7 +54,7 @@ class AttachmentsController extends BaseController
 	public function noop()
 	{
 		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 59)';
-		throw new Exception( $errmsg, 500 );
+		throw new \Exception( $errmsg, 500 );
 	}
 
 
@@ -88,11 +89,10 @@ class AttachmentsController extends BaseController
 		$document = $app->getDocument();
 
 		// Get an instance of the model
-		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
-		$model = new AttachmentsModelAttachments();
+		$model = new AttachmentsModel();
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
@@ -115,7 +115,7 @@ class AttachmentsController extends BaseController
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 61)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$view->setModel($model);
 

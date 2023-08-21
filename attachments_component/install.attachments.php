@@ -286,7 +286,7 @@ class com_AttachmentsInstallerScript
 			try {
 				$db->setQuery($query);
 				$db->execute();
-			} catch (RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				// Complain if there was an error
 				$errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
 				$errmsg .= $db->errorMsg;
@@ -384,7 +384,7 @@ class com_AttachmentsInstallerScript
 		try {
 			$db->setQuery($query, 0, 1);
 			$component = $db->loadObject();
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			return false;
 		}
 
@@ -397,7 +397,7 @@ class com_AttachmentsInstallerScript
 			try {
 				$db->setQuery($query);
 				$db->execute();
-			} catch (RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				return false;
 			}
 

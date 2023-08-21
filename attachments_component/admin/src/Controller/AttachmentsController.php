@@ -13,6 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -77,7 +79,7 @@ class AttachmentsController extends AdminController
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
@@ -100,7 +102,7 @@ class AttachmentsController extends AdminController
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$view->setModel($model);
 
@@ -148,7 +150,6 @@ class AttachmentsController extends AdminController
 
 		// Get ready
 		$app = Factory::getApplication();
-		require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 		// Get the attachments parent manager
 		PluginHelper::importPlugin('attachments');
@@ -172,7 +173,7 @@ class AttachmentsController extends AdminController
 				$id = (int)$attachment_id;
 				if ( ($id == 0) OR !$attachment->load($id) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 166)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 				$parent_id = $attachment->parent_id;
 				$parent_type = $attachment->parent_type;
@@ -183,7 +184,7 @@ class AttachmentsController extends AdminController
 				$apm = getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 				$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -216,7 +217,7 @@ class AttachmentsController extends AdminController
 				$db->setQuery($query);
 				if (!$db->execute()) {
 					$errmsg = $db->getErrorMsg() . ' (ERR 168)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 					}
 			}
 		}
@@ -234,7 +235,7 @@ class AttachmentsController extends AdminController
 			// Get the article/parent handler
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 169)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$parent = $apm->getAttachmentsPlugin($parent_type);
 			$parent_entity = $parent->getCanonicalEntityId($parent_entity);
@@ -245,7 +246,7 @@ class AttachmentsController extends AdminController
 				$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 				$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_S_ID_N',
 										 $parent_entity_name, $parent_id) . ' (ERR 170)';
-				JError::raiseError(500, $errmsg);
+				throw new \Exception($errmsg, 500);
 				}
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -257,7 +258,6 @@ class AttachmentsController extends AdminController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 			$uri = Uri::getInstance();
 			$base_url = $uri->base(true);
 			$lang = $input->getCmd('lang', '');
@@ -292,7 +292,7 @@ class AttachmentsController extends AdminController
 
 		if (empty($cid))
 		{
-			throw new Exception(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
+			throw new \Exception(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 500);
 		}
 		else
 		{
@@ -306,7 +306,7 @@ class AttachmentsController extends AdminController
 			$att_published = $model->publish($cid, $value);
 			if (($att_published == false) OR ($att_published == 0))
 			{
-				throw new Exception($model->getError(), 500);
+				throw new \Exception($model->getError(), 500);
 			}
 			else
 			{

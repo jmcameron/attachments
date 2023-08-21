@@ -14,8 +14,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 
-/** Load the Attachements defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/importFromCSV.php');
 
 
@@ -76,15 +74,15 @@ class ImportAttachments extends ImportFromCSV
 	public function importAttachments($filename, $dry_run=false)
 	{
 		// Open the file
-		$open_ok = $self->open($filename);
+		$open_ok = $this->open($filename);
 		if ( $open_ok !== true ) {
-			throw new Exception($open_ok, 500);
+			throw new \Exception($open_ok, 500);
 			return;
 			}
 
 		// Read the data and import the attachments
 		$num_records = 0;
-		while ( $self->readNextRecord() ) {
+		while ( $this->readNextRecord() ) {
 
 // ???			// Create the raw record (???)
 // ???			$record = object();

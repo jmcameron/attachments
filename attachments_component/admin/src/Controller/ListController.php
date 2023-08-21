@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
+use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -50,7 +51,7 @@ class ListController extends BaseController
 	public function noop()
 	{
 		$errmsg = Text::_('ATTACH_ERROR_NO_FUNCTION_SPECIFIED') . ' (ERR 119)';
-		throw new Exception( $errmsg, 500 );
+		throw new \Exception( $errmsg, 500 );
 	}
 
 
@@ -76,8 +77,7 @@ class ListController extends BaseController
 		$document = $app->getDocument();
 
 		// Get an instance of the model
-		require_once(JPATH_SITE.'/components/com_attachments/models/attachments.php');
-		$model = new AttachmentsModelAttachments();
+		$model = new AttachmentsModel();
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
@@ -98,7 +98,7 @@ class ListController extends BaseController
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$view->setModel($model);
 

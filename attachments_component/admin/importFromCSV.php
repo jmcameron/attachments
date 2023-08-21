@@ -311,7 +311,7 @@ class ImportFromCSV
 			}
 		if ( count($missing) > 0 ) {
 			// Warn if there were missing required field names
-			throw new Exception(Text::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 101)', 500);
+			throw new \Exception(Text::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ',$missing)) . ' (ERR 101)', 500);
 			return;
 			}
 
@@ -336,7 +336,7 @@ class ImportFromCSV
 		try {
 			$db->setQuery($query, 0, 1);
 			$actual_username = $db->loadResult();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
 		}
 		if ( empty($actual_username) ) {
@@ -368,7 +368,7 @@ class ImportFromCSV
 		try {
 			$db->setQuery($query, 0, 1);
 			$actual_category_title = $db->loadResult();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
 		}
 		if ( empty($actual_category_title) ) {

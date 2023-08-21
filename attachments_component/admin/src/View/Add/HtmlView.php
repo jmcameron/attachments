@@ -13,6 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Administrator\View\Add;
 
+use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -27,15 +29,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
+	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
 }
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
-/** Include the Attachments javascript classes */
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
-
 
 /**
  * HTML View class for adding new attachments
@@ -63,7 +61,7 @@ class HtmlView extends BaseHtmlView
 		{
 			$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_UPLOAD_S',
 									 $attachment->parent_entity_name);
-			throw new Exception($errmsg . ' (ERR 173)', 403);
+			throw new \Exception($errmsg . ' (ERR 173)', 403);
 		}
 
 		// Construct derived data
@@ -81,8 +79,7 @@ class HtmlView extends BaseHtmlView
 											 'class="inputbox"', $attachment->state);
 
 		// Set up the access field
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-		$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', null);
+		$this->access_level = AccessLevelsField::getAccessLevels('access', 'access', null);
 		$this->access_level_tooltip = Text::_('JFIELD_ACCESS_LABEL') . '::' . Text::_('JFIELD_ACCESS_DESC');
 
 		// Handle user field 1

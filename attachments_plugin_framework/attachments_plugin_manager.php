@@ -191,7 +191,7 @@ class AttachmentsPluginManager
 		if (!in_array($parent_type, $this->parent_types))
 		{
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
-			throw new Exception($errmsg, 406);
+			throw new \Exception($errmsg, 406);
 		}
 
 		// Instantiate the plugin object, if we have not already done it

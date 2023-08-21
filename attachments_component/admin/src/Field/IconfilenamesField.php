@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Field;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -46,7 +47,6 @@ class IconfilenamesField extends FormField
 
 		// Construct the list of legal icon filenames
 		$icon_filenames = array();
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		foreach ( AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
 			$icon_filenames[] = HTMLHelper::_('select.option', $ifname);
 			}

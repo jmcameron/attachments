@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -19,9 +20,6 @@ use Joomla\CMS\Table\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-
-/** Load the Attachements defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * A class for importing attachments data from files
@@ -190,7 +188,7 @@ class AttachmentsImport
 			try {
 				$db->setQuery($query, 0, 1);
 				$creator_username = $db->loadResult();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CREATOR_ID_S',
 					$creator_id, $attachment_creator_username) . $line_str . ' (ERR 90)';
 			}
@@ -211,7 +209,7 @@ class AttachmentsImport
 			try {
 				$db->setQuery($query, 0, 1);
 				$modifier_username = $db->loadResult();				
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_MODIFIER_ID_S',
 									  $modifier_id, $attachment_modifier_username) . $line_str . ' (ERR 92)';
 			}

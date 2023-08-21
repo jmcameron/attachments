@@ -35,7 +35,7 @@ if ( $controller ) {
 		}
 	else {
 		$errmsg = Text::_('ATTACH_UNKNOWN_CONTROLLER') . ' (ERR 48)';
-		throw new Exception($errmsg, 500);
+		throw new \Exception($errmsg, 500);
 		}
 	}
 else {

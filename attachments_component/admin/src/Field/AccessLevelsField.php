@@ -13,15 +13,13 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Field;
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 
 defined('JPATH_BASE') or die;
-
-/** Load the Attachements defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 
 /**
  * Form Field class list of access levels the user has access to
@@ -50,7 +48,7 @@ class AccessLevelsField extends FormField
 	 */
 	protected function getInput()
 	{
-		$options = new stdClass();
+		$options = new \stdClass();
 		$options->element = $this->element;
 		$options->multiple = $this->multiple;
 		$options->always_public = $this->fieldname == 'show_guest_access_levels';
@@ -85,9 +83,9 @@ class AccessLevelsField extends FormField
 		try {
 			$db->setQuery($query);
 			$levels = $db->loadObjectList();
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			$errmsg = $e->getMessage() . ' (ERR 116)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		// Make sure there is a $level_value
@@ -101,7 +99,7 @@ class AccessLevelsField extends FormField
 			$level_value = Array($level_value);
 			}
 
-		// Make sure the $level_value is in the user's authorised levels (except for super-user)
+		// Make sure the $level_value is in the user's authorised levels (\Except for super-user)
 		if ( !$user->authorise('core.admin') ) {
 
 			// Filter out any non-permitted access levels

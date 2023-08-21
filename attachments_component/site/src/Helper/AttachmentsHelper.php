@@ -11,6 +11,11 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\Helper;
+
+use JMCameron\Component\Attachments\Administrator\Controller\ListController;
+use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
+use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Environment\Browser;
 use Joomla\CMS\Factory;
@@ -24,13 +29,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die('Restricted access');
-
-/** Load the Attachments defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
-
-/** Load the attachments javascript helper */
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
-
 
 /**
  * A class for attachments helper functions
@@ -216,7 +214,7 @@ class AttachmentsHelper
 		if ( ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_SITE) ) ||
 			 ( realpath(rtrim($upload_dir,$dirend_chars)) == realpath(JPATH_ADMINISTRATOR) ) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 29)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Create the subdirectory (if necessary)
@@ -234,7 +232,7 @@ class AttachmentsHelper
 
 		if ( !$subdir_ok || !Folder::exists($upload_dir) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 30)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Add a simple index.html file to the upload directory to prevent browsing
@@ -242,7 +240,7 @@ class AttachmentsHelper
 		$index_fname = $upload_dir.'/index.html';
 		if ( !AttachmentsHelper::write_empty_index_html($upload_dir) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// If this is secure, create the .htindex file, if necessary
@@ -257,7 +255,7 @@ class AttachmentsHelper
 				}
 			if ( ! $hta_ok ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_ADDING_HTACCESS_S', $upload_dir) . ' (ERR 32)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			}
 		else {
@@ -425,7 +423,7 @@ class AttachmentsHelper
 		$secure = $params->get('secure', false);
 		if ( !AttachmentsHelper::setup_upload_directory( $upload_dir, $secure ) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// If we are updating, note the name of the old filename
@@ -455,7 +453,7 @@ class AttachmentsHelper
 		if ( $file_size > $max_size ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_FILE_S_TOO_BIG_N_N_N', $filename,
 									 $file_size, $max_attachment_size, $max_upload_size);
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Get the maximum allowed filename length (for the filename display)
@@ -525,7 +523,7 @@ class AttachmentsHelper
 				$error = 'bad_chars';
 				$error_msg = Text::sprintf('ATTACH_ERROR_BAD_CHARACTER_S_IN_FILENAME_S', $char, $filename);
 				if ( $app->isClient('administrator') ) {
-					$result = new stdClass();
+					$result = new \stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -536,7 +534,7 @@ class AttachmentsHelper
 				$format = StringHelper::strtolower(File::getExt($filename));
 				$error_msg = Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " .php.$format";
 				if ( $app->isClient('administrator') ) {
-					$result = new stdClass();
+					$result = new \stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -547,7 +545,7 @@ class AttachmentsHelper
 				$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 				$error_msg .= $msgbreak . ' (' . Text::_('ATTACH_YOU_MUST_SELECT_A_FILE_TO_UPLOAD') . ')';
 				if ( $app->isClient('administrator') ) {
-					$result = new stdClass();
+					$result = new \stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -559,7 +557,7 @@ class AttachmentsHelper
 				$error_msg .= $msgbreak . '(' . Text::_('ATTACH_ERROR_MAY_BE_LARGER_THAN_LIMIT') . ' ';
 				$error_msg .= get_cfg_var('upload_max_filesize') . ')';
 				if ( $app->isClient('administrator') ) {
-					$result = new stdClass();
+					$result = new \stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -568,8 +566,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
-				$view = new AttachmentsViewUpdate();
+				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -577,8 +574,7 @@ class AttachmentsHelper
 				$view->update = $input->getWord('update');
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
-				$view = new AttachmentsViewUpload();
+				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -659,7 +655,6 @@ class AttachmentsHelper
 
 		// Handle PDF mime types
 		if ($extension == 'pdf') {
-			require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 			if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mime_types)) {
 				$ftype = 'application/pdf';
 				}
@@ -669,7 +664,7 @@ class AttachmentsHelper
 		if ( $error ) {
 
 			if ( $app->isClient('administrator') ) {
-				$result = new stdClass();
+				$result = new \stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
 				return $result;
@@ -677,8 +672,7 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
-				$view = new AttachmentsViewUpdate();
+				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -686,8 +680,7 @@ class AttachmentsHelper
 				$view->update = $input->getWord('update');
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
-				$view = new AttachmentsViewUpload();
+				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -734,7 +727,7 @@ class AttachmentsHelper
 		if ( !File::exists($fullpath) ) {
 			if ( !Folder::create($fullpath) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			AttachmentsHelper::write_empty_index_html($fullpath);
 			}
@@ -758,7 +751,7 @@ class AttachmentsHelper
 									 StringHelper::strlen($filename_sys),
 									 AttachmentsDefines::$MAXIMUM_FILENAME_SYS_LENGTH,
 									 $filename) . '(ERR 35)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Make sure the system filename doesn't already exist
@@ -785,7 +778,7 @@ class AttachmentsHelper
 			$error_msg = Text::sprintf('ATTACH_ERROR_FILE_S_ALREADY_ON_SERVER', $filename);
 
 			if ( $app->isClient('administrator') ) {
-				$result = new stdClass();
+				$result = new \stdClass();
 				$result->error = true;
 				$result->error_msg = $error_msg;
 				return $result;
@@ -794,8 +787,7 @@ class AttachmentsHelper
 			$save_url = Route::_($base_url . "index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
-			require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
-			$view = new AttachmentsViewUpload();
+			$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
 			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 											 $attachment->parent_type, null, $from);
 			// Set up the view
@@ -849,9 +841,9 @@ class AttachmentsHelper
 				try {
 					$db->setQuery($query, 0, 1);
 					$old_state = $db->loadResult();
-				} catch (RuntimeException $e) {
+				} catch (\RuntimeException $e) {
 					$errmsg = $e->getMessage() . ' (ERR 36)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 				$attachment->state = $old_state;
 				}
@@ -868,13 +860,12 @@ class AttachmentsHelper
 		$attachment->modified = $now;
 
 		// Add the icon file type
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
 			$errmsg = Text::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Get the attachment id
@@ -912,9 +903,9 @@ class AttachmentsHelper
 			try {
 				$db->setQuery($query);
 				$result = $db->execute();
-			} catch (RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				$errmsg = $e->getMessage() . ' (ERR 38)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 			$msg = Text::_('ATTACH_ERROR_MOVING_FILE')
 				. " {$_FILES['upload']['tmp_name']} -> {$filename_sys})";
@@ -944,7 +935,7 @@ class AttachmentsHelper
 	private static function parse_url(&$raw_url, $relative_url)
 	{
 		// Set up the return object
-		$result = new stdClass();
+		$result = new \stdClass();
 		$result->error = false;
 		$result->relative = $relative_url;
 
@@ -1121,13 +1112,13 @@ class AttachmentsHelper
 
 			// Set up error handler in case it times out or some other error occurs
 			set_error_handler(function($a, $b, $c, $d) {
-				throw new Exception("fsockopen error");
+				throw new \Exception("fsockopen error");
 			}, E_ALL);
 			try {
 				$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
 				restore_error_handler();
 				}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				restore_error_handler();
 				if ( $verify ) {
 					$u->error = true;
@@ -1139,7 +1130,7 @@ class AttachmentsHelper
 			if ( $u->error ) {
 				$error_msg = Text::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
 				if ( $app->isClient('administrator') ) {
-					$result = new stdClass();
+					$result = new \stdClass();
 					$result->error = true;
 					$result->error_msg = $error_msg;
 					return $result;
@@ -1218,7 +1209,6 @@ class AttachmentsHelper
 
 		// Deal with the file type
 		if ( !$mime_type ) {
-			require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 			$mime_type = AttachmentsFileTypes::mime_type($filename);
 			}
 		if ( $mime_type ) {
@@ -1236,7 +1226,6 @@ class AttachmentsHelper
 			}
 
 		// See if we can figure out the icon
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
 		$icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
 		if ( $icon_filename ) {
 			$attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
@@ -1321,16 +1310,14 @@ class AttachmentsHelper
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
-				require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
-				$view = new AttachmentsViewUpdate();
+				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 				$view->update = $update_form;
 				}
 			else {
-				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
-				$view = new AttachmentsViewUpload();
+				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -1421,9 +1408,9 @@ class AttachmentsHelper
 				$db->setQuery($query, 0, 1);
 				try {
 					$old_state = $db->loadResult();
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$errmsg = $db->stderr() . ' (ERR 39)';
-					throw new Exception($errmsg, 500);
+					throw new \Exception($errmsg, 500);
 				}
 				$attachment->state = $old_state;
 				}
@@ -1438,13 +1425,13 @@ class AttachmentsHelper
 		// Check the URL length
 		if (strlen($attachment->url) > AttachmentsDefines::$MAXIMUM_URL_LENGTH) {
 			$errmsg = "URL is too long! (". strlen($attachment->url) .")";	// ??? Convert to translated error message
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Save the updated attachment
 		if (!$attachment->store()) {
 			$errmsg = Text::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Delete any old attachment file
@@ -1476,13 +1463,12 @@ class AttachmentsHelper
 		$base_url = Uri::base(false);
 
 		// Get the info about the attachment
-		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
-		$model = new AttachmentsModelAttachment();
+		$model = new AttachmentsModel();
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 41)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$parent_id = $attachment->parent_id;
 		$parent_type = $attachment->parent_type;
@@ -1493,7 +1479,7 @@ class AttachmentsHelper
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -1519,7 +1505,7 @@ class AttachmentsHelper
 
 			// Otherwise, just error out
 			$errmsg = Text::_('ATTACH_ERROR_NO_PERMISSION_TO_DOWNLOAD') . ' (ERR 43)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Get the other info about the attachment
@@ -1534,7 +1520,7 @@ class AttachmentsHelper
 			// Make sure the file exists
 			if ( !File::exists($filename_sys) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_FILE_S_NOT_FOUND_ON_SERVER', $filename) . ' (ERR 44)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$file_size = filesize($filename_sys);
 
@@ -1657,7 +1643,7 @@ class AttachmentsHelper
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -1679,7 +1665,7 @@ class AttachmentsHelper
 		// Make sure the new directory exists
 		if ( !Folder::create($new_fullpath) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_CREATE_DIR_S', $new_fullpath) . ' (ERR 46)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Construct the new filename and URL
@@ -1791,9 +1777,9 @@ class AttachmentsHelper
 		$db->setQuery($query);
 		try {
 			$total = $db->loadResult();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$errmsg = $db->stderr() . ' (ERR 47)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		// Generate the HTML for the attachments for the specified parent
@@ -1808,24 +1794,19 @@ class AttachmentsHelper
 			$hta_filename = $attach_dir.'/.htaccess';
 			if ( ($secure && !file_exists($hta_filename)) ||
 				 (!$secure && file_exists($hta_filename)) ) {
-				require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 				AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 				}
 
 			if ( $app->isClient('administrator') ) {
 				// Get the html for the attachments list
-				require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
-
-				$controller = new AttachmentsControllerList();
+				$controller = new ListController();
 
 				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
 													null, $show_file_links, $allow_edit, false, $from);
 				}
 			else {
 				// Get the html for the attachments list
-				require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
-
-				$controller = new AttachmentsControllerAttachments();
+				$controller = new AttachmentsController();
 
 				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
 													null, $show_file_links, $allow_edit, false, $from);

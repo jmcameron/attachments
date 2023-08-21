@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Site\Helper;
+
 use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die('Restricted access');

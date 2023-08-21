@@ -44,7 +44,7 @@ class HtmlView extends BaseHtmlView
 		$user = $app->getIdentity();
 		if ($user === null OR !$user->authorise('core.admin', 'com_attachments'))
 		{
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)', 404);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)', 404);
 			return;
 		}
 

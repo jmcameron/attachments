@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -26,10 +27,6 @@ HTMLHelper::_('bootstrap.tooltip');
 
 $uri = Uri::getInstance();
 $document = Factory::getApplication()->getDocument();
-
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the regular css file
 AttachmentsJavascript::setupJavascript(false);

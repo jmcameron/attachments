@@ -13,6 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Site\View\Update;
 
+use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\View\AttachmentsFormView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -23,10 +25,6 @@ defined('_JEXEC') or die();
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/views/view.php');
-
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-
 
 /**
  * View for the uploads
@@ -46,7 +44,7 @@ class HtmlView extends AttachmentsFormView
 		if ( $user === null OR
 			 !($user->authorise('core.edit', 'com_attachments') OR
 			 $user->authorise('core.edit.own', 'com_attachments')) ) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
 			}
 
 		// For convenience
@@ -79,8 +77,7 @@ class HtmlView extends AttachmentsFormView
 
 		// Set up for editing the access level
 		if ( $this->params->get('allow_frontend_access_editing', false) ) {
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields/accesslevels.php');
-			$this->access_level = JFormFieldAccessLevels::getAccessLevels('access', 'access', $attachment->access);
+			$this->access_level = AccessLevelsField::getAccessLevels('access', 'access', $attachment->access);
 			$this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
 			}
 

@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -18,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\String\StringHelper;
 
@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors) . ' (ERR 175)', 500);
+			throw new \Exception(implode("\n", $errors) . ' (ERR 175)', 500);
 			return false;
 		}
 
@@ -73,9 +73,9 @@ class HtmlView extends BaseHtmlView
 		try {
 			$db->setQuery($query);
 			$levels = $db->loadObjectList();
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			$errmsg = $e->getMessage() . ' (ERR 176)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		$level_name = Array();
@@ -151,7 +151,6 @@ class HtmlView extends BaseHtmlView
 		$this->num_columns = $num_columns;
 
 		// get the version number
-		require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 		$this->version = AttachmentsDefines::$ATTACHMENTS_VERSION;
 		$this->project_url = AttachmentsDefines::$PROJECT_URL;
 

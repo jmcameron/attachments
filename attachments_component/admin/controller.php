@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Administrator\Controller\ListController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -65,7 +66,7 @@ class AttachmentsController extends BaseController
 		if ( !$parent_type ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
 				$db->getErrorMsg() . ' (ERR 65)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 			}
 
 		// Parse the parent type and entity
@@ -108,8 +109,7 @@ class AttachmentsController extends BaseController
 		$items = $parent->getEntityItems($parent_entity, $search_filter);
 
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/entity/view.html.php');
-		$view = new AttachmentsViewEntity( );
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Entity\HtmlView();
 		$view->option = $input->getCmd('option');
 		$view->from = 'closeme';
 		$view->post_url = $post_url;
@@ -132,7 +132,7 @@ class AttachmentsController extends BaseController
 		// Access check
 		$user = Factory::getApplication()->getIdentity();
 		if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
-			throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)', 404);
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)', 404);
 			}
 
 		// Set up the tooltip behavior
@@ -210,8 +210,7 @@ class AttachmentsController extends BaseController
 		// $entries[] = HTMLHelper::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
 
 		// Get the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/utils/view.html.php');
-		$view = new AttachmentsViewUtils();
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Utils\HtmlView();
 		$view->entries = $entries;
 
 		$view->display();
@@ -249,8 +248,7 @@ class AttachmentsController extends BaseController
 			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
 		}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
-		$controller = new AttachmentsControllerList();
+		$controller = new ListController();
 		$response = $controller->displayString($parent_id, $parent_type, $parent_entity,
 											   $title, $show_links, $allow_edit, false, $from);
 		echo $response;
@@ -263,8 +261,7 @@ class AttachmentsController extends BaseController
 	public function help()
 	{
 		// Set up the view
-		require_once(JPATH_COMPONENT_ADMINISTRATOR . '/views/help/view.html.php');
-		$view = new AttachmentsViewHelp();
+		$view = new \JMCameron\Component\Attachments\Administrator\View\Help\HtmlView();
 
 		// Load language(s)
 		$app = Factory::getApplication();

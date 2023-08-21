@@ -66,9 +66,9 @@ class AttachmentModel extends AdminModel
 			try {
 				$db->setQuery($query, 0, 1);
 				$item->creator_name = $db->loadResult();
-			} catch (RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				$errmsg = $e->getMessage() . ' (ERR 112)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 
 			// Get the modifier name
@@ -77,9 +77,9 @@ class AttachmentModel extends AdminModel
 			try {
 				$db->setQuery($query, 0, 1);
 				$item->modifier_name = $db->loadResult();
-			} catch (RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				$errmsg = $e->getMessage() . ' (ERR 113)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 			
 			// Get the parent info (??? Do we really need this?)
@@ -89,7 +89,7 @@ class AttachmentModel extends AdminModel
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 114)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 				}
 			$item->parent = $apm->getAttachmentsPlugin($parent_type);
 

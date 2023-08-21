@@ -14,8 +14,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 
-/** Load the Attachments defines */
-require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/importFromCSV.php');
 
 
@@ -71,18 +69,18 @@ class ImportArticles extends ImportFromCSV
 	public function importArticles($filename, $dry_run=false)
 	{
 		// Open the file
-		$open_ok = $self->open($filename);
+		$open_ok = $this->open($filename);
 		if ( $open_ok !== true ) {
-			throw new Exception($open_ok, 500);
+			throw new \Exception($open_ok, 500);
 			return;
 			}
 
 		// Read the data and import the articles
 		$num_records = 0;
-		while ( $self->readNextRecord() ) {
+		while ( $this->readNextRecord() ) {
 
 			// Create the raw record
-			$record = object();
+			$record = new \stdClass();
 
 			// Copy in the fields from the CSV data
 			$this->bind($record);
@@ -91,7 +89,7 @@ class ImportArticles extends ImportFromCSV
 			$cat_ok = $this->_verifyCategory((int)$record->catid,
 											 $record->category_title);
 			if ( $cat_ok !== true ) {
-				throw new Exception($cat_ok, 500);
+				throw new \Exception($cat_ok, 500);
 				return;
 				}
 
@@ -99,7 +97,7 @@ class ImportArticles extends ImportFromCSV
 			$creator_ok = $this->_verifyUser((int)$record->created_by,
 											 $record->created_by_name);
 			if ( $creator_ok !== true ) {
-				throw new Exception($creator_ok, 500);
+				throw new \Exception($creator_ok, 500);
 				return;
 				}
 

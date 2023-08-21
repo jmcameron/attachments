@@ -93,9 +93,9 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			try {
 				$results = $db->loadObject();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$errmsg = Text::_('ATTACH_ERROR_CHECKING_CATEGORY_OWNERSHIP') . ' (ERR 106)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 
 			if ( !empty($results) ) {
@@ -149,9 +149,9 @@ class AttachmentsPermissions
 			$db->setQuery($query, 0, 1);
 			try {
 				$results = $db->loadObject();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$errmsg = Text::_('ATTACH_ERROR_CHECKING_ARTICLE_OWNERSHIP') . ' (ERR 107)';
-				throw new Exception($errmsg, 500);
+				throw new \Exception($errmsg, 500);
 			}
 
 			if ( !empty($results) ) {

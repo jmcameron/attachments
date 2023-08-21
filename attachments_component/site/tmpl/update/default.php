@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -81,10 +83,6 @@ $last_modified = $mdate->format($date_format, true);
 
 // If this is an error re-display, display the CSS links directly
 $echo_css = $this->error;
-
-/** Load the Attachments helper */
-require_once(JPATH_SITE.'/components/com_attachments/helper.php');
-require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the stylesheets
 $uri = Uri::getInstance();
@@ -252,8 +250,7 @@ if ( $this->error )
 
 // Generate the list of existing attachments
 if ( ($update == 'file') || ($attachment->uri_type == 'file') ) {
-	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
-	$controller = new AttachmentsControllerAttachments();
+	$controller = new AttachmentsController();
 	$controller->display($parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'ATTACH_EXISTING_ATTACHMENTS',
 						 false, false, true, $this->from);

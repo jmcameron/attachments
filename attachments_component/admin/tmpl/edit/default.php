@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Administrator\Controller\ListController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -340,8 +341,7 @@ else
 if ( $attachment->parent_id AND ($update == 'file') )
 {
 	/** Get the attachments controller class */
-	require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/controllers/list.php');
-	$controller = new AttachmentsControllerList();
+	$controller = new ListController();
 	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }

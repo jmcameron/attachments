@@ -25,7 +25,7 @@ defined('_JEXEC') or die('Restricted access');
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
+	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
 	}
 
 /** Define the legacy classes, if necessary */
@@ -96,9 +96,9 @@ class SpecialController extends BaseController
 		try {
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			$errmsg = $e->getMessage() . ' (ERR 148)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		// Get the category IDs
@@ -111,9 +111,9 @@ class SpecialController extends BaseController
 		try {
 			$db->setQuery($query);
 			$crows = $db->loadObjectList();
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			$errmsg = $e->getMessage() . ' (ERR 149)';
-			throw new Exception($errmsg, 500);
+			throw new \Exception($errmsg, 500);
 		}
 
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
