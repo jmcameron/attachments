@@ -14,6 +14,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
@@ -64,7 +65,7 @@ if ( $format != 'raw' ) {
 	}
 
 $html .= "<table>\n";
-$html .= "<caption>{$this->title}</caption>\n";
+$html .= "<caption style=\"caption-side:top\">{$this->title}</caption>\n";
 
 // Add the column titles, if requested
 if ( $this->show_column_titles ) {
@@ -305,10 +306,10 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$update_link = '';
 	$delete_link = '';
 
-	$a_class = 'modal-button';
-	if ( $app->isClient('administrator') ) {
-		$a_class = 'modal';
-		}
+	$a_class = 'modal-button mx-2';
+	// if ( $app->isClient('administrator') ) {
+	// 	$a_class = 'modal';
+	// 	}
 
 	// Add the link to edit the attachment, if requested
 	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {
@@ -316,8 +317,25 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		// Create the edit link
 		$update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
 		$tooltip = Text::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
-		$update_link = "<a class=\"$a_class\" type=\"button\" href=\"$update_url\"";
-		$update_link .= " rel=\"{handler: 'iframe', size: {x: 920, y: 600}}\" title=\"$tooltip\">";
+
+		$randomId = base64_encode('update'.$actual_filename);
+		$modalParams['title']  = $this->escape($tooltip);
+		$modalParams['url']    = $update_url;
+		$modalParams['height'] = '100%';
+		$modalParams['width']  = '100%';
+		$modalParams['bodyHeight'] = 75;
+		$modalParams['modalWidth'] = 80;
+		$html .= LayoutHelper::render(
+			'libraries.html.bootstrap.modal.main', 
+			[
+				'selector' => 'modal-' . $randomId, 
+				'body' => "<iframe src=\"$update_url\" scrolling=\"no\"></iframe>",
+				'params' => $modalParams
+			]
+		);
+
+		$update_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+		$update_link .= "title=\"$tooltip\">";
 		$update_link .= HTMLHelper::image('com_attachments/pencil.gif', $tooltip, null, true);
 		$update_link .= "</a>";
 		}
@@ -328,8 +346,25 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		// Create the delete link
 		$delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
 		$tooltip = Text::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
-		$delete_link = "<a class=\"$a_class\" type=\"button\" href=\"$delete_url\"";
-		$delete_link .= " rel=\"{handler: 'iframe', size: {x: 600, y: 400}, iframeOptions: {scrolling: 'no'}}\" title=\"$tooltip\">";
+
+		$randomId = base64_encode('delete'.$actual_filename);
+		$modalParams['title']  = $this->escape($tooltip);
+		$modalParams['url']    = $delete_url;
+		$modalParams['height'] = '100%';
+		$modalParams['width']  = '100%';
+		$modalParams['bodyHeight'] = 40;
+		$modalParams['modalWidth'] = 80;
+		$html .= LayoutHelper::render(
+			'libraries.html.bootstrap.modal.main', 
+			[
+				'selector' => 'modal-' . $randomId, 
+				'body' => "<iframe src=\"$delete_url\" scrolling=\"no\"></iframe>",
+				'params' => $modalParams
+			]
+		);
+
+		$delete_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+		$delete_link .= "title=\"$tooltip\">";
 		$delete_link .= HTMLHelper::image('com_attachments/delete.gif', $tooltip, null, true);
 		$delete_link .= "</a>";
 		}
