@@ -14,45 +14,26 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-// Define some global variables to help figure out whether log messages.
-//
-//	Note: Apparently with Joomla 2.5+, the installer behavior has changed.
-//		  If the extension is being installed the first time, it first does the
-//		  install() method and the the update() method of this install script class.
-//		  Similarly when upgrading a previously installed component, it does the
-//		  update() method twice.  Not sure if this is a bug in Joomla or a config
-//		  error in this extension.	In any case, these flags are used to eliminate
-//		  the duplicate user information messages (about enabled plugins, etc).
-//		  The second time through the postFlight() function does not hurt anything,
-//		  so there is no point in repeating the informational messages to the user.
-
-/** Flag whether the informational messages should be emitted (warnings always go).
- */
-$attachments_install_verbose = true;
-
-/** Name of the last executed install method (install or upgrade)
- */
-$attachments_install_last_method = null;
-
 
 /**
  * The main attachments installation class
  *
  * @package Attachments
  */
-class com_AttachmentsInstallerScript 
+class com_AttachmentsInstallerScript implements InstallerScriptInterface
 {
 	/**
 	 * An array of supported database types
 	 *
 	 * @var	   array
 	 */
-	protected $dbKnown = array('mysql' => 'MySQL',
+	protected array $dbKnown = array('mysql' => 'MySQL',
 							   'mysqli' => 'MySQLi',
 							   'pdomysql' => 'PDO MySql',
 							   'postgresql' => 'PostgreSQL',
@@ -64,8 +45,14 @@ class com_AttachmentsInstallerScript
 	 *
 	 * @var	   array
 	 */
-	protected $dbSupported = array('mysql', 'mysqli', 'pdomysql');
+	protected array $dbSupported = array('mysql', 'mysqli', 'pdomysql');
 
+	/**
+	 * Minimum Joomla release supported
+	 * 
+	 * @var string
+	 */
+	protected string $minimum_joomla_release = "4.2.0";
 
 	/**
 	 * name of moved attachments directory (if present)
@@ -75,7 +62,7 @@ class com_AttachmentsInstallerScript
 	/**
 	 * List of the plugins
 	 */
-	var $plugins = Array('plg_content_attachments',
+	var array $plugins = array('plg_content_attachments',
 						 'plg_search_attachments',
 						 'plg_attachments_plugin_framework',
 						 'plg_attachments_for_content',
@@ -89,27 +76,27 @@ class com_AttachmentsInstallerScript
 	/**
 	 * Attachments component install function
 	 *
-	 * @param $parent : the installer parent
+	 * @param InstallerAdapter $adapter The adapter calling this method
+	 * @return boolean True on success
 	 */
-	public function install($parent)
+	public function install(InstallerAdapter $adapter): bool
 	{
-		global $attachments_install_verbose, $attachments_install_last_method;
-		$attachments_install_verbose = true;
-		$attachments_install_last_method = 'install';
-
 		$app = Factory::getApplication();
 		$app->enqueueMessage(Text::sprintf('ATTACH_ATTACHMENTS_COMPONENT_SUCCESSFULLY_INSTALLED'), 'message');
 
 		com_AttachmentsInstallerScript::installPermissions();
+
+		return true;
 	}
 
 
 	/**
 	 * Attachments component update function
 	 *
-	 * @param $parent : the installer parent
+	 * @param InstallerAdapter $adapter The adapter calling this method
+	 * @return boolean True on success
 	 */
-	public function update($parent)
+	public function update(InstallerAdapter $adapter): bool
 	{
 		global $attachments_install_verbose, $attachments_install_last_method;
 		$attachments_install_last_method = 'update';
@@ -120,15 +107,18 @@ class com_AttachmentsInstallerScript
 			}
 
 		com_AttachmentsInstallerScript::installPermissions();
+
+		return true;
 	}
 
 
 	/**
 	 * Attachments component uninstall function
 	 *
-	 * @param $parent : the installer parent
+	 * @param InstallerAdapter $adapter The adapter calling this method
+	 * @return boolean True on success
 	 */
-	public function uninstall($parent)
+	public function uninstall(InstallerAdapter $adapter): bool
 	{
 		// disable all the plugins
 		foreach ($this->plugins as $plugin_name)
@@ -145,27 +135,21 @@ class com_AttachmentsInstallerScript
 			// NOTE: Do NOT complain if there was an error
 			// (in case any plugin is already uninstalled and this query fails)
 		}
+
+		return true;
 	}
 
 
 	/**
 	 * Attachments component preflight function
 	 *
-	 * @param $type : type of installation
-	 * @param $parent : the installer parent
+	 * @param string $type The type of change (install or discover_install, update, uninstall)
+	 * @param InstallerAdapter $adapter The adapter calling this method
+	 * @return boolean True on success
 	 */
-	public function preflight($type, $parent)
+	public function preflight(string $type, InstallerAdapter $adapter): bool
 	{
-		global $attachments_install_verbose, $attachments_install_last_method;
-
 		$app = Factory::getApplication();
-
-		if ( $attachments_install_last_method == 'update' ) {
-			$attachments_install_verbose = false;
-			}
-		if ( $attachments_install_last_method == null ) {
-			$attachments_install_verbose = true;
-			}
 
 		// Load the installation language
 		$lang = $app->getLanguage();
@@ -184,11 +168,12 @@ class com_AttachmentsInstallerScript
 		$app->enqueueMessage('<br/>', 'message');
 
 		// Check to see if the database type is supported
-		if (!in_array(JFactory::getDbo()->name, $this->dbSupported))
+		$db_driver_name = Factory::getContainer()->get('DatabaseDriver')->name;
+		if (!in_array($db_driver_name, $this->dbSupported))
 		{
-			$db_name = $this->dbKnown[JFactory::getDbo()->name];
+			$db_name = $this->dbKnown[$db_driver_name];
 			if (empty($db_name)) {
-				$db_name = JFactory::getDbo()->name;
+				$db_name = $db_driver_name;
 				}
 			$errmsg = Text::sprintf('ATTACH_ATTACHMENTS_ERROR_UNSUPPORTED_DB_S', $db_name);
 			$app->enqueueMessage($errmsg, 'error');
@@ -196,7 +181,7 @@ class com_AttachmentsInstallerScript
 		}
 
 		// Verify that the Joomla version is adequate for this version of the Attachments extension
-		$this->minimum_joomla_release = $parent->getManifest()->attributes()->version;		  
+		$this->minimum_joomla_release = $adapter->getManifest()->attributes()->version;		  
 		if ( version_compare(JVERSION, $this->minimum_joomla_release, 'lt') ) {
 			$msg = Text::sprintf('ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP', $this->minimum_joomla_release);
 			if ( $msg == 'ATTACH_ATTACHMENTS_ONLY_WORKS_FOR_VERSION_S_UP' ) {
@@ -241,10 +226,8 @@ class com_AttachmentsInstallerScript
 				return false;
 				}
 
-			if ( $attachments_install_verbose ) {
-				$msg = Text::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
-				$app->enqueueMessage($msg, 'message');
-				}
+			$msg = Text::sprintf('ATTACH_TEMPORARILY_RENAMED_ATTACHMENTS_DIR_TO_S', $this->moved_attachments_dir);
+			$app->enqueueMessage($msg, 'message');
 			}
 
 		// ??? Joomla! 2.5x+ bugfix for "Can not build admin menus"
@@ -254,19 +237,20 @@ class com_AttachmentsInstallerScript
 		else {
 			$this->_bugfixCantBuildAdminMenus('com_attachments');
 			}
+		
+		return true;
 	}
 
 
 	/**
 	 * Attachments component postflight function
 	 *
-	 * @param $type : type of installation
-	 * @param $parent : the installer parent
+	 * @param string $type The type of change (install or discover_install, update, uninstall)
+	 * @param InstallerAdapter $adapter The adapter calling this method
+	 * @return boolean True on success
 	 */
-	public function postflight($type, $parent)
+	public function postflight(string $type, InstallerAdapter $adapter): bool
 	{
-		global $attachments_install_verbose, $attachments_install_last_method;
-
 		$app = Factory::getApplication();
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
@@ -294,22 +278,16 @@ class com_AttachmentsInstallerScript
 				return false;
 			}
 
-			if ( $attachments_install_verbose ) {
-				$app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
-				}
+			$app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
 		}
 
-		if ( $attachments_install_verbose ) {
-			$app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
-			}
+		$app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
 
 		// Restore the attachments directory (if renamed)
 		$attachdir = JPATH_ROOT.'/attachments';
 		if ( $this->moved_attachments_dir && Folder::exists($this->moved_attachments_dir) ) {
 			Folder::move($this->moved_attachments_dir, $attachdir);
-			if ( $attachments_install_verbose ) {
-				$app->enqueueMessage(Text::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
-				}
+			$app->enqueueMessage(Text::sprintf('ATTACH_RESTORED_ATTACHMENTS_DIR_TO_S', $attachdir), 'message');
 			}
 
 		// If needed, add the 'url_verify' column (may be needed because of SQL update issues)
@@ -332,9 +310,7 @@ class com_AttachmentsInstallerScript
 		$htaccess_file = $attachdir . '/.htaccess';
 		if ( File::exists($htaccess_file) ) {
 			if ( com_AttachmentsInstallerScript::setSecureMode() ) {
-				if ( $attachments_install_verbose ) {
-					$app->enqueueMessage(Text::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
-					}
+				$app->enqueueMessage(Text::_('ATTACH_RESTORED_SECURE_MODE'), 'message');
 				}
 			}
 
@@ -346,14 +322,11 @@ class com_AttachmentsInstallerScript
 		$app->enqueueMessage("<div style=\"$emphasis $padding\">$pkg_uninstall</div>", 'notice');
 		
 		// Ask the user for feedback
-		if ( $attachments_install_verbose ) {
-			$msg = Text::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
-								  '<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>');
-			$app->enqueueMessage("<div style=\"$emphasis $padding\">$msg</div>", 'message');
-			}
+		$msg = Text::sprintf('ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
+								'<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>');
+		$app->enqueueMessage("<div style=\"$emphasis $padding\">$msg</div>", 'message');
 
-		// Once postflight has run once, don't repeat the message if it runs again (eg, upgrade after install)
-		$attachments_install_verbose = false;
+		return true;
 	}
 
 
@@ -362,8 +335,6 @@ class com_AttachmentsInstallerScript
 	 */
 	protected function installPermissions()
 	{
-		global $attachments_install_verbose;
-
 		/** Load the Attachments defines */
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 		AttachmentsUpdate::installAttachmentsPermissions($attachments_install_verbose);
