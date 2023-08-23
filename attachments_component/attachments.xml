@@ -125,6 +125,7 @@
 		<filename>src/Model/AttachmentModel.php</filename>
 		<filename>src/Model/AttachmentsModel.php</filename>
 		<filename>src/Model/index.html</filename>
+		<filename>src/Controller/DisplayController.php</filename>
 		<filename>src/Controller/SpecialController.php</filename>
 		<filename>src/Controller/AttachmentsController.php</filename>
 		<filename>src/Controller/ListController.php</filename>
