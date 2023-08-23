@@ -11,6 +11,7 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -863,8 +864,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_attachments/permissions.php';
-
 		$user = Factory::getApplication()->getIdentity();
 
 		// Handle each entity type
@@ -923,8 +922,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		{
 			return true;
 		}
-
-		require_once JPATH_ADMINISTRATOR . '/components/com_attachments/permissions.php';
 
 		// Handle each entity type
 
@@ -1017,8 +1014,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			return true;
 		}
 
-		require_once JPATH_ADMINISTRATOR . '/components/com_attachments/permissions.php';
-
 		// Handle each entity type
 
 		switch ($attachment->parent_entity)
@@ -1108,8 +1103,6 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		{
 			return true;
 		}
-
-		require_once JPATH_ADMINISTRATOR . '/components/com_attachments/permissions.php';
 
 		// Handle each entity type
 
