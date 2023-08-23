@@ -337,7 +337,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 	{
 		/** Load the Attachments defines */
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-		AttachmentsUpdate::installAttachmentsPermissions($attachments_install_verbose);
+		AttachmentsUpdate::installAttachmentsPermissions();
 	}
 
 
