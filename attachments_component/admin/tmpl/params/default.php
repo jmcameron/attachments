@@ -30,12 +30,6 @@ HTMLHelper::_('bootstrap.tooltip');
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('form.validate');
 
-
-if (version_compare(JVERSION, '3.0', 'ge'))
-{
-	HTMLHelper::_('formbehavior.chosen', 'select');
-}
-
 $document = $app->getDocument();
 $uri = Uri::getInstance();
 
@@ -57,23 +51,24 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 <form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
 	<div class="row-fluid">
 		<div class="span10">
-			<ul class="nav nav-tabs" id="configTabs">
+			<?php echo HTMLHelper::_("uitab.startTabSet", "configTabs", ["active" => "basic"]); ?>
 				<?php
 					$fieldSets = $this->form->getFieldsets();
+
 					foreach ($fieldSets as $name => $fieldSet) :
 						$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
 				?>
-					<li><a href="#<?php echo $name;?>" data-toggle="tab"><?php echo	 Text::_($label);?></a></li>
-				<?php
-					endforeach;
-				?>
-			</ul>
-			<div class="tab-content">
+
+				<?php echo HTMLHelper::_(
+					"uitab.addTab",
+					"configTabs",
+					$name,
+					Text::_($label)
+				); ?>
+
 				<?php
 					$fieldSets = $this->form->getFieldsets();
-					foreach ($fieldSets as $name => $fieldSet) :
 				?>
-					<div class="tab-pane" id="<?php echo $name;?>">
 						<?php
 							if (isset($fieldSet->description) && !empty($fieldSet->description)) :
 								echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
@@ -93,11 +88,12 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 				<?php
 					endforeach;
 				?>
-				</div>
+				<?php echo HTMLHelper::_("uitab.endTab"); ?>
 				<?php
 				endforeach;
 				?>
-			</div>
+				<?php echo HTMLHelper::_("form.token"); ?>
+			<?php echo HTMLHelper::_("uitab.endTabSet"); ?>
 		</div>
 	</div>
 	<div>

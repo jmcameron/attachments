@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * Attachments component param controller
  *
@@ -26,10 +26,6 @@ use Joomla\Component\Config\Administrator\Model\ComponentModel;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
-
 
 /**
  * Attachment Controller

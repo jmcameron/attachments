@@ -2,7 +2,7 @@
 <config>
   <fieldset name="basic" id="attachments-fieldset"
 	    label="ATTACH_CONFIG_BASIC_SETTINGS_LABEL"
-	    addfieldpath="/administrator/components/com_attachments/models/fields"
+	    addfieldprefix="JMCameron\Component\Attachments\Administrator\Field"
 	    >
     <field name="publish_default" type="radio" default="0" class="btn-group"
            label="ATTACH_ATTACHMENTS_PUBLISHED_BY_DEFAULT"
@@ -14,8 +14,8 @@
            label="ATTACH_AUTO_PUBLISH_WARNING" rows="2" cols="60"
            description="ATTACH_AUTO_PUBLISH_WARNING_DESCRIPTION">
     </field>
-    <field name="default_access_level" type="accesslevels" default="2"
-	   label="ATTACH_DEFAULT_ACCESS_LEVEL"
+    <field name="default_access_level" type="accessLevels" default="2"
+	   label="ATTACH_DEFAULT_ACCESS_LEVEL" class="form-select"
 	   description="ATTACH_DEFAULT_ACCESS_LEVEL_DESCRIPTION"
 	   />
     <field name="user_field_1_name" type="text" default=""
@@ -162,9 +162,9 @@
            extension="com_content" multiple="multiple"
            description="ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION">
     </field>
-    <field name="show_guest_access_levels" type="accesslevels" default="[1]"
+    <field name="show_guest_access_levels" type="accessLevels" default="[1]"
 	   extension="com_attachments" multiple="multiple" size="3"
-	   label="ATTACH_SHOW_GUEST_ACCESS_LEVELS"
+	   label="ATTACH_SHOW_GUEST_ACCESS_LEVELS" class="form-select"
 	   description="ATTACH_SHOW_GUEST_ACCESS_LEVELS_DESCRIPTION"
 	   />
     <field name="hide_add_attachments_link" type="radio" default="0" class="btn-group"
