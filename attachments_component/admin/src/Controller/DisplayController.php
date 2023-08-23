@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Administrator\Controller;
+
 use JMCameron\Component\Attachments\Administrator\Controller\ListController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -30,7 +32,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
  *
  * @package Attachments
  */
-class AttachmentsController extends BaseController
+class DisplayController extends BaseController
 {
 
 	/** List the attachments

@@ -92,10 +92,8 @@
 	    <filename>attachments.php</filename>
 	    <filename>access.xml</filename>
 	    <filename>config.xml</filename>
-	    <filename>controller.php</filename>
 	    <filename>import.php</filename>
 	    <filename>index.html</filename>
-	    <filename>permissions.php</filename>
 	    <filename>forms/index.html</filename>
 	    <filename>forms/attachment.xml</filename>
 	    <filename>sql/index.html</filename>
@@ -137,6 +135,7 @@
 		<filename>src/Field/AccessLevelsField.php</filename>
 		<filename>src/Field/index.html</filename>
 		<filename>src/index.html</filename>
+		<filename>src/Helper/AttachmentsPermissions.php</filename>
 		<filename>src/Table/AttachmentTable.php</filename>
 		<filename>src/Table/index.html</filename>
 		<filename>src/View/Warning/HtmlView.php</filename>

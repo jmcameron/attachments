@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -174,7 +175,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolBar()
 	{
-		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/permissions.php');
 		$canDo = AttachmentsPermissions::getActions();
 
 		$toolbar = Toolbar::getInstance('toolbar');
