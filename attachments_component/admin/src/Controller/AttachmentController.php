@@ -17,15 +17,19 @@ use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Form\FormFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Input\Input;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -43,11 +47,11 @@ class AttachmentController extends FormController
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 *
-	 * @return	JControllerForm
+	 * @return	FormController
 	 */
-	public function __construct($config = array())
+	public function __construct($config = array(),  MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null, FormFactoryInterface $formFactory = null)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $factory, $app, $input, $formFactory);
 
 		$this->registerTask('applyNew',	'saveNew');
 		$this->registerTask('save2New',	'saveNew');
