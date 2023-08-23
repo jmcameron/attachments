@@ -96,6 +96,8 @@
 	    <filename>import.php</filename>
 	    <filename>index.html</filename>
 	    <filename>permissions.php</filename>
+	    <filename>forms/index.html</filename>
+	    <filename>forms/attachment.xml</filename>
 	    <filename>sql/index.html</filename>
 	    <filename>sql/install.mysql.sql</filename>
 	    <filename>sql/uninstall.mysql.sql</filename>
