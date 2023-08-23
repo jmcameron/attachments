@@ -208,9 +208,10 @@ class AttachmentController extends FormController
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Add\HtmlView();
+		$document = $app->getDocument();
+		$view = $this->getView('Add', $document->getType(), 'Administrator');
 
-		AttachmentController::add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
+		$this->add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 		// ??? Move the add_view_urls function to attachments base view class
 
 		// We do not have a real attachment yet so fake it
@@ -629,9 +630,10 @@ class AttachmentController extends FormController
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Edit\HtmlView();
+		$document = $app->getDocument();
+		$view = $this->getView('Edit', $document->getType(), 'Administrator');
 
-		AttachmentController::add_view_urls($view, 'update', $parent_id,
+		$this->add_view_urls($view, 'update', $parent_id,
 													   $parent_type, $attachment_id, $from);
 
 		// Update change URLS to remember if we want to change the parent
@@ -1153,7 +1155,8 @@ class AttachmentController extends FormController
 			}
 
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Warning\HtmlView();
+		$document = $app->getDocument();
+		$view = $this->getView('Warning', $document->getType(), 'Administrator');
 		$view->parent_id = $attachment_id;
 		// $view->option = $input->getCmd('option'); // Protected variable is it really needed?
 		$view->from = $input->getWord('from');
