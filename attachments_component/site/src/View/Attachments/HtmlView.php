@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
 			}
 
 		// Add the default path
-		$this->addTemplatePath(JPATH_SITE.'/components/com_attachments/views/attachments/tmpl');
+		$this->addTemplatePath(JPATH_SITE.'/components/com_attachments/tmpl/attachments');
 
 		// Set up the correct path for template overloads
 		// (Do this after previous addTemplatePath so that template overrides actually override)

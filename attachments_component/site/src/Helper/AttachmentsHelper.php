@@ -1799,7 +1799,10 @@ class AttachmentsHelper
 
 			if ( $app->isClient('administrator') ) {
 				// Get the html for the attachments list
-				$controller = new ListController();
+				$controller = $app
+					->bootComponent('com_attachments')
+					->getMVCFactory()
+					->createController('List', 'Administrator', [], $app, $app->getInput());
 
 				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
 													null, $show_file_links, $allow_edit, false, $from);

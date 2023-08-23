@@ -46,7 +46,7 @@ if ( $format != 'raw' ) {
 
 	// If any attachments are modifiable, add necessary Javascript for iframe
 	if ( $this->some_attachments_modifiable ) {
-		AttachmentsJavascript::setupModalJavascript();
+		// AttachmentsJavascript::setupModalJavascript();
 		}
 
 	// Construct the empty div for the attachments

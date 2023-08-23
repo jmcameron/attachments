@@ -14,10 +14,13 @@
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
 use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\Input\Input;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -37,11 +40,11 @@ class ListController extends BaseController
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 *
-	 * @return	JControllerForm
+	 * @return	BaseController
 	 */
-	public function __construct( $default = array('default_task' => 'noop') )
+	public function __construct( $config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null )
 	{
-		parent::__construct( $default );
+		parent::__construct( $config, $factory, $app, $input );
 	}
 
 
@@ -93,9 +96,9 @@ class ListController extends BaseController
 			}
 
 		// Get the view
-		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
+		$this->addViewPath(JPATH_SITE.'/components/com_attachments/src/View');
 		$viewType = $document->getType();
-		$view = $this->getView('Attachments', $viewType);
+		$view = $this->getView('Attachments', $viewType, 'Site');
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';
 			throw new \Exception($errmsg, 500);
