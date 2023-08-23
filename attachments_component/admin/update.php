@@ -695,6 +695,7 @@ class AttachmentsUpdate
 		$root_rules = new Rules($root->rules);
 
 		// Define the new rules
+		require_once(JPATH_SITE . '/components/com_attachments/src/Helper/AttachmentsDefines.php');
 		$new_rules = new Rules(AttachmentsDefines::$DEFAULT_ATTACHMENTS_ACL_PERMISSIONS);
 
 		// Merge the rules into default rules and save it
