@@ -43,11 +43,7 @@ $uri = Uri::getInstance();
 		}
 	}
 </script>
-<?php
 
-if (version_compare(JVERSION, '3.0', 'ge'))
-{
-?>
 <form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
 	<div class="row-fluid">
 		<div class="span10">
@@ -108,51 +104,3 @@ if (version_compare(JVERSION, '3.0', 'ge'))
 <script type="text/javascript">
 		jQuery('#configTabs a:first').tab('show'); // Select first tab
 </script>
-<?php
-}
-else
-{
-?>
-<form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
-	<?php
-	echo HTMLHelper::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
-		$fieldSets = $this->form->getFieldsets();
-		foreach ($fieldSets as $name => $fieldSet) :
-			$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
-			echo HTMLHelper::_('tabs.panel',Text::_($label), 'publishing-details');
-			if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-				echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
-			endif;
-	?>
-			<ul class="config-option-list" id="attachments-options">
-			<?php
-			foreach ($this->form->getFieldset($name) as $field):
-			?>
-				<li>
-				<?php if (!$field->hidden) : ?>
-				<?php echo $field->label; ?>
-				<?php endif; ?>
-				<?php echo $field->input; ?>
-				</li>
-			<?php
-			endforeach;
-			?>
-			</ul>
-
-
-	<div class="clr"></div>
-	<?php
-		endforeach;
-	echo HTMLHelper::_('tabs.end');
-	?>
-	<div>
-		<input type="hidden" name="id" value="<?php echo $this->component->id;?>" />
-		<input type="hidden" name="option" value="com_attachments" />
-		<input type="hidden" name="component" value="com_attachments" />
-		<input type="hidden" name="old_secure" value="<?php echo $this->params->get('secure'); ?>" />
-		<input type="hidden" name="task" value="params.edit" />
-		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
-</form>
-<?php
-}
