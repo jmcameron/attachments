@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Administrator\View\Attachments;
+
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Component\ComponentHelper;
