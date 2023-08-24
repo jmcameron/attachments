@@ -21,10 +21,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
- 
 /**
  * HTML View class for adding new attachments
  *

@@ -24,10 +24,6 @@ use Joomla\Input\Input;
 
 defined('_JEXEC') or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
-
-
 /**
  * Class for a controller for dealing with lists of attachments
  *

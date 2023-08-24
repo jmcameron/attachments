@@ -37,7 +37,7 @@ class AttachmentsModel extends ListModel
 	 * Constructor
 	 *
 	 * @param	array	An optional associative array of configuration settings.
-	 * @see		JControllerLegacy
+	 * @see		ListModel
 	 * @since	1.6
 	 */
 	public function __construct($config = array())

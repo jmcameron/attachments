@@ -22,9 +22,6 @@ use Joomla\CMS\Uri\Uri;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-/** Define the legacy classes, if necessary */
-require_once JPATH_SITE . '/components/com_attachments/legacy/view.php';
-
 /**
  * View for the help pages
  *

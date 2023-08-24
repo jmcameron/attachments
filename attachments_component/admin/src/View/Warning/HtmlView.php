@@ -20,10 +20,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
-
 /**
  * View for the special controller
  * (adapted from administrator/components/com_config/views/component/view.php)

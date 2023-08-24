@@ -35,9 +35,6 @@ if ( $user === null OR
 	return;
 }
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
 /**
  * HTML View class for editing new attachments
  *

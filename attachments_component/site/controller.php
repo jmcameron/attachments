@@ -30,9 +30,6 @@ use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
-
 /**
  * The main attachments controller class (for the front end)
  *

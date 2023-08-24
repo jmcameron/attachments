@@ -25,10 +25,6 @@ use Joomla\String\StringHelper;
 // No direct access
 defined('_JEXEC') or die('Restricted Access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
-
 /**
  * View for a list of attachments
  *

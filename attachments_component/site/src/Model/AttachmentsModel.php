@@ -22,10 +22,6 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
-
-
 /**
  * Attachment List Model for all attachments belonging to one
  * content article (or other content-related entity)

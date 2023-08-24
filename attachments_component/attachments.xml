@@ -33,12 +33,8 @@
 	<namespace path="src/">JMCameron\Component\Attachments</namespace>
 
     <files folder="site">
-	<filename>attachments.php</filename>
+	<!-- <filename>attachments.php</filename> -->
 	<filename>controller.php</filename>
-	<filename>legacy/controller.php</filename>
-	<filename>legacy/model.php</filename>
-	<filename>legacy/view.php</filename>
-	<filename>legacy/index.html</filename>
 	<filename>index.html</filename>
 	<filename>router.php</filename>
 	<filename>src/Model/AttachmentModel.php</filename>

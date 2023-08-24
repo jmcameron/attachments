@@ -22,9 +22,6 @@ use Joomla\CMS\MVC\View\HtmlView;
 // No direct access
 defined('_JEXEC') or die();
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
 /**
  * View for the uploads
  *

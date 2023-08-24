@@ -20,10 +20,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 
 defined('_JEXEC') or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
-
-
 /**
  * Attachment Model
  *

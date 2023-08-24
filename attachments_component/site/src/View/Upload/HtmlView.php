@@ -22,10 +22,6 @@ use Joomla\CMS\Language\Text;
 // No direct access
 defined('_JEXEC') or die();
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/views/view.php');
-
-
 /**
  * View for the uploads
  *

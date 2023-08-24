@@ -24,10 +24,6 @@ use Joomla\CMS\Uri\Uri;
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
-
 /**
  * HTML View class for asking the user to log in
  *

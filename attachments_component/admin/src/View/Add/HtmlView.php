@@ -32,9 +32,6 @@ if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
 	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
 }
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
-
 /**
  * HTML View class for adding new attachments
  *

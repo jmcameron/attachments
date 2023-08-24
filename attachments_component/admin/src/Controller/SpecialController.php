@@ -28,10 +28,6 @@ if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
 	}
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
-
-
 /**
  * The controller for special requests
  * (adapted from administrator/components/com_config/controllers/component.php)
