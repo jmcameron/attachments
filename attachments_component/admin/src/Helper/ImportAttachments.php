@@ -11,8 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
-defined('_JEXEC') or die('Restricted access');
+namespace JMCameron\Component\Attachments\Administrator\Helper;
 
+defined('_JEXEC') or die('Restricted access');
 
 require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/importFromCSV.php');
 

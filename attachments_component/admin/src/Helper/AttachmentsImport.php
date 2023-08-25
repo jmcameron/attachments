@@ -11,12 +11,14 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Administrator\Helper;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -116,7 +118,7 @@ class AttachmentsImport
 
 		// Load the attachments parent manager
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Process the CSV data
 		if ( $dry_run ) {
@@ -223,8 +225,10 @@ class AttachmentsImport
 				}
 
 			// Construct an attachments entry
-			Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-			$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+			$mvc = Factory::getApplication()
+				->bootComponent("com_attachments")
+				->getMVCFactory();
+			$attachment = $mvc->createTable('Attachment', 'Administrator');
 
 			if ( $update ) {
 

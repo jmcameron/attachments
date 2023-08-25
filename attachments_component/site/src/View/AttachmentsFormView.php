@@ -41,7 +41,6 @@ class AttachmentsFormView extends HtmlView
 	 */
 	protected function startHTML()
 	{
-		require_once JPATH_BASE.'/libraries/joomla/document/html/renderer/head.php';
 		$app = Factory::getApplication();
 		$document = $app->getDocument();
 		$this->assignRef('document', $document);

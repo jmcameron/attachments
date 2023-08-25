@@ -11,6 +11,7 @@
  * @link http://joomlacode.org/gf/project/attachments/frs/
  */
 
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -336,7 +337,6 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 	protected function installPermissions()
 	{
 		/** Load the Attachments defines */
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 		AttachmentsUpdate::installAttachmentsPermissions();
 	}
 

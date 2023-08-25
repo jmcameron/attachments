@@ -11,9 +11,12 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Administrator\Helper;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -26,14 +29,6 @@ use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die('Restricted access');
 
-// Access check.
-$app = Factory::getApplication();
-$user = $app->getIdentity();
-if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
-	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 67)', 404);
-	return;
-	}
-
 /**
  * A class for update functions
  *
@@ -41,14 +36,29 @@ if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
  */
 class AttachmentsUpdate
 {
+
+	/**
+	 * Access check
+	 */
+	public static function checkAccess()
+	{
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 67)', 404);
+			return;
+			}
+	}
+
 	/**
 	 * Add icon filenames for all attachments missing an icon
 	 */
 	public static function add_icon_filenames()
 	{
-		require_once(JPATH_COMPONENT_SITE.'/file_types.php');
+		static::checkAccess();
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id, filename, file_type, icon_filename')->from('#__attachments');
@@ -57,7 +67,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 68)';
+			$errmsg = $e->getMessage() . ' (ERR 68)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -69,8 +79,10 @@ class AttachmentsUpdate
 			}
 
 		// Update the icon file_types all the attachments (that do not have one already)
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
 
@@ -101,9 +113,10 @@ class AttachmentsUpdate
 	 */
 	public static function update_null_dates()
 	{
-		$app = Factory::getApplication();
+		static::checkAccess();
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
@@ -111,7 +124,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 70)';
+			$errmsg = $e->getMessage() . ' (ERR 70)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -167,12 +180,14 @@ class AttachmentsUpdate
 	 */
 	public static function disable_sql_uninstall($dbtype = 'mysql')
 	{
+		static::checkAccess();
+
 		// Construct the filenames
 		if ( $dbtype == 'mysqli' ) {
 			// Use the same MYSQL installation file for mysqli
 			$dbtype = 'mysql';
 			}
-		$filename = JPATH_COMPONENT_ADMINISTRATOR."/sql/uninstall.$dbtype.sql";
+		$filename = JPATH_ADMINISTRATOR."/components/com_attachments/sql/uninstall.$dbtype.sql";
 		$tempfilename = $filename.'.tmp';
 		$msg = '';
 
@@ -211,6 +226,8 @@ class AttachmentsUpdate
 	 */
 	private static function checkFilename($filename)
 	{
+		static::checkAccess();
+
 		$finfo = new \StdClass();
 
 		// If it is a windows filename, convert to Linux format for analysis
@@ -272,14 +289,14 @@ class AttachmentsUpdate
 	 */
 	public static function regenerate_system_filenames()
 	{
-		// Get the component parameters
-		$params = ComponentHelper::getParams('com_attachments');
+		static::checkAccess();
 
 		// Define where the attachments go
 		$upload_url = AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 		$upload_dir = JPATH_SITE . '/' . $upload_url;
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
@@ -287,7 +304,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 72)';
+			$errmsg = $e->getMessage() . ' (ERR 72)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -300,10 +317,12 @@ class AttachmentsUpdate
 
 		// Get the parent plugin manager
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 
 		$msg = '';
 
@@ -425,13 +444,13 @@ class AttachmentsUpdate
 	 */
 	public static function remove_spaces_from_system_filenames()
 	{
-		// Get the component parameters
-		$params = ComponentHelper::getParams('com_attachments');
+		static::checkAccess();
 
 		// Define where the attachments go
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
@@ -439,7 +458,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 78)';
+			$errmsg = $e->getMessage() . ' (ERR 78)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -451,8 +470,10 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 		$numUpdated = 0;
 
 		foreach ($IDs as $id) {
@@ -514,6 +535,8 @@ class AttachmentsUpdate
 	 */
 	public static function update_file_sizes()
 	{
+		static::checkAccess();
+
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
@@ -521,6 +544,7 @@ class AttachmentsUpdate
 		$upload_dir = JPATH_SITE.'/'.AttachmentsDefines::$ATTACHMENTS_SUBDIR;
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
@@ -528,7 +552,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 80)';
+			$errmsg = $e->getMessage() . ' (ERR 80)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -540,8 +564,10 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 		$numUpdated = 0;
 		foreach ($IDs as $id) {
 
@@ -567,12 +593,15 @@ class AttachmentsUpdate
 	 */
 	public static function check_files_existance()
 	{
+		static::checkAccess();
+
 		$msg = '';
 
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('file'));
@@ -580,7 +609,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 82)';
+			$errmsg = $e->getMessage() . ' (ERR 82)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -592,8 +621,10 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 		$numMissing = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {
@@ -624,10 +655,13 @@ class AttachmentsUpdate
 	 */
 	public static function validate_urls()
 	{
+		static::checkAccess();
+
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
 		// Get all the attachment IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('id')->from('#__attachments')->where('uri_type=' . $db->quote('url'));
@@ -635,7 +669,7 @@ class AttachmentsUpdate
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 83)';
+			$errmsg = $e->getMessage() . ' (ERR 83)';
 			throw new \Exception($errmsg, 500);
 		}
 		if ( count($attachments) == 0 ) {
@@ -647,8 +681,10 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$attachment = Table::getInstance('Attachment', 'AttachmentsTable');
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$attachment = $mvc->createTable('Attachment', 'Administrator');
 		$numUpdated = 0;
 		$numChecked = 0;
 		foreach ($IDs as $id) {
@@ -687,6 +723,8 @@ class AttachmentsUpdate
 	 */
 	public static function installAttachmentsPermissions($verbose = true)
 	{
+		static::checkAccess();
+
 		$app = Factory::getApplication();
 
 		// Get the root rules
@@ -695,7 +733,6 @@ class AttachmentsUpdate
 		$root_rules = new Rules($root->rules);
 
 		// Define the new rules
-		require_once(JPATH_SITE . '/components/com_attachments/src/Helper/AttachmentsDefines.php');
 		$new_rules = new Rules(AttachmentsDefines::$DEFAULT_ATTACHMENTS_ACL_PERMISSIONS);
 
 		// Merge the rules into default rules and save it

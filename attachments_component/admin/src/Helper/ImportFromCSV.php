@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Component\Attachments\Administrator\Helper;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
@@ -147,7 +149,7 @@ class ImportFromCSV
 		// Open the CSV file
 		$this->_file = @fopen($csv_filename, 'r');
 		if ( ! $this->_file ) {
-			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 98)';
+			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $csv_filename) . ' (ERR 98)';
 			}
 
 		// Parse the first row to process field names and indeces
