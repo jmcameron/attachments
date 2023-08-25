@@ -13,14 +13,19 @@
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -38,8 +43,21 @@ if (!file_exists(JPATH_SITE . '/components/com_attachments/attachments.xml'))
  * @package	 Attachments
  * @since	 1.3.4
  */
-class plgContentAttachments extends CMSPlugin
+class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 {
+	/**
+	 * $db and $app are loaded on instantiation
+	 */
+	protected DatabaseDriver $db;
+	protected CMSApplication $app;
+
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected bool $autoloadLanguage = true;
+
 	/**
 	 * Constructor
 	 *
@@ -55,10 +73,23 @@ class plgContentAttachments extends CMSPlugin
 		// Save this page's URL
 		$uri= Uri::getInstance();
 		$return = '&return=' . urlencode(base64_encode(Uri::current() . '?' . $uri->getQuery()));
-		$app = Factory::getApplication();
-		$app->setUserState('com_attachments.current_url', $return);
+		$this->app->setUserState('com_attachments.current_url', $return);
 
 		$this->loadLanguage();
+	}
+
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onContentPrepare' => 'onContentPrepare',
+			'onContentBeforeDisplay' => 'onContentBeforeDisplay',
+			'onContentAfterSave' => 'onContentAfterSave',
+		];
 	}
 
 	/**
@@ -105,7 +136,7 @@ class plgContentAttachments extends CMSPlugin
 			$parent_entity = 'category';
 		}
 
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 		$layout = $input->getCmd('layout');
 
@@ -127,7 +158,7 @@ class plgContentAttachments extends CMSPlugin
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit quietly if there is no Attachments plugin to handle this parent_type
 			return false;
@@ -148,7 +179,7 @@ class plgContentAttachments extends CMSPlugin
 		}
 		else if ($parent_entity == 'category')
 		{
-			$db = Factory::getContainer()->get('DatabaseDriver');
+			$db = $this->db;
 			$description = $row->text;
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
@@ -172,7 +203,7 @@ class plgContentAttachments extends CMSPlugin
 		}
 
 		// Load the language
-		$lang = Factory::getApplication()->getLanguage();
+		$lang = $this->app->getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Set up the refresh behavior
@@ -228,7 +259,7 @@ class plgContentAttachments extends CMSPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 		$layout = $input->getCmd('layout');
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
@@ -250,7 +281,7 @@ class plgContentAttachments extends CMSPlugin
 		// ??? Do we need to filter to ensure only articles use this callback?
 
 		// Load the language
-		$lang = Factory::getApplication()->getLanguage();
+		$lang = $this->app->getLanguage();
 		$lang->load('plg_content_attachments', dirname(__FILE__));
 
 		// Add the refresh javascript
@@ -261,7 +292,7 @@ class plgContentAttachments extends CMSPlugin
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		if (!$apm->attachmentsPluginInstalled($parent_type))
 		{
@@ -356,10 +387,10 @@ class plgContentAttachments extends CMSPlugin
 		// Get the attachments associated with this newly created item.
 		// NOTE: We assume that all attachments that have parent_id=null
 		//		 and are created by the current user are for this item.
-		$user = Factory::getApplication()->getIdentity();
+		$user = $this->app->getIdentity();
 		$user_id = $user->get('id');
 
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = $this->db;
 		$query = $db->getQuery(true);
 		$query->select('*')->from('#__attachments');
 		$query->where('created_by=' . (int) $user_id . ' AND parent_id IS NULL');

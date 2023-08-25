@@ -11,15 +11,20 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+namespace JMCameron\Plugin\AttachmentsPluginFramework;
+
 use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
 
 // No direct access
@@ -51,8 +56,21 @@ defined('_JEXEC') or die('Restricted access');
  * @package	 Attachments
  * @since	 3.0
  */
-class AttachmentsPlugin extends CMSPlugin
+class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 {
+	/**
+	 * $db and $app are loaded on instantiation
+	 */
+	protected DatabaseDriver $db;
+	protected CMSApplication $app;
+
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
 	/** Parent_type: com_content, com_quickfaq, etc
 	 */
 	protected $parent_type = null;
@@ -133,6 +151,16 @@ class AttachmentsPlugin extends CMSPlugin
 	}
 
 	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [];
+	}
+
+	/**
 	 * Get the attachments parameter object
 	 *
 	 * @return	 object	 com_attachments parameter object
@@ -159,7 +187,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function getParentId(&$attachment)
 	{
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		return $input->getInt('id', false);
 	}
 
@@ -291,7 +319,7 @@ class AttachmentsPlugin extends CMSPlugin
 		}
 		else
 		{
-			$lang = Factory::getApplication()->getLanguage();
+			$lang = $this->app->getLanguage();
 			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
 			throw new \Exception($errmsg, 500);
@@ -358,7 +386,7 @@ class AttachmentsPlugin extends CMSPlugin
 		}
 
 		// Look up the title
-		$db	   = Factory::getContainer()->get('DatabaseDriver');
+		$db	   = $this->db;
 		$query = $db->getQuery(true);
 		$query->select($entity_title_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
@@ -394,14 +422,14 @@ class AttachmentsPlugin extends CMSPlugin
 		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app	   = Factory::getApplication();
+		$app	   = $this->app;
 		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
 												   'filter_order', '', 'cmd');
 		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
 												   'filter_order_Dir', '', 'word');
 
 		// Get all the items
-		$db	   = Factory::getContainer()->get('DatabaseDriver');
+		$db	   = $this->db;
 		$query = $db->getQuery(true);
 		$query->select("DISTINCT $entity_id_field,$entity_title_field");
 		$query->from("#__$entity_table");
@@ -520,7 +548,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
 	{
-		$app = Factory::getApplication();
+		$app = $this->app;
 
 		if ($app->isClient("administrator"))
 		{
@@ -644,7 +672,7 @@ class AttachmentsPlugin extends CMSPlugin
 		// First time, so look up the parent
 		$entity_table	 = $this->entity_table[$parent_entity];
 		$entity_id_field = $this->entity_id_field[$parent_entity];
-		$db				 = Factory::getContainer()->get('DatabaseDriver');
+		$db				 = $this->db;
 		$query			 = $db->getQuery(true);
 		$query->select($entity_id_field)->from("#__$entity_table");
 		$query->where("$entity_id_field=" . (int) $parent_id);
@@ -739,7 +767,7 @@ class AttachmentsPlugin extends CMSPlugin
 	 */
 	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$layout = $input->getCmd('layout');
 		$aparams = $this->attachmentsParams();
 
@@ -860,7 +888,7 @@ class AttachmentsPlugin extends CMSPlugin
 		}
 
 		// Determine where we are
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$from	= $input->getCmd('view', 'closeme');
 		$Itemid = $input->getInt('Itemid', 1);
 
@@ -931,7 +959,7 @@ class AttachmentsPlugin extends CMSPlugin
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
 
 			// Handle RTL styling (if necessary)
-			$lang = Factory::getApplication()->getLanguage();
+			$lang = $this->app->getLanguage();
 			if ($lang->isRTL())
 			{
 				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
@@ -1032,7 +1060,7 @@ class AttachmentsPlugin extends CMSPlugin
 		// but not for all frontends, especially not com_content/articles
 		$id = null;
 		if ($view == $parent_entity) {
-			$input = Factory::getApplication()->getInput();
+			$input = $this->app->getInput();
 			$id = $input->getInt('id', $default=null);
 			}
 		else {
@@ -1075,7 +1103,7 @@ class AttachmentsPlugin extends CMSPlugin
 	{
 		// Figure out where to insert the attachments list
 		$reptag = '<div id="editor-xtd-buttons"';
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$user = $app->getIdentity();
 		if ($user->getParam('editor', $app->get('editor')) == 'tinymce') {
 			# Hack because TinyMCE changed the structure

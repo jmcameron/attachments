@@ -12,8 +12,11 @@
  */
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use JMCameron\Plugin\AttachmentsPluginFramework\PlgAttachmentsFramework;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
@@ -22,8 +25,9 @@ use Joomla\String\StringHelper;
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the attachments plugin class */
-if (!PluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
+if (!PluginHelper::importPlugin('attachments', 'framework'))
 {
+	Log::add("fail to load attachments_plugin_framework");
 	// Fail gracefully if the Attachments plugin framework plugin is disabled
 	return;
 }
@@ -35,7 +39,7 @@ if (!PluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
  * @package	 Attachments
  * @since	 3.0
  */
-class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
+class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 {
 	/**
 	 * Constructor
@@ -1257,5 +1261,5 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 
 /** Register this attachments type */
-$apm = getAttachmentsPluginManager();
+$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 $apm->addParentType('com_content');

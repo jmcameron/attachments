@@ -11,6 +11,8 @@
  * @link		http://joomlacode.org/gf/project/attachments/frs/
  */
 
+namespace JMCameron\Plugin\AttachmentsPluginFramework;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -53,12 +55,29 @@ class AttachmentsPluginManager
 	 */
 	private $language_loaded = false;
 
+	private static $instance;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
 		$this->loadLanguage();
+	}
+
+	/**
+	 * Get the singleton plugin manager for attachments
+	 *
+	 * @return AttachmentsPluginManager the plugin manager singleton object
+	 */
+	public static function &getAttachmentsPluginManager(): AttachmentsPluginManager
+	{
+		if (!is_object(static::$instance))
+		{
+			static::$instance = new AttachmentsPluginManager();
+		}
+
+		return static::$instance;
 	}
 
 	/**
@@ -134,7 +153,7 @@ class AttachmentsPluginManager
 		{
 			// Add an option for each entity
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = $this->getAttachmentsPluginManager();
 
 			// Process all the parent types
 			foreach ($this->parent_types as $parent_type)
