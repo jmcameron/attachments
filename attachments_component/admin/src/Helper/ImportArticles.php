@@ -15,9 +15,6 @@ namespace JMCameron\Component\Attachments\Administrator\Helper;
 
 defined('_JEXEC') or die('Restricted access');
 
-require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/importFromCSV.php');
-
-
 /**
  * A class for importing attachments data from files
  *

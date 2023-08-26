@@ -203,8 +203,10 @@ if ( !$params->get('publish_default', false) && !$this->may_publish ) {
 
 // Show the existing attachments (if any)
 if ( $parent_id || ($parent_id === 0) ) {
-	require_once(JPATH_SITE.'/components/com_attachments/controllers/attachments.php');
-	$controller = new AttachmentsControllerAttachments();
+	$app = Factory::getApplication();
+	$mvc = $app->bootComponent("com_attachments")
+		->getMVCFactory();
+	$controller = $mvc->createController('Attachments', 'Site', [], $app, $app->getInput());
 	$controller->displayString($parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS',
 							   false, false, true, $this->from);

@@ -13,8 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
-use AttachmentsImport;
-use AttachmentsUpdate;
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -98,7 +98,6 @@ class UtilsController extends BaseController
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 		$msg = AttachmentsUpdate::add_icon_filenames();
 		$this->setRedirect('index.php?option=' . $this->option, $msg);
 	}
@@ -117,8 +116,6 @@ class UtilsController extends BaseController
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
 			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
 		$msg = Text::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
@@ -140,8 +137,6 @@ class UtilsController extends BaseController
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
 			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
@@ -173,8 +168,6 @@ class UtilsController extends BaseController
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
 		$input = $app->getInput();
@@ -204,8 +197,6 @@ class UtilsController extends BaseController
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
 			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
@@ -237,8 +228,6 @@ class UtilsController extends BaseController
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-
 		$msg = AttachmentsUpdate::update_file_sizes();
 
 		$input = $app->getInput();
@@ -269,8 +258,6 @@ class UtilsController extends BaseController
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-
 		$msg = AttachmentsUpdate::check_files_existance();
 
 		$input = $app->getInput();
@@ -299,8 +286,6 @@ class UtilsController extends BaseController
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
 			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
 
 		$msg = AttachmentsUpdate::validate_urls();
 
@@ -332,8 +317,6 @@ class UtilsController extends BaseController
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)', 404);
 			}
 
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/update.php');
-
 		$msg = AttachmentsUpdate::installAttachmentsPermissions();
 
 		$input = $app->getInput();
@@ -362,8 +345,6 @@ class UtilsController extends BaseController
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)', 404);
 			}
-
-		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/import.php');
 
 		$input = $app->getInput();
 		$filename = $input->getString('filename', null);
