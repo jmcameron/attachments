@@ -11,11 +11,14 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -26,21 +29,32 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @package		Attachments
  * @subpackage	Attachments.Quickicon_Plugin
  */
-class PlgQuickiconAttachments extends CMSPlugin
+class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
 {
-	/*
-	 * Constructor.
-	 *
-	 * @access		protected
-	 * @param		object	$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
+	/**
+	 * $db and $app are loaded on instantiation
 	 */
-	public function __construct(& $subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+	
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onGetIcons' => 'onGetIcons',
+		];
+	}
 
 	/**
 	 * This method is called when the Quick Icons module is constructing its set

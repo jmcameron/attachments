@@ -48,15 +48,15 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	/**
 	 * $db and $app are loaded on instantiation
 	 */
-	protected DatabaseDriver $db;
-	protected CMSApplication $app;
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
 	/**
 	 * Load the language file on instantiation
 	 *
 	 * @var    boolean
 	 */
-	protected bool $autoloadLanguage = true;
+	protected $autoloadLanguage = true;
 
 	/**
 	 * Constructor
@@ -74,8 +74,6 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 		$uri= Uri::getInstance();
 		$return = '&return=' . urlencode(base64_encode(Uri::current() . '?' . $uri->getQuery()));
 		$this->app->setUserState('com_attachments.current_url', $return);
-
-		$this->loadLanguage();
 	}
 
 	/**

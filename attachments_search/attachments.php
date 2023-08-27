@@ -11,12 +11,16 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
 
 // no direct access
@@ -27,22 +31,33 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @package		Attachments
  */
-class plgSearchAttachments extends CMSPlugin
+class plgSearchAttachments extends CMSPlugin implements SubscriberInterface
 {
 	/**
-	 * Constructor
-	 *
-	 * @access		protected
-	 * @param		object	$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
-	 * @since		1.5
+	 * $db and $app are loaded on instantiation
 	 */
-	public function __construct(& $subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onContentSearchAreas' => 'onContentSearchAreas',
+			'onContentSearch' => 'onContentSearch',
+		];
+	}
 
 	/**
 	 * @return array An array of search areas
@@ -54,7 +69,6 @@ class plgSearchAttachments extends CMSPlugin
 			);
 		return $areas;
 	}
-
 
 	/**
 	 * Attachments Search method
@@ -191,7 +205,7 @@ class plgSearchAttachments extends CMSPlugin
 
 		// Prepare to get parent info
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Add the result data to the results of the search
 		$k = 0;

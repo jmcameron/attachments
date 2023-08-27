@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -18,6 +20,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 
 // no direct access
@@ -28,8 +32,21 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @package Attachments
  */
-class plgButtonInsert_attachments_token extends CMSPlugin
+class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements SubscriberInterface
 {
+	/**
+	 * $db and $app are loaded on instantiation
+	 */
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
+
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
 	/**
 	 * Constructor
 	 *
@@ -43,6 +60,17 @@ class plgButtonInsert_attachments_token extends CMSPlugin
 		$this->loadLanguage();
 	}
 
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onDisplay' => 'onDisplay',
+		];
+	}
 
 	/**
 	 * Insert attachments token button
@@ -76,10 +104,10 @@ class plgButtonInsert_attachments_token extends CMSPlugin
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			return new \stdClass();
+			return;
 			}
 
 		// Get ready for language things

@@ -12,16 +12,19 @@
  */
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
 /** Load the Attachments defines (if available) */
-if (!file_exists(JPATH_SITE.'/components/com_attachments/attachments.xml'))
+if (!file_exists(JPATH_ADMINISTRATOR.'/components/com_attachments/attachments.xml'))
 {
 	// Exit quietly if the attachments component has been uninstalled or deleted
 	return;
@@ -33,8 +36,32 @@ if (!file_exists(JPATH_SITE.'/components/com_attachments/attachments.xml'))
  *
  * @package Attachments
  */
-class plgSystemShow_attachments extends CMSPlugin
+class Plgsystemshow_attachments extends CMSPlugin implements SubscriberInterface
 {
+	/**
+	 * $db and $app are loaded on instantiation
+	 */
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
+
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onAfterRender' => 'onAfterRender',
+		];
+	}
 
 	/**
 	 * Inserts the attachments list above the row of xtd-buttons
@@ -47,7 +74,7 @@ class plgSystemShow_attachments extends CMSPlugin
 	 */
 	public function onAfterRender()
 	{
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$input = $app->getInput();
 		$task = $input->getCmd('task');
 		$view = $input->getCmd('view');
@@ -85,11 +112,12 @@ class plgSystemShow_attachments extends CMSPlugin
 			// Exit if the framework does not exist (eg, during uninstallaton)
 			return false;
 			}
-		if ( !function_exists('getAttachmentsPluginManager') ) {
+		if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") ) {
 			// Exit if the function does not exist (eg, during uninstallaton)
 			return false;
 			}
-		$apm = getAttachmentsPluginManager();
+
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			return false;
