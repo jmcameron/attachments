@@ -89,7 +89,6 @@
 	    <filename>attachments.php</filename>
 	    <filename>access.xml</filename>
 	    <filename>config.xml</filename>
-	    <filename>import.php</filename>
 	    <filename>index.html</filename>
 	    <filename>forms/index.html</filename>
 	    <filename>forms/attachment.xml</filename>
@@ -134,6 +133,11 @@
 		<filename>src/Field/index.html</filename>
 		<filename>src/index.html</filename>
 		<filename>src/Helper/AttachmentsPermissions.php</filename>
+	    <filename>src/Helper/AttachmentsImport.php</filename>
+	    <filename>src/Helper/AttachmentsUpdate.php</filename>
+	    <filename>src/Helper/ImportArticles.php</filename>
+	    <filename>src/Helper/ImportAttachments.php</filename>
+	    <filename>src/Helper/ImportFromCSV.php</filename>
 		<filename>src/Table/AttachmentTable.php</filename>
 		<filename>src/Table/index.html</filename>
 		<filename>src/View/Warning/HtmlView.php</filename>
@@ -153,7 +157,6 @@
 		<filename>src/View/Utils/index.html</filename>
 		<filename>src/View/Params/HtmlView.php</filename>
 		<filename>src/View/Params/index.html</filename>
-	    <filename>update.php</filename>
 	    <filename>Changelog.php</filename>
 	    <folder>sql/updates</folder>
 	    <folder>language</folder>
