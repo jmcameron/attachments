@@ -12,13 +12,16 @@
  */
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
-use Joomla\CMS\Factory;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -28,20 +31,32 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @package Attachments
  */
-class plgButtonAdd_attachment extends CMSPlugin
+class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterface
 {
 	/**
-	 * Constructor
-	 *
-	 * @param &object &$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
+	 * $db and $app are loaded on instantiation
 	 */
-	public function __construct(& $subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onDisplay' => 'onDisplay',
+		];
+	}
 
 	/**
 	 * Add Attachment button
@@ -54,8 +69,7 @@ class plgButtonAdd_attachment extends CMSPlugin
 	 */
 	public function onDisplay($name, $asset, $author)
 	{
-		$app = Factory::getApplication();
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 
 		// Avoid displaying the button for anything except for registered parents
 		$parent_type = $input->getCmd('option');
@@ -94,7 +108,7 @@ class plgButtonAdd_attachment extends CMSPlugin
 
 		// Check for the special case where we are creating an article from a category list
 		$item_id = $input->getInt('Itemid');
-		$menu = $app->getMenu();
+		$menu = $this->app->getMenu();
 		$menu_item = $menu->getItem($item_id);
 		if ( $menu_item AND ($menu_item->query['view'] == 'category') AND empty($a_id) ) {
 			$parent_entity = 'article';
@@ -103,14 +117,14 @@ class plgButtonAdd_attachment extends CMSPlugin
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
-			return new \stdClass();
+			return;
 			}
 		// Figure out where we are and construct the right link and set
 		$base_url = Uri::root(true);
-		if ( $app->isClient('administrator') ) {
+		if ( $this->app->isClient('administrator') ) {
 			$base_url = str_replace('/administrator','', $base_url);
 			}
 
@@ -147,14 +161,14 @@ class plgButtonAdd_attachment extends CMSPlugin
 		HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button.css');
 
 		// Handle RTL styling (if necessary)
-		$lang = $app->getLanguage();
+		$lang = $this->app->getLanguage();
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
 			HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button_rtl.css');
 			}
 
 		// Load the language file from the frontend
-		$lang->load('com_attachments', dirname(__FILE__));
+		$lang->load('com_attachments', JPATH_ADMINISTRATOR.'/components/com_attachments');
 
 		// Create the [Add Attachment] button object
 		$button = new CMSObject();
