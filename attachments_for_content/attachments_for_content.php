@@ -16,7 +16,6 @@ use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use JMCameron\Plugin\AttachmentsPluginFramework\PlgAttachmentsFramework;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
@@ -27,7 +26,6 @@ defined('_JEXEC') or die('Restricted access');
 /** Load the attachments plugin class */
 if (!PluginHelper::importPlugin('attachments', 'framework'))
 {
-	Log::add("fail to load attachments_plugin_framework");
 	// Fail gracefully if the Attachments plugin framework plugin is disabled
 	return;
 }
@@ -39,7 +37,7 @@ if (!PluginHelper::importPlugin('attachments', 'framework'))
  * @package	 Attachments
  * @since	 3.0
  */
-class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
+class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 {
 	/**
 	 * Constructor
@@ -78,6 +76,10 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 
 		// Always load the language
 		$this->loadLanguage();
+
+		/** Register this attachments type */
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+		$apm->addParentType('com_content');
 	}
 
 	/**
@@ -494,13 +496,13 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 					throw new \Exception($errmsg, 500);
 				}
 
-				$now	  = JFactory::getDate()->toUnix();
-				$nullDate = JFactory::getDate($db->getNullDate())->toUnix();
+				$now	  = Factory::getDate()->toUnix();
+				$nullDate = Factory::getDate($db->getNullDate())->toUnix();
 
 				if ($article)
 				{
-					$publish_up	  = JFactory::getDate($article->publish_up)->toUnix();
-					$publish_down = JFactory::getDate($article->publish_down)->toUnix();
+					$publish_up	  = Factory::getDate($article->publish_up)->toUnix();
+					$publish_down = Factory::getDate($article->publish_down)->toUnix();
 
 					$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down == $nullDate) || ($now <= $publish_down)));
 				}
@@ -868,7 +870,11 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	 */
 	public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
 	{
-		$user = Factory::getApplication()->getIdentity();
+		if ($user_id) {
+			$user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+		} else {
+			$user = $this->app->getIdentity();
+		}
 
 		// Handle each entity type
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
@@ -921,7 +927,12 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	{
 		// If the user generally has permissions to edit all content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = Factory::getApplication()->getIdentity();
+		if ($user_id) {
+			$user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+		} else {
+			$user = $this->app->getIdentity();
+		}
+
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
@@ -1012,7 +1023,12 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	{
 		// If the user generally has permissions to edit ALL content, they
 		// may edit this attachment (editor, publisher, admin, etc)
-		$user = Factory::getApplication()->getIdentity();
+		if ($user_id) {
+			$user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+		} else {
+			$user = $this->app->getIdentity();
+		}
+
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
@@ -1102,7 +1118,12 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	{
 		// If the user generally has permissions to edit all content, they
 		// may change this attachment state (editor, publisher, admin, etc)
-		$user = Factory::getApplication()->getIdentity();
+		if ($user_id) {
+			$user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+		} else {
+			$user = $this->app->getIdentity();
+		}
+
 		if ($user->authorise('com_content', 'edit', 'content', 'all'))
 		{
 			return true;
@@ -1187,7 +1208,12 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	 */
 	public function userMayAccessAttachment(&$attachment, $user_id = null)
 	{
-		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+		if ($user_id) {
+			$user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+		} else {
+			$user = $this->app->getIdentity();
+		}
+
 		return in_array($attachment->access, $user->getAuthorisedViewLevels());
 	}
 
@@ -1258,8 +1284,3 @@ class AttachmentsPlugin_Com_Content extends PlgAttachmentsFramework
 	}
 
 }
-
-
-/** Register this attachments type */
-$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
-$apm->addParentType('com_content');
