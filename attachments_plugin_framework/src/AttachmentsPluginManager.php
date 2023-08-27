@@ -16,7 +16,6 @@ namespace JMCameron\Plugin\AttachmentsPluginFramework;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Event\Event;
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -55,7 +54,7 @@ class AttachmentsPluginManager
 	 */
 	private $language_loaded = false;
 
-	private static $instance;
+	private static ?AttachmentsPluginManager $instance = null;
 
 	/**
 	 * Constructor
@@ -192,7 +191,7 @@ class AttachmentsPluginManager
 
 		$lang = Factory::getApplication()->getLanguage();
 
-		$this->language_loaded = $lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
+		$this->language_loaded = $lang->load('plg_attachments_plugin_framework', dirname(__FILE__));
 
 		return $this->language_loaded;
 	}
@@ -239,7 +238,7 @@ class AttachmentsPluginManager
 
 		// Install the plugin
 		$dispatcher					= Factory::getApplication()->getDispatcher();
-		$className					= 'AttachmentsPlugin_' . $parent_type;
+		$className					= 'PlgAttachmentsAttachments_' . str_replace('com_', 'for_', $parent_type);
 		$this->plugin[$parent_type] = new $className($dispatcher);
 
 		return is_object($this->plugin[$parent_type]);

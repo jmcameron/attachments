@@ -13,12 +13,10 @@
 
 namespace JMCameron\Plugin\AttachmentsPluginFramework;
 
-use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -61,8 +59,8 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	/**
 	 * $db and $app are loaded on instantiation
 	 */
-	protected DatabaseDriver $db;
-	protected CMSApplication $app;
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
 	/**
 	 * Load the language file on instantiation
@@ -313,14 +311,14 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		}
 
 		// Check aliases
-		if (is_array($this->entities) && array_key_exists($parent_entity, $this->entity_name))
+		if (is_array($this->entity_name) && array_key_exists($parent_entity, $this->entity_name))
 		{
 			return $this->entity_name[$parent_entity];
 		}
 		else
 		{
 			$lang = $this->app->getLanguage();
-			$lang->load('plg_attachments_attachments_plugin_framework', dirname(__FILE__));
+			$lang->load('plg_attachments_plugin_framework', dirname(__FILE__).'/..');
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
 			throw new \Exception($errmsg, 500);
 		}
@@ -940,7 +938,10 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		$add_attachment_btn  = false;
 
 		// Get the html for the attachments list
-		$controller		  = new AttachmentsController();
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
 		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
 
 		// If the attachments list is empty, insert an empty div for it

@@ -20,5 +20,9 @@
         <filename>index.html</filename>
         <folder>language</folder>
     </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_attachments_attachments_plugin_framework.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_attachments_attachments_plugin_framework.sys.ini</language>
+    </languages>
 
 </extension>
