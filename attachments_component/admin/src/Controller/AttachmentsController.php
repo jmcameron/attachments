@@ -15,10 +15,12 @@ namespace JMCameron\Component\Attachments\Administrator\Controller;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -46,7 +48,7 @@ class AttachmentsController extends AdminController
 	 *
 	 * @return	object	The model.
 	 */
-	public function getModel($name = 'Attachments', $prefix = 'AttachmentsModel', $config = array())
+	public function getModel($name = 'Attachments', $prefix = 'Administrator', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -153,7 +155,7 @@ class AttachmentsController extends AdminController
 
 		// Get the attachments parent manager
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Get attachments to remove from the request
 		$input = $app->getInput();
@@ -181,7 +183,7 @@ class AttachmentsController extends AdminController
 
 				// Get the article/parent handler
 				PluginHelper::importPlugin('attachments');
-				$apm = getAttachmentsPluginManager();
+				$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 167)';
 					throw new \Exception($errmsg, 500);

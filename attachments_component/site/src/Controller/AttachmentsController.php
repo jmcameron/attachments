@@ -13,14 +13,15 @@
 
 namespace JMCameron\Component\Attachments\Site\Controller;
 
-use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-
+use Joomla\Input\Input;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -38,9 +39,9 @@ class AttachmentsController extends BaseController
 	 * Recognized key values include 'name', 'default_task', 'model_path', and
 	 * 'view_path' (this list is not meant to be comprehensive).
 	 */
-	public function __construct( $default = array('default_task' => 'noop') )
+	public function __construct($config = array('default_task' => 'noop'),  MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
 	{
-		parent::__construct( $default );
+		parent::__construct($config, $factory, $app, $input);
 	}
 
 
@@ -85,7 +86,7 @@ class AttachmentsController extends BaseController
 		$document = $app->getDocument();
 
 		// Get an instance of the model
-		$model = new AttachmentsModel();
+		$model = $this->getModel('Attachments', 'Site');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
 			throw new \Exception($errmsg, 500);
@@ -106,7 +107,6 @@ class AttachmentsController extends BaseController
 			}
 
 		// Get the view
-		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
 		$viewType = $document->getType();
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {

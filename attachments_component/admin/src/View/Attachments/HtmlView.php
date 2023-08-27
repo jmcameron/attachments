@@ -15,6 +15,7 @@ namespace JMCameron\Component\Attachments\Administrator\View\Attachments;
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -22,6 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\String\StringHelper;
 
@@ -46,7 +48,7 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		// Fail gracefully if the Attachments plugin framework plugin is disabled
-		if ( !PluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+		if ( !PluginHelper::isEnabled('attachments', 'framework') ) {
 			echo '<h1>' . Text::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
 			return;
 			}
@@ -120,7 +122,7 @@ class HtmlView extends BaseHtmlView
 		$filter_entity_options = array();
 		$filter_entity_options[] = HTMLHelper::_('select.option', 'ALL', Text::_( 'ATTACH_ALL_TYPES' ) );
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		$entity_info = $apm->getInstalledEntityInfo();
 		foreach ($entity_info as $einfo) {
 			$filter_entity_options[] = HTMLHelper::_('select.option', $einfo['id'], $einfo['name_plural']);
@@ -202,10 +204,7 @@ class HtmlView extends BaseHtmlView
 			ToolBarHelper::divider();
 			ToolBarHelper::custom('params.edit', 'options', 'options', 'JTOOLBAR_OPTIONS', false);
 
-			$icon_name = 'adminUtils';
-			if (version_compare(JVERSION, '3.0', 'ge')) {
-				$icon_name = 'wrench';
-				}
+			$icon_name = 'wrench';
 
 			// Add a button for extra admin commands
 			$toolbar->appendButton('Popup', $icon_name, 'ATTACH_UTILITIES',
@@ -218,18 +217,9 @@ class HtmlView extends BaseHtmlView
 		// Manually add a help button for the help view
 		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
 		$help = ' ' . Text::_('JTOOLBAR_HELP') . ' ';
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			$link = "<button class=\"btn btn-small\" rel=\"help\" href=\"#\" ";
-			$link .= "onclick=\"Joomla.popupWindow('$url', 'Help', 800, 650, 1)\"> ";
-			$link .= "<i class=\"icon-question-sign\"></i>$help</button>";
-		}
-		else
-		{
-			$link = '<a class="toolbar" rel="help" href="#" ';
-			$link .= "onclick=\"Joomla.popupWindow('$url', 'Help', 800, 650, 1)\"> ";
-			$link .= "<span class=\"icon-32-help\"> </span>$help</a>";
-		}
+		$link = "<button class=\"btn btn-small\" rel=\"help\" href=\"#\" ";
+		$link .= "onclick=\"Joomla.popupWindow('$url', 'Help', 800, 650, 1)\"> ";
+		$link .= "<i class=\"icon-question-sign\"></i>$help</button>";
 		$toolbar->appendButton('Custom', $link, 'toolbar-help');
 	}
 

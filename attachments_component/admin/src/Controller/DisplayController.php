@@ -259,24 +259,23 @@ class DisplayController extends BaseController
 	public function help()
 	{
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Help\HtmlView();
+		$view = $this->createView('Help', 'Administrator', 'html');
 
 		// Load language(s)
-		$app = Factory::getApplication();
-		$view->lang = $app->getLanguage();
+		$view->lang = $this->app->getLanguage();
 
 		// Now load the help page file
 		// (Load the component file first since the help pages share some items)
 		if ( $view->lang->getTag() != 'en-GB' )
 		{
 			// First load English for any untranslated items
-			$view->lang->load('com_attachments', dirname(__FILE__), 'en-GB');
-			$view->lang->load('com_attachments.help', dirname(__FILE__), 'en-GB');
+			$view->lang->load('com_attachments', JPATH_ADMINISTRATOR.'/components/com_attachments', 'en-GB');
+			$view->lang->load('com_attachments.help', JPATH_ADMINISTRATOR.'/components/com_attachments', 'en-GB');
 		}
 
 		// Load current language
-		$view->lang->load('com_attachments', dirname(__FILE__), null, true);
-		$view->lang->load('com_attachments.help', dirname(__FILE__), null, true);
+		$view->lang->load('com_attachments', JPATH_ADMINISTRATOR.'/components/com_attachments', null, true);
+		$view->lang->load('com_attachments.help', JPATH_ADMINISTRATOR.'/components/com_attachments', null, true);
 
 		// Call parent to display
 		$view->display();

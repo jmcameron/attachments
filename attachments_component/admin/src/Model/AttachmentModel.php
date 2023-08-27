@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Model;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -38,9 +39,12 @@ class AttachmentModel extends AdminModel
 	 * @return		Table	A database object
 	 * @since		1.6
 	 */
-	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
+	public function getTable($type = 'Attachment', $prefix = 'Administrator', $config = array())
 	{
-		return Table::getInstance($type, $prefix, $config);
+		$mvc = Factory::getApplication()
+				->bootComponent("com_attachments")
+				->getMVCFactory();
+		return $mvc->createTable($type, $prefix, $config);
 	}
 
 
@@ -86,7 +90,7 @@ class AttachmentModel extends AdminModel
 			$parent_type = $item->parent_type;
 			$parent_entity = $item->parent_entity;
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 114)';
 				throw new \Exception($errmsg, 500);

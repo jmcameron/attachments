@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Model;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -157,7 +158,7 @@ class AttachmentsModel extends ListModel
 
 			// Get the contributions for all the known content types
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			$known_parent_types = $apm->getInstalledParentTypes();
 			foreach ($known_parent_types as $parent_type) {
 				$parent = $apm->getAttachmentsPlugin($parent_type);
@@ -294,7 +295,7 @@ class AttachmentsModel extends ListModel
 
 		// Update the attachments with information about thier parents
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		foreach ($items as $item) {
 			$parent_id = $item->parent_id;
 			$parent_type = $item->parent_type;
@@ -354,9 +355,12 @@ class AttachmentsModel extends ListModel
 	 * @return		JTable	A database object
 	 * @since		1.6
 	 */
-	public function getTable($type = 'Attachment', $prefix = 'AttachmentsTable', $config = array())
+	public function getTable($type = 'Attachment', $prefix = 'Administrator', $config = array())
 	{
-		return Table::getInstance($type, $prefix, $config);
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		return $mvc->createTable($type, $prefix, $config);
 	}
 
 
@@ -369,7 +373,6 @@ class AttachmentsModel extends ListModel
 	{
 		// Get the ids and make sure they are integers
 		$attachmentTable = $this->getTable();
-		$attachmentTable = Table::getInstance('Attachment', 'AttachmentsTable');
 
 		return $attachmentTable->publish($cid, $value);
 	}

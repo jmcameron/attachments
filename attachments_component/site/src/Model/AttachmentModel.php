@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Site\Model;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -105,7 +106,7 @@ class AttachmentModel extends BaseDatabaseModel
 						}
 					}
 				else {
-					$user_levels[] = $glevel;
+					$user_levels[] = $guest_levels;
 					}
 				}
 			$user_levels = implode(',', array_unique($user_levels));
@@ -129,7 +130,7 @@ class AttachmentModel extends BaseDatabaseModel
 			$parent_type = $this->_attachment->parent_type;
 			$parent_entity = $this->_attachment->parent_entity;
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				$this->_attachment->parent_type = false;
 				return false;

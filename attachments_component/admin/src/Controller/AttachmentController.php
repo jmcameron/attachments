@@ -17,12 +17,14 @@ use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\FormFactoryInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -80,7 +82,7 @@ class AttachmentController extends FormController
 	public function add()
 	{
 		// Fail gracefully if the Attachments plugin framework plugin is disabled
-		if ( !PluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+		if ( !PluginHelper::isEnabled('attachments', 'framework') ) {
 			echo '<h1>' . Text::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
 			return;
 			}
@@ -95,8 +97,7 @@ class AttachmentController extends FormController
 		// Access check.
 		if (!$this->allowAdd()) {
 			// Set the internal error and also the redirect error.
-			$this->setError(Text::_('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED'));
-			$this->setMessage($this->getError(), 'error');
+			$this->setMessage(Text::_('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED'), 'error');
 			$this->setRedirect(Route::_('index.php?option='.$this->option .
 										 '&view='.$this->view_list.$this->getRedirectToListAppend(), false));
 			return false;
@@ -145,7 +146,7 @@ class AttachmentController extends FormController
 
 		// Set up the "select parent" button
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		$entity_info = $apm->getInstalledEntityInfo();
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
@@ -187,7 +188,7 @@ class AttachmentController extends FormController
 		if ( !$new_parent ) {
 
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 				// Exit if there is no Attachments plugin to handle this parent_type
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 123)';
@@ -209,7 +210,7 @@ class AttachmentController extends FormController
 
 		// Set up the view
 		$document = $app->getDocument();
-		$view = $this->getView('Add', $document->getType(), 'Administrator');
+		$view = $this->getView('Add', $document->getType(), 'Administrator', ['option' => $this->option]);
 
 		$this->add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
 		// ??? Move the add_view_urls function to attachments base view class
@@ -238,7 +239,6 @@ class AttachmentController extends FormController
 		$view->new_parent	 = $new_parent;
 		$view->may_publish	 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 		$view->entity_info	 = $entity_info;
-		// $view->option		 = $this->option;
 		$view->from			 = $from;
 
 		$view->params		 = $params;
@@ -258,7 +258,7 @@ class AttachmentController extends FormController
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Access check.
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$user = $app->getIdentity();
 		if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 124)', 403);
@@ -271,7 +271,7 @@ class AttachmentController extends FormController
 			}
 
 		// Get the article/parent handler
-		$input = $app->getInput();
+		$input = $this->input;
 		$new_parent = $input->getBool('new_parent', false);
 		$parent_type = $input->getCmd('parent_type', 'com_content');
 		$parent_entity = $input->getCmd('parent_entity', 'default');
@@ -283,7 +283,7 @@ class AttachmentController extends FormController
 
 		// Exit if there is no Attachments plugin to handle this parent_type
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 126)';
 			throw new \Exception($errmsg, 500);
@@ -315,7 +315,7 @@ class AttachmentController extends FormController
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
-		if (!$attachment->bind($input->get('post'))) {
+		if (!$attachment->bind($input->post)) {
 			$errmsg = $attachment->getError() . ' (ERR 128)';
 			throw new \Exception($errmsg, 500);
 		}
@@ -359,8 +359,8 @@ class AttachmentController extends FormController
 			}
 
 		// Update the url checkbox fields
-		$attachment->url_relative = $relative_url;
-		$attachment->url_verify = $verify_url;
+		$attachment->url_relative = $relative_url ? 1 : 0;
+		$attachment->url_verify = $verify_url ? 1 : 0;
 
 		// Update create/modify info
 		$attachment->created_by = $user->get('id');
@@ -371,6 +371,8 @@ class AttachmentController extends FormController
 		$msgType = 'message';
 		$error = false;
 		if ( $new_uri_type == 'file' ) {
+			// Set up the parent entity to save
+			$attachment->parent_entity = $parent_entity;
 
 			// Upload a new file
 			$result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
@@ -506,7 +508,7 @@ class AttachmentController extends FormController
 	public function edit($key = null, $urlVar = null)
 	{
 		// Fail gracefully if the Attachments plugin framework plugin is disabled
-		if ( !PluginHelper::isEnabled('attachments', 'attachments_plugin_framework') ) {
+		if ( !PluginHelper::isEnabled('attachments', 'framework') ) {
 			echo '<h1>' . Text::_('ATTACH_WARNING_ATTACHMENTS_PLUGIN_FRAMEWORK_DISABLED') . '</h1>';
 			return;
 			}
@@ -547,7 +549,7 @@ class AttachmentController extends FormController
 
 		// Get the parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit if there is no Attachments plugin to handle this parent_type
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 133)';
@@ -631,7 +633,7 @@ class AttachmentController extends FormController
 
 		// Set up the view
 		$document = $app->getDocument();
-		$view = $this->getView('Edit', $document->getType(), 'Administrator');
+		$view = $this->getView('Edit', $document->getType(), 'Administrator', ['option' => $this->option]);
 
 		$this->add_view_urls($view, 'update', $parent_id,
 													   $parent_type, $attachment_id, $from);
@@ -687,7 +689,6 @@ class AttachmentController extends FormController
 		$view->may_publish		 = $parent->userMayChangeAttachmentState($parent_id, $parent_entity, $user->id);
 
 		$view->from		  = $from;
-		$view->option	  = $this->option;
 
 		$view->attachment = $attachment;
 
@@ -746,7 +747,7 @@ class AttachmentController extends FormController
 
 		// Get the parent handler for this attachment
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
 			throw new \Exception($errmsg, 500);

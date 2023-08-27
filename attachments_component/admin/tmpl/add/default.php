@@ -235,7 +235,10 @@ if ( $attachment->parent_title ) {
 // Show the existing attachments
 if ( ($attachment->uri_type == 'file') && $attachment->parent_id ) {
 	/** Get the Attachments controller class */
-	$controller = new ListController();
+	$mvc = Factory::getApplication()
+		->bootComponent("com_attachments")
+		->getMVCFactory();
+	$controller = $mvc->createController('List', 'Administrator', [], $app, $app->getInput());
 	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }

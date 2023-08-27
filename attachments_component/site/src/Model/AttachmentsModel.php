@@ -11,8 +11,9 @@
  * @author Jonathan M. Cameron
  */
 
-namespace JMCameron\Component\Attachments\Site\Model; 
+namespace JMCameron\Component\Attachments\Site\Model;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -224,7 +225,7 @@ class AttachmentsModel extends BaseDatabaseModel
 
 			// Get the parent handler
 			PluginHelper::importPlugin('attachments');
-			$apm = getAttachmentsPluginManager();
+			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
 				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 55)';
 				throw new \Exception($errmsg, 500);
@@ -386,7 +387,7 @@ class AttachmentsModel extends BaseDatabaseModel
 					}
 				}
 			else {
-				$user_levels[] = $glevel;
+				$user_levels[] = $guest_levels;
 				}
 			}
 		$user_levels = implode(',', array_unique($user_levels));

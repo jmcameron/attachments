@@ -13,6 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Table;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -78,7 +79,7 @@ class AttachmentTable extends Table
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Remove any attachments that the user may not publish/unpublish
 		$bad_ids = Array();

@@ -15,6 +15,7 @@ namespace JMCameron\Component\Attachments\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die('Restricted access');
@@ -35,7 +36,14 @@ class AttachmentsPermissions
 	 */
 	public static function getActions($user_id = null)
 	{
-		$user	= Factory::getUser($user_id);
+		if ($user_id) {
+			$user = Factory::getContainer()
+				->get(UserFactoryInterface::class)
+				->loadUserById($user_id);
+		} else {
+			$user = Factory::getApplication()->getIdentity();
+		}
+
 		$result	= new Registry();
 
 		$assetName = 'com_attachments';
@@ -71,7 +79,13 @@ class AttachmentsPermissions
 	 */
 	public static function userMayEditCategory($category_id, $user_id = null)
 	{
-		$user = Factory::getUser($user_id);
+		if ($user_id) {
+			$user = Factory::getContainer()
+				->get(UserFactoryInterface::class)
+				->loadUserById($user_id);
+		} else {
+			$user = Factory::getApplication()->getIdentity();
+		}
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
@@ -121,7 +135,13 @@ class AttachmentsPermissions
 	 */
 	public static function userMayEditArticle($article_id, $user_id = null)
 	{
-		$user = Factory::getUser($user_id);
+		if ($user_id) {
+			$user = Factory::getContainer()
+				->get(UserFactoryInterface::class)
+				->loadUserById($user_id);
+		} else {
+			$user = Factory::getApplication()->getIdentity();
+		}
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', 'com_content')) {
