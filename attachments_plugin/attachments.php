@@ -25,12 +25,13 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 
 defined('_JEXEC') or die('Restricted access');
 
 /** Load the Attachments defines (if available) */
-if (!file_exists(JPATH_SITE . '/components/com_attachments/attachments.xml'))
+if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.xml'))
 {
 	// Exit quietly if the attachments component has been uninstalled or deleted
 	return;
@@ -93,15 +94,14 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	/**
 	 * The content plugin that inserts the attachments list into content items
 	 *
-	 * @param string The context of the content being passed to the plugin.
-	 * @param &object &$row the content object (eg, article) being displayed
-	 * @param &object &$params the parameters
-	 * @param int $page the 'page' number
+	 * @param	Event $event The event object
 	 *
 	 * @return true if anything has been inserted into the content object
 	 */
-	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	// public function onContentPrepare($context, &$row, &$params, $page = 0)
+	public function onContentPrepare(Event $event)
 	{
+		[$context, $row, $params, $page] = $event->getArguments();
 		// Enable the following four diagnostic lines to see if a component uses onContentPrepare
 		// $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
 		// if (isset($row->text)) $row->text .= $msg;
@@ -248,15 +248,13 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	/**
 	 * The content plugin that inserts the attachments list into content items
 	 *
-	 * @param	string	 $context  the context of the content being passed to the plugin.
-	 * @param	&object	 &$row	   the content object (eg, article) being displayed
-	 * @param	&object	 &$params  the parameters
-	 * @param	int		 $page	   the 'page' number
+	 * @param	Event $event The event object
 	 *
 	 * @return true if anything has been inserted into the content object
 	 */
-	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
+	public function onContentBeforeDisplay(Event $event)
 	{
+		[$context, $row, $params, $page] = $event->getArguments();
 		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 		$layout = $input->getCmd('layout');
@@ -360,14 +358,13 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	 *
 	 * This method is called right after the content is saved.
 	 *
-	 * @param string The context of the content being passed to the plugin.
-	 * @param object $item A JTableContent object
-	 * @param bool $isNew If the content is newly created
+	 * @param	Event $event The event object
 	 *
 	 * @return	void
 	 */
-	function onContentAfterSave($context, $item, $isNew )
+	function onContentAfterSave(Event $event)
 	{
+		[$context, $item, $isNew] = $event->getArguments();
 		if ( !$isNew ) {
 			// If the item is not new, this step is not needed
 			return true;
