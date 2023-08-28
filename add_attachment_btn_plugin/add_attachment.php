@@ -21,6 +21,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 
 // no direct access
@@ -61,13 +62,11 @@ class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterfa
 	/**
 	 * Add Attachment button
 	 *
-	 * @param string $name The name of the editor form
-	 * @param int $asset The asset ID for the entity being edited
-	 * @param int $author The ID of the author of the entity
+	 * @param Event $event The event object
 	 *
 	 * @return a button
 	 */
-	public function onDisplay($name, $asset, $author)
+	public function onDisplay(Event $event)
 	{
 		$input = $this->app->getInput();
 
