@@ -318,7 +318,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		else
 		{
 			$lang = $this->app->getLanguage();
-			$lang->load('plg_attachments_plugin_framework', dirname(__FILE__).'/..');
+			$lang->load('plg_attachments_plugin_framework', JPATH_PLUGINS . '/attachments/framework');
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
 			throw new \Exception($errmsg, 500);
 		}
@@ -938,9 +938,11 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		$add_attachment_btn  = false;
 
 		// Get the html for the attachments list
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
+		/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
 		$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
 		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
 
@@ -1104,9 +1106,8 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	{
 		// Figure out where to insert the attachments list
 		$reptag = '<div id="editor-xtd-buttons"';
-		$app = $this->app;
-		$user = $app->getIdentity();
-		if ($user->getParam('editor', $app->get('editor')) == 'tinymce') {
+		$user = $this->app->getIdentity();
+		if ($user->getParam('editor', $this->app->get('editor')) == 'tinymce') {
 			# Hack because TinyMCE changed the structure
 			$reptag = '<div class="toggle-editor btn-toolbar float-end clearfix mt-3"';
 			}
@@ -1122,7 +1123,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	 *
 	 * Attachment pop-dialogs will be closed using javascript if they are called from pages of these 'from' types
 	 *
-	 * @retrun array  An array of known tokens (strings)
+	 * @return array  An array of known tokens (strings)
 	 */
 	public function knownFroms()
 	{

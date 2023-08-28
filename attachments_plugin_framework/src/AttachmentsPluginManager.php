@@ -15,6 +15,7 @@ namespace JMCameron\Plugin\AttachmentsPluginFramework;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 
 // No direct access
@@ -191,8 +192,11 @@ class AttachmentsPluginManager
 
 		$lang = Factory::getApplication()->getLanguage();
 
-		$this->language_loaded = $lang->load('plg_attachments_plugin_framework', dirname(__FILE__));
+		Log::add("AttachmentsPluginManager loading language...");
 
+		$this->language_loaded = $lang->load('plg_attachments_plugin_framework', JPATH_PLUGINS . '/attachments/framework');
+
+		Log::add("AttachmentsPluginManager language loaded: " . ($this->language_loaded ? "yes" : "no"));
 		return $this->language_loaded;
 	}
 
