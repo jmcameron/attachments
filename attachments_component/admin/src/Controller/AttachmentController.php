@@ -88,7 +88,7 @@ class AttachmentController extends FormController
 			}
 
 		// Access check.
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$user = $app->getIdentity();
 		if ($user=== null || !$user->authorise('core.create', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 121)', 403);
@@ -312,6 +312,7 @@ class AttachmentController extends FormController
 			}
 
 		// Set up the new record
+		/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
@@ -514,7 +515,7 @@ class AttachmentController extends FormController
 			}
 
 		// Access check.
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$user = $app->getIdentity();
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
@@ -523,6 +524,7 @@ class AttachmentController extends FormController
 
 		$uri = Uri::getInstance();
 
+		/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
@@ -718,13 +720,14 @@ class AttachmentController extends FormController
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Access check.
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$user = $app->getIdentity();
 		if ($user === null OR !($user->authorise('core.edit', 'com_attachments') OR
 			   $user->authorise('core.edit.own', 'com_attachments')) ) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 134)', 403);
 			}
 
+		/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
@@ -1145,6 +1148,7 @@ class AttachmentController extends FormController
 			}
 
 		// Load the attachment
+		/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
@@ -1175,12 +1179,12 @@ class AttachmentController extends FormController
 		$view->action_button_label = Text::_('ATTACH_DELETE');
 
 		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id;
-		$view->action_url .= "&ampfrom=" . $view->from;
+		$view->action_url .= "&amp;from=" . $view->from;
 
 		$view->display();
 	}
 
 	public function cancel($key = null) {
-		
+		$this->setRedirect(Route::_('index.php?option=' . $this->option, false));
 	}
 }

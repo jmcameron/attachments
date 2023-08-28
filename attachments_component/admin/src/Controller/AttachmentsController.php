@@ -20,7 +20,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -46,12 +45,11 @@ class AttachmentsController extends AdminController
 	 * @param	string	The class prefix. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 *
-	 * @return	object	The model.
+	 * @return	BaseDatabaseModel|boolean	The model.
 	 */
 	public function getModel($name = 'Attachments', $prefix = 'Administrator', $config = array())
 	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
+		return parent::getModel($name, $prefix, array_merge(array('ignore_request' => true), $config));
 	}
 
 
@@ -73,12 +71,11 @@ class AttachmentsController extends AdminController
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$app = Factory::getApplication();
-		$document = $app->getDocument();
+		$document = $this->app->getDocument();
 
 		// Get an instance of the model
-		$this->addModelPath(JPATH_SITE.'/components/com_attachments/models');
-		$model = $this->getModel('Attachments');
+		/** @var \JMCameron\Component\Attachments\Site\Model\AttachmentsModel $model */
+		$model = $this->getModel('Attachments', 'Site');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 164)';
 			throw new \Exception($errmsg, 500);
@@ -99,9 +96,9 @@ class AttachmentsController extends AdminController
 			}
 
 		// Get the view
-		$this->addViewPath(JPATH_SITE.'/components/com_attachments/views');
 		$viewType = $document->getType();
-		$view = $this->getView('Attachments', $viewType);
+		/** @var \JMCameron\Component\Attachments\Site\View\Attachments\HtmlView $view */
+		$view = $this->getView('Attachments', $viewType, 'Site');
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
 			throw new \Exception($errmsg, 500);
@@ -150,20 +147,18 @@ class AttachmentsController extends AdminController
 		// Check for request forgeries
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
-		// Get ready
-		$app = Factory::getApplication();
-
 		// Get the attachments parent manager
 		PluginHelper::importPlugin('attachments');
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Get attachments to remove from the request
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		$cid = $input->get('cid', array(), 'array');
 		$deleted_ids = Array();
 
 		if (count($cid))
 		{
+			/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
 			$model		= $this->getModel('Attachment');
 			$attachment = $model->getTable();
 
@@ -206,7 +201,7 @@ class AttachmentsController extends AdminController
 					$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 					$errmsg = Text::sprintf('ATTACH_ERROR_NO_PERMISSION_TO_DELETE_S_ATTACHMENT_S_ID_N',
 											 $parent_entity, $attachment->filename, $id);
-					$app->enqueueMessage($errmsg, 'warning');
+					$this->app->enqueueMessage($errmsg, 'warning');
 				}
 			}
 
@@ -299,6 +294,7 @@ class AttachmentsController extends AdminController
 		else
 		{
 			// Get the model.
+			/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentsModel $model */
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers

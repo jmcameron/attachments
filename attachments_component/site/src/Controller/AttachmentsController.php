@@ -82,10 +82,11 @@ class AttachmentsController extends BaseController
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$app = Factory::getApplication();
+		$app = $this->app;
 		$document = $app->getDocument();
 
 		// Get an instance of the model
+		/** @var \JMCameron\Component\Attachments\Site\Model\AttachmentsModel $model */
 		$model = $this->getModel('Attachments', 'Site');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
@@ -108,6 +109,7 @@ class AttachmentsController extends BaseController
 
 		// Get the view
 		$viewType = $document->getType();
+		/** @var \JMCameron\Component\Attachments\Site\View\Attachments\HtmlView $view */
 		$view = $this->getView('Attachments', $viewType);
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 61)';
