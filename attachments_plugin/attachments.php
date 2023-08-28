@@ -19,7 +19,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
@@ -393,7 +392,7 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 		try {
 			$attachments = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = $db->stderr() . ' (ERR 200)';
+			$errmsg = $e->getMessage() . ' (ERR 200)';
 			throw new \Exception($errmsg, 500);
 		}
 
@@ -403,8 +402,11 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 			}
 
 		// Change the attachment to the new content item!
-		Table::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');
-		$atrow = Table::getInstance('Attachment', 'AttachmentsTable');
+		/** @var Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		$atrow = $mvc->createTable('Attachment', 'Administrator');
 
 		foreach ($attachments as $attachment) {
 
