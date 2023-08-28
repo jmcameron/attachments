@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 
 // no direct access
@@ -61,15 +62,16 @@ class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
 	 * of icons. You can return an array which defines a single icon and it will
 	 * be rendered right after the stock Quick Icons.
 	 *
-	 * @param  $context	 The calling context
+	 * @param  Event $event	 The event object
 	 *
 	 * @return array A list of icon definition associative arrays, consisting of the
 	 *				 keys link, image, text and access.
 	 *
 	 * @since		2.5
 	 */
-	public function onGetIcons($context)
+	public function onGetIcons(Event $event)
 	{
+		[$context] = $event->getArguments();
 		$user = Factory::getApplication()->getIdentity();
 		// See if we should show the icon
 		if ($context != $this->params->get('context', 'mod_quickicon') ||
