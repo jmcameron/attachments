@@ -94,7 +94,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	public function determineParentEntity(&$parent)
 	{
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 
 		// Handle category calls
@@ -133,7 +133,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	protected function getTextFieldName(&$row, $parent_entity)
 	{
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 		$layout = $input->getCmd('layout');
 
@@ -199,7 +199,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	public function getEntityItems($parent_entity = 'default', $filter = '')
 	{
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = $this->db;
 
 		$parent_entity		= $this->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
@@ -216,9 +216,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		$entity_id_field	= $this->entity_id_field[$parent_entity];
 
 		// Get the ordering information
-		$app	   = Factory::getApplication();
-		$order	   = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order', 'filter_order', '', 'cmd');
-		$order_Dir = $app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$order	   = $this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order', 'filter_order', '', 'cmd');
+		$order_Dir = $this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir', 'filter_order_Dir', '', 'word');
 
 		// Get all the items
 		$query = $db->getQuery(true);
@@ -240,7 +239,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		try {
 			$items = $db->loadObjectList();
 		} catch (\Exception $e) {
-			$errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 401) <br/>' . $db->stderr();
+			$errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 401) <br/>' . $e->getMessage();
 			throw new \Exception($errmsg, 500);
 		}
 
@@ -271,7 +270,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	{
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
-		$db	   = Factory::getContainer()->get('DatabaseDriver');
+		$db	   = $this->db;
 		$query = $db->getQuery(true);
 
 		$result = 0;
@@ -348,12 +347,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
 	{
-		$app = Factory::getApplication();
-
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Determine the task
-		if ($app->isClient("administrator"))
+		if ($this->app->isClient("administrator"))
 		{
 			$task = 'attachment.add';
 		}
@@ -450,7 +447,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	public function isParentPublished($parent_id, $parent_entity = 'default')
 	{
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = $this->db;
 
 		$published = false;
 
@@ -539,7 +536,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 
 			default:
 				// Articles
-				$db	   = Factory::getContainer()->get('DatabaseDriver');
+				$db	   = $this->db;
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__content')->where(' id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
@@ -580,7 +577,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 			return array();
 		}
 
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = $this->db;
 
 		$where = Array();
 
@@ -707,7 +704,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		$user_levels = array_unique($user->getAuthorisedViewLevels());
 
 		// See if the parent's access level is permitted for the user
-		$db	   = Factory::getContainer()->get('DatabaseDriver');
+		$db	   = $this->db;
 		$query = $db->getQuery(true);
 		$query->select('id')->from("#__$table");
 		$query->where('id = ' . (int) $parent_id . ' AND access in (' . implode(',', $user_levels) . ')');
@@ -744,7 +741,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		if (!$parent_id && ($parent_entity == 'category'))
 		{
 			$parent_id = $input->getInt('id');
@@ -771,7 +768,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		$all_but_article_views = $aparams->get('hide_except_article_views', false);
 
 		// Make sure the parent is valid and get info about it
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = $this->db;
 
 		if ($parent_entity == 'category')
 		{
@@ -1242,9 +1239,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 	 */
 	public function getParentIdInEditor($parent_entity, $view, $layout)
 	{
-		$app = Factory::getApplication();
-		$input = $app->getInput();
-		if ($app->isClient("administrator")) {
+		$input = $this->app->getInput();
+		if ($this->app->isClient("administrator")) {
 			// The default works fine for the back end
 			return parent::getParentIdInEditor($parent_entity, $view, $layout);
 			}
