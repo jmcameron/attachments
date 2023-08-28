@@ -14,13 +14,12 @@
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 
@@ -48,19 +47,6 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 	protected $autoloadLanguage = true;
 
 	/**
-	 * Constructor
-	 *
-	 * @param &object &$subject The object to observe
-	 * @param array	 $config	An array that holds the plugin configuration
-	 * @since 1.5
-	 */
-	public function __construct(&$subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
-
-	/**
 	 * Returns an array of events this subscriber will listen to.
 	 *
 	 * @return  array
@@ -75,14 +61,13 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 	/**
 	 * Insert attachments token button
 	 *
-	 * @param string $name The name of the editor form
-	 * @param int $asset The asset ID for the entity being edited
-	 * @param int $author The ID of the author of the entity
+	 * @param Event $event The event object
 	 *
 	 * @return a button
 	 */
-	public function onDisplay($name, $asset, $author)
+	public function onDisplay(Event $event)
 	{
+		[$name, $asset, $author] = $event->getArguments();
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
@@ -94,7 +79,7 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 			}
 
 		// Avoid displaying the button for anything except for registered parents
-		$input = Factory::getApplication()->getInput();
+		$input = $this->app->getInput();
 		$parent_type = $input->getCmd('option');
 
 		// Handle sections and categories specially (since they are really com_content)
@@ -111,7 +96,7 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 			}
 
 		// Get ready for language things
-		$lang =	 Factory::getApplication()->getLanguage();
+		$lang =	 $this->app->getLanguage();
 		if ( !$lang->load('plg_editors-xtd_insert_attachments_token', dirname(__FILE__)) ) {
 			// If the desired translation is not available, at least load the English
 			$lang->load('plg_editors-xtd_insert_attachments_token', JPATH_ADMINISTRATOR, 'en-GB');
@@ -131,9 +116,7 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 			}
 			";
 
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
-		$uri = Uri::getInstance();
+		$doc = $this->app->getDocument();
 
 		$doc->addScriptDeclaration($js);
 
