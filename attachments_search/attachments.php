@@ -20,6 +20,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use Joomla\String\StringHelper;
 
@@ -76,13 +77,15 @@ class plgSearchAttachments extends CMSPlugin implements SubscriberInterface
 	 * The sql must return the following fields that are
 	 * used in a common display routine: href, title, section, created, text,
 	 * browsernav
-	 * @param string Target search string
-	 * @param string matching option, exact|any|all
-	 * @param string ordering option, newest|oldest|popular|alpha|category
-	 * @param mixed An array if restricted to areas, null if search all
+	 * @param Event $event The event object
 	 */
-	public function onContentSearch($text, $phrase='', $ordering='', $areas=null)
+	public function onContentSearch(Event $event)
 	{
+		// $text - Target search string
+		// $phrase - matching option, exact|any|all
+		// $ordering - ordering option, newest|oldest|popular|alpha|category
+		// $areas - An array if restricted to areas, null if search all
+		[$text, $phrase, $ordering, $areas] = $event->getArguments();
 		$user	 = Factory::getApplication()->getIdentity();
 
 		// Exit if the search does not include attachments
