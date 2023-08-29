@@ -102,6 +102,7 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.category.'.$category_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the category
+			/** @var \Joomla\Database\DatabaseDriver $db */
 			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__categories');
@@ -164,6 +165,7 @@ class AttachmentsPermissions
 			 $user->authorise('core.edit.own', 'com_content.article.'.$article_id) ) {
 
 			// Yes user can 'edit.own', Find out if the user created the article
+			/** @var \Joomla\Database\DatabaseDriver $db */
 			$db = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('id')->from('#__content');

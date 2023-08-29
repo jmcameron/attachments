@@ -152,7 +152,7 @@ class ImportFromCSV
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $csv_filename) . ' (ERR 98)';
 			}
 
-		// Parse the first row to process field names and indeces
+		// Parse the first row to process field names and indices
 		$result = $this->_parseFieldNames($this->_file);
 		if ( $result !== true ) {
 			fclose($this->_file);
@@ -210,7 +210,7 @@ class ImportFromCSV
 				}
 			}
 
-		// Make sure the extra feilds are present
+		// Make sure the extra fields are present
 		$missing_fields = Array();
 		foreach ($this->_extra_fields as $efield) {
 			if ( !isset($this->_data[$efield]) ) {
@@ -331,6 +331,7 @@ class ImportFromCSV
 	 */
 	protected function _verifyUser($user_id, $expected_username)
 	{
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
@@ -338,7 +339,7 @@ class ImportFromCSV
 		try {
 			$db->setQuery($query, 0, 1);
 			$actual_username = $db->loadResult();
-		} catch (\Exception $e) {
+		} catch (\RuntimeException $e) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
 		}
 		if ( empty($actual_username) ) {
@@ -363,6 +364,7 @@ class ImportFromCSV
 	 */
 	protected function _verifyCategory($category_id, $expected_category_title)
 	{
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
@@ -370,7 +372,7 @@ class ImportFromCSV
 		try {
 			$db->setQuery($query, 0, 1);
 			$actual_category_title = $db->loadResult();
-		} catch (\Exception $e) {
+		} catch (\RuntimeException $e) {
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
 		}
 		if ( empty($actual_category_title) ) {

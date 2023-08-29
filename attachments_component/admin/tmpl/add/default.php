@@ -11,7 +11,6 @@
  * @author Jonathan M. Cameron
  */
 
-use JMCameron\Component\Attachments\Administrator\Controller\ListController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -24,6 +23,7 @@ defined('_JEXEC') or die('Restricted access');
 HTMLHelper::_('bootstrap.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
+/** @var \Joomla\CMS\Application\CMSApplication $app */
 $app = Factory::getApplication();
 $document = $app->getDocument();
 $uri = Uri::getInstance();
@@ -33,7 +33,7 @@ $attachment = $this->attachment;
 $upload_id = 'upload';
 
 
-// Show buttons for adding the attachments to other entitites (if appropriate)
+// Show buttons for adding the attachments to other entities (if appropriate)
 $alt_parent_html = '';
 $editor = $app->getInput()->getWord('editor');
 $exceptions = Array('article', 'category', 'add_to_parent');
@@ -235,9 +235,11 @@ if ( $attachment->parent_title ) {
 // Show the existing attachments
 if ( ($attachment->uri_type == 'file') && $attachment->parent_id ) {
 	/** Get the Attachments controller class */
+	/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 	$mvc = Factory::getApplication()
 		->bootComponent("com_attachments")
 		->getMVCFactory();
+	/** @var \JMCameron\Component\Attachments\Administrator\Controller\ListController $controller */
 	$controller = $mvc->createController('List', 'Administrator', [], $app, $app->getInput());
 	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);

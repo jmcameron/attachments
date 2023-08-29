@@ -112,6 +112,7 @@ class AttachmentModel extends BaseDatabaseModel
 			$user_levels = implode(',', array_unique($user_levels));
 
 			// Load the attachment data and make sure this user has access
+			/** @var \Joomla\Database\DatabaseDriver $db */
 			$db		= Factory::getContainer()->get('DatabaseDriver');
 			$query	= $db->getQuery(true);
 			$query->select('a.*, a.id as id');
@@ -198,22 +199,25 @@ class AttachmentModel extends BaseDatabaseModel
 
 
 	/**
-	 * Increment the download cout
+	 * Increment the download count
 	 *
 	 * @param int $attachment_id the attachment ID
 	 */
 	public function incrementDownloadCount()
 	{
 		// Update the download count
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->update('#__attachments')->set('download_count = (download_count + 1)');
 		$query->where('id = ' .(int)$this->_id);
 		$db->setQuery($query);
-		if ( !$db->execute() ) {
-			$errmsg = $db->stderr() . ' (ERR 49)';
+		try {
+			$db->execute();
+		} catch (\RuntimeException $e) {
+			$errmsg = $e->getMessage() . ' (ERR 49)';
 			throw new \Exception($errmsg, 500);
-			}
+		}
 	}
 
 }

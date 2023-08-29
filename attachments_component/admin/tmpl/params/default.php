@@ -20,6 +20,7 @@ use Joomla\CMS\Uri\Uri;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+/** @var \Joomla\CMS\Application\CMSApplication $app */
 $app = Factory::getApplication();
 $template = $app->getTemplate();
 
@@ -27,7 +28,7 @@ $template = $app->getTemplate();
 HTMLHelper::_('bootstrap.tooltip');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $app->getDocument()->getWebAssetManager();
 $wa->useScript('form.validate');
 
 $document = $app->getDocument();

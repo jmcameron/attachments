@@ -11,7 +11,6 @@
  * @author Jonathan M. Cameron
  */
 
-use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -192,6 +191,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				if ( !$logged_in AND ($attachment->access != '1')) {
 					$guest_levels = $this->params->get('show_guest_access_levels', Array('1'));
 					if ( in_array($attachment->access, $guest_levels) ) {
+						/** @var \Joomla\CMS\Application\CMSApplication $app */
 						$app = Factory::getApplication();
 						$return = $app->getUserState('com_attachments.current_url', '');
 						$url = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);

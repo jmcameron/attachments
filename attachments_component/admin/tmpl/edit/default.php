@@ -11,7 +11,6 @@
  * @author Jonathan M. Cameron
  */
 
-use JMCameron\Component\Attachments\Administrator\Controller\ListController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -26,6 +25,7 @@ defined('_JEXEC') or die('Restricted access');
 HTMLHelper::_('bootstrap.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
+/** @var \Joomla\CMS\Application\CMSApplication $app */
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 $document = $app->getDocument();
@@ -341,7 +341,12 @@ else
 if ( $attachment->parent_id AND ($update == 'file') )
 {
 	/** Get the attachments controller class */
-	$controller = new ListController();
+	/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+	$mvc = $this->app
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+	/** @var \JMCameron\Component\Attachments\Administrator\Controller\ListController $controller */
+	$controller = $mvc->createController('List', 'Administrator', [], $this->app, $this->app->getInput());
 	$controller->displayString($attachment->parent_id, $attachment->parent_type, $attachment->parent_entity,
 							   'ATTACH_EXISTING_ATTACHMENTS', false, false, true, $this->from);
 }

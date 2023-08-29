@@ -11,7 +11,6 @@
  * @author Jonathan M. Cameron
  */
 
-use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -22,6 +21,7 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die('Restricted access');
 
 // Add the plugins stylesheet to style the list of attachments
+/** @var \Joomla\CMS\Application\CMSApplication $app */
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 $document = $app->getDocument();
@@ -250,7 +250,11 @@ if ( $this->error )
 
 // Generate the list of existing attachments
 if ( ($update == 'file') || ($attachment->uri_type == 'file') ) {
-	$controller = new AttachmentsController();
+	/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+	$mvc = $app->bootComponent('com_attachments')
+		->getMVCFactory();
+	/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
+	$controller = $mvc->createController('Attachments', 'Site', [], $app, $app->getInput());
 	$controller->display($parent_id, $attachment->parent_type, $attachment->parent_entity,
 						 'ATTACH_EXISTING_ATTACHMENTS',
 						 false, false, true, $this->from);

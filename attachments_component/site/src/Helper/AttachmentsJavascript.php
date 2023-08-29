@@ -25,7 +25,7 @@ defined('_JEXEC') or die('Restricted access');
 class AttachmentsJavascript
 {
 	/**
-	 * Set up the appropriate Javascript framework (Mootools or jQuery)
+	 * Set up the appropriate Javascript framework
 	 */
 	public static function setupJavascript($add_refresh_script = true)
 	{

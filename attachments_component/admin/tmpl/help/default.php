@@ -264,7 +264,7 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 		 $this->endList();
 	  $this->endSubSection('formatting-options');
 
-	  // Visibilty Options
+	  // Visibility Options
 	  $this->startSubSection(Array( 'id' => 'visibility-options',
 									'code' => 'ATTACH_HELP_055000_SUBSECTION_TITLE'));
 		 echo $this->image('options-visibility.png', 'ATTACH_HELP_055000_SUBSECTION_TITLE',

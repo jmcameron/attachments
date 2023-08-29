@@ -79,6 +79,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the icon file_types all the attachments (that do not have one already)
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
@@ -157,11 +158,13 @@ class AttachmentsUpdate
 				$query->set('modified=' . $db->quote($mod_date) . ', created=' . $db->quote($created));
 				$query->where('id = ' . (int)$attachment->id);
 				$db->setQuery($query);
-				if (!$db->execute()) {
+				try {
+					$db->execute();
+				} catch(\RuntimeException $e) {
 					$errmsg = Text::sprintf('ATTACH_ERROR_UPDATING_NULL_DATE_FOR_ATTACHMENT_FILE_S',
 											 $attachment->filename);
-					throw new \Exception($errmsg . $db->stderr() . ' (ERR 71)', 500);
-					}
+					throw new \Exception($errmsg . $e->getMessage() . ' (ERR 71)', 500);
+				}
 				$numUpdated++;
 				}
 			}
@@ -319,6 +322,7 @@ class AttachmentsUpdate
 		PluginHelper::importPlugin('attachments');
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
@@ -470,6 +474,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
@@ -564,6 +569,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
@@ -621,6 +627,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();
@@ -681,6 +688,7 @@ class AttachmentsUpdate
 			}
 
 		// Update the system filenames for all the attachments
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();

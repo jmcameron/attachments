@@ -57,7 +57,7 @@ class AttachmentTable extends Table
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
-		// Initialise variables.
+		// Initialize variables.
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
@@ -92,7 +92,7 @@ class AttachmentTable extends Table
 			$this->_db->setQuery($query);
 			try {
 				$attachment = $this->_db->loadObject();
-			} catch (\Exception $e) {
+			} catch (\RuntimeException $e) {
 				throw new \Exception($e->getMessage() . ' (ERR 108)');
 			}
 
@@ -154,7 +154,7 @@ class AttachmentTable extends Table
 		// Check for a database error.
 		try {
 			$this->_db->execute();
-		} catch (\Exception $e) {
+		} catch (\RuntimeException $e) {
 			throw new \Exception(Text::sprintf('JLIB_DATABASE_ERROR_PUBLISH_FAILED',
 													get_class($this), $e->getMessage()) . ' (ERR 111)');
 			return false;

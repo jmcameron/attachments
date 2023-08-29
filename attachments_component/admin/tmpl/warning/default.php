@@ -19,6 +19,7 @@ use Joomla\CMS\Uri\Uri;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+/** @var \Joomla\CMS\Application\CMSApplication $app */
 $app = Factory::getApplication();
 $template = $app->getTemplate();
 

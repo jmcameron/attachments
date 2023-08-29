@@ -23,7 +23,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\String\StringHelper;
 
@@ -95,6 +94,7 @@ class HtmlView extends BaseHtmlView
 		if ( $suppress_obsolete_attachments ) {
 			$list_for_parents_default = 'PUBLISHED';
 			}
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
 		$app = Factory::getApplication();
 		$list_for_parents =
 			$app->getUserStateFromRequest('com_attachments.listAttachments.list_for_parents',

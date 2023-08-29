@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Table;
 use Joomla\Filter\OutputFilter;
 
 // No direct access to this file
@@ -78,6 +77,7 @@ class AttachmentsModel extends ListModel
 	{
 
 		// Create a new query object.
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 
@@ -126,6 +126,7 @@ class AttachmentsModel extends ListModel
 				$where[] = 'a.id = ' . (int) $search . '';
 				}
 			else {
+				/** @var \Joomla\Database\DatabaseDriver $db */
 				$db = Factory::getContainer()->get('DatabaseDriver');
 				$where[] = '(LOWER( a.filename ) LIKE ' .
 					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
@@ -230,7 +231,8 @@ class AttachmentsModel extends ListModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		// Initialise variables.
+		// Initialize variables.
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
 		$app = Factory::getApplication('administrator');
 
 		// Set up the list limits (not sure why the base class version of this does not work)
@@ -293,7 +295,7 @@ class AttachmentsModel extends ListModel
 
 		$good_items = Array();
 
-		// Update the attachments with information about thier parents
+		// Update the attachments with information about their parents
 		PluginHelper::importPlugin('attachments');
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		foreach ($items as $item) {
@@ -328,7 +330,7 @@ class AttachmentsModel extends ListModel
 				}
 
 			else {
-				// Handle pathalogical case where there is no parent handler
+				// Handle pathological case where there is no parent handler
 				// (eg, deleted component)
 				$item->parent_exists = false;
 				$item->parent_entity_type = $parent_entity;
@@ -357,6 +359,7 @@ class AttachmentsModel extends ListModel
 	 */
 	public function getTable($type = 'Attachment', $prefix = 'Administrator', $config = array())
 	{
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 			->bootComponent("com_attachments")
 			->getMVCFactory();

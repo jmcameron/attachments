@@ -20,13 +20,15 @@ use Joomla\CMS\Uri\Uri;
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-$template = Factory::getApplication()->getTemplate();
+/** @var \Joomla\CMS\Application\CMSApplication $app */
+$app = Factory::getApplication();
+$template = $app->getTemplate();
 
 // Load the tooltip behavior.
 HTMLHelper::_('bootstrap.tooltip');
 
 $uri = Uri::getInstance();
-$document = Factory::getApplication()->getDocument();
+$document = $app->getDocument();
 
 // Add the regular css file
 AttachmentsJavascript::setupJavascript(false);

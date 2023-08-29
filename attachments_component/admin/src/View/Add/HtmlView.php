@@ -163,7 +163,7 @@ class HtmlView extends BaseHtmlView
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
 			}
 
-		// Set up mootools/modal
+		// Set up modal
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Set the toolbar

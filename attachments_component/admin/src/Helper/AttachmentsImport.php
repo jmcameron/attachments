@@ -96,6 +96,7 @@ class AttachmentsImport
 														$update=false,
 														$dry_run=false)
 	{
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Open the CSV file
@@ -105,7 +106,7 @@ class AttachmentsImport
 			return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $filename) . ' (ERR 85)';
 			}
 
-		// Parse the first row to process field names and indeces
+		// Parse the first row to process field names and indices
 		$field = AttachmentsImport::_parseFieldNames($f);
 		$line_num += 1;
 		if ( !is_array($field) ) {
@@ -225,6 +226,7 @@ class AttachmentsImport
 				}
 
 			// Construct an attachments entry
+			/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 			$mvc = Factory::getApplication()
 				->bootComponent("com_attachments")
 				->getMVCFactory();

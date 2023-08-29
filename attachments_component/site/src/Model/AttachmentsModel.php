@@ -90,16 +90,6 @@ class AttachmentsModel extends BaseDatabaseModel
 	 */
 	var $_num_attachments = null;
 
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-
 	/**
 	 * Set the parent id (and optionally the parent type)
 	 *
@@ -227,7 +217,7 @@ class AttachmentsModel extends BaseDatabaseModel
 			PluginHelper::importPlugin('attachments');
 			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
-				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 55)';
+				$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $this->_parent_type) . ' (ERR 55)';
 				throw new \Exception($errmsg, 500);
 				}
 			$this->_parent_class = $apm->getAttachmentsPlugin($this->_parent_type);
@@ -370,6 +360,7 @@ class AttachmentsModel extends BaseDatabaseModel
 
 		// Determine allowed access levels
 		$app = Factory::getApplication();
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$user = $app->getIdentity();
 		$user_levels = $user->getAuthorisedViewLevels();

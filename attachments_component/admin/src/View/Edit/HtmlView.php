@@ -101,7 +101,7 @@ class HtmlView extends BaseHtmlView
 		$this->display_url_tooltip = Text::_('ATTACH_DISPLAY_URL') . '::' . Text::_('ATTACH_DISPLAY_URL_TOOLTIP');
 		$this->download_count_tooltip = Text::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' . Text::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
 
-		// Set up mootools/modal
+		// Set up modal
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Add the style sheets

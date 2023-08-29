@@ -19,5 +19,11 @@ defined('_JEXEC') or die('Restricted Access');
 ?>
 <tr>
 <td colspan="<?php echo $this->num_columns-3; ?>"><?php echo $this->pagination->getListFooter(); ?></td>
-<td colspan="3"><div id="componentVersion"><a target="_blank" title="<?php echo Text::_('ATTACH_ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>"><?php echo JText::sprintf('ATTACH_ATTACHMENTS_VERSION_S', $this->version); ?></a></div></td>
+<td colspan="3">
+	<div id="componentVersion">
+		<a target="_blank" title="<?php echo Text::_('ATTACH_ATTACHMENTS_PROJECT_URL_DESCRIPTION'); ?>" href="<?php echo $this->project_url ?>">
+			<?php echo Text::sprintf('ATTACH_ATTACHMENTS_VERSION_S', $this->version); ?>
+		</a>
+	</div>
+</td>
 </tr>

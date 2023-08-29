@@ -46,6 +46,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
 		$app = Factory::getApplication();
 		$document = $app->getDocument();
 		$input = $app->getInput();
@@ -59,6 +60,7 @@ class HtmlView extends BaseHtmlView
 		AttachmentsJavascript::setupJavascript();
 
 		// Get the model
+		/** @var \JMCameron\Component\Attachments\Site\Model\AttachmentsModel $model */
 		$model = $this->getModel('Attachments');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 63)';
@@ -83,7 +85,6 @@ class HtmlView extends BaseHtmlView
 
 		// Set up the correct path for template overloads
 		// (Do this after previous addTemplatePath so that template overrides actually override)
-		$app = Factory::getApplication();
 		$templateDir = JPATH_SITE.'/templates/'.$app->getTemplate().'/html/com_attachments/attachments';
 		$this->addTemplatePath($templateDir);
 

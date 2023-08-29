@@ -68,6 +68,7 @@ class AccessLevelsField extends FormField
 		$user	= Factory::getApplication()->getIdentity();
 		$user_access_levels = array_unique($user->getAuthorisedViewLevels());
 
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db		= Factory::getContainer()->get('DatabaseDriver');
 		$query	= $db->getQuery(true);
 

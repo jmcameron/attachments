@@ -41,6 +41,7 @@ class AttachmentModel extends AdminModel
 	 */
 	public function getTable($type = 'Attachment', $prefix = 'Administrator', $config = array())
 	{
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
 				->bootComponent("com_attachments")
 				->getMVCFactory();
@@ -62,6 +63,7 @@ class AttachmentModel extends AdminModel
 		if ( $item->id != 0 ) {
 
 			// If the item exists, get more info
+			/** @var \Joomla\Database\DatabaseDriver $db */
 			$db = Factory::getContainer()->get('DatabaseDriver');
 
 			// Get the creator name
@@ -132,7 +134,9 @@ class AttachmentModel extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_attachments.edit.attachment.data', array());
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
+		$app = Factory::getApplication();
+		$data = $app->getUserState('com_attachments.edit.attachment.data', array());
 		if (empty($data))
 		{
 			$data = $this->getItem();

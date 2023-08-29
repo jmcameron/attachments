@@ -13,9 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Site\Helper;
 
-use JMCameron\Component\Attachments\Administrator\Controller\ListController;
-use JMCameron\Component\Attachments\Site\Controller\AttachmentsController;
-use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Environment\Browser;
 use Joomla\CMS\Factory;
@@ -405,6 +403,7 @@ class AttachmentsHelper
 	{
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$input = $app->getInput();
@@ -469,7 +468,6 @@ class AttachmentsHelper
 		if (StringHelper::strlen($filename) > $max_filename_length) {
 			$filename = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
 			$msg = Text::_('ATTACH_WARNING_FILENAME_TRUNCATED');
-			$app = Factory::getApplication();
 			if ( $app->isClient('administrator') ) {
 				$lang = $app->getLanguage();
 				if ( $lang->isRTL() ) {
@@ -566,7 +564,12 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
+				$view = $mvc->createView('Update', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -574,7 +577,12 @@ class AttachmentsHelper
 				$view->update = $input->getWord('update');
 				}
 			else {
-				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
+				$view = $mvc->createView('Upload', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -672,7 +680,12 @@ class AttachmentsHelper
 
 			// Set up the view to redisplay the form with warnings
 			if ( $save_type == 'update' ) {
-				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
+				$view = $mvc->createView('Update', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -680,7 +693,12 @@ class AttachmentsHelper
 				$view->update = $input->getWord('update');
 				}
 			else {
-				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
+				$view = $mvc->createView('Upload', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -787,7 +805,12 @@ class AttachmentsHelper
 			$save_url = Route::_($base_url . "index.php?option=com_attachments&task=save&tmpl=component");
 
 			// Set up the view to redisplay the form with warnings
-			$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
+			/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+			$mvc = Factory::getApplication()
+				->bootComponent("com_attachments")
+				->getMVCFactory();
+			/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
+			$view = $mvc->createView('Upload', 'Site');
 			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 											 $attachment->parent_type, null, $from);
 			// Set up the view
@@ -835,6 +858,7 @@ class AttachmentsHelper
 				}
 			else {
 				// Restore the old state (ignore form info)
+				/** @var \Joomla\Database\DatabaseDriver $db */
 				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
@@ -1310,14 +1334,24 @@ class AttachmentsHelper
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
-				$view = new \JMCameron\Component\Attachments\Site\View\Update\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
+				$view = $mvc->createView('Update', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 				$view->update = $update_form;
 				}
 			else {
-				$view = new \JMCameron\Component\Attachments\Site\View\Upload\HtmlView();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = Factory::getApplication()
+					->bootComponent("com_attachments")
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
+				$view = $mvc->createView('Upload', 'Site');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -1402,14 +1436,15 @@ class AttachmentsHelper
 				}
 			else {
 				// Restore the old state
+				/** @var \Joomla\Database\DatabaseDriver $db */
 				$db = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true);
 				$query->select('state')->from('#__attachments')->where('id = '.(int)$attachment->id);
 				$db->setQuery($query, 0, 1);
 				try {
 					$old_state = $db->loadResult();
-				} catch (\Exception $e) {
-					$errmsg = $db->stderr() . ' (ERR 39)';
+				} catch (\RuntimeException $e) {
+					$errmsg = $e->getMessage() . ' (ERR 39)';
 					throw new \Exception($errmsg, 500);
 				}
 				$attachment->state = $old_state;
@@ -1463,7 +1498,12 @@ class AttachmentsHelper
 		$base_url = Uri::base(false);
 
 		// Get the info about the attachment
-		$model = new AttachmentsModel();
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+		$mvc = Factory::getApplication()
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		/** @var \JMCameron\Component\Attachments\Site\Model\AttachmentModel $model */
+		$model = $mvc->createModel('Attachment');
 		$model->setId($id);
 		$attachment = $model->getAttachment();
 		if ( !$attachment ) {
@@ -1476,7 +1516,7 @@ class AttachmentsHelper
 
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 42)';
 			throw new \Exception($errmsg, 500);
@@ -1495,11 +1535,11 @@ class AttachmentsHelper
 				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
 				if ( in_array($attachment->access, $guest_levels) ) {
 					// Construct the login request with return URL
+					/** @var \Joomla\CMS\Application\CMSApplication $app */
 					$app = Factory::getApplication();
 					$return = $app->getUserState('com_attachments.current_url', '');
 					$redirect_to = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
-					$app = Factory::getApplication();
-					$app->redirect($redirect_to );
+					$app->redirect($redirect_to);
 					}
 				}
 
@@ -1640,7 +1680,7 @@ class AttachmentsHelper
 			$parent_entity = $attachment->parent_entity;
 			}
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 45)';
 			throw new \Exception($errmsg, 500);
@@ -1799,17 +1839,22 @@ class AttachmentsHelper
 
 			if ( $app->isClient('administrator') ) {
 				// Get the html for the attachments list
-				$controller = $app
-					->bootComponent('com_attachments')
-					->getMVCFactory()
-					->createController('List', 'Administrator', [], $app, $app->getInput());
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = $app->bootComponent('com_attachments')
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Administrator\Controller\ListController $controller */
+				$controller = $mvc->createController('List', 'Administrator', [], $app, $app->getInput());
 
 				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
 													null, $show_file_links, $allow_edit, false, $from);
 				}
 			else {
 				// Get the html for the attachments list
-				$controller = new AttachmentsController();
+				/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+				$mvc = $app->bootComponent('com_attachments')
+					->getMVCFactory();
+				/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
+				$controller = $mvc->createController('Attachments', 'Site', [], $app, $app->getInput());
 
 				$alist = $controller->displayString($parent_id, $parent_type, $parent_entity,
 													null, $show_file_links, $allow_edit, false, $from);
