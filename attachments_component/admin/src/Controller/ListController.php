@@ -13,10 +13,8 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
-use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -72,11 +70,11 @@ class ListController extends BaseController
 								  $title=null, $show_file_links=true, $allow_edit=true,
 								  $echo=true, $from=null)
 	{
-		$app = Factory::getApplication();
-		$document = $app->getDocument();
+		$document = $this->app->getDocument();
 
 		// Get an instance of the model
-		$model = new AttachmentsModel();
+		/** @var \JMCameron\Component\Attachments\Site\Model\AttachmentsModel $model */
+		$model = $this->getModel('Attachments', 'Site');
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
@@ -92,8 +90,8 @@ class ListController extends BaseController
 			}
 
 		// Get the view
-		$this->addViewPath(JPATH_SITE.'/components/com_attachments/src/View');
 		$viewType = $document->getType();
+		/** @var \JMCameron\Component\Attachments\Site\View\Attachments\HtmlView */
 		$view = $this->getView('Attachments', $viewType, 'Site');
 		if ( !$view ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 120)';

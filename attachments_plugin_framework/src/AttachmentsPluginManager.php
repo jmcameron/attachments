@@ -135,7 +135,7 @@ class AttachmentsPluginManager
 	/**
 	 * Return the list of installed parent types
 	 *
-	 * @return an array of the installed parent types
+	 * @return array an array of the installed parent types
 	 */
 	public function &getInstalledParentTypes()
 	{

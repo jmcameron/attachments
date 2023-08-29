@@ -13,8 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
-use JMCameron\Component\Attachments\Administrator\Controller\ListController;
-use Joomla\CMS\Factory;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -39,8 +38,7 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		$app = Factory::getApplication();
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		// Set the default view (if not specified)
 		$input->set('view', $input->getCmd('view', 'Attachments'));
 
@@ -57,13 +55,11 @@ class DisplayController extends BaseController
 	 */
 	public function selectEntity()
 	{
-		$app = Factory::getApplication();
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		// Get the parent type
 		$parent_type = $input->getCmd('parent_type');
 		if ( !$parent_type ) {
-			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
-				$db->getErrorMsg() . ' (ERR 65)';
+			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 65)';
 			throw new \Exception($errmsg, 500);
 			}
 
@@ -77,7 +73,7 @@ class DisplayController extends BaseController
 
 		// Get the content parent object
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 		$parent_entity = $parent->getCanonicalEntityId($parent_entity);
 		$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
@@ -90,16 +86,16 @@ class DisplayController extends BaseController
 
 		// table ordering
 		$filter_order =
-			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
+			$this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order',
 										  'filter_order', '', 'cmd');
 		$filter_order_Dir =
-			$app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
+			$this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir',
 										  'filter_order_Dir','',	'word');
 		$lists['order_Dir'] = $filter_order_Dir;
 		$lists['order']		= $filter_order;
 
 		// search filter
-		$search_filter = $app->getUserStateFromRequest('com_attachments.selectEntity.search',
+		$search_filter = $this->app->getUserStateFromRequest('com_attachments.selectEntity.search',
 													   'search', '', 'string' );
 		$lists['search'] = $search_filter;
 
@@ -107,7 +103,7 @@ class DisplayController extends BaseController
 		$items = $parent->getEntityItems($parent_entity, $search_filter);
 
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Entity\HtmlView();
+		$view = $this->getView('Entity', 'html');
 		$view->option = $input->getCmd('option');
 		$view->from = 'closeme';
 		$view->post_url = $post_url;
@@ -128,7 +124,7 @@ class DisplayController extends BaseController
 	public function adminUtils()
 	{
 		// Access check
-		$user = Factory::getApplication()->getIdentity();
+		$user = $this->app->getIdentity();
 		if ($user === null OR !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 66)', 404);
 			}
@@ -208,7 +204,7 @@ class DisplayController extends BaseController
 		// $entries[] = HTMLHelper::_('tooltip', $utils_test_tooltip, null, null, 'TEST', $utils_test_url);
 
 		// Get the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Utils\HtmlView();
+		$view = $this->getView('Utils', 'html');
 		$view->entries = $entries;
 
 		$view->display();
@@ -220,8 +216,7 @@ class DisplayController extends BaseController
 	 */
 	public function attachmentsList()
 	{
-		$app = Factory::getApplication();
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		$parent_id = $input->getInt('parent_id', false);
 		$parent_type = $input->getWord('parent_type', '');
 		$parent_entity = $input->getWord('parent_entity', 'default');
@@ -246,7 +241,13 @@ class DisplayController extends BaseController
 			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
 		}
 
-		$controller = new ListController();
+		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+		$mvc = $this->app
+			->bootComponent("com_attachments")
+			->getMVCFactory();
+		/** @var \JMCameron\Component\Attachments\Administrator\Controller\ListController $controller */
+		$controller = $mvc->createController('List', 'Administrator', [], $this->app, $this->app->getInput());
+
 		$response = $controller->displayString($parent_id, $parent_type, $parent_entity,
 											   $title, $show_links, $allow_edit, false, $from);
 		echo $response;
@@ -259,7 +260,7 @@ class DisplayController extends BaseController
 	public function help()
 	{
 		// Set up the view
-		$view = $this->createView('Help', 'Administrator', 'html');
+		$view = $this->getView('Help', 'html');
 
 		// Load language(s)
 		$view->lang = $this->app->getLanguage();

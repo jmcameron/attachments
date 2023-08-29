@@ -16,18 +16,15 @@ namespace JMCameron\Component\Attachments\Administrator\Controller;
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
-use Joomla\CMS\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\Input\Input;
 
 defined('_JEXEC') or die('Restricted access');
 
-// Access check.
-$app = Factory::getApplication();
-$user = $app->getIdentity();
-if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)', 404);
-	}
+
 
 /**
  * The controller for utils requests
@@ -40,12 +37,18 @@ class UtilsController extends BaseController
 	/**
 	 * Constructor.
 	 *
-	 * @param	array An optional associative array of configuration settings.
+	 * @return	BaseController
 	 */
-	public function __construct( $default = array())
+	public function __construct( $config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null )
 	{
-		$default['default_task'] = 'noop';
-		parent::__construct( $default );
+		$config['default_task'] = 'noop';
+		parent::__construct( $config, $factory, $app, $input );
+
+		// Access check.
+		$user = $this->app->getIdentity();
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 150)', 404);
+			}
 	}
 
 
@@ -74,13 +77,12 @@ class UtilsController extends BaseController
 	 */
 	protected function enqueueSystemMessage($msg, $type = 'message')
 	{
-		$app = Factory::getApplication();
-		$app->enqueueMessage($msg, $type);
+		$this->app->enqueueMessage($msg, $type);
 
 		// Not sure why I need the extra saving to the session below,
 		// but it it seems necessary because I'm doing it from an iframe.
-		$session = $app->getSession();
-		$session->set('application.queue', $app->getMessageQueue());
+		$session = $this->app->getSession();
+		$session->set('application.queue', $this->app->getMessageQueue());
 	}
 
 
@@ -91,15 +93,14 @@ class UtilsController extends BaseController
 	public function add_icon_filenames()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
 			}
 
 		$msg = AttachmentsUpdate::add_icon_filenames();
-		$this->setRedirect('index.php?option=' . $this->option, $msg);
+		$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 	}
 
 
@@ -110,8 +111,7 @@ class UtilsController extends BaseController
 	public function update_null_dates()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
@@ -119,7 +119,7 @@ class UtilsController extends BaseController
 
 		$numUpdated = AttachmentsUpdate::update_null_dates();
 		$msg = Text::sprintf( 'ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated );
-		$this->setRedirect('index.php?option=' . $this->option, $msg);
+		$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 	}
 
 
@@ -131,8 +131,7 @@ class UtilsController extends BaseController
 	public function disable_sql_uninstall()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
@@ -140,7 +139,7 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
@@ -161,8 +160,7 @@ class UtilsController extends BaseController
 	public function regenerate_system_filenames()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user ===null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
@@ -170,7 +168,7 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
@@ -179,7 +177,7 @@ class UtilsController extends BaseController
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -191,8 +189,7 @@ class UtilsController extends BaseController
 	public function remove_spaces_from_system_filenames()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
@@ -200,7 +197,7 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
@@ -209,7 +206,7 @@ class UtilsController extends BaseController
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -221,8 +218,7 @@ class UtilsController extends BaseController
 	public function update_file_sizes()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
@@ -230,7 +226,7 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::update_file_sizes();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
@@ -239,7 +235,7 @@ class UtilsController extends BaseController
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -251,8 +247,7 @@ class UtilsController extends BaseController
 	public function check_files()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
@@ -260,16 +255,16 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::check_files_existance();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -280,8 +275,7 @@ class UtilsController extends BaseController
 	public function validate_urls()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
@@ -289,16 +283,16 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::validate_urls();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
-			// Close this window and refesh the parent window
+			// Close this window and refresh the parent window
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -310,8 +304,7 @@ class UtilsController extends BaseController
 	public function reinstall_permissions()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 159)', 404);
@@ -319,7 +312,7 @@ class UtilsController extends BaseController
 
 		$msg = AttachmentsUpdate::installAttachmentsPermissions();
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		if ( $input->getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
@@ -328,7 +321,7 @@ class UtilsController extends BaseController
 			AttachmentsJavascript::closeModal();
 			}
 		else {
-			$this->setRedirect('index.php?option=' . $this->option, $msg);
+			$this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
 			}
 	}
 
@@ -339,14 +332,13 @@ class UtilsController extends BaseController
 	public function installAttachmentsFromCsvFile()
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 160)', 404);
 			}
 
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 		$filename = $input->getString('filename', null);
 		if ( $filename == null ) {
 			$errmsg = Text::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 161)';
@@ -388,7 +380,7 @@ class UtilsController extends BaseController
 	public function test()
 	{
 		// Access check.
-		if (!Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_attachments')) {
+		if (!$this->app->getIdentity()->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 			}
 

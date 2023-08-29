@@ -13,20 +13,17 @@
 
 namespace JMCameron\Component\Attachments\Administrator\Controller;
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Input\Input;
 use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die('Restricted access');
-
-// Access check.
-$app = Factory::getApplication();
-$user = $app->getIdentity();
-if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
-	throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
-	}
 
 /**
  * The controller for special requests
@@ -39,12 +36,18 @@ class SpecialController extends BaseController
 	/**
 	 * Constructor.
 	 *
-	 * @param	array An optional associative array of configuration settings.
+	 * @return	BaseController
 	 */
-	public function __construct( $default = array())
+	public function __construct( $config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null )
 	{
-		$default['default_task'] = 'noop';
-		parent::__construct( $default );
+		$config['default_task'] = 'noop';
+		parent::__construct( $config, $factory, $app, $input );
+
+		// Access check.
+		$user = $this->app->getIdentity();
+		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
+			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 147)', 404);
+			}
 	}
 
 
@@ -65,10 +68,9 @@ class SpecialController extends BaseController
 	 */
 	public function showSEF()
 	{
-		$app = Factory::getApplication();
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 		echo "<html><head><title>SEF Status</title></head><body>";
-		echo "SEF: " . $app->getCfg('sef') . "<br />";
+		echo "SEF: " . $this->app->getCfg('sef') . "<br />";
 		echo "</body></html>";
 		exit();
 	}
@@ -82,6 +84,7 @@ class SpecialController extends BaseController
 	public function listAttachmentIDs()
 	{
 		// Get the article IDs
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('att.id,parent_id,parent_type,parent_entity,art.catid');
@@ -150,7 +153,7 @@ class SpecialController extends BaseController
 	{
 		// Get the article/parent handler
 		PluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		$ptypes = $apm->getInstalledParentTypes();
 		echo implode('<br/>', $ptypes);

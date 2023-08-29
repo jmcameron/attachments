@@ -41,8 +41,7 @@ class ParamsController extends FormController
 	public function edit($key = null, $urlVar = null)
 	{
 		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 		if ($user === null || !$user->authorise('core.admin', 'com_attachments')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 117)', 404);
 			return false;
@@ -66,7 +65,8 @@ class ParamsController extends FormController
 		}
 
 		// Set up the view
-		$view = new \JMCameron\Component\Attachments\Administrator\View\Params\HtmlView();
+		/** @var \JMCameron\Component\Attachments\Administrator\View\Params\HtmlView $view */
+		$view = $this->getView('Params', 'html');
 		$view->setModel($model);
 		$view->params = $params;
 
@@ -85,8 +85,7 @@ class ParamsController extends FormController
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$app = Factory::getApplication();
-		$input = $app->getInput();
+		$input = $this->app->getInput();
 
 		// Get the old component parameters
 		$old_params = ComponentHelper::getParams('com_attachments');
@@ -110,10 +109,10 @@ class ParamsController extends FormController
 		$new_secure = $data['secure'];
 
 		// Check if the user is authorized to do this.
-		$user = $app->getIdentity();
+		$user = $this->app->getIdentity();
 		if ($user === null || !$user->authorise('core.admin', $option))
 		{
-			$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'));
+			$this->app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'));
 			$this->redirect('index.php');
 			return;
 		}
@@ -129,11 +128,11 @@ class ParamsController extends FormController
 
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				$app->enqueueMessage($errors[$i], 'warning');
+				$this->app->enqueueMessage($errors[$i], 'warning');
 			}
 
 			// Save the data in the session.
-			$app->setUserState('com_config.config.global.data', $data);
+			$this->app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(Route::_('index.php?option=com_attachments&task=params.edit', false));
@@ -152,7 +151,7 @@ class ParamsController extends FormController
 		if ($return === false)
 		{
 			// Save the data in the session.
-			$app->setUserState('com_config.config.global.data', $data);
+			$this->app->setUserState('com_config.config.global.data', $data);
 
 			// Save failed, go back to the screen and display a notice.
 			$message = Text::sprintf('JERROR_SAVE_FAILED', $model->getError());
