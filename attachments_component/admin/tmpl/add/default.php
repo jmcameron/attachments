@@ -215,7 +215,7 @@ if ( $attachment->parent_title ) {
 	<input type="hidden" name="parent_entity" value="<?php echo $attachment->parent_entity; ?>" />
 	<input type="hidden" name="uri_type" value="<?php echo $attachment->uri_type; ?>" />
 	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
-	<input type="hidden" name="task" value="attachment.add" />
+	<input type="hidden" name="task" value="attachment.saveNew" />
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<?php if ( $this->from == 'closeme' ): ?>
 	<div class="form_buttons" align="center">
