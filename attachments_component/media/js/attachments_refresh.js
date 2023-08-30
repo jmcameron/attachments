@@ -15,13 +15,13 @@
  */
 
 function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
-    var id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid,
+    let id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid,
         alist = document.getElementById(id),
-        url = siteUrl + "/index.php?option=com_attachments&task=attachmentsList";
-    url += "&parent_id=" + pid;
-    url += "&parent_type=" + ptype + "&parent_entity=" + pentity;
-    url += "&lang=" + lang;
-    url += "&from=" + from + "&tmpl=component&format=raw";
+        url = `${siteUrl}/index.php?option=com_attachments&task=attachmentsList`;
+    url += `&parent_id=${pid}`;
+    url += `&parent_type=${ptype}&parent_entity=${pentity}`;
+    url += `&lang=${lang}`;
+    url += `&from=${from}&tmpl=component&format=raw`;
     if (!alist) {
         alist = window.parent.document.getElementById(id);
     }
@@ -29,22 +29,19 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
         id = "attachmentsList_" + ptype + "_default_" + pid;
         alist = window.parent.document.getElementById(id);
     }
-    new window.Request({
-        url: url,
-        method: 'get',
-        onComplete: function (response) {
-
-            // Refresh the attachments list
-            alist.innerHTML = response;
-
-            // Remove any old click events (since they are for a deleted/updated SqueezeBox)
-            $$('a.modal-button').removeEvents('click');
-
-            // Since the html has been replaced, we need to reconnect the modal button events
-            window.SqueezeBox.initialize({});
-            window.SqueezeBox.assign($$('a.modal-button'), { parse: 'rel' });
-        }
-    }).send();
+    fetch(new Request(url, {method: "GET"}))
+        .then(function(response) {
+            console.log(response);
+            if (response.status == 200) {
+                return response.text();
+            } else {
+                return Promise.reject(response);
+            }
+        })
+        .then(html => {
+            alist.innerHTML = html;
+        })
+        .catch(reason => console.log(reason));
 };
 
 

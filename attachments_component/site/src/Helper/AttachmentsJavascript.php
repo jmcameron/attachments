@@ -31,7 +31,7 @@ class AttachmentsJavascript
 	{
 		if ($add_refresh_script)
 		{
-			HTMLHelper::script('com_attachments/attachments_refresh.js', false, true);
+			HTMLHelper::script('com_attachments/attachments_refresh.js', ['relative' => true]);
 		}
 	}
 
