@@ -326,7 +326,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			'libraries.html.bootstrap.modal.main', 
 			[
 				'selector' => 'modal-' . $randomId, 
-				'body' => "<iframe src=\"$update_url\" scrolling=\"no\"></iframe>",
+				'body' => "<iframe src=\"$update_url\" scrolling=\"no\" loading=\"lazy\"></iframe>",
 				'params' => $modalParams
 			]
 		);
@@ -355,7 +355,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			'libraries.html.bootstrap.modal.main', 
 			[
 				'selector' => 'modal-' . $randomId, 
-				'body' => "<iframe src=\"$delete_url\" scrolling=\"no\"></iframe>",
+				'body' => "<iframe src=\"$delete_url\" scrolling=\"no\" loading=\"lazy\"></iframe>",
 				'params' => $modalParams
 			]
 		);
