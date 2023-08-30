@@ -1129,6 +1129,7 @@ class AttachmentController extends FormController
 	public function delete_warning()
 	{
 		// Access check.
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
 		if ( $user === null OR !( $user->authorise('core.delete', 'com_attachments') OR
@@ -1161,9 +1162,8 @@ class AttachmentController extends FormController
 
 		// Set up the view
 		$document = $app->getDocument();
-		$view = $this->getView('Warning', $document->getType(), 'Administrator');
+		$view = $this->getView('Warning', $document->getType(), 'Administrator', ['option' => $input->getCmd('option')]);
 		$view->parent_id = $attachment_id;
-		// $view->option = $input->getCmd('option'); // Protected variable is it really needed?
 		$view->from = $input->getWord('from');
 		$view->tmpl = $input->getWord('tmpl');
 
