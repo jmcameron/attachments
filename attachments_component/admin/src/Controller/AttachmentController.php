@@ -581,7 +581,7 @@ class AttachmentController extends FormController
 	   function jSelectParentArticle(id, title) {
 		   document.getElementById('parent_id').value = id;
 		   document.getElementById('parent_title').value = title;
-		   window.parent.SqueezeBox.close();
+		   window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();
 		   };" ;
 			$document->addScriptDeclaration($js);
 			}

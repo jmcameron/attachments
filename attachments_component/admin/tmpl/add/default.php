@@ -224,7 +224,7 @@ if ( $attachment->parent_title ) {
 			  value="<?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>" />
 	   <span class="right">
 		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-				 onClick="window.parent.SqueezeBox.close();" />
+				 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
 	   </span>
 	</div>
 	<?php endif; ?>
