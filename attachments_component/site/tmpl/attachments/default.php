@@ -316,6 +316,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$tooltip = Text::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 
 		$randomId = base64_encode('update'.$actual_filename);
+		// Remove +,/,= from the $randomId
+		$randomId = strtr($randomId, "+/=", "AAA");
 		$modalParams['title']  = $this->escape($tooltip);
 		$modalParams['url']    = $update_url;
 		$modalParams['height'] = '100%';
@@ -345,6 +347,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$tooltip = Text::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 
 		$randomId = base64_encode('delete'.$actual_filename);
+		// Remove +,/,= from the $randomId
+		$randomId = strtr($randomId, "+/=", "AAA");
 		$modalParams['title']  = $this->escape($tooltip);
 		$modalParams['url']    = $delete_url;
 		$modalParams['height'] = '100%';
