@@ -16,10 +16,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Module\Quickicon\Administrator\Event\QuickIconsEvent;
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -62,16 +61,16 @@ class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
 	 * of icons. You can return an array which defines a single icon and it will
 	 * be rendered right after the stock Quick Icons.
 	 *
-	 * @param  Event $event	 The event object
+	 * @param  QuickIconsEvent $event	 The event object
 	 *
 	 * @return array A list of icon definition associative arrays, consisting of the
 	 *				 keys link, image, text and access.
 	 *
 	 * @since		2.5
 	 */
-	public function onGetIcons(Event $event)
+	public function onGetIcons(QuickIconsEvent $event)
 	{
-		[$context] = $event->getArguments();
+		$context = $event->getContext();
 		$user = Factory::getApplication()->getIdentity();
 		// See if we should show the icon
 		if ($context != $this->params->get('context', 'mod_quickicon') ||
@@ -84,17 +83,20 @@ class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
 		// Add the CSS file
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_quickicon.css');
 
-		$image = 'flag-2';
-		$icon = Uri::root() . '/media/com_attachments/images/attachments_logo48.png';
+		$image = 'icon-attachment';
+
+		$result = $event->getArgument('result', []);
 
 		// Return the icon info for the quickicon system
-		return
-			array(
-				array(
-					'link' => 'index.php?option=com_attachments',
-					'image' => $image,
-					'icon' => $icon,
-					'text' => Text::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
-					'id' => 'plg_quickicon_attachment'));
+		$result[] = [
+			[
+				'link' => 'index.php?option=com_attachments',
+				'image' => $image,
+				'text' => Text::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
+				'id' => 'plg_quickicon_attachment'	
+			]
+		];
+
+		$event->setArgument('result', $result);
 	}
 }
