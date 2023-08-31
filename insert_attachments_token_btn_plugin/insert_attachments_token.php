@@ -61,13 +61,14 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 	/**
 	 * Insert attachments token button
 	 *
-	 * @param Event $event The event object
+	 * @param string $name The name of the editor form
+	 * @param int $asset The asset ID for the entity being edited
+	 * @param int $author The ID of the author of the entity
 	 *
 	 * @return a button
 	 */
-	public function onDisplay(Event $event)
+	public function onDisplay($name, $asset, $author)
 	{
-		[$name, $asset, $author] = $event->getArguments();
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 

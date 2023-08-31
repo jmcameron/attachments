@@ -62,11 +62,13 @@ class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterfa
 	/**
 	 * Add Attachment button
 	 *
-	 * @param Event $event The event object
+	 * @param string $name The name of the editor form
+	 * @param int $asset The asset ID for the entity being edited
+	 * @param int $author The ID of the author of the entity
 	 *
 	 * @return a button
 	 */
-	public function onDisplay(Event $event)
+	public function onDisplay($name, $asset, $author)
 	{
 		$input = $this->app->getInput();
 
