@@ -31,7 +31,6 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
     }
     fetch(new Request(url, {method: "GET"}))
         .then(function(response) {
-            console.log(response);
             if (response.status == 200) {
                 return response.text();
             } else {
