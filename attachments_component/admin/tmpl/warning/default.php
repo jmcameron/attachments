@@ -30,7 +30,7 @@ $uri = Uri::getInstance();
 $document = $app->getDocument();
 
 // Hide the vertical scrollbar using javascript
-$hide_scrollbar = "window.addEvent('domready', function() {
+$hide_scrollbar = "document.addEventListener('DOMContentLoaded', (event) => {
 	   document.documentElement.style.overflow = \"hidden\";
 	   document.body.scroll = \"no\";});";
 $document->addScriptDeclaration($hide_scrollbar);

@@ -23,7 +23,7 @@ HTMLHelper::_('bootstrap.tooltip');
 
 // Hide the vertical scrollbar using javascript
 $document = Factory::getApplication()->getDocument();
-$hide_scrollbar = "window.addEvent('domready', function() {
+$hide_scrollbar = "document.addEventListener('DOMContentLoaded', (event) => {
 	   document.documentElement.style.overflow = \"hidden\";
 	   document.body.scroll = \"no\";});";
 $document->addScriptDeclaration($hide_scrollbar);
