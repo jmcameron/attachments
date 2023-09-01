@@ -569,7 +569,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
-				$view = $mvc->createView('Update', 'Site');
+				$view = $mvc->createView('Update', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -582,7 +582,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
-				$view = $mvc->createView('Upload', 'Site');
+				$view = $mvc->createView('Upload', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
@@ -685,7 +685,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
-				$view = $mvc->createView('Update', 'Site');
+				$view = $mvc->createView('Update', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -810,7 +810,7 @@ class AttachmentsHelper
 				->bootComponent("com_attachments")
 				->getMVCFactory();
 			/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
-			$view = $mvc->createView('Upload', 'Site');
+			$view = $mvc->createView('Upload', 'Site', 'html');
 			AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 											 $attachment->parent_type, null, $from);
 			// Set up the view
@@ -1339,7 +1339,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
-				$view = $mvc->createView('Update', 'Site');
+				$view = $mvc->createView('Update', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
@@ -1351,7 +1351,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
-				$view = $mvc->createView('Upload', 'Site');
+				$view = $mvc->createView('Upload', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
