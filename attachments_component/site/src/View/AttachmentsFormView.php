@@ -41,9 +41,10 @@ class AttachmentsFormView extends HtmlView
 	 */
 	protected function startHTML()
 	{
+		/** @var \Joomla\CMS\Application\CMSApplication $app */
 		$app = Factory::getApplication();
 		$document = $app->getDocument();
-		$this->assignRef('document', $document);
+		$this->document = $document;
 
 		$this->template = $app->getTemplate(true)->template;
 		$template_dir = $this->baseurl.'/templates/'.$this->template;
