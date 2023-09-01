@@ -304,7 +304,7 @@ class DisplayController extends BaseController
 			$errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $attachment_id) . ' (ERR 9)';
 			throw new \Exception($errmsg, 500);
 			}
-		if (!$attachment->bind($input->get('post'))) {
+		if (!$attachment->bind($input->post->getArray())) {
 			$errmsg = $attachment->getError() . ' (ERR 10)';
 			throw new \Exception($errmsg, 500);
 			}
