@@ -316,7 +316,7 @@ class AttachmentController extends FormController
 		$model		= $this->getModel();
 		$attachment = $model->getTable();
 
-		if (!$attachment->bind($input->post)) {
+		if (!$attachment->bind($input->post->getArray())) {
 			$errmsg = $attachment->getError() . ' (ERR 128)';
 			throw new \Exception($errmsg, 500);
 		}
