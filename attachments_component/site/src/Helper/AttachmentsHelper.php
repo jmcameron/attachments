@@ -620,8 +620,8 @@ class AttachmentsHelper
 		$cmparams = ComponentHelper::getParams('com_media');
 
 		// Check to make sure the extension is allowed
-		$allowable = explode( ',', $cmparams->get( 'upload_extensions' ));
-		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ));
+		$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
+		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ) ?? '');
 		$extension = StringHelper::strtolower(File::getExt($filename));
 		$error = false;
 		$error_msg = false;
@@ -698,7 +698,7 @@ class AttachmentsHelper
 					->bootComponent("com_attachments")
 					->getMVCFactory();
 				/** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
-				$view = $mvc->createView('Upload', 'Site');
+				$view = $mvc->createView('Upload', 'Site', 'html');
 
 				AttachmentsHelper::add_view_urls($view, 'upload', $attachment->parent_id,
 												 $attachment->parent_type, null, $from);
