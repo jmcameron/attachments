@@ -34,13 +34,13 @@
 
     <files folder="site">
 	<!-- <filename>attachments.php</filename> -->
-	<filename>controller.php</filename>
 	<filename>index.html</filename>
 	<filename>router.php</filename>
 	<filename>src/Model/AttachmentModel.php</filename>
 	<filename>src/Model/AttachmentsModel.php</filename>
 	<filename>src/Model/index.html</filename>
 	<filename>src/Controller/AttachmentsController.php</filename>
+	<filename>src/Controller/DisplayController.php</filename>
 	<filename>src/Controller/index.html</filename>
 	<filename>src/Helper/AttachmentsDefines.php</filename>
 	<filename>src/Helper/AttachmentsHelper.php</filename>
