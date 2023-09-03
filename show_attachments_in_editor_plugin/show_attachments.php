@@ -42,7 +42,9 @@ class Plgsystemshow_attachments extends CMSPlugin implements SubscriberInterface
 	 * $db and $app are loaded on instantiation
 	 */
 	protected ?DatabaseDriver $db = null;
-	protected ?CMSApplication $app = null;
+
+	/** @var CMSApplication $app */
+	protected $app = null;
 
 	/**
 	 * Load the language file on instantiation
