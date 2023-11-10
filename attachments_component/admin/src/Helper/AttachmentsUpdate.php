@@ -16,7 +16,6 @@ namespace JMCameron\Component\Attachments\Administrator\Helper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
-use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -320,7 +319,7 @@ class AttachmentsUpdate
 
 		// Get the parent plugin manager
 		PluginHelper::importPlugin('attachments');
-		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+		$apm = \JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
 		$mvc = Factory::getApplication()
