@@ -257,6 +257,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 	public function postflight(string $type, InstallerAdapter $adapter): bool
 	{
 		$app = Factory::getApplication();
+		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Make sure the translations are available
@@ -305,10 +306,14 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			$query .= " TINYINT(1) UNSIGNED NOT NULL DEFAULT '1'";
 			$query .= " AFTER " . $db->quoteName('url_relative');
 			$db->setQuery($query);
-			if ( !$db->execute() ) {
-				// Ignore any DB errors (may require manual DB mods)
-				// ??? $errmsg = $db->stderr();
-				}
+			try {
+				if ( !$db->execute() ) {
+					// Ignore any DB errors (may require manual DB mods)
+					// ??? $errmsg = $db->stderr();
+					}
+			} catch (\RuntimeException $e) {
+				
+			}
 		}
 
 		// Check to see if we should be in secure mode
