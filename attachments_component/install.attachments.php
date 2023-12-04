@@ -242,7 +242,15 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 		else {
 			$this->_bugfixCantBuildAdminMenus('com_attachments');
 			}
-		
+
+		// Joomla 3.x to 4.x remove old mysql upgrade scripts
+		if (File::exists(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql')) {
+			unlink(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql');
+		}
+		if (File::exists(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql')) {
+			unlink(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql');
+		}
+
 		return true;
 	}
 
