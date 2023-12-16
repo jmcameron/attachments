@@ -170,8 +170,6 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			$lang->load('pkg_attachments.sys', dirname(__FILE__), null, true);
 			}
 
-		$app->enqueueMessage('<br/>', 'message');
-
 		// Check to see if the database type is supported
 		$db_driver_name = Factory::getContainer()->get('DatabaseDriver')->name;
 		if (!in_array($db_driver_name, $this->dbSupported))
