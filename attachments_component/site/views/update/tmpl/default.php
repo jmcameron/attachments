@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 $document = JFactory::getDocument();
 $app = JFactory::getApplication();
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 
 $lang = JFactory::getLanguage();
 
@@ -83,7 +83,7 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the stylesheets
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 
 AttachmentsJavascript::setupJavascript();
 

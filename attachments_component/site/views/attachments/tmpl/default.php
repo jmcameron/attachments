@@ -13,6 +13,10 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
 
 // Load the Attachments helper
 require_once(JPATH_SITE.'/components/com_attachments/helper.php'); /* ??? Needed? */
@@ -22,7 +26,7 @@ $user = JFactory::getUser();
 $logged_in = $user->get('username') <> '';
 
 $app = JFactory::getApplication();
-$uri = JFactory::getURI();
+$uri = JUri::getInstance();
 
 // Set a few variables for convenience
 $attachments = $this->list;
@@ -31,8 +35,8 @@ $parent_type = $this->parent_type;
 $parent_entity = $this->parent_entity;
 
 $base_url = $this->base_url;
-
-$format = JRequest::getWord('format', '');
+$app 	 = JFactory::getApplication('site');
+$format = $app->input->getWord('format', '');
 
 $html = '';
 
@@ -117,7 +121,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$html .= '<tr class="'.$row_class.'">';
 		
 	// Construct some display items
-	if ( JString::strlen($attachment->icon_filename) > 0 )
+	if ( strlen($attachment->icon_filename) > 0 )
 		$icon = $attachment->icon_filename;
 	else
 		$icon = 'generic.gif';
@@ -152,14 +156,14 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->file_link_open_mode == 'new_window')
 		$target = ' target="_blank"';
 	$html .= '<td class="at_filename">';
-	if ( JString::strlen($attachment->display_name) == 0 )
+	if ( strlen($attachment->display_name) == 0 )
 		$filename = $attachment->filename;
 	else
 		$filename = htmlspecialchars(stripslashes($attachment->display_name));
 	$actual_filename = $attachment->filename;
 	// Uncomment the following two lines to replace '.pdf' with its HTML-encoded equivalent
-	// $actual_filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
-	// $filename = JString::str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
+	// $actual_filename = str_ireplace('.pdf', '.&#112;&#100;&#102;', $actual_filename);
+	// $filename = str_ireplace('.pdf', '.&#112;&#100;&#102;', $filename);
 
 	if ( $this->show_file_links ) {
 		if ( $attachment->uri_type == 'file' ) {
@@ -222,7 +226,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Add description (maybe)
 	if ( $this->show_description ) {
 		$description = htmlspecialchars(stripslashes($attachment->description));
-		if ( JString::strlen($description) == 0)
+		if ( strlen($description) == 0)
 			$description = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_description\">$description</td>";
@@ -233,7 +237,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Show the USER DEFINED FIELDs (maybe)
 	if ( $this->show_user_field_1 ) {
 		$user_field = stripslashes($attachment->user_field_1);
-		if ( JString::strlen($user_field) == 0 )
+		if ( strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -242,7 +246,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 	if ( $this->show_user_field_2 ) {
 		$user_field = stripslashes($attachment->user_field_2);
-		if ( JString::strlen($user_field) == 0 )
+		if ( strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -251,7 +255,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		}
 	if ( $this->show_user_field_3 ) {
 		$user_field = stripslashes($attachment->user_field_3);
-		if ( JString::strlen($user_field) == 0 )
+		if ( strlen($user_field) == 0 )
 			$user_field = '&nbsp;';
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
@@ -299,9 +303,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$delete_link = '';
 
 	$a_class = 'modal-button';
-	if ( $app->isAdmin() ) {
+	if ( $app->isClient('administrator') ) {
 		$a_class = 'modal';
-		}
+	}
 
 	// Add the link to edit the attachment, if requested
 	if ( $this->some_attachments_modifiable && $attachment->user_may_edit && $this->allow_edit ) {

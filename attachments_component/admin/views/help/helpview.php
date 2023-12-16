@@ -63,7 +63,7 @@ class HelpView extends JViewLegacy
 		parent::__construct($config);
 
 		// Save the plugin type
-		$this->show_codes = JRequest::getCmd('show') == 'codes';
+		$this->show_codes = AttachmentsHelper::getCmd('show') == 'codes';
 	}
 
 	/**
@@ -106,7 +106,7 @@ class HelpView extends JViewLegacy
 	 */
 	protected function toggledURL()
 	{
-		$uri = JRequest::getURI();
+		$uri = AttachmentsHelper::getURI();
 
 		if ($this->show_codes)
 		{

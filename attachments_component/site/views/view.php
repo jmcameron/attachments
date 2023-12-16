@@ -61,7 +61,7 @@ class AttachmentsFormView extends JViewLegacy
 			}
 
 		// Add the CSS for the attachments list (whether we need it or not)
-		JHtml::stylesheet('com_attachments/attachments_list.css', array(), true);
+		JHtml::stylesheet('media/com_attachments/attachments_list.css', array(), true);
 
 		$head_renderer = new JDocumentRendererHead($document);
 

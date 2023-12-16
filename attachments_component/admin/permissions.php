@@ -12,7 +12,7 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\Factory as JFactory;
 
 /**
  * A class for attachments permissions functions

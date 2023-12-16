@@ -135,8 +135,8 @@ class AttachmentsViewAdd extends JViewLegacy
 		elseif ( $parent_id && ($parent_id != -1) ) {
 			$upload_toggle_url .= "&amp;parent_id=$parent_id";
 			}
-		if ( JRequest::getWord('editor') ) {
-			$upload_toggle_url .= "&amp;editor=" . JRequest::getWord('editor');
+		if ( AttachmentsHelper::getWord('editor') ) {
+			$upload_toggle_url .= "&amp;editor=" . AttachmentsHelper::getWord('editor');
 			}
 
 		$this->upload_toggle_button_text = $upload_toggle_button_text;
@@ -171,7 +171,7 @@ class AttachmentsViewAdd extends JViewLegacy
 	 */
 	protected function addToolBar()
 	{
-		JRequest::setVar('hidemainmenu', true);
+		//AttachmentsHelper::setVar('hidemainmenu', true);
 		JToolBarHelper::title(JText::_('ATTACH_ADD_ATTACHMENT'));
 
 		JToolBarHelper::apply('attachment.applyNew');

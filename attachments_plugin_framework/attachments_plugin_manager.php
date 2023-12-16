@@ -13,7 +13,11 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Object\CMSObject as JObject;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 
 /**
  * The class for the manager for attachments plugins
@@ -187,7 +191,8 @@ class AttachmentsPluginManager extends JObject
 		if (!in_array($parent_type, $this->parent_types))
 		{
 			$errmsg = JText::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
-			JError::raiseError(406, $errmsg);
+			//JError::raiseError(406, $errmsg);
+			JFactory::getApplication()->enqueueMessage($errmsg, 'error');
 		}
 
 		// Instantiate the plugin object, if we have not already done it
@@ -215,10 +220,14 @@ class AttachmentsPluginManager extends JObject
 		}
 
 		// Install the plugin
-		$dispatcher					= JDispatcher::getInstance();
-		$className					= 'AttachmentsPlugin_' . $parent_type;
-		$this->plugin[$parent_type] = new $className($dispatcher);
-
-		return is_object($this->plugin[$parent_type]);
+		$app 		= JFactory::getApplication('site');
+		$dispatcher					= $app->getDispatcher();
+            $className					= 'AttachmentsPlugin_' . $parent_type;
+        if (class_exists($className)) {
+            $this->plugin[$parent_type] = new $className($dispatcher);		
+            return is_object($this->plugin[$parent_type]);		
+        }else {
+            return false;
+        }
 	}
 }

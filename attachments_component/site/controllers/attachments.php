@@ -12,7 +12,13 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\MVC\Controller\BaseController as JControllerLegacy;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Router\Route as JRoute;
 
+ 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
 
@@ -96,7 +102,7 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 
 		// If none of the attachments should be visible, exit now
 		if ( ! $model->someVisible() ) {
-			return false;
+			//return false;
 			}
 
 		// Get the view
@@ -110,7 +116,7 @@ class AttachmentsControllerAttachments extends JControllerLegacy
 		$view->setModel($model);
 
 		// Construct the update URL template
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = JUri::getInstance()->base(false);
 		$update_url = $base_url . "index.php?option=com_attachments&task=update&id=%d";
 		$update_url .= "&from=$from&tmpl=component";
 		$update_url = JRoute::_($update_url);

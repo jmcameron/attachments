@@ -13,13 +13,11 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-// Add the attachments admin CSS files
-$document = JFactory::getDocument();
-$uri = JFactory::getURI();
+use Joomla\CMS\HTML\HTMLHelper;
 
 // load tooltip behavior
-JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));

@@ -13,7 +13,12 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Joomla\CMS\Language\Text as JText;
+ 
 /** Load the attachments helper */
 require_once JPATH_SITE . '/components/com_attachments/helper.php';
 
@@ -153,7 +158,9 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentId(&$attachment)
 	{
-		return JRequest::getInt('id', false);
+		//return JRequest::getInt('id', false);
+		$app 		= JFactory::getApplication('site');
+		return	$app->input->getInt('id');
 	}
 
 	/**
@@ -357,7 +364,8 @@ class AttachmentsPlugin extends JPlugin
 		$query->where("$entity_id_field=" . (int) $parent_id);
 		$db->setQuery($query);
 		$title = $db->loadResult();
-		if ($db->getErrorNum())
+		//if ($db->getErrorNum())
+		if ($title == NULL)
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_PARENT_S_TITLE_FOR_ID_N',
@@ -422,16 +430,16 @@ class AttachmentsPlugin extends JPlugin
 
 		// Do the query
 		$db->setQuery($query);
-		if ($db->getErrorNum())
+		/*if ($db->getErrorNum())
 		{
 			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 			$errmsg				= JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
 			JError::raiseError(500, $errmsg);
 		}
 		else
-		{
+		{*/
 			$items = $db->loadObjectList();
-		}
+		//}
 
 		if ($items == null)
 		{
@@ -734,13 +742,15 @@ class AttachmentsPlugin extends JPlugin
 	 * @return true if the attachments should be hidden for this parent
 	 */
 	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
-	{
-		$layout = JRequest::getCmd('layout');
+	{		
+		//$layout = JRequest::getCmd('layout');
+		$app 		= JFactory::getApplication('site');
+		$layout		= $app->input->get('layout');
 		$aparams = $this->attachmentsParams();
 
 		// Check to see whether the attachments should be hidden on the front page
 		$hide_on_frontpage = $aparams->get('hide_on_frontpage', false);
-		if ($hide_on_frontpage && (JRequest::getVar('view') == 'featured'))
+		if ($hide_on_frontpage && ($app->input->get('view') == 'featured'))
 		{
 			return true;
 		}
@@ -854,10 +864,13 @@ class AttachmentsPlugin extends JPlugin
 			return false;
 		}
 
-		// Determine where we are
-		$from	= JRequest::getCmd('view', 'closeme');
-		$Itemid = JRequest::getInt('Itemid', 1);
-
+		// Determine where we are		
+		//$from	= JRequest::getCmd('view', 'closeme');
+		//$Itemid = JRequest::getInt('Itemid', 1);
+		$app 		= JFactory::getApplication('site');
+		$from		= $app->input->getCmd('view', 'closeme');
+		$Itemid 	= $app->input->getInt('Itemid', 1);
+		
 		// See whether we can display the links to add attachments
 		$user_can_add = $this->userMayAddAttachment($parent_id, $parent_entity);
 
@@ -872,7 +885,7 @@ class AttachmentsPlugin extends JPlugin
 		$attachments_tag	  = '';
 		$attachments_tag_args = '';
 		$match				  = false;
-		if (JString::strpos($content->$text_field_name, '{attachments'))
+		if (strpos($content->$text_field_name, '{attachments'))
 		{
 			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
 			{
@@ -923,13 +936,15 @@ class AttachmentsPlugin extends JPlugin
 		if ($html || $user_can_add)
 		{
 			// Add the style sheet
-			JHtml::stylesheet('com_attachments/attachments_list.css', Array(), true);
+			//KO JHtml::stylesheet('com_attachments/css/attachments_list.css');            
+            $document = JFactory::getDocument();
+            $document->addStyleSheet(JUri::root() . '/media/com_attachments/css/attachments_list.css');
 
 			// Handle RTL styling (if necessary)
 			$lang = JFactory::getLanguage();
 			if ($lang->isRTL())
 			{
-				JHtml::stylesheet('com_attachments/attachments_list_rtl.css', Array(), true);
+				JHtml::stylesheet('com_attachments/css/attachments_list_rtl.css', Array(), true);
 			}
 		}
 
@@ -1027,17 +1042,18 @@ class AttachmentsPlugin extends JPlugin
 		// but not for all frontends, especially not com_content/articles
 		$id = null;
 		if ($view == $parent_entity) {
-			$id = JRequest::getInt('id', $default=null);
-			}
+			//$id = JRequest::getInt('id', $default=null);
+			$app 		= JFactory::getApplication('site');
+			$id			= $app->input('id');
+		}
 		else {
 			$id = false;
-			}
+		}
 
 		// If we got one, convert it to an int
 		if (is_numeric($id)) {
 			$id = (int)$id;
-			}
-
+		}
 		return $id;
 	}
 

@@ -13,15 +13,16 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\HTML\HTMLHelper;
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 // Add the plugins stylesheet to style the list of attachments
 $user = JFactory::getUser();
 $document = JFactory::getDocument();
 $app = JFactory::getApplication();
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 
 // Get the component parameters
 jimport('joomla.application.component.helper');
@@ -123,7 +124,7 @@ else
 
 <?php endif; ?>
   <tr><td class="key"><label><?php echo JText::_('ATTACH_ATTACHMENT_TYPE'); ?></label></td>
-  <td colspan="5"><?php echo JText::_('ATTACH_' . JString::strtoupper($attachment->uri_type));?>
+  <td colspan="5"><?php echo JText::_('ATTACH_' . strtoupper($attachment->uri_type));?>
   <?php if ( ($attachment->uri_type == 'file') && ( $update != 'url' ) ): ?>
 	  <a class="changeButton hasTip" href="<?php echo $this->change_url_url ?>"
 		 title="<?php echo JText::_('ATTACH_CHANGE_TO_URL') . '::' . JText::_('ATTACH_CHANGE_TO_URL_TOOLTIP'); ?>"

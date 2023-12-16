@@ -13,13 +13,15 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\HTML\HTMLHelper;
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
+
 
 // Add the plugins stylesheet to style the list of attachments
 $document = JFactory::getDocument();
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 
 $attachment = $this->attachment;
 
@@ -28,7 +30,7 @@ $upload_id = 'upload';
 
 // Show buttons for adding the attachments to other entitites (if appropriate)
 $alt_parent_html = '';
-$editor = JRequest::getWord('editor');
+$editor = AttachmentsHelper::getWord('editor');
 $exceptions = Array('article', 'category', 'add_to_parent');
 if ( !in_array($editor, $exceptions) ) {
 

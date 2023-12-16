@@ -62,10 +62,11 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$query->select('*')->from('#__viewlevels');
 		$db->setQuery($query);
 		$levels = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
+		if ( version_compare(JVERSION, '4.0', 'lt') &&
+			$db->getErrorNum() ) {
 			$errmsg = $db->stderr() . ' (ERR 176)';
 			JError::raiseError(500, $errmsg);
-			}
+		}
 		$level_name = Array();
 		foreach ($levels as $level) {
 			// NOTE: We do not translate the access level title
@@ -86,7 +87,7 @@ class AttachmentsViewAttachments extends JViewLegacy
 		$list_for_parents =
 			$app->getUserStateFromRequest('com_attachments.listAttachments.list_for_parents',
 										  'list_for_parents', $list_for_parents_default, 'word');
-		$lists['list_for_parents'] = JString::strtolower($list_for_parents);
+		$lists['list_for_parents'] = strtolower($list_for_parents);
 
 		// Add the drop-down menu to decide which attachments to show
 		$filter_parent_state = $this->state->get('filter.parent_state', 'ALL');

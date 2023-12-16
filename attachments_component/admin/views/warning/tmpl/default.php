@@ -13,13 +13,15 @@
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
+use Joomla\CMS\HTML\HTMLHelper;
 
 $template = JFactory::getApplication()->getTemplate();
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 $document = JFactory::getDocument();
 
 // Hide the vertical scrollbar using javascript

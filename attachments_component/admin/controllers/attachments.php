@@ -16,7 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 
 // import Joomla controlleradmin library
 jimport('joomla.application.component.controlleradmin');
-
+use Joomla\CMS\MVC\Controller\AdminController as JControllerAdmin;
+use Joomla\CMS\MVC\Controller\BaseController as JControllerLegacy;
+use Joomla\CMS\Factory as JFactory
 /**
  * Attachments Controller
  *
@@ -91,7 +93,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		if ( !$view ) {
 			$errmsg = JText::_('ATTACH_ERROR_UNABLE_TO_FIND_VIEW') . ' (ERR 165)';
 			JError::raiseError(500, $errmsg);
-			}
+		}
 		$view->setModel($model);
 
 		// Construct the update URL template
@@ -113,16 +115,14 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 		// Get the view to generate the display output from the template
 		if ( $view->display() === true ) {
-
 			// Display or return the results
 			if ( $echo ) {
 				echo $view->getOutput();
-				}
+			}
 			else {
 				return $view->getOutput();
-				}
-
 			}
+		}
 
 		return false;
 	}
@@ -146,7 +146,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		$apm = getAttachmentsPluginManager();
 
 		// Get attachments to remove from the request
-		$cid = JRequest::getVar('cid', array(), '', 'array');
+		$cid = AttachmentsHelper::getVar('cid', array(), '', 'array');
 		$deleted_ids = Array();
 
 		if (count($cid))
@@ -212,7 +212,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		}
 
 		// Figure out how to redirect
-		$from = JRequest::getWord('from');
+		$from = AttachmentsHelper::getWord('from');
 		$known_froms = array('frontpage', 'article', 'editor', 'closeme');
 		if ( in_array( $from, $known_froms ) )
 		{
@@ -248,9 +248,9 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 
 			// Close the iframe and refresh the attachments list in the parent window
 			require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
-			$uri = JFactory::getURI();
+			$uri = AttachmentsHelper::getURI();
 			$base_url = $uri->base(true);
-			$lang = JRequest::getCmd('lang', '');
+			$lang = AttachmentsHelper::getCmd('lang', '');
 			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 		}
@@ -273,7 +273,7 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid = JRequest::getVar('cid', array(), '', 'array');
+		$cid = AttachmentsHelper::getVar('cid', array(), '', 'array');
 		$data = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task = $this->getTask();
 		$value = JArrayHelper::getValue($data, $task, 0, 'int');
@@ -317,8 +317,8 @@ class AttachmentsControllerAttachments extends JControllerAdmin
 				$this->setMessage(JText::plural($ntext,	 $att_published));
 			}
 		}
-		$extension = JRequest::getCmd('extension');
-		$extensionURL = ($extension) ? '&extension=' . JRequest::getCmd('extension') : '';
+		$extension = AttachmentsHelper::getCmd('extension');
+		$extensionURL = ($extension) ? '&extension=' . AttachmentsHelper::getCmd('extension') : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
 	}
 

@@ -14,16 +14,25 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\Component\Config\Administrator\Model;
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller_form.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /** Load the class for the model component form and make it work for both 3.2 and less */
-if (version_compare(JVERSION, '3.2', 'ge'))
+if (version_compare(JVERSION, '3.2', 'ge')&&
+	version_compare(JVERSION, '4.0', 'lt'))
 {
 	require_once(JPATH_SITE . '/components/com_config/model/cms.php');
 	require_once(JPATH_SITE . '/components/com_config/model/form.php');
 }
-require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
+if (version_compare(JVERSION, '4.0', 'lt')) {
+	require_once(JPATH_ADMINISTRATOR.'/components/com_config/models/component.php');
+}
+else {
+	require_once(JPATH_ADMINISTRATOR.'/components/com_config/Model/ComponentModel.php');
+}
+
 
 
 /**
@@ -49,7 +58,7 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the component model/table
-		$model = new ConfigModelComponent();
+		$model = new Joomla\Component\Config\Administrator\Model\ComponentModel();
 		$state = $model->getState();
 		$state->set('component.option', 'com_attachments');
 		$state->set('component.path', JPATH_ADMINISTRATOR.'/components/com_attachments');
@@ -58,7 +67,8 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 		$component = JComponentHelper::getComponent('com_attachments');
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (version_compare(JVERSION, '4.0', 'lt') && 
+			count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors) . ' (ERR 118)');
 			return false;
 		}
@@ -94,18 +104,18 @@ class AttachmentsControllerParams extends JControllerFormLegacy
 		// Get the old component parameters
 		jimport('joomla.application.component.helper');
 		$old_params = JComponentHelper::getParams('com_attachments');
-		$old_secure = JRequest::getInt('old_secure');
+		$old_secure = AttachmentsHelper::getInt('old_secure');
 
 		// Set FTP credentials, if given.
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
-		$model = new ConfigModelComponent();
+		$model = new Joomla\Component\Config\Administrator\Model\ComponentModel();
 		$form	= $model->getForm();
-		$data	= JRequest::getVar('jform', array(), 'post', 'array');
-		$id		= JRequest::getInt('id');
-		$option	= JRequest::getCmd('component');
+		$data	= AttachmentsHelper::getVar('jform', array(), 'post', 'array');
+		$id		= AttachmentsHelper::getInt('id');
+		$option	= AttachmentsHelper::getCmd('component');
 
 		// Get the new component parameters
 		$new_secure = $data['secure'];

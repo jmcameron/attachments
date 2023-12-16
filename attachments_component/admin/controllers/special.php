@@ -116,7 +116,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 			if ( empty($attachment->catid) ) {
 				$attachment->catid = '0';
 				}
-			$parent_entity = JString::strtolower($attachment->parent_entity);
+			$parent_entity = strtolower($attachment->parent_entity);
 			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
 				$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->catid . '<br/>';
 			}
@@ -124,7 +124,7 @@ class AttachmentsControllerSpecial extends JControllerLegacy
 			if ( empty($attachment->id) ) {
 				$attachment->id = '0';
 				}
-			$parent_entity = JString::strtolower($attachment->parent_entity);
+			$parent_entity = strtolower($attachment->parent_entity);
 			echo ' ' . $attachment->id . '/' . $attachment->parent_id . '/' .
 					$attachment->parent_type . '/' . $parent_entity . '/' . $attachment->parent_id . '<br/>';
 			}

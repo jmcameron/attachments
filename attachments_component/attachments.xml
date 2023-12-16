@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5.7" method="upgrade">
     <name>com_attachments</name>
-    <version>3.2.6</version>
+    <version>3.2.7</version>
     <creationDate>March 26, 2018</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
@@ -82,7 +82,8 @@
     <administration>
 	<menu img="../media/com_attachments/images/attachments.png">ATTACH_ATTACHMENTS</menu>
 	<submenu>
-	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
+		<menu link="option=com_attachments">ATTACH_ATTACHMENTS</menu>
+		<menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
 	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
 	</submenu>
 

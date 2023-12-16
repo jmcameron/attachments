@@ -279,7 +279,7 @@ class AttachmentsHelper
 	public static function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
 	{
 		// Construct the url to save the form
-		$url_base = JFactory::getURI()->base(false) . "index.php?option=com_attachments";
+		$url_base = AttachmentsHelper::getURI()->base(false) . "index.php?option=com_attachments";
 
 		$template = '&tmpl=component';
 		$save_task = 'save';
@@ -740,7 +740,7 @@ class AttachmentsHelper
 
 		$url = $upload_url . '/' . $path . $filename;
 
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = AttachmentsHelper::getURI()->base(false);
 
 		// If we are on windows, fix the filename and URL
 		if ( DIRECTORY_SEPARATOR != '/' ) {
@@ -950,7 +950,7 @@ class AttachmentsHelper
 		// Handle relative URLs
 		$url = $raw_url;
 		if ( $relative_url ) {
-			$uri = JFactory::getURI();
+			$uri = AttachmentsHelper::getURI();
 			$url = $uri->base(true) . "/" . $raw_url;
 			}
 
@@ -1473,7 +1473,7 @@ class AttachmentsHelper
 	 */
 	public static function download_attachment($id)
 	{
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = AttachmentsHelper::getURI()->base(false);
 
 		// Get the info about the attachment
 		require_once(JPATH_COMPONENT_SITE.'/models/attachment.php');
@@ -1857,7 +1857,7 @@ class AttachmentsHelper
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
-		$base = JFactory::getURI()->base(false) . "index.php?option=com_attachments&task=upload";
+		$base = JUri::getInstance()->base(false) . "index.php?option=com_attachments&task=upload";
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$url = $base . "&article_id=$parent_id&tmpl=component";
 			}
@@ -1881,6 +1881,89 @@ class AttachmentsHelper
 		$links = $ahead . $icon . "</a>";
 		$links .= $ahead . $add_attachment_txt . "</a>";
 		return "\n<div class=\"addattach\">$links</div>\n";
+	}
+	public static function getpost() {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			return JFactory::getApplication()->input->getArray(array());
+		}
+		else {
+			return call_user_func_array('JRequest::get', ['post']);
+		}
+	}
+	
+	public static function get(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			if ($params[0] == 'post '){
+				return JFactory::getApplication()->input->getInputForRequestMethod('POST');
+			} else {
+				return call_user_func_array(array(JFactory::getApplication()->input, 'get'), $params);
+			}
+		}
+		else {
+			return call_user_func_array('JRequest::get', $params);
+		}
+	}
+	
+	public static function getVar(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getVar'), $params);
+		}
+		else {
+			return call_user_func_array('JRequest::getVar', $params);
+		}
+	}
+	public static function setVar(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			call_user_func_array(array(JFactory::getApplication()->input, 'setVar'), $params);
+		}
+		else {
+			call_user_func_array('JRequest::setVar', $params);
+		}
+	}
+
+	public static function getCmd(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getCmd'), $params);
+		}
+		else {
+			return call_user_func_array('JRequest::getCmd', $params);
+		}
+	}
+
+	public static function getInt(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getInt'), $params);
+		}
+		else {
+			return (int)call_user_func_array('JRequest::getInt', $params);
+		}
+	}
+	
+	public static function getWord(...$params) {
+		if (version_compare(JVERSION, '4.0', 'ge')){
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getWord'), $params);
+		}
+		else {
+			return  (int)call_user_func_array('JRequest::getWord', $params);
+		}
+	}
+	
+	public static function getURI() {
+		if (version_compare(JVERSION, '4.0', 'lt')){
+			return AttachmentsHelper::getURI();
+		}
+		else {
+			return JUri::getInstance();
+		}
+	}
+	
+	public static function getString(...$params) {
+		if (version_compare(JVERSION, '4.0', 'lt')){
+			return call_user_func_array('JRequest::getString', $params);
+		}
+		else {
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getString'), $params);
+		}
 	}
 
 

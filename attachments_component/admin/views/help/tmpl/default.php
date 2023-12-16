@@ -13,9 +13,10 @@
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
-
+use Joomla\CMS\HTML\HTMLHelper;
 // Load the tooltip behavior.
-// JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
+HTMLHelper::_('bootstrap.tooltip');
 
 // Add the CSS for the attachments list (whether we need it or not)
 JHtml::stylesheet('com_attachments/attachments_help.css', array(), true);
@@ -23,7 +24,7 @@ JHtml::stylesheet('com_attachments/attachments_help.css', array(), true);
 // If the user specifies 'show=codes' in the url, the language item codes will
 // be shown by default.	 Note that they can still be toggled with the toggles
 // at the top right and bottom right of the page.
-if (JRequest::getCmd('show') == 'codes') {
+if (AttachmentsHelper::getCmd('show') == 'codes') {
 	JHtml::stylesheet('com_attachments/attachments_help_show_codes.css', array(), true);
 	}
 

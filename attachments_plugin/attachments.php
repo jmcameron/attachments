@@ -12,6 +12,11 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
@@ -19,6 +24,7 @@ if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
 	require_once JPATH_SITE . '/components/com_attachments/defines.php';
 	require_once(JPATH_SITE . '/components/com_attachments/helper.php');
 	require_once(JPATH_SITE . '/components/com_attachments/javascript.php');
+	require_once(JPATH_SITE . '/plugins/attachments/attachments_plugin_framework/attachments_plugin_framework.php');
 }
 else
 {
@@ -48,7 +54,8 @@ class plgContentAttachments extends JPlugin
 		parent::__construct($subject, $config);
 
 		// Save this page's URL
-		$uri= JFactory::getURI();
+		//$uri= JFactory::getURI();
+		$uri = JUri::getInstance(); 
 		$return = '&return=' . urlencode(base64_encode(JUri::current() . '?' . $uri->getQuery()));
 		$app = JFactory::getApplication();
 		$app->setUserState('com_attachments.current_url', $return);
@@ -73,7 +80,8 @@ class plgContentAttachments extends JPlugin
 		// if (isset($row->text)) $row->text .= $msg;
 		// if (isset($row->introtext)) $row->introtext .= $msg;
 		// return;
-
+        $document = JFactory::getDocument();        
+        $document->addStyleSheet(JUri::root() . '/media/com_attachments/css/attachments_list.css');
 		// Set the parent info from the context
 		if (strpos($context, '.') === false)
 		{
@@ -91,17 +99,17 @@ class plgContentAttachments extends JPlugin
 		{
 			if (in_array($parent_entity, Array('featured', 'article'))) {
 				return false;
-				}
+			}
 			if ($parent_entity == 'category.title') {
 				// Do not add attachments to categtory titles (Joomla 3 only)
 				return false;
-				}
+			}
 			if (($parent_entity == 'category') AND (isset($row->catid))) {
 				// Ignore the callback for articles on category blogs
 				if (version_compare(JVERSION, '3.4.0', 'lt')) {
 					return false;
-					}
 				}
+			}
 
 			$parent_entity = 'category';
 
@@ -111,11 +119,13 @@ class plgContentAttachments extends JPlugin
 			if (version_compare(JVERSION, '2.5.10', 'lt') OR
 				(version_compare(JVERSION, '3.0', 'ge') AND version_compare(JVERSION, '3.1', 'lt'))) {
 				return false;
-				}
+			}
 		}
-
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getCmd('layout');
+		$app 		= JFactory::getApplication('site');
+		//$view		= JRequest::getCmd('view');
+		//$layout		= JRequest::getCmd('layout');
+		$view		= $app->input->get('view');
+		$layout		= $app->input->get('layout');
 
 		if ( ($parent_type == 'mod_custom') AND ($parent_entity == 'content') AND ($view == 'category') )
 		{
@@ -127,8 +137,8 @@ class plgContentAttachments extends JPlugin
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
 			if (isset($row->id) and is_numeric($row->id)) {
 				$parent_entity = 'article';
-				}
 			}
+		}
 		if (version_compare(JVERSION, '3.7.0'))
 		{
 			# Ignore this for Joomla 3.7.0+ (seems to be new and category attachments are handled ok without it)
@@ -142,13 +152,13 @@ class plgContentAttachments extends JPlugin
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			// Exit quietly if there is no Attachments plugin to handle this parent_type
 			return false;
-			}
+		}
 		$parent = $apm->getAttachmentsPlugin($parent_type);
 
 		// If this attachments plugin is disabled, skip it
 		if ( ! $apm->attachmentsPluginEnabled($parent_type) ) {
 			return false;
-			}
+		}
 
 		// Get the parent ID
 		$parent_id = null;
@@ -168,7 +178,7 @@ class plgContentAttachments extends JPlugin
 			$result = $db->loadResult();
 			if ($result) {
 				$parent_id = (int)$result;
-				}
+			}
 		}
 
 		// Let the attachment pluging try to figure out the id
@@ -201,7 +211,7 @@ class plgContentAttachments extends JPlugin
 		// Exit if we should not display attachments for this parent
 		if ( $parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity) ) {
 			return false;
-			}
+		}
 
 		// Get the component parameters
 		jimport('joomla.application.component.helper');
@@ -212,9 +222,11 @@ class plgContentAttachments extends JPlugin
 		$all_but_article_views = $attachParams->get('hide_except_article_views', false);
 		if ( $all_but_article_views && !$always_show_category_attachments ) {
 			return false;
-			}
+		}
 
 		// Add the attachments list
+        $document = JFactory::getDocument();        
+        $document->addStyleSheet(JUri::root() . '/media/com_attachments/css/attachments_list.css');
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
 		// FOR DEBUGGING
@@ -237,8 +249,11 @@ class plgContentAttachments extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getCmd('layout');
+		// $view = JRequest::getCmd('view');
+		// $layout = JRequest::getCmd('layout');
+		$app 		= JFactory::getApplication('site');
+		$view		= $app->input->get('view');
+		$layout		= $app->input->get('layout');		
 		if (($context == 'com_content.category') AND ($view == 'category') AND ($layout == 'blog')) {
 			// Use onContentPrepare for category blog articles for Joomla 3.4+
 			if (version_compare(JVERSION, '3.4', 'ge')) {
@@ -268,7 +283,7 @@ class plgContentAttachments extends JPlugin
 		AttachmentsJavascript::setupJavascript();
 
 		// Always include the hide rule (since it may be needed to hide the custom tags)
-		JHtml::stylesheet('com_attachments/attachments_hide.css', array(), true);
+		JHtml::stylesheet('com_attachments/css/attachments_hide.css', array(), true);
 
 		// Get the article/parent handler
 		JPluginHelper::importPlugin('attachments');
@@ -320,9 +335,11 @@ class plgContentAttachments extends JPlugin
 		{
 			return false;
 		}
-
-		// Add the attachments list
+        $document = JFactory::getDocument();        
+        $document->addStyleSheet(JUri::root() . '/media/com_attachments/css/attachments_list.css');
+		// Add the attachments list        
 		$parent->insertAttachmentsList($row, $parent_id, $parent_entity);
+		//return $parent->insertAttachmentsList($row, $parent_id, $parent_entity);
 
 		// ??? if (isset($row->text)) $row->text .= " [OCBD text $context]";
 		// ??? if (isset($row->introtext)) $row->introtext .= " [OCBD introtext $context]";
@@ -373,15 +390,15 @@ class plgContentAttachments extends JPlugin
 		$query->where('created_by=' . (int) $user_id . ' AND parent_id IS NULL');
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 200)';
-			JError::raiseError(500, $errmsg);
-			}
+		// if ( $db->getErrorNum() ) {
+			// $errmsg = $db->stderr() . ' (ERR 200)';
+			// JError::raiseError(500, $errmsg);
+		// }
 
 		// Exit if there are no new attachments
 		if ( count($attachments) == 0 ) {
 			return true;
-			}
+		}
 
 		// Change the attachment to the new content item!
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_attachments/tables');

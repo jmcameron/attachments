@@ -269,7 +269,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// How to redirect?
 		$from = JRequest::getWord('from', 'closeme');
-		$uri = JFactory::getURI();
+		$uri = AttachmentsHelper::getURI();
 		$base_url = $uri->base(false);
 		if ( $from ) {
 			if ( $from == 'frontpage' ) {
@@ -557,7 +557,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Figure out how to redirect
 		$from = JRequest::getWord('from', 'closeme');
-		$uri = JFactory::getURI();
+		$uri = AttachmentsHelper::getURI();
 		if ( in_array($from, $parent->knownFroms()) ) {
 
 			// If there is no parent_id, the parent is being created, use the username instead
@@ -640,7 +640,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 		$view->warning_question = JText::_('ATTACH_REALLY_DELETE_ATTACHMENT') . '<br/>' . $fname;
 
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = AttachmentsHelper::getURI()->base(false);
 		$delete_url = $base_url . "index.php?option=com_attachments&task=delete&id=$attachment_id";
 		$delete_url = JRoute::_($delete_url);
 		$view->action_url = $delete_url;

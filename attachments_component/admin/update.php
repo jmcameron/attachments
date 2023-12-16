@@ -63,10 +63,10 @@ class AttachmentsUpdate
 			$attachment->load($id);
 
 			// Only update those attachment records that don't already have an icon_filename
-			if ( JString::strlen( $attachment->icon_filename ) == 0 ) {
+			if ( strlen( $attachment->icon_filename ) == 0 ) {
 				$new_icon_filename = AttachmentsFileTypes::icon_filename($attachment->filename,
 																		 $attachment->file_type);
-				if ( JString::strlen( $new_icon_filename) > 0 ) {
+				if ( strlen( $new_icon_filename) > 0 ) {
 					$attachment->icon_filename = $new_icon_filename;
 					if (!$attachment->store()) {
 						$errmsg = JText::sprintf('ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
@@ -168,8 +168,8 @@ class AttachmentsUpdate
 		$lines = explode("\n", $contents);
 		$new_lines = Array();
 		for ($i=0; $i < count($lines); $i++) {
-			$line = JString::trim($lines[$i]);
-			if ( JString::strlen($line) != 0 ) {
+			$line = trim($lines[$i]);
+			if ( strlen($line) != 0 ) {
 				if ( $line[0] != '#' ) {
 					$line = '# ' . $line;
 					}
@@ -483,7 +483,7 @@ class AttachmentsUpdate
 			// Construct the new URL (figuire it out from the system filename)
 			$attachments_dir = str_replace(JPATH_SITE, '', $filename_info['dirname']);
 			$dirend_chars = DIRECTORY_SEPARATOR.'/';
-			$attachments_dir = JString::trim($attachments_dir, $dirend_chars);
+			$attachments_dir = trim($attachments_dir, $dirend_chars);
 			$attachments_dir = str_replace(DIRECTORY_SEPARATOR, '/', $attachments_dir);
 			$new_url = $attachments_dir . '/' . $new_basename;
 

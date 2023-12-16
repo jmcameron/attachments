@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Restricted Access');
 // Set up a few convenience items
 $app = JFactory::getApplication();
 $user = JFactory::getUser();
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 $params = $this->params;
 $secure = $params->get('secure',false);
 $superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
@@ -52,7 +52,7 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
 	$link = JFilterOutput::ampReplace( 'index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]='. (int)$item->id );
 	$view_parent_title = JText::_('ATTACH_VIEW_ARTICLE_TITLE');
-	if ( JString::strlen($item->icon_filename) > 0 )
+	if ( strlen($item->icon_filename) > 0 )
 		$icon = $item->icon_filename;
 	else
 		$icon = 'generic.gif';

@@ -13,7 +13,14 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\Model\BaseDatabaseModel as JModelLegacy;
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+
 jimport('joomla.application.component.helper');
+
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
@@ -224,7 +231,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 			$apm = getAttachmentsPluginManager();
 			if ( !$apm->attachmentsPluginInstalled($this->_parent_type) ) {
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 55)';
-				JError::raiseError(500, $errmsg);
+				//JError::raiseError(500, $errmsg);
 				}
 			$this->_parent_class = $apm->getAttachmentsPlugin($this->_parent_type);
 			}
@@ -434,10 +441,12 @@ class AttachmentsModelAttachments extends JModelLegacy
 		// Do the query
 		$db->setQuery($query);
 		$attachments = $db->loadObjectList();
-		if ( $db->getErrorNum() ) {
-			$errmsg = $db->stderr() . ' (ERR 58)';
-			JError::raiseError(500, $errmsg);
-			}
+		if ( $attachments ==NULL) {
+		//$db->getErrorNum() ) {
+			$errmsg = //$db->stderr() . 
+			' (ERR 58)';
+			//JError::raiseError(500, $errmsg);
+		}
 
 		$this->_some_visible = false;
 		$this->_some_modifiable = false;
@@ -471,7 +480,7 @@ class AttachmentsModelAttachments extends JModelLegacy
 				if ( $attachment->uri_type == 'url' ) {
 					$url = $attachment->url;
 					if ( strpos($url, '://') === false ) {
-						$uri = JFactory::getURI();
+						$uri = AttachmentsHelper::getURI();
 						$attachment->url = $uri->base(true) . '/' . $url;
 						}
 					}

@@ -17,10 +17,11 @@ defined('_JEXEC') or die();
 // Access check.
 if (!JFactory::getUser()->authorise('core.admin', 'com_attachments')) {
 	return JError::raiseError(404, JText::_('JERROR_ALERTNOAUTHOR') . ' (ERR 174)');
-	}
+}
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 
 /**
@@ -31,6 +32,7 @@ require_once(JPATH_SITE.'/components/com_attachments/legacy/view.php');
  */
 class AttachmentsViewParams extends JViewLegacy
 {
+
 	/**
 	 * Display the params view
 	 */
@@ -41,8 +43,8 @@ class AttachmentsViewParams extends JViewLegacy
 		$lang = JFactory::getLanguage();
 		if ( $lang->isRTL() ) {
 			JHtml::stylesheet('com_attachments/attachments_admin_form_rtl.css', Array(), true);
-			}
-
+		}
+        $this->fieldsets   =  $this->form ?  $this->form->getFieldsets() : null;
 		$this->addToolBar();
 
 		parent::display($tpl);
@@ -53,7 +55,7 @@ class AttachmentsViewParams extends JViewLegacy
 	 */
 	protected function addToolBar()
 	{
-		JRequest::setVar('hidemainmenu', true);
+		//AttachmentsHelper::setVar('hidemainmenu', true);
 		JToolBarHelper::title(JText::_('ATTACH_CONFIGURATION'), 'attachments.png');
 		JToolBarHelper::apply('params.apply');
 		JToolBarHelper::save('params.save');

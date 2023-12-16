@@ -45,7 +45,7 @@ class AttachmentsViewLogin extends JViewLegacy
 		jimport('joomla.application.component.helper');
 		$params = JComponentHelper::getParams('com_attachments');
 
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = AttachmentsHelper::getURI()->base(false);
 		$register_url = $params->get('register_url', 'index.php?option=com_users&view=registration');
 		$register_url = JRoute::_($base_url . $register_url);
 		$this->register_url = $register_url;
@@ -55,7 +55,7 @@ class AttachmentsViewLogin extends JViewLegacy
 		if ( $this->return_url ) {
 			$return = '&return=' . $this->return_url;
 			}
-		$base_url = JFactory::getURI()->base(false);
+		$base_url = AttachmentsHelper::getURI()->base(false);
 		$login_url = $params->get('login_url', 'index.php?option=com_users&view=login') . $return;
 		$this->login_url = JRoute::_($base_url . $login_url);
 		

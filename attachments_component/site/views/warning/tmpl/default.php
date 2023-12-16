@@ -19,7 +19,7 @@ $template = JFactory::getApplication()->getTemplate();
 // Load the tooltip behavior.
 JHtml::_('behavior.tooltip');
 
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 $document = JFactory::getDocument();
 
 /** Load the Attachments helper */

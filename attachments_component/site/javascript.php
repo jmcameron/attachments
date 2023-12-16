@@ -12,6 +12,7 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
 
 /**
  * A class for attachments javascript functions
@@ -27,8 +28,8 @@ class AttachmentsJavascript
 	{
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
-			JHtml::_('behavior.framework', true);
-			JHtml::_('behavior.modal', 'a.modal');
+			//JHtml::_('behavior.framework', true);
+			//JHtml::_('behavior.modal', 'a.modal');
 		}
 		else
 		{
@@ -59,7 +60,7 @@ class AttachmentsJavascript
 	 */
 	public static function setupModalJavascript()
 	{
-		JHtml::_('behavior.modal', 'a.modal-button');
+//		JHtml::_('behavior.modal', 'a.modal-button');
 	}
 
 

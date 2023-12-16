@@ -13,6 +13,11 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Object\CMSObject as JObject;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+use Joomla\CMS\Language\Text as JText;
 
 /** Load the attachments plugin class */
 if (!JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
@@ -81,7 +86,10 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	public function determineParentEntity(&$parent)
 	{
-		$view = JRequest::getCmd('view');
+		//$view = JRequest::getCmd('view');	
+		$app 		= JFactory::getApplication('site');
+		$view		= $app->input->get('view');
+
 
 		// Handle category calls
 		if (($view == 'category') && (get_class($parent) == 'JTableContent'))
@@ -119,8 +127,11 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	protected function getTextFieldName(&$row, $parent_entity)
 	{
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getCmd('layout');
+		//$view = JRequest::getCmd('view');	
+		//$layout = JRequest::getCmd('layout');
+		$app 		= JFactory::getApplication('site');
+		$view		= $app->input->get('view');
+		$layout 		= $app->input->get('layout');
 
 		$text_field_name = parent::getTextFieldName($row, $parent_entity);
 
@@ -148,7 +159,11 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		{
 			$text_field_name = 'text';
 		}
-
+        if (version_compare(JVERSION, '4.0.0', 'ge') AND
+			($view == 'article') AND ($layout == 'blog'))
+		{
+			$text_field_name = 'text';
+        }
 		return $text_field_name;
 	}
 
@@ -191,7 +206,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Note that article is handled separately
-		if (JString::strtolower($parent_entity) != 'category')
+		if (strtolower($parent_entity) != 'category')
 		{
 			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 400)';
 			JError::raiseError(500, $errmsg);
@@ -224,7 +239,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// Do the query
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
-		if ($db->getErrorNum())
+		//if ($db->getErrorNum())
+		if ($items == null)
 		{
 			$errmsg = JText::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 401) <br/>' . $db->stderr();
 			JError::raiseError(500, $errmsg);
@@ -270,7 +286,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$query->select('created_user_id')->from('#__categories')->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$result = $db->loadResult();
-				if ($db->getErrorNum())
+				//if ($db->getErrorNum())
+				if ($result == NULL)
 				{
 					$errmsg = JText::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERR 402)';
 					JError::raiseError(500, $errmsg);
@@ -281,7 +298,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$query->select('created_by')->from('#__content')->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$result = $db->loadResult();
-				if ($db->getErrorNum())
+				//if ($db->getErrorNum())
+				if ($result == NULL)
 				{
 					$errmsg = JText::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERR 403)';
 					JError::raiseError(500, $errmsg);
@@ -306,7 +324,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	public function getEntityViewURL($parent_id, $parent_entity = 'default')
 	{
-		$uri = JFactory::getURI();
+		$uri = AttachmentsHelper::getURI();
 
 		$base_url = $uri->root(true) . '/';
 
@@ -453,7 +471,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$query->select('published')->from("#__$entity_table")->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$obj = $db->loadObject();
-				if ($db->getErrorNum())
+				//if ($db->getErrorNum())
+				if ($obj == NULL)
 				{
 					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 404)';
 					JError::raiseError(500, $errmsg);
@@ -476,7 +495,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$query->where('id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$article = $db->loadObject();
-				if ($db->getErrorNum())
+				//if ($db->getErrorNum())
+				if ($article == NULL)
 				{
 					$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 405)';
 					JError::raiseError(500, $errmsg);
@@ -532,7 +552,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 				$query->select('state')->from('#__content')->where(' id = ' . (int) $parent_id);
 				$db->setQuery($query, 0, 1);
 				$article = $db->loadObject();
-				if ($db->getErrorNum())
+				//if ($db->getErrorNum())
+				if ($article == NULL)
 				{
 					$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 					$errmsg				= JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 406)';
@@ -574,7 +595,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 
 		$where = Array();
 
-		$filter_entity = JString::strtoupper($filter_entity);
+		$filter_entity = strtoupper($filter_entity);
 
 		// NOTE: These WHERE clauses will be combined by OR
 
@@ -736,7 +757,9 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// Make sure we have a valid parent ID
 		if (!$parent_id && ($parent_entity == 'category'))
 		{
-			$parent_id = JRequest::getInt('id');
+			//$parent_id = JRequest::getInt('id');
+			$app 		= JFactory::getApplication('site');
+			$parent_id 	= $app->input->get('id');
 		}
 		if ($parent_id !== 0)
 		{
@@ -807,14 +830,18 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			$query->select('created_by, catid')->from('#__content')->where('id = ' . (int) $parent_id);
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
-			if ($db->getErrorNum() || (count($attachments) === false))
+			
+			//if ($db->getErrorNum() || (count($attachments) === false))
+			if (count($attachments) === false)
 			{
 				$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
 				JError::raiseError(500, $errmsg);
 			}
 
 			// Honor all_but_article_view option
-			$view = JRequest::getCmd('view');
+			//$view = JRequest::getCmd('view');
+			$app 		= JFactory::getApplication('site');
+			$view		= $app->input->get('view');
 			if ($all_but_article_views)
 			{
 				if ($view != 'article')
@@ -1214,21 +1241,23 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		if ($app->isAdmin()) {
 			// The default works fine for the back end
 			return parent::getParentIdInEditor($parent_entity, $view, $layout);
-			}
+		}
 
 		// Note categories cannot be created or edited from the frontend
 		if ($parent_entity == 'category') {
 			return false;
-			}
+		}
 
 		// Deal with articles (in frontend)
 		$id = null;
 		if (($view == 'article') OR ($view == 'form')) {
-			$id = JRequest::getInt('a_id', $default=null);
-			}
+			//$id = JRequest::getInt('a_id', $default=null);
+			$app 		= JFactory::getApplication('site');
+			$id			= $app->input->get('');
+		}
 		else {
 			$id = false;
-			}
+		}
 
 		// If we got one, convert it to an int
 		if (is_numeric($id)) {

@@ -119,7 +119,7 @@ class AttachmentsViewEdit extends JViewLegacy
 	 */
 	protected function addToolBar()
 	{
-		JRequest::setVar('hidemainmenu', true);
+		AttachmentsHelper::setVar('hidemainmenu', true);
 		JToolBarHelper::title(JText::_('ATTACH_EDIT_ATTACHMENT'));
 
 		JToolBarHelper::apply('attachment.apply');

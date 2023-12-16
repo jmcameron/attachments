@@ -19,7 +19,7 @@ require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
 // Add the plugins stylesheet to style the list of attachments
-$uri = JFactory::getURI();
+$uri = AttachmentsHelper::getURI();
 
 // Add javascript
 AttachmentsJavascript::setupJavascript();

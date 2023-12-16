@@ -12,12 +12,14 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\MVC\Controller\BaseController as JControllerLegacy;
+use Joomla\CMS\Factory as JFactory;
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
 
 
 // Execute the requested task
 $controller = JControllerLegacy::getInstance('Attachments');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$app = JFactory::getApplication();
+$controller->execute($app->getInput()->get('task'));
 $controller->redirect();

@@ -132,7 +132,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::disable_sql_uninstall();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -160,7 +160,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::regenerate_system_filenames();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -188,7 +188,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -216,7 +216,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::update_file_sizes();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -244,7 +244,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::check_files_existance();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -271,7 +271,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::validate_urls();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -299,7 +299,7 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		$msg = AttachmentsUpdate::installAttachmentsPermissions();
 
-		if ( JRequest::getBool('close') ) {
+		if ( AttachmentsHelper::getBool('close') ) {
 
 			$this->enqueueSystemMessage($msg);
 
@@ -324,14 +324,14 @@ class AttachmentsControllerUtils extends JControllerLegacy
 
 		require_once(JPATH_ADMINISTRATOR.'/components/com_attachments/import.php');
 
-		$filename = JRequest::getString('filename', null);
+		$filename = AttachmentsHelper::getString('filename', null);
 		if ( $filename == null ) {
 			$errmsg = JText::_('ATTACH_ERROR_MUST_ADD_FILENAME_TO_URL') . ' (ERR 161)';
 			return JError::raiseError(500, $errmsg);
 			}
-		$verify_parent = JRequest::getBool('verify_parent', true);
-		$update = JRequest::getBool('update', false);
-		$dry_run = JRequest::getBool('dry_run', false);
+		$verify_parent = AttachmentsHelper::getBool('verify_parent', true);
+		$update = AttachmentsHelper::getBool('update', false);
+		$dry_run = AttachmentsHelper::getBool('dry_run', false);
 
 		$status = AttachmentsImport::importAttachmentsFromCSVFile($filename, $verify_parent,
 																  $update,	$dry_run);
