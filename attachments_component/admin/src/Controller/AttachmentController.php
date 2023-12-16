@@ -112,7 +112,7 @@ class AttachmentController extends FormController
 			$parent_type = 'com_content';
 			}
 		else {
-			$pidarr = explode(',', $input->getString('parent_id') ?? '');
+			$pidarr = explode(',', $input->getString('parent_id', ''));
 			$parent_type = $input->getCmd('parent_type', 'com_content');
 
 			// If the entity is embedded in the parent type, split them
