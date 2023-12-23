@@ -743,7 +743,7 @@ class AttachmentController extends FormController
 		$old_uri_type = $attachment->uri_type;
 
 		// Get the data from the form
-		if (!$attachment->bind($input->get('post'))) {
+		if (!$attachment->bind($input->post->getArray())) {
 			$errmsg = $attachment->getError() . ' (ERR 136)';
 			throw new \Exception($errmsg, 500);
 			}

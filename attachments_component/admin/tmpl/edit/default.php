@@ -82,9 +82,21 @@ else
 		  echo $this->selpar_label ?></b></label></td>
 	  <td colspan="5"><input id="parent_title" value="<?php echo $this->selpar_parent_title; ?>"
 				 disabled="disabled" type="text" size="60" />&nbsp;
-		 <a class="modal-button hasTip" type="button" title="<?php echo $this->selpar_btn_tooltip ?>"
-			href="<?php echo $this->selpar_btn_url ?>"
-			rel="{handler: 'iframe', size: {x: 700, y: 375}}"><?php echo $this->selpar_btn_text ?></a>
+<?php
+	$modalId = 'attachment';
+	$modalParams['title']  = $this->escape($this->selpar_btn_tooltip);
+	$modalParams['url']    = $this->selpar_btn_url;
+	$modalParams['height'] = '100%';
+	$modalParams['width']  = '100%';
+	$modalParams['bodyHeight'] = 70;
+	$modalParams['modalWidth'] = 80;
+	echo HTMLHelper::_('bootstrap.renderModal', 'modal-' . $modalId, $modalParams);
+	
+	echo '<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal-' . $modalId . '">'
+		. $this->selpar_btn_text .
+	'</button>';
+
+?>
 	  </td>
 <?php else: ?>
 	  <td class="key"><label><?php echo
