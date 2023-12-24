@@ -21,6 +21,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -1898,11 +1899,39 @@ class AttachmentsHelper
 		$url = Route::_($url);
 
 		$add_attachment_txt = Text::_('ATTACH_ADD_ATTACHMENT');
-		$icon = HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
-		$ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
-		$ahead .= "rel=\"{handler: 'iframe', size: {x: 920, y: 550}}\">";
-		$links = $ahead . $icon . "</a>";
-		$links .= $ahead . $add_attachment_txt . "</a>";
+		// $icon = HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+		// $ahead = '<a class="modal-button" type="button" href="' . $url . '" ';
+		// $ahead .= "rel=\"{handler: 'iframe', size: {x: 920, y: 550}}\">";
+		// $links = $ahead . $icon . "</a>";
+		// $links .= $ahead . $add_attachment_txt . " .-.</a>";
+
+		// Create the add link
+		$a_class = 'modal-button mx-2';
+		$tooltip = $add_attachment_txt;
+
+		$randomId = base64_encode('add');
+		// Remove +,/,= from the $randomId
+		$randomId = strtr($randomId, "+/=", "AAA");
+		$modalParams['title']  = $tooltip === null ? '' : htmlspecialchars($tooltip, ENT_QUOTES, 'UTF-8');
+		$modalParams['url']    = $url;
+		$modalParams['height'] = '100%';
+		$modalParams['width']  = '100%';
+		$modalParams['bodyHeight'] = 75;
+		$modalParams['modalWidth'] = 80;
+		$links = LayoutHelper::render(
+			'libraries.html.bootstrap.modal.main', 
+			[
+				'selector' => 'modal-' . $randomId, 
+				'body' => "<iframe src=\"$url\" scrolling=\"no\" loading=\"lazy\"></iframe>",
+				'params' => $modalParams
+			]
+		);
+
+		$links .= "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+		$links .= "title=\"$tooltip\">";
+		$links .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+		$links .= " $add_attachment_txt</a>";
+
 		return "\n<div class=\"addattach\">$links</div>\n";
 	}
 
