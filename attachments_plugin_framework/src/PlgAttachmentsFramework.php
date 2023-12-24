@@ -1105,7 +1105,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	public function insertAttachmentsListInEditor($parent_id, $parent_entity, $attachments, $body)
 	{
 		// Figure out where to insert the attachments list
-		$reptag = '<div id="editor-xtd-buttons"';
+		$reptag = '<div class="editor-xtd-buttons"';
 		$user = $this->app->getIdentity();
 		if ($user->getParam('editor', $this->app->get('editor')) == 'tinymce') {
 			# Hack because TinyMCE changed the structure
