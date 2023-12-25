@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri as JUri;
 use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\HTML\HTMLHelper as JHtml;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+require_once(JPATH_SITE . '/components/com_attachments/helper.php');
 
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE . '/components/com_attachments/defines.php'))
@@ -120,13 +121,10 @@ class plgContentAttachments extends JPlugin
 				(version_compare(JVERSION, '3.0', 'ge') AND version_compare(JVERSION, '3.1', 'lt'))) {
 				return false;
 			}
-		}
-		$app 		= JFactory::getApplication('site');
-		//$view		= JRequest::getCmd('view');
-		//$layout		= JRequest::getCmd('layout');
-		$view		= $app->input->get('view');
-		$layout		= $app->input->get('layout');
-
+		}		
+		$view		= AttachmentsHelper::getCmd('view');
+		$layout		= AttachmentsHelper::getCmd('layout');
+		
 		if ( ($parent_type == 'mod_custom') AND ($parent_entity == 'content') AND ($view == 'category') )
 		{
 			// Do not add attachments to categtory titles (Joomla 3.4+)
@@ -249,8 +247,8 @@ class plgContentAttachments extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
-		// $view = JRequest::getCmd('view');
-		// $layout = JRequest::getCmd('layout');
+		$view = AttachmentsHelper::getCmd('view');
+		$layout = AttachmentsHelper::getCmd('layout');
 		$app 		= JFactory::getApplication('site');
 		$view		= $app->input->get('view');
 		$layout		= $app->input->get('layout');		

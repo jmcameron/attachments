@@ -81,14 +81,14 @@ class AttachmentsController extends JControllerLegacy
 
 		// Get the parent info
 		$parent_entity = 'default';
-		if ( JRequest::getString('article_id') ) {
-			$pid_info = explode(',', JRequest::getString('article_id'));
+		if ( AttachmentsHelper::getString('article_id') ) {
+			$pid_info = explode(',', AttachmentsHelper::getString('article_id'));
 			$parent_type = 'com_content';
 			}
 		else {
-			$pid_info = explode(',', JRequest::getString('parent_id'));
+			$pid_info = explode(',', AttachmentsHelper::getString('parent_id'));
 			// Be extra cautious and remove all non-cmd characters except for ':'
-			$parent_type = preg_replace('/[^A-Z0-9_\.:-]/i', '', JRequest::getString('parent_type', 'com_content'));
+			$parent_type = preg_replace('/[^A-Z0-9_\.:-]/i', '', AttachmentsHelper::getString('parent_type', 'com_content'));
 
 			// If the entity is embedded in the parent type, split them
 			if ( strpos($parent_type, '.') ) {
@@ -143,10 +143,10 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Use a different template for the iframe view
-		$from = JRequest::getWord('from');
-		$Itemid = JRequest::getInt('Itemid', 1);
+		$from = AttachmentsHelper::getWord('from');
+		$Itemid = AttachmentsHelper::getInt('Itemid', 1);
 		if ( $from == 'closeme') {
-			JRequest::setVar('tmpl', 'component');
+			AttachmentsHelper::setVar('tmpl', 'component');
 			}
 
 		// Get the component parameters
@@ -163,7 +163,7 @@ class AttachmentsController extends JControllerLegacy
 
 		// Determine the type of upload
 		$default_uri_type = 'file';
-		$uri_type = JRequest::getWord('uri', $default_uri_type);
+		$uri_type = AttachmentsHelper::getWord('uri', $default_uri_type);
 		if ( !in_array( $uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 			// Make sure only legal values are entered
 			$uri_type = 'file';
@@ -234,9 +234,9 @@ class AttachmentsController extends JControllerLegacy
 		$params = JComponentHelper::getParams('com_attachments');
 
 		// Get the article/parent handler
-		$new_parent = JRequest::getBool('new_parent', false);
-		$parent_type = JRequest::getCmd('parent_type', 'com_content');
-		$parent_entity = JRequest::getCmd('parent_entity', 'default');
+		$new_parent = AttachmentsHelper::getBool('new_parent', false);
+		$parent_type = AttachmentsHelper::getCmd('parent_type', 'com_content');
+		$parent_entity = AttachmentsHelper::getCmd('parent_entity', 'default');
 		JPluginHelper::importPlugin('attachments');
 		$apm = getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
@@ -249,7 +249,7 @@ class AttachmentsController extends JControllerLegacy
 		$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
 
 		// Make sure we have a valid parent ID
-		$parent_id = JRequest::getInt('parent_id', -1);
+		$parent_id = AttachmentsHelper::getInt('parent_id', -1);
 		if ( !$new_parent && (($parent_id == 0) ||
 							   ($parent_id == -1) ||
 							   !$parent->parentExists($parent_id, $parent_entity)) ) {
@@ -265,10 +265,10 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Get the Itemid
-		$Itemid = JRequest::getInt('Itemid', 1);
+		$Itemid = AttachmentsHelper::getInt('Itemid', 1);
 
 		// How to redirect?
-		$from = JRequest::getWord('from', 'closeme');
+		$from = AttachmentsHelper::getWord('from', 'closeme');
 		$uri = AttachmentsHelper::getURI();
 		$base_url = $uri->base(false);
 		if ( $from ) {
@@ -294,7 +294,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Figure out if we are uploading or updating
-		$save_type = JString::strtolower(JRequest::getWord('save_type'));
+		$save_type = JString::strtolower(AttachmentsHelper::getWord('save_type'));
 		if ( !in_array($save_type, AttachmentsDefines::$LEGAL_SAVE_TYPES) ) {
 			$errmsg = JText::_('ATTACH_ERROR_INVALID_SAVE_PARAMETERS') . ' (ERR 8)';
 			JError::raiseError(500, $errmsg);
@@ -303,7 +303,7 @@ class AttachmentsController extends JControllerLegacy
 		// If this is an update, get the attachment id
 		$attachment_id = false;
 		if ( $save_type == 'update' ) {
-			$attachment_id = JRequest::getInt('id');
+			$attachment_id = AttachmentsHelper::getInt('id');
 			}
 
 		// Bind the info from the form
@@ -313,7 +313,7 @@ class AttachmentsController extends JControllerLegacy
 			$errmsg = JText::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $id) . ' (ERR 9)';
 			JError::raiseError(500, $errmsg);
 			}
-		if (!$attachment->bind(JRequest::get('post'))) {
+		if (!$attachment->bind(AttachmentsHelper::get('post'))) {
 			$errmsg = $attachment->getError() . ' (ERR 10)';
 			JError::raiseError(500, $errmsg);
 			}
@@ -328,7 +328,7 @@ class AttachmentsController extends JControllerLegacy
 		if ( $save_type == 'upload' ) {
 
 			// See if we are uploading a file or URL
-			$new_uri_type = JRequest::getWord('uri_type');
+			$new_uri_type = AttachmentsHelper::getWord('uri_type');
 			if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
@@ -344,7 +344,7 @@ class AttachmentsController extends JControllerLegacy
 		elseif ( $save_type == 'update' ) {
 
 			// See if we are updating a file or URL
-			$new_uri_type = JRequest::getWord('update');
+			$new_uri_type = AttachmentsHelper::getWord('update');
 			if ( $new_uri_type && !in_array( $new_uri_type, AttachmentsDefines::$LEGAL_URI_TYPES ) ) {
 				// Make sure only legal values are entered
 				$new_uri_type = '';
@@ -356,7 +356,7 @@ class AttachmentsController extends JControllerLegacy
 				}
 
 			// Double-check to see if the URL changed
-			$old_url = JRequest::getString('old_url');
+			$old_url = AttachmentsHelper::getString('old_url');
 			if ( !$new_uri_type && $old_url && ($old_url != $attachment->url) ) {
 				$new_uri_type = 'url';
 				}
@@ -366,10 +366,10 @@ class AttachmentsController extends JControllerLegacy
 		$verify_url = false;
 		$relative_url = false;
 		if ( $new_uri_type == 'url' ) {
-			if ( JRequest::getWord('verify_url') == 'verify' ) {
+			if ( AttachmentsHelper::getWord('verify_url') == 'verify' ) {
 				$verify_url = true;
 				}
-			if ( JRequest::getWord('relative_url') == 'relative' ) {
+			if ( AttachmentsHelper::getWord('relative_url') == 'relative' ) {
 				$relative_url = true;
 				}
 			}
@@ -442,7 +442,7 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			$lang = JRequest::getCmd('lang', '');
+			$lang = AttachmentsHelper::getCmd('lang', '');
 			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 			}
@@ -457,7 +457,7 @@ class AttachmentsController extends JControllerLegacy
 	public function download()
 	{
 		// Get the attachment ID
-		$id = JRequest::getInt('id');
+		$id = AttachmentsHelper::getInt('id');
 		if ( !is_numeric($id) ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 12)';
 			JError::raiseError(500, $errmsg);
@@ -476,7 +476,7 @@ class AttachmentsController extends JControllerLegacy
 		$db = JFactory::getDBO();
 
 		// Make sure we have a valid attachment ID
-		$id = JRequest::getInt( 'id');
+		$id = AttachmentsHelper::getInt( 'id');
 		if ( is_numeric($id) ) {
 			$id = (int)$id;
 			}
@@ -551,12 +551,12 @@ class AttachmentsController extends JControllerLegacy
 		AttachmentsHelper::clean_directory($filename_sys);
 
 		// Get the Itemid
-		$Itemid = JRequest::getInt( 'Itemid', 1);
+		$Itemid = AttachmentsHelper::getInt( 'Itemid', 1);
 
 		$msg = JText::_('ATTACH_DELETED_ATTACHMENT') . " '$filename'";
 
 		// Figure out how to redirect
-		$from = JRequest::getWord('from', 'closeme');
+		$from = AttachmentsHelper::getWord('from', 'closeme');
 		$uri = AttachmentsHelper::getURI();
 		if ( in_array($from, $parent->knownFroms()) ) {
 
@@ -570,7 +570,7 @@ class AttachmentsController extends JControllerLegacy
 
 			// Close the iframe and refresh the attachments list in the parent window
 			$base_url = $uri->root(true);
-			$lang = JRequest::getCmd('lang', '');
+			$lang = AttachmentsHelper::getCmd('lang', '');
 			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
 			exit();
 			}
@@ -588,7 +588,7 @@ class AttachmentsController extends JControllerLegacy
 	public function delete_warning()
 	{
 		// Make sure we have a valid attachment ID
-		$attachment_id = JRequest::getInt('id');
+		$attachment_id = AttachmentsHelper::getInt('id');
 		if ( is_numeric($attachment_id) ) {
 			$attachment_id = (int)$attachment_id;
 			}
@@ -626,9 +626,9 @@ class AttachmentsController extends JControllerLegacy
 		require_once(JPATH_COMPONENT.'/views/warning/view.html.php');
 		$view = new AttachmentsViewWarning( );
 		$view->parent_id = $parent_id;
-		$view->option = JRequest::getCmd('option');
-		$view->from = JRequest::getWord('from', 'closeme');
-		$view->tmpl = JRequest::getWord('tmpl');
+		$view->option = AttachmentsHelper::getCmd('option');
+		$view->from = AttachmentsHelper::getWord('from', 'closeme');
+		$view->tmpl = AttachmentsHelper::getWord('tmpl');
 
 		// Prepare for the query
 		$view->warning_title = JText::_('ATTACH_WARNING');
@@ -660,7 +660,7 @@ class AttachmentsController extends JControllerLegacy
 		//		  or: component/attachments/update/id/1/tmpl/component
 
 		// Make sure we have a valid attachment ID
-		$id = JRequest::getInt( 'id');
+		$id = AttachmentsHelper::getInt( 'id');
 		if ( is_numeric($id) ) {
 			$id = (int)$id;
 			}
@@ -720,7 +720,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Make sure the update parameter is legal
-		$update = JRequest::getWord('update');
+		$update = AttachmentsHelper::getWord('update');
 		if ( $update && !in_array($update, AttachmentsDefines::$LEGAL_URI_TYPES) ) {
 			$update = false;
 			}
@@ -734,7 +734,7 @@ class AttachmentsController extends JControllerLegacy
 		// Set up the view
 		require_once(JPATH_COMPONENT_SITE.'/views/update/view.html.php');
 		$view = new AttachmentsViewUpdate();
-		$from = JRequest::getWord('from', 'closeme');
+		$from = AttachmentsHelper::getWord('from', 'closeme');
 		AttachmentsHelper::add_view_urls($view, 'update', $parent_id,
 										 $attachment->parent_type, $id, $from);
 
@@ -747,7 +747,7 @@ class AttachmentsController extends JControllerLegacy
 		$view->params	  = $params;
 
 		$view->from		  = $from;
-		$view->Itemid	  = JRequest::getInt('Itemid', 1);
+		$view->Itemid	  = AttachmentsHelper::getInt('Itemid', 1);
 
 		$view->error = false;
 		$view->error_msg = false;
@@ -761,12 +761,12 @@ class AttachmentsController extends JControllerLegacy
 	 */
 	public function attachmentsList()
 	{
-		$parent_id = JRequest::getInt('parent_id', false);
-		$parent_type = JRequest::getWord('parent_type', '');
-		$parent_entity = JRequest::getWord('parent_entity', 'default');
-		$show_links = JRequest::getBool('show_links', true);
-		$allow_edit = JRequest::getBool('allow_edit', true);
-		$from = JRequest::getWord('from', 'closeme');
+		$parent_id = AttachmentsHelper::getInt('parent_id', false);
+		$parent_type = AttachmentsHelper::getWord('parent_type', '');
+		$parent_entity = AttachmentsHelper::getWord('parent_entity', 'default');
+		$show_links = AttachmentsHelper::getBool('show_links', true);
+		$allow_edit = AttachmentsHelper::getBool('allow_edit', true);
+		$from = AttachmentsHelper::getWord('from', 'closeme');
 		$title = '';
 
 		$response = '';
@@ -776,7 +776,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Allow remapping of parent ID (eg, for Joomfish)
-		$lang = JRequest::getWord('lang', '');
+		$lang = AttachmentsHelper::getWord('lang', '');
 		if ($lang and jimport('attachments_remapper.remapper'))
 		{
 			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
@@ -799,7 +799,7 @@ class AttachmentsController extends JControllerLegacy
 		$view = new AttachmentsViewLogin();
 
 		// Display the view
-		$view->return_url = JRequest::getString('return');
+		$view->return_url = AttachmentsHelper::getString('return');
 		$view->display(null, false, false);
 	}
 

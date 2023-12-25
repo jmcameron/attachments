@@ -15,6 +15,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 jimport('joomla.plugin.plugin');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /** Load the Attachments defines (if available) */
 if (file_exists(JPATH_SITE.'/components/com_attachments/defines.php'))
@@ -50,8 +51,8 @@ class plgSystemShow_attachments extends JPlugin
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{  
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getWord('layout');
+		$view = AttachmentsHelper::getCmd('view');
+		$layout = AttachmentsHelper::getWord('layout');
 
 		if ( $view == 'category' ) {
 
@@ -100,12 +101,12 @@ class plgSystemShow_attachments extends JPlugin
 	 */
 	public function onAfterRender()
 	{
-		$task = JRequest::getCmd('task');
-		$view = JRequest::getCmd('view');
-		$layout = JRequest::getWord('layout');
+		$task = AttachmentsHelper::getCmd('task');
+		$view = AttachmentsHelper::getCmd('view');
+		$layout = AttachmentsHelper::getWord('layout');
 
 		// Make sure this we should handle this
-		$parent_type = JRequest::getCMD('option');
+		$parent_type = AttachmentsHelper::getCMD('option');
 		if (!$parent_type) {
 			return;
 			}
@@ -177,7 +178,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			// Construct the attachment list
-			$Itemid = JRequest::getInt( 'Itemid', 1);
+			$Itemid = AttachmentsHelper::getInt( 'Itemid', 1);
 			$from = 'editor';
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
 																  $user_can_add, $Itemid, $from, false, true);
@@ -238,7 +239,7 @@ class plgSystemShow_attachments extends JPlugin
 				}
 
 			// Construct the attachment list
-			$Itemid = JRequest::getInt( 'Itemid', 1);
+			$Itemid = AttachmentsHelper::getInt( 'Itemid', 1);
 			$from = 'frontpage';
 			$user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,

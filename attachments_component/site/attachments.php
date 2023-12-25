@@ -15,9 +15,10 @@ defined('_JEXEC') or die('Restricted access');
 
 /** Load the default controller */
 require_once( JPATH_COMPONENT.'/controller.php' );
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 // Check for requests for named controller
-$controller = JRequest::getWord('controller', False);
+$controller = AttachmentsHelper::getWord('controller', False);
 if ( $controller ) {
 	// Invoke the named controller, if it exists
 	$path = JPATH_COMPONENT.'/controllers/'.$controller.'.php';
@@ -38,5 +39,5 @@ else {
 
 // Invoke the requested function of the controller
 $controller = new $classname( array('default_task' => 'noop') );
-$controller->execute( JRequest::getCmd('task') );
+$controller->execute( AttachmentsHelper::getCmd('task') );
 $controller->redirect();

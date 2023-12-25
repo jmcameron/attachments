@@ -25,7 +25,7 @@ class AttachmentsHelper
 			return JFactory::getApplication()->input->getArray(array());
 		}
 		else {
-			return call_user_func_array('AttachmentsHelper::get', ['post']);
+			return call_user_func_array('JRequest::get', ['post']);
 		}
 	}
 	
@@ -38,7 +38,7 @@ class AttachmentsHelper
 			}
 		}
 		else {
-			return call_user_func_array('AttachmentsHelper::get', $params);
+			return call_user_func_array('JRequest::get', $params);
 		}
 	}
 	
@@ -47,7 +47,7 @@ class AttachmentsHelper
 			return call_user_func_array(array(JFactory::getApplication()->input, 'getVar'), $params);
 		}
 		else {
-			return call_user_func_array('AttachmentsHelper::getVar', $params);
+			return call_user_func_array('JRequest::getVar', $params);
 		}
 	}
 	public static function setVar(...$params) {
@@ -55,7 +55,7 @@ class AttachmentsHelper
 			call_user_func_array(array(JFactory::getApplication()->input, 'setVar'), $params);
 		}
 		else {
-			call_user_func_array('AttachmentsHelper::setVar', $params);
+			call_user_func_array('JRequest::setVar', $params);
 		}
 	}
 
@@ -64,25 +64,25 @@ class AttachmentsHelper
 			return call_user_func_array(array(JFactory::getApplication()->input, 'getCmd'), $params);
 		}
 		else {
-			return call_user_func_array('AttachmentsHelper::getCmd', $params);
+			return call_user_func_array('JRequest::getCmd', $params);
 		}
 	}
 
 	public static function getInt(...$params) {
 		if (version_compare(JVERSION, '4.0', 'ge')){
-			$recordId = call_user_func_array(array(JFactory::getApplication()->input, 'getInt'), $params);
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getInt'), $params);
 		}
 		else {
-			$recordId	= (int)call_user_func_array('AttachmentsHelper::getInt', $params);
+			return (int)call_user_func_array('JRequest::getInt', $params);
 		}
 	}
 	
 	public static function getWord(...$params) {
 		if (version_compare(JVERSION, '4.0', 'ge')){
-			$recordId = call_user_func_array(array(JFactory::getApplication()->input, 'getWord'), $params);
+			return call_user_func_array(array(JFactory::getApplication()->input, 'getWord'), $params);
 		}
 		else {
-			$recordId	= (int)call_user_func_array('AttachmentsHelper::getWord', $params);
+			return  (int)call_user_func_array('JRequest::getWord', $params);
 		}
 	}
 	

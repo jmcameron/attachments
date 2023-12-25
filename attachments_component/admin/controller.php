@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
-
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /**
  * Define the main attachments controller class
@@ -34,7 +34,7 @@ class AttachmentsController extends JControllerLegacy
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Set the default view (if not specified)
-		JRequest::setVar('view', JRequest::getCmd('view', 'Attachments'));
+		AttachmentsHelper::setVar('view', AttachmentsHelper::getCmd('view', 'Attachments'));
 
 		// Call parent to display
 		parent::display($cachable);
@@ -50,7 +50,7 @@ class AttachmentsController extends JControllerLegacy
 	public function selectEntity()
 	{
 		// Get the parent type
-		$parent_type = JRequest::getCmd('parent_type');
+		$parent_type = AttachmentsHelper::getCmd('parent_type');
 		if ( !$parent_type ) {
 			$errmsg = JText::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) .
 				$db->getErrorMsg() . ' (ERR 65)';
@@ -58,7 +58,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Parse the parent type and entity
-		$parent_entity = JRequest::getCmd('parent_entity', 'default');
+		$parent_entity = AttachmentsHelper::getCmd('parent_entity', 'default');
 		if ( strpos($parent_type, '.') ) {
 			$parts = explode('.', $parent_type);
 			$parent_type = $parts[0];
@@ -100,7 +100,7 @@ class AttachmentsController extends JControllerLegacy
 		// Set up the view
 		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/entity/view.html.php');
 		$view = new AttachmentsViewEntity( );
-		$view->option = JRequest::getCmd('option');
+		$view->option = AttachmentsHelper::getCmd('option');
 		$view->from = 'closeme';
 		$view->post_url = $post_url;
 		$view->parent_type = $parent_type;
@@ -212,12 +212,12 @@ class AttachmentsController extends JControllerLegacy
 	 */
 	public function attachmentsList()
 	{
-		$parent_id = JRequest::getInt('parent_id', false);
-		$parent_type = JRequest::getWord('parent_type', '');
-		$parent_entity = JRequest::getWord('parent_entity', 'default');
-		$show_links = JRequest::getBool('show_links', true);
-		$allow_edit = JRequest::getBool('allow_edit', true);
-		$from = JRequest::getWord('from', 'closeme');
+		$parent_id = AttachmentsHelper::getInt('parent_id', false);
+		$parent_type = AttachmentsHelper::getWord('parent_type', '');
+		$parent_entity = AttachmentsHelper::getWord('parent_entity', 'default');
+		$show_links = AttachmentsHelper::getBool('show_links', true);
+		$allow_edit = AttachmentsHelper::getBool('allow_edit', true);
+		$from = AttachmentsHelper::getWord('from', 'closeme');
 		$title = '';
 
 		$response = '';
@@ -227,7 +227,7 @@ class AttachmentsController extends JControllerLegacy
 			}
 
 		// Allow remapping of parent ID (eg, for Joomfish)
-		$lang = JRequest::getWord('lang', '');
+		$lang = AttachmentsHelper::getWord('lang', '');
 		if ($lang and jimport('attachments_remapper.remapper'))
 		{
 			$parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);

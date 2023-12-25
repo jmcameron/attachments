@@ -13,8 +13,10 @@
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
-jimport('joomla.plugin.plugin');
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Uri\Uri as JUri;
 
 /**
  * Button that allows you to insert an {attachments} token into the text from the editor
@@ -60,7 +62,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 
 		// Avoid displaying the button for anything except for registered parents
-		$parent_type = JRequest::getCmd('option');
+		$parent_type = AttachmentsHelper::getCmd('option');
 
 		// Handle sections and categories specially (since they are really com_content)
 		if ($parent_type == 'com_categories') {
@@ -83,7 +85,11 @@ class plgButtonInsert_attachments_token extends JPlugin
 			}
 
 		// Set up the Javascript to insert the tag
-		$getContent = $this->_subject->getContent($name);
+        if ($this->_subject) {
+            $getContent = $this->_subject->getContent($name);
+        } else {
+            $getContent = "";
+        }
 		$present = JText::_('ATTACH_ATTACHMENTS_TOKEN_ALREADY_PRESENT', true) ;
 		$js =  "
 			function insertAttachmentsToken(editor) {
@@ -99,7 +105,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 
 		$app = JFactory::getApplication();
 		$doc = JFactory::getDocument();
-		$uri = JFactory::getURI();
+		$uri = JUri::getInstance(); 
 
 		$doc->addScriptDeclaration($js);
 
@@ -120,7 +126,7 @@ class plgButtonInsert_attachments_token extends JPlugin
 		$button->set('text', JText::_('ATTACH_ATTACHMENTS_TOKEN'));
 		$button->set('title', JText::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION'));
 
-		if ( $app->isAdmin() ) {
+		if ( $app->isClient('administrator') ) {
 			$button_name = 'insert_attachments_token';
 			if (version_compare(JVERSION, '3.3', 'ge')) {
 				$button_name = 'paperclip';

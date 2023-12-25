@@ -146,9 +146,10 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 			$document = JFactory::getDocument();
 			$js = ' 
 	   function jSelectParentArticle(id, title, catid, object) {
-		   document.id("parent_id").value = id;
-		   document.id("parent_title").value = title;
-		   SqueezeBox.close();
+		   document.getElementById("parent_id").value = id;
+		   document.getElementById("parent_title").value = title;
+		   let modal = bootstrap.Modal.getInstance(document.getElementById("modal-attachment"));
+		   modal.hide();
 		   }';
 			$document->addScriptDeclaration($js);
 			}
@@ -163,7 +164,7 @@ class AttachmentsControllerAttachment extends JControllerFormLegacy
 		$from = AttachmentsHelper::getWord('from');
 		if ( $from == 'closeme' ) {
 			AttachmentsHelper::setVar('tmpl', 'component');
-			}
+		}
 
 		// Disable the main menu items
 		//AttachmentsHelper::setVar( 'hidemainmenu', 1 );

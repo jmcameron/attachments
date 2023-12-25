@@ -158,9 +158,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function getParentId(&$attachment)
 	{
-		//return JRequest::getInt('id', false);
-		$app 		= JFactory::getApplication('site');
-		return	$app->input->getInt('id');
+		return AttachmentsHelper::getInt('id', false);		
 	}
 
 	/**
@@ -743,9 +741,7 @@ class AttachmentsPlugin extends JPlugin
 	 */
 	public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
 	{		
-		//$layout = JRequest::getCmd('layout');
-		$app 		= JFactory::getApplication('site');
-		$layout		= $app->input->get('layout');
+		$layout = AttachmentsHelper::getCmd('layout');		
 		$aparams = $this->attachmentsParams();
 
 		// Check to see whether the attachments should be hidden on the front page
@@ -865,11 +861,8 @@ class AttachmentsPlugin extends JPlugin
 		}
 
 		// Determine where we are		
-		//$from	= JRequest::getCmd('view', 'closeme');
-		//$Itemid = JRequest::getInt('Itemid', 1);
-		$app 		= JFactory::getApplication('site');
-		$from		= $app->input->getCmd('view', 'closeme');
-		$Itemid 	= $app->input->getInt('Itemid', 1);
+		$from	= AttachmentsHelper::getCmd('view', 'closeme');
+		$Itemid = AttachmentsHelper::getInt('Itemid', 1);		
 		
 		// See whether we can display the links to add attachments
 		$user_can_add = $this->userMayAddAttachment($parent_id, $parent_entity);
@@ -1042,9 +1035,7 @@ class AttachmentsPlugin extends JPlugin
 		// but not for all frontends, especially not com_content/articles
 		$id = null;
 		if ($view == $parent_entity) {
-			//$id = JRequest::getInt('id', $default=null);
-			$app 		= JFactory::getApplication('site');
-			$id			= $app->input('id');
+			$id = AttachmentsHelper::getInt('id', $default=null);			
 		}
 		else {
 			$id = false;

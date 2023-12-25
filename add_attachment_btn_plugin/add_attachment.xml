@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="editors-xtd" version="2.5" method="upgrade">
+<extension type="plugin" group="editors-xtd" version="4.0" method="upgrade">
     <name>plg_editors-xtd_add_attachment_btn</name>
     <version>3.2.6</version>
     <creationDate>March 26, 2018</creationDate>

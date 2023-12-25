@@ -18,6 +18,7 @@ use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\HTML\HTMLHelper as JHtml;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use Joomla\CMS\Language\Text as JText;
+require_once(JPATH_SITE . '/components/com_attachments/helper.php');
 
 /** Load the attachments plugin class */
 if (!JPluginHelper::importPlugin('attachments', 'attachments_plugin_framework'))
@@ -86,11 +87,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	public function determineParentEntity(&$parent)
 	{
-		//$view = JRequest::getCmd('view');	
-		$app 		= JFactory::getApplication('site');
-		$view		= $app->input->get('view');
-
-
+		$view = AttachmentsHelper::getCmd('view');	
+		
 		// Handle category calls
 		if (($view == 'category') && (get_class($parent) == 'JTableContent'))
 		{
@@ -127,11 +125,8 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	 */
 	protected function getTextFieldName(&$row, $parent_entity)
 	{
-		//$view = JRequest::getCmd('view');	
-		//$layout = JRequest::getCmd('layout');
-		$app 		= JFactory::getApplication('site');
-		$view		= $app->input->get('view');
-		$layout 		= $app->input->get('layout');
+		$view = AttachmentsHelper::getCmd('view');
+		$layout = AttachmentsHelper::get('layout');
 
 		$text_field_name = parent::getTextFieldName($row, $parent_entity);
 
@@ -357,7 +352,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		$parent_entity = $this->getCanonicalEntityId($parent_entity);
 
 		// Determine the task
-		if ($app->isAdmin())
+		if ( $app->isClient('administrator') )
 		{
 			$task = 'attachment.add';
 		}
@@ -757,9 +752,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// Make sure we have a valid parent ID
 		if (!$parent_id && ($parent_entity == 'category'))
 		{
-			//$parent_id = JRequest::getInt('id');
-			$app 		= JFactory::getApplication('site');
-			$parent_id 	= $app->input->get('id');
+			$parent_id = AttachmentsHelper::getInt('id');			
 		}
 		if ($parent_id !== 0)
 		{
@@ -839,9 +832,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 			}
 
 			// Honor all_but_article_view option
-			//$view = JRequest::getCmd('view');
-			$app 		= JFactory::getApplication('site');
-			$view		= $app->input->get('view');
+			$view = AttachmentsHelper::getCmd('view');
 			if ($all_but_article_views)
 			{
 				if ($view != 'article')
@@ -1238,7 +1229,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 	public function getParentIdInEditor($parent_entity, $view, $layout)
 	{
 		$app = JFactory::getApplication();
-		if ($app->isAdmin()) {
+		if ( $app->isClient('administrator') ) {
 			// The default works fine for the back end
 			return parent::getParentIdInEditor($parent_entity, $view, $layout);
 		}
@@ -1251,9 +1242,7 @@ class AttachmentsPlugin_Com_Content extends AttachmentsPlugin
 		// Deal with articles (in frontend)
 		$id = null;
 		if (($view == 'article') OR ($view == 'form')) {
-			//$id = JRequest::getInt('a_id', $default=null);
-			$app 		= JFactory::getApplication('site');
-			$id			= $app->input->get('');
+			$id = AttachmentsHelper::getInt('a_id', $default=null);			
 		}
 		else {
 			$id = false;

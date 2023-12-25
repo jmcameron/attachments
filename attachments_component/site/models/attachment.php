@@ -15,7 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 
 /** Define the legacy classes, if necessary */
 require_once(JPATH_SITE.'/components/com_attachments/legacy/model.php');
-
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 /**
  * Attachment Model
@@ -47,14 +47,14 @@ class AttachmentsModelAttachment extends JModelLegacy
 		parent::__construct();
 
 		// Get the cid array from the request
-		$cid = JRequest::getVar('cid', false, 'DEFAULT', 'array');
+		$cid = AttachmentsHelper::getVar('cid', false, 'DEFAULT', 'array');
 
 		if ($cid) {
 			// Accept only the first id from the array
 			$id = $cid[0];
 			}
 		else {
-			$id = JRequest::getInt('id',0);
+			$id = AttachmentsHelper::getInt('id',0);
 			}
 
 		$this->setId($id);

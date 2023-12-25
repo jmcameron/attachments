@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 // Load the Attachments helper
 require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
 
 // Add the plugins stylesheet to style the list of attachments
 $uri = AttachmentsHelper::getURI();
@@ -52,8 +53,8 @@ else {
 if ( $this->new_parent ) {
 	$upload_toggle_url .= "&amp;parent_id=0,new";
 	}
-if ( JRequest::getWord('editor') ) {
-	$upload_toggle_url .= "&amp;editor=" . JRequest::getWord('editor');
+if ( AttachmentsHelper::getWord('editor') ) {
+	$upload_toggle_url .= "&amp;editor=" . AttachmentsHelper::getWord('editor');
 	}
 
 // Needed URLs

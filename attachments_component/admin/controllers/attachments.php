@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controlleradmin');
 use Joomla\CMS\MVC\Controller\AdminController as JControllerAdmin;
 use Joomla\CMS\MVC\Controller\BaseController as JControllerLegacy;
-use Joomla\CMS\Factory as JFactory
+use Joomla\CMS\Factory as JFactory;
 /**
  * Attachments Controller
  *

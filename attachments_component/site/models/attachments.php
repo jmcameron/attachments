@@ -19,7 +19,8 @@ use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\Language\Text as JText;
 
-jimport('joomla.application.component.helper');
+require_once(JPATH_SITE.'/components/com_attachments/helper.php');
+
 
 
 /** Define the legacy classes, if necessary */
@@ -120,19 +121,19 @@ class AttachmentsModelAttachments extends JModelLegacy
 			}
 		else {
 			// It was not an argument, so get parent id and type from the JRequest
-			$parent_id	 = JRequest::getInt('article_id', null);
+			$parent_id	 = AttachmentsHelper::getInt('article_id', null);
 
 			// Deal with special case of editing from the front end
 			if ( $parent_id == null ) {
-				if ( (JRequest::getCmd('view') == 'article') &&
-					 (JRequest::getCmd('task') == 'edit' )) {
-					$parent_id = JRequest::getInt('id', null);
+				if ( (AttachmentsHelper::getCmd('view') == 'article') &&
+					 (AttachmentsHelper::getCmd('task') == 'edit' )) {
+					$parent_id = AttachmentsHelper::getInt('id', null);
 					}
 				}
 
 			// If article_id is not specified, get the general parent id/type
 			if ( $parent_id == null ) {
-				$parent_id = JRequest::getInt('parent_id', null);
+				$parent_id = AttachmentsHelper::getInt('parent_id', null);
 				if ( $parent_id == null ) {
 					$errmsg = JText::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 50)';
 					JError::raiseError(500, $errmsg);

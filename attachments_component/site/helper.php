@@ -19,6 +19,7 @@ require_once(JPATH_SITE.'/components/com_attachments/defines.php');
 /** Load the attachments javascript helper */
 require_once(JPATH_SITE.'/components/com_attachments/javascript.php');
 
+use Joomla\CMS\Factory as JFactory;
 
 /**
  * A class for attachments helper functions
@@ -403,7 +404,7 @@ class AttachmentsHelper
 		$user = JFactory::getUser();
 		$db = JFactory::getDBO();
 
-		$from = JRequest::getWord('from');
+		$from = AttachmentsHelper::getWord('from');
 
 		// Figure out if the user may publish this attachment
 		$may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
@@ -568,7 +569,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
-				$view->update = JRequest::getWord('update');
+				$view->update = AttachmentsHelper::getWord('update');
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -581,7 +582,7 @@ class AttachmentsHelper
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
-				$new_uri_type = JRequest::getWord('update');
+				$new_uri_type = AttachmentsHelper::getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$attachment->display_name = '';
 					}
@@ -596,7 +597,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = AttachmentsHelper::getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -678,7 +679,7 @@ class AttachmentsHelper
 				AttachmentsHelper::add_view_urls($view, 'update', $attachment->parent_id,
 												 $attachment->parent_type, $attachment_id, $from);
 
-				$view->update = JRequest::getWord('update');
+				$view->update = AttachmentsHelper::getWord('update');
 				}
 			else {
 				require_once(JPATH_COMPONENT_SITE.'/views/upload/view.html.php');
@@ -691,7 +692,7 @@ class AttachmentsHelper
 			// Suppress the display filename if we are changing from file to url
 			$display_name = $attachment->display_name;
 			if ( $save_type == 'update' ) {
-				$new_uri_type = JRequest::getWord('update');
+				$new_uri_type = AttachmentsHelper::getWord('update');
 				if ( $new_uri_type && (($new_uri_type == 'file') || ($new_uri_type != $attachment->uri_type)) ) {
 					$attachment->display_name = '';
 					}
@@ -706,7 +707,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = AttachmentsHelper::getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -804,7 +805,7 @@ class AttachmentsHelper
 			$view->params =	$params;
 
 			$view->from = $from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = AttachmentsHelper::getInt('Itemid', 1);
 
 			$view->error = $error;
 			$view->error_msg = $error_msg;
@@ -1295,11 +1296,11 @@ class AttachmentsHelper
 				$old_filename = $attachment->filename;
 				$old_filename_sys = $attachment->filename_sys;
 				}
-			$old_display_name = JRequest::getString('old_display_name', null);
+			$old_display_name = AttachmentsHelper::getString('old_display_name', null);
 			}
 
 		// Check to make sure the URL is valid
-		$from = JRequest::getWord('from');
+		$from = AttachmentsHelper::getWord('from');
 
 		// Get the info from the url
 		$result = AttachmentsHelper::get_url_info($attachment->url, $attachment, $verify, $relative_url);
@@ -1316,7 +1317,7 @@ class AttachmentsHelper
 				return $result;
 				}
 
-			$update_form = JRequest::getWord('update');
+			$update_form = AttachmentsHelper::getWord('update');
 
 			// Redisplay the upload/update form with complaints
 			if ( $update ) {
@@ -1351,7 +1352,7 @@ class AttachmentsHelper
 			$view->params = $params;
 
 			$view->from =	$from;
-			$view->Itemid = JRequest::getInt('Itemid', 1);
+			$view->Itemid = AttachmentsHelper::getInt('Itemid', 1);
 
 			$view->error = $result->error;
 			$view->error_msg = $result->error_msg;
@@ -1362,9 +1363,9 @@ class AttachmentsHelper
 			}
 
 		// Clear out the display_name if the URL has changed
-		$old_url = JRequest::getString('old_url');
+		$old_url = AttachmentsHelper::getString('old_url');
 		if ( $attachment->display_name && ( $attachment->url != $old_url ) ) {
-			$old_display_name = JRequest::getString('old_display_name');
+			$old_display_name = AttachmentsHelper::getString('old_display_name');
 			if ( $old_display_name == $attachment->display_name ) {
 				$attachment->display_name = '';
 				}
@@ -1406,7 +1407,7 @@ class AttachmentsHelper
 		// If the user is not authorised to change the state (eg, publish/unpublish),
 		// ignore the form data and make sure the publish state is set correctly.
 		if ( !$may_publish ) {
-			$save_type = JString::strtolower(JRequest::getWord('save_type', 'update'));
+			$save_type = JString::strtolower(AttachmentsHelper::getWord('save_type', 'update'));
 			if ( $save_type == 'upload' ) {
 				// Use the default publish state
 				jimport('joomla.application.component.helper');
@@ -1948,14 +1949,6 @@ class AttachmentsHelper
 		}
 	}
 	
-	public static function getURI() {
-		if (version_compare(JVERSION, '4.0', 'lt')){
-			return AttachmentsHelper::getURI();
-		}
-		else {
-			return JUri::getInstance();
-		}
-	}
 	
 	public static function getString(...$params) {
 		if (version_compare(JVERSION, '4.0', 'lt')){
@@ -1963,6 +1956,15 @@ class AttachmentsHelper
 		}
 		else {
 			return call_user_func_array(array(JFactory::getApplication()->input, 'getString'), $params);
+		}
+	}
+
+	public static function getURI() {
+		if (version_compare(JVERSION, '4.0', 'lt')){
+			return JRequest::getURI();
+		}
+		else {
+			return JUri::getInstance();
 		}
 	}
 
