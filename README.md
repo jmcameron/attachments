@@ -1,4 +1,4 @@
-# attachments 4.0 (beta version)
+# attachments 4.0.1
 
 This branch is in test. Adapting the component to work with Joomla 4.
 
@@ -8,7 +8,16 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 ## Requirements
 
-Joomla 4.0+
+Joomla 4.0+ compatible also with Joomla 5.0+
+
+## Changes since 4.0 beta
+
+orrection for Blank page in popup after adding file #41
+Show attachments for blog articles issue #40
+Add scrollbar to iframes
+Fix modal not closing
+The Event::getArguments changed in Joomla 5
+Reorganize code to work with both joomla 4 and 5
 
 ## Migration from attachments 3
 - make backup
