@@ -1,0 +1,19 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "^10.3",
+        "phpcompatibility/php-compatibility": "^10.0@dev"
+    },
+    "autoload-dev": {
+        "Tests\\": "tests",
+        "JMCameron\\Component\\Attachments\\Administrator\\": "attachments_component/admin/src/",
+        "JMCameron\\Component\\Attachments\\Site\\": "attachments_component/site/src/"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "check-compatibility": "phpcs -p . --standard=PHPCompatibility --runtime-set testVersion 7.4- --ignore=*/vendor/*,temp/*"
+    }
+}

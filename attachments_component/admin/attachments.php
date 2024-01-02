@@ -11,13 +11,14 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
-/** Define the legacy classes, if necessary */
-require_once(JPATH_SITE.'/components/com_attachments/legacy/controller.php');
-
-
 // Execute the requested task
-$controller = JControllerLegacy::getInstance('Attachments');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$mvc = Factory::getApplication()
+    ->bootComponent("com_attachments")
+    ->getMVCFactory();
+$controller = $mvc->createController('Attachments');
+$controller->execute(Factory::getApplication()->getInput()->get('task'));
 $controller->redirect();

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="attachments" version="4.0" method="upgrade">
+    <name>plg_attachments_plugin_framework</name>
+    <version>3.2.6</version>
+    <creationDate>March 26, 2018</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <copyright>(C) 2009-2018 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <description>ATTACH_ATTACHMENTS_FOR_COMPONENTS_PLUGIN_FRAMEWORK_DESCRIPTION</description>
+
+    <scriptfile>install.php</scriptfile>
+
+    <namespace path="src/">JMCameron\Plugin\AttachmentsPluginFramework</namespace>
+
+    <files>
+        <filename plugin="framework">src/PlgAttachmentsFramework.php</filename>
+        <filename>src/AttachmentsPluginManager.php</filename>
+        <filename>index.html</filename>
+        <folder>language</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_attachments_plugin_framework.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_attachments_plugin_framework.sys.ini</language>
+    </languages>
+
+</extension>

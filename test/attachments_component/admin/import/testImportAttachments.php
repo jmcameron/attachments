@@ -90,13 +90,13 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
 
 		// Delete the attachments
 		if ( !$update ) {
-			$db = JFactory::getDBO();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			if (is_array($result)) {
 				$query = $db->getQuery(true);
 				$ids = implode(',', $result);
 				$query->delete('#__attachments')->where("id IN ( $ids )");
 				$db->setQuery($query);
-				if ( !$db->query() ) {
+				if ( !$db->execute() ) {
 					$this->assertTrue(false, 'ERROR deleting new test attachments' . $db->getErrorMsg());
 					}
 				}

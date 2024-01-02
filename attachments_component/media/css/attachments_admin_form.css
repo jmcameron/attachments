@@ -302,7 +302,6 @@ form.attachmentsBackend fieldset.adminform table.admintable td input[type="check
 	float: none;
 	padding: 0;
 	margin: 0 0 0 0.5em;
-	display: inline;
 }
 
 form.attachmentsBackend fieldset.adminform table.admintable tr {

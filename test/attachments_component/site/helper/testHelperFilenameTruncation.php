@@ -11,15 +11,13 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+
 /** Load the PHPUnit test framework */
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
 require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
-
-/** Load the helper class for testing */
-require_once JPATH_BASE.'/components/com_attachments/helper.php';
-
 
 /**
  * Work-around class to expose protected method for testing

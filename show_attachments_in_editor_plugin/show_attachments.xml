@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="system" version="2.5" method="upgrade">
+<extension type="plugin" group="system" version="4.0" method="upgrade">
     <name>plg_system_show_attachments_in_editor</name>
     <version>3.2.6</version>
     <creationDate>March 26, 2018</creationDate>
@@ -15,5 +15,9 @@
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_show_attachments.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_show_attachments.sys.ini</language>
+	</languages>
 
 </extension>

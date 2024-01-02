@@ -11,6 +11,8 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
@@ -31,7 +33,7 @@ function AttachmentsBuildRoute(&$query)
 
 	// Syntax to delete an attachment:
 	//		index.php?option=com_attachments&task=delete&id=4&article_id=44&from=article
-	//			--> /attachments/delete/4/artcile/44
+	//			--> /attachments/delete/4/article/44
 	//			--> /attachments/delete/4/article/44/from/article
 	// or:
 	//		index.php?option=com_attachments&task=delete&id=4&parent_id=44&from=parent
@@ -43,7 +45,7 @@ function AttachmentsBuildRoute(&$query)
 	$segments = array();
 
 	// get a menu item based on Itemid or currently active
-	$app		= JFactory::getApplication();
+	$app		= Factory::getApplication();
 	$menu		= $app->getMenu();
 
 	// we need a menu item.	 Either the one specified in the query, or the current active one if none specified

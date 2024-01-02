@@ -11,33 +11,54 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
+use Joomla\Event\SubscriberInterface;
+use Joomla\String\StringHelper;
+
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
-
-jimport('joomla.plugin.plugin');
-
 
 /**
  * Attachments Search plugin
  *
  * @package		Attachments
  */
-class plgSearchAttachments extends JPlugin
+class plgSearchAttachments extends CMSPlugin implements SubscriberInterface
 {
 	/**
-	 * Constructor
-	 *
-	 * @access		protected
-	 * @param		object	$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
-	 * @since		1.5
+	 * $db and $app are loaded on instantiation
 	 */
-	public function __construct(& $subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onContentSearchAreas' => 'onContentSearchAreas',
+			'onContentSearch' => 'onContentSearch',
+		];
+	}
 
 	/**
 	 * @return array An array of search areas
@@ -50,21 +71,22 @@ class plgSearchAttachments extends JPlugin
 		return $areas;
 	}
 
-
 	/**
 	 * Attachments Search method
 	 *
 	 * The sql must return the following fields that are
 	 * used in a common display routine: href, title, section, created, text,
 	 * browsernav
-	 * @param string Target search string
-	 * @param string mathcing option, exact|any|all
-	 * @param string ordering option, newest|oldest|popular|alpha|category
-	 * @param mixed An array if restricted to areas, null if search all
+	 * @param Event $event The event object
 	 */
-	public function onContentSearch($text, $phrase='', $ordering='', $areas=null)
+	public function onContentSearch(Event $event)
 	{
-		$user	 = JFactory::getUser();
+		// $text - Target search string
+		// $phrase - matching option, exact|any|all
+		// $ordering - ordering option, newest|oldest|popular|alpha|category
+		// $areas - An array if restricted to areas, null if search all
+		[$text, $phrase, $ordering, $areas] = $event->getArguments();
+		$user	 = Factory::getApplication()->getIdentity();
 
 		// Exit if the search does not include attachments
 		if (is_array($areas)) {
@@ -74,7 +96,7 @@ class plgSearchAttachments extends JPlugin
 			}
 
 		// Make sure we have something to search for
-		$text = JString::trim( $text );
+		$text = StringHelper::trim( $text );
 		if ($text == '') {
 			return array();
 			}
@@ -83,21 +105,20 @@ class plgSearchAttachments extends JPlugin
 		$limit = $this->params->def('search_limit', 50);
 
 		// Get the component parameters
-		jimport('joomla.application.component.helper');
-		$attachParams = JComponentHelper::getParams('com_attachments');
+		$attachParams = ComponentHelper::getParams('com_attachments');
 		$secure = $attachParams->get('secure', false);
 		$user_field_1 = false;
-		if ( JString::strlen($attachParams->get('user_field_1_name', '')) > 0 ) {
+		if ( StringHelper::strlen($attachParams->get('user_field_1_name', '')) > 0 ) {
 			$user_field_1 = true;
 			$user_field_1_name = $attachParams->get('user_field_1_name');
 			}
 		$user_field_2 = false;
-		if ( JString::strlen($attachParams->get('user_field_2_name', '')) > 0 ) {
+		if ( StringHelper::strlen($attachParams->get('user_field_2_name', '')) > 0 ) {
 			$user_field_2 = true;
 			$user_field_2_name = $attachParams->get('user_field_2_name');
 			}
 		$user_field_3 = false;
-		if ( JString::strlen($attachParams->get('user_field_3_name', '')) > 0 ) {
+		if ( StringHelper::strlen($attachParams->get('user_field_3_name', '')) > 0 ) {
 			$user_field_3 = true;
 			$user_field_3_name = $attachParams->get('user_field_3_name');
 			}
@@ -105,7 +126,7 @@ class plgSearchAttachments extends JPlugin
 		$wheres = array();
 
 		// Create the search query
-		$db = JFactory::getDBO();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		switch ($phrase)  {
 
@@ -164,7 +185,6 @@ class plgSearchAttachments extends JPlugin
 		}
 
 		// Load the permissions functions
-		$user = JFactory::getUser();
 		$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
 
 		// Construct and execute the query
@@ -187,8 +207,8 @@ class plgSearchAttachments extends JPlugin
 			}
 
 		// Prepare to get parent info
-		JPluginHelper::importPlugin('attachments');
-		$apm = getAttachmentsPluginManager();
+		PluginHelper::importPlugin('attachments');
+		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 
 		// Add the result data to the results of the search
 		$k = 0;
@@ -226,13 +246,13 @@ class plgSearchAttachments extends JPlugin
 			// Construct the download URL if necessary
 			if ( $secure && $attachment->uri_type == 'file' ) {
 				$attachment->href =
-					JRoute::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+					Route::_("index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
 				$attachment->href = $attachment->url;
 				}
-			if ( $attachment->display_name && (JString::strlen($attachment->display_name) > 0) ) {
-				$attachment->title = JString::str_ireplace('&#183;', '.', $attachment->display_name);
+			if ( $attachment->display_name && (StringHelper::strlen($attachment->display_name) > 0) ) {
+				$attachment->title = StringHelper::str_ireplace('&#183;', '.', $attachment->display_name);
 				}
 			else {
 				if ( $attachment->uri_type == 'file' ) {
@@ -244,36 +264,36 @@ class plgSearchAttachments extends JPlugin
 				}
 
 			// Set the text to the string containing the search target
-			if ( JString::strlen($attachment->display_name) > 0 ) {
+			if ( StringHelper::strlen($attachment->display_name) > 0 ) {
 				$text = $attachment->display_name .
-					" (" . JText::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename . ") ";
+					" (" . Text::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename . ") ";
 				}
 			else {
-				$text = JText::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename;
+				$text = Text::_('ATTACH_FILENAME_COLON') . " " . $attachment->filename;
 				}
 
-			if ( JString::strlen($attachment->description) > 0 ) {
-				$text .= " | " . JText::_('ATTACH_DESCRIPTION_COLON') . stripslashes($attachment->description);
+			if ( StringHelper::strlen($attachment->description) > 0 ) {
+				$text .= " | " . Text::_('ATTACH_DESCRIPTION_COLON') . stripslashes($attachment->description);
 				}
 
-			if ( $user_field_1 && (JString::strlen($attachment->user_field_1) > 0) ) {
+			if ( $user_field_1 && (StringHelper::strlen($attachment->user_field_1) > 0) ) {
 				$text .= " | " . $user_field_1_name	 . ": " . stripslashes($attachment->user_field_1);
 				}
-			if ( $user_field_2 && (JString::strlen($attachment->user_field_2) > 0) ) {
+			if ( $user_field_2 && (StringHelper::strlen($attachment->user_field_2) > 0) ) {
 				$text .= " | " . $user_field_2_name	 . ": " . stripslashes($attachment->user_field_2);
 				}
-			if ( $user_field_3 && (JString::strlen($attachment->user_field_3) > 0) ) {
+			if ( $user_field_3 && (StringHelper::strlen($attachment->user_field_3) > 0) ) {
 				$text .= " | " . $user_field_3_name	 . ": " . stripslashes($attachment->user_field_3);
 				}
 			$attachment->text = $text;
 			$attachment->browsernav = 2;
 
-			$parent_entity_name = JText::_('ATTACH_' . $parent_entity);
+			$parent_entity_name = Text::_('ATTACH_' . $parent_entity);
 			$attachment->parent_entity_name = $parent_entity_name;
 
-			$parent_title = JText::_($parent->getTitle($attachment->parent_id, $parent_entity));
+			$parent_title = Text::_($parent->getTitle($attachment->parent_id, $parent_entity));
 
-			$attachment->section = JText::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',
+			$attachment->section = Text::sprintf('ATTACH_ATTACHED_TO_PARENT_S_TITLE_S',
 										   $parent_entity_name, $parent_title);
 
 			$results[$k] = $attachment;

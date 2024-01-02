@@ -11,77 +11,92 @@
  * @author Jonathan M. Cameron
  */
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
+use Joomla\Module\Quickicon\Administrator\Event\QuickIconsEvent;
+
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-jimport('joomla.plugin.plugin');
-
-
 /**
- * Attachments quickcion plugin class
+ * Attachments quickicon plugin class
  *
  * @package		Attachments
  * @subpackage	Attachments.Quickicon_Plugin
  */
-class PlgQuickiconAttachments extends JPlugin
+class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
 {
-	/*
-	 * Constructor.
-	 *
-	 * @access		protected
-	 * @param		object	$subject The object to observe
-	 * @param		array	$config	 An array that holds the plugin configuration
+	/**
+	 * $db and $app are loaded on instantiation
 	 */
-	public function __construct(& $subject, $config)
-	{
-		parent::__construct($subject, $config);
-		$this->loadLanguage();
-	}
+	protected ?DatabaseDriver $db = null;
+	protected ?CMSApplication $app = null;
 
+	/**
+	 * Load the language file on instantiation
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+	
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return  array
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onGetIcons' => 'onGetIcons',
+		];
+	}
 
 	/**
 	 * This method is called when the Quick Icons module is constructing its set
 	 * of icons. You can return an array which defines a single icon and it will
 	 * be rendered right after the stock Quick Icons.
 	 *
-	 * @param  $context	 The calling context
+	 * @param  QuickIconsEvent $event	 The event object
 	 *
 	 * @return array A list of icon definition associative arrays, consisting of the
 	 *				 keys link, image, text and access.
 	 *
 	 * @since		2.5
 	 */
-	public function onGetIcons($context)
+	public function onGetIcons(QuickIconsEvent $event)
 	{
+		$context = $event->getContext();
+		$user = Factory::getApplication()->getIdentity();
 		// See if we should show the icon
 		if ($context != $this->params->get('context', 'mod_quickicon') ||
-			!JFactory::getUser()->authorise('core.manage', 'com_attachments'))
+			$user === null ||
+			!$user->authorise('core.manage', 'com_attachments'))
 		{
 			return;
 		}
 
 		// Add the CSS file
-		JHtml::stylesheet('com_attachments/attachments_quickicon.css', array(), true);
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_quickicon.css');
 
-		if (version_compare(JVERSION, '3.0', 'ge'))
-		{
-			$image = 'flag-2';
-			$icon = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
-		}
-		else
-		{
-			$image = JUri::root() . '/media/com_attachments/images/attachments_logo48.png';
-			$icon = '';
-		}
+		$image = 'icon-attachment';
+
+		$result = $event->getArgument('result', []);
 
 		// Return the icon info for the quickicon system
-		return
-			array(
-				array(
-					'link' => 'index.php?option=com_attachments',
-					'image' => $image,
-					'icon' => $icon,
-					'text' => JText::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
-					'id' => 'plg_quickicon_attachment'));
+		$result[] = [
+			[
+				'link' => 'index.php?option=com_attachments',
+				'image' => $image,
+				'text' => Text::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
+				'id' => 'plg_quickicon_attachment'	
+			]
+		];
+
+		$event->setArgument('result', $result);
 	}
 }
