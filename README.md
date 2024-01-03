@@ -11,8 +11,12 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 4.0+
 
-## Migration from Jcomments 3
+## Migration from attachments 3
 - make backup
 - install attachments 4.0.x
+
+## Version for Joomla 3.X
+
+This version is still maintained under branch https://github.com/jmcameron/attachments/tree/joomla_3.x
 
 
