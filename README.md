@@ -12,8 +12,8 @@ Joomla 4.0+
 
 ## Migration from attachments 3
 - make backup
-- remove "Attachments - Plugin Framework"
-- install attachments 4.0.x
+- remove "Attachments - Plugin Framework" before upgrading to Joomla 4. If the site is already migrated to Joomla 4, you should first remove the folder ```plugins/attachments/attachments_plugin_framework``` and then remove it from the backend.
+- after upgrading the site to Joomla 4 install attachments 4.0.x
 - check if all parts of the Attachment extension are enabled
 
 ## Version for Joomla 3.X
