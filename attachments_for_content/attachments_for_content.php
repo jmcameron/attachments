@@ -494,12 +494,12 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 				}
 
 				$now	  = Factory::getDate()->toUnix();
-				$nullDate = Factory::getDate($db->getNullDate())->toUnix();
+				$nullDate = null;
 
 				if ($article)
 				{
 					$publish_up	  = Factory::getDate($article->publish_up)->toUnix();
-					$publish_down = Factory::getDate($article->publish_down)->toUnix();
+                    $publish_down = $article->publish_down? Factory::getDate($article->publish_down)->toUnix():null;
 
 					$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down == $nullDate) || ($now <= $publish_down)));
 				}
