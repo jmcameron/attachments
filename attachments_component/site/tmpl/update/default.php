@@ -204,7 +204,7 @@ if ( $this->error )
 <?php endif; ?>
 <?php if ( $params->get('allow_frontend_access_editing', false) ): ?>
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><? echo Text::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
+		<div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><?php echo Text::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
 <?php endif; ?>
 		<?php if ( $params->get('user_field_1_name') ): ?>
 		<p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
