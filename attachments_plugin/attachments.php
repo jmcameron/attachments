@@ -100,7 +100,14 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	// public function onContentPrepare($context, &$row, &$params, $page = 0)
 	public function onContentPrepare(Event $event)
 	{
-		[$context, $row, $params, $page] = $event->getArguments();
+		if (version_compare(JVERSION, '5', 'lt')) {
+			[$context, $row, $params, $page] = $event->getArguments();
+		} 
+		 else {
+			$context = $event['context'];
+			$row = $event['subject'];
+			$params = $event['params'];
+		}
 		// Enable the following four diagnostic lines to see if a component uses onContentPrepare
 		// $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
 		// if (isset($row->text)) $row->text .= $msg;
@@ -253,7 +260,14 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	 */
 	public function onContentBeforeDisplay(Event $event)
 	{
-		[$context, $row, $params, $page] = $event->getArguments();
+		if (version_compare(JVERSION, '5', 'lt')) {
+			[$context, $row, $params, $page] = $event->getArguments();
+		} 
+		 else {
+			$context = $event['context'];
+			$row = $event['subject'];
+			$params = $event['params'];
+		}
 		$input = $this->app->getInput();
 		$view = $input->getCmd('view');
 		$layout = $input->getCmd('layout');
