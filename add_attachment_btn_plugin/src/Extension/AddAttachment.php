@@ -20,6 +20,7 @@ use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -73,7 +74,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
         $button = $this->onDisplay($event->getEditorId());
 
         if ($button) {
-            $subject->add($button);
+            $subject->add(new Button($this->_name, $button->getProperties()));
         }
     }
 
@@ -84,7 +85,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
 	 * @param int $asset The asset ID for the entity being edited
 	 * @param int $author The ID of the author of the entity
 	 *
-	 * @return Button button
+	 * @return CMSObject button
 	 */
 	public function onDisplay($name)
 	{
@@ -191,21 +192,18 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
 
 		$link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
 		$link .= '&amp;editor=' . $editor;
-		
-		// Create the [Add Attachment] button object
-		$button = new Button(
-			$this->_name,
-			[
-				'action' => 'modal',
-				'text' => Text::_('ATTACH_ADD_ATTACHMENT'),
-				'name' => 'paperclip',
-				'link' => $link,
-				'icon' => 'attachment',
-				'iconSVG' => '<svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"/></svg>',
-				'options' => "{handler: 'iframe', size: {x: 920, y: 530}}"
-		
-			]
-		);
+
+		$button = new CMSObject();
+
+		// Finalize the [Add Attachment] button info
+		$button->modal = true;
+		$button->class = 'btn';
+		$button->text = Text::_('ATTACH_ADD_ATTACHMENT');
+		$button->name = 'paperclip';
+		$button->link = $link;
+		$button->icon = 'attachment';
+		$button->iconSVG = '<svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"/></svg>';
+		$button->options = "{handler: 'iframe', size: {x: 920, y: 530}}";
 
 		return $button;
 	}
