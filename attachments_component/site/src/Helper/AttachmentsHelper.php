@@ -1922,7 +1922,7 @@ class AttachmentsHelper
 			'libraries.html.bootstrap.modal.main', 
 			[
 				'selector' => 'modal-' . $randomId, 
-				'body' => "<iframe src=\"$url\" scrolling=\"no\" loading=\"lazy\"></iframe>",
+				'body' => "<iframe src=\"$url\" scrolling=\"yes\" loading=\"lazy\"></iframe>",
 				'params' => $modalParams
 			]
 		);
