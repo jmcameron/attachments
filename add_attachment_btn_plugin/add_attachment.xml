@@ -9,11 +9,13 @@
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
     <description>ATTACH_ADD_ATTACHMENT_BUTTON_PLUGIN_DESCRIPTION</description>
-
+    <namespace path="src">JMCameron\Plugin\EditorsXtd\AddAttachment</namespace>
     <files>
-	<filename plugin="add_attachment">add_attachment.php</filename>
-	<filename>index.html</filename>
-	<folder>language</folder>
+        <folder plugin="add_attachment">services</folder>
+	    <folder>src</folder>
     </files>
-
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_add_attachment.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_add_attachment.sys.ini</language>
+	</languages>
 </extension>
