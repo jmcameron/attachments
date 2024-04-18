@@ -162,11 +162,6 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 		{
 			$text_field_name = 'text';
 		}
-        
-        if (($view == 'article') AND ($layout == 'blog') AND ($parent_entity == 'article'))
-		{
-			$text_field_name = 'text';
-		}
 
 		return $text_field_name;
 	}

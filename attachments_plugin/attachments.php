@@ -130,14 +130,14 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 		if ( $parent_type == 'com_content' ) 
 		{
 			if (in_array($parent_entity, Array('featured', 'article'))) {
-				$parent_entity = 'article';
-			}
+				return false;
+				}
 			if ($parent_entity == 'category.title') {
 				// Do not add attachments to category titles (Joomla 3 only)
 				return false;
-			}
+				}
 
-			
+			$parent_entity = 'category';
 		}
 
 		$input = $this->app->getInput();
