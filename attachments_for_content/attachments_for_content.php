@@ -139,11 +139,13 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 
 		$text_field_name = parent::getTextFieldName($row, $parent_entity);
 
+		// The following isn't true any more?
+		//
 		// In the case of a blog, we know what text_field_name should be
-		if (isset($row->introtext) AND ($layout == 'blog'))
-		{
-			$text_field_name = 'introtext';
-		}
+		// if (isset($row->introtext) AND ($layout == 'blog'))
+		// {
+		// 	$text_field_name = 'introtext';
+		// }
 
 		// Featured also uses 'introtext'
 		if (isset($row->introtext) AND ($view == 'featured'))
