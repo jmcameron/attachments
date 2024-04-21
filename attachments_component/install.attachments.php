@@ -471,7 +471,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			->where($db->quoteName('element').' = '.$db->quote($extension_name));
 		$db->setQuery($query);
 		$ids = $db->loadRow();
-		if(count($ids) > 1) {
+		if(!is_null($ids) && count($ids) > 1) {
 			asort($ids);
 			$extension_id = array_shift($ids); // Keep the oldest id
 			
@@ -492,7 +492,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			  // ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
-		if(count($ids) > 1) {
+		if(!is_null($ids) && count($ids) > 1) {
 			asort($ids);
 			$asset_id = array_shift($ids); // Keep the oldest id
 			
