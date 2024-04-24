@@ -93,7 +93,7 @@ if ( $this->error )
 <div id="uploadAttachmentsPage">
 <h1><?php echo Text::sprintf('ATTACH_FOR_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) ?></h1>
 	<form class="attachments" enctype="multipart/form-data" name="upload_form"
-		  action="<?php echo $this->save_url; ?>" method="post">
+		  action="<?php echo $this->save_url . "&XDEBUG_SESSION_START=test" ?>" method="post">
 		<fieldset>
 			<legend><?php echo Text::_('ATTACH_UPLOAD_ATTACHMENT'); ?></legend>
 			<?php if ( $this->error_msg ): ?>
@@ -207,13 +207,17 @@ if ( $parent_id || ($parent_id === 0) ) {
 	$mvc = $app->bootComponent("com_attachments")
 		->getMVCFactory();
 	$controller = $mvc->createController('Attachments', 'Site', [], $app, $app->getInput());
-	$controller->displayString($parent_id, $attachment->parent_type, $attachment->parent_entity,
+	$controller->displayString($parent_id, $attachment->parent_type, $attachment->parent_type,
 							   'ATTACH_EXISTING_ATTACHMENTS',
 							   false, false, true, $this->from);
 	}
 
+$lang = '';
 echo "</div>";
-
+echo "<script type=\"text/javascript\">
+			console.log(\"refresh attachments\");
+			window.parent.refreshAttachments(\"$base_url\",\"$attachment->parent_type\",\"$attachment->parent_entity\",$parent_id,\"$lang\",\"$this->from\");
+	 </script>";
 if ( $this->error ) {
 	echo $this->endHTML();
 	}

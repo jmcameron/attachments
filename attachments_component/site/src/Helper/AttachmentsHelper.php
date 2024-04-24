@@ -620,8 +620,12 @@ class AttachmentsHelper
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
 		$cmparams = ComponentHelper::getParams('com_media');
 
-		// Check to make sure the extension is allowed
-		$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
+		// Check to make sure the extension is allowed in Joomla 5 it was renamed
+		if (version_compare(JVERSION, '5', 'lt')) {
+			$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
+		} else {
+			$allowable = explode( ',', $cmparams->get( 'upload_extensions' ) ?? '');
+		}
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ) ?? '');
 		$extension = StringHelper::strtolower(File::getExt($filename));
 		$error = false;
@@ -1881,7 +1885,7 @@ class AttachmentsHelper
 		AttachmentsJavascript::setupModalJavascript();
 
 		// Generate the HTML for a	button for the user to click to get to a form to add an attachment
-		$base = Uri::base(false) . "index.php?option=com_attachments&task=upload";
+		$base = Uri::base(false) . "index.php?option=com_attachments&task=upload&XDEBUG_SESSION_START=test";
 		if ( ($parent_type == 'com_content') && ($parent_entity == 'default') ) {
 			$url = $base . "&article_id=$parent_id&tmpl=component";
 			}
@@ -1922,7 +1926,7 @@ class AttachmentsHelper
 			'libraries.html.bootstrap.modal.main', 
 			[
 				'selector' => 'modal-' . $randomId, 
-				'body' => "<iframe src=\"$url\" scrolling=\"yes\" loading=\"lazy\"></iframe>",
+				'body' => "<iframe width=\"100%\" height=\"600\" src=\"$url\" scrolling=\"auto\" loading=\"lazy\"></iframe>",
 				'params' => $modalParams
 			]
 		);

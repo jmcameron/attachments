@@ -38,7 +38,11 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
             }
         })
         .then(html => {
-            alist.innerHTML = html;
+            if (alist) {
+                alist.innerHTML = html;
+            } else {
+                console.log("list is null for url" + url);
+            }
         })
         .catch(reason => console.log(reason));
 };

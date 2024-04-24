@@ -432,12 +432,11 @@ class DisplayController extends BaseController
 				}
 
 			// Close the iframe and refresh the attachments list in the parent window
-			$base_url = $uri->root(true);
+			$base_url = $uri->root(false);
 			$lang = $input->getCmd('lang', '');
 			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
-			exit();
-			}
-
+			$redirect_to = Route::_($uri->base(false) . "index.php?option=com_attachments&parent_type=". $parent_type . "&parent_id=" .$pid  . "&task=upload&tmpl=component&from=closeme&XDEBUG_SESSION_START=test", false);
+		}
 		$this->setRedirect( $redirect_to, $msg );
 	}
 
