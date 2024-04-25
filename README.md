@@ -12,7 +12,7 @@ Joomla 4.0+ compatible also with Joomla 5.0+
 
 ## Changes since 4.0 beta
 
-orrection for Blank page in popup after adding file #41
+correction for Blank page in popup after adding file #41
 Show attachments for blog articles issue #40
 Add scrollbar to iframes
 Fix modal not closing
