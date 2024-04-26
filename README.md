@@ -12,12 +12,12 @@ Joomla 4.0+ compatible also with Joomla 5.0+
 
 ## Changes since 4.0 beta
 
-correction for Blank page in popup after adding file #41
-Show attachments for blog articles issue #40
-Add scrollbar to iframes
-Fix modal not closing
-The Event::getArguments changed in Joomla 5
-Reorganize code to work with both joomla 4 and 5
+- correction for Blank page in popup after adding file #41
+- Show attachments for blog articles issue #40
+- Add scrollbar to iframes
+- Fix modal not closing
+- The Event::getArguments changed in Joomla 5
+- Reorganize code to work with both joomla 4 and 5
 
 ## Migration from attachments 3
 - make backup
