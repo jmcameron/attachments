@@ -620,12 +620,8 @@ class AttachmentsHelper
 		// Make sure the file type is okay (respect restrictions imposed by media manager)
 		$cmparams = ComponentHelper::getParams('com_media');
 
-		// Check to make sure the extension is allowed in Joomla 5 it was renamed
-		if (version_compare(JVERSION, '5', 'lt')) {
-			$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
-		} else {
-			$allowable = explode( ',', $cmparams->get( 'upload_extensions' ) ?? '');
-		}
+		// Check to make sure the extension is allowed
+		$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ) ?? '');
 		$extension = StringHelper::strtolower(File::getExt($filename));
 		$error = false;
