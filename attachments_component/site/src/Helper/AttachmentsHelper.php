@@ -1289,6 +1289,9 @@ class AttachmentsHelper
 		$app = Factory::getApplication();
 		$input = $app->getInput();
 
+		// The attachment doesn't reside on our system
+		$attachment->filename_sys = '';
+
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
