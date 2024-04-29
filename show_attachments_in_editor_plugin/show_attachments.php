@@ -159,7 +159,7 @@ class Plgsystemshow_attachments extends CMSPlugin implements SubscriberInterface
 			$Itemid = $input->getInt( 'Itemid', 1);
 			$from = 'editor';
 			$attachments = AttachmentsHelper::attachmentsListHTML($parent_id, $parent_type, $parent_entity,
-																  $user_can_add, $Itemid, $from, false, true);
+																  $user_can_add, $Itemid, $from, true, true);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ( $attachments == '' ) {
