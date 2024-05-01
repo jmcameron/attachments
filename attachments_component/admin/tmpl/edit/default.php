@@ -337,7 +337,7 @@ else
 <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 <input type="hidden" name="option" value="<?php echo $this->option;?>" />
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />
-<input type="hidden" name="task" value="attachment.edit" />
+<input type="hidden" name="task" value="attachment.save" />
 <?php if ( $this->in_popup ): ?>
 <div class="form_buttons" align="center">
 	<input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" value="<?php echo Text::_('ATTACH_SAVE'); ?>" />
