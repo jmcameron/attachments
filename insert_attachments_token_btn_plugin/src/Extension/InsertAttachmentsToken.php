@@ -11,13 +11,19 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Plugin\EditorsXtd\InsertAttachmentsToken\Extension;
+
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
@@ -31,7 +37,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @package Attachments
  */
-class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements SubscriberInterface
+class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
 {
 	/**
 	 * $db and $app are loaded on instantiation
@@ -53,11 +59,26 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 	 */
 	public static function getSubscribedEvents(): array
 	{
-		return [
-			'onDisplay' => 'onDisplay',
-		];
+		return ['onEditorButtonsSetup' => 'onEditorButtonsSetup'];
 	}
 
+    public function onEditorButtonsSetup(EditorButtonsSetupEvent $event)
+    {
+        $subject  = $event->getButtonsRegistry();
+        $disabled = $event->getDisabledButtons();
+
+        if (\in_array($this->_name, $disabled)) {
+            return;
+        }
+
+        $this->loadLanguage();
+
+        $button = $this->onDisplay($event->getEditorId());
+
+        if ($button) {
+            $subject->add(new Button($this->_name, $button->getProperties()));
+        }
+    }
 	/**
 	 * Insert attachments token button
 	 *
@@ -67,7 +88,7 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 	 *
 	 * @return a button
 	 */
-	public function onDisplay($name, $asset, $author)
+	public function onDisplay($name)
 	{
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
@@ -131,19 +152,18 @@ class PlgEditorsXtdInsert_attachments_token extends CMSPlugin implements Subscri
 			HTMLHelper::stylesheet('media/com_attachments/css/insert_attachments_token_button_rtl.css');
 			}
 
-		$button = new Registry();
-		$button->set('modal', false);
-		$button->set('class', 'btn');
-		$button->set('onclick', 'insertAttachmentsToken(\''.$name.'\');return false;');
-		$button->set('text', Text::_('ATTACH_ATTACHMENTS_TOKEN'));
-		$button->set('title', Text::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION'));
-
-		$button_name = 'paperclip';
-		$button->set('name', $button_name);
+		$button = new CMSObject();
+		$button->modal = false;
+		$button->class = 'btn';
+		$button->text = Text::_('ATTACH_ATTACHMENTS_TOKEN');
+		$button->name = 'paperclip';
+		$button->link = 'javascript:void(0)';
+		$button->icon = 'attachment';
+		$button->onclick = 'insertAttachmentsToken(\''.$name.'\');return false;';
+		$button->title = Text::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION');
 
 		// TODO: The button writer needs to take into account the javascript directive
 		// $button->set('link', 'javascript:void(0)');
-		$button->set('link', '#');
 
 		return $button;
 	}
