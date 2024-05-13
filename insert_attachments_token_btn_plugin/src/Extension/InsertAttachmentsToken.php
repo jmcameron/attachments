@@ -127,16 +127,17 @@ class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
 		// Set up the Javascript to insert the tag
 		$present = Text::_('ATTACH_ATTACHMENTS_TOKEN_ALREADY_PRESENT', true) ;
 		$js =  "
-			function insertAttachmentsToken(editor) {
-				var content = Joomla.editors.instances['$name'].getValue();
+			function insertAttachmentsToken(editorName) {
+				let editor = Joomla.editors.instances[editorName];
+				let content = editor.getValue();
 				if (content.match(/\{\s*attachments/i)) {
 					alert('$present');
 					return false;
 				} else {
-					jInsertEditorText('<span class=\"hide_attachments_token\">{attachments}</span>', editor);
-				}
+					editor.replaceSelection('<span class=\"hide_attachments_token\">{attachments}</span>');
 			}
-			";
+		}
+		";
 
 		$doc = $this->app->getDocument();
 
@@ -157,10 +158,11 @@ class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
 		$button->class = 'btn';
 		$button->text = Text::_('ATTACH_ATTACHMENTS_TOKEN');
 		$button->name = 'paperclip';
-		$button->link = 'javascript:void(0)';
+		$button->link = '#';
 		$button->icon = 'attachment';
 		$button->onclick = 'insertAttachmentsToken(\''.$name.'\');return false;';
-		$button->title = Text::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION');
+		//otherwise it shows the description as the button title making it huge
+		//$button->title = Text::_('ATTACH_ATTACHMENTS_TOKEN_DESCRIPTION');
 
 		// TODO: The button writer needs to take into account the javascript directive
 		// $button->set('link', 'javascript:void(0)');
