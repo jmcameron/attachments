@@ -840,7 +840,7 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 
 			// See if the options apply to this article
 			// $created_by = (int) $attachments[0]->created_by;
-			$catid		= is_array($attachments) ? (int) $attachments[0]->catid : 0;
+			$catid		= !empty($attachments) ? (int) $attachments[0]->catid : 0;
 
 			// First, check to see whether the attachments should be hidden for this parent
 			$hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', Array());
