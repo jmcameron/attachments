@@ -1,4 +1,4 @@
-VERSION = "4.0.1"
+VERSION = "4.0.2"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
 
@@ -68,7 +68,7 @@ veryclean: clean
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
-	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec ./fixvd {} \;
+	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec  ./fixvd {} \;
 
 revertversions:
 	@echo "Reverting all install xml files"
