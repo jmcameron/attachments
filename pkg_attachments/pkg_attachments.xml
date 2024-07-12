@@ -27,7 +27,8 @@
     </files>
 
     <updateservers>
-       <server type="extension" priority="1" name="Attachments Updates">http://jmcameron.net/attachments/updates/updates.xml</server>
+       <server type="extension" priority="1" name="Attachments Updates">https://raw.githubusercontent.com/jmcameron/attachments/master/pkg_attachments/update_pkg.xml</server>
     </updateservers>
+
 
 </extension>
