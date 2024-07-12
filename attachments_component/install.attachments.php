@@ -333,7 +333,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 		// Add warning message about how to uninstall properly
 		$emphasis = 'font-size: 125%; font-weight: bold;';
 		$padding = 'padding: 0.5em 0;';
-		$pkg_name = Text::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS');
+		$pkg_name = Text::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_40PLUS');
 		$pkg_uninstall = Text::sprintf('ATTACH_PACKAGE_NOTICE_UNINSTALL_PACKAGE_S', $pkg_name);
 		$app->enqueueMessage("<div style=\"$emphasis $padding\">$pkg_uninstall</div>", 'notice');
 		
