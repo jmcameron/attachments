@@ -84,6 +84,16 @@ if ( $attachment->parent_title ) {
 	}
 
 ?>
+
+<script type="text/javascript">
+	Joomla.submitbutton = function(task)
+	{
+		if (document.formvalidator.isValid(document.getElementById('adminForm')))
+		{
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		}
+	}
+</script>
 <form class="attachmentsBackend" enctype="multipart/form-data"
 	  name="adminForm" id="adminForm"
 	  action="<?php echo $this->save_url; ?>" method="post">
