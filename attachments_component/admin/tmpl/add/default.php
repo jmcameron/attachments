@@ -83,6 +83,8 @@ if ( $attachment->parent_title ) {
 	echo "<h1>" . Text::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
 	}
 
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->useScript('form.validate');
 ?>
 
 <script type="text/javascript">
@@ -229,9 +231,7 @@ if ( $attachment->parent_title ) {
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<?php if ( $this->from == 'closeme' ): ?>
 	<div class="form_buttons" align="center">
-	   <input type="submit" name="Submit" class="button"
-			  onclick="javascript: submitbutton('attachment.saveNew')"
-			  value="<?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>" />
+		<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('attachment.saveNew')"><?php echo Text::_('ATTACH_UPLOAD_VERB'); ?></button>
 	   <span class="right">
 		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
