@@ -174,7 +174,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			else {
 				$url = $base_url . $attachment->url;
 				if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
-					$url = utf8_encode($url);
+					// $url = utf8_encode($url); Deprecated from php 8.2
+                    $url = iconv('ISO-8859-1', 'UTF-8', $url);
 					}
 				}
 			$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);

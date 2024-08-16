@@ -156,13 +156,12 @@ class AttachmentsController extends AdminController
 		$cid = $input->get('cid', array(), 'array');
 		$deleted_ids = Array();
 
+        /** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
+        $model		= $this->getModel('Attachment');
+        $attachment = $model->getTable();
+
 		if (count($cid))
 		{
-			/** @var \JMCameron\Component\Attachments\Administrator\Model\AttachmentModel $model */
-			$model		= $this->getModel('Attachment');
-			$attachment = $model->getTable();
-
-
 			// Loop through the attachments and delete them one-by-one
 			foreach ($cid as $attachment_id)
 			{

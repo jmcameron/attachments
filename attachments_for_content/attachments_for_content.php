@@ -496,14 +496,13 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 				}
 
 				$now	  = Factory::getDate()->toUnix();
-				$nullDate = Factory::getDate($db->getNullDate())->toUnix();
 
 				if ($article)
 				{
-					$publish_up	  = Factory::getDate($article->publish_up)->toUnix();
-					$publish_down = Factory::getDate($article->publish_down)->toUnix();
+					$publish_up	  = $article->publish_up? Factory::getDate($article->publish_up)->toUnix() : null;
+					$publish_down = $article->publish_down? Factory::getDate($article->publish_down)->toUnix() : null;
 
-					$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down == $nullDate) || ($now <= $publish_down)));
+					$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down === null) || ($now <= $publish_down)));
 				}
 				else
 				{
@@ -593,11 +592,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 			if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE'))
 			{
 				$now	  = Factory::getDate()->toSql();
-				$nullDate = $db->getNullDate();
 				$where[]  = "EXISTS (SELECT * FROM #__content AS c1 " .
 					"WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND " .
-					'(c1.publish_up = ' . $db->quote($nullDate) . ' OR c1.publish_up <= ' . $db->quote($now) . ') AND ' .
-					'(c1.publish_down = ' . $db->quote($nullDate) . ' OR c1.publish_down >= ' . $db->quote($now) . ')))';
+					'(c1.publish_up IS null OR c1.publish_up <= ' . $db->quote($now) . ') AND ' .
+					'(c1.publish_down IS null OR c1.publish_down >= ' . $db->quote($now) . ')))';
 			}
 
 			if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY'))
