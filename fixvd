@@ -4,6 +4,8 @@
 $v = $ENV{ATVERS};
 die "Must specify version number by setting version with environment ATVERS" unless $v;
 
+
+
 # Get the release date
 use POSIX qw(strftime);
 $d = $ENV{ATDATE};
@@ -11,10 +13,13 @@ if ($d eq '') {
     $d = strftime("%B %e, %Y", (localtime));
 }
 
+print "fixvd $ARGV[0] with version :$v date:$d\n";
+
 while (<>) {
     s|^([ \t]+<version>)[^<]+</version>|\1$v</version>|;
     s|^([ \t]+<creationDate>)[^<]+</creationDate>|\1$d</creationDate>|;
     s|^([ \t]+public static[ \t]+\$ATTACHMENTS_VERSION[ \t]+=[ \t]+)'[^\']+'|\1'$v'|;
     s|^([ \t]+public static[ \t]+\$ATTACHMENTS_VERSION_DATE[ \t]+=[ \t]+)'[^\']+'|\1'$d'|;
     s|^\*\*Version .+ - [^\*]+[0-9]+\*\*$|**Version $v - $d**|;
+    s|v\d\.\d\.\d/attachments-\d\.\d\.\d\.|v$v\/attachments\-$v\.|;
     print;}

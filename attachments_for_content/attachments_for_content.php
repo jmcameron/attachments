@@ -139,11 +139,13 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 
 		$text_field_name = parent::getTextFieldName($row, $parent_entity);
 
+		// The following isn't true any more?
+		//
 		// In the case of a blog, we know what text_field_name should be
-		if (isset($row->introtext) AND ($layout == 'blog'))
-		{
-			$text_field_name = 'introtext';
-		}
+		// if (isset($row->introtext) AND ($layout == 'blog'))
+		// {
+		// 	$text_field_name = 'introtext';
+		// }
 
 		// Featured also uses 'introtext'
 		if (isset($row->introtext) AND ($view == 'featured'))
@@ -494,12 +496,12 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 				}
 
 				$now	  = Factory::getDate()->toUnix();
-				$nullDate = null;
+				$nullDate = Factory::getDate($db->getNullDate())->toUnix();
 
 				if ($article)
 				{
 					$publish_up	  = Factory::getDate($article->publish_up)->toUnix();
-                    $publish_down = $article->publish_down? Factory::getDate($article->publish_down)->toUnix():null;
+					$publish_down = Factory::getDate($article->publish_down)->toUnix();
 
 					$published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down == $nullDate) || ($now <= $publish_down)));
 				}
@@ -837,18 +839,12 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 			}
 
 			// See if the options apply to this article
-            if(count($attachments))
-            {
-                $created_by = (int)$attachments[0]->created_by;
-                $catid = (int)$attachments[0]->catid;
-            }else{
-                $created_by = 0;
-                $catid = 0;
-            }
+			// $created_by = (int) $attachments[0]->created_by;
+			$catid		= !empty($attachments) ? (int) $attachments[0]->catid : 0;
 
 			// First, check to see whether the attachments should be hidden for this parent
 			$hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', Array());
-			if (in_array($catid, $hide_attachments_for_categories) && $catid)
+			if (in_array($catid, $hide_attachments_for_categories))
 			{
 				return true;
 			}

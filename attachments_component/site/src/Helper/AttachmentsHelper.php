@@ -1289,6 +1289,9 @@ class AttachmentsHelper
 		$app = Factory::getApplication();
 		$input = $app->getInput();
 
+		// The attachment doesn't reside on our system
+		$attachment->filename_sys = '';
+
 		// Get the component parameters
 		$params = ComponentHelper::getParams('com_attachments');
 
@@ -1922,7 +1925,7 @@ class AttachmentsHelper
 			'libraries.html.bootstrap.modal.main', 
 			[
 				'selector' => 'modal-' . $randomId, 
-				'body' => "<iframe src=\"$url\" scrolling=\"no\" loading=\"lazy\"></iframe>",
+				'body' => "<iframe width=\"100%\" height=\"600\" src=\"$url\" scrolling=\"auto\" loading=\"lazy\"></iframe>",
 				'params' => $modalParams
 			]
 		);

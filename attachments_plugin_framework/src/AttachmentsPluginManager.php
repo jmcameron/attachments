@@ -192,11 +192,8 @@ class AttachmentsPluginManager
 
 		$lang = Factory::getApplication()->getLanguage();
 
-		Log::add("AttachmentsPluginManager loading language...");
-
 		$this->language_loaded = $lang->load('plg_attachments_plugin_framework', JPATH_PLUGINS . '/attachments/framework');
 
-		Log::add("AttachmentsPluginManager language loaded: " . ($this->language_loaded ? "yes" : "no"));
 		return $this->language_loaded;
 	}
 

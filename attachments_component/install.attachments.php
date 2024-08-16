@@ -333,7 +333,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 		// Add warning message about how to uninstall properly
 		$emphasis = 'font-size: 125%; font-weight: bold;';
 		$padding = 'padding: 0.5em 0;';
-		$pkg_name = Text::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_16PLUS');
+		$pkg_name = Text::_('ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_40PLUS');
 		$pkg_uninstall = Text::sprintf('ATTACH_PACKAGE_NOTICE_UNINSTALL_PACKAGE_S', $pkg_name);
 		$app->enqueueMessage("<div style=\"$emphasis $padding\">$pkg_uninstall</div>", 'notice');
 		
@@ -471,7 +471,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			->where($db->quoteName('element').' = '.$db->quote($extension_name));
 		$db->setQuery($query);
 		$ids = $db->loadRow();
-		if(count($ids) > 1) {
+		if(!is_null($ids) && count($ids) > 1) {
 			asort($ids);
 			$extension_id = array_shift($ids); // Keep the oldest id
 			
@@ -492,7 +492,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 			  // ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
-		if(count($ids) > 1) {
+		if(!is_null($ids) && count($ids) > 1) {
 			asort($ids);
 			$asset_id = array_shift($ids); // Keep the oldest id
 			

@@ -11,9 +11,13 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Plugin\EditorsXtd\AddAttachment\Extension;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Editor\Button\Button;
+use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
@@ -21,7 +25,6 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 
 // no direct access
@@ -32,7 +35,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @package Attachments
  */
-class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterface
+class AddAttachment extends CMSPlugin implements SubscriberInterface
 {
 	/**
 	 * $db and $app are loaded on instantiation
@@ -54,10 +57,26 @@ class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterfa
 	 */
 	public static function getSubscribedEvents(): array
 	{
-		return [
-			'onDisplay' => 'onDisplay',
-		];
+		return ['onEditorButtonsSetup' => 'onEditorButtonsSetup'];
 	}
+
+    public function onEditorButtonsSetup(EditorButtonsSetupEvent $event)
+    {
+        $subject  = $event->getButtonsRegistry();
+        $disabled = $event->getDisabledButtons();
+
+        if (\in_array($this->_name, $disabled)) {
+            return;
+        }
+
+        $this->loadLanguage();
+
+        $button = $this->onDisplay($event->getEditorId());
+
+        if ($button) {
+            $subject->add(new Button($this->_name, $button->getProperties()));
+        }
+    }
 
 	/**
 	 * Add Attachment button
@@ -66,9 +85,9 @@ class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterfa
 	 * @param int $asset The asset ID for the entity being edited
 	 * @param int $author The ID of the author of the entity
 	 *
-	 * @return a button
+	 * @return CMSObject button
 	 */
-	public function onDisplay($name, $asset, $author)
+	public function onDisplay($name)
 	{
 		$input = $this->app->getInput();
 
@@ -171,11 +190,10 @@ class plgEditorsXtdAdd_attachment extends CMSPlugin implements SubscriberInterfa
 		// Load the language file from the frontend
 		$lang->load('com_attachments', JPATH_ADMINISTRATOR.'/components/com_attachments');
 
-		// Create the [Add Attachment] button object
-		$button = new CMSObject();
-
 		$link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
 		$link .= '&amp;editor=' . $editor;
+
+		$button = new CMSObject();
 
 		// Finalize the [Add Attachment] button info
 		$button->modal = true;

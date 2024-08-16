@@ -199,6 +199,11 @@ class AttachmentTable extends Table
 		$this->user_field_2 = $this->_db->escape($this->user_field_2);
 		$this->user_field_3 = $this->_db->escape($this->user_field_3);
 
+		// Change boolean values to numeric
+		$this->url_valid = $this->url_valid ? 1 : 0;
+		$this->url_relative = $this->url_relative ? 1 : 0;
+		$this->url_verify = $this->url_verify ? 1 : 0;
+
 		// Let the parent class do the real work!
 		return parent::store($updateNulls);
 	}
