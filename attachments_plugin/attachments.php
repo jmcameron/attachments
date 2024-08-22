@@ -49,7 +49,7 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	 * $db and $app are loaded on instantiation
 	 */
 	protected ?DatabaseDriver $db = null;
-	protected ?CMSApplication $app = null;
+	protected $app = null;
 
 	/**
 	 * Load the language file on instantiation
@@ -69,6 +69,9 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
+
+		// Check if the plugin is loaded from the cli
+		if (\Joomla\CMS\Factory::getApplication()->isClient('cli')) return;
 
 		// Save this page's URL
 		$uri= Uri::getInstance();
