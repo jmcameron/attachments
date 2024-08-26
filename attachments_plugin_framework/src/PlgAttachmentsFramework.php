@@ -60,7 +60,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	 * $db and $app are loaded on instantiation
 	 */
 	protected ?DatabaseDriver $db = null;
-	protected ?CMSApplication $app = null;
+	protected $app = null;
 
 	/**
 	 * Load the language file on instantiation
