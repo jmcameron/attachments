@@ -639,9 +639,7 @@ class AttachmentsHelper
 		if ( $cmparams->get('restrict_uploads',true) ) {
 			if ( $cmparams->get('check_mime', true) ) {
 				$allowed_mime = explode(',', $cmparams->get('upload_mime'));
-				$illegal_mime = explode(',', $cmparams->get('upload_mime_illegal'));
-				if ( StringHelper::strlen($ftype) && !in_array($ftype, $allowed_mime) &&
-					 in_array($ftype, $illegal_mime) ) {
+				if ( StringHelper::strlen($ftype) && !in_array($ftype, $allowed_mime)) {
 					$error = 'illegal_mime_type';
 					$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 					$error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
