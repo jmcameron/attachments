@@ -25,8 +25,9 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
+                $dispatcher = $container->get(DispatcherInterface::class);
                 $plugin     = new AddAttachment(
-                    $container->get(DispatcherInterface::class),
+                    $dispatcher,
                     (array) PluginHelper::getPlugin('editors-xtd', 'add_attachment')
                 );
                 $plugin->setApplication(Factory::getApplication());
