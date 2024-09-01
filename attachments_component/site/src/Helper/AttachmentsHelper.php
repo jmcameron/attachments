@@ -622,6 +622,10 @@ class AttachmentsHelper
 
 		// Check to make sure the extension is allowed
 		$allowable = explode( ',', $cmparams->get( 'restrict_uploads_extensions' ) ?? '');
+		$no_extensions_allowed = false;
+		if (count($allowable) === 1 && $allowable[0] === "") {
+			$no_extensions_allowed = true;
+		}
 		$ignored = explode(',', $cmparams->get( 'ignore_extensions' ) ?? '');
 		$extension = StringHelper::strtolower(File::getExt($filename));
 		$error = false;
@@ -630,6 +634,9 @@ class AttachmentsHelper
 			$error = 'illegal_file_extension';
 			$error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
 			$error_msg .= "<br />" . Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " $extension";
+			if ($no_extensions_allowed) {
+				$error_msg .= "<br />" . Text::_('ATTACH_ERROR_NO_EXTENSIONS_ALLOWED_HINT');
+			}
 			if ($user->authorise('core.admin')) {
 				$error_msg .= "<br />" . Text::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
 				}
