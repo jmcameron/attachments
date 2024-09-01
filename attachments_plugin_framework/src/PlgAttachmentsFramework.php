@@ -133,6 +133,16 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 	private $com_attachments_params = null;
 
 	/**
+	 * True if it is an attachment to a newly created (not saved) content
+	 */
+	public bool $new = false;
+
+	/**
+	 * Parent title
+	 */
+	public string $title = "";
+	
+	/**
 	 * Constructor
 	 *
 	 * @param	object	&$subject  The object to observe

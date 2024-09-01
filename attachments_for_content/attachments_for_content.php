@@ -37,8 +37,6 @@ if (!PluginHelper::importPlugin('attachments', 'framework'))
  * @package	 Attachments
  * @since	 3.0
  */
-
-#[AllowDynamicProperties]
 class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
 {
 	/**
