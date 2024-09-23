@@ -96,7 +96,7 @@ $wa->useScript('form.validate');
 		}
 	}
 </script>
-<form class="attachmentsBackend" enctype="multipart/form-data"
+<form class="attachmentsBackend form-validate" enctype="multipart/form-data"
 	  name="adminForm" id="adminForm"
 	  action="<?php echo $this->save_url; ?>" method="post">
 	<fieldset class="adminform">
@@ -233,7 +233,7 @@ $wa->useScript('form.validate');
 	<div class="form_buttons" align="center">
 		<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('attachment.saveNew')"><?php echo Text::_('ATTACH_UPLOAD_VERB'); ?></button>
 	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
+		  <input  class="btn btn-primary" type="button" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
 	   </span>
 	</div>
