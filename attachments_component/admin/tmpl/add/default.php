@@ -83,8 +83,20 @@ if ( $attachment->parent_title ) {
 	echo "<h1>" . Text::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
 	}
 
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->useScript('form.validate');
 ?>
-<form class="attachmentsBackend" enctype="multipart/form-data"
+
+<script type="text/javascript">
+	Joomla.submitbutton = function(task)
+	{
+		if (document.formvalidator.isValid(document.getElementById('adminForm')))
+		{
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		}
+	}
+</script>
+<form class="attachmentsBackend form-validate" enctype="multipart/form-data"
 	  name="adminForm" id="adminForm"
 	  action="<?php echo $this->save_url; ?>" method="post">
 	<fieldset class="adminform">
@@ -219,11 +231,9 @@ if ( $attachment->parent_title ) {
 	<input type="hidden" name="from" value="<?php echo $this->from; ?>" />
 	<?php if ( $this->from == 'closeme' ): ?>
 	<div class="form_buttons" align="center">
-	   <input type="submit" name="Submit" class="button"
-			  onclick="javascript: submitbutton('attachment.saveNew')"
-			  value="<?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>" />
+		<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('attachment.saveNew')"><?php echo Text::_('ATTACH_UPLOAD_VERB'); ?></button>
 	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
+		  <input  class="btn btn-primary" type="button" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
 				 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
 	   </span>
 	</div>
