@@ -380,7 +380,14 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
 	 */
 	function onContentAfterSave(Event $event)
 	{
-		[$context, $item, $isNew] = $event->getArguments();
+		if (version_compare(JVERSION, '5', 'lt')) {
+			[$context, $item, $isNew] = $event->getArguments();
+		} else {
+			$context = $event->getArgument('context');
+			$item = $event->getArgument('subject');
+			$isNew = $event->getArgument('isNew');
+		}
+		
 		if ( !$isNew ) {
 			// If the item is not new, this step is not needed
 			return true;
