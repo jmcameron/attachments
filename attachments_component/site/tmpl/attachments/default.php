@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -172,7 +173,12 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				$url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
 				}
 			else {
-				$url = $base_url . $attachment->url;
+				// We need to urlencode the filename
+				$offset = strlen(AttachmentsDefines::$ATTACHMENTS_SUBDIR."/{$attachment->parent_entity}/{$attachment->parent_id}/");
+				$url_path = mb_strcut($attachment->url, 0, $offset);
+				$url_filename = rawurlencode(mb_strcut($attachment->url, $offset));
+				$url = $base_url . $url_path . $url_filename;
+
 				if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
 					// $url = utf8_encode($url); Deprecated from php 8.2
                     $url = iconv('ISO-8859-1', 'UTF-8', $url);
