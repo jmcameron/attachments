@@ -168,7 +168,9 @@
        <filename>css/add_attachment_button.css</filename>
        <filename>css/add_attachment_button_rtl.css</filename>
        <filename>css/attachments_admin.css</filename>
+       <filename>css/attachments_admin_dark.css</filename>
        <filename>css/attachments_admin_form.css</filename>
+       <filename>css/attachments_admin_form_dark.css</filename>
        <filename>css/attachments_admin_form_rtl.css</filename>
        <filename>css/attachments_admin_rtl.css</filename>
        <filename>css/attachments_admin_utils.css</filename>

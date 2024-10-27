@@ -44,6 +44,9 @@ class HtmlView extends BaseHtmlView
 	{
 		// Add the style sheets
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css');
+		if (version_compare(JVERSION, '5', 'ge')) {
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_dark.css');
+		}
 		$lang = Factory::getApplication()->getLanguage();
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');

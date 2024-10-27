@@ -10,29 +10,26 @@ form.attachmentsBackend * {
 }
 
 form.attachmentsBackend,
-form#adminForm 
-{
+form#adminForm {
 	font-size: 1.2em;
 }
 
 form.attachmentsBackend th,
-form#adminForm th
-{
+form#adminForm th {
 	font-size: 1em;
 }
 
 
 form.attachmentsBackend div.right,
 form#adminForm div.right {
-    display: inline-block;
-    float: right;
-    padding-right: 10px;
+	display: inline-block;
+	float: right;
+	padding-right: 10px;
 }
 
 
 /* for Joomla 3.x */
-div.container-fluid form#adminForm 
-{
+div.container-fluid form#adminForm {
 	font-size: 1em;
 }
 
@@ -46,7 +43,7 @@ form#adminForm div.attachments_filter label.filter-search-lbl {
 	font-size: 100%;
 }
 
-form#adminForm div.attachments_filter { 
+form#adminForm div.attachments_filter {
 	padding: 0 0 2px 6px;
 	margin: 0 0 6px 0;
 }
@@ -58,96 +55,169 @@ form#adminForm button#reset_order {
 form#adminForm div.attachments_filter table,
 form#adminForm div.attachments_filter tbody,
 form#adminForm div.attachments_filter tr,
-form#adminForm div.attachments_filter td { 
+form#adminForm div.attachments_filter td {
 	padding: 0;
 	margin: 0;
 }
 
-form#adminForm div.attachments_filter td { 
+form#adminForm div.attachments_filter td {
 	vertical-align: middle;
 }
 
 form#adminForm div.attachments_filter td select,
 form#adminForm div.attachments_filter td option,
-form#adminForm div.attachments_filter td input { 
+form#adminForm div.attachments_filter td input {
 	vertical-align: middle;
 	padding: 0;
 	margin: 0;
 }
 
-form#adminForm div.attachments_filter td select { 
-        height: 1.6em;
+form#adminForm div.attachments_filter td select {
+	height: 1.6em;
 }
 
 form#adminForm input[type=checkbox] {
 	vertical-align: middle;
 }
 
-table.adminlist th { 
+table.adminlist th {
 	text-align: left;
-	border-bottom: 0; 
+	border-bottom: 0;
 	padding: 4px 0 4px 8px;
 }
-table.adminlist th.at_checked { 
-    padding: 0;
-    text-align: center; 
-    width: 20px; 
-}
-table.adminlist th.at_published	   { text-align: center; }
-table.adminlist th.at_filename	   { text-align: left; }
-table.adminlist th.at_description  { text-align: left; }
-table.adminlist th.at_access	   { text-align: center; }
-table.adminlist th.at_user_field   { text-align: left; }
-table.adminlist th.at_file_type	   { text-align: center; }
-table.adminlist th.at_file_size	   { text-align: center; }
-table.adminlist th.at_creator_name { text-align: left; }
-table.adminlist th.at_created_date { text-align: left; }
-table.adminlist th.at_mod_date	   { text-align: left; }
-table.adminlist th.at_downloads	   { text-align: center; }
 
-table.adminlist td { 
+table.adminlist th.at_checked {
+	padding: 0;
+	text-align: center;
+	width: 20px;
+}
+
+table.adminlist th.at_published {
+	text-align: center;
+}
+
+table.adminlist th.at_filename {
 	text-align: left;
-	border-bottom: 0; 
+}
+
+table.adminlist th.at_description {
+	text-align: left;
+}
+
+table.adminlist th.at_access {
+	text-align: center;
+}
+
+table.adminlist th.at_user_field {
+	text-align: left;
+}
+
+table.adminlist th.at_file_type {
+	text-align: center;
+}
+
+table.adminlist th.at_file_size {
+	text-align: center;
+}
+
+table.adminlist th.at_creator_name {
+	text-align: left;
+}
+
+table.adminlist th.at_created_date {
+	text-align: left;
+}
+
+table.adminlist th.at_mod_date {
+	text-align: left;
+}
+
+table.adminlist th.at_downloads {
+	text-align: center;
+}
+
+table.adminlist td {
+	text-align: left;
+	border-bottom: 0;
 }
 
 table.adminlist img#link {
 	margin-left: -16px;
 }
 
-table.adminlist td.at_filename { 
-	text-align: left; 
+table.adminlist td.at_filename {
+	text-align: left;
 	padding: 4px 0 4px 8px;
 }
 
-table.adminlist td.at_filename { 
-	font-size: 120%; 
+table.adminlist td.at_filename {
+	font-size: 120%;
 }
 
-div.container-fluid table.adminlist td.at_filename { 
+div.container-fluid table.adminlist td.at_filename {
 	font-size: 100%;
 }
 
 
-table.adminlist td.at_filename a img { 
-	vertical-align: top; 
+table.adminlist td.at_filename a img {
+	vertical-align: top;
 }
 
-table.adminlist td.at_checked { 
-    text-align: center; 
-    width: 20px; 
-    padding: 0;
+table.adminlist td.at_checked {
+	text-align: center;
+	width: 20px;
+	padding: 0;
 }
 
-table.adminlist td.at_published	   { text-align: center; padding: 4px 0 4px 8px;}
-table.adminlist td.at_description  { text-align: left;   padding: 4px 0 4px 8px;}
-table.adminlist td.at_access	   { text-align: center; padding: 4px 0 4px 8px;}
-table.adminlist td.at_user_field   { text-align: left;   padding: 4px 0 4px 8px;}
-table.adminlist td.at_file_type	   { text-align: center; padding: 4px 0 4px 8px;}
-table.adminlist td.at_file_size	   { text-align: center; padding: 4px 0 4px 8px;}
-table.adminlist td.at_creator_name { text-align: left;   padding: 4px 0 4px 8px;}
-table.adminlist td.at_created_date { text-align: left;   padding: 4px 0 4px 8px;}
-table.adminlist td.at_mod_date	   { text-align: left;   padding: 4px 0 4px 8px;}
-table.adminlist td.at_downloads	   { text-align: center; padding: 4px 0 4px 8px;}
+table.adminlist td.at_published {
+	text-align: center;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_description {
+	text-align: left;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_access {
+	text-align: center;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_user_field {
+	text-align: left;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_file_type {
+	text-align: center;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_file_size {
+	text-align: center;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_creator_name {
+	text-align: left;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_created_date {
+	text-align: left;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_mod_date {
+	text-align: left;
+	padding: 4px 0 4px 8px;
+}
+
+table.adminlist td.at_downloads {
+	text-align: center;
+	padding: 4px 0 4px 8px;
+}
 
 table.adminlist td.at_parentsep {
 	height: 0.8em;
@@ -158,7 +228,7 @@ table.adminlist td.at_parentsep {
 }
 
 table.adminlist tr.row1 {
-    background-color: #F0F0F0;
+	background-color: #F0F0F0;
 }
 
 span.error {
@@ -168,40 +238,72 @@ span.error {
 }
 
 
-table.adminlist td.showlinks a { 
+table.adminlist td.showlinks a {
 	font-size: 110%;
 	font-weight: bold;
-	text-align: center; 
+	text-align: center;
 }
 
 
 
 /* For the link to download a file */
 
-a.downloadAttach  {
+a.downloadAttach {
 	margin-left: 0px;
 	font-size: 80%;
-	color : #F00; 
-	text-decoration: none; 
+	color: #F00;
+	text-decoration: none;
 }
-a.downloadAttach:link	 { color : #F00; text-decoration: none; }
-a.downloadAttach:visited { color : #F00; text-decoration: none; }
-a.downloadAttach:hover	 { color : #F00; text-decoration: underline; }
-a.downloadAttach:active	 { color : #F00; text-decoration: none; }
+
+a.downloadAttach:link {
+	color: #F00;
+	text-decoration: none;
+}
+
+a.downloadAttach:visited {
+	color: #F00;
+	text-decoration: none;
+}
+
+a.downloadAttach:hover {
+	color: #F00;
+	text-decoration: underline;
+}
+
+a.downloadAttach:active {
+	color: #F00;
+	text-decoration: none;
+}
 
 
 
 /* For the link to add another attachment to an parent */
 
-a.addAttach	  { 
+a.addAttach {
 	font-weight: normal;
 	color: #F00;
 	text-decoration: none;
 }
-a.addAttach:link	{ color : #F00; text-decoration: none; }
-a.addAttach:visited { color : #F00; text-decoration: none; } 
-a.addAttach:hover	{ color : #F00; text-decoration: underline; }
-a.addAttach:active	{ color : #F00; text-decoration: none; } 
+
+a.addAttach:link {
+	color: #F00;
+	text-decoration: none;
+}
+
+a.addAttach:visited {
+	color: #F00;
+	text-decoration: none;
+}
+
+a.addAttach:hover {
+	color: #F00;
+	text-decoration: underline;
+}
+
+a.addAttach:active {
+	color: #F00;
+	text-decoration: none;
+}
 
 a.addAttach img {
 	vertical-align: text-bottom;
@@ -227,14 +329,30 @@ div.attachmentsAdmin h2 {
 	font-weight: bold;
 }
 
-div.attachmentsAdmin li a	  { padding: 2px; }
-div.attachmentsAdmin li a:link	  { color: #0000FF; text-decoration: none; }
-div.attachmentsAdmin li a:hover	  { 
-	color: #0000FF; text-decoration: none; 
+div.attachmentsAdmin li a {
+	padding: 2px;
+}
+
+div.attachmentsAdmin li a:link {
+	color: #0000FF;
+	text-decoration: none;
+}
+
+div.attachmentsAdmin li a:hover {
+	color: #0000FF;
+	text-decoration: none;
 	background-color: #DDDDDD;
-	}
-div.attachmentsAdmin li a:visited { color: #0000FF; text-decoration: none; }
-div.attachmentsAdmin li a:active  { color: #0000FF; text-decoration: none; }
+}
+
+div.attachmentsAdmin li a:visited {
+	color: #0000FF;
+	text-decoration: none;
+}
+
+div.attachmentsAdmin li a:active {
+	color: #0000FF;
+	text-decoration: none;
+}
 
 div#componentVersion {
 	font-style: italic;
@@ -253,19 +371,36 @@ td#key_article {
 	padding-bottom: 8px;
 }
 
-a.changeButton	{
+a.changeButton {
 	padding: 1px 4px 1px 4px;
 	margin-left: 12px;
 	font-size: 95%;
-	color : #333333;
+	color: #333333;
 	text-decoration: none;
 	background-color: #CCCCCC;
 	border: 1px solid #888888;
 }
-a.changeButton:link	   { color : #333333; text-decoration: none; }
-a.changeButton:visited { color : #333333; text-decoration: none; }
-a.changeButton:hover   { color : #333333; text-decoration: none; background-color: #DDDDDD; }
-a.changeButton:active  { color : #333333; text-decoration: none; }
+
+a.changeButton:link {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.changeButton:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.changeButton:hover {
+	color: #333333;
+	text-decoration: none;
+	background-color: #DDDDDD;
+}
+
+a.changeButton:active {
+	color: #333333;
+	text-decoration: none;
+}
 
 a.modal-button {
 	padding-top: 1px;
@@ -278,10 +413,26 @@ a.modal-button {
 	font-weight: bold;
 }
 
-a.modal-button:link    { color: #333333; text-decoration: none; }
-a.modal-button:hover   { color: #333333; text-decoration: none; background-color: #DDDDDD; }
-a.modal-button:visited { color: #333333; text-decoration: none; }
-a.modal-button:active  { color: #333333; text-decoration: none; }
+a.modal-button:link {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.modal-button:hover {
+	color: #333333;
+	text-decoration: none;
+	background-color: #DDDDDD;
+}
+
+a.modal-button:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.modal-button:active {
+	color: #333333;
+	text-decoration: none;
+}
 
 
 /* For the upload attachment form */
@@ -291,14 +442,13 @@ form.attachmentsBackend {
 }
 
 form.attachmentsBackend fieldset,
-form.attachmentsBackend td > fieldset.radio {
+form.attachmentsBackend td>fieldset.radio {
 	margin: 0;
 }
 
 form.attachmentsBackend fieldset.adminform table.admintable td label,
 form.attachmentsBackend fieldset.adminform table.admintable td input[type="radio"],
-form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"]
-{
+form.attachmentsBackend fieldset.adminform table.admintable td input[type="checkbox"] {
 	float: none;
 	padding: 0;
 	margin: 0 0 0 0.5em;
@@ -310,7 +460,6 @@ form.attachmentsBackend fieldset.adminform table.admintable tr {
 }
 
 form.attachmentsBackend fieldset.adminform table.admintable td select.inputbox {
-	background-color: #DDD;
 	margin: 0 8px 0 1px;
 }
 
@@ -341,7 +490,7 @@ form.attachmentsBackend legend {
 form.attachmentsBackend input {
 	float: none;
 	border: 1px solid #888;
-	color : #333333;
+	color: #333333;
 	background-color: #CCC;
 	margin: 2px;
 }
@@ -356,20 +505,19 @@ form.attachmentsBackend input#parent_title {
 	width: 45%;
 }
 
-form.attachmentsBackend input[type="button"], 
+form.attachmentsBackend input[type="button"],
 form.attachmentsBackend input[type="submit"],
 {
-	font-size: 1.3em;
-	font-weight: bold;
-	border: 1px solid #666; 
+font-size: 1.3em;
+font-weight: bold;
+border: 1px solid #666;
 }
 
 div.attachmentsWarning div.form_buttons,
 form.attachmentsBackend div.form_buttons {
-    background-color: #F4F4F4;
-    margin-top: 4px;
-    padding: 8px 20px 8px 20px;
-    text-align: center;
+	margin-top: 4px;
+	padding: 8px 20px 8px 20px;
+	text-align: center;
 }
 
 form.attachmentsBackend span.right {
@@ -382,7 +530,7 @@ form.attachmentsBackend table.admintable {
 }
 
 form.attachmentsBackend table.admintable td {
-        padding: 3px 8px 3px 3px;
+	padding: 3px 8px 3px 3px;
 	vertical-align: middle;
 	font-size: 1.0em;
 }
@@ -401,8 +549,6 @@ form.attachmentsBackend table.admintable td span.optional {
 
 form.attachmentsBackend table.admintable td.key,
 form.attachmentsBackend table.admintable td.key2 {
-	background-color: #DADAF0;
-	color: #444;
 	width: 8em;
 	padding: 0 4px 0 4px;
 	margin: 2px 0 2px 0;
@@ -431,7 +577,7 @@ form.attachmentsBackend fieldset.adminform label {
 
 form.attachmentsBackend fieldset.adminform label#upload_file_label {
 	display: inline-block;
-        margin-top: 1.2em;
+	margin-top: 1.2em;
 }
 
 div.attachmentsBackendTitle h1 {
@@ -448,7 +594,8 @@ div.attachmentsBackendTitle h2 {
 	padding: 0 0 6px 0;
 }
 
-input#upload, input#upload_warning {
+input#upload,
+input#upload_warning {
 	margin-top: 4px;
 }
 
@@ -461,23 +608,22 @@ div#attachmentsPotentialParents {
 }
 
 div#attachmentsPotentialParents p {
-    padding-left: 2em;
+	padding-left: 2em;
 }
 
-div#attachmentsPotentialParents span:first-letter
-{
-    margin-left: -2em;
+div#attachmentsPotentialParents span:first-letter {
+	margin-left: -2em;
 }
 
 div#attachmentsPotentialParents span {
-        font-weight: bold;
+	font-weight: bold;
 	font-size: 1.1em;
 	margin: 0;
 }
 
 div#attachmentsPotentialParents a.changeButton {
-    margin-left: 0;
-    margin-right: 0;
+	margin-left: 0;
+	margin-right: 0;
 }
 
 /* Small fixes for form to edit parameters */
@@ -491,47 +637,46 @@ input#paramshide_attachments_for {
 }
 
 dl#config-tabs-com_attachments_configuration h3 {
-    font-size: 1.4em;
+	font-size: 1.4em;
 }
 
-dl#config-tabs-com_attachments_configuration > dt {
-    background-color: #CACACA;
+dl#config-tabs-com_attachments_configuration>dt {
+	background-color: #CACACA;
 }
 
-dl#config-tabs-com_attachments_configuration > dt.open {
-    background-color: transparent;
+dl#config-tabs-com_attachments_configuration>dt.open {
+	background-color: transparent;
 }
 
-dl#config-tabs-com_attachments_configuration > dt.open h3 {
-    font-weight: bold;
+dl#config-tabs-com_attachments_configuration>dt.open h3 {
+	font-weight: bold;
 }
 
 ul#attachments-options {
-    font-size: 1.2em;
+	font-size: 1.2em;
 }
 
-ul#attachments-options > li label,
-ul#attachments-options > li select,
-ul#attachments-options > li textarea,
-ul#attachments-options > li input,
-ul#attachments-options > li > fieldset.radio
-{
+ul#attachments-options>li label,
+ul#attachments-options>li select,
+ul#attachments-options>li textarea,
+ul#attachments-options>li input,
+ul#attachments-options>li>fieldset.radio {
 	float: none;
 	display: inline-block;
 	min-width: 2.75em;
 }
 
-ul#attachments-options > li {
+ul#attachments-options>li {
 	background-color: #E0E0E0;
 	margin: 3px 0 3px 0;
 }
 
-ul#attachments-options > li textarea,
-ul#attachments-options > li select {
+ul#attachments-options>li textarea,
+ul#attachments-options>li select {
 	vertical-align: middle;
 }
 
-ul#attachments-options > li > label {
+ul#attachments-options>li>label {
 	min-width: 21em;
 	width: 21em;
 	text-align: right;
@@ -540,98 +685,95 @@ ul#attachments-options > li > label {
 }
 
 
-ul#attachments-options > li > label#jform_rules-lbl {
-    display: none;
+ul#attachments-options>li>label#jform_rules-lbl {
+	display: none;
 }
 
 ul#attachments-options div#permissions-sliders {
-    margin: 4px 0 0 0;
+	margin: 4px 0 0 0;
 }
 
 form#component-form p.tab-description {
-    font-size: 150%;
-    margin: 0 0 0 0;
+	font-size: 150%;
+	margin: 0 0 0 0;
 }
 
 ul#attachments-options div.pane-sliders p {
-    margin: 0 0 4px 0;
+	margin: 0 0 4px 0;
 }
 
 /* fieldset#jform_download_mode label { width: 5em; } */
 
 .form-horizontal .control-group .controls {
-    margin-left: 300px;
+	margin-left: 300px;
 }
 
 .form-horizontal .control-group .control-label {
-    width: 285px;
-    padding-left: 4px;
-    background-color: #F9F9F9;
+	width: 285px;
+	padding-left: 4px;
 }
 
 .form-horizontal .control-group .radio.btn-group {
-    padding-top: 0;
+	padding-top: 0;
 }
 
-form.attachmentsBackend > fieldset.adminform > table.admintable {
-    border: 0;
-    width: 100%;
+form.attachmentsBackend>fieldset.adminform>table.admintable {
+	border: 0;
+	width: 100%;
 }
 
 /* For warning dialog */
 
 div.attachmentsWarning {
-    padding: 10px;
-    margin: 20px;
+	padding: 10px;
+	margin: 20px;
 }
 
 div.attachmentsWarning h1 {
-    line-height: normal;
-    font-size: 250%;
-    font-weight: bold;
-    text-align: center;
-    color: #F00;
-    border-bottom: 1px solid #DDD;
+	line-height: normal;
+	font-size: 250%;
+	font-weight: bold;
+	text-align: center;
+	color: #F00;
+	border-bottom: 1px solid #DDD;
 }
 
 div.attachmentsWarning h2 {
-    line-height: normal;
-    font-size: 175%;
-    font-weight: bold;
-    text-align: center;
-    margin: 1em 0 1em 0;
+	line-height: normal;
+	font-size: 175%;
+	font-weight: bold;
+	text-align: center;
+	margin: 1em 0 1em 0;
 }
 
-*
-div.attachmentsWarning input[type="button"], 
-div.attachmentsWarning input[type="submit"]
-{
+* div.attachmentsWarning input[type="button"],
+div.attachmentsWarning input[type="submit"] {
 	font-size: 1.3em;
 	font-weight: bold;
-	border: 1px solid #666; 
+	border: 1px solid #666;
 	background-color: #DDD;
 }
 
 
 div.attachmentsWarning span.left {
-    width: 8em;
-    float: left;
+	width: 8em;
+	float: left;
 }
 
 div.attachmentsWarning span.right {
-    width: 8em;
-    float: right;
+	width: 8em;
+	float: right;
 }
 
 /* For utils command list */
 
 div#modal-adminUtils div.modal-header {
-    /* Copied from 3.0 .subheader */
-    background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
-    border-bottom: 1px solid #D3D3D3;
-    color: #0C192E;
-    margin-bottom: 10px;
-    text-shadow: 0 1px 0 #FFFFFF;
+	/* Copied from 3.0 .subheader */
+	background: -moz-linear-gradient(center top, #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+	border-bottom: 1px solid #D3D3D3;
+	color: #0C192E;
+	margin-bottom: 10px;
+	text-shadow: 0 1px 0 #FFFFFF;
 }
 
 div#utilsList {
@@ -649,11 +791,14 @@ div#utilsList h2 {
 
 /* For icons */
 
-.icon-48-attachments  { background-image: url(../images/attachments_logo48.png); }
+.icon-48-attachments {
+	background-image: url(../images/attachments_logo48.png);
+}
 
-.icon-16-attachments  { background-image: url(../images/attachments.png); }
+.icon-16-attachments {
+	background-image: url(../images/attachments.png);
+}
 
-.icon-32-adminUtils   { background-image: url(../images/attachments_utils32.png); }
-
-
-
+.icon-32-adminUtils {
+	background-image: url(../images/attachments_utils32.png);
+}
