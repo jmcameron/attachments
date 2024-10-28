@@ -1,4 +1,4 @@
-# attachments 4.0.2
+# attachments 4.0.3
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ Joomla 4.0+ compatible also with Joomla 5.0+
 - Add a hint if no extensions are allowed due to joomla upgrade
 - Fix Deprecated: explode() when upload a file (FE) [#64](/../../issues/64)
 - Allow plugins to be loaded from cli. Fixes [#61](/../../issues/61)
-- Merge pull request [#60](/../../pull/50) from mckillo/master
+- Merge pull request [#60](/../../pull/60) from mckillo/master
   Some small fix about install, string, datetime, deprecated
 
 ## Changes since version 4.0.1
