@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="finder" method="upgrade">
+	<name>plg_finder_attachments</name>
+	<author>Theofilos Intzoglou</author>
+	<creationDate>2024-10</creationDate>
+	<copyright>(C) 2024 Theofilos Intzoglou</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>int.teo@gmail.com</authorEmail>
+	<authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+	<version>4.0.2</version>
+	<description>ATTACH_ATTACHMENTS_FINDER_PLUGIN_DESCRIPTION</description>
+	<namespace path="src">JMCameron\Plugin\Finder\Attachments</namespace>
+	<files>
+		<folder plugin="attachments">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_finder_attachments.ini</language>
+		<language tag="en-GB">language/en-GB/plg_finder_attachments.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldprefix="Joomla\Component\Finder\Administrator\Field">
+				<field
+					name="search_archived"
+					type="radio"
+					layout="joomla.form.field.radio.switcher"
+					label="PLG_FINDER_CATEGORIES_FIELD_SEARCH_ARCHIVED_LABEL"
+					description="PLG_FINDER_CATEGORIES_FIELD_SEARCH_ARCHIVED_DESC"
+					default="1"
+					filter="integer"
+					>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field
+					name="taxonomies"
+					type="taxonomytypes"
+					label="PLG_FINDER_CATEGORIES_TAXONOMIES_LABEL"
+					default="type,language"
+					multiple="true"
+					>
+					<option value="language">PLG_FINDER_CATEGORIES_TAXONOMIES_LANGUAGE</option>
+					<option value="type">PLG_FINDER_CATEGORIES_TAXONOMIES_TYPE</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
