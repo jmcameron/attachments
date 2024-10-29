@@ -397,54 +397,34 @@ final class Attachments extends Adapter implements SubscriberInterface
             $db->quoteName(
                 [
                     'a.id',
-                    'a.title',
-                    'a.alias',
-                    'a.extension',
-                    'a.metakey',
-                    'a.metadesc',
-                    'a.metadata',
-                    'a.language',
-                    'a.lft',
-                    'a.parent_id',
-                    'a.level',
+                    'a.filename',
+                    'a.url',
+                    'a.uri_type',
+                    'a.url_valid',
+                    'a.url_relative',
+                    'a.url_verify',
+                    'a.display_name',
                     'a.access',
-                    'a.params',
+                    'a.state',
+                    'a.parent_type',
+                    'a.parent_id',
+                    'a.created_by',
+                    'a.modified',
+                    'a.modified_by'
                 ]
             )
         )
             ->select(
                 $db->quoteName(
                     [
-                        'a.description',
-                        'a.created_user_id',
-                        'a.modified_time',
-                        'a.modified_user_id',
-                        'a.created_time',
-                        'a.published',
+                        'a.created',
                     ],
                     [
-                        'summary',
-                        'created_by',
-                        'modified',
-                        'modified_by',
                         'start_date',
-                        'state',
                     ]
                 )
-            );
-
-        // Handle the alias CASE WHEN portion of the query.
-        $case_when_item_alias = ' CASE WHEN ';
-        $case_when_item_alias .= $query->charLength($db->quoteName('a.alias'), '!=', '0');
-        $case_when_item_alias .= ' THEN ';
-        $a_id = $query->castAsChar($db->quoteName('a.id'));
-        $case_when_item_alias .= $query->concatenate([$a_id, 'a.alias'], ':');
-        $case_when_item_alias .= ' ELSE ';
-        $case_when_item_alias .= $a_id . ' END AS slug';
-
-        $query->select($case_when_item_alias)
-            ->from($db->quoteName('#__categories', 'a'))
-            ->where($db->quoteName('a.id') . ' > 1');
+            )
+            ->from($db->quoteName($this->table, 'a'));
 
         return $query;
     }
