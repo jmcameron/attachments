@@ -17,5 +17,7 @@
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_token.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_token.sys.ini</language>
+		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_insert_attachments_token.ini</language>
+		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_insert_attachments_token.sys.ini</language>
 	</languages>
 </extension>
