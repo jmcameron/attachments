@@ -145,6 +145,7 @@ class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
 
 		// Add the regular css file
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 		HTMLHelper::stylesheet('media/com_attachments/css/insert_attachments_token_button.css');
 
 		// Handle RTL styling (if necessary)

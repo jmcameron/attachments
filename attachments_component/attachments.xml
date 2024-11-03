@@ -180,6 +180,7 @@
        <filename>css/attachments_hide.css</filename>
        <filename>css/attachments_help.css</filename>
        <filename>css/attachments_list.css</filename>
+       <filename>css/attachments_list_dark.css</filename>
        <filename>css/attachments_list_rtl.css</filename>
        <filename>css/attachments_quickicon.css</filename>
        <filename>css/insert_attachments_token_button.css</filename>

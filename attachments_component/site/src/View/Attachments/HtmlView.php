@@ -75,6 +75,7 @@ class HtmlView extends BaseHtmlView
 
 		// if we have attachments, add the stylesheets for the attachments list
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 		$lang = $app->getLanguage();
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
