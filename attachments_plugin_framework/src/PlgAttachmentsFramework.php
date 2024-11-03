@@ -970,6 +970,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		{
 			// Add the style sheet
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 
 			// Handle RTL styling (if necessary)
 			$lang = $this->app->getLanguage();

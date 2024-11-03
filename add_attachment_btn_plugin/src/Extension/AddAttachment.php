@@ -178,6 +178,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
 
 		// Add the regular css file
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 		HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button.css');
 
 		// Handle RTL styling (if necessary)
