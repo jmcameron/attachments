@@ -24,6 +24,10 @@
         <file type="plugin" id="insert_attachments_token" group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
         <file type="plugin" id="attachments" group="quickicon">attachments_quickicon_plugin.zip</file>
     </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>
+        <language tag="el-GR">language/el-GR/el-GR.pkg_attachments.sys.ini</language>
+    </languages>
 
     <updateservers>
        <server type="extension" priority="1" name="Attachments Updates">https://raw.githubusercontent.com/jmcameron/attachments/master/pkg_attachments/update_pkg.xml</server>
