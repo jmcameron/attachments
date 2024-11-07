@@ -165,8 +165,10 @@
 		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.sys.ini</language>
 		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.ini</language>
 		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.help.ini</language>
-    	<language tag="el-GR">admin/language/el-GR/el-GR.com_attachments.sys.ini</language>
+		<language tag="el-GR">admin/language/el-GR/el-GR.com_attachments.sys.ini</language>
 		<language tag="el-GR">admin/language/el-GR/el-GR.com_attachments.ini</language>
+		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.sys.ini</language>
+		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.ini</language>
 	</languages>
     </administration>
 
@@ -224,6 +226,7 @@
     <languages>
 		<language tag="en-GB">site/language/en-GB/en-GB.com_attachments.ini</language>
     	<language tag="el-GR">site/language/el-GR/el-GR.com_attachments.ini</language>
+		<language tag="fr-FR">site/language/fr-FR/fr-FR.com_attachments.ini</language>
 	</languages>
 
 </extension>
