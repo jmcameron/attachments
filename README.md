@@ -1,4 +1,4 @@
-# attachments 4.0.3
+# attachments 4.0.4
 
 ## Quick Start
 
@@ -7,6 +7,10 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 ## Requirements
 
 Joomla 4.0+ compatible also with Joomla 5.0+
+
+## Changes since version 4.0.3
+- add translation for Greek
+- re-add translations for French; import them from old translation package
 
 ## Changes since version 4.0.2
 
