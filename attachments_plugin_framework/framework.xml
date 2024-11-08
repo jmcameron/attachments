@@ -25,6 +25,8 @@
         <language tag="en-GB">language/en-GB/en-GB.plg_attachments_framework.sys.ini</language>
         <language tag="el-GR">language/el-GR/el-GR.plg_attachments_framework.ini</language>
         <language tag="el-GR">language/el-GR/el-GR.plg_attachments_framework.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.plg_attachments_framework.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.plg_attachments_framework.sys.ini</language>
     </languages>
 
 </extension>
