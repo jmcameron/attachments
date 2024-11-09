@@ -209,7 +209,7 @@ class AttachmentsPluginManager
 		// Make sure the parent type is valid
 		if (!in_array($parent_type, $this->parent_types))
 		{
-			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 303)';
+			$errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $parent_type . ' (ERR 303)';
 			throw new \Exception($errmsg, 406);
 		}
 
