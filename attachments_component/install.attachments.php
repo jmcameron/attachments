@@ -18,11 +18,6 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 
-require_once "admin/src/Helper/AttachmentsUpdate.php";
-require_once "site/src/Helper/AttachmentsDefines.php";
-require_once "site/src/Helper/AttachmentsFileTypes.php";
-require_once "site/src/Helper/AttachmentsHelper.php";
-
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -351,8 +346,13 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 	 */
 	protected function installPermissions()
 	{
+		require_once "admin/src/Helper/AttachmentsUpdate.php";
+		require_once "site/src/Helper/AttachmentsDefines.php";
+		require_once "site/src/Helper/AttachmentsFileTypes.php";
+		require_once "site/src/Helper/AttachmentsHelper.php";
+
 		/** Load the Attachments defines */
-		\JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
+		JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
 	}
 
 
