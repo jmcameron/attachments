@@ -355,7 +355,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 		require_once "site/src/Helper/AttachmentsHelper.php";
 
 		/** Load the Attachments defines */
-		JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
+		\JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
 	}
 
 
