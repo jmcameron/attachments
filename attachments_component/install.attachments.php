@@ -257,6 +257,9 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 	 */
 	public function postflight(string $type, InstallerAdapter $adapter): bool
 	{
+		if ($type == "uninstall")
+			return true;
+
 		$app = Factory::getApplication();
 		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
