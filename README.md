@@ -8,6 +8,10 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 4.0+ compatible also with Joomla 5.0+
 
+
+## Changes since version 4.0.4
+- add translation for Turkish
+
 ## Changes since version 4.0.3
 - fix uninstall issue [#79](/../../issues/79)
 - add translation for Greek
