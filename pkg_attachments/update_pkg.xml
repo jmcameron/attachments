@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <updates>
 	<update>
-		<name>attachments</name>
+		<name>Attachments</name>
 		<description>Attachments</description>
 		<element>pkg_attachments</element>
 		<type>package</type>
@@ -16,7 +16,10 @@
 		</tags>
 		<maintainer>Jonathan M. Cameron</maintainer>
 		<maintainerurl>https://github.com/jmcameron/attachments</maintainerurl>
-		<php_minimum>7.2.0</php_minimum>
-		<targetplatform name="joomla" version="[45].[0123456789]|10"/>
+		<php_minimum>8.0</php_minimum>
+		<targetplatform name="joomla" version="(4\.[01234]|5\.[0123])"/>
+		<sha256>7EBB9C1297E7F20610689E31669D8976940F600ADF72034EA993566A062B1777</sha256>
+		<sha384>02812D2B49EC23DFB19F24F780082B6C4421756232B5624C006A19EAA8A369677C38EBAF11CFB46CB93188E93A4C582E</sha384>
+		<sha512>B4878B03D44E151ACCBBAB15D1100F8AEB070F82B21E851081078D0A33D3CBC4DA126397AD7EE1AA229317C6C617001DA53526D64F54F2E1F15D3126BE51EB82</sha512>
 	</update>
 </updates>
