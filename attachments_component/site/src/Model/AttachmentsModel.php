@@ -17,6 +17,7 @@ use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -335,6 +336,7 @@ class AttachmentsModel extends BaseDatabaseModel
 	 */
 	public function &getAttachmentsList($attachmentid=null)
 	{
+		Log::add("Attachment id: ". join(',', $attachmentid ?? []) . print_r($attachmentid, true));
 		// Just return it if it has already been created
 		if ( $this->_list != null ) {
 			return $this->_list;
@@ -349,10 +351,6 @@ class AttachmentsModel extends BaseDatabaseModel
 		$parent_id	   = $this->getParentId();
 		$parent_type   = $this->getParentType();
 		$parent_entity = $this->getParentEntity();
-		
-		if ($attachmentid) {
-			$parent_id = '%';
-			}
 
 		// Use parent entity corresponding to values saved in the attachments table
 		$parent = $this->getParentClass();
@@ -391,8 +389,8 @@ class AttachmentsModel extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
 		$query->leftJoin('#__users AS u ON u.id = a.created_by');
-		if ($attachmentid != null) {
-			$query->where('a.id in (' . $attachmentid . ')' );
+		if ($attachmentid && join(',', $attachmentid)) {
+			$query->where('a.id in (' . join(',', $attachmentid) . ')' );
 			}
 		if ( $parent_id == 0 ) {
 			// If the parent ID is zero, the parent is being created so we have
@@ -401,9 +399,7 @@ class AttachmentsModel extends BaseDatabaseModel
 			$query->where('a.parent_id IS NULL AND u.id=' . (int)$user_id);
 			}
 		else {
-			if ($parent_id != '%') {
-				$query->where('a.parent_id LIKE "'.(int)$parent_id . '"');
-			}
+			$query->where('a.parent_id='.(int)$parent_id);
 
 			// Handle the state part of the query
 			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
@@ -440,6 +436,7 @@ class AttachmentsModel extends BaseDatabaseModel
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
 		} catch (\RuntimeException $e) {
+			Log::add("Query: $query");
 			$errmsg = $e->getMessage() . ' (ERR 58)';
 			throw new \Exception($errmsg, 500);
 		}

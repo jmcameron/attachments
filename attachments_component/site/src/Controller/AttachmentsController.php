@@ -21,7 +21,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
-use JMCameron\Component\Attachments\Site\Model\AttachmentsModel;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -90,12 +89,9 @@ class AttachmentsController extends BaseController
 		$model = $this->getModel('Attachments', 'Site');
 		if ( !$model ) {
 			$errmsg = Text::_('ATTACH_ERROR_UNABLE_TO_FIND_MODEL') . ' (ERR 60)';
-			//throw new \Exception($errmsg, 500);
-			return;
+			throw new \Exception($errmsg, 500);
 			}
-		if ($attachmentsid) {
-			$parent_id = '?';
-		}
+
 		$model->setParentId($parent_id, $parent_type, $parent_entity);
 
 		// Get the component parameters
