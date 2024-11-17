@@ -63,10 +63,10 @@ class PlgContentAttachmentsId extends PlgAttachmentsFramework implements Subscri
 		{
 			list ($parent_type, $parent_entity) = explode('.', $context, 2);
 		}
-		return $this->OnPrepareRow($row, $parent_type, $parent_entity);	
+		return $this->OnPrepareRow($row, $parent_type, $parent_entity, $row->id);
 	}
 
-	public function OnPrepareRow(&$row, $parent_type, $parent_entity) {	
+	public function OnPrepareRow(&$row, $parent_type, $parent_entity, $parent_id) {	
 		static $load = null;
 
 		$matches = array();
@@ -90,7 +90,7 @@ class PlgContentAttachmentsId extends PlgAttachmentsFramework implements Subscri
 				/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
 				$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
 				// parent_id is set arbitrary to 1
-				$attachments_list = $controller->displayString(1, $parent_type, 'article', null, true, true, false, 'article', $attachment_ids);
+				$attachments_list = $controller->displayString($parent_id, $parent_type, 'article', null, true, true, false, 'article', $attachment_ids);
 				$row->text = str_replace($base, $attachments_list, $row->text);
 			}
 		}
