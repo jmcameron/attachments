@@ -75,7 +75,7 @@ class PlgContentAttachmentsId extends PlgAttachmentsFramework implements Subscri
 			$oldid = $row->id;
 			for($i = 0, $total = count($matches[0]); $i < $total; $i++){
 				$base = $matches[0][$i];
-				$attachment_ids = $matches[1][$i];
+				$attachment_ids = explode(',', $matches[1][$i]);
 				JPluginHelper::importPlugin('attachments');
 				$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 				if ( !$apm->attachmentsPluginInstalled($parent_type) ) {

@@ -336,7 +336,6 @@ class AttachmentsModel extends BaseDatabaseModel
 	 */
 	public function &getAttachmentsList($attachmentid=null)
 	{
-		Log::add("Attachment id: ". join(',', $attachmentid ?? []) . print_r($attachmentid, true));
 		// Just return it if it has already been created
 		if ( $this->_list != null ) {
 			return $this->_list;
@@ -389,8 +388,8 @@ class AttachmentsModel extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
 		$query->leftJoin('#__users AS u ON u.id = a.created_by');
-		if ($attachmentid) {
-			$query->where('a.id in (' .  $attachmentid . ')' );
+		if ($attachmentid && join(',', $attachmentid)) {
+			$query->where('a.id in (' . join(',', $attachmentid) . ')' );
 			}
 		if ( $parent_id == 0 ) {
 			// If the parent ID is zero, the parent is being created so we have
@@ -436,7 +435,6 @@ class AttachmentsModel extends BaseDatabaseModel
 			$db->setQuery($query);
 			$attachments = $db->loadObjectList();
 		} catch (\RuntimeException $e) {
-			Log::add("Query: $query");
 			$errmsg = $e->getMessage() . ' (ERR 58)';
 			throw new \Exception($errmsg, 500);
 		}
