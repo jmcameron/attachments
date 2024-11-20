@@ -115,10 +115,14 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
    ?>
 	<tr class="<?php echo "row$k"; ?>">
 	  <td class="at_checked hidden-phone"><?php echo $checked; ?></td>
+	<?php if ( !$this->editor ) : ?>
 	  <td class="at_published" align="center"><?php echo $published;?></td>
+	<?php endif; ?>
 	  <td class="at_filename">
-		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
-		  ><?php echo HTMLHelper::image('com_attachments/file_icons/'.$icon, $download_verb, null, true);
+	  <?php if ( !$this->editor ) : ?>
+		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>" >
+	  <?php endif; ?>
+		  <?php echo HTMLHelper::image('com_attachments/file_icons/'.$icon, $download_verb, null, true);
 		if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
 			if ( $item->url_valid ) {
 				echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
@@ -127,7 +131,11 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 				echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
 				}
 			}
-		 ?></a>&nbsp;<a
+		 ?>
+	  <?php if ( !$this->editor ) : ?>
+		 </a>
+	<?php endif; ?>
+		 &nbsp;<a
 		 href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
 			 ><?php if ( $item->uri_type == 'file' ) {
 				echo $item->filename;
