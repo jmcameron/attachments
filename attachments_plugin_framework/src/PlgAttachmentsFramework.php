@@ -911,25 +911,31 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		}
 
 		// Get the attachments tag, if present
-		$attachments_tag	  = '';
+		$attachments_tag	  = [];
 		$attachments_tag_args = '';
 		$match				  = false;
-		if (StringHelper::strpos($content->$text_field_name, '{attachments'))
+		$attachment_id        = null;
+		$offset               = -1;
+		while (false != ($offset = StringHelper::strpos($content->$text_field_name, '{attachments', $offset + 1)))
 		{
-			if (preg_match('@(<span class="hide_attachments_token">)?{attachments([ ]*:*[^}]+)?}(</span>)?@', $content->$text_field_name, $match))
+			if (preg_match('@(?<opening_tag><span class="hide_attachments_token">)?{attachments(?<arguments>[ ]*:*[^}]+)?}(?<closing_tag></span>)?@', substr($content->$text_field_name, $offset), $match))
 			{
-				$attachments_tag = true;
+				$attachments_tag[] = $match[0];
 			}
 
-			if (isset($match[1]) && $match[1])
+			var_dump($match);
+			if (($attachments_placement === "custom") && isset($match["arguments"]) && $match["arguments"])
 			{
-				$attachments_tag_args_raw = $match[1];
+				$attachments_tag_args_raw = $match["arguments"];
 				$attachments_tag_args	  = ltrim($attachments_tag_args_raw, ' :');
-			}
 
-			if ($attachments_tag)
-			{
-				$attachments_tag = $match[0];
+				preg_match('/id=([\d,]+)/', $attachments_tag_args, $match_id);
+				var_dump($match_id);
+				if ($match_id) {
+					$attachment_id[] = explode(",", $match_id[1]);
+				}
+			} else {
+				$attachment_id[] = null;
 			}
 		}
 
@@ -942,58 +948,66 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 			AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
 		}
 
-		// Construct the attachment list (if appropriate)
-		$html				 = '';
-		$attachments_list	 = false;
-		$add_attachment_btn  = false;
+		$i = 0;
+		$attachments_html = [];
+		// Run at least once and for every {attachments} tag
+		while (isset($attachments_tag[$i]) || $i === 0) {
 
-		// Get the html for the attachments list
-		/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
-		$mvc = Factory::getApplication()
-			->bootComponent("com_attachments")
-			->getMVCFactory();
-		/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
-		$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
-		$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from);
+			// Construct the attachment list (if appropriate)
+			$html				 = '';
+			$attachments_list	 = false;
+			$add_attachment_btn  = false;
 
-		// If the attachments list is empty, insert an empty div for it
-		if ($attachments_list == '')
-		{
-			$class_name		  = $aparams->get('attachments_table_style', 'attachmentsList');
-			$div_id			  = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
-			$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
-		}
+			// Get the html for the attachments list
+			/** @var \Joomla\CMS\MVC\Factory\MVCFactory $mvc */
+			$mvc = Factory::getApplication()
+				->bootComponent("com_attachments")
+				->getMVCFactory();
+			/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
+			$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
+			$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from, $attachment_id[$i]);
 
-		$html .= $attachments_list;
-
-		if ($html || $user_can_add)
-		{
-			// Add the style sheet
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
-
-			// Handle RTL styling (if necessary)
-			$lang = $this->app->getLanguage();
-			if ($lang->isRTL())
+			// If the attachments list is empty, insert an empty div for it
+			if ($attachments_list == '')
 			{
-				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
+				$class_name		  = $aparams->get('attachments_table_style', 'attachmentsList');
+				$div_id			  = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
+				$attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
 			}
-		}
 
-		// Construct the add-attachments button, if appropriate
-		$hide_add_attachments_link = $aparams->get('hide_add_attachments_link', 0);
-		if ($user_can_add && !$hide_add_attachments_link)
-		{
-			$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->parent_type, $parent_id, $parent_entity, $Itemid, $from);
-			$html .= $add_attachments_btn;
-		}
+			$html .= $attachments_list;
 
-		// Wrap both list and the Add Attachments button in another div
-		if ($html)
-		{
-			$html = "<div class=\"attachmentsContainer\">\n" . $html . "\n</div>";
-		}
+			if ($html || $user_can_add)
+			{
+				// Add the style sheet
+				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
+				HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 
+				// Handle RTL styling (if necessary)
+				$lang = $this->app->getLanguage();
+				if ($lang->isRTL())
+				{
+					HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
+				}
+			}
+
+			// Construct the add-attachments button, if appropriate
+			$hide_add_attachments_link = $aparams->get('hide_add_attachments_link', 0);
+			if ($user_can_add && !$hide_add_attachments_link)
+			{
+				$add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->parent_type, $parent_id, $parent_entity, $Itemid, $from);
+				$html .= $add_attachments_btn;
+			}
+
+			// Wrap both list and the Add Attachments button in another div
+			if ($html)
+			{
+				$html = "<div class=\"attachmentsContainer\">\n" . $html . "\n</div>";
+			}
+
+			$attachments_html[] = $html;
+			$i++;
+		}
 		// Finally, add the attachments
 
 		// NOTE: Hope str_replace() below is UTF8 safe (since the token being replaced is UTF8)...
@@ -1006,11 +1020,14 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				{
 					if ($attachments_tag)
 					{
-						$content->$text_field_name = $html . $content->$text_field_name;
+						for ($i=0; $i < count($attachments_tag); $i++) {
+							$content->$text_field_name = str_replace($attachments_tag[$i], '', $content->$text_field_name);
+						}
+						$content->$text_field_name = $attachments_html[0] . $content->$text_field_name;
 					}
 					else
 					{
-						$content->$text_field_name = $html . str_replace($attachments_tag, '', $content->$text_field_name);
+						$content->$text_field_name = $attachments_html[0] . $content->$text_field_name;
 					}
 				}
 				break;
@@ -1021,12 +1038,14 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				{
 					if ($attachments_tag)
 					{
-						$content->$text_field_name = str_replace($attachments_tag, $html, $content->$text_field_name);
+						for ($i=0; $i < count($attachments_tag); $i++) {
+							$content->$text_field_name = str_replace($attachments_tag[$i], $attachments_html[$i], $content->$text_field_name);
+						}
 					}
 					else
 					{
 						// If there is no tag, insert the attachments at the end
-						$content->$text_field_name .= $html;
+						$content->$text_field_name .= $attachments_html[0];
 					}
 				}
 				break;
@@ -1035,7 +1054,9 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				// Disable and strip out any attachments tags
 				if ($attachments_tag)
 				{
-					$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name);
+					for ($i=0; $i < count($attachments_tag); $i++) {
+						$content->$text_field_name = str_replace($attachments_tag[$i], '', $content->$text_field_name);
+					}
 				}
 				break;
 
@@ -1045,11 +1066,14 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				{
 					if ($attachments_tag)
 					{
-						$content->$text_field_name = str_replace($attachments_tag, '', $content->$text_field_name) . $html;
+						for ($i=0; $i < count($attachments_tag); $i++) {
+							$content->$text_field_name = str_replace($attachments_tag[$i], '', $content->$text_field_name);
+						}
+						$content->$text_field_name =  $content->$text_field_name . $attachments_html[0];
 					}
 					else
 					{
-						$content->$text_field_name .= $html;
+						$content->$text_field_name .= $attachments_html[0];
 					}
 				}
 				break;

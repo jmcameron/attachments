@@ -387,8 +387,8 @@ class AttachmentsModel extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
 		$query->leftJoin('#__users AS u ON u.id = a.created_by');
-		if ($attachmentid != null) {
-			$query->where('a.id in (' . $attachmentid . ')' );
+		if ($attachmentid && join(',', $attachmentid)) {
+			$query->where('a.id in (' . join(',', $attachmentid) . ')' );
 			}
 		if ( $parent_id == 0 ) {
 			// If the parent ID is zero, the parent is being created so we have
