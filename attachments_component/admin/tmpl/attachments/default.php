@@ -55,9 +55,5 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
   </div>
   
 </form>
-<script>
-	$(document).ready(function() {
-						 alert("ici");
-						})};
- </script>
+
 
