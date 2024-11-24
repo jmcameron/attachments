@@ -125,7 +125,7 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
 		// Finalize the [Add Attachment] button info
 		$button->modal = true;
 		$button->class = 'btn';
-		$button->text = Text::_('ATTACH_ATTACHMENTS_ID_TOKEN');
+		$button->text = Text::_('INSERT_ATTACHMENTS_ID_TOKEN');
 		$button->name = 'paperclipid';
 		$button->link = $link;
 		$button->icon = 'attachment';

@@ -15,9 +15,9 @@
         <folder plugin="insert_attachments_id_token">services</folder>
     </files>
 	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachmentsid_token.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachmentsid_token.sys.ini</language>
-		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachmentsid_token.ini</language>
-		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachmentsid_token.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_id_token.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_id_token.sys.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachments_id_token.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachments_id_token.sys.ini</language>
 	</languages>
 </extension>
