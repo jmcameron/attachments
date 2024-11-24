@@ -350,10 +350,6 @@ class AttachmentsModel extends BaseDatabaseModel
 		$parent_type   = $this->getParentType();
 		$parent_entity = $this->getParentEntity();
 		
-		if ($attachmentid) {
-			$parent_id = '%';
-			}
-
 		// Use parent entity corresponding to values saved in the attachments table
 		$parent = $this->getParentClass();
 
@@ -401,10 +397,8 @@ class AttachmentsModel extends BaseDatabaseModel
 			$query->where('a.parent_id IS NULL AND u.id=' . (int)$user_id);
 			}
 		else {
-			if ($parent_id != '%') {
-				$query->where('a.parent_id LIKE "'.(int)$parent_id . '"');
-			}
-
+			$query->where('a.parent_id='.(int)$parent_id);
+			
 			// Handle the state part of the query
 			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
 				// Do not filter on state since this user can change the state of any attachment
