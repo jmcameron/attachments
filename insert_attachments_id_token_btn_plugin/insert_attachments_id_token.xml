@@ -8,7 +8,7 @@
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>https://github.com/jmcameron/attachments/</authorUrl>
-    <description>ATTACH_INSERT_ATTACHMENTSID_TOKEN_BUTTON_PLUGIN_DESCRIPTION</description>
+    <description>ATTACH_INSERT_ATTACHMENTS_ID_TOKEN_BUTTON_PLUGIN_DESCRIPTION</description>
     <namespace path="src">JMCameron\Plugin\EditorsXtd\InsertAttachmentsIdToken</namespace>
     <files>
         <folder>src</folder>
@@ -17,6 +17,8 @@
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_id_token.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_insert_attachments_id_token.sys.ini</language>
+		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_insert_attachments_id_token.ini</language>
+		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_insert_attachments_id_token.sys.ini</language>
 		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachments_id_token.ini</language>
 		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_insert_attachments_id_token.sys.ini</language>
 	</languages>
