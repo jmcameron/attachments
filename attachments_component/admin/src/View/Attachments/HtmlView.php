@@ -187,7 +187,7 @@ class HtmlView extends BaseHtmlView
 				let editor = parent.Joomla.editors.instances[editorName];
 				var adminform = document.getElementById("adminForm");
 				var Data = new FormData(adminform);
-				editor.replaceSelection("{attachmentsid id=" + Data.getAll("cid[]") +"}");
+				editor.replaceSelection("{attachments id=" + Data.getAll("cid[]") +"}");
 				$(".btn-close", parent.document).click();
 				}');
 			}
