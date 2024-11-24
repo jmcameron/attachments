@@ -119,7 +119,7 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
 		$lang->load('com_attachments', JPATH_ADMINISTRATOR.'/components/com_attachments');
 
 		$link = "/index.php?option=com_attachments&tmpl=component&parent_id=" . $id;
-		$link .= '&amp;editor=' . $name . '&amp;XDEBUG_SESSION_START=test';
+		$link .= '&amp;editor=' . $name;
 		$button = new CMSObject();
 
 		// Finalize the [Add Attachment] button info
