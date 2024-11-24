@@ -22,8 +22,7 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die('Restricted access');
 
 // Add the attachments admin CSS files
-$app = Factory::getApplication();
-$document = $app->getDocument();
+$document = Factory::getApplication()->getDocument();
 $uri = Uri::getInstance();
 
 // load tooltip behavior
@@ -32,8 +31,6 @@ HTMLHelper::_('bootstrap.tooltip');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 
-// Make sure the translations are available
-$lang = $app->getLanguage();
 ?>
 <form action="<?php echo Route::_('index.php?option=com_attachments'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if ( $this->editor ) : ?>
