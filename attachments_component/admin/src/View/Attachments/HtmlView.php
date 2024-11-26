@@ -16,6 +16,7 @@ namespace JMCameron\Component\Attachments\Administrator\View\Attachments;
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use JMCameron\Component\Attachments\Administrator\Model\AttachmentsModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -52,10 +53,18 @@ class HtmlView extends BaseHtmlView
 			return;
 			}
 
+		$app = Factory::getApplication();
+		$jinput = $app->getInput();
+		$this->editor = $jinput->getString('editor', null);
+		$id = $jinput->getInt('parent_id', null);
+		if ($id) {
+			$model = $this->getModel();
+			$model->setState('filter.parent_id', $id); 
+		}
 		$this->items = $this->get('Items');
 		$this->state = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-
+		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			throw new \Exception(implode("\n", $errors) . ' (ERR 175)', 500);
@@ -166,9 +175,22 @@ class HtmlView extends BaseHtmlView
 			}
 
 		// Set the toolbar
-		$this->addToolBar();
+		if ( !$this->editor ) {
+			$this->addToolBar();
+			}
 
 		// Display the attachments
+		if ( $this->editor ) {
+			$document = Factory::getDocument();
+			HTMLHelper::_('jquery.framework');
+			$document->addScriptDeclaration('function insertAttachmentsIdToken($, editorName) {
+				let editor = parent.Joomla.editors.instances[editorName];
+				var adminform = document.getElementById("adminForm");
+				var Data = new FormData(adminform);
+				editor.replaceSelection("{attachments id=" + Data.getAll("cid[]") +"}");
+				$(".btn-close", parent.document).click();
+				}');
+			}
 		parent::display($tpl);
 	}
 

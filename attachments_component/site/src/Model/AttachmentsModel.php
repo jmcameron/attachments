@@ -349,7 +349,7 @@ class AttachmentsModel extends BaseDatabaseModel
 		$parent_id	   = $this->getParentId();
 		$parent_type   = $this->getParentType();
 		$parent_entity = $this->getParentEntity();
-
+		
 		// Use parent entity corresponding to values saved in the attachments table
 		$parent = $this->getParentClass();
 
@@ -398,7 +398,7 @@ class AttachmentsModel extends BaseDatabaseModel
 			}
 		else {
 			$query->where('a.parent_id='.(int)$parent_id);
-
+			
 			// Handle the state part of the query
 			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
 				// Do not filter on state since this user can change the state of any attachment

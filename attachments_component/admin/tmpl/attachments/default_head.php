@@ -30,8 +30,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	 <th class="at_checked hidden-phone">
 		 <input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
 	 </th>
+	 <?php if ( !$this->editor ) : ?>
 	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_PUBLISHED',
 							 'a.state', $listDirn, $listOrder ) ?></th>
+	<?php endif; ?>
 	 <th class="at_filename"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_ATTACHMENT_FILENAME_URL',
 							 'a.filename', $listDirn, $listOrder ) ?></th>
 	 <th class="at_description"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_DESCRIPTION',

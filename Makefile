@@ -10,6 +10,7 @@ all: parts $(ZIPFILE)
 
 INSTALLS = attachments_plugin \
 	   add_attachment_btn_plugin \
+	   insert_attachments_id_token_btn_plugin \
 	   insert_attachments_token_btn_plugin \
 	   attachments_plugin_framework \
 	   attachments_for_content \
