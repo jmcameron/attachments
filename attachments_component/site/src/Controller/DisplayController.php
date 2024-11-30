@@ -448,8 +448,8 @@ class DisplayController extends BaseController
 	public function download()
 	{
 		// Get the attachment ID
-		$id = $this->input->getInt('id');
-		if ( !is_numeric($id) ) {
+		$id = $this->input->getInt('id', '0');
+		if ( !is_numeric($id) || $id <=0 ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 12)';
 			throw new \Exception($errmsg, 500);
 			}
