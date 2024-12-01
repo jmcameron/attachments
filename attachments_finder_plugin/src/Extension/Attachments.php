@@ -3,6 +3,7 @@
 namespace JMCameron\Plugin\Finder\Attachments\Extension;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Log\Log;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
@@ -19,7 +20,7 @@ use Joomla\Registry\Registry;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Smart Search adapter for Joomla Categories.
+ * Smart Search adapter for Attachments.
  *
  * @since  2.5
  */
@@ -99,10 +100,11 @@ final class Attachments extends Adapter implements SubscriberInterface
         }
 
         return array_merge($parentEvents, [
-            'onFinderAfterDelete' => 'onFinderAfterDelete',
-            'onFinderAfterSave'   => 'onFinderAfterSave',
+            // 'onFinderAfterDelete' => 'onFinderAfterDelete',
+            // 'onFinderAfterSave'   => 'onFinderAfterSave',
             'onFinderBeforeSave'  => 'onFinderBeforeSave',
-            'onFinderChangeState' => 'onFinderChangeState',
+            // 'onFinderChangeState' => 'onFinderChangeState',
+            // 'onFinderCategoryChangeState' => 'onFinderCategoryChangeState',
         ]);
     }
 
@@ -198,6 +200,7 @@ final class Attachments extends Adapter implements SubscriberInterface
         $row     = $event->getArgument('row');
         $isNew   = $event->getArgument('isNew');
 
+        dd($context, $row, $isNew);
         // We only want to handle categories here.
         if ($context === 'com_categories.category') {
             // Query the database for the old access level and the parent if the item isn't new.
@@ -282,93 +285,59 @@ final class Attachments extends Adapter implements SubscriberInterface
             return;
         }
 
-        // Extract the extension element
-        $parts             = explode('.', $item->extension);
-        $extension_element = $parts[0];
-
-        // Check if the extension that owns the category is also enabled.
-        if (ComponentHelper::isEnabled($extension_element) === false) {
-            return;
-        }
-
         $item->setLanguage();
 
-        $extension = ucfirst(substr($extension_element, 4));
-
-        // Initialize the item parameters.
         $item->params = new Registry($item->params);
 
-        $item->metadata = new Registry($item->metadata);
-
-        /*
-         * Add the metadata processing instructions based on the category's
-         * configuration parameters.
-         */
-
-        // Add the meta author.
-        $item->metaauthor = $item->metadata->get('author');
-
-        // Handle the link to the metadata.
-        $item->addInstruction(Indexer::META_CONTEXT, 'link');
-        $item->addInstruction(Indexer::META_CONTEXT, 'metakey');
-        $item->addInstruction(Indexer::META_CONTEXT, 'metadesc');
-        $item->addInstruction(Indexer::META_CONTEXT, 'metaauthor');
-        $item->addInstruction(Indexer::META_CONTEXT, 'author');
-
-        // Deactivated Methods
-        // $item->addInstruction(Indexer::META_CONTEXT, 'created_by_alias');
-
-        // Trigger the onContentPrepare event.
-        $item->summary = Helper::prepareContent($item->summary, $item->params);
+        if ($item->display_name) {
+            $item->title = $item->display_name;
+        } elseif ($item->uri_type == "file") {
+            $item->title = $item->filename;
+        } else {
+            $item->title = $item->url;
+        }
 
         // Create a URL as identifier to recognise items again.
-        $item->url = $this->getUrl($item->id, $item->extension, $this->layout);
+        $item->url = $this->getUrl($item->id, $this->extension, $this->layout);
 
+        // We can only index com_content articles and categories
+        if ($item->parent_type != "com_content")
+            return;
+
+        $extension = "Content";
         /*
          * Build the necessary route information.
          * Need to import component route helpers dynamically, hence the reason it's handled here.
          */
-        $class = $extension . 'HelperRoute';
 
-        // Need to import component route helpers dynamically, hence the reason it's handled here.
-        \JLoader::register($class, JPATH_SITE . '/components/' . $extension_element . '/helpers/route.php');
+        $class = 'Joomla\\Component\\' . $extension . '\\Site\\Helper\\RouteHelper';
 
-        if (class_exists($class) && method_exists($class, 'getCategoryRoute')) {
-            $item->route = $class::getCategoryRoute($item->id, $item->language);
-        } else {
-            $class = 'Joomla\\Component\\' . $extension . '\\Site\\Helper\\RouteHelper';
+        $item->body = $item->description;
 
+        if ($item->parent_entity == "category") {
             if (class_exists($class) && method_exists($class, 'getCategoryRoute')) {
-                $item->route = $class::getCategoryRoute($item->id, $item->language);
+                $item->route = $class::getCategoryRoute($item->parent_id, $item->language);
+                $item->summary = $item->category_title;
+            } else {
+                // This category has no frontend route.
+                return;
+            }
+        } elseif ($item->parent_entity == "article") {
+            if (class_exists($class) && method_exists($class, 'getArticleRoute')) {
+                $item->route = $class::getArticleRoute($item->parent_id, $item->language);
+                $item->summary = $item->article_title;
             } else {
                 // This category has no frontend route.
                 return;
             }
         }
 
-        // Get the menu title if it exists.
-        $title = $this->getItemMenuTitle($item->url);
-
-        // Adjust the title if necessary.
-        if (!empty($title) && $this->params->get('use_menu_title', true)) {
-            $item->title = $title;
-        }
-
         // Translate the state. Categories should only be published if the parent category is published.
         $item->state = $this->translateState($item->state);
 
-        // Get taxonomies to display
-        $taxonomies = $this->params->get('taxonomies', ['type', 'language']);
-
-        // Add the type taxonomy data.
-        if (\in_array('type', $taxonomies)) {
-            $item->addTaxonomy('Type', 'Category');
-        }
-
-        // Add the language taxonomy data.
-        if (\in_array('language', $taxonomies)) {
-            $item->addTaxonomy('Language', $item->language);
-        }
+        $item->addTaxonomy('Type', 'Attachment');
+        $item->addTaxonomy('Category', $item->uri_type);
+        $item->addTaxonomy('Language', $item->language);
 
         // Get content extras.
         Helper::getContentExtras($item);
@@ -402,10 +371,11 @@ final class Attachments extends Adapter implements SubscriberInterface
                     'a.uri_type',
                     'a.url_valid',
                     'a.url_relative',
-                    'a.url_verify',
                     'a.display_name',
+                    'a.description',
                     'a.access',
                     'a.state',
+                    'a.parent_entity',
                     'a.parent_type',
                     'a.parent_id',
                     'a.created_by',
@@ -418,20 +388,32 @@ final class Attachments extends Adapter implements SubscriberInterface
                 $db->quoteName(
                     [
                         'a.created',
+                        'ar.title',
+                        'c.title'
                     ],
                     [
                         'start_date',
+                        'article_title',
+                        'category_title'
                     ]
                 )
             )
-            ->from($db->quoteName($this->table, 'a'));
+            ->from($db->quoteName($this->table, 'a'))
+            ->join(
+                'LEFT',
+                '#__content ar ON a.parent_id = ar.id AND a.parent_entity = "article"'
+            )
+            ->join(
+                'LEFT',
+                '#__categories c ON a.parent_id = c.id AND a.parent_entity = "category"'
+            );
 
         return $query;
     }
 
     /**
      * Method to get a SQL query to load the published and access states for
-     * a category and its parents.
+     * an attachment.
      *
      * @return  QueryInterface  A database object.
      *
@@ -445,6 +427,8 @@ final class Attachments extends Adapter implements SubscriberInterface
             $this->getDatabase()->quoteName(
                 [
                     'a.id',
+                    'a.parent_type',
+                    'a.parent_entity',
                     'a.parent_id',
                     'a.access',
                 ]
@@ -454,22 +438,13 @@ final class Attachments extends Adapter implements SubscriberInterface
                 $this->getDatabase()->quoteName(
                     [
                         'a.' . $this->state_field,
-                        'c.published',
-                        'c.access',
                     ],
                     [
                         'state',
-                        'cat_state',
-                        'cat_access',
                     ]
                 )
             )
-            ->from($this->getDatabase()->quoteName('#__categories', 'a'))
-            ->join(
-                'INNER',
-                $this->getDatabase()->quoteName('#__categories', 'c'),
-                $this->getDatabase()->quoteName('c.id') . ' = ' . $this->getDatabase()->quoteName('a.parent_id')
-            );
+            ->from($this->getDatabase()->quoteName($this->table, 'a'));
 
         return $query;
     }

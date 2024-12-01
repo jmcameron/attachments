@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="plugin" group="finder" method="upgrade">
 	<name>plg_finder_attachments</name>
-	<author>Theofilos Intzoglou</author>
-	<creationDate>2024-10</creationDate>
-	<copyright>(C) 2024 Theofilos Intzoglou</copyright>
+	<author>Jonathan M. Cameron</author>
+	<creationDate>December 1, 2024</creationDate>
+	<copyright>(C) 2024 Jonathan M. Cameron</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-	<authorEmail>int.teo@gmail.com</authorEmail>
+	<authorEmail>jmcameron@jmcameron.net</authorEmail>
 	<authorUrl>https://github.com/jmcameron/attachments</authorUrl>
-	<version>4.0.2</version>
+	<version>4.0.4</version>
 	<description>ATTACH_ATTACHMENTS_FINDER_PLUGIN_DESCRIPTION</description>
 	<namespace path="src">JMCameron\Plugin\Finder\Attachments</namespace>
 	<files>
@@ -25,8 +25,8 @@
 					name="search_archived"
 					type="radio"
 					layout="joomla.form.field.radio.switcher"
-					label="PLG_FINDER_CATEGORIES_FIELD_SEARCH_ARCHIVED_LABEL"
-					description="PLG_FINDER_CATEGORIES_FIELD_SEARCH_ARCHIVED_DESC"
+					label="PLG_FINDER_ATTACHMENTS_FIELD_SEARCH_ARCHIVED_LABEL"
+					description="PLG_FINDER_ATTACHMENTS_FIELD_SEARCH_ARCHIVED_DESC"
 					default="1"
 					filter="integer"
 					>
@@ -36,12 +36,12 @@
 				<field
 					name="taxonomies"
 					type="taxonomytypes"
-					label="PLG_FINDER_CATEGORIES_TAXONOMIES_LABEL"
+					label="PLG_FINDER_ATTACHMENTS_TAXONOMIES_LABEL"
 					default="type,language"
 					multiple="true"
 					>
-					<option value="language">PLG_FINDER_CATEGORIES_TAXONOMIES_LANGUAGE</option>
-					<option value="type">PLG_FINDER_CATEGORIES_TAXONOMIES_TYPE</option>
+					<option value="language">PLG_FINDER_ATTACHMENTS_TAXONOMIES_LANGUAGE</option>
+					<option value="type">PLG_FINDER_ATTACHMENTS_TAXONOMIES_TYPE</option>
 				</field>
 			</fieldset>
 		</fields>
