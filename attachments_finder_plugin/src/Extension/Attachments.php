@@ -293,6 +293,7 @@ final class Attachments extends Adapter implements SubscriberInterface
             $item->title = $item->display_name;
         } elseif ($item->uri_type == "file") {
             $item->title = $item->filename;
+            $item->mime = $item->file_type;
         } else {
             $item->title = $item->url;
         }
@@ -312,7 +313,9 @@ final class Attachments extends Adapter implements SubscriberInterface
 
         $class = 'Joomla\\Component\\' . $extension . '\\Site\\Helper\\RouteHelper';
 
-        $item->body = $item->description;
+        if ($item->description) {
+            $item->body = "<br/>".$item->description;
+        }
 
         if ($item->parent_entity == "category") {
             if (class_exists($class) && method_exists($class, 'getCategoryRoute')) {
@@ -367,6 +370,7 @@ final class Attachments extends Adapter implements SubscriberInterface
                 [
                     'a.id',
                     'a.filename',
+                    'a.file_type',
                     'a.url',
                     'a.uri_type',
                     'a.url_valid',
