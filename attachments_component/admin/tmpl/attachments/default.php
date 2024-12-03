@@ -14,7 +14,9 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -31,7 +33,15 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_attachments'); ?>" method="post" name="adminForm" id="adminForm">
-<?php echo $this->loadTemplate('filter');?>
+<?php if ( $this->editor ) : ?>
+		<p><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS_DESCRIPTION'); ?></p>
+		<button onclick="insertAttachmentsIdToken(jQuery, '<?php echo $this->editor ?>');"><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS'); ?></button>
+<?php endif; ?>
+<?php 
+	if (!$this->editor ) {
+		echo $this->loadTemplate('filter');
+	}
+?>
   <table class="adminlist" id="attachmentsList">
 	<thead><?php echo $this->loadTemplate('head');?></thead>
 	<tbody><?php echo $this->loadTemplate('body');?></tbody>
@@ -44,5 +54,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
 	<?php echo HTMLHelper::_('form.token'); ?>
   </div>
+  
 </form>
+
 

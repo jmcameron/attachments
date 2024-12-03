@@ -27,15 +27,15 @@ class AttachmentsDefines
 {
 	/** The Attachments extension version number
 	 */
-	public static $ATTACHMENTS_VERSION = '3.2.6';
+	public static $ATTACHMENTS_VERSION = '4.0.4';
 
 	/** The Attachments extension version date
 	 */
-	public static $ATTACHMENTS_VERSION_DATE = 'March 26, 2018';
+	public static $ATTACHMENTS_VERSION_DATE = 'November  9, 2024';
 
 	/** Project URL
 	 */
-	public static $PROJECT_URL = 'http://joomlacode.org/gf/project/attachments3/';
+	public static $PROJECT_URL = 'https://github.com/jmcameron/attachments';
 
 	/** Supported save types for uploading/updating
 	 */

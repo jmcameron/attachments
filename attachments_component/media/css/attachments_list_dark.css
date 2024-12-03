@@ -1,0 +1,21 @@
+@media (prefers-color-scheme: dark) {
+    div.attachmentsList a.at_url:link {
+        color: #2a69b8;
+    }
+
+    #main div.attachmentsList tbody tr.even,
+    #main div.attachmentsList tbody tr.even td,
+    div.attachmentsList tbody tr.even td,
+    div.attachmentsList tbody tr.even {
+        background-color: rgb(25 29 41);
+    }
+
+    #main div.attachmentsList table tbody tr.even td,
+    div.attachmentsList table tbody tr.even td {
+        background-color: rgb(25 29 41);
+    }
+
+    form.attachmentsBackend+div.attachmentsList table {
+        background-color: unset;
+    }
+}

@@ -333,7 +333,7 @@ class AttachmentsModel extends BaseDatabaseModel
 	 *
 	 * @return the list of attachments for this parent
 	 */
-	public function &getAttachmentsList()
+	public function &getAttachmentsList($attachmentid=null)
 	{
 		// Just return it if it has already been created
 		if ( $this->_list != null ) {
@@ -349,7 +349,7 @@ class AttachmentsModel extends BaseDatabaseModel
 		$parent_id	   = $this->getParentId();
 		$parent_type   = $this->getParentType();
 		$parent_entity = $this->getParentEntity();
-
+		
 		// Use parent entity corresponding to values saved in the attachments table
 		$parent = $this->getParentClass();
 
@@ -387,7 +387,9 @@ class AttachmentsModel extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('a.*, u.name as creator_name')->from('#__attachments AS a');
 		$query->leftJoin('#__users AS u ON u.id = a.created_by');
-
+		if ($attachmentid && join(',', $attachmentid)) {
+			$query->where('a.id in (' . join(',', $attachmentid) . ')' );
+			}
 		if ( $parent_id == 0 ) {
 			// If the parent ID is zero, the parent is being created so we have
 			// do the query differently
@@ -396,7 +398,7 @@ class AttachmentsModel extends BaseDatabaseModel
 			}
 		else {
 			$query->where('a.parent_id='.(int)$parent_id);
-
+			
 			// Handle the state part of the query
 			if ( $user->authorise('core.edit.state', 'com_attachments') ) {
 				// Do not filter on state since this user can change the state of any attachment
@@ -497,7 +499,7 @@ class AttachmentsModel extends BaseDatabaseModel
 	 *
 	 * @return true if there are attachments and some should be visible
 	 */
-	public function someVisible()
+	public function someVisible($attachmentid=null)
 	{
 		// See if the attachments list has been loaded
 		if ( $this->_list == null ) {
@@ -508,7 +510,7 @@ class AttachmentsModel extends BaseDatabaseModel
 				}
 
 			// Since the attachments have not been loaded, load them now
-			$this->getAttachmentsList();
+			$this->getAttachmentsList($attachmentid);
 			}
 
 		return $this->_some_visible;

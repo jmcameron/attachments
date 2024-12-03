@@ -1,4 +1,4 @@
-# attachments 4.0.2
+# attachments 4.0.4
 
 ## Quick Start
 
@@ -7,6 +7,26 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 ## Requirements
 
 Joomla 4.0+ compatible also with Joomla 5.0+
+
+## Changes since version 4.0.3
+- fix uninstall issue [#79](/../../issues/79)
+- add translation for Greek
+- re-add translations for French; import them from old translation package
+
+## Changes since version 4.0.2
+
+- Some cosmetic changes to better fit the new admin template for joomla 4 & 5
+- Rawurlencode filenames when not using secure download links
+- Fix attachment parent info saving for Joomla 5 for new articles
+- Correct add attachment in backend
+- correct ReferenceError: submitbutton is not defined
+  in add Attachment for article
+- Fix plugin warnings
+- Add a hint if no extensions are allowed due to joomla upgrade
+- Fix Deprecated: explode() when upload a file (FE) [#64](/../../issues/64)
+- Allow plugins to be loaded from cli. Fixes [#61](/../../issues/61)
+- Merge pull request [#60](/../../pull/60) from mckillo/master
+  Some small fix about install, string, datetime, deprecated
 
 ## Changes since version 4.0.1
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
     <name>com_attachments</name>
-    <version>4.0.2</version>
-    <creationDate>July 11, 2024</creationDate>
+    <version>4.0.4</version>
+    <creationDate>November  9, 2024</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>
@@ -160,6 +160,16 @@
 	    <folder>sql/updates</folder>
 	    <folder>language</folder>
 	</files>
+
+	<languages>
+		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.sys.ini</language>
+		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.ini</language>
+		<language tag="en-GB">admin/language/en-GB/en-GB.com_attachments.help.ini</language>
+		<language tag="el-GR">admin/language/el-GR/el-GR.com_attachments.sys.ini</language>
+		<language tag="el-GR">admin/language/el-GR/el-GR.com_attachments.ini</language>
+		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.sys.ini</language>
+		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.ini</language>
+	</languages>
     </administration>
 
     <media destination="com_attachments" folder="media">
@@ -180,6 +190,7 @@
        <filename>css/attachments_hide.css</filename>
        <filename>css/attachments_help.css</filename>
        <filename>css/attachments_list.css</filename>
+       <filename>css/attachments_list_dark.css</filename>
        <filename>css/attachments_list_rtl.css</filename>
        <filename>css/attachments_quickicon.css</filename>
        <filename>css/insert_attachments_token_button.css</filename>
@@ -212,8 +223,10 @@
     </media>
 
     <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
-    <languages folder="site">
-	<language tag="en-GB">en-GB.pkg_attachments.sys.ini</language>
-    </languages>
+    <languages>
+		<language tag="en-GB">site/language/en-GB/en-GB.com_attachments.ini</language>
+    	<language tag="el-GR">site/language/el-GR/el-GR.com_attachments.ini</language>
+		<language tag="fr-FR">site/language/fr-FR/fr-FR.com_attachments.ini</language>
+	</languages>
 
 </extension>

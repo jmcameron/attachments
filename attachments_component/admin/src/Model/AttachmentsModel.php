@@ -45,6 +45,7 @@ class AttachmentsModel extends ListModel
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id',
+				'parent_id',
 				'a.state',
 				'a.access',
 				'a.filename',
@@ -80,7 +81,11 @@ class AttachmentsModel extends ListModel
 		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
-
+		$id = $this->getState('filter.parent_id');
+		if (is_numeric($id))
+		{
+			$query->where('a.parent_id = ' . (int) $id);
+		}
 		$query->select('a.*, a.id as id');
 		$query->from('#__attachments as a');
 

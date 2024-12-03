@@ -2,8 +2,8 @@
 <extension type="package" version="4.0" method="upgrade">
     <name>pkg_attachments</name>
     <packagename>attachments</packagename>
-    <version>4.0.2</version>
-    <creationDate>July 11, 2024</creationDate>
+    <version>4.0.4</version>
+    <creationDate>November  9, 2024</creationDate>
     <copyright>(C) 2007-2024 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <author>Jonathan M. Cameron</author>
@@ -17,13 +17,19 @@
         <file type="component" id="com_attachments">attachments_component.zip</file>
         <file type="plugin" id="attachments" group="content">attachments_plugin.zip</file>
         <file type="plugin" id="attachments" group="search">attachments_search.zip</file>
-        <file type="plugin" id="attachments_plugin_framework" group="attachments">attachments_plugin_framework.zip</file>
+        <file type="plugin" id="framework" group="attachments">attachments_plugin_framework.zip</file>
         <file type="plugin" id="attachments_for_content" group="attachments">attachments_for_content.zip</file>
         <file type="plugin" id="show_attachments" group="system">show_attachments_in_editor_plugin.zip</file>
         <file type="plugin" id="add_attachment"	 group="editors-xtd">add_attachment_btn_plugin.zip</file>
+        <file type="plugin" id="insert_attachments_id_token" group="editors-xtd">insert_attachments_id_token_btn_plugin.zip</file>
         <file type="plugin" id="insert_attachments_token" group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
         <file type="plugin" id="attachments" group="quickicon">attachments_quickicon_plugin.zip</file>
     </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>
+        <language tag="el-GR">language/el-GR/el-GR.pkg_attachments.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.pkg_attachments.sys.ini</language>
+    </languages>
 
     <updateservers>
        <server type="extension" priority="1" name="Attachments Updates">https://raw.githubusercontent.com/jmcameron/attachments/master/pkg_attachments/update_pkg.xml</server>

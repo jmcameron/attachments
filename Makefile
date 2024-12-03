@@ -1,4 +1,4 @@
-VERSION = "4.0.2"
+VERSION = "4.0.4"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
 
@@ -10,6 +10,7 @@ all: parts $(ZIPFILE)
 
 INSTALLS = attachments_plugin \
 	   add_attachment_btn_plugin \
+	   insert_attachments_id_token_btn_plugin \
 	   insert_attachments_token_btn_plugin \
 	   attachments_plugin_framework \
 	   attachments_for_content \
@@ -68,7 +69,7 @@ veryclean: clean
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
-	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec  ./fixvd {} \;
+	@export ATVERS=$(VERSION); export ATDATE=$(DATE); find . \( -name 'AttachmentsDefines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec  ./fixvd {} \;
 
 revertversions:
 	@echo "Reverting all install xml files"
