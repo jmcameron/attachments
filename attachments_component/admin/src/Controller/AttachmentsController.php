@@ -19,6 +19,7 @@ use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -257,7 +258,7 @@ class AttachmentsController extends AdminController
 			$uri = Uri::getInstance();
 			$base_url = $uri->base(true);
 			$lang = $input->getCmd('lang', '');
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from, false);
 			exit();
 		}
 

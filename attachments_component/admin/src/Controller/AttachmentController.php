@@ -1178,7 +1178,7 @@ class AttachmentController extends FormController
 		$view->warning_question = Text::_('ATTACH_REALLY_DELETE_ATTACHMENT') . '<br/>' . $msg;
 		$view->action_button_label = Text::_('ATTACH_DELETE');
 
-		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id;
+		$view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id . "&amp;XDEBUG_SESSION_START=test";
 		$view->action_url .= "&amp;from=" . $view->from;
 
 		$view->display();

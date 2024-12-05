@@ -13,7 +13,9 @@
 
 namespace JMCameron\Component\Attachments\Site\Helper;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -31,7 +33,10 @@ class AttachmentsJavascript
 	{
 		if ($add_refresh_script)
 		{
-			HTMLHelper::script('com_attachments/attachments_refresh.js', ['relative' => true]);
+			//HTMLHelper::script('com_attachments/js/attachments_refresh.js', ['relative' => false]);
+			$app = Factory::getApplication();
+			$document = $app->getDocument();
+			$document->addScript(Uri::root() . 'media/com_attachments/js/attachments_refresh.js');
 		}
 	}
 
@@ -39,14 +44,15 @@ class AttachmentsJavascript
 	/**
 	 * Close the iframe
 	 */
-	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from)
+	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from, $refresh=False)
 	{
 		echo "<script type=\"text/javascript\">
 			let iframe = window.parent.document.querySelector(\".modal.show iframe\");
-			// Refresh iframe before closing
-			if (iframe) iframe.src += '';
-
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$lang\",\"$from\");
+			// Refresh iframe before closing";
+		if ($refresh) { 
+			echo "if (iframe) iframe.src += '';";
+		}
+		echo "window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$lang\",\"$from\");
 			window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();
 			</script>";
 	}
