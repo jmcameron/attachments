@@ -218,6 +218,15 @@ class AttachmentsController extends AdminController
 			}
 		}
 
+		PluginHelper::importPlugin('content');
+		Factory::getApplication()->triggerEvent('onContentAfterDelete', [
+			'com_attachments.attachment',
+			$model,
+			null,
+			false
+		]);
+
+
 		// Figure out how to redirect
 		$from = $input->getWord('from');
 		$known_froms = array('frontpage', 'article', 'editor', 'closeme');

@@ -100,11 +100,10 @@ final class Attachments extends Adapter implements SubscriberInterface
         }
 
         return array_merge($parentEvents, [
-            // 'onFinderAfterDelete' => 'onFinderAfterDelete',
-            // 'onFinderAfterSave'   => 'onFinderAfterSave',
+            'onFinderAfterDelete' => 'onFinderAfterDelete',
+            'onFinderAfterSave'   => 'onFinderAfterSave',
             'onFinderBeforeSave'  => 'onFinderBeforeSave',
             // 'onFinderChangeState' => 'onFinderChangeState',
-            // 'onFinderCategoryChangeState' => 'onFinderCategoryChangeState',
         ]);
     }
 
@@ -133,12 +132,10 @@ final class Attachments extends Adapter implements SubscriberInterface
     public function onFinderAfterDelete(Event $event): void
     {
         $context = $event->getArgument('context');
-        $table = $event->getArgument('row');
+        $table = $event->getArgument('subject');
 
-        if ($context === 'com_categories.category') {
+        if ($context === 'com_attachments.attachment') {
             $id = $table->id;
-        } elseif ($context === 'com_finder.index') {
-            $id = $table->link_id;
         } else {
             return;
         }
@@ -162,23 +159,23 @@ final class Attachments extends Adapter implements SubscriberInterface
     public function onFinderAfterSave(Event $event): void
     {
         $context = $event->getArgument('context');
-        $row     = $event->getArgument('row');
+        $subject     = $event->getArgument('subject');
         $isNew   = $event->getArgument('isNew');
 
         // We only want to handle categories here.
-        if ($context === 'com_categories.category') {
+        if ($context === 'com_attachments.attachment') {
             // Check if the access levels are different.
-            if (!$isNew && $this->old_access != $row->access) {
+            if (!$isNew && $this->old_access != $subject->access) {
                 // Process the change.
-                $this->itemAccessChange($row);
+                $this->itemAccessChange($subject);
             }
 
             // Reindex the category item.
-            $this->reindex($row->id);
+            $this->reindex($subject->id);
 
             // Check if the parent access level is different.
-            if (!$isNew && $this->old_cataccess != $row->access) {
-                $this->categoryAccessChange($row);
+            if (!$isNew && $this->old_cataccess != $subject->access) {
+                $this->categoryAccessChange($subject);
             }
         }
     }
@@ -197,16 +194,15 @@ final class Attachments extends Adapter implements SubscriberInterface
     public function onFinderBeforeSave(Event $event): void
     {
         $context = $event->getArgument('context');
-        $row     = $event->getArgument('row');
+        $subject     = $event->getArgument('subject');
         $isNew   = $event->getArgument('isNew');
 
-        dd($context, $row, $isNew);
         // We only want to handle categories here.
-        if ($context === 'com_categories.category') {
+        if ($context === 'com_attachments.attachment') {
             // Query the database for the old access level and the parent if the item isn't new.
             if (!$isNew) {
-                $this->checkItemAccess($row);
-                $this->checkCategoryAccess($row);
+                $this->checkItemAccess($subject);
+                $this->checkCategoryAccess($subject);
             }
         }
     }
