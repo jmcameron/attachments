@@ -387,9 +387,10 @@ class AttachmentController extends FormController
 			$result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
 			// NOTE: store() is not needed if upload_file() is called since it does it
 
+			$model->id = $attachment->id;
 			$app->triggerEvent('onContentAfterSave', [
 				'com_attachments.attachment',
-				$this->getModel(),
+				$model,
 				null,
 				true
 			]);
