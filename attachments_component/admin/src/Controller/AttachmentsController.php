@@ -317,6 +317,13 @@ class AttachmentsController extends AdminController
 			}
 			else
 			{
+				PluginHelper::importPlugin('content');
+				$app->triggerEvent('onContentChangeState', [
+					'com_attachments.attachment',
+					$cid,
+					$value
+				]);
+				
 				if ($value == 1)
 				{
 					$ntext = $this->text_prefix . '_N_ITEMS_PUBLISHED';
