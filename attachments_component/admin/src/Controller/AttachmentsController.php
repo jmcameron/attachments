@@ -257,7 +257,7 @@ class AttachmentsController extends AdminController
 			$uri = Uri::getInstance();
 			$base_url = $uri->base(true);
 			$lang = $input->getCmd('lang', '');
-			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
+			AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from, false);
 			exit();
 		}
 

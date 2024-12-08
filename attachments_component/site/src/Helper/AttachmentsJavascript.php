@@ -39,12 +39,12 @@ class AttachmentsJavascript
 	/**
 	 * Close the iframe
 	 */
-	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from)
+	public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from, $refresh = true)
 	{
 		echo "<script type=\"text/javascript\">
 			let iframe = window.parent.document.querySelector(\".modal.show iframe\");
 			// Refresh iframe before closing
-			if (iframe) iframe.src += '';
+			if (\"$refresh\" && iframe) iframe.src += '';
 
 			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$lang\",\"$from\");
 			window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();
