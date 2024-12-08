@@ -378,7 +378,7 @@ class AttachmentController extends FormController
 			PluginHelper::importPlugin('content');
 			$app->triggerEvent('onContentBeforeSave', [
 				'com_attachments.attachment',
-				$model,
+				$attachment,
 				null,
 				true
 			]);
@@ -387,10 +387,9 @@ class AttachmentController extends FormController
 			$result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
 			// NOTE: store() is not needed if upload_file() is called since it does it
 
-			$model->id = $attachment->id;
 			$app->triggerEvent('onContentAfterSave', [
 				'com_attachments.attachment',
-				$model,
+				$attachment,
 				null,
 				true
 			]);
@@ -766,6 +765,14 @@ class AttachmentController extends FormController
 
 		// Get the parent handler for this attachment
 		PluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('content');
+		$app->triggerEvent('onContentBeforeSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			false
+		]);
+
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
@@ -837,6 +844,13 @@ class AttachmentController extends FormController
 				$filename_sys = $db->loadResult();
 				File::delete($filename_sys);
 				AttachmentsHelper::clean_directory($filename_sys);
+
+				Factory::getApplication()->triggerEvent('onContentAfterDelete', [
+					'com_attachments.attachment',
+					$attachment,
+					null,
+					false
+				]);
 				}
 			else {
 				// Otherwise switch the file/url to the new parent
@@ -945,6 +959,13 @@ class AttachmentController extends FormController
 				$msg = $result;
 				}
 			// NOTE: store() is not needed if upload_file() is called since it does it
+
+			$app->triggerEvent('onContentAfterSave', [
+				'com_attachments.attachment',
+				$attachment,
+				null,
+				false
+			]);
 			}
 
 		elseif ( $new_uri_type == 'url' ) {
