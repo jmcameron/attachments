@@ -103,7 +103,7 @@ final class Attachments extends Adapter implements SubscriberInterface
             'onFinderAfterDelete' => 'onFinderAfterDelete',
             'onFinderAfterSave'   => 'onFinderAfterSave',
             'onFinderBeforeSave'  => 'onFinderBeforeSave',
-            // 'onFinderChangeState' => 'onFinderChangeState',
+            'onFinderChangeState' => 'onFinderChangeState',
         ]);
     }
 
@@ -224,38 +224,9 @@ final class Attachments extends Adapter implements SubscriberInterface
         $pks     = $event->getArgument('pks');
         $value   = $event->getArgument('value');
 
-        // We only want to handle categories here.
-        if ($context === 'com_categories.category') {
-            /*
-             * The category published state is tied to the parent category
-             * published state so we need to look up all published states
-             * before we change anything.
-             */
-            foreach ($pks as $pk) {
-                $pk    = (int) $pk;
-                $query = clone $this->getStateQuery();
-
-                $query->where($this->getDatabase()->quoteName('a.id') . ' = :plgFinderCategoriesId')
-                    ->bind(':plgFinderCategoriesId', $pk, ParameterType::INTEGER);
-
-                $this->getDatabase()->setQuery($query);
-                $item = $this->getDatabase()->loadObject();
-
-                // Translate the state.
-                $state = null;
-
-                if ($item->parent_id != 1) {
-                    $state = $item->cat_state;
-                }
-
-                $temp = $this->translateState($value, $state);
-
-                // Update the item.
-                $this->change($pk, 'state', $temp);
-
-                // Reindex the item.
-                $this->reindex($pk);
-            }
+        // We only want to handle attachments here.
+        if ($context === 'com_attachments.attachment') {
+            $this->itemStateChange($pks, $value);
         }
 
         // Handle when the plugin is disabled.
