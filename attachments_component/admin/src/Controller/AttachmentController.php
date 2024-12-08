@@ -375,9 +375,24 @@ class AttachmentController extends FormController
 			// Set up the parent entity to save
 			$attachment->parent_entity = $parent_entity;
 
+			PluginHelper::importPlugin('content');
+			$app->triggerEvent('onContentBeforeSave', [
+				'com_attachments.attachment',
+				$model,
+				null,
+				true
+			]);
+
 			// Upload a new file
 			$result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
 			// NOTE: store() is not needed if upload_file() is called since it does it
+
+			$app->triggerEvent('onContentAfterSave', [
+				'com_attachments.attachment',
+				$this->getModel(),
+				null,
+				true
+			]);
 
 			if ( is_object($result) ) {
 				$error = true;
