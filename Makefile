@@ -17,6 +17,7 @@ INSTALLS = attachments_plugin \
 	   attachments_search \
 	   show_attachments_in_editor_plugin \
 	   attachments_quickicon_plugin \
+	   attachments_finder_plugin \
 	   attachments_component
 
 EXTRAS = 
