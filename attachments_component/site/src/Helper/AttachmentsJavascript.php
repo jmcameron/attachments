@@ -13,9 +13,7 @@
 
 namespace JMCameron\Component\Attachments\Site\Helper;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die('Restricted access');
 
