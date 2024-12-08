@@ -3,7 +3,6 @@
 namespace JMCameron\Plugin\Finder\Attachments\Extension;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Log\Log;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
@@ -172,11 +171,6 @@ final class Attachments extends Adapter implements SubscriberInterface
 
             // Reindex the category item.
             $this->reindex($subject->id);
-
-            // Check if the parent access level is different.
-            if (!$isNew && $this->old_cataccess != $subject->access) {
-                $this->categoryAccessChange($subject);
-            }
         }
     }
 
