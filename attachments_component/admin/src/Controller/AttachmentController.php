@@ -367,6 +367,14 @@ class AttachmentController extends FormController
 		$attachment->created_by = $user->get('id');
 		$attachment->modified_by = $user->get('id');
 
+		PluginHelper::importPlugin('content');
+		$app->triggerEvent('onContentBeforeSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			true
+		]);
+
 		// Upload new file/url and create the attachment
 		$msg = '';
 		$msgType = 'message';
@@ -375,24 +383,9 @@ class AttachmentController extends FormController
 			// Set up the parent entity to save
 			$attachment->parent_entity = $parent_entity;
 
-			PluginHelper::importPlugin('content');
-			$app->triggerEvent('onContentBeforeSave', [
-				'com_attachments.attachment',
-				$attachment,
-				null,
-				true
-			]);
-
 			// Upload a new file
 			$result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
 			// NOTE: store() is not needed if upload_file() is called since it does it
-
-			$app->triggerEvent('onContentAfterSave', [
-				'com_attachments.attachment',
-				$attachment,
-				null,
-				true
-			]);
 
 			if ( is_object($result) ) {
 				$error = true;
@@ -436,6 +429,13 @@ class AttachmentController extends FormController
 				}
 			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
+
+		$app->triggerEvent('onContentAfterSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			true
+		]);
 
 		// See where to go to next
 		$task = $this->getTask();
@@ -844,13 +844,6 @@ class AttachmentController extends FormController
 				$filename_sys = $db->loadResult();
 				File::delete($filename_sys);
 				AttachmentsHelper::clean_directory($filename_sys);
-
-				Factory::getApplication()->triggerEvent('onContentAfterDelete', [
-					'com_attachments.attachment',
-					$attachment,
-					null,
-					false
-				]);
 				}
 			else {
 				// Otherwise switch the file/url to the new parent
@@ -959,13 +952,6 @@ class AttachmentController extends FormController
 				$msg = $result;
 				}
 			// NOTE: store() is not needed if upload_file() is called since it does it
-
-			$app->triggerEvent('onContentAfterSave', [
-				'com_attachments.attachment',
-				$attachment,
-				null,
-				false
-			]);
 			}
 
 		elseif ( $new_uri_type == 'url' ) {
@@ -1005,6 +991,13 @@ class AttachmentController extends FormController
 				throw new \Exception($errmsg, 500);
 				}
 			}
+
+		$app->triggerEvent('onContentAfterSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			false
+		]);
 
 		switch ( $this->getTask() )	 {
 
