@@ -230,6 +230,7 @@ class DisplayController extends BaseController
 		$parent_type = $input->getCmd('parent_type', 'com_content');
 		$parent_entity = $input->getCmd('parent_entity', 'default');
 		PluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('content');
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $parent_type) . ' (ERR 5)';
@@ -365,11 +366,26 @@ class DisplayController extends BaseController
 				}
 			}
 
+		$app = Factory::getApplication();
 		// Handle the various ways this function might get invoked
 		if ( $save_type == 'upload' ) {
 			$attachment->created_by = $user->get('id');
 			$attachment->parent_id = $parent_id;
-			}
+
+			$app->triggerEvent('onContentBeforeSave', [
+				'com_attachments.attachment',
+				$attachment,
+				null,
+				true
+			]);
+		} else {
+			$app->triggerEvent('onContentBeforeSave', [
+				'com_attachments.attachment',
+				$attachment,
+				null,
+				false
+			]);
+		}
 
 		// Update the modified info
 		$now = Factory::getDate();
@@ -419,6 +435,22 @@ class DisplayController extends BaseController
 
 			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
+
+		if ( $save_type == 'upload' ) {
+			$app->triggerEvent('onContentAfterSave', [
+				'com_attachments.attachment',
+				$attachment,
+				null,
+				true
+			]);
+		} else {
+			$app->triggerEvent('onContentAfterSave', [
+				'com_attachments.attachment',
+				$attachment,
+				null,
+				false
+			]);
+		}
 
 		// If we are supposed to close this iframe, do it now.
 		if ( in_array( $from, $parent->knownFroms() ) ) {
@@ -537,6 +569,14 @@ class DisplayController extends BaseController
 			$errmsg = $db->getErrorMsg() . ' (ERR 19)';
 			throw new \Exception($errmsg, 500);
 			}
+
+		PluginHelper::importPlugin('content');
+		Factory::getApplication()->triggerEvent('onContentAfterDelete', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			false
+		]);
 
 		// Clean up after ourselves
 		AttachmentsHelper::clean_directory($filename_sys);
