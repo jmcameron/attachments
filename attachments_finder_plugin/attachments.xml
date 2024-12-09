@@ -17,6 +17,8 @@
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_finder_attachments.ini</language>
 		<language tag="en-GB">language/en-GB/plg_finder_attachments.sys.ini</language>
+		<language tag="el-GR">language/el-GR/plg_finder_attachments.ini</language>
+		<language tag="el-GR">language/el-GR/plg_finder_attachments.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
