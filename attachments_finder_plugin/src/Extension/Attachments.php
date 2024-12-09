@@ -130,8 +130,12 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderAfterDelete(Event $event): void
     {
-        $context = $event->getArgument('context');
-        $table = $event->getArgument('subject');
+        if (version_compare(JVERSION, '5.0', 'ge')) {
+            $context = $event->getArgument('context');
+            $table = $event->getArgument('subject');
+        } else {
+            [$context, $table] = $event->getArguments();
+        }
 
         if ($context === 'com_attachments.attachment') {
             $id = $table->id;
@@ -157,9 +161,13 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderAfterSave(Event $event): void
     {
-        $context = $event->getArgument('context');
-        $subject     = $event->getArgument('subject');
-        $isNew   = $event->getArgument('isNew');
+        if (version_compare(JVERSION, '5.0', 'ge')) {
+            $context = $event->getArgument('context');
+            $subject     = $event->getArgument('subject');
+            $isNew   = $event->getArgument('isNew');
+        } else {
+            [$context, $subject, $isNew] = $event->getArguments();
+        }
 
         // We only want to handle categories here.
         if ($context === 'com_attachments.attachment') {
@@ -187,9 +195,13 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderBeforeSave(Event $event): void
     {
-        $context = $event->getArgument('context');
-        $subject     = $event->getArgument('subject');
-        $isNew   = $event->getArgument('isNew');
+        if (version_compare(JVERSION, '5.0', 'ge')) {
+            $context = $event->getArgument('context');
+            $subject     = $event->getArgument('subject');
+            $isNew   = $event->getArgument('isNew');
+        } else {
+            [$context, $subject, $isNew] = $event->getArguments();
+        }
 
         // We only want to handle categories here.
         if ($context === 'com_attachments.attachment') {
@@ -214,9 +226,13 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderChangeState(Event $event): void
     {
-        $context = $event->getArgument('context');
-        $pks     = $event->getArgument('pks');
-        $value   = $event->getArgument('value');
+        if (version_compare(JVERSION, '5.0', 'ge')) {
+            $context = $event->getArgument('context');
+            $pks     = $event->getArgument('pks');
+            $value   = $event->getArgument('value');
+        } else {
+            [$context, $pks, $value] = $event->getArguments();
+        }
 
         // We only want to handle attachments here.
         if ($context === 'com_attachments.attachment') {
