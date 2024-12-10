@@ -311,7 +311,11 @@ final class Attachments extends Adapter implements SubscriberInterface
             }
         } elseif ($item->parent_entity == "article") {
             if (class_exists($class) && method_exists($class, 'getArticleRoute')) {
-                $item->route = $class::getArticleRoute($item->parent_id, $item->language);
+                $item->route = $class::getArticleRoute(
+                    $item->article_alias ? "{$item->parent_id}:{$item->article_alias}" : $item->parent_id, 
+                    $item->article_catid,
+                    $item->language
+                );
                 $item->summary = $item->article_title;
             } else {
                 // This category has no frontend route.
@@ -377,11 +381,15 @@ final class Attachments extends Adapter implements SubscriberInterface
                     [
                         'a.created',
                         'ar.title',
+                        'ar.catid',
+                        'ar.alias',
                         'c.title'
                     ],
                     [
                         'start_date',
                         'article_title',
+                        'article_catid',
+                        'article_alias',
                         'category_title'
                     ]
                 )
