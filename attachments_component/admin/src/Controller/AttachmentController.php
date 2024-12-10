@@ -367,6 +367,14 @@ class AttachmentController extends FormController
 		$attachment->created_by = $user->get('id');
 		$attachment->modified_by = $user->get('id');
 
+		PluginHelper::importPlugin('content');
+		$app->triggerEvent('onContentBeforeSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			true
+		]);
+
 		// Upload new file/url and create the attachment
 		$msg = '';
 		$msgType = 'message';
@@ -421,6 +429,13 @@ class AttachmentController extends FormController
 				}
 			$msg = Text::_('ATTACH_ATTACHMENT_UPDATED');
 			}
+
+		$app->triggerEvent('onContentAfterSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			true
+		]);
 
 		// See where to go to next
 		$task = $this->getTask();
@@ -750,6 +765,14 @@ class AttachmentController extends FormController
 
 		// Get the parent handler for this attachment
 		PluginHelper::importPlugin('attachments');
+		PluginHelper::importPlugin('content');
+		$app->triggerEvent('onContentBeforeSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			false
+		]);
+
 		$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
 		if ( !$apm->attachmentsPluginInstalled($attachment->parent_type) ) {
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $attachment->parent_type) . ' (ERR 135B)';
@@ -968,6 +991,13 @@ class AttachmentController extends FormController
 				throw new \Exception($errmsg, 500);
 				}
 			}
+
+		$app->triggerEvent('onContentAfterSave', [
+			'com_attachments.attachment',
+			$attachment,
+			null,
+			false
+		]);
 
 		switch ( $this->getTask() )	 {
 

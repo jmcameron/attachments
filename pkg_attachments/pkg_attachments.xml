@@ -24,6 +24,7 @@
         <file type="plugin" id="insert_attachments_id_token" group="editors-xtd">insert_attachments_id_token_btn_plugin.zip</file>
         <file type="plugin" id="insert_attachments_token" group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
         <file type="plugin" id="attachments" group="quickicon">attachments_quickicon_plugin.zip</file>
+        <file type="plugin" id="attachments" group="finder">attachments_finder_plugin.zip</file>
     </files>
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>

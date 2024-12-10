@@ -70,7 +70,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 						 'plg_editors-xtd_insert_attachments_id_token_btn',
 						 'plg_editors-xtd_insert_attachments_token_btn',
 						 'plg_system_show_attachments_in_editor',
-						 'plg_quickicon_attachments'
+						 'plg_quickicon_attachments',
+						 'plg_finder_attachments'
 						 );
 
 
