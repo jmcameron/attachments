@@ -211,8 +211,40 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				$tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
 				}
 			}
-		$html .= "<a class=\"at_icon\" href=\"$url\"$target title=\"$tooltip\">";
-		$html .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+		if ( $this->file_link_open_mode == 'in_a_popup' ) {
+			$a_class = 'modal-button mx-2';
+			} else {
+				$a_class = 'at_icon';
+			}
+		if ( $this->file_link_open_mode == 'in_a_popup' ) {
+			$randomId = base64_encode('show'.$actual_filename);
+			// Remove +,/,= from the $randomId
+			$randomId = strtr($randomId, "+/=", "AAA");
+			$modalParams['title']  = $this->escape($tooltip);
+			$modalParams['url']    = $url;
+			$modalParams['height'] = '80%';
+			$modalParams['width']  = '80%';
+			$modalParams['bodyHeight'] = '800';
+			$modalParams['modalWidth'] = '1000';
+			$html .= LayoutHelper::render(
+				'libraries.html.bootstrap.modal.main', 
+				[
+					'selector' => 'modal-' . $randomId, 
+					'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" height=\"750\" width=\"750\"></iframe>",
+					'params' => $modalParams
+				]
+			);
+
+			$show_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+			$show_link .= "title=\"$tooltip\">";
+			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+			$show_link .= "&nbsp;" . $filename . "</a>";
+			}
+		else {
+			$show_link = "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">";
+			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+		}
+		$html .= $show_link;
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
 				$html .= HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
@@ -222,7 +254,9 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				}
 			}
 		$html .= "</a>";
-		$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
+		if ( $this->file_link_open_mode != 'in_a_popup' ) {
+			$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
+			}
 		}
 	else {
 		$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
