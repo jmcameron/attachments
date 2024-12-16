@@ -253,3 +253,12 @@ div.uploadAttachmentsPage div.warning h2 {
 form.attachmentsBackend + div.attachmentsList table {
     background-color: #FFF;
 }
+
+
+.modal-body.jviewport-width80 { 
+	width: 80vw; max-width:none; 
+} 
+ 
+.modal-body.jviewport-height80 { 
+	height: 80vh;
+}
