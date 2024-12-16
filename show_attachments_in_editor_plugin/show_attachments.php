@@ -12,6 +12,7 @@
  */
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
@@ -61,8 +62,14 @@ class Plgsystemshow_attachments extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
+			'onBeforeRender' => 'onBeforeRender',
 			'onAfterRender' => 'onAfterRender',
 		];
+	}
+
+	public function onBeforeRender()
+	{
+		AttachmentsJavascript::setupModalJavascript();
 	}
 
 	/**
