@@ -218,7 +218,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 				}
 			}
 
-		$show_in_modal = $this->file_link_open_mode == 'in_a_popup' && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
+		$show_in_modal = (!$app->client->mobile) && ($this->file_link_open_mode == 'in_a_popup') && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
 		
 		if ( $show_in_modal ) {
 			$a_class = 'modal-button';
