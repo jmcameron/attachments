@@ -231,13 +231,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$modalParams['url']    = $url;
 			$modalParams['height'] = '80%';
 			$modalParams['width']  = '80%';
-			$modalParams['bodyHeight'] = '80';
-			$modalParams['modalWidth'] = '80';
+			$modalParams['bodyHeight'] = '800';
+			$modalParams['modalWidth'] = '600';
 			$html .= LayoutHelper::render(
 				'libraries.html.bootstrap.modal.main', 
 				[
 					'selector' => 'modal-' . $randomId, 
-					'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\"></iframe>",
+					'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" height=\"550\" width=\"750\"></iframe>",
 					'params' => $modalParams
 				]
 			);
