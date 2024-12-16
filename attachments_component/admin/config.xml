@@ -188,8 +188,7 @@
            label="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
            description="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
     </field>
-    <field name="file_link_open_mode" type="radio" default="in_same_window" class="btn-group btn-group-yesno"
-           label="ATTACH_FILE_LINK_OPEN_MODE"
+    <field name="file_link_open_mode" type="list" default="in_same_window"
            description="ATTACH_FILE_LINK_OPEN_MODE_DESCRIPTION">
       <option value="new_window">ATTACH_IN_NEW_WINDOW</option>
       <option value="in_same_window">ATTACH_IN_SAME_WINDOW</option>
