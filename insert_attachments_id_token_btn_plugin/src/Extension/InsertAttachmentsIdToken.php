@@ -16,6 +16,7 @@ namespace JMCameron\Plugin\EditorsXtd\InsertAttachmentsIdToken\Extension;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
 use Joomla\CMS\Factory;
@@ -97,15 +98,23 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
 	 */
 	public function onDisplay($name, $id)
 	{
+		// Get the component parameters
+		$params = ComponentHelper::getParams('com_attachments');
+
+		// This button should only be displayed in 'custom placement' mode.
+		// Check to make sure that is the case
+		$placement = $params->get('attachments_placement', 'end');
+		if ( $placement != 'custom' ) {
+			return false;
+			}
+
 		// Add the regular css file
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
 		HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
 		HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button.css');
 
-		// Handle RTL styling (if necessary)
-		$lang = $this->app->getLanguage();
-				// Get ready for language things
-		$lang =	 $this->app->getLanguage();
+		// Get ready for language things
+		$lang =	$this->app->getLanguage();
 		if ( !$lang->load('plg_editors-xtd_insert_attachments_id_token', dirname(__FILE__)) ) {
 			// If the desired translation is not available, at least load the English
 			$lang->load('plg_editors-xtd_insert_attachments_id_token', JPATH_ADMINISTRATOR, 'en-GB');
