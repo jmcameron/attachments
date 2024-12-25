@@ -255,7 +255,7 @@ form.attachmentsBackend + div.attachmentsList table {
 }
 
 
-.modal-body.jviewport-width80 { 
+.modal-dialog.jviewport-width80 { 
 	width: 80vw; max-width:none; 
 } 
  
