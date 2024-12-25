@@ -328,7 +328,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		else
 		{
 			$lang = $this->app->getLanguage();
-			$lang->load('plg_attachments_plugin_framework', JPATH_PLUGINS . '/attachments/framework');
+			$lang->load('plg_attachments_framework', JPATH_PLUGINS . '/attachments/framework');
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
 			throw new \Exception($errmsg, 500);
 		}
@@ -922,8 +922,6 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 			{
 				$attachments_tag[] = $match[0];
 			}
-
-			var_dump($match);
 			if (($attachments_placement === "custom") && isset($match["arguments"]) && $match["arguments"])
 			{
 				$attachments_tag_args_raw = $match["arguments"];

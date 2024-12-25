@@ -44,6 +44,9 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		$app = Factory::getApplication();
+		$lang = $app->getLanguage();
+		$lang->load('plg_attachments_framework', JPATH_PLUGINS . '/attachments/framework');
 		// For convenience below
 		$attachment = $this->attachment;
 		$parent_id = $attachment->parent_id;
