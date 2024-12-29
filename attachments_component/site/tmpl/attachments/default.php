@@ -276,43 +276,74 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	// Add description (maybe)
 	if ( $this->show_description ) {
 		$description = htmlspecialchars(stripslashes($attachment->description));
-		if ( StringHelper::strlen($description) == 0)
+
+        $is_empty = 0;
+		if ( StringHelper::strlen($description) == 0) {
 			$description = '&nbsp;';
+			$is_empty = 1;			
+		}
+		
 		if ( $this->show_column_titles )
 			$html .= "<td class=\"at_description\">$description</td>";
-		else
-			$html .= "<td class=\"at_description\">[$description]</td>";
+		else {
+			if ($is_empty && $this->params->get('hide_brackets_if_empty')) 
+				$html .= "<td class=\"at_description\">$description</td>";
+			else
+				$html .= "<td class=\"at_description\">[$description]</td>";
 		}
-
+	}
 	// Show the USER DEFINED FIELDs (maybe)
 	if ( $this->show_user_field_1 ) {
 		$user_field = stripslashes($attachment->user_field_1);
-		if ( StringHelper::strlen($user_field) == 0 )
+	    $is_empty = 0;
+		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-		if ( $this->show_column_titles )
-			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
-		else
-			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
-		}
-	if ( $this->show_user_field_2 ) {
-		$user_field = stripslashes($attachment->user_field_2);
-		if ( StringHelper::strlen($user_field) == 0 )
-			$user_field = '&nbsp;';
-		if ( $this->show_column_titles )
-			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
-		else
-			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
-		}
-	if ( $this->show_user_field_3 ) {
-		$user_field = stripslashes($attachment->user_field_3);
-		if ( StringHelper::strlen($user_field) == 0 )
-			$user_field = '&nbsp;';
-		if ( $this->show_column_titles )
-			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
-		else
-			$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
+			$is_empty = 1;			
 		}
 
+		if ( $this->show_column_titles )
+			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+		else {
+			if ($is_empty && $this->params->get('hide_brackets_if_empty')) 
+				$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+			else
+				$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
+		}
+	}
+	if ( $this->show_user_field_2 ) {
+		$user_field = stripslashes($attachment->user_field_2);
+		$is_empty = 0;
+		if ( StringHelper::strlen($user_field) == 0 ) {
+			$user_field = '&nbsp;';
+			$is_empty = 1;			
+		}
+
+		if ( $this->show_column_titles )
+			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+		else {
+			if ($is_empty && $this->params->get('hide_brackets_if_empty')) 
+				$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+			else
+				$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
+		}
+	}
+	if ( $this->show_user_field_3 ) {
+		$user_field = stripslashes($attachment->user_field_3);
+	    $is_empty = 0;
+		if ( StringHelper::strlen($user_field) == 0 ) {
+			$user_field = '&nbsp;';
+			$is_empty = 1;			
+		}
+
+		if ( $this->show_column_titles )
+			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+		else {
+			if ($is_empty && $this->params->get('hide_brackets_if_empty')) 
+				$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+			else
+				$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
+		}
+	}
 	// Add the creator's username (if requested)
 	if ( $this->show_creator_name ) {
 		$html .= "<td class=\"at_creator_name\">{$attachment->creator_name}</td>";
