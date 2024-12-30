@@ -13,6 +13,8 @@
     <packagerurl>http://joomlacode.org/gf/project/attachments/</packagerurl>
     <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_40PLUS</description>
 
+    <scriptfile>install.attachments.php</scriptfile>
+
     <files folder="packages">
         <file type="component" id="com_attachments">attachments_component.zip</file>
         <file type="plugin" id="attachments" group="content">attachments_plugin.zip</file>
