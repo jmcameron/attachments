@@ -65,6 +65,13 @@
       <option value="0">JNO</option>
       <option value="1">JYES</option>
     </field>
+    <field name="hide_brackets_if_empty" type="radio" default="0" layout="joomla.form.field.radio.switcher"
+           label="ATTACH_HIDE_BRACKETS_IF_EMPTY"
+           description="ATTACH_HIDE_BRACKETS_IF_EMPTY_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
+
     <field name="show_creator_name" type="radio" default="0" layout="joomla.form.field.radio.switcher"
            label="ATTACH_SHOW_ATTACHMENT_CREATOR"
            description="ATTACH_SHOW_ATTACHMENT_CREATOR_DESCRIPTION">
