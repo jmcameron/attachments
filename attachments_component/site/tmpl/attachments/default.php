@@ -322,7 +322,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
 		else {
 			if ($is_empty && $this->params->get('hide_brackets_if_empty')) 
-				$html .= "<td class=\"at_user_field\">" . $user_field . "</td>";
+				$html .= "<td class=\"at_user_field\"></td>";
 			else
 				$html .= "<td class=\"at_user_field\">[" . $user_field . "]</td>";
 		}
