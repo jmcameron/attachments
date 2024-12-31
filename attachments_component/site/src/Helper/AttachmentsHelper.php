@@ -436,10 +436,14 @@ class AttachmentsHelper
 			}
 
 		// Get the new filename
-		// (Note: The following replacement is necessary to allow
-		//		  single quotes in filenames to work correctly.)
-		// Trim of any trailing period (to avoid exploits)
-		$filename = rtrim(StringHelper::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
+		// Make filename safe
+		$filename_safe = $params->get('sanitize_filename_characters', false);
+		if ( $filename_safe ) {
+			$filename = File::makeSafe(strtolower($_FILES['upload']['name']));
+			} else {
+			// Trim of any trailing period (to avoid exploits)
+			$filename = rtrim(StringHelper::str_ireplace("\'", "'", $_FILES['upload']['name']), '.');
+			}
 		$ftype = $_FILES['upload']['type'];
 
 		// Check the file size

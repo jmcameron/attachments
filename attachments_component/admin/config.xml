@@ -191,6 +191,12 @@
            label="ATTACH_FORBIDDEN_FILENAME_CHARACTERS" size="40"
            description="ATTACH_FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION">
     </field>
+    <field name="sanitize_filename_characters"  type="radio" default="0" layout="joomla.form.field.radio.switcher"
+           label="ATTACH_SANITIZE_FILENAME"
+           description="ATTACH_SANITIZE_FILENAME_DESCRIPTION">
+      <option value="0">JNO</option>
+      <option value="1">JYES</option>
+    </field>
     <field name="attachments_table_style" type="text" default="attachmentsList"
            label="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES" size="40"
            description="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
