@@ -8,7 +8,7 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 4.0+ compatible also with Joomla 5.0+
 
-## 2025-01-01 version 4.0.5
+## 2025-01-01 version 4.1.0
 
 - Make filename safe adapt {PR #23](/../../pull/23 ) for Joomla 4+ [#98](/../../pull/98)
 - Hide empty brackets Adapt [pull/8](/../../pull/8) to joomla 4+ [#96](/../../pull/96)
