@@ -51,9 +51,7 @@ class HtmlView extends BaseHtmlView
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
 			}
-
 		$this->addToolBar();
-
 		parent::display($tpl);
 	}
 
@@ -68,6 +66,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::apply('params.apply');
 		ToolbarHelper::save('params.save');
 		ToolbarHelper::cancel('params.cancel', 'JTOOLBAR_CLOSE');
+		ToolbarHelper::inlinehelp();
 	}
 
 }

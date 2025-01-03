@@ -704,9 +704,9 @@ ul#attachments-options div.pane-sliders p {
 
 /* fieldset#jform_download_mode label { width: 5em; } */
 
-.form-horizontal .control-group .controls {
+/* .form-horizontal .control-group .controls {
 	margin-left: 300px;
-}
+} */
 
 .form-horizontal .control-group .control-label {
 	width: 285px;
