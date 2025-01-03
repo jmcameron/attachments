@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Toolbar\Toolbar;
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
@@ -51,9 +52,7 @@ class HtmlView extends BaseHtmlView
 		if ( $lang->isRTL() ) {
 			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
 			}
-
 		$this->addToolBar();
-
 		parent::display($tpl);
 	}
 
@@ -68,6 +67,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::apply('params.apply');
 		ToolbarHelper::save('params.save');
 		ToolbarHelper::cancel('params.cancel', 'JTOOLBAR_CLOSE');
+		ToolbarHelper::inlinehelp();
 	}
 
 }

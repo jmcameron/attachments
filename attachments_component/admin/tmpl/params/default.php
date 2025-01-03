@@ -48,49 +48,19 @@ $uri = Uri::getInstance();
 <form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
 	<div class="row-fluid">
 		<div class="span10">
-			<?php echo HTMLHelper::_("uitab.startTabSet", "configTabs", ["active" => "basic"]); ?>
-				<?php
+			<?php echo HTMLHelper::_("uitab.startTabSet", "configTabs", ["active" => "basic"]); 
 					$fieldSets = $this->form->getFieldsets();
-
 					foreach ($fieldSets as $name => $fieldSet) :
 						$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
-				?>
-
-				<?php echo HTMLHelper::_(
-					"uitab.addTab",
-					"configTabs",
-					$name,
-					Text::_($label)
-				); ?>
-
-				<?php
-					$fieldSets = $this->form->getFieldsets();
-				?>
-						<?php
-							if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-								echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
-							endif;
-							foreach ($this->form->getFieldset($name) as $field):
-						?>
-							<div class="control-group">
-						<?php if (!$field->hidden && $name != "permissions") : ?>
-								<div class="control-label">
-									<?php echo $field->label; ?>
-								</div>
-						<?php endif; ?>
-						<div class="<?php if ($name != "permissions") : ?>controls<?php endif; ?>">
-							<?php echo $field->input; ?>
-						</div>
-					</div>
-				<?php
-					endforeach;
-				?>
-				<?php echo HTMLHelper::_("uitab.endTab"); ?>
-				<?php
+						echo HTMLHelper::_("uitab.addTab", "configTabs", $name, Text::_($label)); 
+						if (isset($fieldSet->description) && !empty($fieldSet->description)) :
+							echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
+						endif;
+						echo $this->form->renderFieldset($name); 
+                        echo HTMLHelper::_("uitab.endTab"); 
 				endforeach;
-				?>
-				<?php echo HTMLHelper::_("form.token"); ?>
-			<?php echo HTMLHelper::_("uitab.endTabSet"); ?>
+				echo HTMLHelper::_("form.token"); 
+			    echo HTMLHelper::_("uitab.endTabSet"); ?>
 		</div>
 	</div>
 	<div>
@@ -102,6 +72,4 @@ $uri = Uri::getInstance();
 		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 </form>
-<script type="text/javascript">
-		jQuery('#configTabs a:first').tab('show'); // Select first tab
-</script>
+

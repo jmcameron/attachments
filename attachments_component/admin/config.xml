@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
+  <inlinehelp button="show" />
   <fieldset name="basic" id="attachments-fieldset"
 	    label="ATTACH_CONFIG_BASIC_SETTINGS_LABEL"
 	    addfieldprefix="JMCameron\Component\Attachments\Administrator\Field"
