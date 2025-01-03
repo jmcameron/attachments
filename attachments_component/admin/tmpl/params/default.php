@@ -56,7 +56,12 @@ $uri = Uri::getInstance();
 						if (isset($fieldSet->description) && !empty($fieldSet->description)) :
 							echo '<p class="tab-description">'.Text::_($fieldSet->description).'</p>';
 						endif;
-						echo $this->form->renderFieldset($name); 
+						$options = [];
+						if ($name == "permissions") {
+							$options['hiddenLabel'] = true;
+						}
+						echo $this->form->renderFieldset($name, $options);
+
                         echo HTMLHelper::_("uitab.endTab"); 
 				endforeach;
 				echo HTMLHelper::_("form.token"); 
