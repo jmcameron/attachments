@@ -928,7 +928,6 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				$attachments_tag_args	  = ltrim($attachments_tag_args_raw, ' :');
 
 				preg_match('/id=([\d,]+)/', $attachments_tag_args, $match_id);
-				var_dump($match_id);
 				if ($match_id) {
 					$attachment_id[] = explode(",", $match_id[1]);
 				}
