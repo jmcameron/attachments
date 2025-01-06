@@ -203,6 +203,7 @@
            description="ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION">
     </field>
     <field name="file_link_open_mode" type="list" default="in_same_window"
+           label="ATTACH_FILE_LINK_OPEN_MODE"
            description="ATTACH_FILE_LINK_OPEN_MODE_DESCRIPTION">
       <option value="new_window">ATTACH_IN_NEW_WINDOW</option>
       <option value="in_same_window">ATTACH_IN_SAME_WINDOW</option>
