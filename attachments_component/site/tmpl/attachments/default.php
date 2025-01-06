@@ -175,51 +175,37 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	if ( $this->show_file_links ) {
 		if ( $attachment->uri_type == 'file' ) {
 			// Handle file attachments
-			if ( $this->secure ) {
-				$url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
-				}
-			else {
-				// We need to urlencode the filename
-				$offset = strlen(AttachmentsDefines::$ATTACHMENTS_SUBDIR."/{$attachment->parent_entity}/{$attachment->parent_id}/");
-				$url_path = mb_strcut($attachment->url, 0, $offset);
-				$url_filename = rawurlencode(mb_strcut($attachment->url, $offset));
-				$url = $base_url . $url_path . $url_filename;
+			// We need to urlencode the filename
+			$offset = strlen(AttachmentsDefines::$ATTACHMENTS_SUBDIR."/{$attachment->parent_entity}/{$attachment->parent_id}/");
+			$url_path = mb_strcut($attachment->url, 0, $offset);
+			$url_filename = rawurlencode(mb_strcut($attachment->url, $offset));
+			$url = $base_url . $url_path . $url_filename;
 
-				if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
-					// $url = utf8_encode($url); Deprecated from php 8.2
-                    $url = iconv('ISO-8859-1', 'UTF-8', $url);
-					}
+			if (strtoupper(substr(PHP_OS,0,3) == 'WIN')) {
+				// $url = utf8_encode($url); Deprecated from php 8.2
+				$url = iconv('ISO-8859-1', 'UTF-8', $url);
 				}
-			$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+			$tooltip = Text::_('ATTACH_VIEW_THIS_ATTACHMENT');
 			}
 		else {
-			// Handle URL "attachments"
-			if ( $this->secure ) {
-				$url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
-				$tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
-				}
-			else {
 				// Handle the link url if not logged in but link displayed for guests
-				$url = '';
-				if ( !$logged_in AND ($attachment->access != '1')) {
-					$guest_levels = $this->params->get('show_guest_access_levels', Array('1'));
-					if ( in_array($attachment->access, $guest_levels) ) {
-						/** @var \Joomla\CMS\Application\CMSApplication $app */
-						$app = Factory::getApplication();
-						$return = $app->getUserState('com_attachments.current_url', '');
-						$url = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
-						$target = '';
-						}
-					}
-				if ( $url == '' ) {
-					$url = $attachment->url;
-					}
-				$tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
-				}
-			}
-
-		$show_in_modal = (!$app->client->mobile) && ($this->file_link_open_mode == 'in_a_popup') && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
-		
+            $url = '';
+            if ( !$logged_in AND ($attachment->access != '1')) {
+                $guest_levels = $this->params->get('show_guest_access_levels', Array('1'));
+                if ( in_array($attachment->access, $guest_levels) ) {
+                    /** @var \Joomla\CMS\Application\CMSApplication $app */
+                    $app = Factory::getApplication();
+                    $return = $app->getUserState('com_attachments.current_url', '');
+                    $url = Route::_($base_url . 'index.php?option=com_attachments&task=requestLogin' . $return);
+                    $target = '';
+                    }
+                }
+            if ( $url == '' ) {
+                $url = $attachment->url;
+                }
+            $tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $attachment->url);
+       }
+       $show_in_modal = (!$app->client->mobile) && ($this->file_link_open_mode == 'in_a_popup') && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
 		if ( $show_in_modal ) {
 			$a_class = 'modal-button';
 			AttachmentsJavascript::setupModalJavascript();
@@ -280,7 +266,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
         $is_empty = 0;
 		if ( StringHelper::strlen($description) == 0) {
 			$description = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 		
 		if ( $this->show_column_titles )
@@ -298,7 +284,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	    $is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -315,7 +301,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -332,7 +318,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	    $is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -358,7 +344,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			}
 		$html .= '<td class="at_file_size">' . $file_size_str . '</td>';
 		}
-
+	if ( $this->secure ) {
+        $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+        $html .=  '<td class="at_icon">';
+        $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+        $html .= "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
+                HTMLHelper::image("com_attachments/download.gif", "", null, true) . '</a></td>';
+    }
 	// Show number of downloads (maybe)
 	if ( $this->secure && $this->show_downloads ) {
 		$num_downloads = (int)$attachment->download_count;
