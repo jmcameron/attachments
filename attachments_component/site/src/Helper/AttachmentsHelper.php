@@ -1506,7 +1506,7 @@ class AttachmentsHelper
 	 *
 	 * @param int $id the attachment id
 	 */
-	public static function download_attachment($id)
+	public static function download_attachment($id, $raw=0, $popup=0)
 	{
 		$base_url = Uri::base(false);
 
@@ -1614,14 +1614,19 @@ class AttachmentsHelper
 			}
 
 			// Force the download
-			if ($download_mode == 'attachment') {
-				// attachment
-				header("Content-Disposition: attachment; filename=\"$mod_filename\"");
+			$content_disposition = 'attachment';
+			// in popup model attachment is inline
+			if ( $popup == 1 ) {
+				$content_disposition = 'inline';
 				}
-			else {
+			else if ( $raw == 1 ) {
 				// inline
-				header("Content-Disposition: inline; filename=\"$mod_filename\"");
+				$content_disposition = 'attachment';
 				}
+			else if ($download_mode != 'attachment' ) {
+				$content_disposition = 'inline';
+			}
+			header("Content-Disposition: ". $content_disposition ."; filename=\"$mod_filename\"");
 			header('Content-Transfer-Encoding: binary');
 			header("Content-Type: $content_type");
 
