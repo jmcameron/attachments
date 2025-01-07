@@ -236,16 +236,10 @@ class HtmlView extends BaseHtmlView
 								   'index.php?option=com_attachments&amp;task=adminUtils&amp;tmpl=component',
 								   800, 500);
 			}
-
-		ToolBarHelper::divider();
-
-		// Manually add a help button for the help view
-		$url = 'index.php?option=com_attachments&amp;task=help&amp;tmpl=component';
-		$help = ' ' . Text::_('JTOOLBAR_HELP') . ' ';
-		$link = "<button class=\"btn btn-small\" rel=\"help\" href=\"#\" ";
-		$link .= "onclick=\"Joomla.popupWindow('$url', 'Help', 800, 650, 1)\"> ";
-		$link .= "<i class=\"icon-question-sign\"></i>$help</button>";
-		$toolbar->appendButton('Custom', $link, 'toolbar-help');
+			ToolBarHelper::divider();
+			$toolbar->appendButton('Popup', 'help', 'JTOOLBAR_HELP',
+								   'index.php?option=com_attachments&amp;task=help&amp;tmpl=component',
+								   800, 500);
 	}
 
 }

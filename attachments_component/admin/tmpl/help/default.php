@@ -35,7 +35,7 @@ if ($app->getInput()->getCmd('show') == 'codes') {
 
 // Define the section constants
 define('SECT_INTRO',   1);
-define('SECT_NEW_V3',  2);
+define('SECT_NEW_V4',  2);
 define('SECT_FEAT',	   3);
 define('SECT_UPLOAD',  4);
 define('SECT_SETNGS',  5);
@@ -56,7 +56,7 @@ define('SECT_ACKNOW', 19);
 define('SECT_CONTCT', 20);
 
 $this->saveSectionInfo(SECT_INTRO,	'introduction',		 'ATTACH_HELP_010000_SECTION_TITLE');
-$this->saveSectionInfo(SECT_NEW_V3, 'v3-features',		 'ATTACH_HELP_020000_SECTION_TITLE');
+$this->saveSectionInfo(SECT_NEW_V4, 'v4-features',		 'ATTACH_HELP_020000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_FEAT,	'features',			 'ATTACH_HELP_030000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_UPLOAD, 'uploading',		 'ATTACH_HELP_040000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_SETNGS, 'settings',			 'ATTACH_HELP_050000_SECTION_TITLE');
@@ -71,7 +71,6 @@ $this->saveSectionInfo(SECT_UTILS,	'admin-utilities',	 'ATTACH_HELP_130000_SECTI
 $this->saveSectionInfo(SECT_WARN,	'warnings',			 'ATTACH_HELP_140000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_UPGRAD, 'upgrading',		 'ATTACH_HELP_150000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_UNINST, 'uninstalling',		 'ATTACH_HELP_160000_SECTION_TITLE');
-$this->saveSectionInfo(SECT_MIGRAT, 'migration',		 'ATTACH_HELP_170000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_TRANS,	'translations',		 'ATTACH_HELP_180000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_ACKNOW, 'acknowledgments',	 'ATTACH_HELP_190000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_CONTCT, 'contact',			 'ATTACH_HELP_200000_SECTION_TITLE');
@@ -110,26 +109,19 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
    $this->startSection(SECT_INTRO);
 	  $this->addParagraph(		'ATTACH_HELP_010100_TEXT');
 	  $this->addWarning(		'ATTACH_HELP_010200_WARNING');
-	  $this->addNote(			'ATTACH_HELP_010300_NOTE');
 	  $this->addParagraph('ATTACH_HELP_010400_TEXT', Array( '{SECT_TRANS}' => $this->sectionLink(SECT_TRANS) ));
-	  $this->addParagraph('ATTACH_HELP_010500_TEXT');
-	  $this->startList();
-		 $email_list_url = 'http://jmcameron.net/attachments/email-list.html';
-		 $email_list_text = Text::sprintf('ATTACH_HELP_010600_TEXT', $email_list_url);
-		 $this->addListElementHtml("<a class=\"reference external\" href=\"$email_list_url\">$email_list_text</a>");
-	  $this->endList();
    $this->endSection(SECT_INTRO);
 
    // ------------------------------------------------------------
    // New features in Version 3.1
-   $this->startSection(SECT_NEW_V3);
+   $this->startSection(SECT_NEW_V4);
 	  $this->startList();
 		 $this->addListElement('ATTACH_HELP_020100_TEXT');
 		 $this->addListElement('ATTACH_HELP_020200_TEXT');
 		 $this->addListElement('ATTACH_HELP_020300_TEXT');
 		 $this->addListElement('ATTACH_HELP_020400_TEXT');
 	  $this->endList();
-   $this->endSection(SECT_NEW_V3);
+   $this->endSection(SECT_NEW_V4);
 
    // ------------------------------------------------------------
    // Major features of the Attachments Extension
@@ -166,7 +158,6 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
    // Attachments Settings
    $this->startSection(SECT_SETNGS);
 	  $this->addParagraph('ATTACH_HELP_050100_TEXT');
-	  $this->addNote(	  'ATTACH_HELP_050150_NOTE');
 
 	  // Basic Options
 	  $this->startSubSection(Array( 'id' => 'basic-options',
@@ -180,22 +171,20 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 											'ATTACH_HELP_050400_TEXT');
 			$this->addDefinitionListElement('ATTACH_DEFAULT_ACCESS_LEVEL',
 											'ATTACH_DEFAULT_ACCESS_LEVEL_DESCRIPTION');
-			$this->addListElement('ATTACH_HELP_050600_TEXT');
-			$this->addHint(		  'ATTACH_HELP_050700_HINT_TEXT');
-			$this->addDefinitionListElement('ATTACH_MAX_FILENAME_URL_LENGTH', 
-											'ATTACH_HELP_050800_TEXT');
+			$this->addDefinitionListElement('ATTACH_HELP_050600_TEXT', 'ATTACH_USER_DEFINED_FIELD_NAME_DESCRIPTION');
+			$this->addHint('ATTACH_HELP_050700_HINT_TEXT');
+			$this->addDefinitionListElement('ATTACH_MAX_FILENAME_URL_LENGTH', 'ATTACH_MAX_FILENAME_URL_LENGTH_DESCRIPTION');
 			$this->addDefinitionListElement('ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED', 
-											'ATTACH_HELP_050900_TEXT', null, false);
+											'ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION', null, false);
 			   $this->startList();
 				  $this->addListElement('ATTACH_HELP_051000_TEXT');
 				  $this->addListElement('ATTACH_HELP_051100_TEXT');
 				  $this->addListElement('ATTACH_HELP_051200_TEXT', null, false);
-					  $this->addWarning('ATTACH_HELP_051300_WARNING');
+				  $this->addWarning('ATTACH_HELP_051300_WARNING');
 				  $this->endListElement();
-				  $this->addParagraph(	'ATTACH_HELP_051400_TEXT', null, 'noindent');
+				  $this->addParagraph('ATTACH_HELP_051400_TEXT', null, 'noindent');
 				  $this->addPreBlock("&lt;span class=&quot;hide&quot;&gt;{attachments}&lt;/span&gt;");
-				  $this->addParagraph(	'ATTACH_HELP_051500_TEXT', null, 'noindent');
-				  $this->addWarning(	'ATTACH_HELP_051600_WARNING');
+				  $this->addParagraph('ATTACH_HELP_051500_TEXT', null, 'noindent');
 				  $this->addListElement('ATTACH_HELP_051700_TEXT');
 				  $this->addListElement('ATTACH_HELP_051800_TEXT');
 				  $this->endListElement();
@@ -212,18 +201,18 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 		 echo $this->image('options-formatting.png', 'ATTACH_HELP_052000_SUBSECTION_TITLE',
 						   'class="float-right drop-shadow"') . "\n";
 		 $this->startList();
-			$this->addListElement('ATTACH_HELP_052100_TEXT');
-			$this->addListElement('ATTACH_HELP_052200_TEXT');
-			$this->addListElement('ATTACH_HELP_052300_TEXT');
-			$this->addListElement('ATTACH_HELP_052400_TEXT');
-			$this->addListElement('ATTACH_HELP_052500_TEXT', null, false);
+			$this->addDefinitionListElement('ATTACH_SHOW_COLUMN_TITLES', 'ATTACH_SHOW_COLUMN_TITLES_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_SHOW_ATTACHMENT_DESCRIPTION', 'ATTACH_SHOW_ATTACHMENT_DESCRIPTION_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_HIDE_BRACKETS_IF_EMPTY', 'ATTACH_HIDE_BRACKETS_IF_EMPTY_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_SHOW_ATTACHMENT_CREATOR', 'ATTACH_SHOW_ATTACHMENT_CREATOR_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_SHOW_ATTACHMENT_FILE_SIZE', 'ATTACH_SHOW_ATTACHMENT_FILE_SIZE_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_SHOW_NUMBER_OF_DOWNLOADS','ATTACH_SHOW_NUMBER_OF_DOWNLOADS_DESCRIPTION');
 				$this->addWarning('ATTACH_HELP_052600_WARNING');
 			$this->endListElement();
-			$this->addListElement('ATTACH_HELP_052650_TEXT');
-			$this->addListElement('ATTACH_HELP_052700_TEXT');
-			$this->addListElement('ATTACH_HELP_052800_TEXT',
-								  Array('{DESC}' => Text::_('ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION')));
-			$this->addListElement('ATTACH_HELP_052900_TEXT', null, false);
+			$this->addDefinitionListElement('ATTACH_SHOW_CREATION_DATE', 'ATTACH_HELP_052650_TEXT');
+			$this->addDefinitionListElement('ATTACH_SHOW_MODIFICATION_DATE', 'ATTACH_HELP_052700_TEXT');
+			$this->addDefinitionListElement('ATTACH_FORMAT_STRING_FOR_DATES', 'ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_ATTACHMENTS_LIST_ORDER', 'ATTACH_HELP_052900_TEXT');
 				$this->startList('ol', 'arabic simple');
 					$this->addListElement('ATTACH_HELP_053000_TEXT',
 										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILENAME')));
@@ -271,15 +260,15 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 						   'class="float-right drop-shadow"') . "\n";
 		 $this->addParagraph('ATTACH_HELP_055100_TEXT');
 		 $this->startList();
-			 $this->addListElement('ATTACH_HELP_055200_TEXT');
-			 $this->addListElement('ATTACH_HELP_055300_TEXT');
-			 $this->addListElement('ATTACH_HELP_055400_TEXT');
-			 $this->addListElement('ATTACH_HELP_055500_TEXT');
-			 $this->addListElement('ATTACH_HELP_055600_TEXT');
-			 $this->addListElement('ATTACH_HELP_055700_TEXT');
-			 $this->addListElement('ATTACH_HELP_055800_TEXT',
+			 $this->addDefinitionListElement('ATTACH_HIDE_ATTACHMENTS_ON_FRONTPAGE', 'ATTACH_HIDE_ATTACHMENTS_ON_FRONTPAGE_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_HIDE_ATTACHMENTS_WITH_READMORE', 'ATTACH_HIDE_ATTACHMENTS_WITH_READMORE_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_HIDE_ATTACHMENTS_ON_BLOGS', 'ATTACH_HIDE_ATTACHMENTS_ON_BLOGS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS', 'ATTACH_HIDE_ATTACHMENTS_EXCEPT_ON_ARTICLE_VIEWS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_ALWAYS_SHOW_CATEGORY_ATTACHMENTS', 'ATTACH_ALWAYS_SHOW_CATEGORY_ATTACHMENTS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES', 'ATTACH_HIDE_ATTACHMENTS_FOR_CATEGORIES_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_SHOW_GUEST_ACCESS_LEVELS', 'ATTACH_HELP_055800_TEXT',
 				  Array('{DESCRIPTION}' => Text::_('ATTACH_SHOW_GUEST_ACCESS_LEVELS_DESCRIPTION')));
-			 $this->addListElement('ATTACH_HELP_055900_TEXT');
+			 $this->addDefinitionListElement('ATTACH_HIDE_ADD_ATTACHMENTS_LINK', 'ATTACH_HIDE_ADD_ATTACHMENTS_LINK_DESCRIPTION');
 		 $this->endList();
 	  $this->endSubSection('visibility-options');
 
@@ -289,25 +278,27 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 		 echo $this->image('options-advanced.png', 'ATTACH_HELP_057000_SUBSECTION_TITLE',
 						   'class="float-right drop-shadow"') . "\n";
 		 $this->startList();
-			 $this->addListElement('ATTACH_HELP_057050_TEXT',
+			 $this->addDefinitionListElement('ATTACH_MAX_ATTACHMENT_SIZE', 'ATTACH_HELP_057050_TEXT',
 								   Array('{DESCRIPTION}' => Text::_('ATTACH_MAX_ATTACHMENT_SIZE_DESCRIPTION'),
 										 '{SECT_WARN}' => $this->sectionLink(SECT_WARN)));
-			 $this->addListElement('ATTACH_HELP_057100_TEXT');
-			 $this->addListElement('ATTACH_HELP_057200_TEXT', Array( '{SECT_STYLE}' => $this->sectionLink(SECT_STYLE) ));
-			 $this->addListElement('ATTACH_HELP_057300_TEXT');
+			 $this->addDefinitionListElement('ATTACH_FORBIDDEN_FILENAME_CHARACTERS', 'ATTACH_FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES', 'ATTACH_HELP_057200_TEXT', 
+											Array( '{DESCRIPTION}' =>Text::_('ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION'), 
+											'{SECT_STYLE}' => $this->sectionLink(SECT_STYLE)));
+			 $this->addDefinitionListElement('ATTACH_FILE_LINK_OPEN_MODE' , 'ATTACH_FILE_LINK_OPEN_MODE_DESCRIPTION');
 			 $blk1 = "<pre class=\"literal-block\">content/attachments/language/qq-QQ/qq-QQ.plg_content_attachments.ini</pre>\n";
 			 $blk2 = "<pre class=\"literal-block\">language/overrides/en-GB.override.ini</pre>\n";
-			 $this->addListElement('ATTACH_HELP_057400_TEXT', null, false);
+			 $this->addDefinitionListElement('ATTACH_CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS', 'ATTACH_HELP_057400_TEXT',
+										array('{DESCRIPTION}' => Text::_('ATTACH_CUSTOM_TITLES_FOR_ATTACHMENTS_LISTS_DESCRIPTION')), false);
 				 $this->addNote(Array('ATTACH_HELP_057500_NOTE', 'ATTACH_HELP_057600_NOTE'),
 								Array('{BLOCK1}' => $blk1, '{BLOCK2}' => $blk2));
 			 $this->endListElement();
-			 $this->addListElement('ATTACH_HELP_057700_TEXT');
-			 $this->addListElement('ATTACH_HELP_057800_TEXT');
-			 $this->addListElement('ATTACH_HELP_057900_TEXT');
-			 $this->addListElement('ATTACH_HELP_057940_TEXT',
-								   Array('{DESCRIPTION}' => Text::_('ATTACH_URL_TO_LOGIN_DESCRIPTION')));
-			 $this->addListElement('ATTACH_HELP_057960_TEXT',
-								   Array('{DESCRIPTION}' => Text::_('ATTACH_URL_TO_REGISTER_DESCRIPTION')));
+			 $this->addDefinitionListElement('ATTACH_TIMEOUT_FOR_CHECKING_LINKS', 'ATTACH_TIMEOUT_FOR_CHECKING_LINKS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_SUPERIMPOSE_URL_LINK_ICONS', 'ATTACH_SUPERIMPOSE_URL_LINK_ICONS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_SUPPRESS_OBSOLETE_ATTACHMENTS','ATTACH_HELP_057900_TEXT', 
+					array('{DESCRIPTION}' => Text::_('ATTACH_SUPPRESS_OBSOLETE_ATTACHMENTS_DESCRIPTION')));
+			 $this->addDefinitionListElement('ATTACH_URL_TO_LOGIN', 'ATTACH_URL_TO_LOGIN_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_URL_TO_REGISTER', 'ATTACH_URL_TO_REGISTER_DESCRIPTION');
 		 $this->endList();
 	  $this->endSubSection('advanced-options');
 
@@ -317,17 +308,18 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 		 echo $this->image('options-security.png', 'ATTACH_HELP_058000_SUBSECTION_TITLE',
 						   'class="float-right drop-shadow"') . "\n";
 		 $this->startList();
-			 $this->addListElement(Array('ATTACH_HELP_058100_TEXT',
-										 'ATTACH_HELP_058200_TEXT',
-										 'ATTACH_HELP_058300_TEXT'), null, false);
+			 $this->addDefinitionListElement('ATTACH_SECURE_ATTACHMENT_DOWNLOADS', Array('ATTACH_HELP_058100_TEXT', 'ATTACH_HELP_058200_TEXT',
+										 'ATTACH_HELP_058300_TEXT'));
 				 $this->addHint('ATTACH_HELP_058400_HINT');
 			 $this->endListElement();
-			 $this->addListElement('ATTACH_HELP_058500_TEXT', null, false);
-				 $this->startList();
+			 $this->addDefinitionListElement('ATTACH_DOWNLOAD_MODE_FOR_SECURE_DOWNLOADS', 'ATTACH_HELP_058500_TEXT');
+			 	 $this->startList();
 					  $this->addListElement('ATTACH_HELP_058600_TEXT');
 					  $this->addListElement('ATTACH_HELP_058700_TEXT');
 				 $this->endList();
-				 $this->addParagraph('ATTACH_HELP_058800_TEXT');
+			 $this->addParagraph('ATTACH_HELP_058800_TEXT');
+			 $this->addDefinitionListElement('ATTACH_SHOW_RAW_DOWNLOAD', 'ATTACH_SHOW_RAW_DOWNLOAD_DESCRIPTION');
+
 			 $this->endListElement();
 		 $this->endList();
 	  $this->endSubSection('security-options');
@@ -594,16 +586,6 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 	  $this->endList();
    $this->endSection(SECT_UNINST);
 
-   // ------------------------------------------------------------
-   // Migration Attachments from Joomla 1.5 to Joomla 2.5+ or 3.x
-   $this->startSection(SECT_MIGRAT);
-	  $this->addParagraph('ATTACH_HELP_170100_TEXT');
-	  $this->startList();
-		 $migrate_url = 'http://jmcameron.net/attachments/';
-		 $migrate_url_text = Text::sprintf('ATTACH_HELP_170000_SECTION_TITLE', $migrate_url);
-		 $this->addListElementHtml("<a class=\"reference external\" href=\"$migrate_url\">$migrate_url_text</a>");
-	  $this->endList();
-   $this->endSection(SECT_MIGRAT);
 
    // ------------------------------------------------------------
    // Translations
