@@ -233,6 +233,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			$modalParams['width']  = '80%';
 			$modalParams['bodyHeight'] = '80';
 			$modalParams['modalWidth'] = '80';
+			$url .= "&popup=1";
 			$html .= LayoutHelper::render(
 				'libraries.html.bootstrap.modal.main', 
 				[
@@ -280,7 +281,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
         $is_empty = 0;
 		if ( StringHelper::strlen($description) == 0) {
 			$description = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 		
 		if ( $this->show_column_titles )
@@ -298,7 +299,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	    $is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -315,7 +316,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -332,7 +333,7 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	    $is_empty = 0;
 		if ( StringHelper::strlen($user_field) == 0 ) {
 			$user_field = '&nbsp;';
-			$is_empty = 1;			
+			$is_empty = 1;
 		}
 
 		if ( $this->show_column_titles )
@@ -358,7 +359,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			}
 		$html .= '<td class="at_file_size">' . $file_size_str . '</td>';
 		}
-
+	if ( $this->show_raw_download &&  $show_in_modal ) {
+        $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id . "&raw=1");
+        $html .=  '<td class="at_icon">';
+        $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+        $html .= "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
+                HTMLHelper::image("com_attachments/download.gif", "", null, true) . '</a></td>';
+    }
 	// Show number of downloads (maybe)
 	if ( $this->secure && $this->show_downloads ) {
 		$num_downloads = (int)$attachment->download_count;

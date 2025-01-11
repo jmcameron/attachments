@@ -485,9 +485,10 @@ class DisplayController extends BaseController
 			$errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ATTACHMENT_ID_N', $id) . ' (ERR 12)';
 			throw new \Exception($errmsg, 500);
 			}
-
+		$raw = $this->input->getInt('raw', 0);
+		$popup = $this->input->getInt('popup', 0);
 		// NOTE: The helper download_attachment($id) function does the access check
-		AttachmentsHelper::download_attachment($id);
+		AttachmentsHelper::download_attachment($id, $raw, $popup);
 	}
 
 

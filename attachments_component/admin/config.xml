@@ -256,6 +256,13 @@
       <option value="attachment">ATTACH_ATTACHMENT</option>
       <option value="inline">ATTACH_INLINE</option>
     </field>
+    <field name="show_raw_download" type="radio" default="0" layout="joomla.form.field.radio.switcher"
+           label="ATTACH_SHOW_RAW_DOWNLOAD"
+           description="ATTACH_SHOW_RAW_DOWNLOAD_DESCRIPTION"
+           showon="download_mode:inline[AND]file_link_open_mode:in_a_popup">
+      <option value="0">JNO</option>
+      <option value="1">JYES</option>
+    </field>
   </fieldset>
 
   <fieldset name="permissions"
