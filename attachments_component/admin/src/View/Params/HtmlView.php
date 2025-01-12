@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 // Check to ensure this file is included in Joomla!
@@ -66,6 +67,14 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::apply('params.apply');
 		ToolbarHelper::save('params.save');
 		ToolbarHelper::cancel('params.cancel', 'JTOOLBAR_CLOSE');
+		ToolBarHelper::divider();
+
+		// Manually add a help button for the help view
+		ToolBarHelper::divider();
+		$toolbar = Toolbar::getInstance('toolbar');
+		$toolbar->appendButton('Popup', 'help', 'JTOOLBAR_HELP',
+                               'index.php?option=com_attachments&amp;task=help&amp;tmpl=component#settings',
+                               800, 500);
 		ToolbarHelper::inlinehelp();
 	}
 
