@@ -17,7 +17,6 @@ use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
@@ -128,7 +127,7 @@ class ParamsController extends FormController
 
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				$this->app->enqueueMessage($errors[$i], 'warning');
+				$this->app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 			}
 
 			// Save the data in the session.
