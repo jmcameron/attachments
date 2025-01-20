@@ -282,6 +282,7 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 								   Array('{DESCRIPTION}' => Text::_('ATTACH_MAX_ATTACHMENT_SIZE_DESCRIPTION'),
 										 '{SECT_WARN}' => $this->sectionLink(SECT_WARN)));
 			 $this->addDefinitionListElement('ATTACH_FORBIDDEN_FILENAME_CHARACTERS', 'ATTACH_FORBIDDEN_FILENAME_CHARACTERS_DESCRIPTION');
+			 $this->addDefinitionListElement('ATTACH_SANITIZE_FILENAME', 'ATTACH_SANITIZE_FILENAME_DESCRIPTION');
 			 $this->addDefinitionListElement('ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES', 'ATTACH_HELP_057200_TEXT', 
 											Array( '{DESCRIPTION}' =>Text::_('ATTACH_CSS_STYLE_FOR_ATTACHMENTS_TABLES_DESCRIPTION'), 
 											'{SECT_STYLE}' => $this->sectionLink(SECT_STYLE)));
