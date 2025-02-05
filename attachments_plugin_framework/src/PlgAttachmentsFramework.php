@@ -914,7 +914,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 		$attachments_tag	  = [];
 		$attachments_tag_args = '';
 		$match				  = false;
-		$attachment_id        = null;
+		$attachment_id []     = null;
 		$offset               = -1;
 		while (false != ($offset = StringHelper::strpos($content->$text_field_name, '{attachments', $offset + 1)))
 		{
@@ -962,7 +962,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 				->getMVCFactory();
 			/** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
 			$controller		  = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
-			$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from, $attachment_id[$i] ?? null);
+			$attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from, $attachment_id[$i]);
 
 			// If the attachments list is empty, insert an empty div for it
 			if ($attachments_list == '')
