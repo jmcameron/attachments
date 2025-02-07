@@ -15,7 +15,9 @@ This will update all xml versions (package/component/plugins)
 Update the README.md with new fix/features
 launch make
 this will create a attachments-<version>.zip in root directory
-git pull of all modifications
+launch make fixsha
+this will update the hecksums in file update_pkg.xml
+git push of all modifications
 create a release with v<version> as name
 upload the package file  attachments-<version>.zip into this release 
 

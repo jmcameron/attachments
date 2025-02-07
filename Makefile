@@ -1,6 +1,7 @@
-VERSION = "4.1.0"
+VERSION = "4.1.1"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
+
 
 # Only set DATE if you need to force the date.  
 # (Otherwise it uses the current date.)
@@ -74,7 +75,11 @@ fixversions:
 
 revertversions:
 	@echo "Reverting all install xml files"
-	@find . \( -name 'defines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
+	@find . \( -name 'AttachmentsDefines.php' -o -name 'help.rst' -o -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
+
+fixsha:
+	@echo "Updating update xml files with checksums"
+	./fixsha.sh $(ZIPFILE) 'update_pkg.xml'
 
 fixcopyrights:
 	@find . \( -name '*.php' -o -name '*.ini' -o -name '*.xml' \) -exec ./fixcopyright {} \;

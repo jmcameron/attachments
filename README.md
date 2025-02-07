@@ -1,4 +1,4 @@
-# attachments 4.0.4
+# attachments 4.1.1
 
 ## Quick Start
 
@@ -7,6 +7,12 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 ## Requirements
 
 Joomla 4.0+ compatible also with Joomla 5.0+
+
+## 2025-02-07 version 4.1.1
+
+- improve help pages for english/french
+- Check if $attachment_id[$i] exists [#103](/../../pull/103)
+- Add download link to be able to view attachement in a popup or download it [#102](/../../pull/102)
 
 ## 2025-01-01 version 4.1.0
 
