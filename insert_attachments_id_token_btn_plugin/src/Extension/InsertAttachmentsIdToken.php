@@ -46,6 +46,8 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
 	protected ?CMSApplication $app = null;
 	protected $parent_type =null;
 	protected $row = null;
+	protected $editor = null;
+	protected $id = null;
 
 	/**
 	 * Load the language file on instantiation
