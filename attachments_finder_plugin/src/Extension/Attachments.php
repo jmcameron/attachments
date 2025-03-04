@@ -95,7 +95,11 @@ final class Attachments extends Adapter implements SubscriberInterface
         $parentEvents = [];
         // Joomla 4 Adapter class doesn't have a getSubscribedEvents method
         if (method_exists(Adapter::class, 'getSubscribedEvents')) {
-            $parentEvents = call_user_func('parent::getSubscribedEvents');
+            if (version_compare(phpversion(), '8.2.0', '<')) {
+                $parentEvents = call_user_func('parent::getSubscribedEvents');
+            } else {
+                $parentEvents = call_user_func(array(parent::class, 'getSubscribedEvents'));
+            }
         } else {
             $parentEvents = [
                 'onStartIndex' => 'onStartIndex',
