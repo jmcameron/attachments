@@ -8,6 +8,11 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 4.0+ compatible also with Joomla 5.0+
 
+## 2025-04-02 version 4.1.2
+
+- Deprecation warning [#115](/../../issues/115)
+- Deprecation warning [#113](/../../issues/113)
+
 ## 2025-02-07 version 4.1.1
 
 - improve help pages for english/french
