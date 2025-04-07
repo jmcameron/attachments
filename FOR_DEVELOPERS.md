@@ -5,10 +5,10 @@
 
 ### How to update release version
 
-Update line VERSION = "4.0.2"
-in Makefile file
-launch make fixversions in an linux shell
-This will update all xml versions (package/component/plugins)
+- Update line VERSION = "<new version>" (for instance "4.0.2") in Makefile file
+- launch make fixversions in an linux shell (This will update all xml versions (package/component/plugins)
+- launch make fixsha to update the checksums for update server
+
 
 ### How to update release package
 
