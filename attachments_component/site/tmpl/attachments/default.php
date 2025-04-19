@@ -251,7 +251,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		else {
 			$a_class = 'at_icon';
 			$show_link = "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">";
-			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, null, null, true);
+			$show_link .= "&nbsp;" . $filename . "</a>";
 		}
 		$html .= $show_link;
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
@@ -261,10 +262,6 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 			else {
 				$html .= HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
 				}
-			}
-		$html .= "</a>";
-		if ( !$show_in_modal ) {
-			$html .= "<a class=\"at_url\" href=\"$url\"$target title=\"$tooltip\">$filename</a>";
 			}
 		}
 	else {
