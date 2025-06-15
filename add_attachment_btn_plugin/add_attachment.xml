@@ -19,7 +19,9 @@
 		<language tag="en-GB">language/en-GB/en-GB.plg_editors-xtd_add_attachment.sys.ini</language>
 		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_add_attachment.ini</language>
 		<language tag="el-GR">language/el-GR/el-GR.plg_editors-xtd_add_attachment.sys.ini</language>
-		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_add_attachment.ini</language>
-		<language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_add_attachment.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_add_attachment.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.plg_editors-xtd_add_attachment.sys.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.plg_editors-xtd_add_attachment.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.plg_editors-xtd_add_attachment.sys.ini</language>
 	</languages>
 </extension>

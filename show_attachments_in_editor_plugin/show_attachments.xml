@@ -22,6 +22,8 @@
 		<language tag="el-GR">language/el-GR/el-GR.plg_system_show_attachments.sys.ini</language>
 		<language tag="fr-FR">language/fr-FR/fr-FR.plg_system_show_attachments.ini</language>
 		<language tag="fr-FR">language/fr-FR/fr-FR.plg_system_show_attachments.sys.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.plg_system_show_attachments.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.plg_system_show_attachments.sys.ini</language>
 	</languages>
 
 </extension>

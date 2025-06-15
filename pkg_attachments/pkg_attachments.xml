@@ -32,6 +32,7 @@
         <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>
         <language tag="el-GR">language/el-GR/el-GR.pkg_attachments.sys.ini</language>
         <language tag="fr-FR">language/fr-FR/fr-FR.pkg_attachments.sys.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.pkg_attachments.sys.ini</language>
     </languages>
 
     <updateservers>
