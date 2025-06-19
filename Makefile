@@ -7,7 +7,7 @@ ZIPFILE = attachments-$(VERSION2).zip
 # (Otherwise it uses the current date.)
 # DATE = "February 19, 2011"
 
-all: parts $(ZIPFILE)
+all: parts $(ZIPFILE) fixsha
 
 INSTALLS = attachments_plugin \
 	   add_attachment_btn_plugin \
