@@ -110,8 +110,8 @@
     <field name="use_fontawesome_icons" type="radio" default="1" class="btn-group"
            label="ATTACH_SHOW_FONTAWESOME_ICONS"
            description="ATTACH_SHOW_FONTAWESOME_ICONS_DESCRIPTION">
-      <option value="0">JNO</option>
-      <option value="1">JYES</option>
+      <option value="1">JNO</option>
+      <option value="0">JYES</option>
     </field>
     <field name="use_fontawesome_icons_style" type="list" default="fas"
            label="ATTACH_SHOW_FONTAWESOME_ICONS_STYLE"
