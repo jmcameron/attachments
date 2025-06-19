@@ -107,6 +107,21 @@
            label="ATTACH_FORMAT_STRING_FOR_DATES" size="30"
            description="ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION">
     </field>
+    <field name="use_fontawesome_icons" type="radio" default="1" class="btn-group"
+           label="ATTACH_SHOW_FONTAWESOME_ICONS"
+           description="ATTACH_SHOW_FONTAWESOME_ICONS_DESCRIPTION">
+      <option value="1">JYES</option>
+      <option value="0">JNO</option>
+    </field>
+    <field name="use_fontawesome_icons_style" type="list" default="fas"
+           label="ATTACH_SHOW_FONTAWESOME_ICONS_STYLE"
+           description="ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_DESCRIPTION"
+           showon="use_fontawesome_icons:1">
+      <option value="fas">ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAS</option>
+      <option value="far">ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAR</option>
+      <option value="fal">ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAL</option>
+      <option value="fad">ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAD</option>
+    </field>
     <field name="sort_order" type="list" default="filename"
            label="ATTACH_ATTACHMENTS_LIST_ORDER"
            description="ATTACH_ATTACHMENTS_LIST_ORDER_DESCRIPTION">

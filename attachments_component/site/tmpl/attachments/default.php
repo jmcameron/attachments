@@ -13,6 +13,7 @@
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -109,7 +110,11 @@ if ( $this->file_link_open_mode == 'in_a_popup' ) {
 	AttachmentsJavascript::setupModalJavascript();
 }
 
-// Construct the lines for the attachments
+if ($this->use_fontawesome_icons) {
+    $faIconsStyle = $this->use_fontawesome_icons_style;
+}
+
+    // Construct the lines for the attachments
 $row_num = 0;
 for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$attachment = $attachments[$i];
@@ -129,10 +134,16 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 	$html .= '<tr class="'.$row_class.'">';
 		
 	// Construct some display items
-	if ( StringHelper::strlen($attachment->icon_filename) > 0 )
-		$icon = $attachment->icon_filename;
-	else
-		$icon = 'generic.gif';
+    if ($this->use_fontawesome_icons)
+    {
+        $icon = AttachmentsFileTypes::fa_icon_filename('', $attachment->file_type);
+    }
+    else {
+        if (StringHelper::strlen($attachment->icon_filename) > 0)
+            $icon = $attachment->icon_filename;
+        else
+            $icon = 'generic.gif';
+    }
 
 	if ( $this->show_file_size) {
 		$file_size = (int)( $attachment->file_size / 1024.0 );
@@ -221,52 +232,77 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 		$show_in_modal = (!$app->client->mobile) && ($this->file_link_open_mode == 'in_a_popup') && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
 		
 		if ( $show_in_modal ) {
-			$a_class = 'modal-button';
-			AttachmentsJavascript::setupModalJavascript();
+            $a_class = 'modal-button';
+            AttachmentsJavascript::setupModalJavascript();
 
-			$randomId = base64_encode('show'.$actual_filename);
-			// Remove +,/,= from the $randomId
-			$randomId = strtr($randomId, "+/=", "AAA");
-			$modalParams['title']  = $this->escape($tooltip);
-			$modalParams['url']    = $url;
-			$modalParams['height'] = '80%';
-			$modalParams['width']  = '80%';
-			$modalParams['bodyHeight'] = '80';
-			$modalParams['modalWidth'] = '80';
-			$url .= "&popup=1";
-			$html .= LayoutHelper::render(
-				'libraries.html.bootstrap.modal.main', 
-				[
-					'selector' => 'modal-' . $randomId, 
-					'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'></iframe>",
-					'params' => $modalParams
-				]
-			);
+            $randomId = base64_encode('show' . $actual_filename);
+            // Remove +,/,= from the $randomId
+            $randomId = strtr($randomId, "+/=", "AAA");
+            $modalParams['title'] = $this->escape($tooltip);
+            $modalParams['url'] = $url;
+            $modalParams['height'] = '80%';
+            $modalParams['width'] = '80%';
+            $modalParams['bodyHeight'] = '80';
+            $modalParams['modalWidth'] = '80';
+            $url .= "&popup=1";
+            $html .= LayoutHelper::render(
+                'libraries.html.bootstrap.modal.main',
+                [
+                    'selector' => 'modal-' . $randomId,
+                    'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'></iframe>",
+                    'params' => $modalParams
+                ]
+            );
 
-			$show_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
-			$show_link .= "title=\"$tooltip\">";
-			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+            $show_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+            $show_link .= "title=\"$tooltip\">";
+            if ($this->use_fontawesome_icons) {
+                $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
+                }
+            else {
+                $show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+            }
 			$show_link .= "&nbsp;" . $filename . "</a>";
 			}
 		else {
 			$a_class = 'at_icon';
 			$show_link = "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">";
-			$show_link .= HTMLHelper::image('com_attachments/file_icons/'.$icon, null, null, true);
+            if ($this->use_fontawesome_icons) {
+                $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
+                }
+            else {
+                $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, null, null, true);
+            }
 			$show_link .= "&nbsp;" . $filename . "</a>";
 		}
 		$html .= $show_link;
 		if ( ($attachment->uri_type == 'url') && $this->superimpose_link_icons ) {
 			if ( $attachment->url_valid ) {
-				$html .= HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                if ($this->use_fontawesome_icons) {
+                    $html .= '<i class="' . $faIconsStyle . ' fa-eye-slash"></i>';
+                    }
+                else {
+                    $html .= HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                    }
 				}
 			else {
-				$html .= HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                if ($this->use_fontawesome_icons) {
+                    $html .= '<i class="' . $faIconsStyle . ' fa-eye-slash redicon"></i>';
+                    }
+                else {
+                    $html .= HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                }
 				}
 			}
 		}
 	else {
 		$tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
-		$html .= HTMLHelper::image('com_attachments/file_icons/'.$icon, $tooltip, null, true);
+        if ($this->use_fontawesome_icons) {
+            $html .= '<i class="' . $faIconsStyle . ' ' . $icon . '" title="' . $tooltip . '"></i>';
+            }
+        else {
+            $html .= HTMLHelper::image('com_attachments/file_icons/' . $icon, $tooltip, null, true);
+        }
 		$html .= '&nbsp;' . $filename;
 		}
 	$html .= "</td>";
@@ -360,8 +396,13 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
         $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id . "&raw=1");
         $html .=  '<td class="at_icon">';
         $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
-        $html .= "<a class=\"". $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
+        if ($this->use_fontawesome_icons) {
+            $html .= '<i class="' . $faIconsStyle . ' fa-download"></i>';
+            }
+        else {
+            $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
                 HTMLHelper::image("com_attachments/download.gif", "", null, true) . '</a></td>';
+        }
     }
 	// Show number of downloads (maybe)
 	if ( $this->secure && $this->show_downloads ) {
@@ -419,7 +460,12 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 		$update_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
 		$update_link .= "title=\"$tooltip\">";
-		$update_link .= HTMLHelper::image('com_attachments/pencil.gif', $tooltip, null, true);
+        if ($this->use_fontawesome_icons) {
+            $update_link .= '<i class="' . $faIconsStyle . ' fa-edit"></i>';
+        }
+        else {
+            $update_link .= HTMLHelper::image('com_attachments/pencil.gif', $tooltip, null, true);
+            }
 		$update_link .= "</a>";
 		}
 
@@ -450,7 +496,12 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
 
 		$delete_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
 		$delete_link .= "title=\"$tooltip\">";
-		$delete_link .= HTMLHelper::image('com_attachments/delete.gif', $tooltip, null, true);
+        if ($this->use_fontawesome_icons) {
+            $delete_link .= '<i class="' . $faIconsStyle . ' fa-trash"></i>';
+            }
+        else {
+            $delete_link .= HTMLHelper::image('com_attachments/delete.gif', $tooltip, null, true);
+        }
 		$delete_link .= "</a>";
 		}
 

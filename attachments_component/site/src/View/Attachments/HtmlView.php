@@ -180,6 +180,8 @@ class HtmlView extends BaseHtmlView
 		$this->show_modified_date =	$params->get('show_modified_date', false);
 		$this->file_link_open_mode = $params->get('file_link_open_mode', 'in_same_window');
 		$this->show_raw_download = $params->get('show_raw_download', false);
+        $this->use_fontawesome_icons = $params->get('use_fontawesome_icons', false);
+        $this->use_fontawesome_icons_style = $params->get('use_fontawesome_icons_style', 'fas');
 
 		// Set up the file/url titleshow_mod_date
 		if ( $this->show_column_titles ) {

@@ -262,3 +262,8 @@ form.attachmentsBackend + div.attachmentsList table {
 .modal-body.jviewport-height80 { 
 	height: 80vh;
 }
+
+#main div.attachmentsContainer,
+div.attachmentsContainer .redicon {
+    color: red;
+}
