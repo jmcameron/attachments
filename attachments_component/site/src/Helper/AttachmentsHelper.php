@@ -1008,10 +1008,10 @@ class AttachmentsHelper
 				$port = 80;
 				}
 			elseif ( $protocol == 'https' ) {
-				$ports = 443;
+				$port = 443;
 				}
 			elseif ( $protocol == 'ftp' ) {
-				$ports = 21;
+				$port = 21;
 				}
 			elseif ( $protocol == '' ) {
 				$port = 80;
