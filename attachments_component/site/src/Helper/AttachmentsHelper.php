@@ -26,7 +26,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
-use Joomla\CMS\Log\Log;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -1105,7 +1104,7 @@ class AttachmentsHelper
 		// * Get 'filename' (for display)
 		//
 		// * Rename all occurrences of 'display_name' to 'display_name'
-		Log::add("get_url_info parse_url". print_r($raw_url, true) , Log::INFO, 'attachments');
+
 		$u = AttachmentsHelper::parse_url($raw_url, $relative_url);
 
 		// Deal with parsing errors
@@ -1142,7 +1141,7 @@ class AttachmentsHelper
 		$fp = false;
 
 		$app = Factory::getApplication();
-		Log::add("get_url_info" , Log::INFO, 'attachments');
+
 		if ( $timeout > 0 ) {
 
 			// Set up error handler in case it times out or some other error occurs
@@ -1150,7 +1149,6 @@ class AttachmentsHelper
 				throw new \Exception("fsockopen error");
 			}, E_ALL);
 			try {
-				Log::add("get_url_info fsocopen". print_r($u, true) , Log::INFO, 'attachments');
 				if ($u->port == 443) {
 					$fp = fsockopen("ssl://" . $u->domain , $u->port, $errno, $errstr, $timeout);
 				} else {
@@ -1160,7 +1158,6 @@ class AttachmentsHelper
 				}
 			catch (\Exception $e) {
 				restore_error_handler();
-				Log::add("get_url_info error". $e->getMessage() , Log::ERROR, 'attachments');
 				if ( $verify ) {
 					$u->error = true;
 					$u->error_code = 'url_check_exception';
@@ -1170,7 +1167,6 @@ class AttachmentsHelper
 
 			if ( $u->error ) {
 				$error_msg = Text::sprintf('ATTACH_ERROR_CHECKING_URL_S', $raw_url);
-				Log::add("get_url_info error". $error_msg, Log::ERROR, 'attachments');
 				if ( $app->isClient('administrator') ) {
 					$result = new \stdClass();
 					$result->error = true;
@@ -1189,7 +1185,7 @@ class AttachmentsHelper
 			while ( !feof($fp) ) {
 
 				$http_response = fgets($fp, 128);
-				Log::add("get_url_info response". print_r($http_response, true), Log::INFO, 'attachments');
+
 				// Check to see if it was found
 				if ( preg_match("|^HTTP/1\.\d [0-9]+ ([^$]+)$|m",
 								$http_response, $match) ) {
@@ -1212,12 +1208,11 @@ class AttachmentsHelper
 
 				}
 			fclose($fp);
-			Log::add("get_url end of fp", Log::INFO, 'attachments');
+
 			// Return error if it was not found (timed out, etc)
 			if ( !$found && $verify ) {
 				$u->error = true;
 				$u->error_code = 'url_not_found';
-				Log::add("get_url_info response". 'url_not_found', Log::INFO, 'attachments');
 				$u->error_msg = Text::sprintf('ATTACH_ERROR_COULD_NOT_ACCESS_URL_S', $raw_url);
 				return $u;
 				}
@@ -1233,7 +1228,6 @@ class AttachmentsHelper
 				return $u;
 				}
 			if ( $timeout == 0 ) {
-				Log::add("get_url_info response". 'no fp', Log::INFO, 'attachments');
 				// Pretend it was found
 				$found = true;
 				if ( $overlay ) {
