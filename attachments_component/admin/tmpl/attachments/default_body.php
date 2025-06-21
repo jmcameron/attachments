@@ -11,6 +11,7 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -30,6 +31,8 @@ $params = $this->params;
 $secure = $params->get('secure',false);
 $superimpose_link_icons = $params->get('superimpose_url_link_icons', true);
 $icon_dir = $uri->root(true) . '/components/com_attachments/media/icons/';
+$use_fontawesome_icons = $params->get('use_fontawesome_icons', false);
+$use_fontawesome_icons_style = $params->get('use_fontawesome_icons_style', 'fas');
 
 // Loop through all the attachments
 $k = 0;
@@ -57,13 +60,18 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$published = HTMLHelper::_('jgrid.published', $item->state, $i, 'attachments.' );
 	$access = $this->level_name[$item->access];
 
-	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
-	$link = OutputFilter::ampReplace( 'index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]='. (int)$item->id );
-	$view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
-	if ( StringHelper::strlen($item->icon_filename) > 0 )
-		$icon = $item->icon_filename;
-	else
-		$icon = 'generic.gif';
+    $size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
+    $link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' . (int)$item->id);
+    $view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
+    if ($use_fontawesome_icons) {
+        $icon = AttachmentsFileTypes::fa_icon_filename('', $item->file_type);
+        }
+    else {
+        if (StringHelper::strlen($item->icon_filename) > 0)
+            $icon = $item->icon_filename;
+        else
+            $icon = 'generic.gif';
+    }
 	$add_attachment_title = Text::_('ATTACH_ADD_ATTACHMENT_TITLE');
 	$edit_attachment_title = Text::_('ATTACH_EDIT_THIS_ATTACHMENT_TITLE');
 	$access_attachment_title = Text::_('ATTACH_ACCESS_THIS_ATTACHMENT_TITLE');
@@ -100,7 +108,12 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 				"href=\"".$item->parent_url."\" target=\"_blank\">" . $item->parent_title . "</a>";
 			$artLine .= OutputFilter::ampReplace('&nbsp;&nbsp;&nbsp;&nbsp;');
 			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">";
-			$artLine .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+            if ($use_fontawesome_icons) {
+                $artLine .= '<i class="' . $use_fontawesome_icons_style . ' fa-paperclip"></i>';
+                }
+            else {
+                $artLine .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+                }
 			$artLine .= "</a>&nbsp;<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
 				"$add_attachment_txt</a>";
 			$artLine .= "</td></tr>";
@@ -122,13 +135,29 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	  <?php if ( !$this->editor ) : ?>
 		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>" >
 	  <?php endif; ?>
-		  <?php echo HTMLHelper::image('com_attachments/file_icons/'.$icon, $download_verb, null, true);
+		  <?php
+            if ($use_fontawesome_icons) {
+                echo '<i class="' . $use_fontawesome_icons_style . ' ' . $icon . '"></i>';
+                }
+            else {
+                echo HTMLHelper::image('com_attachments/file_icons/' . $icon, $download_verb, null, true);
+                }
 		if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
 			if ( $item->url_valid ) {
-				echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                if ($use_fontawesome_icons) {
+                    echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash"></i>';
+                }
+                else {
+                    echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                    }
 				}
 			else {
-				echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                if ($use_fontawesome_icons) {
+                    echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash redicon"></i>';
+                }
+                else {
+                    echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                    }
 				}
 			}
 		 ?>
@@ -148,11 +177,16 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 					echo $item->url;
 					}
 				}
-			   ?></a>&nbsp;&nbsp;<a class="downloadAttach" href="<?php echo $url; ?>" target="_blank"
+			   ?></a>&nbsp;&nbsp;
+          <?php if(!$use_fontawesome_icons): ?>
+          <a class="downloadAttach" href="<?php echo $url; ?>" target="_blank"
 		 title="<?php echo $access_attachment_title; ?>"><?php echo $download_verb;
 		  ?></a><a class="downloadAttach" href="<?php echo $url; ?>"  target="_blank"
 		 title="<?php echo $access_attachment_title; ?>"
 		  ><?php echo HTMLHelper::image('com_attachments/download.gif', $download_verb, null, true); ?></a>
+        <?php else: echo '<a class="downloadAttach" href="'.$url.'"  target="_blank"
+		 title="' . $access_attachment_title . '"
+		  ><i class="' . $use_fontawesome_icons_style . ' fa-download"></i></a>'; endif; ?>
 	  </td>
 	  <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
 	  <td class="at_access" align="center"><?php echo $access; ?></td>

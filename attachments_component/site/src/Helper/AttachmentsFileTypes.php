@@ -87,7 +87,80 @@ class AttachmentsFileTypes {
 			   '_link' => 'link.gif',
 			   );
 
-	/** Array of lookups for icon filename from mime type */
+    /**
+     * Array of lookups for FontAwesome icon given a filename extension
+     *
+     * @access  public
+     *
+     * @var     array
+     *
+     * @since   1.0.0
+     */
+    public const ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA = [
+        'aif' => 'fa-file-audio',
+        'aiff' => 'fa-file-audio',
+        'avi' => 'fa-file-video',
+        'avif' => 'fa-file-image',
+        'bmp' => 'fa-file-image',
+        'bz2' => 'fa-file-archive',
+        'c' => 'fa-file-code',
+        'c++' => 'fa-file-code',
+        'cab' => 'fa-file-archive',
+        'cc' => 'fa-file-code',
+        'cpp' => 'fa-file-code',
+        'css' => 'fa-file-code',
+        'csv' => 'fa-file-lines',
+        'doc' => 'fa-file-word',
+        'docx' => 'fa-file-word',
+        'eps' => 'fa-file-image',
+        'gif' => 'fa-file-image',
+        'gz' => 'fa-file-archive',
+        'h' => 'fa-file-code',
+        'iv' => 'fa-file-image',
+        'jpg' => 'fa-file-image',
+        'js' => 'fa-file-code',
+        'midi' => 'fa-file-audio',
+        'mov' => 'fa-file-video',
+        'mp3' => 'fa-file-audio',
+        'mpeg' => 'fa-file-video',
+        'mpg' => 'fa-file-video',
+        'odg' => 'fa-file-image',
+        'odp' => 'fa-file-powerpoint',
+        'ods' => 'fa-file-excel',
+        'odt' => 'fa-file-word',
+        'pdf' => 'fa-file-pdf',
+        'php' => 'fa-file-code',
+        'png' => 'fa-file-image',
+        'pps' => 'fa-file-powerpoint',
+        'ppt' => 'fa-file-powerpoint',
+        'pptx' => 'fa-file-powerpoint',
+        'ps' => 'fa-file-image',
+        'ra' => 'fa-file-audio',
+        'ram' => 'fa-file-audio',
+        'rar' => 'fa-file-archive',
+        'rtf' => 'fa-file-lines',
+        'sql' => 'fa-file-code',
+        'swf' => 'fa-file-video',
+        'tar' => 'fa-file-archive',
+        'txt' => 'fa-file-lines',
+        'vcf' => 'fa-address-card',
+        'vrml' => 'fa-file-image',
+        'wav' => 'fa-file-audio',
+        'webp' => 'fa-file-image',
+        'wma' => 'fa-file-audio',
+        'wmv' => 'fa-file-video',
+        'wrl' => 'fa-file-image',
+        'xls' => 'fa-file-excel',
+        'xlsx' => 'fa-file-excel',
+        'xml' => 'fa-file-code',
+        'zip' => 'fa-file-archive',
+
+        // Artificial
+        '_generic' => 'fa-file',
+        '_link' => 'fa-link',
+    ];
+
+    /** Array of lookups for icon filename from mime type */
 	static $attachments_icon_from_mime_type =
 		Array( 'application/bzip2' => 'archive.gif',
 			   'application/excel' => 'excel.gif',
@@ -117,7 +190,8 @@ class AttachmentsFileTypes {
 			   'application/x-rar-compressed' => 'archive.gif',
 			   'application/x-tar' => 'archive.gif', 
 			   'application/x-vrml' => '3d.gif', 
-			   'application/x-zip' => 'zip.gif', 
+			   'application/x-zip' => 'zip.gif',
+               'application/x-zip-compressed' => 'zip.gif',
 			   'application/xml' => 'xml.gif',
 			   'audio/mpeg' => 'music.gif',
 			   'audio/x-aiff' => 'music.gif',
@@ -144,7 +218,76 @@ class AttachmentsFileTypes {
 			   'link/unknown' => 'link.gif'
 			   );
 
-	/** Array of lookups for mime type from filename extension */
+    /**
+     * Array of lookups for FontAwesome icon from mime type
+     *
+     * @access  public
+     *
+     * @var     array
+     *
+     * @since   1.0.0
+     */
+    public const ATTACHMENTS_ICON_FROM_MIME_TYPE_FA = [
+        'application/bzip2' => 'fa-file-archive',
+        'application/excel' => 'fa-file-excel',
+        'application/msword' => 'fa-file-word',
+        'application/pdf' => 'fa-file-pdf',
+        'application/postscript' => 'fa-file-image',
+        'application/powerpoint' => 'fa-file-powerpoint',
+        'application/rtf' => 'fa-file',
+        'application/vnd.ms-cab-compressed' => 'fa-file-archive',
+        'application/vnd.ms-excel' => 'fa-file-excel',
+        'application/vnd.ms-powerpoint' => 'fa-file-powerpoint',
+        'application/vnd.ms-pps' => 'fa-file-powerpoint',
+        'application/vnd.ms-word' => 'fa-file-word',
+        'application/vnd.oasis.opendocument.graphics' => 'fa-file-image',
+        'application/vnd.oasis.opendocument.presentation' => 'fa-file-powerpoint',
+        'application/vnd.oasis.opendocument.spreadsheet' => 'fa-file-excel',
+        'application/vnd.oasis.opendocument.text' => 'fa-file-word',
+        'application/vnd.openxmlformats' => 'fa-file-code',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fa-file-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'fa-file-powerpoint',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fa-file-excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fa-file-word',
+        'application/x-bz2' => 'fa-file-archive',
+        'application/x-gzip' => 'fa-file-archive',
+        'application/x-javascript' => 'fa-file-code',
+        'application/x-midi' => 'fa-file-audio',
+        'application/x-shockwave-flash' => 'fa-file-video',
+        'application/x-rar-compressed' => 'fa-file-archive',
+        'application/x-tar' => 'fa-file-archive',
+        'application/x-vrml' => 'fa-file-image',
+        'application/x-zip' => 'fa-file-archive',
+        'application/x-zip-compressed' => 'fa-file-archive',
+        'application/xml' => 'fa-file-code',
+        'audio/mpeg' => 'fa-file-audio',
+        'audio/x-aiff' => 'fa-file-audio',
+        'audio/x-ms-wma' => 'fa-file-audio',
+        'audio/x-pn-realaudio' => 'fa-file-audio',
+        'audio/x-wav' => 'fa-file-audio',
+        'image/avif' => 'fa-file-image',
+        'image/bmp' => 'fa-file-image',
+        'image/gif' => 'fa-file-image',
+        'image/jpeg' => 'fa-file-image',
+        'image/png' => 'fa-file-image',
+        'image/webp' => 'fa-file-image',
+        'model/vrml' => 'fa-file-image  ',
+        'text/css' => 'fa-file-code',
+        'text/html' => 'fa-file',
+        'text/plain' => 'fa-file-lines',
+        'text/rtf' => 'fa-file-lines',
+        'text/x-vcard' => 'fa-address-card',
+        'video/mpeg' => 'fa-file-video',
+        'video/quicktime' => 'fa-file-video',
+        'video/x-ms-wmv' => 'fa-file-video',
+        'video/x-msvideo' => 'fa-file-video',
+
+        // Artificial
+        'link/generic' => 'fa-file',
+        'link/unknown' => 'fa-link'
+    ];
+
+    /** Array of lookups for mime type from filename extension */
 	static $attachments_mime_type_from_extension =
 		Array( 'aif' => 'audio/x-aiff',
 			   'aiff' => 'audio/x-aiff',
@@ -266,8 +409,63 @@ class AttachmentsFileTypes {
 		return '';
 	}
 
-	
-	/**
+    /**
+     * Get the FontAwesome icon name for a specific filename (or mime type)
+     *
+     * @access  public
+     *
+     * @param   string  $filename  the filename to check
+     * @param   string  $mimeType  the MIME type to check (if the filename fails)
+     *
+     * @return  string  the FontAwesome icon name (or '' if none is found)
+     *
+     * @since   4.1.2
+     */
+    public static function fa_icon_filename(string $filename, string $mimeType): string
+    {
+        // Recognize some special cases first
+        if (($mimeType == 'link/unknown') || ($mimeType == 'unknown'))
+        {
+            return 'fa-link';
+        }
+
+        if ($mimeType == 'link/broken')
+        {
+            return 'fa-link-slashed';
+        }
+
+        if ($filename)
+        {
+            // Make sure it is a real filename
+            if (strpos($filename, '.') === false)
+            {
+                // Do not know any better, assume it is text
+                return 'fa-file-lines';
+            }
+
+            $pathInfo = pathinfo($filename);
+
+            // Try the extension first
+            $extension = StringHelper::strtolower($pathInfo['extension']);
+
+            if (array_key_exists($extension, self::ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA))
+            {
+                return self::ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA[$extension];
+            }
+        }
+        else
+        {
+            // Try the mime type
+            if (array_key_exists($mimeType, self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA))
+            {
+                return self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA[$mimeType];
+            }
+        }
+
+        return '';
+    }
+
+    /**
 	 * Get an array of unique icon filenames
 	 *
 	 * @return an array of unique icon filenames

@@ -1950,7 +1950,15 @@ class AttachmentsHelper
 
 		$links .= "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
 		$links .= "title=\"$tooltip\">";
-		$links .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+
+        // Get the component parameters
+        $params = ComponentHelper::getParams('com_attachments');
+        if ($params->get('use_fontawesome_icons')) {
+            $links .= '<i class="' . $params->get('use_fontawesome_icons_style') . ' fa-paperclip"></i>';
+            }
+        else {
+            $links .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+        }
 		$links .= " $add_attachment_txt</a>";
 
 		return "\n<div class=\"addattach\">$links</div>\n";
