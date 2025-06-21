@@ -397,7 +397,8 @@ for ($i=0, $n=count($attachments); $i < $n; $i++) {
         $html .=  '<td class="at_icon">';
         $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
         if ($this->use_fontawesome_icons) {
-            $html .= '<i class="' . $faIconsStyle . ' fa-download"></i>';
+            $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" . 
+				'<i class="' . $faIconsStyle . ' fa-download"></i></a></td>';
             }
         else {
             $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
