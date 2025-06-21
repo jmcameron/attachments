@@ -41,21 +41,24 @@ $last_parent_type = null;
 $last_parent_entity = null;
 
 
-for ($i=0, $n=count( $this->items ); $i < $n; $i++) {
-    $item = $this->items[$i];
+for ($i=0, $n=count( $this->items ); $i < $n; $i++)
+{
+	$item = $this->items[$i];
 
-    if ($item->uri_type == 'file') {
-        if ($secure) {
-            $url = Route::_("index.php?option=com_attachments&amp;task=attachment.download&amp;id=" . (int)$item->id);
-        } else {
-            $url = $uri->root(true) . '/' . $item->url;
-        }
-    } else {
-        $url = $item->url;
-    }
-    $checked = HTMLHelper::_('grid.id', $i, $item->id);
-    $published = HTMLHelper::_('jgrid.published', $item->state, $i, 'attachments.');
-    $access = $this->level_name[$item->access];
+	if ( $item->uri_type == 'file' ) {
+		if ( $secure ) {
+			$url = Route::_("index.php?option=com_attachments&amp;task=attachment.download&amp;id=" . (int)$item->id);
+			}
+		else {
+			$url = $uri->root(true) . '/' . $item->url;
+			}
+		}
+	else {
+		$url = $item->url;
+		}
+	$checked = HTMLHelper::_('grid.id', $i, $item->id );
+	$published = HTMLHelper::_('jgrid.published', $item->state, $i, 'attachments.' );
+	$access = $this->level_name[$item->access];
 
     $size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
     $link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' . (int)$item->id);
