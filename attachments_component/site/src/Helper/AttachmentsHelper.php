@@ -1149,7 +1149,11 @@ class AttachmentsHelper
 				throw new \Exception("fsockopen error");
 			}, E_ALL);
 			try {
-				$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
+				if ($u->port == 443) {
+					$fp = fsockopen("ssl://" . $u->domain , $u->port, $errno, $errstr, $timeout);
+				} else {
+					$fp = fsockopen($u->domain, $u->port, $errno, $errstr, $timeout);
+				}
 				restore_error_handler();
 				}
 			catch (\Exception $e) {
@@ -1176,7 +1180,7 @@ class AttachmentsHelper
 
 		// Check the URL to get the size, etc
 		if ($fp) {
-			$request = "HEAD {$u->url} HTTP/1.1\nHOST: {$u->domain}\nConnection: close\n\n";
+			$request = "GET / HTTP/1.1\r\nHOST: {$u->domain}\r\nConnection: close\r\n\r\n";
 			fputs($fp, $request);
 			while ( !feof($fp) ) {
 
