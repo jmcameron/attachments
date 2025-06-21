@@ -446,7 +446,7 @@ class AttachmentsFileTypes {
             $pathInfo = pathinfo($filename);
 
             // Try the extension first
-            $extension = strtolower($pathInfo['extension']);
+            $extension = StringHelper::strtolower($pathInfo['extension']);
 
             if (array_key_exists($extension, self::ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA))
             {
