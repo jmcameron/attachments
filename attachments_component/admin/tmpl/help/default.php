@@ -116,6 +116,7 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
    // New features in Version 3.1
    $this->startSection(SECT_NEW_V4);
 	  $this->startList();
+		 $this->addListElement('ATTACH_HELP_020050_TEXT');
 		 $this->addListElement('ATTACH_HELP_020100_TEXT');
 		 $this->addListElement('ATTACH_HELP_020200_TEXT');
 		 $this->addListElement('ATTACH_HELP_020300_TEXT');

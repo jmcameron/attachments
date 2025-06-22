@@ -1,4 +1,4 @@
-# attachments 4.1.1
+# attachments 4.1.3
 
 ## Quick Start
 
@@ -6,7 +6,15 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 ## Requirements
 
-Joomla 4.0+ compatible also with Joomla 5.0+
+Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
+
+## 2025-06-22 version 4.1.3
+
+- fix issue [#119](/../../issues/119) Install - checksum verification failed
+- fix issue [#121](/../../issues/121) Accessibility warning
+- Fix issue [#125](/../../issues/125) Wrong variables names
+- Fix issue [#128](/../../issues/128) Verify URL existence is not working
+- Adding FontAwesome feature - alternative for legacy gif icons.
 
 ## 2025-04-02 version 4.1.2
 
