@@ -176,7 +176,7 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 			$this->addDefinitionListElement('ATTACH_MAX_FILENAME_URL_LENGTH', 'ATTACH_MAX_FILENAME_URL_LENGTH_DESCRIPTION');
 			$this->addDefinitionListElement('ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED', 
 											'ATTACH_WHERE_SHOULD_ATTACHMENTS_BE_PLACED_DESCRIPTION', null, false);
-			   $this->startList();
+			$this->startList();
 				  $this->addListElement('ATTACH_HELP_051000_TEXT');
 				  $this->addListElement('ATTACH_HELP_051100_TEXT');
 				  $this->addListElement('ATTACH_HELP_051200_TEXT', null, false);
@@ -212,8 +212,19 @@ $toggle_img = Uri::root(true).'/media/system/images/tooltip.png';
 			$this->addDefinitionListElement('ATTACH_SHOW_CREATION_DATE', 'ATTACH_HELP_052650_TEXT');
 			$this->addDefinitionListElement('ATTACH_SHOW_MODIFICATION_DATE', 'ATTACH_HELP_052700_TEXT');
 			$this->addDefinitionListElement('ATTACH_FORMAT_STRING_FOR_DATES', 'ATTACH_FORMAT_STRING_FOR_DATES_DESCRIPTION');
+			$this->addDefinitionListElement('ATTACH_SHOW_FONTAWESOME_ICONS', 
+											'ATTACH_SHOW_FONTAWESOME_ICONS_DESCRIPTION', null, false);
+			$this->addDefinitionListElement('ATTACH_SHOW_FONTAWESOME_ICONS_STYLE', 
+											'ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_DESCRIPTION');
+				$this->startList();
+				  $this->addListElement('ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAS');
+				  $this->addListElement('ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAR');
+				  $this->addListElement('ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAL');
+				  $this->addListElement('ATTACH_SHOW_FONTAWESOME_ICONS_STYLE_FAD');
+				$this->endList();
+			$this->endListElement();
 			$this->addDefinitionListElement('ATTACH_ATTACHMENTS_LIST_ORDER', 'ATTACH_HELP_052900_TEXT');
-				$this->startList('ol', 'arabic simple');
+					$this->startList('ol', 'arabic simple');
 					$this->addListElement('ATTACH_HELP_053000_TEXT',
 										  Array('{LABEL}' => Text::_('ATTACH_SORT_FILENAME')));
 					$this->addListElement('ATTACH_HELP_053100_TEXT',
