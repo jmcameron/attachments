@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Uri\Uri;
 
 
@@ -33,28 +34,36 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_attachments'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if ( $this->editor ) : ?>
-		<p><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS_DESCRIPTION'); ?></p>
-		<button onclick="insertAttachmentsIdToken(jQuery, '<?php echo $this->editor ?>');"><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS'); ?></button>
-<?php endif; ?>
-<?php 
-	if (!$this->editor ) {
-		echo $this->loadTemplate('filter');
-	}
-?>
-  <table class="adminlist" id="attachmentsList">
-	<thead><?php echo $this->loadTemplate('head');?></thead>
-	<tbody><?php echo $this->loadTemplate('body');?></tbody>
-	<tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
-  </table>
-  <div>
-	<input type="hidden" name="task" value="" />
-	<input type="hidden" name="boxchecked" value="0" />
-	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-	<?php echo HTMLHelper::_('form.token'); ?>
-  </div>
-  
+    <div class="row">
+        <div class="col-md-12">
+            <div id="j-main-container" class="j-main-container">
+				<?php
+				if (!$this->editor ) {
+					echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+				};
+				?>
+				<?php if (empty($this->items)) : ?>
+                    <div class="alert alert-info">
+                        <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+						<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+                    </div>
+				<?php else : ?>
+					<?php if ( $this->editor ) : ?>
+                        <p><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS_DESCRIPTION'); ?></p>
+                        <button onclick="insertAttachmentsIdToken(jQuery, '<?php echo $this->editor ?>');"><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS'); ?></button>
+					<?php endif; ?>
+                    <table class="table itemList" id="attachmentsList">
+                        <thead><?php echo $this->loadTemplate('head');?></thead>
+                        <tbody><?php echo $this->loadTemplate('body');?></tbody>
+                        <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
+                    </table>
+                    <div>
+                        <input type="hidden" name="task" value="" />
+                        <input type="hidden" name="boxchecked" value="0" />
+						<?php echo HTMLHelper::_('form.token'); ?>
+                    </div>
+				<?php endif; ?>
+            </div>
+        </div>
+    </div>
 </form>
-
-

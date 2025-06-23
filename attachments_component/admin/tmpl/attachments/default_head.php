@@ -12,6 +12,7 @@
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
@@ -27,45 +28,41 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 
 ?>
 <tr>
-	 <th class="at_checked hidden-phone">
-		 <input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
-	 </th>
-	 <?php if ( !$this->editor ) : ?>
-	 <th class="at_published" width="5%" nowrap="nowrap"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_PUBLISHED',
-							 'a.state', $listDirn, $listOrder ) ?></th>
+    <th class="w-1 text-center ">
+		<?php echo HTMLHelper::_('grid.checkall'); ?>
+    </th>
+	<?php if ( !$this->editor ) : ?>
+        <th scope="col" ><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_PUBLISHED', 'a.state', $listDirn, $listOrder); ?></th>
 	<?php endif; ?>
-	 <th class="at_filename"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_ATTACHMENT_FILENAME_URL',
-							 'a.filename', $listDirn, $listOrder ) ?></th>
-	 <th class="at_description"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_DESCRIPTION',
-							 'a.description', $listDirn, $listOrder ) ?></th>
-	 <th class="at_access" width="5%" nowrap="nowrap"><?php echo HTMLHelper::_('grid.sort', 'JFIELD_ACCESS_LABEL',
-							 'a.access', $listDirn, $listOrder ) ?></th>
-	 <?php if ($params->get('user_field_1_name')): ?>
-	   <th class="at_user_field"><?php echo HTMLHelper::_('grid.sort', $params->get('user_field_1_name', ''),
-													 'a.user_field_1', $listDirn, $listOrder ) ?></th>
-	 <?php endif; ?>
-	 <?php if ($params->get('user_field_2_name')): ?>
-	   <th class="at_user_field"><?php echo HTMLHelper::_('grid.sort', $params->get('user_field_2_name', ''),
-													 'a.user_field_2', $listDirn, $listOrder ) ?></th>
-	 <?php endif; ?>
-	 <?php if ($params->get('user_field_3_name')): ?>
-	   <th class="at_user_field"><?php echo HTMLHelper::_('grid.sort', $params->get('user_field_3_name', ''),
-													 'a.user_field_3', $listDirn, $listOrder ) ?></th>
-	 <?php endif; ?>
-	 <th class="at_file_type"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_FILE_TYPE',
-							 'a.file_type', $listDirn, $listOrder ) ?></th>
-	 <th class="at_file_size"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_FILE_SIZE_KB',
-							 'a.file_size', $listDirn, $listOrder ) ?></th>
-	 <th class="at_creator_name"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_CREATOR',
-							 'u1.name', $listDirn, $listOrder ) ?></th>
-	 <th class="at_created_date"><?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_CREATED',
-							 'a.created', $listDirn, $listOrder ) ?></th>
-	 <th class="at_mod_date"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_LAST_MODIFIED',
-							 'a.modified', $listDirn, $listOrder ) ?></th>
-	 <?php if ( $secure ): ?>
-	   <th class="at_downloads"><?php echo HTMLHelper::_('grid.sort', 'ATTACH_DOWNLOADS',
-													'a.download_count', $listDirn, $listOrder ) ?></th>
-	 <?php endif; ?>
+    <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_ATTACHMENT_FILENAME_URL',
+			'a.filename', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_DESCRIPTION',
+			'a.description', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-10 d-none d-md-table-cell text-center"><?php echo HTMLHelper::_('searchtools.sort', 'JFIELD_ACCESS_LABEL',
+			'a.access', $listDirn, $listOrder ) ?></th>
+	<?php if ($params->get('user_field_1_name')): ?>
+        <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo Text::_($params->get('user_field_1_name', '')); ?></th>
+	<?php endif; ?>
+	<?php if ($params->get('user_field_2_name')): ?>
+        <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo Text::_($params->get('user_field_2_name', '')); ?></th>
+	<?php endif; ?>
+	<?php if ($params->get('user_field_3_name')): ?>
+        <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo Text::_($params->get('user_field_3_name', '')); ?></th>
+	<?php endif; ?>
+    <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_FILE_TYPE',
+			'a.file_type', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-10 d-none d-md-table-cell text-center"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_FILE_SIZE_KB',
+			'a.file_size', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-25 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_CREATOR',
+			'u1.name', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-50 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_CREATED',
+			'a.created', $listDirn, $listOrder ) ?></th>
+    <th scope="col" class="w-50 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_LAST_MODIFIED',
+			'a.modified', $listDirn, $listOrder ) ?></th>
+	<?php if ( $secure ): ?>
+        <th scope="col" class="w-10 d-none d-md-table-cell"><?php echo HTMLHelper::_('searchtools.sort', 'ATTACH_DOWNLOADS',
+				'a.download_count', $listDirn, $listOrder ) ?></th>
+	<?php endif; ?>
 </tr>
 
 

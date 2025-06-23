@@ -43,6 +43,28 @@ class HtmlView extends BaseHtmlView
 	protected $state;
 
 	/**
+	 * Form object for search filters
+	 *
+	 * @var     \Joomla\CMS\Form\Form
+	 *
+	 * @access  public
+	 *
+	 * @since   1.0.0
+	 */
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var     array
+	 *
+	 * @access  public
+	 *
+	 * @since   1.0.0
+	 */
+	public $activeFilters = [];
+
+	/**
 	 * Display the list view
 	 */
 	public function display($tpl = null)
@@ -59,12 +81,14 @@ class HtmlView extends BaseHtmlView
 		$id = $jinput->getInt('parent_id', null);
 		if ($id) {
 			$model = $this->getModel();
-			$model->setState('filter.parent_id', $id); 
-		}
+			$model->setState('filter.parent_id', $id);
+			}
 		$this->items = $this->get('Items');
 		$this->state = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-		
+		$this->filterForm    = $this->get('FilterForm');
+		$this->activeFilters = $this->get('ActiveFilters');
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			throw new \Exception(implode("\n", $errors) . ' (ERR 175)', 500);

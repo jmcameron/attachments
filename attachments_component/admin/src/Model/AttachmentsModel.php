@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Database\ParameterType;
 use Joomla\Filter\OutputFilter;
 
 // No direct access to this file
@@ -43,10 +44,9 @@ class AttachmentsModel extends ListModel
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id',
-				'parent_id',
-				'a.state',
+				'a.state', 'state',
 				'a.access',
 				'a.filename',
 				'a.description',
@@ -55,13 +55,16 @@ class AttachmentsModel extends ListModel
 				'a.user_field_3',
 				'a.file_type',
 				'a.file_size',
-				'creator_name',
-				'modifier_name',
-				'u1.name',
 				'a.created',
 				'a.modified',
-				'a.download_count'
-			);
+				'a.download_count',
+				'a.created_by',
+				'parent_state',
+				'a.parent_id',
+				'a.parent_type',
+				'a.parent_entity', 'parent_entity',
+				'a.display_name',
+			];
 		}
 
 		parent::__construct($config);
@@ -81,208 +84,207 @@ class AttachmentsModel extends ListModel
 		/** @var \Joomla\Database\DatabaseDriver $db */
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
-		$id = $this->getState('filter.parent_id');
-		if (is_numeric($id))
-		{
-			$query->where('a.parent_id = ' . (int) $id);
+
+		// Select the required fields from the table.
+		$query->select(
+			$this->getState(
+				'list.select',
+				$db->qn(['a.id',
+						'a.filename',
+						'a.filename_sys',
+						'a.file_type',
+						'a.file_size',
+						'a.url',
+						'a.uri_type',
+						'a.url_valid',
+						'a.url_relative',
+						'a.url_verify',
+						'a.display_name',
+						'a.description',
+						'a.icon_filename',
+						'a.access',
+						'a.state',
+						'a.user_field_1',
+						'a.user_field_2',
+						'a.user_field_3',
+						'a.parent_type',
+						'a.parent_entity',
+						'a.parent_id',
+						'a.created',
+						'a.created_by',
+						'a.modified',
+						'a.modified_by',
+						'a.download_count',
+					]
+				)
+			)
+		)
+			->select(
+				[
+					$db->qn('uc.name', 'editor_name'),
+					$db->qn('ag.title', 'access_level'),
+					$db->qn('ua.name', 'creator_name'),
+				]
+			)
+			->from($db->qn('#__attachments', 'a'))
+			->join('LEFT', $db->qn('#__users', 'uc'), $db->qn('uc.id') . ' = ' . $db->qn('a.modified_by'))
+			->join('LEFT', $db->qn('#__viewlevels', 'ag'), $db->qn('ag.id') . ' = ' . $db->qn('a.access'))
+			->join('LEFT', $db->qn('#__users', 'ua'), $db->qn('ua.id') . ' = ' . $db->qn('a.created_by'));
+
+		$filterEntityParts = [];
+
+		// Filter by published state
+		$state = (string) $this->getState('filter.state');
+
+		if ((int) $this->getState('filter.listforparent', 0)) {
+			$parentId = $this->getState('filter.parent_id');
+			$parentType = $this->getState('filter.parent_type');
+			$parentEntity = $this->getState('filter.parent_entity');
+			$query
+				->where($db->qn('a.parent_id') . ' = :parent_id', 'AND')
+				->where($db->qn('a.parent_type') . ' = :parent_type', 'AND')
+				->where($db->qn('a.parent_entity') . ' = :parent_entity')
+				->bind(':parent_id', $parentId, ParameterType::INTEGER)
+				->bind(':parent_type', $parentType, ParameterType::STRING)
+				->bind(':parent_entity', $parentEntity, ParameterType::STRING);
 		}
-		$query->select('a.*, a.id as id');
-		$query->from('#__attachments as a');
-
-		$query->select('u1.name as creator_name');
-		$query->leftJoin('#__users AS u1 ON u1.id = a.created_by');
-
-		$query->select('u2.name as modifier_name');
-		$query->leftJoin('#__users AS u2 ON u2.id = a.modified_by');
-
-		// Add the where clause
-		$where = $this->_buildContentWhere($query);
-		if ($where) {
-			$query->where($where);
+		else {
+			if (is_numeric($state))	{
+				$state = (int) $state;
+				$query
+					->where($db->qn('a.state') . ' = :state')
+					->bind(':state', $state, ParameterType::INTEGER);
+			}
+			elseif ($state === '') {
+				$query->whereIn($db->qn('a.state'), [0, 1]);
 			}
 
-		// Add the order-by clause
-		$order_by = $this->_buildContentOrderBy();
-		if ($order_by) {
-			$query->order($db->escape($order_by));
-			}
+			// Filter by search in title.
+			$search = $this->getState('filter.search');
 
-		return $query;
-	}
+			$params = ComponentHelper::getComponent('com_attachments')->getParams();
 
-
-
-	/**
-	 * Method to build the where clause of the query for the Items
-	 *
-	 * @access private
-	 * @return string
-	 * @since 1.0
-	 */
-	private function _buildContentWhere($query)
-	{
-		$where = Array();
-
-		// Set up the search
-		$search = $this->getState('filter.search');
-
-		if ( $search ) {
-			if ( ($search != '') && is_numeric($search) ) {
-				$where[] = 'a.id = ' . (int) $search . '';
+			if (!empty($search)) {
+				if (stripos($search, 'id:') === 0) {
+					$search = (int) substr($search, 5);
+					$query
+						->where($db->qn('a.id') . ' = :searchId')
+						->bind(':searchId', $search, ParameterType::INTEGER);
 				}
-			else {
-				/** @var \Joomla\Database\DatabaseDriver $db */
-				$db = Factory::getContainer()->get('DatabaseDriver');
-				$where[] = '(LOWER( a.filename ) LIKE ' .
-					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
-					' OR LOWER( a.description ) LIKE ' .
-					$db->quote( '%'.$db->escape( $search, true ).'%', false ) .
-					' OR LOWER( a.display_name ) LIKE ' .
-					$db->quote( '%'.$db->escape( $search, true ).'%', false ) . ')';
+				else {
+					$queryStr =
+						'('
+						. 'LOWER (a.filename) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
+						. 'LOWER (a.description) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
+						. 'LOWER (a.display_name) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+					if (!empty($params->get('user_field_1_name', ''))) {
+						$queryStr .= 'OR LOWER (a.user_field_1) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+					}
+					if (!empty($params->get('user_field_2_name', ''))) {
+						$queryStr .= 'OR LOWER (a.user_field_2) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+					}
+					if (!empty($params->get('user_field_3_name', ''))) {
+						$queryStr .= 'OR LOWER (a.user_field_3) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+					}
+					$queryStr .= ')';
+
+					$query
+						->where(
+							$queryStr
+						);
 				}
 			}
 
-		// Get the entity filter info
-		$filter_entity = $this->getState('filter.entity');
-		if ( $filter_entity != 'ALL' ) {
-			$where[] = "a.parent_entity = '$filter_entity'";
+			$filterEntity = $this->getState('filter.parent_entity');
+
+			if (($filterEntity != '') && ($filterEntity != 'ALL')) {
+				$filterEntityParts = explode('.', $filterEntity);
+				$parentType = $filterEntityParts[0];
+				$parentEntity = $filterEntityParts[1];
+
+				$query
+					->where($db->qn('a.parent_type') . ' = ' . $db->quote($parentType))
+					->where($db->qn('a.parent_entity') . ' = ' . $db->quote($parentEntity));
 			}
+		}
 
-		// Get the parent_state filter
-		$params = ComponentHelper::getParams('com_attachments');
+		$filterParentStateDefault = '';
 
-		// Get the desired state
-		$filter_parent_state_default = 'ALL';
-		$suppress_obsolete_attachments = $params->get('suppress_obsolete_attachments', false);
-		if ( $suppress_obsolete_attachments ) {
-			$filter_parent_state_default = 'PUBLISHED';
-			}
-		$filter_parent_state = $this->getState('filter.parent_state', $filter_parent_state_default);
-		if ( $filter_parent_state != 'ALL' ) {
+		$suppressObsoleteAttachments = $params->get('suppress_obsolete_attachments', false);
 
-			$fps_wheres = array();
+		if ($suppressObsoleteAttachments)
+		{
+			$filterParentStateDefault = 'PUBLISHED';
+		}
 
-			// Get the contributions for all the known content types
-			PluginHelper::importPlugin('attachments');
-			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
-			$known_parent_types = $apm->getInstalledParentTypes();
-			foreach ($known_parent_types as $parent_type) {
-				$parent = $apm->getAttachmentsPlugin($parent_type);
-				$pwheres = $parent->getParentPublishedFilter($filter_parent_state, $filter_entity);
-				foreach ($pwheres as $pw) {
-					$fps_wheres[] = $pw;
+		$filterParentState = $this->getState('filter.parent_state', $filterParentStateDefault);
+
+		if (!empty($filterParentState)) {
+			$countFilterEntityParts = count($filterEntityParts);
+
+			if (($filterParentState != '') && ($filterParentState != 'ALL') && ($countFilterEntityParts == 2 || $countFilterEntityParts == 0)) {
+				$fpsWheres = [];
+
+				// Get the contributions for all the known content types
+				PluginHelper::importPlugin('attachments');
+				$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+				$knownParentTypes = $apm->getInstalledParentTypes();
+
+				$pwheres = [];
+
+				foreach ($knownParentTypes as $parentType) {
+					$parent = $apm->getAttachmentsPlugin($parentType);
+
+					if ($countFilterEntityParts == 2) {
+						$pwheres = $parent->getParentPublishedFilter($filterParentState, $filterEntityParts[1]);
+					}
+					elseif ($countFilterEntityParts == 0) {
+						$pwheres = $parent->getParentPublishedFilter($filterParentState, 'ALL');
+					}
+
+					foreach ($pwheres as $pw) {
+						$fpsWheres[] = $pw;
 					}
 				}
 
-			if ( $filter_parent_state == 'NONE' ) {
-				$basic = '';
-				$fps_wheres = '( (a.parent_id = 0) OR (a.parent_id IS NULL) ' .
-					(count($fps_wheres) ?
-					 ' OR (' . implode(' AND ', $fps_wheres) . ')' : '') . ')';
+				if ($filterParentState == 'NONE') {
+					$fpsWheres = '( (a.parent_id = 0) OR (a.parent_id IS NULL) ' .
+						(count($fpsWheres) ? ' OR (' . implode(' AND ', $fpsWheres) . ')' : '') . ')';
 				}
-			else {
-				$fps_wheres = (count($fps_wheres) ? '(' . implode(' OR ', $fps_wheres) . ')' : '');
+				else {
+					$fpsWheres = (count($fpsWheres) ? '(' . implode(' OR ', $fpsWheres) . ')' : '');
 				}
 
-			// Copy the new where clauses into our main list
-			if ($fps_wheres) {
-				$where[] = $fps_wheres;
+				// Copy the new where clauses into our main list
+				if ($fpsWheres) {
+					$where[] = $fpsWheres;
+					$query->where($where);
 				}
 			}
+		}
 
-		// Make sure the user can only see the attachments they may access
-		$user	= Factory::getApplication()->getIdentity();
-		if ( !$user->authorise('core.admin') ) {
-			$user_levels = implode(',', array_unique($user->getAuthorisedViewLevels()));
-			$where[] = 'a.access in ('.$user_levels.')';
+		$user = Factory::getApplication()->getIdentity();
+
+		if (!$user->authorise('core.admin')) {
+			$userLevels = array_unique($user->getAuthorisedViewLevels());
+			$query->whereIn('a.access', $userLevels);
+		}
+
+		// Add the list ordering clause.
+		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderDirn = $this->state->get('list.direction', 'DESC');
+
+		$orderBy = "a.parent_type, a.parent_entity, a.parent_id";
+
+		if ($orderCol) {
+			$orderBy = "$orderCol $orderDirn, a.parent_entity, a.parent_id";
 			}
+		$ordering = $db->escape($orderBy) . ' ' . $db->escape($orderDirn);
 
-		// Construct the WHERE clause
-		$where = (count($where) ? implode(' AND ', $where) : '');
+		$query->order($ordering);
 
-		return $where;
+		return $query;
 	}
-
-
-	/**
-	 * Method to build the orderby clause of the query for the Items
-	 *
-	 * @access private
-	 * @return string
-	 * @since 1.0
-	 */
-	private function _buildContentOrderBy()
-	{
-		// Get the ordering information
-		$orderCol	= $this->state->get('list.ordering');
-		$orderDirn	= $this->state->get('list.direction');
-
-		// Construct the ORDER BY clause
-		$order_by = "a.parent_type, a.parent_entity, a.parent_id";
-		if ( $orderCol ) {
-			$order_by = "$orderCol $orderDirn, a.parent_entity, a.parent_id";
-			}
-
-		return $order_by;
-	}
-
-
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @since	1.6
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		// Initialize variables.
-		/** @var \Joomla\CMS\Application\CMSApplication $app */
-		$app = Factory::getApplication('administrator');
-
-		// Set up the list limits (not sure why the base class version of this does not work)
-		$value = $app->getUserStateFromRequest($this->context.'.list.limit', 'limit', $app->get('list_limit'), 'uint');
-		$limit = $value;
-		$this->setState('list.limit', $limit);
-
-		$value = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0, 'uint');
-		$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
-		$this->setState('list.start', $limitstart);
-
-		// Load the filter state.
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', null, 'string');
-		$this->setState('filter.search', $search);
-
-		$entity = $this->getUserStateFromRequest($this->context.'.filter.entity', 'filter_entity', 'ALL', 'word');
-		$this->setState('filter.entity', $entity);
-
-		$parent_state = $this->getUserStateFromRequest($this->context.'.filter.parent_state', 'filter_parent_state', null, 'string');
-		$this->setState('filter.parent_state', $parent_state);
-
-		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
-		$this->setState('filter.state', $state);
-
-		// Check if the ordering field is in the white list, otherwise use the incoming value.
-		$value = $app->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering, 'string');
-		if (!in_array($value, $this->filter_fields)) {
-			$value = $ordering;
-			$app->setUserState($this->context.'.ordercol', $value);
-			}
-		$this->setState('list.ordering', $value);
-
-		// Check if the ordering direction is valid, otherwise use the incoming value.
-		$value = $app->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction, 'cmd');
-		if (!in_array(strtoupper($value ?? ''), array('ASC', 'DESC', ''))) {
-			$value = $direction;
-			$app->setUserState($this->context.'.orderdirn', $value);
-			}
-		$this->setState('list.direction', $value);
-
-		// Load the parameters.
-		$params = ComponentHelper::getParams('com_attachments');
-		$this->setState('params', $params);
-	}
-
 
 	/**
 	 * Method to get an array of data items.
