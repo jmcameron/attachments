@@ -125,49 +125,49 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$last_parent_type = $item->parent_type;
 	$last_parent_entity = $item->parent_entity;
 	$download_verb = Text::_('ATTACH_DOWNLOAD_VERB');
-   ?>
-	<tr class="<?php echo "row$k"; ?>">
-	  <td class="at_checked hidden-phone"><?php echo $checked; ?></td>
-	<?php if ( !$this->editor ) : ?>
-	  <td class="at_published" align="center"><?php echo $published;?></td>
-	<?php endif; ?>
-	  <td class="at_filename">
-	  <?php if ( !$this->editor ) : ?>
-		 <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>" >
-	  <?php endif; ?>
-		  <?php
-            if ($use_fontawesome_icons) {
-                echo '<i class="' . $use_fontawesome_icons_style . ' ' . $icon . '"></i>';
-                }
-            else {
-                echo HTMLHelper::image('com_attachments/file_icons/' . $icon, $download_verb, null, true);
-                }
-		if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
-			if ( $item->url_valid ) {
-                if ($use_fontawesome_icons) {
-                    echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash"></i>';
-                }
-                else {
-                    echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
-                    }
+	?>
+    <tr class="<?php echo "row$k"; ?>">
+        <td class="w-1 text-center "><?php echo $checked; ?></td>
+		<?php if ( !$this->editor ) : ?>
+            <td class="w-1 text-center"><?php echo $published;?></td>
+		<?php endif; ?>
+        <td class="w-25 d-none d-md-table-cell">
+			<?php if ( !$this->editor ) : ?>
+            <a href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>" >
+				<?php endif; ?>
+				<?php
+				if ($use_fontawesome_icons) {
+					echo '<i class="' . $use_fontawesome_icons_style . ' ' . $icon . '"></i>';
 				}
-			else {
-                if ($use_fontawesome_icons) {
-                    echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash redicon"></i>';
-                }
-                else {
-                    echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
-                    }
+				else {
+					echo HTMLHelper::image('com_attachments/file_icons/' . $icon, $download_verb, null, true);
 				}
-			}
-		 ?>
-	  <?php if ( !$this->editor ) : ?>
-		 </a>
-	<?php endif; ?>
-		 &nbsp;<a
-		 href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
-			 ><?php if ( $item->uri_type == 'file' ) {
-				echo $item->filename;
+				if ( ($item->uri_type == 'url') && $superimpose_link_icons ) {
+					if ( $item->url_valid ) {
+						if ($use_fontawesome_icons) {
+							echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash"></i>';
+						}
+						else {
+							echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+						}
+					}
+					else {
+						if ($use_fontawesome_icons) {
+							echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash redicon"></i>';
+						}
+						else {
+							echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+						}
+					}
+				}
+				?>
+				<?php if ( !$this->editor ) : ?>
+            </a>
+		<?php endif; ?>
+            &nbsp;<a
+                    href="<?php echo $link; ?>" title="<?php echo $edit_attachment_title; ?>"
+            ><?php if ( $item->uri_type == 'file' ) {
+					echo $item->filename;
 				}
 				else {
 				if ( $item->filename ) {
@@ -187,27 +187,27 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
         <?php else: echo '<a class="downloadAttach" href="'.$url.'"  target="_blank"
 		 title="' . $access_attachment_title . '"
 		  ><i class="' . $use_fontawesome_icons_style . ' fa-download"></i></a>'; endif; ?>
-	  </td>
-	  <td class="at_description"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
-	  <td class="at_access" align="center"><?php echo $access; ?></td>
-	  <?php if ( $params->get('user_field_1_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo stripslashes($item->user_field_1); ?></td>
-	  <?php endif; ?>
-	  <?php if ( $params->get('user_field_2_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo stripslashes($item->user_field_2); ?></td>
-	  <?php endif; ?>
-	  <?php if ( $params->get('user_field_3_name', '') != '' ): ?>
-		 <td class="at_user_field"><?php echo stripslashes($item->user_field_3); ?></td>
-	  <?php endif; ?>
-	  <td class="at_file_type"><?php echo $item->file_type; ?></td>
-	  <td class="at_file_size"><?php echo $size_kb; ?></td>
-	  <td class="at_creator_name"><?php echo $item->creator_name; ?></td>
-	  <td class="at_created_date"><?php echo $created; ?></td>
-	  <td class="at_mod_date"><?php echo $modified ?></td>
-	  <?php if ( $secure ): ?>
-		 <td class="at_downloads"><?php echo $item->download_count; ?></td>
-	  <?php endif; ?>
-	</tr>
+        </td>
+        <td class="w-25 d-none d-md-table-cell"><?php echo htmlspecialchars(stripslashes($item->description)); ?></td>
+        <td class="w-10 d-none d-md-table-cell text-center"><?php echo $access; ?></td>
+		<?php if ( $params->get('user_field_1_name', '') != '' ): ?>
+            <td class="w-25 d-none d-md-table-cell"><?php echo stripslashes($item->user_field_1); ?></td>
+		<?php endif; ?>
+		<?php if ( $params->get('user_field_2_name', '') != '' ): ?>
+            <td class="w-25 d-none d-md-table-cell"><?php echo stripslashes($item->user_field_2); ?></td>
+		<?php endif; ?>
+		<?php if ( $params->get('user_field_3_name', '') != '' ): ?>
+            <td class="w-25 d-none d-md-table-cell"><?php echo stripslashes($item->user_field_3); ?></td>
+		<?php endif; ?>
+        <td class="w-25 d-none d-md-table-cell"><?php echo $item->file_type; ?></td>
+        <td class="w-10 d-none d-md-table-cell text-center"><?php echo $size_kb; ?></td>
+        <td class="w-25 d-none d-md-table-cell"><?php echo $item->creator_name; ?></td>
+        <td class="w-25 d-none d-md-table-cell"><?php echo $created; ?></td>
+        <td class="w-25 d-none d-md-table-cell"><?php echo $modified ?></td>
+		<?php if ( $secure ): ?>
+            <td class="w-10 d-none d-md-table-cell"><?php echo $item->download_count; ?></td>
+		<?php endif; ?>
+    </tr>
 	<?php
 	$k = 1 - $k;
 }
