@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
     <name>com_attachments</name>
-    <version>4.1.3</version>
-    <creationDate>June 22, 2025</creationDate>
+    <version>4.1.4</version>
+    <creationDate>June 28, 2025</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>http://joomlacode.org/gf/project/attachments3/</authorUrl>

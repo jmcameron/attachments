@@ -1,4 +1,4 @@
-# attachments 4.1.3
+# attachments 4.1.4
 
 ## Quick Start
 
@@ -7,6 +7,16 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 ## Requirements
 
 Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
+
+
+## 2025-06-22 version 4.1.4
+
+- Introduce new extended filtering, new backend list visualisation that is more coherent with Joomla! interface, 
+  introduce bootstrap styling to list and filtering controls.
+- fix issue [#135](/../../issues/135)  Cannot add attachment to category
+
+**Notes:**
+- Searching attachments using the id has changed in the backend. You can now use id: to find an attachment using its id.
 
 ## 2025-06-22 version 4.1.3
 
