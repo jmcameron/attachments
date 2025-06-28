@@ -48,30 +48,30 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	if ( $item->uri_type == 'file' ) {
 		if ( $secure ) {
 			$url = Route::_("index.php?option=com_attachments&amp;task=attachment.download&amp;id=" . (int)$item->id);
-		}
+			}
 		else {
 			$url = $uri->root(true) . '/' . $item->url;
+			}
 		}
-	}
 	else {
 		$url = $item->url;
-	}
+		}
 	$checked = HTMLHelper::_('grid.id', $i, $item->id );
 	$published = HTMLHelper::_('jgrid.published', $item->state, $i, 'attachments.' );
 	$access = $this->level_name[$item->access];
 
-	$size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
-	$link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' . (int)$item->id);
-	$view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
-	if ($use_fontawesome_icons) {
-		$icon = AttachmentsFileTypes::fa_icon_filename('', $item->file_type);
-	}
-	else {
-		if (StringHelper::strlen($item->icon_filename) > 0)
-			$icon = $item->icon_filename;
-		else
-			$icon = 'generic.gif';
-	}
+    $size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
+    $link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' . (int)$item->id);
+    $view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
+    if ($use_fontawesome_icons) {
+        $icon = AttachmentsFileTypes::fa_icon_filename('', $item->file_type);
+        }
+    else {
+        if (StringHelper::strlen($item->icon_filename) > 0)
+            $icon = $item->icon_filename;
+        else
+            $icon = 'generic.gif';
+    }
 	$add_attachment_title = Text::_('ATTACH_ADD_ATTACHMENT_TITLE');
 	$edit_attachment_title = Text::_('ATTACH_EDIT_THIS_ATTACHMENT_TITLE');
 	$access_attachment_title = Text::_('ATTACH_ACCESS_THIS_ATTACHMENT_TITLE');
@@ -88,17 +88,17 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 	$modified = $mdate->format("Y-m-d H:i", true);
 
 	$add_attachment_txt = Text::_('ATTACH_ADD_ATTACHMENT');
-	if ( ($item->parent_id != $last_parent_id) || ($item->parent_type != $last_parent_type)
-		|| ($item->parent_entity != $last_parent_entity) ) {
+	if ( ($item->parent_id != $last_parent_id) || ($item->parent_type != $last_parent_type) 
+		 || ($item->parent_entity != $last_parent_entity) ) {
 		$parent_type = $item->parent_type;
 		if ( $item->parent_entity != 'default' ) {
 			$parent_type .= '.' . $item->parent_entity;
-		}
+			}
 		if ( ($item->parent_id == null) || !$item->parent_exists ) {
 			$artLine = '<tr><td class="at_parentsep" colspan="'.$this->num_columns.'">';
 			$artLine .= '<b>'.$item->parent_entity_type.':</b> <span class="error">'.$item->parent_title.'</span>';
 			$artLine .= '</td></tr>';
-		}
+			}
 		else {
 			$addAttachLink = 'index.php?option=com_attachments&amp;task=attachment.add&amp;parent_id='. $item->parent_id .
 				'&amp;parent_type=' . $parent_type . '&amp;editor=add_to_parent';
@@ -108,19 +108,19 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 				"href=\"".$item->parent_url."\" target=\"_blank\">" . $item->parent_title . "</a>";
 			$artLine .= OutputFilter::ampReplace('&nbsp;&nbsp;&nbsp;&nbsp;');
 			$artLine .= "<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">";
-			if ($use_fontawesome_icons) {
-				$artLine .= '<i class="' . $use_fontawesome_icons_style . ' fa-paperclip"></i>';
-			}
-			else {
-				$artLine .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
-			}
+            if ($use_fontawesome_icons) {
+                $artLine .= '<i class="' . $use_fontawesome_icons_style . ' fa-paperclip"></i>';
+                }
+            else {
+                $artLine .= HTMLHelper::image('com_attachments/add_attachment.gif', $add_attachment_txt, null, true);
+                }
 			$artLine .= "</a>&nbsp;<a class=\"addAttach\" href=\"$addAttachLink\" title=\"$add_attachment_title\">" .
 				"$add_attachment_txt</a>";
 			$artLine .= "</td></tr>";
-		}
+			}
 		echo $artLine;
 		$k = 0;
-	}
+		}
 	$last_parent_id = $item->parent_id;
 	$last_parent_type = $item->parent_type;
 	$last_parent_entity = $item->parent_entity;
@@ -170,21 +170,21 @@ for ($i=0, $n=count( $this->items ); $i < $n; $i++)
 					echo $item->filename;
 				}
 				else {
-					if ( $item->filename ) {
-						echo $item->filename;
+				if ( $item->filename ) {
+					echo $item->filename;
 					}
-					else {
-						echo $item->url;
+				else {
+					echo $item->url;
 					}
 				}
-				?></a>&nbsp;&nbsp;
-			<?php if(!$use_fontawesome_icons): ?>
-                <a class="downloadAttach" href="<?php echo $url; ?>" target="_blank"
-                   title="<?php echo $access_attachment_title; ?>"><?php echo $download_verb;
-					?></a><a class="downloadAttach" href="<?php echo $url; ?>"  target="_blank"
-                             title="<?php echo $access_attachment_title; ?>"
-                ><?php echo HTMLHelper::image('com_attachments/download.gif', $download_verb, null, true); ?></a>
-			<?php else: echo '<a class="downloadAttach" href="'.$url.'"  target="_blank"
+			   ?></a>&nbsp;&nbsp;
+          <?php if(!$use_fontawesome_icons): ?>
+          <a class="downloadAttach" href="<?php echo $url; ?>" target="_blank"
+		 title="<?php echo $access_attachment_title; ?>"><?php echo $download_verb;
+		  ?></a><a class="downloadAttach" href="<?php echo $url; ?>"  target="_blank"
+		 title="<?php echo $access_attachment_title; ?>"
+		  ><?php echo HTMLHelper::image('com_attachments/download.gif', $download_verb, null, true); ?></a>
+        <?php else: echo '<a class="downloadAttach" href="'.$url.'"  target="_blank"
 		 title="' . $access_attachment_title . '"
 		  ><i class="' . $use_fontawesome_icons_style . ' fa-download"></i></a>'; endif; ?>
         </td>

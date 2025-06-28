@@ -81,8 +81,8 @@ class HtmlView extends BaseHtmlView
 		$id = $jinput->getInt('parent_id', null);
 		if ($id) {
 			$model = $this->getModel();
-			$model->setState('filter.parent_id', $id);
-			}
+			$model->setState('filter.parent_id', $id); 
+		}
 		$this->items = $this->get('Items');
 		$this->state = $this->get('State');
 		$this->pagination = $this->get('Pagination');
