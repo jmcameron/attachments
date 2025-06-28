@@ -166,7 +166,7 @@ class AttachmentsModel extends ListModel
 
 			if (!empty($search)) {
 				if (stripos($search, 'id:') === 0) {
-					$search = (int) substr($search, 5);
+					$search = (int) substr($search, 3);
 					$query
 						->where($db->qn('a.id') . ' = :searchId')
 						->bind(':searchId', $search, ParameterType::INTEGER);
