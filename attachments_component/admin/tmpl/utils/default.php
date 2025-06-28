@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -32,9 +33,8 @@ $document->addScriptDeclaration($hide_scrollbar);
 <div class="attachmentsAdmin" id="utilsList">
   <h1><?php echo Text::_('ATTACH_ATTACHMENTS_ADMINISTRATIVE_UTILITY_COMMANDS'); ?></h1>
   <ul>
-<?php foreach ($this->entries as $link_html)
-{
-	echo "	  <li><h2>$link_html</h2></li>\n";
+<?php foreach ($this->entries as $link_html) {
+    echo "	  <li><h2>$link_html</h2></li>\n";
 }
 ?>
   </ul>

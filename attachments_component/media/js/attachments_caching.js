@@ -8,7 +8,8 @@
  * @param css_url string the URL/path to the CSS stylesheet file
  */
 
-function includeCSS(css_url) {
+function includeCSS(css_url)
+{
     var css_link = document.createElement('link');
     css_link.type = 'text/css';
     css_link.rel = 'stylesheet';

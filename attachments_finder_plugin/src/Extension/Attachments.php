@@ -290,8 +290,9 @@ final class Attachments extends Adapter implements SubscriberInterface
         $item->url = $this->getUrl($item->id, $this->extension, $this->layout);
 
         // We can only index com_content articles and categories
-        if ($item->parent_type != "com_content")
+        if ($item->parent_type != "com_content") {
             return;
+        }
 
         $extension = "Content";
         /*
@@ -302,7 +303,7 @@ final class Attachments extends Adapter implements SubscriberInterface
         $class = 'Joomla\\Component\\' . $extension . '\\Site\\Helper\\RouteHelper';
 
         if ($item->description) {
-            $item->body = "<br/>".$item->description;
+            $item->body = "<br/>" . $item->description;
         }
 
         if ($item->parent_entity == "category") {
@@ -316,7 +317,7 @@ final class Attachments extends Adapter implements SubscriberInterface
         } elseif ($item->parent_entity == "article") {
             if (class_exists($class) && method_exists($class, 'getArticleRoute')) {
                 $item->route = $class::getArticleRoute(
-                    $item->article_alias ? "{$item->parent_id}:{$item->article_alias}" : $item->parent_id, 
+                    $item->article_alias ? "{$item->parent_id}:{$item->article_alias}" : $item->parent_id,
                     $item->article_catid,
                     $item->language
                 );

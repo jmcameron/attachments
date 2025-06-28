@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -17,7 +18,7 @@ use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
-require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
+require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
 
 /**
  * Tests for file_type functions
@@ -27,20 +28,20 @@ require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
  */
 class FileTypeRoundTripTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Test the round-trip conversions form icon-filename to mime-type and back
-	 */
-	public function testRoundTrip()
-	{
-		$icon_filenames = AttachmentsFileTypes::unique_icon_filenames();
+    /**
+     * Test the round-trip conversions form icon-filename to mime-type and back
+     */
+    public function testRoundTrip()
+    {
+        $icon_filenames = AttachmentsFileTypes::unique_icon_filenames();
 
-		$mime_from_icon = array_flip(AttachmentsFileTypes::$attachments_icon_from_mime_type);
+        $mime_from_icon = array_flip(AttachmentsFileTypes::$attachments_icon_from_mime_type);
 
-		foreach ($icon_filenames as $icon) {
-			if ( array_key_exists($icon, $mime_from_icon) ) {
-				$mime_type = $mime_from_icon[$icon];
-				$this->assertEquals($icon, AttachmentsFileTypes::icon_filename('', $mime_type));
-				}
-			}
-	}
+        foreach ($icon_filenames as $icon) {
+            if (array_key_exists($icon, $mime_from_icon)) {
+                $mime_type = $mime_from_icon[$icon];
+                $this->assertEquals($icon, AttachmentsFileTypes::icon_filename('', $mime_type));
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *

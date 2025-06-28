@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -29,54 +30,54 @@ defined('_JEXEC') or die();
  */
 class HtmlView extends AttachmentsFormView
 {
+    /**
+     * Display the view
+     */
+    public function display($tpl = null)
+    {
+        // Access check.
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        if ($user === null or !$user->authorise('core.create', 'com_attachments')) {
+            throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 64)', 404);
+            return;
+        }
 
-	/**
-	 * Display the view
-	 */
-	public function display($tpl=null)
-	{
-		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
-		if ($user === null OR !$user->authorise('core.create', 'com_attachments')) {
-			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 64)', 404);
-			return;
-			}
+        // For convenience below
+        $attachment = $this->attachment;
+        $parent = $this->parent;
 
-		// For convenience below
-		$attachment = $this->attachment;
-		$parent = $this->parent;
+        // Set up for editing the access level
+        if ($this->params->get('allow_frontend_access_editing', false)) {
+            $this->access_level = AccessLevelsField::getAccessLevels('access', 'access', null);
+            $this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
+        }
 
-		// Set up for editing the access level
-		if ( $this->params->get('allow_frontend_access_editing', false) ) {
-			$this->access_level = AccessLevelsField::getAccessLevels('access', 'access', null);
-			$this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-			}
+        // Set up publishing info
+        $this->may_publish = $parent->userMayChangeAttachmentState(
+            $attachment->parent_id,
+            $attachment->parent_entity,
+            $user->id
+        );
+        if ($this->may_publish) {
+            $this->publish = HTMLHelper::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
+        }
 
-		// Set up publishing info
-		$this->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
-																   $attachment->parent_entity, $user->id);
-		if ( $this->may_publish ) {
-			$this->publish = HTMLHelper::_('select.booleanlist', 'state', 'class="inputbox"', $attachment->state);
-			}
+        // Construct derived data
+        $attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
+        $attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
 
-		// Construct derived data
-		$attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
-		$attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
+        $this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
+        $this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
-		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
-		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
+        // Add the stylesheets for the form
+        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        $lang = $app->getLanguage();
+        if ($lang->isRTL()) {
+            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+        }
 
-		// Add the stylesheets for the form
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
-		$lang = $app->getLanguage();
-		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
-			}
-
-		// Display the upload form
-		parent::display($tpl);
-	}
-
-
+        // Display the upload form
+        parent::display($tpl);
+    }
 }

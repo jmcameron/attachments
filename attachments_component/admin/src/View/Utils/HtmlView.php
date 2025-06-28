@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -27,23 +28,22 @@ defined('_JEXEC') or die();
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * Display the view
-	 *
-	 * @param	string	$tpl  A template file to load. [optional]
-	 *
-	 */
-	public function display($tpl = null)
-	{
-		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
-		if ($user === null OR !$user->authorise('core.admin', 'com_attachments'))
-		{
-			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)', 404);
-			return;
-		}
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
+     */
+    public function display($tpl = null)
+    {
+        // Access check.
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        if ($user === null or !$user->authorise('core.admin', 'com_attachments')) {
+            throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 171)', 404);
+            return;
+        }
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }

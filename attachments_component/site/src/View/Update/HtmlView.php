@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -30,63 +31,71 @@ defined('_JEXEC') or die();
  */
 class HtmlView extends AttachmentsFormView
 {
-	/**
-	 * Display the view
-	 */
-	public function display($tpl=null)
-	{
-		// Access check.
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
-		if ( $user === null OR
-			 !($user->authorise('core.edit', 'com_attachments') OR
-			 $user->authorise('core.edit.own', 'com_attachments')) ) {
-			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
-			}
+    /**
+     * Display the view
+     */
+    public function display($tpl = null)
+    {
+        // Access check.
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        if (
+            $user === null or
+             !($user->authorise('core.edit', 'com_attachments') or
+             $user->authorise('core.edit.own', 'com_attachments'))
+        ) {
+            throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 62)', 404);
+        }
 
-		// For convenience
-		$attachment = $this->attachment;
-		$parent = $this->parent;
+        // For convenience
+        $attachment = $this->attachment;
+        $parent = $this->parent;
 
-		// Construct derived data
-		$attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
-		$attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
-		if (!isset($attachment->modifier_name))
-		{
-			AttachmentsHelper::addAttachmentUserNames($attachment);
-		}
+        // Construct derived data
+        $attachment->parent_entity_name = Text::_('ATTACH_' . $attachment->parent_entity);
+        $attachment->parent_title = $parent->getTitle($attachment->parent_id, $attachment->parent_entity);
+        if (!isset($attachment->modifier_name)) {
+            AttachmentsHelper::addAttachmentUserNames($attachment);
+        }
 
-		$this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
-		$this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
+        $this->relative_url_checked = $attachment->url_relative ? 'checked="yes"' : '';
+        $this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
-		$this->may_publish = $parent->userMayChangeAttachmentState($attachment->parent_id,
-																   $attachment->parent_entity,
-																   $attachment->created_by
-																   );
+        $this->may_publish = $parent->userMayChangeAttachmentState(
+            $attachment->parent_id,
+            $attachment->parent_entity,
+            $attachment->created_by
+        );
 
-		// Set up some HTML for display in the form
-		$this->lists = Array();
-		$this->lists['published'] = HTMLHelper::_('select.booleanlist', 'state',
-											 'class="inputbox"', $attachment->state);
-		$this->lists['url_valid'] = HTMLHelper::_('select.booleanlist', 'url_valid',
-											 'class="inputbox" title="' . Text::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
-											 $attachment->url_valid);
+        // Set up some HTML for display in the form
+        $this->lists = array();
+        $this->lists['published'] = HTMLHelper::_(
+            'select.booleanlist',
+            'state',
+            'class="inputbox"',
+            $attachment->state
+        );
+        $this->lists['url_valid'] = HTMLHelper::_(
+            'select.booleanlist',
+            'url_valid',
+            'class="inputbox" title="' . Text::_('ATTACH_URL_IS_VALID_TOOLTIP') . '"',
+            $attachment->url_valid
+        );
 
-		// Set up for editing the access level
-		if ( $this->params->get('allow_frontend_access_editing', false) ) {
-			$this->access_level = AccessLevelsField::getAccessLevels('access', 'access', $attachment->access);
-			$this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
-			}
+        // Set up for editing the access level
+        if ($this->params->get('allow_frontend_access_editing', false)) {
+            $this->access_level = AccessLevelsField::getAccessLevels('access', 'access', $attachment->access);
+            $this->access_level_tooltip = Text::_('ATTACH_ACCESS_LEVEL_TOOLTIP');
+        }
 
-		// Add the stylesheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
-		$lang = $app->getLanguage();
-		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
-			}
+        // Add the stylesheets
+        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        $lang = $app->getLanguage();
+        if ($lang->isRTL()) {
+            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+        }
 
-		// Display the form
-		parent::display($tpl);
-	}
-
+        // Display the form
+        parent::display($tpl);
+    }
 }

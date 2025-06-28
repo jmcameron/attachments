@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -27,18 +28,18 @@ defined('_JEXEC') or die();
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * Display the view
-	 */
-	public function display($tpl = null)
-	{
-		// Add the stylesheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
-		$lang = Factory::getApplication()->getLanguage();
-		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
-			}
+    /**
+     * Display the view
+     */
+    public function display($tpl = null)
+    {
+        // Add the stylesheets
+        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        $lang = Factory::getApplication()->getLanguage();
+        if ($lang->isRTL()) {
+            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+        }
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }

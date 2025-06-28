@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -17,7 +18,7 @@ use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /** Load the CSV file iterator class */
-require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
+require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
 
 /**
  * Tests for file_type conversion functions
@@ -27,29 +28,29 @@ require_once JPATH_TESTS.'/utils/CsvFileIterator.php';
  */
 class FileTypeConversionsTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Test various file type and mime type conversions to icon filenames
-	 *
-	 * @dataProvider provider
-	 *
-	 * @param string $filename the filename to test
-	 * @param string $icon_filename the expected icon_filename
-	 * @param string $mime_type the mime type to test (if the filename is empty)
-	 */
-	public function testConversions($filename, $icon_filename, $mime_type)
-	{
-		$this->assertEquals($icon_filename, AttachmentsFileTypes::icon_filename($filename, $mime_type));
+    /**
+     * Test various file type and mime type conversions to icon filenames
+     *
+     * @dataProvider provider
+     *
+     * @param string $filename the filename to test
+     * @param string $icon_filename the expected icon_filename
+     * @param string $mime_type the mime type to test (if the filename is empty)
+     */
+    public function testConversions($filename, $icon_filename, $mime_type)
+    {
+        $this->assertEquals($icon_filename, AttachmentsFileTypes::icon_filename($filename, $mime_type));
 
-		if ( $filename ) {
-			$this->assertEquals($mime_type, AttachmentsFileTypes::mime_type($filename));
-			}
-	}
+        if ($filename) {
+            $this->assertEquals($mime_type, AttachmentsFileTypes::mime_type($filename));
+        }
+    }
 
-	/**
-	 * Get the test data from CSV file
-	 */
-	public function provider()
-	{
-		return new CsvFileIterator(dirname(__FILE__).'/testFileTypesConversionsData.csv');
-	}
+    /**
+     * Get the test data from CSV file
+     */
+    public function provider()
+    {
+        return new CsvFileIterator(dirname(__FILE__) . '/testFileTypesConversionsData.csv');
+    }
 }

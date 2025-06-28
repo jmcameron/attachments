@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -37,20 +38,20 @@ $document->addScriptDeclaration($hide_scrollbar);
 
 ?>
 <div class="attachmentsWarning">
-	 <h1><?php echo $this->warning_title; ?></h1>
-	 <h2 id="warning_msg"><?php echo $this->warning_question ?></h2>
+     <h1><?php echo $this->warning_title; ?></h1>
+     <h2 id="warning_msg"><?php echo $this->warning_question ?></h2>
   <form action="<?php echo $this->action_url; ?>" name="warning_form" method="post">
-	<div class="form_buttons" align="center">
-	   <span class="left">&nbsp;</span>
-	   <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
-	   <span class="right">
-		  <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-				 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
-	   </span>
-	</div>
-	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
-	<input type="hidden" name="from" value="<?php echo $this->from;?>" />
+    <div class="form_buttons" align="center">
+       <span class="left">&nbsp;</span>
+       <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
+       <span class="right">
+          <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
+                 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+       </span>
+    </div>
+    <input type="hidden" name="option" value="<?php echo $this->option;?>" />
+    <input type="hidden" name="from" value="<?php echo $this->from;?>" />
 
-	<?php echo HTMLHelper::_( 'form.token' ); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
   </form>
  </div>

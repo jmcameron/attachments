@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component installation script
  *
@@ -27,76 +28,76 @@ defined('_JEXEC') or die('Restricted access');
  */
 class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
 {
-	/**
-	 * Attachments component install function
-	 *
-	 * @param InstallerAdapter $adapter The adapter calling this method
-	 * @return boolean True on success
-	 */
-	public function install(InstallerAdapter $adapter): bool
-	{
-		return true;
-	}
+    /**
+     * Attachments component install function
+     *
+     * @param InstallerAdapter $adapter The adapter calling this method
+     * @return boolean True on success
+     */
+    public function install(InstallerAdapter $adapter): bool
+    {
+        return true;
+    }
 
 
-	/**
-	 * Attachments component update function
-	 *
-	 * @param InstallerAdapter $adapter The adapter calling this method
-	 * @return boolean True on success
-	 */
-	public function update(InstallerAdapter $adapter): bool
-	{
-		return true;
-	}
+    /**
+     * Attachments component update function
+     *
+     * @param InstallerAdapter $adapter The adapter calling this method
+     * @return boolean True on success
+     */
+    public function update(InstallerAdapter $adapter): bool
+    {
+        return true;
+    }
 
 
-	/**
-	 * Attachments component uninstall function
-	 *
-	 * @param InstallerAdapter $adapter The adapter calling this method
-	 * @return boolean True on success
-	 */
-	public function uninstall(InstallerAdapter $adapter): bool
-	{
-		return true;
-	}
+    /**
+     * Attachments component uninstall function
+     *
+     * @param InstallerAdapter $adapter The adapter calling this method
+     * @return boolean True on success
+     */
+    public function uninstall(InstallerAdapter $adapter): bool
+    {
+        return true;
+    }
 
 
-	/**
-	 * Attachments component preflight function
-	 *
-	 * @param string $type The type of change (install or discover_install, update, uninstall)
-	 * @param InstallerAdapter $adapter The adapter calling this method
-	 * @return boolean True on success
-	 */
-	public function preflight(string $type, InstallerAdapter $adapter): bool
-	{
-		$app = Factory::getApplication();
+    /**
+     * Attachments component preflight function
+     *
+     * @param string $type The type of change (install or discover_install, update, uninstall)
+     * @param InstallerAdapter $adapter The adapter calling this method
+     * @return boolean True on success
+     */
+    public function preflight(string $type, InstallerAdapter $adapter): bool
+    {
+        $app = Factory::getApplication();
 
-		// Load the installation language
-		$lang = $app->getLanguage();
-		$lang->load('pkg_attachments.sys', dirname(__FILE__), 'en-GB');
+        // Load the installation language
+        $lang = $app->getLanguage();
+        $lang->load('pkg_attachments.sys', dirname(__FILE__), 'en-GB');
 
-		if (Folder::exists(JPATH_ROOT . '/plugins/attachments/attachments_plugin_framework')) {
-			$msg = Text::_('ATTACH_PACKAGE_REMOVE_OLD_ATTACHMENTS_FRAMEWORK');
-			$app->enqueueMessage($msg, 'error');
-			return false;
-		}
+        if (Folder::exists(JPATH_ROOT . '/plugins/attachments/attachments_plugin_framework')) {
+            $msg = Text::_('ATTACH_PACKAGE_REMOVE_OLD_ATTACHMENTS_FRAMEWORK');
+            $app->enqueueMessage($msg, 'error');
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 
-	/**
-	 * Attachments component postflight function
-	 *
-	 * @param string $type The type of change (install or discover_install, update, uninstall)
-	 * @param InstallerAdapter $adapter The adapter calling this method
-	 * @return boolean True on success
-	 */
-	public function postflight(string $type, InstallerAdapter $adapter): bool
-	{
-		return true;
-	}
+    /**
+     * Attachments component postflight function
+     *
+     * @param string $type The type of change (install or discover_install, update, uninstall)
+     * @param InstallerAdapter $adapter The adapter calling this method
+     * @return boolean True on success
+     */
+    public function postflight(string $type, InstallerAdapter $adapter): bool
+    {
+        return true;
+    }
 }

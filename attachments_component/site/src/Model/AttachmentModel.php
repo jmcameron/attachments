@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachment model definition
  *
@@ -28,196 +29,190 @@ defined('_JEXEC') or die('Restricted access');
  */
 class AttachmentModel extends BaseDatabaseModel
 {
-
-	/**
-	 * Attachment ID
-	 */
-	var $_id = null;
-
-
-	/**
-	 * Attachment object/data
-	 *
-	 * @var object
-	 */
-	var $_attachment = null;
+    /**
+     * Attachment ID
+     */
+    var $_id = null;
 
 
-	/**
-	 * Constructor, build object and determines its ID
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		// Get the cid array from the request
-		$input = Factory::getApplication()->getInput();
-		$cid = $input->get('cid', 'DEFAULT', 'array');
-
-		if ($cid) {
-			// Accept only the first id from the array
-			$id = $cid[0];
-			}
-		else {
-			$id = $input->getInt('id',0);
-			}
-
-		$this->setId($id);
-	}
+    /**
+     * Attachment object/data
+     *
+     * @var object
+     */
+    var $_attachment = null;
 
 
-	/**
-	 * Reset the model ID and data
-	 */
-	public function setId($id=0)
-	{
-		$this->_id = $id;
-		$this->_attachment = null;
-	}
+    /**
+     * Constructor, build object and determines its ID
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Get the cid array from the request
+        $input = Factory::getApplication()->getInput();
+        $cid = $input->get('cid', 'DEFAULT', 'array');
+
+        if ($cid) {
+            // Accept only the first id from the array
+            $id = $cid[0];
+        } else {
+            $id = $input->getInt('id', 0);
+        }
+
+        $this->setId($id);
+    }
 
 
-	/**
-	 * Load the attachment data
-	 *
-	 * @return true if loaded successfully
-	 */
-	private function _loadAttachment()
-	{
-		if ($this->_id == 0) {
-			return false;
-			}
-
-		if ( empty($this->_attachment) ) {
-
-			$user	= Factory::getApplication()->getIdentity();
-			$user_levels = $user->getAuthorisedViewLevels();
-
-			// If the user is not logged in, add extra view levels (if configured)
-			if ( $user->get('username') == '' ) {
-
-				// Get the component parameters
-				$params = ComponentHelper::getParams('com_attachments');
-
-				// Add the specified access levels
-				$guest_levels = $params->get('show_guest_access_levels', Array('1'));
-				if (is_array($guest_levels)) {
-					foreach ($guest_levels as $glevel) {
-						$user_levels[] = $glevel;
-						}
-					}
-				else {
-					$user_levels[] = $guest_levels;
-					}
-				}
-			$user_levels = implode(',', array_unique($user_levels));
-
-			// Load the attachment data and make sure this user has access
-			/** @var \Joomla\Database\DatabaseDriver $db */
-			$db		= Factory::getContainer()->get('DatabaseDriver');
-			$query	= $db->getQuery(true);
-			$query->select('a.*, a.id as id');
-			$query->from('#__attachments as a');
-			$query->where('a.id = '.(int)$this->_id);
-			if ( !$user->authorise('core.admin') ) {
-				$query->where('a.access in ('.$user_levels.')');
-				}
-			$db->setQuery($query, 0, 1);
-			$this->_attachment = $db->loadObject();
-			if ( empty($this->_attachment) ) {
-				return false;
-				}
-
-			// Retrieve the information about the parent
-			$parent_type = $this->_attachment->parent_type;
-			$parent_entity = $this->_attachment->parent_entity;
-			PluginHelper::importPlugin('attachments');
-			$apm = AttachmentsPluginManager::getAttachmentsPluginManager();
-			if ( !$apm->attachmentsPluginInstalled($parent_type) ) {
-				$this->_attachment->parent_type = false;
-				return false;
-				}
-			$parent = $apm->getAttachmentsPlugin($parent_type);
-
-			// Set up the parent info
-			$parent_id = $this->_attachment->parent_id;
-			$this->_attachment->parent_title = $parent->getTitle($parent_id, $parent_entity);
-			$this->_attachment->parent_published =
-				$parent->isParentPublished($parent_id, $parent_entity);
-			}
-
-		return true;
-	}
+    /**
+     * Reset the model ID and data
+     */
+    public function setId($id = 0)
+    {
+        $this->_id = $id;
+        $this->_attachment = null;
+    }
 
 
-	/**
-	 * Create a new Attachment object
-	 */
-	private function _initAttachment()
-	{
-		echo "_initData not implemented yet <br />";
-		return null;
-	}
+    /**
+     * Load the attachment data
+     *
+     * @return true if loaded successfully
+     */
+    private function _loadAttachment()
+    {
+        if ($this->_id == 0) {
+            return false;
+        }
+
+        if (empty($this->_attachment)) {
+            $user   = Factory::getApplication()->getIdentity();
+            $user_levels = $user->getAuthorisedViewLevels();
+
+            // If the user is not logged in, add extra view levels (if configured)
+            if ($user->get('username') == '') {
+                // Get the component parameters
+                $params = ComponentHelper::getParams('com_attachments');
+
+                // Add the specified access levels
+                $guest_levels = $params->get('show_guest_access_levels', array('1'));
+                if (is_array($guest_levels)) {
+                    foreach ($guest_levels as $glevel) {
+                        $user_levels[] = $glevel;
+                    }
+                } else {
+                    $user_levels[] = $guest_levels;
+                }
+            }
+            $user_levels = implode(',', array_unique($user_levels));
+
+            // Load the attachment data and make sure this user has access
+            /** @var \Joomla\Database\DatabaseDriver $db */
+            $db     = Factory::getContainer()->get('DatabaseDriver');
+            $query  = $db->getQuery(true);
+            $query->select('a.*, a.id as id');
+            $query->from('#__attachments as a');
+            $query->where('a.id = ' . (int)$this->_id);
+            if (!$user->authorise('core.admin')) {
+                $query->where('a.access in (' . $user_levels . ')');
+            }
+            $db->setQuery($query, 0, 1);
+            $this->_attachment = $db->loadObject();
+            if (empty($this->_attachment)) {
+                return false;
+            }
+
+            // Retrieve the information about the parent
+            $parent_type = $this->_attachment->parent_type;
+            $parent_entity = $this->_attachment->parent_entity;
+            PluginHelper::importPlugin('attachments');
+            $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+            if (!$apm->attachmentsPluginInstalled($parent_type)) {
+                $this->_attachment->parent_type = false;
+                return false;
+            }
+            $parent = $apm->getAttachmentsPlugin($parent_type);
+
+            // Set up the parent info
+            $parent_id = $this->_attachment->parent_id;
+            $this->_attachment->parent_title = $parent->getTitle($parent_id, $parent_entity);
+            $this->_attachment->parent_published =
+                $parent->isParentPublished($parent_id, $parent_entity);
+        }
+
+        return true;
+    }
 
 
-	/**
-	 * Get the data
-	 *
-	 * @return object
-	 */
-	public function getAttachment()
-	{
-		if ( !$this->_loadAttachment() ) {
-			// If the load fails, create a new one
-			$this->_initAttachment();
-			}
-
-		return $this->_attachment;
-	}
+    /**
+     * Create a new Attachment object
+     */
+    private function _initAttachment()
+    {
+        echo "_initData not implemented yet <br />";
+        return null;
+    }
 
 
-	/**
-	 * Save the attachment
-	 *
-	 * @param object $data mixed object or associative array of data to save
-	 *
-	 * @return Boolean true on success
-	 */
-	public function save($data)
-	{
-		// Get the table
-		$table = $this->getTable('Attachments');
+    /**
+     * Get the data
+     *
+     * @return object
+     */
+    public function getAttachment()
+    {
+        if (!$this->_loadAttachment()) {
+            // If the load fails, create a new one
+            $this->_initAttachment();
+        }
 
-		// Save the data
-		if ( !$table->save($data) ) {
-			// An error occured, save the model error message
-			$this->setError($table->getError());
-			return false;
-			}
-
-		return true;
-	}
+        return $this->_attachment;
+    }
 
 
-	/**
-	 * Increment the download count
-	 *
-	 * @param int $attachment_id the attachment ID
-	 */
-	public function incrementDownloadCount()
-	{
-		// Update the download count
-		/** @var \Joomla\Database\DatabaseDriver $db */
-		$db = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->update('#__attachments')->set('download_count = (download_count + 1)');
-		$query->where('id = ' .(int)$this->_id);
-		$db->setQuery($query);
-		try {
-			$db->execute();
-		} catch (\RuntimeException $e) {
-			$errmsg = $e->getMessage() . ' (ERR 49)';
-			throw new \Exception($errmsg, 500);
-		}
-	}
+    /**
+     * Save the attachment
+     *
+     * @param object $data mixed object or associative array of data to save
+     *
+     * @return Boolean true on success
+     */
+    public function save($data)
+    {
+        // Get the table
+        $table = $this->getTable('Attachments');
 
+        // Save the data
+        if (!$table->save($data)) {
+            // An error occured, save the model error message
+            $this->setError($table->getError());
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Increment the download count
+     *
+     * @param int $attachment_id the attachment ID
+     */
+    public function incrementDownloadCount()
+    {
+        // Update the download count
+        /** @var \Joomla\Database\DatabaseDriver $db */
+        $db = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->update('#__attachments')->set('download_count = (download_count + 1)');
+        $query->where('id = ' . (int)$this->_id);
+        $db->setQuery($query);
+        try {
+            $db->execute();
+        } catch (\RuntimeException $e) {
+            $errmsg = $e->getMessage() . ' (ERR 49)';
+            throw new \Exception($errmsg, 500);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -17,4 +18,6 @@ namespace JMCameron\Component\Attachments\Site\View\Attachments;
 defined('_JEXEC') or die('Restricted Access');
 
 /** The normal html view does exactly what we want so just use it */
-class RawView extends HtmlView {}
+class RawView extends HtmlView
+{
+}

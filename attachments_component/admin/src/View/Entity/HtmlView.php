@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Attachments component
  *
@@ -19,7 +20,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 // no direct access
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * HTML View class for adding new attachments
@@ -28,18 +29,18 @@ defined( '_JEXEC' ) or die('Restricted access');
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * Display the entity view
-	 */
-	public function display($tpl = null)
-	{
-		// Add the style sheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css');
-		$lang = Factory::getApplication()->getLanguage();
-		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css');
-			}
+    /**
+     * Display the entity view
+     */
+    public function display($tpl = null)
+    {
+        // Add the style sheets
+        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css');
+        $lang = Factory::getApplication()->getLanguage();
+        if ($lang->isRTL()) {
+            HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css');
+        }
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 }
