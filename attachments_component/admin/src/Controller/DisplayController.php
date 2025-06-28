@@ -103,8 +103,7 @@ class DisplayController extends BaseController
 		$items = $parent->getEntityItems($parent_entity, $search_filter);
 
 		// Set up the view
-		$view = $this->getView('Entity', 'html');
-		$view->option = $input->getCmd('option');
+		$view = $this->getView('Entity', 'html', '', array('option' => $input->getCmd('option')));
 		$view->from = 'closeme';
 		$view->post_url = $post_url;
 		$view->parent_type = $parent_type;
