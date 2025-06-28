@@ -91,6 +91,7 @@
 	    <filename>index.html</filename>
 	    <filename>forms/index.html</filename>
 	    <filename>forms/attachment.xml</filename>
+		<filename>forms/filter_attachments.xml</filename>
 	    <filename>sql/index.html</filename>
 	    <filename>sql/install.mysql.sql</filename>
 	    <filename>sql/uninstall.mysql.sql</filename>
