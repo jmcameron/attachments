@@ -6,9 +6,9 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
 
@@ -29,7 +29,10 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 
 /**
  * The main attachments controller class (for the front end)

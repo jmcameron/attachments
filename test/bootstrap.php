@@ -12,6 +12,7 @@
  * eg, /path/to/joomla/unittest/
  */
 
+
 // Load the custom initialisation file if it exists.
 if (file_exists('config.php')) {
     include 'config.php';
@@ -20,7 +21,8 @@ if (file_exists('config.php')) {
 // Define expected Joomla constants.
 
 define('DS', DIRECTORY_SEPARATOR);
-define('_JEXEC', 1);
+
+
 
 if (!defined('JPATH_BASE')) {
     define('JPATH_BASE', '/var/www/test/joomla25');

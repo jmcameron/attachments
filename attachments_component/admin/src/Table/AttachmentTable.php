@@ -6,9 +6,9 @@
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
 
@@ -22,8 +22,10 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
 
-// No direct access
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 
 /**
  * Attachments table class
@@ -54,7 +56,7 @@ class AttachmentTable extends Table
      * @param   integer The user id of the user performing the operation.
      * @return  int Number of attachments published ( false if 0 )
      * @since   1.0.4
-     * @link    http://docs.joomla.org/JTable/publish
+     * @link https://github.com/jmcameron/attachments
      */
     public function publish($pks = null, $state = 1, $userId = 0)
     {
@@ -195,7 +197,7 @@ class AttachmentTable extends Table
      *
      * @return  boolean  True on success.
      *
-     * @link    http://docs.joomla.org/JTable/store
+     * @link https://github.com/jmcameron/attachments
      */
     public function store($updateNulls = false)
     {

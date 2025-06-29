@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Add Attachments Button plugin
+ * Insert Attachments Token Button plugin
  *
  * @package Attachments
- * @subpackage Insert_Attachments_Token_Button_Plugin
+ * @subpackage Insert_Attachment_Token_Button_Plugin
  *
- * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
 
@@ -30,8 +30,9 @@ use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Button that allows you to insert an {attachments} token into the text from the editor

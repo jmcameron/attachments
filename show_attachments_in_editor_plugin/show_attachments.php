@@ -6,9 +6,9 @@
  * @package Attachments
  * @subpackage Show_Attachments_In_Editor_Plugin
  *
- * @copyright Copyright (C) 2009-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2009-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
 
@@ -22,8 +22,9 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /** Load the Attachments defines (if available) */
 if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.xml')) {

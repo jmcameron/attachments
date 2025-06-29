@@ -7,9 +7,9 @@
  * @subpackage Attachments_Component
  *
  * @author Jonathan M. Cameron
- * @copyright Copyright (C) 2007-2024 Jonathan M. Cameron
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  */
 
 use Joomla\CMS\Factory;
@@ -18,8 +18,9 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 
-// No direct access
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * The main attachments installation class

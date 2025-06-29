@@ -7,15 +7,17 @@
  * @subpackage  Attachments_Component
  *
  * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2011-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright   Copyright (C) 2011-2025 Jonathan M. Cameron, All Rights Reserved
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  */
 
 namespace JMCameron\Component\Attachments\Site\Helper;
 
-// No direct access.
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 
 /**
  * Attachments extension defines
@@ -28,11 +30,11 @@ class AttachmentsDefines
 {
     /** The Attachments extension version number
      */
-    public static $ATTACHMENTS_VERSION = '4.1.4';
+    public static $ATTACHMENTS_VERSION = '4.1.5';
 
     /** The Attachments extension version date
      */
-    public static $ATTACHMENTS_VERSION_DATE = 'June 28, 2025';
+    public static $ATTACHMENTS_VERSION_DATE = 'June 29, 2025';
 
     /** Project URL
      */

@@ -7,9 +7,9 @@
  * @subpackage  Attachments_Component
  *
  * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
- * @copyright   Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright   Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link        http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  */
 
 namespace JMCameron\Component\Attachments\Administrator\View\Help;
@@ -20,8 +20,10 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die();
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 
 /**
  * View for the help page
