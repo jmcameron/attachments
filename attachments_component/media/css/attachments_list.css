@@ -60,7 +60,7 @@ div.attachmentsList tbody tr.even
 #main div.attachmentsList  tr.unpublished,
 #main div.attachmentsList  tr.unpublished td,
 div.attachmentsList  tr.unpublished,
-div.attachmentsList  tr.unpublished td 
+div.attachmentsList  tr.unpublished td
 {
     background-color: #AAA;
 }
@@ -128,7 +128,7 @@ div.attachmentsList img.link_overlay {
     margin-left: -16px;
 }
 
-#main div.attachmentsList a.at_icon, 
+#main div.attachmentsList a.at_icon,
 div.attachmentsList a.at_icon {
     padding-right: 4px;
 }
@@ -159,8 +159,8 @@ div.attachmentsList td.at_edit { text-align: center; background: transparent; }
 /* Style for the 'Add Attachment' link */
 
 #main div.addattach,
-div.addattach { 
-    margin-top: 4px; 
+div.addattach {
+    margin-top: 4px;
     background: transparent;
 }
 
@@ -197,10 +197,10 @@ div.addattach a:visited { color: red; text-decoration: none; }
 div.addattach a:hover   { color: red; text-decoration: underline; color: #F00; background: transparent; }
 div.addattach a:active  { color: red; text-decoration: none; }
 
-div.addattach a.modal-button { 
-    background: transparent; 
-    border-width: 0 !important; 
-    padding: 2px !important; 
+div.addattach a.modal-button {
+    background: transparent;
+    border-width: 0 !important;
+    padding: 2px !important;
 }
 div.addattach a.modal-button:link { background: transparent; }
 div.addattach a.modal-button:visited { background: transparent; }
@@ -255,12 +255,12 @@ form.attachmentsBackend + div.attachmentsList table {
 }
 
 
-.modal-dialog.jviewport-width80 { 
-	width: 80vw; max-width:none; 
-} 
- 
-.modal-body.jviewport-height80 { 
-	height: 80vh;
+.modal-dialog.jviewport-width80 {
+    width: 80vw; max-width:none;
+}
+
+.modal-body.jviewport-height80 {
+    height: 80vh;
 }
 
 #main div.attachmentsContainer,

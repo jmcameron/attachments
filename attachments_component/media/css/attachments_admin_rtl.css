@@ -1,22 +1,22 @@
 /* Styles for the main list of attachments in the administrative back end */
 
-table.adminlist th { 
+table.adminlist th {
     text-align: right;
 }
 table.adminlist th.at_filename    { text-align: right; }
 table.adminlist th.at_description { text-align: right; }
 table.adminlist th.at_user_field   { text-align: right; }
 
-table.adminlist td { 
+table.adminlist td {
     text-align: right;
 }
 
-table.adminlist td.at_filename { 
-    text-align: right; 
+table.adminlist td.at_filename {
+    text-align: right;
     /*font-size: 125%; */
 }
 
-.at_filename a 
+.at_filename a
 {
     font-size: 80%;
 }
@@ -55,17 +55,17 @@ div.attachmentsAdmin {
 
 /* For icons */
 
-.icon-48-attachments 
+.icon-48-attachments
 {
     background-position:right;
 }
 
-.icon-16-attachments   
+.icon-16-attachments
 {
     background-position:right;
 }
 
-.icon-32-admin 
-{ 
+.icon-32-admin
+{
     background-position:right;
 }

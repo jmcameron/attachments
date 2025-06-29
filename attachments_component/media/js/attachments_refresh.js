@@ -1,6 +1,6 @@
 /**
  * Define Javascript function for refreshing attachments lists
- * 
+ *
  * Copyright (C) 2010-2016 Jonathan M. Cameron, All Rights Reserved
  * License: http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  *
@@ -14,14 +14,15 @@
  * @param from string the 'from' clause to pass in the request
  */
 
-function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
+function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from)
+{
     let id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid,
         alist = document.getElementById(id),
-        url = `${siteUrl}/index.php?option=com_attachments&task=attachmentsList`;
-    url += `&parent_id=${pid}`;
-    url += `&parent_type=${ptype}&parent_entity=${pentity}`;
-    url += `&lang=${lang}`;
-    url += `&from=${from}&tmpl=component&format=raw`;
+        url = `${siteUrl} / index.php ? option = com_attachments & task = attachmentsList`;
+    url += ` & parent_id = ${pid}`;
+    url += ` & parent_type = ${ptype} & parent_entity = ${pentity}`;
+    url += ` & lang = ${lang}`;
+    url += ` & from = ${from} & tmpl = component & format = raw`;
     if (!alist) {
         alist = window.parent.document.getElementById(id);
     }
@@ -30,7 +31,7 @@ function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from) {
         alist = window.parent.document.getElementById(id);
     }
     fetch(new Request(url, {method: "GET"}))
-        .then(function(response) {
+        .then(function (response) {
             if (response.status == 200) {
                 return response.text();
             } else {

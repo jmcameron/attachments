@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Attachments component
+ *
+ * @package Attachments
+ * @subpackage Attachments_Component
+ *
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link https://github.com/jmcameron/attachments
+ * @author Jonathan M. Cameron
+ */
+
 namespace JMCameron\Plugin\Finder\Attachments\Extension;
 
 use Joomla\CMS\Component\ComponentHelper;
@@ -290,8 +302,9 @@ final class Attachments extends Adapter implements SubscriberInterface
         $item->url = $this->getUrl($item->id, $this->extension, $this->layout);
 
         // We can only index com_content articles and categories
-        if ($item->parent_type != "com_content")
+        if ($item->parent_type != "com_content") {
             return;
+        }
 
         $extension = "Content";
         /*
@@ -302,7 +315,7 @@ final class Attachments extends Adapter implements SubscriberInterface
         $class = 'Joomla\\Component\\' . $extension . '\\Site\\Helper\\RouteHelper';
 
         if ($item->description) {
-            $item->body = "<br/>".$item->description;
+            $item->body = "<br/>" . $item->description;
         }
 
         if ($item->parent_entity == "category") {
@@ -316,7 +329,7 @@ final class Attachments extends Adapter implements SubscriberInterface
         } elseif ($item->parent_entity == "article") {
             if (class_exists($class) && method_exists($class, 'getArticleRoute')) {
                 $item->route = $class::getArticleRoute(
-                    $item->article_alias ? "{$item->parent_id}:{$item->article_alias}" : $item->parent_id, 
+                    $item->article_alias ? "{$item->parent_id}:{$item->article_alias}" : $item->parent_id,
                     $item->article_catid,
                     $item->language
                 );

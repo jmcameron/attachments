@@ -1,15 +1,15 @@
 /* Styles for lists of attachments */
 
-div.attachmentsList table 
+div.attachmentsList table
 {
     direction: rtl;
 }
 
-div.attachmentsList caption 
+div.attachmentsList caption
 {
     font-family: Times New Roman, Arial;
     font-size: 130%;
-    text-align: right; 
+    text-align: right;
 }
 
 div.addattach img {
@@ -67,7 +67,7 @@ div.deleteWarning {
     margin-right: 20px;
 }
 
-.at_url 
+.at_url
 {
     font-family: Times New Roman, Arial;
 }
