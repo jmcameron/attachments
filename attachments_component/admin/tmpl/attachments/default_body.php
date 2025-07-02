@@ -65,10 +65,10 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
                                     (int)$item->id);
     $view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
     if ($use_fontawesome_icons) {
-        $icon = AttachmentsFileTypes::fa_icon_filename('', $item->file_type);
+        $icon = AttachmentsFileTypes::faIconFilename('', $item->file_type);
     } else {
-        if (StringHelper::strlen($item->icon_filename) > 0) {
-            $icon = $item->icon_filename;
+        if (StringHelper::strlen($item->iconFilename) > 0) {
+            $icon = $item->iconFilename;
         } else {
             $icon = 'generic.gif';
         }

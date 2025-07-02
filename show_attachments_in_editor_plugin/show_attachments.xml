@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" version="4.0" method="upgrade">
     <name>plg_system_show_attachments_in_editor</name>
-    <version>4.1.5</version>
-    <creationDate>June 29, 2025</creationDate>
+    <version>4.1.4.1</version>
+    <creationDate>July  2, 2025</creationDate>
     <author>Jonathan M. Cameron</author>
     <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>

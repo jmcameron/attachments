@@ -24,6 +24,7 @@ use Joomla\CMS\Factory;
  *
  * @package Attachments
  */
+// phpcs:ignore
 class plgAttachmentsAttachments_for_contentInstallerScript
 {
     /**

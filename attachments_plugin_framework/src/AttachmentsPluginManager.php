@@ -185,7 +185,10 @@ class AttachmentsPluginManager
 
         $lang = Factory::getApplication()->getLanguage();
 
-        $this->language_loaded = $lang->load('plg_attachments_plugin_framework', JPATH_PLUGINS . '/attachments/framework');
+        $this->language_loaded = $lang->load(
+            'plg_attachments_plugin_framework',
+            JPATH_PLUGINS . '/attachments/framework'
+        );
 
         return $this->language_loaded;
     }

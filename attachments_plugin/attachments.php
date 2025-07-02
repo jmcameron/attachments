@@ -30,14 +30,14 @@ use Joomla\Event\SubscriberInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+
 
 /** Load the Attachments defines (if available) */
 if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.xml')) {
     // Exit quietly if the attachments component has been uninstalled or deleted
     return;
 }
-
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Attachments plugin
@@ -115,7 +115,8 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
             $params = $event['params'];
         }
         // Enable the following four diagnostic lines to see if a component uses onContentPrepare
-        // $msg = "<br/>onContentPrepare: CONTEXT: $context,  OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
+        // $msg = "<br/>onContentPrepare: CONTEXT: $context,
+        // OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
         // if (isset($row->text)) $row->text .= $msg;
         // if (isset($row->introtext)) $row->introtext .= $msg;
         // return;
@@ -361,7 +362,7 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
      *
      * @return  void
      */
-    function onContentAfterSave(Event $event)
+    public function onContentAfterSave(Event $event)
     {
         if (version_compare(JVERSION, '5', 'lt')) {
             [$context, $item, $isNew] = $event->getArguments();

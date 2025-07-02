@@ -309,8 +309,8 @@ if ($update == 'file') {
   </tr>
   <?php endif; ?>
   <tr>
-      <td class="key"><label for="icon_filename"><?php echo Text::_('ATTACH_ICON_FILENAME'); ?></label></td>
-      <td><?php echo $this->lists['icon_filenames']; ?></td>
+      <td class="key"><label for="iconFilename"><?php echo Text::_('ATTACH_ICON_FILENAME'); ?></label></td>
+      <td><?php echo $this->lists['iconFilenames']; ?></td>
       <td class="key2"><label><?php echo Text::_('ATTACH_FILE_TYPE'); ?></label></td>
       <?php if ($secure) {
             $ncols = 1;
@@ -356,7 +356,9 @@ if ($update == 'file') {
 <input type="hidden" name="old_parent_type" value="<?php echo $attachment->parent_type ?>" />
 <input type="hidden" name="old_parent_entity" value="<?php echo $attachment->parent_entity ?>" />
 <input type="hidden" name="new_parent_type" id="new_parent_type" value="<?php echo $this->new_parent_type; ?>" />
-<input type="hidden" name="new_parent_entity" id="new_parent_entity" value="<?php echo $this->new_parent_entity;    ?>" />
+<input type="hidden" name="new_parent_entity" id="new_parent_entity" 
+       value="<?php echo $this->new_parent_entity;?>"
+/>
 <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 <input type="hidden" name="option" value="<?php echo $this->option;?>" />
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />

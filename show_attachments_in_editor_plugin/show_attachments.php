@@ -24,14 +24,14 @@ use Joomla\Event\SubscriberInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+
 
 /** Load the Attachments defines (if available) */
 if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.xml')) {
     // Exit quietly if the attachments component has been uninstalled or deleted
     return;
 }
-
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Show Attachments in Editor system plugin

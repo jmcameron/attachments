@@ -321,7 +321,11 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
         } else {
             $lang = $this->app->getLanguage();
             $lang->load('plg_attachments_framework', JPATH_PLUGINS . '/attachments/framework');
-            $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S', $parent_entity, $this->parent_type) . ' (ERR 300)';
+            $errmsg = Text::sprintf(
+                'ATTACH_ERROR_INVALID_ENTITY_S_FOR_PARENT_S',
+                $parent_entity,
+                $this->parent_type
+            ) . ' (ERR 300)';
             throw new \Exception($errmsg, 500);
         }
     }
@@ -462,7 +466,10 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
             $items = $db->loadObjectList();
         } catch (\Exception $e) {
             $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
-            $errmsg             = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 302)';
+            $errmsg             = Text::sprintf(
+                'ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS',
+                $parent_entity_name
+            ) . ' (ERR 302)';
             throw new \Exception($errmsg, 500);
         }
 
@@ -581,7 +588,8 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
     /**
      * Get the title for the attachments list for this parent
      *
-     * @param   string  $title          the untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE' or 'ATTACH_EXISTING_ATTACHMENTS')
+     * @param   string  $title          the untranslated title token (either 'ATTACH_ATTACHMENTS_TITLE'
+     *                                  or 'ATTACH_EXISTING_ATTACHMENTS')
      * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
      * @param   string  $parent_entity  the type of entity for this parent type
      *
@@ -602,7 +610,10 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
                         continue;
                     }
 
-                    if (($this->parent_type == 'com_content') && (($parent_entity == 'default') || ($parent_entity == 'article'))) {
+                    if (
+                        ($this->parent_type == 'com_content') &&
+                        (($parent_entity == 'default') || ($parent_entity == 'article'))
+                    ) {
                         $title = $match[2];
                     }
                 } elseif (preg_match('|^([a-zA-Z0-9_/-]+):([0-9]+)\s*([^$]+)$|', $rtitle, $match)) {
@@ -878,7 +889,14 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
         $attachment_id        = null;
         $offset               = -1;
         while (false != ($offset = StringHelper::strpos($content->$text_field_name, '{attachments', $offset + 1))) {
-            if (preg_match('@(?<opening_tag><span class="hide_attachments_token">)?{attachments(?<arguments>[ ]*:*[^}]+)?}(?<closing_tag></span>)?@', substr($content->$text_field_name, $offset), $match)) {
+            if (
+                preg_match(
+                    '@(?<opening_tag><span class="hide_attachments_token">)' .
+                    '?{attachments(?<arguments>[ ]*:*[^}]+)?}(?<closing_tag></span>)?@',
+                    substr($content->$text_field_name, $offset),
+                    $match
+                )
+            ) {
                 $attachments_tag[] = $match[0];
             }
             if (($attachments_placement === "custom") && isset($match["arguments"]) && $match["arguments"]) {
@@ -918,12 +936,23 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
                 ->getMVCFactory();
             /** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
             $controller       = $mvc->createController('Attachments', 'Site', [], $this->app, $this->app->getInput());
-            $attachments_list = $controller->displayString($parent_id, $this->parent_type, $parent_entity, null, true, true, false, $from, $attachment_id[$i] ?? null);
+            $attachments_list = $controller->displayString(
+                $parent_id,
+                $this->parent_type,
+                $parent_entity,
+                null,
+                true,
+                true,
+                false,
+                $from,
+                $attachment_id[$i] ?? null
+            );
 
             // If the attachments list is empty, insert an empty div for it
             if ($attachments_list == '') {
                 $class_name       = $aparams->get('attachments_table_style', 'attachmentsList');
-                $div_id           = 'attachmentsList' . '_' . $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
+                $div_id           = 'attachmentsList' . '_' .
+                                     $this->parent_type . '_' . $parent_entity . '_' . (string) $parent_id;
                 $attachments_list = "\n<div class=\"$class_name\" id=\"$div_id\"></div>\n";
             }
 
@@ -944,7 +973,13 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
             // Construct the add-attachments button, if appropriate
             $hide_add_attachments_link = $aparams->get('hide_add_attachments_link', 0);
             if ($user_can_add && !$hide_add_attachments_link) {
-                $add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML($this->parent_type, $parent_id, $parent_entity, $Itemid, $from);
+                $add_attachments_btn = AttachmentsHelper::attachmentButtonsHTML(
+                    $this->parent_type,
+                    $parent_id,
+                    $parent_entity,
+                    $Itemid,
+                    $from
+                );
                 $html .= $add_attachments_btn;
             }
 
@@ -966,7 +1001,11 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
                 if ($attachments_list || $user_can_add) {
                     if ($attachments_tag) {
                         for ($i = 0; $i < count($attachments_tag); $i++) {
-                            $content->$text_field_name = str_replace($attachments_tag[$i], '', $content->$text_field_name);
+                            $content->$text_field_name = str_replace(
+                                $attachments_tag[$i],
+                                '',
+                                $content->$text_field_name
+                            );
                         }
                         $content->$text_field_name = $attachments_html[0] . $content->$text_field_name;
                     } else {
@@ -980,7 +1019,11 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
                 if ($attachments_list || $user_can_add) {
                     if ($attachments_tag) {
                         for ($i = 0; $i < count($attachments_tag); $i++) {
-                            $content->$text_field_name = str_replace($attachments_tag[$i], $attachments_html[$i], $content->$text_field_name);
+                            $content->$text_field_name = str_replace(
+                                $attachments_tag[$i],
+                                $attachments_html[$i],
+                                $content->$text_field_name
+                            );
                         }
                     } else {
                         // If there is no tag, insert the attachments at the end
@@ -1003,7 +1046,11 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
                 if ($attachments_list || $user_can_add) {
                     if ($attachments_tag) {
                         for ($i = 0; $i < count($attachments_tag); $i++) {
-                            $content->$text_field_name = str_replace($attachments_tag[$i], '', $content->$text_field_name);
+                            $content->$text_field_name = str_replace(
+                                $attachments_tag[$i],
+                                '',
+                                $content->$text_field_name
+                            );
                         }
                         $content->$text_field_name =  $content->$text_field_name . $attachments_html[0];
                     } else {

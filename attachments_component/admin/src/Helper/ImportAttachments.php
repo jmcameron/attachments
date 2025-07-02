@@ -39,7 +39,7 @@ class ImportAttachments extends ImportFromCSV
                                   'url_relative',
                                   'display_name',
                                   'description',
-                                  'icon_filename',
+                                  'iconFilename',
                                   'access',
                                   'state',
                                   'user_field_1',

@@ -34,12 +34,12 @@ class FileTypeConversionsTest extends PHPUnit_Framework_TestCase
      * @dataProvider provider
      *
      * @param string $filename the filename to test
-     * @param string $icon_filename the expected icon_filename
+     * @param string $iconFilename the expected iconFilename
      * @param string $mime_type the mime type to test (if the filename is empty)
      */
-    public function testConversions($filename, $icon_filename, $mime_type)
+    public function testConversions($filename, $iconFilename, $mime_type)
     {
-        $this->assertEquals($icon_filename, AttachmentsFileTypes::icon_filename($filename, $mime_type));
+        $this->assertEquals($iconFilename, AttachmentsFileTypes::iconFilename($filename, $mime_type));
 
         if ($filename) {
             $this->assertEquals($mime_type, AttachmentsFileTypes::mime_type($filename));

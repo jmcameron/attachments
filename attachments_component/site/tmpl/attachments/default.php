@@ -135,10 +135,10 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
 
     // Construct some display items
     if ($this->use_fontawesome_icons) {
-        $icon = AttachmentsFileTypes::fa_icon_filename('', $attachment->file_type);
+        $icon = AttachmentsFileTypes::faIconFilename('', $attachment->file_type);
     } else {
-        if (StringHelper::strlen($attachment->icon_filename) > 0) {
-            $icon = $attachment->icon_filename;
+        if (StringHelper::strlen($attachment->iconFilename) > 0) {
+            $icon = $attachment->iconFilename;
         } else {
             $icon = 'generic.gif';
         }

@@ -33,14 +33,14 @@ class FileTypeRoundTripTest extends PHPUnit_Framework_TestCase
      */
     public function testRoundTrip()
     {
-        $icon_filenames = AttachmentsFileTypes::unique_icon_filenames();
+        $iconFilenames = AttachmentsFileTypes::uniqueIconFilenames();
 
         $mime_from_icon = array_flip(AttachmentsFileTypes::$attachments_icon_from_mime_type);
 
-        foreach ($icon_filenames as $icon) {
+        foreach ($iconFilenames as $icon) {
             if (array_key_exists($icon, $mime_from_icon)) {
                 $mime_type = $mime_from_icon[$icon];
-                $this->assertEquals($icon, AttachmentsFileTypes::icon_filename('', $mime_type));
+                $this->assertEquals($icon, AttachmentsFileTypes::iconFilename('', $mime_type));
             }
         }
     }

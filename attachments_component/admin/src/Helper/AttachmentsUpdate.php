@@ -63,7 +63,7 @@ class AttachmentsUpdate
         /** @var \Joomla\Database\DatabaseDriver $db */
         $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        $query->select('id, filename, file_type, icon_filename')->from('#__attachments');
+        $query->select('id, filename, file_type, iconFilename')->from('#__attachments');
         $query->where('file_type IS NULL');
         $db->setQuery($query);
         try {
@@ -90,14 +90,14 @@ class AttachmentsUpdate
         foreach ($IDs as $id) {
             $attachment->load($id);
 
-            // Only update those attachment records that don't already have an icon_filename
-            if (StringHelper::strlen($attachment->icon_filename) == 0) {
-                $new_icon_filename = AttachmentsFileTypes::icon_filename(
+            // Only update those attachment records that don't already have an iconFilename
+            if (StringHelper::strlen($attachment->iconFilename) == 0) {
+                $new_iconFilename = AttachmentsFileTypes::iconFilename(
                     $attachment->filename,
                     $attachment->file_type
                 );
-                if (StringHelper::strlen($new_icon_filename) > 0) {
-                    $attachment->icon_filename = $new_icon_filename;
+                if (StringHelper::strlen($new_iconFilename) > 0) {
+                    $attachment->iconFilename = $new_iconFilename;
                     if (!$attachment->store()) {
                         $errmsg = Text::sprintf(
                             'ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S',

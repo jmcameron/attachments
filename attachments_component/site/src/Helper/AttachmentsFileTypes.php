@@ -29,7 +29,7 @@ use Joomla\String\StringHelper;
 class AttachmentsFileTypes
 {
     /** Array of lookups for icon filename given a filename extension */
-    static $attachments_icon_from_file_extension =
+    public static $attachments_icon_from_file_extension =
         array( 'aif' => 'music.gif',
                'aiff' => 'music.gif',
                'avi' => 'video.gif',
@@ -165,7 +165,7 @@ class AttachmentsFileTypes
     ];
 
     /** Array of lookups for icon filename from mime type */
-    static $attachments_icon_from_mime_type =
+    public static $attachments_icon_from_mimeType =
         array( 'application/bzip2' => 'archive.gif',
                'application/excel' => 'excel.gif',
                'application/msword' => 'word.gif',
@@ -231,7 +231,7 @@ class AttachmentsFileTypes
      *
      * @since   1.0.0
      */
-    public const ATTACHMENTS_ICON_FROM_MIME_TYPE_FA = [
+    public const ATTACHMENTS_ICON_FROM_MIMETYPE_FA = [
         'application/bzip2' => 'fa-file-archive',
         'application/excel' => 'fa-file-excel',
         'application/msword' => 'fa-file-word',
@@ -292,7 +292,7 @@ class AttachmentsFileTypes
     ];
 
     /** Array of lookups for mime type from filename extension */
-    static $attachments_mime_type_from_extension =
+    public static $attachments_mimeType_from_extension =
         array( 'aif' => 'audio/x-aiff',
                'aiff' => 'audio/x-aiff',
                'avi' => 'video/x-msvideo',
@@ -351,7 +351,7 @@ class AttachmentsFileTypes
                );
 
     /** Array of known PDF mime types */
-    static $attachments_pdf_mime_types =
+    public static $attachments_pdf_mimeTypes =
         array('application/pdf',
               'application/x-pdf',
               'application/vnd.fdf',
@@ -365,17 +365,17 @@ class AttachmentsFileTypes
      * Get the icon filename for a specific filename (or mime type)
      *
      * @param string $filename the filename to check
-     * @param string $mime_type the MIME type to check (if the filename fails)
+     * @param string $mimeType the MIME type to check (if the filename fails)
      *
      * @return the icon filename (or '' if none is found)
      */
-    public static function icon_filename($filename, $mime_type)
+    public static function iconFilename($filename, $mimeType)
     {
         // Recognize some special cases first
-        if (($mime_type == 'link/unknown') or ($mime_type == 'unknown')) {
+        if (($mimeType == 'link/unknown') or ($mimeType == 'unknown')) {
             return 'link.gif';
         }
-        if ($mime_type == 'link/broken') {
+        if ($mimeType == 'link/broken') {
             return 'link_bad.gif';
         }
 
@@ -398,8 +398,8 @@ class AttachmentsFileTypes
             }
         } else {
             // Try the mime type
-            if (array_key_exists($mime_type, AttachmentsFileTypes::$attachments_icon_from_mime_type)) {
-                $iconf = AttachmentsFileTypes::$attachments_icon_from_mime_type[$mime_type];
+            if (array_key_exists($mimeType, AttachmentsFileTypes::$attachments_icon_from_mimeType)) {
+                $iconf = AttachmentsFileTypes::$attachments_icon_from_mimeType[$mimeType];
                 if ($iconf && (StringHelper::strlen($iconf) > 0)) {
                     return $iconf;
                 }
@@ -421,7 +421,7 @@ class AttachmentsFileTypes
      *
      * @since   4.1.2
      */
-    public static function fa_icon_filename(string $filename, string $mimeType): string
+    public static function faIconFilename(string $filename, string $mimeType): string
     {
         // Recognize some special cases first
         if (($mimeType == 'link/unknown') || ($mimeType == 'unknown')) {
@@ -449,8 +449,8 @@ class AttachmentsFileTypes
             }
         } else {
             // Try the mime type
-            if (array_key_exists($mimeType, self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA)) {
-                return self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA[$mimeType];
+            if (array_key_exists($mimeType, self::ATTACHMENTS_ICON_FROM_MIMETYPE_FA)) {
+                return self::ATTACHMENTS_ICON_FROM_MIMETYPE_FA[$mimeType];
             }
         }
 
@@ -462,7 +462,7 @@ class AttachmentsFileTypes
      *
      * @return an array of unique icon filenames
      */
-    public static function unique_icon_filenames()
+    public static function uniqueIconFilenames()
     {
         $vals = array_unique(array_values(AttachmentsFileTypes::$attachments_icon_from_file_extension));
         sort($vals);
@@ -478,7 +478,7 @@ class AttachmentsFileTypes
      *
      * @return the mime type string
      */
-    public static function mime_type($filename)
+    public static function mimeType($filename)
     {
         $path_info = pathinfo($filename);
 
@@ -489,10 +489,10 @@ class AttachmentsFileTypes
 
         // Try the extension first
         $extension = strtolower($path_info['extension']);
-        if (array_key_exists($extension, AttachmentsFileTypes::$attachments_mime_type_from_extension)) {
-            $mime_type = AttachmentsFileTypes::$attachments_mime_type_from_extension[$extension];
-            if (strlen($mime_type) > 0) {
-                return $mime_type;
+        if (array_key_exists($extension, AttachmentsFileTypes::$attachments_mimeType_from_extension)) {
+            $mimeType = AttachmentsFileTypes::$attachments_mimeType_from_extension[$extension];
+            if (strlen($mimeType) > 0) {
+                return $mimeType;
             }
         }
 

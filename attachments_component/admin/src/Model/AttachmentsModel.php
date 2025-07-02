@@ -104,7 +104,7 @@ class AttachmentsModel extends ListModel
                         'a.url_verify',
                         'a.display_name',
                         'a.description',
-                        'a.icon_filename',
+                        'a.iconFilename',
                         'a.access',
                         'a.state',
                         'a.user_field_1',

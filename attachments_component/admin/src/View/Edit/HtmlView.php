@@ -87,18 +87,18 @@ class HtmlView extends BaseHtmlView
         );
 
         // Construct the drop-down list for legal icon filenames
-        $icon_filenames = array();
-        foreach (AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
-            $icon_filenames[] = HTMLHelper::_('select.option', $ifname);
+        $iconFilenames = array();
+        foreach (AttachmentsFileTypes::uniqueIconFilenames() as $ifname) {
+            $iconFilenames[] = HTMLHelper::_('select.option', $ifname);
         }
-        $this->lists['icon_filenames'] = HTMLHelper::_(
+        $this->lists['iconFilenames'] = HTMLHelper::_(
             'select.genericlist',
-            $icon_filenames,
-            'icon_filename',
+            $iconFilenames,
+            'iconFilename',
             'class="inputbox" size="1"',
             'value',
             'text',
-            $attachment->icon_filename
+            $attachment->iconFilename
         );
 
         // If switching from article to URL default url_verify to true

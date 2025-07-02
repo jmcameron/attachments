@@ -183,7 +183,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 break;
 
             default:
-                return "index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParentArticle";
+                return "index.php?option=com_content&amp;view=articles" .
+                        "&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParentArticle";
         }
     }
 
@@ -213,8 +214,18 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
         $entity_id_field    = $this->entity_id_field[$parent_entity];
 
         // Get the ordering information
-        $order     = $this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order', 'filter_order', '', 'cmd');
-        $order_Dir = $this->app->getUserStateFromRequest('com_attachments.selectEntity.filter_order_Dir', 'filter_order_Dir', '', 'word');
+        $order     = $this->app->getUserStateFromRequest(
+            'com_attachments.selectEntity.filter_order',
+            'filter_order',
+            '',
+            'cmd'
+        );
+        $order_Dir = $this->app->getUserStateFromRequest(
+            'com_attachments.selectEntity.filter_order_Dir',
+            'filter_order_Dir',
+            '',
+            'word'
+        );
 
         // Get all the items
         $query = $db->getQuery(true);
@@ -235,7 +246,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
         try {
             $items = $db->loadObjectList();
         } catch (\Exception $e) {
-            $errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 401) <br/>' . $e->getMessage();
+            $errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) .
+                             ' (ERR 401) <br/>' . $e->getMessage();
             throw new \Exception($errmsg, 500);
         }
 
@@ -445,7 +457,11 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 try {
                     $obj = $db->loadObject();
                 } catch (\Exception $e) {
-                    $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 404)';
+                    $errmsg = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 404)';
                     throw new \Exception($errmsg, 500);
                 }
                 if (is_object($obj)) {
@@ -464,7 +480,11 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 try {
                     $article = $db->loadObject();
                 } catch (\Exception $e) {
-                    $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 405)';
+                    $errmsg = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 405)';
                     throw new \Exception($errmsg, 500);
                 }
 
@@ -474,7 +494,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                     $publish_up   = $article->publish_up ? Factory::getDate($article->publish_up)->toUnix() : null;
                     $publish_down = $article->publish_down ? Factory::getDate($article->publish_down)->toUnix() : null;
 
-                    $published = (($article->state == 1) && ($now >= $publish_up) && (($publish_down === null) || ($now <= $publish_down)));
+                    $published = (($article->state == 1) && ($now >= $publish_up) &&
+                                  (($publish_down === null) || ($now <= $publish_down)));
                 } else {
                     $published = false;
                 }
@@ -513,7 +534,11 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                     $article = $db->loadObject();
                 } catch (\Exception $e) {
                     $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
-                    $errmsg             = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 406)';
+                    $errmsg             = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 406)';
                     throw new \Exception($errmsg, 500);
                 }
 
@@ -568,7 +593,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
             if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE')) {
                 $where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
                     "WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=0))";
-                $where[] = "(a.parent_entity = 'article' AND NOT EXISTS (select * from #__content as c1 where c1.id = a.parent_id))";
+                $where[] = "(a.parent_entity = 'article' AND NOT EXISTS " .
+                           "(select * from #__content as c1 where c1.id = a.parent_id))";
 
                 // ??? Add clauses here to get articles that are unpublished because of publish_up/publish_down
             }
@@ -576,7 +602,8 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
             if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY')) {
                 $where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
                     "WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=0))";
-                $where[] = "(a.parent_entity = 'category' AND NOT EXISTS (select * from #__categories as c1 where c1.id = a.parent_id))";
+                $where[] = "(a.parent_entity = 'category' AND NOT EXISTS " .
+                           "(select * from #__categories as c1 where c1.id = a.parent_id))";
             }
         } elseif ($parent_state == 'ARCHIVED') {
             // These WHERE clauses will be combined by OR
@@ -655,7 +682,11 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
             $obj = $db->loadObject();
         } catch (\Exception $e) {
             $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
-            $errmsg             = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 408)';
+            $errmsg             = Text::sprintf(
+                'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                $parent_entity_name,
+                $parent_id
+            ) . ' (ERR 408)';
             throw new \Exception($errmsg, 500);
         }
 
@@ -745,11 +776,19 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
             try {
                 $attachments = $db->loadObjectList();
             } catch (\Exception $e) {
-                $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
+                $errmsg = Text::sprintf(
+                    'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                    $parent_entity_name,
+                    $parent_id
+                ) . ' (ERR 410)';
                 throw new \Exception($errmsg, 500);
             }
             if (count($attachments) === false) {
-                $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_S_ID_N', $parent_entity_name, $parent_id) . ' (ERR 410)';
+                $errmsg = Text::sprintf(
+                    'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                    $parent_entity_name,
+                    $parent_id
+                ) . ' (ERR 410)';
                 throw new \Exception($errmsg, 500);
             }
 
@@ -870,7 +909,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has permissions to edit their own attachments
-                if ($user->authorise('core.edit.own', 'com_attachments') && ((int) $user->id == (int) $attachment->created_by)) {
+                if (
+                    $user->authorise('core.edit.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
                     return true;
                 }
 
@@ -898,7 +940,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has permissions to edit their own attachments
-                if ($user->authorise('core.edit.own', 'com_attachments') && ((int) $user->id == (int) $attachment->created_by)) {
+                if (
+                    $user->authorise('core.edit.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
                     return true;
                 }
 
@@ -952,7 +997,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has edit.own and created it
-                if ($user->authorise('attachments.delete.own', 'com_attachments') && ((int) $user->id == (int) $attachment->created_by)) {
+                if (
+                    $user->authorise('attachments.delete.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
                     return true;
                 }
 
@@ -978,7 +1026,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has permissions to delete their own attachments
-                if ($user->authorise('attachments.delete.own', 'com_attachments') && ((int) $user->id == (int) $attachment->created_by)) {
+                if (
+                    $user->authorise('attachments.delete.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
                     return true;
                 }
 
@@ -1036,7 +1087,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has permissions to change the state of their own attachments
-                if ($user->authorise('attachments.edit.state.own', 'com_attachments') && ((int) $user->id == (int) $attachment_creator_id)) {
+                if (
+                    $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment_creator_id)
+                ) {
                     return true;
                 }
 
@@ -1064,7 +1118,10 @@ class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
                 }
 
                 // See if the user has permissions to change the state of their own attachments
-                if ($user->authorise('attachments.edit.state.own', 'com_attachments') && ((int) $user->id == (int) $attachment_creator_id)) {
+                if (
+                    $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment_creator_id)
+                ) {
                     return true;
                 }
 

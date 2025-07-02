@@ -661,9 +661,9 @@ class AttachmentsHelper
             if ($cmparams->get('check_mime', true)) {
                 $allowed_mime = explode(',', $cmparams->get('upload_mime'));
                 if (StringHelper::strlen($ftype) && !in_array($ftype, $allowed_mime)) {
-                    $error = 'illegal_mime_type';
+                    $error = 'illegal_mimeType';
                     $error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-                    $error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
+                    $error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_mimeType') . " $ftype";
                     if ($user->authorise('core.admin')) {
                         $error_msg .= "	 <br />" . Text::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
                     }
@@ -683,7 +683,7 @@ class AttachmentsHelper
 
         // Handle PDF mime types
         if ($extension == 'pdf') {
-            if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mime_types)) {
+            if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mimeTypes)) {
                 $ftype = 'application/pdf';
             }
         }
@@ -926,7 +926,7 @@ class AttachmentsHelper
         $attachment->modified = $now;
 
         // Add the icon file type
-        $attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $ftype);
+        $attachment->iconFilename = AttachmentsFileTypes::iconFilename($filename, $ftype);
 
         // Save the updated attachment
         if (!$attachment->store()) {
@@ -1143,7 +1143,7 @@ class AttachmentsHelper
         // Set up defaults for what we want to know
         $filename = basename($u->path);
         $file_size = 0;
-        $mime_type = '';
+        $mimeType = '';
         $found = false;
 
         // Set the defaults
@@ -1242,7 +1242,7 @@ class AttachmentsHelper
                         $match
                     )
                 ) {
-                    $mime_type = trim($match[1]);
+                    $mimeType = trim($match[1]);
                 }
             }
             fclose($fp);
@@ -1268,9 +1268,9 @@ class AttachmentsHelper
                 // Pretend it was found
                 $found = true;
                 if ($overlay) {
-                    $mime_type = 'link/generic';
+                    $mimeType = 'link/generic';
                 } else {
-                    $mime_type = 'link/unknown';
+                    $mimeType = 'link/unknown';
                 }
             }
         }
@@ -1282,32 +1282,32 @@ class AttachmentsHelper
         $attachment->url_valid = $found;
 
         // Deal with the file type
-        if (!$mime_type) {
-            $mime_type = AttachmentsFileTypes::mime_type($filename);
+        if (!$mimeType) {
+            $mimeType = AttachmentsFileTypes::mimeType($filename);
         }
-        if ($mime_type) {
-            $attachment->file_type = StringHelper::trim($mime_type);
+        if ($mimeType) {
+            $attachment->file_type = StringHelper::trim($mimeType);
         } else {
             if ($overlay) {
-                $mime_type = 'link/generic';
+                $mimeType = 'link/generic';
                 $attachment->file_type = 'link/generic';
             } else {
-                $mime_type = 'link/unknown';
+                $mimeType = 'link/unknown';
                 $attachment->file_type = 'link/unknown';
             }
         }
 
         // See if we can figure out the icon
-        $icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
-        if ($icon_filename) {
-            $attachment->icon_filename = AttachmentsFileTypes::icon_filename($filename, $mime_type);
+        $iconFilename = AttachmentsFileTypes::iconFilename($filename, $mimeType);
+        if ($iconFilename) {
+            $attachment->iconFilename = AttachmentsFileTypes::iconFilename($filename, $mimeType);
         } else {
-            if ($mime_type == 'link/unknown') {
-                $attachment->icon_filename = 'link.gif';
-            } elseif ($mime_type == 'link/broken') {
-                $attachment->icon_filename = 'link_broken.gif';
+            if ($mimeType == 'link/unknown') {
+                $attachment->iconFilename = 'link.gif';
+            } elseif ($mimeType == 'link/broken') {
+                $attachment->iconFilename = 'link_broken.gif';
             } else {
-                $attachment->icon_filename = 'link.gif';
+                $attachment->iconFilename = 'link.gif';
             }
         }
 

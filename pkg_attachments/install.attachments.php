@@ -27,6 +27,7 @@ use Joomla\CMS\Language\Text;
  *
  * @package Attachments
  */
+// phpcs:ignore
 class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
 {
     /**
