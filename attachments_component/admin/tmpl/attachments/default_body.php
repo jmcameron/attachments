@@ -67,8 +67,8 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
     if ($use_fontawesome_icons) {
         $icon = AttachmentsFileTypes::faIconFilename('', $item->file_type);
     } else {
-        if (StringHelper::strlen($item->iconFilename) > 0) {
-            $icon = $item->iconFilename;
+        if (StringHelper::strlen($item->icon_filename) > 0) {
+            $icon = $item->icon_filename;
         } else {
             $icon = 'generic.gif';
         }

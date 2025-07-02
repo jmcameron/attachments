@@ -100,7 +100,7 @@ class AttachmentsFileTypes
      *
      * @since   1.0.0
      */
-    public const ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA = [
+    public const attachments_icon_from_file_extension_fa = [
         'aif' => 'fa-file-audio',
         'aiff' => 'fa-file-audio',
         'avi' => 'fa-file-video',

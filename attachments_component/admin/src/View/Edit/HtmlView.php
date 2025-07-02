@@ -98,7 +98,7 @@ class HtmlView extends BaseHtmlView
             'class="inputbox" size="1"',
             'value',
             'text',
-            $attachment->iconFilename
+            $attachment->icon_filename
         );
 
         // If switching from article to URL default url_verify to true

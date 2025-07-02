@@ -91,13 +91,13 @@ class AttachmentsUpdate
             $attachment->load($id);
 
             // Only update those attachment records that don't already have an iconFilename
-            if (StringHelper::strlen($attachment->iconFilename) == 0) {
+            if (StringHelper::strlen($attachment->icon_filename) == 0) {
                 $new_iconFilename = AttachmentsFileTypes::iconFilename(
                     $attachment->filename,
                     $attachment->file_type
                 );
                 if (StringHelper::strlen($new_iconFilename) > 0) {
-                    $attachment->iconFilename = $new_iconFilename;
+                    $attachment->icon_filename = $new_iconFilename;
                     if (!$attachment->store()) {
                         $errmsg = Text::sprintf(
                             'ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S',

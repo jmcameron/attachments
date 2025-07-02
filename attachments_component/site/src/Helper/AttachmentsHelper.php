@@ -926,7 +926,7 @@ class AttachmentsHelper
         $attachment->modified = $now;
 
         // Add the icon file type
-        $attachment->iconFilename = AttachmentsFileTypes::iconFilename($filename, $ftype);
+        $attachment->icon_filename = AttachmentsFileTypes::iconFilename($filename, $ftype);
 
         // Save the updated attachment
         if (!$attachment->store()) {
@@ -1300,14 +1300,14 @@ class AttachmentsHelper
         // See if we can figure out the icon
         $iconFilename = AttachmentsFileTypes::iconFilename($filename, $mimeType);
         if ($iconFilename) {
-            $attachment->iconFilename = AttachmentsFileTypes::iconFilename($filename, $mimeType);
+            $attachment->icon_filename = AttachmentsFileTypes::iconFilename($filename, $mimeType);
         } else {
             if ($mimeType == 'link/unknown') {
-                $attachment->iconFilename = 'link.gif';
+                $attachment->icon_filename = 'link.gif';
             } elseif ($mimeType == 'link/broken') {
-                $attachment->iconFilename = 'link_broken.gif';
+                $attachment->icon_filename = 'link_broken.gif';
             } else {
-                $attachment->iconFilename = 'link.gif';
+                $attachment->icon_filename = 'link.gif';
             }
         }
 
