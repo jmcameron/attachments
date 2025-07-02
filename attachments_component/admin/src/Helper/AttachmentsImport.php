@@ -34,7 +34,7 @@ use Joomla\CMS\Plugin\PluginHelper;
  */
 class AttachmentsImport
 {
-    static $field_names =
+    public static $field_names =
         array( 'id',
                'filename',
                'filename_sys',
@@ -64,7 +64,7 @@ class AttachmentsImport
                'modified_by_username',
                'download_count' );
 
-    static $extra_field_names =
+    public static $extra_field_names =
         array( 'parent_title',
                'created_by_username',
                'modified_by_username' );
@@ -77,7 +77,7 @@ class AttachmentsImport
      * @param string  $ustr2  UTF-8 string 2
      * @return true if the strings match
      */
-    static function utf8StringsEqual($ustr1, $ustr2)
+    public static function utf8StringsEqual($ustr1, $ustr2)
     {
         return strncasecmp(trim($ustr1), trim($ustr2), 4096) == 0;
     }
@@ -93,7 +93,8 @@ class AttachmentsImport
      * @param bool $update if true, if the attachment exists, update it (or create a new one)
      * @param bool $dry_run do everything except actually add entries to attachment table in the database
      *
-     * @return array of IDs of the imported attachments (if $dry_run, number that would have been imported), or error message
+     * @return array of IDs of the imported attachments (if $dry_run, number that would have been imported),
+     * or error message
      */
     public static function importAttachmentsFromCSVFile(
         $filename,
@@ -112,7 +113,7 @@ class AttachmentsImport
         }
 
         // Parse the first row to process field names and indices
-        $field = AttachmentsImport::_parseFieldNames($f);
+        $field = AttachmentsImport::parseFieldNames($f);
         $line_num += 1;
         if (!is_array($field)) {
             return $field;
@@ -160,7 +161,8 @@ class AttachmentsImport
 
             // Make sure it is not a 'section' attachment
             if ($parent_entity == 'section') {
-                return Text::sprintf('ATTACH_ERROR_SECTION_ATTACHMENT_NOT_ALLOWED_ID', $attachment_id) . $line_str . ' (ERR 86B)';
+                return Text::sprintf('ATTACH_ERROR_SECTION_ATTACHMENT_NOT_ALLOWED_ID', $attachment_id) .
+                                    $line_str . ' (ERR 86B)';
             }
 
             // Get the attachment parent object
@@ -311,7 +313,7 @@ class AttachmentsImport
      *
      * @return the associative array (fieldname => index) or error message
      */
-    protected static function _parseFieldNames($file)
+    protected static function parseFieldNames($file)
     {
         // Load the field names from the file
         $field = array();

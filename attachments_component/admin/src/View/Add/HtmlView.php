@@ -24,15 +24,15 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
-
 // Access check.
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null || !$user->authorise('core.create', 'com_attachments')) {
     throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 172)', 404);
 }
+// phpcs:enable PSR1.Files.SideEffects
+
+
 
 /**
  * HTML View class for adding new attachments
@@ -73,7 +73,8 @@ class HtmlView extends BaseHtmlView
 
         // Construct some tooltips
         $this->enter_url_tooltip = Text::_('ATTACH_ENTER_URL') . '::' . Text::_('ATTACH_ENTER_URL_TOOLTIP');
-        $this->display_filename_tooltip = Text::_('ATTACH_DISPLAY_FILENAME') . '::' . Text::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+        $this->display_filename_tooltip = Text::_('ATTACH_DISPLAY_FILENAME') . '::' .
+                                          Text::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
         $this->display_url_tooltip = Text::_('ATTACH_DISPLAY_URL') . '::' . Text::_('ATTACH_DISPLAY_URL_TOOLTIP');
 
         // Add the published selection

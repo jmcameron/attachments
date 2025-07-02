@@ -23,14 +23,14 @@ use Joomla\String\StringHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+
 
 /** Load the attachments plugin class */
 if (!PluginHelper::importPlugin('attachments', 'framework')) {
     // Fail gracefully if the Attachments plugin framework plugin is disabled
     return;
 }
-
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * The class for the Attachments plugin for regular Joomla! content (articles, categories)

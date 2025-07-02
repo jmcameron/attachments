@@ -72,9 +72,7 @@ class AttachmentTable extends Table
         if (empty($pks)) {
             if ($this->$k) {
                 $pks = array($this->$k);
-            }
-            // Nothing to set publishing state on, return false.
-            else {
+            } else { // Nothing to set publishing state on, return false.
                 throw new \Exception(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }

@@ -24,7 +24,9 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Input\Input;
 use Joomla\String\StringHelper;
 
-defined('_JEXEC') or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * The controller for special requests
@@ -39,8 +41,12 @@ class SpecialController extends BaseController
      *
      * @return  BaseController
      */
-    public function __construct($config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
-    {
+    public function __construct(
+        $config = array('default_task' => 'noop'),
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null
+    ) {
         $config['default_task'] = 'noop';
         parent::__construct($config, $factory, $app, $input);
 

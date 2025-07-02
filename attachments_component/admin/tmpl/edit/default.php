@@ -260,9 +260,14 @@ if ($update == 'file') {
   </tr>
 <?php endif; ?>
 
-  <tr><td class="key"><label class="hasTip" for="description"
-                 title="<?php echo Text::_('ATTACH_DESCRIPTION') . '::' . Text::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"><?php
-                    echo Text::_('ATTACH_DESCRIPTION'); ?></label></td>
+  <tr>
+    <td class="key">
+        <label class="hasTip" for="description"
+               title="<?php echo Text::_('ATTACH_DESCRIPTION') . '::' .
+                                 Text::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>">
+              <?php echo Text::_('ATTACH_DESCRIPTION'); ?>
+         </label>
+     </td>
       <td colspan="5"><input class="text hasTip" type="text" name="description"
              title="<?php echo Text::_('ATTACH_DESCRIPTION_DESCRIPTION'); ?>"
                  id="description" size="80" maxlength="255"
@@ -273,8 +278,14 @@ if ($update == 'file') {
       <td colspan="5"><?php echo $this->lists['published']; ?></td>
   </tr>
 <?php endif; ?>
-  <tr><td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo Text::_('JFIELD_ACCESS_LABEL'); ?></label></td>
-      <td colspan="5"><?php echo $this->access_level; ?></td>
+  <tr>
+    <td class="key">
+        <label for="access" class="hasTip" 
+           title="<?php echo $this->access_level_tooltip ?>">
+           <?php echo Text::_('JFIELD_ACCESS_LABEL'); ?>
+        </label>
+    </td>
+    <td colspan="5"><?php echo $this->access_level; ?></td>
   </tr>
   <?php if ($params->get('user_field_1_name', '') != '') : ?>
   <tr><td class="key"><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?></label></td>
@@ -310,7 +321,10 @@ if ($update == 'file') {
       <?php if ($secure) : ?>
       <td class="key hasTip" title="<?php echo $this->download_count_tooltip; ?>">
           <label for="download_count"><?php echo Text::_('ATTACH_NUMBER_OF_DOWNLOADS'); ?></label></td>
-      <td class="hasTip" name="download_count" title="<?php echo $this->download_count_tooltip; ?>"><?php echo $attachment->download_count ?></td>
+      <td class="hasTip" name="download_count" 
+          title="<?php echo $this->download_count_tooltip; ?>">
+            <?php echo $attachment->download_count ?>
+      </td>
       <?php endif; ?>
   </tr>
   <tr>
@@ -342,16 +356,21 @@ if ($update == 'file') {
 <input type="hidden" name="old_parent_type" value="<?php echo $attachment->parent_type ?>" />
 <input type="hidden" name="old_parent_entity" value="<?php echo $attachment->parent_entity ?>" />
 <input type="hidden" name="new_parent_type" id="new_parent_type" value="<?php echo $this->new_parent_type; ?>" />
-<input type="hidden" name="new_parent_entity" id="new_parent_entity" value="<?php echo $this->new_parent_entity; ?>" />
+<input type="hidden" name="new_parent_entity" id="new_parent_entity" value="<?php echo $this->new_parent_entity;    ?>" />
 <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
 <input type="hidden" name="option" value="<?php echo $this->option;?>" />
 <input type="hidden" name="from" value="<?php echo $this->from;?>" />
 <input type="hidden" name="task" value="attachment.save" />
 <?php if ($this->in_popup) : ?>
 <div class="form_buttons" align="center">
-    <input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" value="<?php echo Text::_('ATTACH_SAVE'); ?>" />
-    <span class="right"><input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-              onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" /></span>
+    <input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" 
+           value="<?php echo Text::_('ATTACH_SAVE'); ?>" />
+    <span class="right">
+        <input type="button" name="cancel" 
+               value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
+               onClick="window.parent.bootstrap.Modal.getInstance(
+                         window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+     </span>
 </div>
 <?php endif; ?>
 <?php echo HTMLHelper::_('form.token'); ?>

@@ -48,7 +48,9 @@ $uri = Uri::getInstance();
     }
 </script>
 
-<form action="<?php echo Route::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate form-horizontal">
+<form action="<?php echo Route::_('index.php?option=com_config');?>" 
+      id="component-form" method="post" name="adminForm" autocomplete="off" 
+      class="form-validate form-horizontal">
     <div class="row-fluid">
         <div class="span10">
             <?php echo HTMLHelper::_("uitab.startTabSet", "configTabs", ["active" => "basic"]);

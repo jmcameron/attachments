@@ -152,7 +152,7 @@ class DisplayController extends BaseController
         // Make sure the attachments directory exists
         $upload_dir = JPATH_BASE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
         $secure = $params->get('secure', false);
-        if (!AttachmentsHelper::setup_upload_directory($upload_dir, $secure)) {
+        if (!AttachmentsHelper::setupUploadDirectory($upload_dir, $secure)) {
             $errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 4)';
             throw new \Exception($errmsg, 500);
         }
@@ -174,7 +174,7 @@ class DisplayController extends BaseController
         } else {
             $parent_id_str = (string)$parent_id;
         }
-        AttachmentsHelper::add_view_urls($view, 'upload', $parent_id_str, $parent_type, null, $from);
+        AttachmentsHelper::addViewUrls($view, 'upload', $parent_id_str, $parent_type, null, $from);
 
         // We do not have a real attachment yet so fake it
         $attachment = new \stdClass();
@@ -331,7 +331,10 @@ class DisplayController extends BaseController
 
             // Fix the access level
             if (!$params->get('allow_frontend_access_editing', false)) {
-                $attachment->access = $params->get('default_access_level', AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID);
+                $attachment->access = $params->get(
+                    'default_access_level',
+                    AttachmentsDefines::$DEFAULT_ACCESS_LEVEL_ID
+                );
             }
         } elseif ($save_type == 'update') {
             // See if we are updating a file or URL
@@ -404,14 +407,14 @@ class DisplayController extends BaseController
         // Upload new file/url and create/update the attachment
         if ($new_uri_type == 'file') {
             // Upload a new file
-            $msg = AttachmentsHelper::upload_file($attachment, $parent, $attachment_id, $save_type);
-            // NOTE: store() is not needed if upload_file() is called since it does it
+            $msg = AttachmentsHelper::uploadFile($attachment, $parent, $attachment_id, $save_type);
+            // NOTE: store() is not needed if uploadFile() is called since it does it
         } elseif ($new_uri_type == 'url') {
             $attachment->url_relative = $relative_url;
             $attachment->url_verify = $verify_url;
 
             // Upload/add the new URL
-            $msg = AttachmentsHelper::add_url(
+            $msg = AttachmentsHelper::addUrl(
                 $attachment,
                 $parent,
                 $verify_url,
@@ -419,7 +422,7 @@ class DisplayController extends BaseController
                 $old_uri_type,
                 $attachment_id
             );
-            // NOTE: store() is not needed if add_url() is called since it does it
+            // NOTE: store() is not needed if addUrl() is called since it does it
         } else {
             // Save the updated attachment info
             if (!$attachment->store()) {
@@ -461,7 +464,14 @@ class DisplayController extends BaseController
             // Close the iframe and refresh the attachments list in the parent window
             $base_url = $uri->root(true);
             $lang = $input->getCmd('lang', '');
-            AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
+            AttachmentsJavascript::closeIframeRefreshAttachments(
+                $base_url,
+                $parent_type,
+                $parent_entity,
+                $pid,
+                $lang,
+                $from
+            );
             exit();
         }
 
@@ -482,8 +492,8 @@ class DisplayController extends BaseController
         }
         $raw = $this->input->getInt('raw', 0);
         $popup = $this->input->getInt('popup', 0);
-        // NOTE: The helper download_attachment($id) function does the access check
-        AttachmentsHelper::download_attachment($id, $raw, $popup);
+        // NOTE: The helper downloadAttachment($id) function does the access check
+        AttachmentsHelper::downloadAttachment($id, $raw, $popup);
     }
 
 
@@ -577,7 +587,7 @@ class DisplayController extends BaseController
         ]);
 
         // Clean up after ourselves
-        AttachmentsHelper::clean_directory($filename_sys);
+        AttachmentsHelper::cleanDirectory($filename_sys);
 
         // Get the Itemid
         $Itemid = $input->getInt('Itemid', 1);
@@ -598,7 +608,14 @@ class DisplayController extends BaseController
             // Close the iframe and refresh the attachments list in the parent window
             $base_url = $uri->root(true);
             $lang = $input->getCmd('lang', '');
-            AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
+            AttachmentsJavascript::closeIframeRefreshAttachments(
+                $base_url,
+                $parent_type,
+                $parent_entity,
+                $pid,
+                $lang,
+                $from
+            );
             exit();
         } else {
             $redirect_to = $uri->root(true);
@@ -611,7 +628,7 @@ class DisplayController extends BaseController
     /**
      * Show the warning for deleting an attachment
      */
-    public function delete_warning()
+    public function deleteWarning()
     {
         $input = $this->input;
         // Make sure we have a valid attachment ID
@@ -619,7 +636,10 @@ class DisplayController extends BaseController
         if (is_numeric($attachment_id)) {
             $attachment_id = (int)$attachment_id;
         } else {
-            $errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 20)';
+            $errmsg = Text::sprintf(
+                'ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N',
+                $attachment_id
+            ) . ' (ERR 20)';
             throw new \Exception($errmsg, 500);
         }
 
@@ -735,7 +755,7 @@ class DisplayController extends BaseController
         // Make sure the attachments directory exists
         $upload_dir = JPATH_BASE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
         $secure = $params->get('secure', false);
-        if (!AttachmentsHelper::setup_upload_directory($upload_dir, $secure)) {
+        if (!AttachmentsHelper::setupUploadDirectory($upload_dir, $secure)) {
             $errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 28)';
             throw new \Exception($errmsg, 500);
         }
@@ -755,7 +775,7 @@ class DisplayController extends BaseController
         // Set up the view
         $view = $this->getView('Update', 'html', 'Site');
         $from = $input->getWord('from', 'closeme');
-        AttachmentsHelper::add_view_urls(
+        AttachmentsHelper::addViewUrls(
             $view,
             'update',
             $parent_id,

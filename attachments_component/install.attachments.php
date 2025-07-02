@@ -3,14 +3,17 @@
 /**
  * Attachments component installation script
  *
- * @package Attachments
+ * @package    Attachments
  * @subpackage Attachments_Component
  *
- * @author Jonathan M. Cameron
+ * @author    Jonathan M. Cameron
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link https://github.com/jmcameron/attachments
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link      https://github.com/jmcameron/attachments
  */
+
+// phpcs:disable PSR1.Classes.ClassDeclaration
+// phpcs:ignore PascalCase format
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -29,12 +32,15 @@ use Joomla\CMS\Language\Text;
  *
  * @package Attachments
  */
+
+
+// phpcs:ignore
 class com_AttachmentsInstallerScript implements InstallerScriptInterface
 {
     /**
      * An array of supported database types
      *
-     * @var    array
+     * @var array
      */
     protected array $dbKnown = array('mysql' => 'MySQL',
                                'mysqli' => 'MySQLi',
@@ -46,7 +52,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * An array of supported database types
      *
-     * @var    array
+     * @var array
      */
     protected array $dbSupported = array('mysql', 'mysqli', 'pdomysql');
 
@@ -60,12 +66,12 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * name of moved attachments directory (if present)
      */
-    var $moved_attachments_dir = null;
+    protected string $moved_attachments_dir = null;
 
     /**
      * List of the plugins
      */
-    var array $plugins = array('plg_content_attachments',
+    protected array $plugins = array('plg_content_attachments',
                          'plg_search_attachments',
                          'plg_attachments_plugin_framework',
                          'plg_attachments_for_content',
@@ -81,7 +87,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * Attachments component install function
      *
-     * @param InstallerAdapter $adapter The adapter calling this method
+     * @param  InstallerAdapter $adapter The adapter calling this method
      * @return boolean True on success
      */
     public function install(InstallerAdapter $adapter): bool
@@ -98,7 +104,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * Attachments component update function
      *
-     * @param InstallerAdapter $adapter The adapter calling this method
+     * @param  InstallerAdapter $adapter The adapter calling this method
      * @return boolean True on success
      */
     public function update(InstallerAdapter $adapter): bool
@@ -120,7 +126,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * Attachments component uninstall function
      *
-     * @param InstallerAdapter $adapter The adapter calling this method
+     * @param  InstallerAdapter $adapter The adapter calling this method
      * @return boolean True on success
      */
     public function uninstall(InstallerAdapter $adapter): bool
@@ -131,8 +137,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             $db = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
             $query->update('#__extensions')
-                  ->set("enabled = 0")
-                  ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
+                ->set("enabled = 0")
+                ->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
             $db->setQuery($query);
             $db->execute();
 
@@ -147,8 +153,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * Attachments component preflight function
      *
-     * @param string $type The type of change (install or discover_install, update, uninstall)
-     * @param InstallerAdapter $adapter The adapter calling this method
+     * @param  string           $type    The type of change (install or discover_install, update, uninstall)
+     * @param  InstallerAdapter $adapter The adapter calling this method
      * @return boolean True on success
      */
     public function preflight(string $type, InstallerAdapter $adapter): bool
@@ -206,8 +212,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         $db->setQuery($query);
         if ($db->loadResult() == 0) {
             if (
-                Folder::exists(JPATH_ROOT . '/components/com_attachments') or
-                Folder::exists(JPATH_ROOT . '/administrator/components/com_attachments')
+                Folder::exists(JPATH_ROOT . '/components/com_attachments')
+                or Folder::exists(JPATH_ROOT . '/administrator/components/com_attachments')
             ) {
                 $msg = Text::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
                 $app->enqueueMessage($msg, 'error');
@@ -232,17 +238,33 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 
         // ??? Joomla! 2.5x+ bugfix for "Can not build admin menus"
         if (in_array($type, array('install','discover_install'))) {
-            $this->_bugfixDBFunctionReturnedNoError('com_attachments');
+            $this->bugfixDBFunctionReturnedNoError('com_attachments');
         } else {
-            $this->_bugfixCantBuildAdminMenus('com_attachments');
+            $this->bugfixCantBuildAdminMenus('com_attachments');
         }
 
         // Joomla 3.x to 4.x remove old mysql upgrade scripts
-        if (File::exists(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql')) {
-            File::delete(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql');
+        if (
+            File::exists(
+                JPATH_ROOT .
+                '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql'
+            )
+        ) {
+            File::delete(
+                JPATH_ROOT .
+                '/administrator/components/com_attachments/sql/updates/mysql/3.1-2012-11-17.sql'
+            );
         }
-        if (File::exists(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql')) {
-            File::delete(JPATH_ROOT . '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql');
+        if (
+            File::exists(
+                JPATH_ROOT .
+                '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql'
+            )
+        ) {
+            File::delete(
+                JPATH_ROOT .
+                '/administrator/components/com_attachments/sql/updates/mysql/3.1-2013-04-29.sql'
+            );
         }
 
         return true;
@@ -252,8 +274,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * Attachments component postflight function
      *
-     * @param string $type The type of change (install or discover_install, update, uninstall)
-     * @param InstallerAdapter $adapter The adapter calling this method
+     * @param  string           $type    The type of change (install or discover_install, update, uninstall)
+     * @param  InstallerAdapter $adapter The adapter calling this method
      * @return boolean True on success
      */
     public function postflight(string $type, InstallerAdapter $adapter): bool
@@ -263,7 +285,9 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         }
 
         $app = Factory::getApplication();
-        /** @var \Joomla\Database\DatabaseDriver $db */
+        /**
+ * @var \Joomla\Database\DatabaseDriver $db
+*/
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Make sure the translations are available
@@ -350,12 +374,14 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
      */
     protected function installPermissions()
     {
-        require_once "admin/src/Helper/AttachmentsUpdate.php";
-        require_once "site/src/Helper/AttachmentsDefines.php";
-        require_once "site/src/Helper/AttachmentsFileTypes.php";
-        require_once "site/src/Helper/AttachmentsHelper.php";
+        include_once "admin/src/Helper/AttachmentsUpdate.php";
+        include_once "site/src/Helper/AttachmentsDefines.php";
+        include_once "site/src/Helper/AttachmentsFileTypes.php";
+        include_once "site/src/Helper/AttachmentsHelper.php";
 
-        /** Load the Attachments defines */
+        /**
+ * Load the Attachments defines
+*/
         \JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
     }
 
@@ -404,7 +430,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
      *
      * @param $extension_name string The name of the extension
      */
-    private function _bugfixDBFunctionReturnedNoError($extension_name)
+    private function bugfixDBFunctionReturnedNoError($extension_name)
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
@@ -420,7 +446,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__assets')
-                  ->where($db->quoteName('id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
@@ -429,15 +455,15 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         // Fix broken #__extensions records
         $query = $db->getQuery(true);
         $query->select('extension_id')
-              ->from('#__extensions')
-              ->where($db->quoteName('element') . ' = ' . $db->quote($extension_name));
+            ->from('#__extensions')
+            ->where($db->quoteName('element') . ' = ' . $db->quote($extension_name));
         $db->setQuery($query);
         $ids = $db->loadRow();
         if (!empty($ids)) {
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__extensions')
-                  ->where($db->quoteName('extension_id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('extension_id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
@@ -446,17 +472,17 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         // Fix broken #__menu records
         $query = $db->getQuery(true);
         $query->select('id')
-              ->from('#__menu')
-              ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
-              ->where($db->quoteName('menutype') . ' = ' . $db->quote('main'))
-              ->where($db->quoteName('link') . ' LIKE ' . $db->quote('index.php?option=' . $extension_name . '%'));
+            ->from('#__menu')
+            ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
+            ->where($db->quoteName('menutype') . ' = ' . $db->quote('main'))
+            ->where($db->quoteName('link') . ' LIKE ' . $db->quote('index.php?option=' . $extension_name . '%'));
         $db->setQuery($query);
         $ids = $db->loadRow();
         if (!empty($ids)) {
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__menu')
-                  ->where($db->quoteName('id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
@@ -468,9 +494,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
      *
      * Adapted from Akeeba Backup install script (https://www.akeebabackup.com/)
      * with permission of Nicholas Dionysopoulos (Thanks Nick!)
-     *
      */
-    private function _bugfixCantBuildAdminMenus($extension_name)
+    private function bugfixCantBuildAdminMenus($extension_name)
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
@@ -488,7 +513,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__extensions')
-                      ->where($db->quoteName('extension_id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('extension_id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
@@ -497,8 +522,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         // If there are multiple assets records, delete all except the oldest one
         $query = $db->getQuery(true);
         $query->select('id')
-              ->from('#__assets')
-              ->where('name = ' . $db->quote($extension_name));
+            ->from('#__assets')
+            ->where('name = ' . $db->quote($extension_name));
               // ??? Removed unneeded db->quote('name') since it failed in Joomla 3.0 Beta
         $db->setQuery($query);
         $ids = $db->loadObjectList();
@@ -509,7 +534,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__assets')
-                      ->where($db->quoteName('id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
@@ -518,20 +543,22 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         // Remove #__menu records for good measure!
         $query = $db->getQuery(true);
         $query->select('id')
-              ->from('#__menu')
-              ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
-              ->where($db->quoteName('menutype') . ' = ' . $db->quote('main'))
-              ->where($db->quoteName('link') . ' LIKE ' . $db->quote('index.php?option=' . $extension_name . '%'));
+            ->from('#__menu')
+            ->where($db->quoteName('type') . ' = ' . $db->quote('component'))
+            ->where($db->quoteName('menutype') . ' = ' . $db->quote('main'))
+            ->where($db->quoteName('link') . ' LIKE ' . $db->quote('index.php?option=' . $extension_name . '%'));
         $db->setQuery($query);
         $ids = $db->loadRow();
         if (!empty($ids)) {
             foreach ($ids as $id) {
                 $query = $db->getQuery(true);
                 $query->delete('#__menu')
-                  ->where($db->quoteName('id') . ' = ' . $db->quote($id));
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($id));
                 $db->setQuery($query);
                 $db->execute();
             }
         }
     }
 }
+// phpcs:enable PSR12.Namespaces.NamespaceDeclaration
+

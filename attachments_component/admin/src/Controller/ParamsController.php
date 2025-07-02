@@ -161,7 +161,7 @@ class ParamsController extends FormController
         if ($new_secure != $old_secure) {
             // Check/update the security status
             $attach_dir = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
-            AttachmentsHelper::setup_upload_directory($attach_dir, $new_secure == 1);
+            AttachmentsHelper::setupUploadDirectory($attach_dir, $new_secure == 1);
 
             $msg = Text::_('ATTACH_UPDATED_ATTACHMENTS_PARAMETERS_AND_SECURITY_SETTINGS');
         } else {

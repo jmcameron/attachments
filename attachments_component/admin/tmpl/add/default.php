@@ -85,7 +85,13 @@ if (!in_array($editor, $exceptions)) {
 
 
 if ($attachment->parent_title) {
-    echo "<h1>" . Text::sprintf('ATTACH_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) . "</h1>";
+    echo "<h1>" .
+        Text::sprintf(
+            'ATTACH_PARENT_S_COLON_S',
+            $attachment->parent_entity_name,
+            $attachment->parent_title
+        ) .
+      "</h1>";
 }
 
 $wa = $app->getDocument()->getWebAssetManager();
@@ -111,7 +117,9 @@ $wa->useScript('form.validate');
   <tr>
     <td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
     <td><?php echo $alt_parent_html; ?>
-      <input id="parent_title" value="<?php echo $attachment->parent_title ?>" disabled="disabled" type="text" size="60" />&nbsp;
+      <input id="parent_title" 
+              value="<?php echo $attachment->parent_title ?>"
+              disabled="disabled" type="text" size="60" />&nbsp;
     <?php
     $modalId = 'attachment';
     $modalParams['title']  = $this->escape($this->selpar_btn_tooltip);
@@ -133,7 +141,11 @@ $wa->useScript('form.validate');
 <?php endif; ?>
 <?php if ($attachment->uri_type == 'file') : ?>
   <tr>
-    <td class="key"><label for="upload" id="upload_file_label"><?php echo Text::_('ATTACH_ATTACH_FILE_COLON') ?></label></td>
+    <td class="key">
+        <label for="upload" id="uploadFile_label">
+        <?php echo Text::_('ATTACH_ATTACH_FILE_COLON') ?>
+        </label>
+    </td>
     <td>
       <a class="changeButton" href="<?php echo $this->upload_toggle_url ?>"
          title="<?php echo $this->upload_toggle_tooltip; ?>"><?php
@@ -143,12 +155,16 @@ $wa->useScript('form.validate');
     </td>
   </tr>
   <tr>
-    <td class="key"><label for="display_name" class="hasTip" title="<?php echo $this->display_filename_tooltip; ?>"
-              ><?php echo Text::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
+    <td class="key"><label for="display_name" class="hasTip" 
+        title="<?php echo $this->display_filename_tooltip; ?>">
+        <?php echo Text::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
     <td>
        <input type="text" name="display_name" id="display_name" size="75" maxlength="80"
               title="<?php echo $this->display_filename_tooltip; ?>" class="hasTip"
-              value="<?php echo $attachment->display_name ?>" /><span class="optional"><?php echo Text::_('ATTACH_OPTIONAL'); ?></span>
+              value="<?php echo $attachment->display_name ?>" />
+       <span class="optional">
+         <?php echo Text::_('ATTACH_OPTIONAL'); ?>
+       </span>
    </td>
 <?php else : ?>
   <tr>
@@ -198,7 +214,12 @@ $wa->useScript('form.validate');
   </tr>
 <?php endif; ?>
   <tr>
-    <td class="key"><label for="access" class="hasTip" title="<?php echo $this->access_level_tooltip ?>"><?php echo Text::_('JFIELD_ACCESS_LABEL'); ?></label></td>
+    <td class="key">
+        <label for="access" class="hasTip"
+               title="<?php echo $this->access_level_tooltip ?>">
+               <?php echo Text::_('JFIELD_ACCESS_LABEL'); ?>
+        </label>
+    </td>
     <td><?php echo $this->access_level; ?></td>
   </tr>
 <?php if ($this->show_user_field_1) : ?>
@@ -236,10 +257,17 @@ $wa->useScript('form.validate');
     <input type="hidden" name="from" value="<?php echo $this->from; ?>" />
     <?php if ($this->from == 'closeme') : ?>
     <div class="form_buttons" align="center">
-        <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('attachment.saveNew')"><?php echo Text::_('ATTACH_UPLOAD_VERB'); ?></button>
+        <button type="button"
+                class="btn btn-primary" 
+                onclick="Joomla.submitbutton('attachment.saveNew')">
+            <?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>
+       </button>
        <span class="right">
-          <input  class="btn btn-primary" type="button" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-                 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+          <input class="btn btn-primary" type="button" 
+                 value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
+                 onClick="window.parent.bootstrap.Modal.getInstance(
+                                window.parent.document.querySelector('.joomla-modal.show')
+                           ).hide();" />
        </span>
     </div>
     <?php endif; ?>

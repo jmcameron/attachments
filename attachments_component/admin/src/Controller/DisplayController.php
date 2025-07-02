@@ -157,9 +157,10 @@ class DisplayController extends BaseController
 
         // Set up the HTML for the 'Disable MySQL uninstallation' command
         $disable_mysql_uninstall_url =
-            "$url_top&amp;task=utils.disable_sql_uninstall" . $closeme;
+            "$url_top&amp;task=utils.disableSqlUninstall" . $closeme;
         $disable_mysql_uninstall_tooltip =
-            Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION') . '::' . Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION_TOOLTIP');
+            Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION') . '::' .
+            Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
             $disable_mysql_uninstall_tooltip,
@@ -170,35 +171,36 @@ class DisplayController extends BaseController
         );
 
         // Set up the HTML for the 'Reinstall Attachments Permissions' command
-        $reinstall_permissions_url = "$url_top&amp;task=utils.reinstall_permissions" . $closeme;
-        $reinstall_permissions_tooltip = Text::_('ATTACH_REINSTALL_PERMISSIONS') . '::' . Text::_('ATTACH_REINSTALL_PERMISSIONS_TOOLTIP');
+        $reinstallPermissions_url = "$url_top&amp;task=utils.reinstallPermissions" . $closeme;
+        $reinstallPermissions_tooltip = Text::_('ATTACH_reinstallPermissions') . '::' .
+                                         Text::_('ATTACH_reinstallPermissions_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $reinstall_permissions_tooltip,
+            $reinstallPermissions_tooltip,
             null,
             null,
-            Text::_('ATTACH_REINSTALL_PERMISSIONS'),
-            $reinstall_permissions_url
+            Text::_('ATTACH_reinstallPermissions'),
+            $reinstallPermissions_url
         );
 
         // Set up the HTML for the 'Regenerate attachment system filenames' command
-        $regenerate_system_filenames_url =
-            "$url_top&amp;task=utils.regenerate_system_filenames" . $closeme;
-        $regenerate_system_filenames_tooltip =
+        $regenerateSystemFilenames_url =
+            "$url_top&amp;task=utils.regenerateSystemFilenames" . $closeme;
+        $regenerateSystemFilenames_tooltip =
             Text::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES') . '::' .
             Text::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $regenerate_system_filenames_tooltip,
+            $regenerateSystemFilenames_tooltip,
             null,
             null,
             Text::_('ATTACH_REGENERATE_ATTACHMENT_SYSTEM_FILENAMES'),
-            $regenerate_system_filenames_url
+            $regenerateSystemFilenames_url
         );
 
         // Set up the HTML for the 'Remove spaces from system filenames' command
         $unspacify_system_filenames_url =
-            "$url_top&amp;task=utils.remove_spaces_from_system_filenames" . $closeme;
+            "$url_top&amp;task=utils.removeSpacesFromSystemFilenames" . $closeme;
         $unspacify_system_filenames_tooltip =
             Text::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES')   . '::' .
             Text::_('ATTACH_DESPACE_ATTACHMENT_SYSTEM_FILENAMES_TOOLTIP');
@@ -212,42 +214,42 @@ class DisplayController extends BaseController
         );
 
         // Set up the HTML for the 'Update attachment file sizes' command
-        $update_file_sizes_url =
-            "$url_top&amp;task=utils.update_file_sizes" . $closeme;
-        $update_file_sizes_tooltip =
+        $updateFilezizes_url =
+            "$url_top&amp;task=utils.updateFilezizes" . $closeme;
+        $updateFilezizes_tooltip =
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES') . '::' .
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $update_file_sizes_tooltip,
+            $updateFilezizes_tooltip,
             null,
             null,
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES'),
-            $update_file_sizes_url
+            $updateFilezizes_url
         );
 
         // Set up the HTML for the 'Check Files' command
-        $check_files_url = "$url_top&amp;task=utils.check_files" . $closeme;
-        $check_files_tooltip = Text::_('ATTACH_CHECK_FILES') . '::' . Text::_('ATTACH_CHECK_FILES_TOOLTIP');
+        $checkFiles_url = "$url_top&amp;task=utils.checkFiles" . $closeme;
+        $checkFiles_tooltip = Text::_('ATTACH_checkFiles') . '::' . Text::_('ATTACH_checkFiles_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $check_files_tooltip,
+            $checkFiles_tooltip,
             null,
             null,
-            Text::_('ATTACH_CHECK_FILES'),
-            $check_files_url
+            Text::_('ATTACH_checkFiles'),
+            $checkFiles_url
         );
 
         // Set up the HTML for the 'Validate URLs' command
-        $validate_urls_url = "$url_top&amp;task=utils.validate_urls" . $closeme;
-        $validate_urls_tooltip = Text::_('ATTACH_VALIDATE_URLS') . '::' . Text::_('ATTACH_VALIDATE_URLS_TOOLTIP');
+        $validateUrls_url = "$url_top&amp;task=utils.validateUrls" . $closeme;
+        $validateUrls_tooltip = Text::_('ATTACH_validateUrls') . '::' . Text::_('ATTACH_validateUrls_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $validate_urls_tooltip,
+            $validateUrls_tooltip,
             null,
             null,
-            Text::_('ATTACH_VALIDATE_URLS'),
-            $validate_urls_url
+            Text::_('ATTACH_validateUrls'),
+            $validateUrls_url
         );
 
         // Test ???

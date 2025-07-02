@@ -42,8 +42,12 @@ class AttachmentsController extends BaseController
      * Recognized key values include 'name', 'default_task', 'model_path', and
      * 'view_path' (this list is not meant to be comprehensive).
      */
-    public function __construct($config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
-    {
+    public function __construct(
+        $config = array('default_task' => 'noop'),
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null
+    ) {
         parent::__construct($config, $factory, $app, $input);
     }
 
@@ -135,7 +139,7 @@ class AttachmentsController extends BaseController
         $view->update_url = $update_url;
 
         // Construct the delete URL template
-        $delete_url = $base_url . "index.php?option=com_attachments&task=delete_warning&id=%d";
+        $delete_url = $base_url . "index.php?option=com_attachments&task=deleteWarning&id=%d";
         $delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
         $delete_url .= "&from=$from&tmpl=component";
         $delete_url = Route::_($delete_url);

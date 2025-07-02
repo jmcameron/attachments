@@ -50,8 +50,8 @@ if ($attachment->uri_type == 'file') {
     $upload_button_text = Text::_('ATTACH_UPLOAD_VERB');
 } else {
     $upload_toggle_button_text = Text::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
-    $upload_toggle_url = $this->upload_file_url;
-    $upload_button_text = Text::_('ATTACH_ADD_URL');
+    $upload_toggle_url = $this->uploadFile_url;
+    $upload_button_text = Text::_('ATTACH_addUrl');
 }
 
 // If this is for an existing content item, modify the URL appropriately
@@ -92,7 +92,13 @@ if ($this->error) {
 // Display the form
 ?>
 <div id="uploadAttachmentsPage">
-<h1><?php echo Text::sprintf('ATTACH_FOR_PARENT_S_COLON_S', $attachment->parent_entity_name, $attachment->parent_title) ?></h1>
+<h1>
+    <?php echo Text::sprintf(
+        'ATTACH_FOR_PARENT_S_COLON_S',
+        $attachment->parent_entity_name,
+        $attachment->parent_title
+    ) ?>
+</h1>
     <form class="attachments" enctype="multipart/form-data" name="upload_form"
           action="<?php echo $this->save_url; ?>" method="post">
         <fieldset>
@@ -144,11 +150,21 @@ if ($this->error) {
                           size="70" maxlength="255"
                   value="<?php echo stripslashes($attachment->description); ?>" /></p>
 <?php if ($this->may_publish) : ?>
-            <div class="at_control"><label><?php echo Text::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->publish; ?></div>
+            <div class="at_control">
+                <label>
+                    <?php echo Text::_('ATTACH_PUBLISHED'); ?>
+                </label>
+                <?php echo $this->publish; ?>
+             </div>
 <?php endif; ?>
 <?php if ($params->get('allow_frontend_access_editing', false)) : ?>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><?php echo Text::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
+            <div class="at_control">
+                <label for="access" title="<?php echo $this->access_level_tooltip; ?>">
+                    <?php echo Text::_('ATTACH_ACCESS_COLON'); ?>
+                </label>
+                <?php echo $this->access_level; ?>
+            </div>
 <?php endif; ?>
             <?php if ($params->get('user_field_1_name', false)) : ?>
             <p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
@@ -184,7 +200,8 @@ if ($this->error) {
             <input type="submit" name="submit" value="<?php echo $upload_button_text ?>" />
             <span class="right">
               <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-                     onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+                     onClick="window.parent.bootstrap.Modal.getInstance(
+                                window.parent.document.querySelector('.joomla-modal.show')).hide();" />
             </span>
         </div>
     </form>

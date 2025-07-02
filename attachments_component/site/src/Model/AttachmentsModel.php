@@ -38,53 +38,53 @@ class AttachmentsModel extends BaseDatabaseModel
     /**
      * ID of parent of the list of attachments
      */
-    var $_parent_id = null;
+    protected $parent_id = null;
 
     /**
      * type of parent
      */
-    var $_parent_type = null;
+    protected $parent_type = null;
 
     /**
      * type of parent entity (each parent_type can support several)
      */
-    var $_parent_entity = null;
+    protected $parent_entity = null;
 
     /**
      * Parent class object (an Attachments extension plugin object)
      */
-    var $_parent = null;
+    protected $parent = null;
 
     /**
      * Parent title
      */
-    var $_parent_title = null;
+    protected $parent_title = null;
 
     /**
      * Parent entity name
      */
-    var $_parent_entity_name = null;
+    protected $parent_entity_name = null;
 
     /**
      * Whether some of the attachments should be visible to the user
      */
-    var $_some_visible = null;
+    protected $some_visible = null;
 
     /**
      * Whether some of the attachments should be modifiable to the user
      */
-    var $_some_modifiable = null;
+    protected $some_modifiable = null;
 
     /**
      * The desired sort order
      */
-    var $_sort_order;
+    protected $sort_order;
 
 
     /**
      * The list of attachments for the specified article/content entity
      */
-    var $_list = null;
+    protected $list = null;
 
     /**
      * Number of attachments
@@ -92,7 +92,7 @@ class AttachmentsModel extends BaseDatabaseModel
      * NOTE: After the list of attachments has been retrieved, if it is empty, this is set to zero.
      *       But _list remains null.   You can use this to check to see if the list has been loaded.
      */
-    var $_num_attachments = null;
+    protected $num_attachments = null;
 
     /**
      * Set the parent id (and optionally the parent type)
@@ -134,20 +134,20 @@ class AttachmentsModel extends BaseDatabaseModel
         }
 
         // Reset instance variables
-        $this->_parent_id = $parent_id;
-        $this->_parent_type = $parent_type;
-        $this->_parent_entity = $parent_entity;
+        $this->parent_id = $parent_id;
+        $this->parent_type = $parent_type;
+        $this->parent_entity = $parent_entity;
 
-        $this->_parent = null;
-        $this->_parent_class = null;
-        $this->_parent_title = null;
-        $this->_parent_entity_name = null;
+        $this->parent = null;
+        $this->parent_class = null;
+        $this->parent_title = null;
+        $this->parent_entity_name = null;
 
-        $this->_list = null;
-        $this->_sort_order = null;
-        $this->_some_visible = null;
-        $this->_some_modifiable = null;
-        $this->_num_attachments = null;
+        $this->list = null;
+        $this->sort_order = null;
+        $this->some_visible = null;
+        $this->some_modifiable = null;
+        $this->num_attachments = null;
     }
 
 
@@ -159,11 +159,11 @@ class AttachmentsModel extends BaseDatabaseModel
      */
     public function getParentId()
     {
-        if ($this->_parent_id === null) {
+        if ($this->parent_id === null) {
             $errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 51)';
             throw new \Exception($errmsg, 500);
         }
-        return $this->_parent_id;
+        return $this->parent_id;
     }
 
 
@@ -174,11 +174,11 @@ class AttachmentsModel extends BaseDatabaseModel
      */
     public function getParentType()
     {
-        if ($this->_parent_type == null) {
+        if ($this->parent_type == null) {
             $errmsg = Text::_('ATTACH_ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 52)';
             throw new \Exception($errmsg, 500);
         }
-        return $this->_parent_type;
+        return $this->parent_type;
     }
 
 
@@ -189,18 +189,18 @@ class AttachmentsModel extends BaseDatabaseModel
      */
     public function getParentEntity()
     {
-        if ($this->_parent_entity == null) {
+        if ($this->parent_entity == null) {
             $errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ENTITY_SPECIFIED') . ' (ERR 53)';
             throw new \Exception($errmsg, 500);
         }
 
         // Make sure we have a good parent_entity value
-        if ($this->_parent_entity == 'default') {
+        if ($this->parent_entity == 'default') {
             $parent = $this->getParentClass();
-            $this->_parent_entity = $parent->getDefaultEntity();
+            $this->parent_entity = $parent->getDefaultEntity();
         }
 
-        return $this->_parent_entity;
+        return $this->parent_entity;
     }
 
 
@@ -211,23 +211,23 @@ class AttachmentsModel extends BaseDatabaseModel
      */
     public function &getParentClass()
     {
-        if ($this->_parent_type == null) {
+        if ($this->parent_type == null) {
             $errmsg = Text::_('ATTACH_ERROR_NO_PARENT_TYPE_SPECIFIED') . ' (ERR 54)';
             throw new \Exception($errmsg, 500);
         }
 
-        if ($this->_parent_class == null) {
+        if ($this->parent_class == null) {
             // Get the parent handler
             PluginHelper::importPlugin('attachments');
             $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
-            if (!$apm->attachmentsPluginInstalled($this->_parent_type)) {
-                $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $this->_parent_type) . ' (ERR 55)';
+            if (!$apm->attachmentsPluginInstalled($this->parent_type)) {
+                $errmsg = Text::sprintf('ATTACH_ERROR_INVALID_PARENT_TYPE_S', $this->parent_type) . ' (ERR 55)';
                 throw new \Exception($errmsg, 500);
             }
-            $this->_parent_class = $apm->getAttachmentsPlugin($this->_parent_type);
+            $this->parent_class = $apm->getAttachmentsPlugin($this->parent_type);
         }
 
-        return $this->_parent_class;
+        return $this->parent_class;
     }
 
 
@@ -239,19 +239,19 @@ class AttachmentsModel extends BaseDatabaseModel
     public function getParentTitle()
     {
         // Get the title if we have not done it before
-        if ($this->_parent_title == null) {
+        if ($this->parent_title == null) {
             $parent = $this->getParentClass();
 
             // Make sure we have an article ID
-            if ($this->_parent_id === null) {
+            if ($this->parent_id === null) {
                 $errmsg = Text::_('ATTACH_ERROR_UNKNOWN_PARENT_ID') . ' (ERR 56)';
                 throw new \Exception($errmsg, 500);
             }
 
-            $this->_parent_title = $parent->getTitle($this->_parent_id, $this->_parent_entity);
+            $this->parent_title = $parent->getTitle($this->parent_id, $this->parent_entity);
         }
 
-        return $this->_parent_title;
+        return $this->parent_title;
     }
 
 
@@ -263,17 +263,17 @@ class AttachmentsModel extends BaseDatabaseModel
     public function getParentEntityName()
     {
         // Get the parent entity name if we have not done it before
-        if ($this->_parent_entity_name == null) {
+        if ($this->parent_entity_name == null) {
             // Make sure we have an article ID
-            if ($this->_parent_id === null) {
+            if ($this->parent_id === null) {
                 $errmsg = Text::_('ATTACH_ERROR_NO_PARENT_ID_SPECIFIED') . ' (ERR 57)';
                 throw new \Exception($errmsg, 500);
             }
 
-            $this->_parent_entity_name = Text::_('ATTACH_' . $this->getParentEntity());
+            $this->parent_entity_name = Text::_('ATTACH_' . $this->getParentEntity());
         }
 
-        return $this->_parent_entity_name;
+        return $this->parent_entity_name;
     }
 
 
@@ -326,7 +326,7 @@ class AttachmentsModel extends BaseDatabaseModel
             $order_by = 'filename';
         }
 
-        $this->_sort_order = $order_by;
+        $this->sort_order = $order_by;
     }
 
 
@@ -339,8 +339,8 @@ class AttachmentsModel extends BaseDatabaseModel
     public function &getAttachmentsList($attachmentid = null)
     {
         // Just return it if it has already been created
-        if ($this->_list != null) {
-            return $this->_list;
+        if ($this->list != null) {
+            return $this->list;
         }
 
         // Get the component parameters
@@ -357,8 +357,8 @@ class AttachmentsModel extends BaseDatabaseModel
         $parent = $this->getParentClass();
 
         // Define the list order
-        if (! $this->_sort_order) {
-            $this->_sort_order = 'filename';
+        if (! $this->sort_order) {
+            $this->sort_order = 'filename';
         }
 
         // Determine allowed access levels
@@ -409,7 +409,8 @@ class AttachmentsModel extends BaseDatabaseModel
                 // The user can edit the state of any attachment if they created the article/parent
                 $parent_creator_id = $parent->getParentCreatorId($parent_id, $parent_entity);
                 if ((int)$parent_creator_id == (int)$user->get('id')) {
-                    // Do not filter on state since this user can change the state of any attachment on this article/parent
+                    // Do not filter on state since this user can change
+                    // the state of any attachment on this article/parent
                 } else {
                     // Since the user is not the creator, they should only see published attachments
                     $query->where('a.state = 1');
@@ -420,11 +421,13 @@ class AttachmentsModel extends BaseDatabaseModel
             }
         }
 
-        $query->where('a.parent_type=' . $db->quote($parent_type) . ' AND a.parent_entity=' . $db->quote($parent_entity));
+        $query->where(
+            'a.parent_type=' . $db->quote($parent_type) . ' AND a.parent_entity=' . $db->quote($parent_entity)
+        );
         if (!$user->authorise('core.admin')) {
             $query->where('a.access IN (' . $user_levels . ')');
         }
-        $query->order($this->_sort_order);
+        $query->order($this->sort_order);
 
         // Do the query
         try {
@@ -435,19 +438,19 @@ class AttachmentsModel extends BaseDatabaseModel
             throw new \Exception($errmsg, 500);
         }
 
-        $this->_some_visible = false;
-        $this->_some_modifiable = false;
+        $this->some_visible = false;
+        $this->some_modifiable = false;
 
         // Install the list of attachments in this object
-        $this->_num_attachments = count($attachments);
+        $this->num_attachments = count($attachments);
 
         // The query only returns items that are visible/accessible for
         // the user, so if it contains anything, they will be visible
-        $this->_some_visible = $this->_num_attachments > 0;
+        $this->some_visible = $this->num_attachments > 0;
 
         // Add permissions for each attachment in the list
-        if ($this->_num_attachments > 0) {
-            $this->_list = $attachments;
+        if ($this->num_attachments > 0) {
+            $this->list = $attachments;
 
             // Add the permissions to each row
             $parent = $this->getParentClass();
@@ -457,7 +460,7 @@ class AttachmentsModel extends BaseDatabaseModel
                 $attachment->user_may_delete = $parent->userMayDeleteAttachment($attachment);
                 $attachment->user_may_edit = $parent->userMayEditAttachment($attachment);
                 if ($attachment->user_may_edit) {
-                    $this->_some_modifiable = true;
+                    $this->some_modifiable = true;
                 }
             }
 
@@ -474,7 +477,7 @@ class AttachmentsModel extends BaseDatabaseModel
         }
 
         // Finally, return the list!
-        return $this->_list;
+        return $this->list;
     }
 
 
@@ -485,7 +488,7 @@ class AttachmentsModel extends BaseDatabaseModel
      */
     public function numAttachments()
     {
-        return $this->_num_attachments;
+        return $this->num_attachments;
     }
 
 
@@ -497,9 +500,9 @@ class AttachmentsModel extends BaseDatabaseModel
     public function someVisible($attachmentid = null)
     {
         // See if the attachments list has been loaded
-        if ($this->_list == null) {
+        if ($this->list == null) {
             // See if we have already loaded the attachments list
-            if ($this->_num_attachments === 0) {
+            if ($this->num_attachments === 0) {
                 return false;
             }
 
@@ -507,7 +510,7 @@ class AttachmentsModel extends BaseDatabaseModel
             $this->getAttachmentsList($attachmentid);
         }
 
-        return $this->_some_visible;
+        return $this->some_visible;
     }
 
 
@@ -519,9 +522,9 @@ class AttachmentsModel extends BaseDatabaseModel
     public function someModifiable()
     {
         // See if the attachments list has been loaded
-        if ($this->_list == null) {
+        if ($this->list == null) {
             // See if we have already loaded the attachments list
-            if ($this->_num_attachments === 0) {
+            if ($this->num_attachments === 0) {
                 return false;
             }
 
@@ -529,7 +532,7 @@ class AttachmentsModel extends BaseDatabaseModel
             $this->getAttachmentsList();
         }
 
-        return $this->_some_modifiable;
+        return $this->some_modifiable;
     }
 
 
@@ -542,9 +545,9 @@ class AttachmentsModel extends BaseDatabaseModel
     public function types()
     {
         // Make sure the attachments are loaded
-        if ($this->_list == null) {
+        if ($this->list == null) {
             // See if we have already loaded the attachments list
-            if ($this->_num_attachments === 0) {
+            if ($this->num_attachments === 0) {
                 return false;
             }
 
@@ -554,7 +557,7 @@ class AttachmentsModel extends BaseDatabaseModel
 
         // Scan the attachments
         $types = false;
-        foreach ($this->_list as $attachment) {
+        foreach ($this->list as $attachment) {
             if ($types) {
                 if ($attachment->uri_type != $types) {
                     return 'both';

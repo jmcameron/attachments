@@ -144,7 +144,7 @@ function AttachmentsParseRoute($segments)
     $vars['task'] = $task;
     $i = 1;
 // Handle the the main keyword clause that have an id immediately following them
-    if (($task == 'delete') || ($task == 'delete_warning') || ($task == 'download')) {
+    if (($task == 'delete') || ($task == 'deleteWarning') || ($task == 'download')) {
         $vars['id'] = $segments[$i];
         $i = 2;
     }

@@ -42,15 +42,24 @@ class AttachmentsJavascript
     /**
      * Close the iframe
      */
-    public static function closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from, $refresh = true)
-    {
+    public static function closeIframeRefreshAttachments(
+        $base_url,
+        $parent_type,
+        $parent_entity,
+        $parent_id,
+        $lang,
+        $from,
+        $refresh = true
+    ) {
         echo "<script type=\"text/javascript\">
 			let iframe = window.parent.document.querySelector(\".modal.show iframe\");
 			// Refresh iframe before closing
 			if (\"$refresh\" && iframe) iframe.src += '';
 
-			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",\"$parent_entity\",$parent_id,\"$lang\",\"$from\");
-			window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();
+			window.parent.refreshAttachments(\"$base_url\",\"$parent_type\",
+                                              \"$parent_entity\",$parent_id,\"$lang\",\"$from\");
+			window.parent.bootstrap.Modal.getInstance(
+                        window.parent.document.querySelector('.joomla-modal.show')).hide();
 			</script>";
     }
 
@@ -69,6 +78,10 @@ class AttachmentsJavascript
      */
     public static function closeModal()
     {
-        echo '<script>var myparent = window.parent; myparent.bootstrap.Modal.getInstance(myparent.document.querySelector(\'.joomla-modal.show\')).hide(); myparent.location.reload();</script>';
+        echo '<script>
+                var myparent = window.parent; myparent.bootstrap.Modal.getInstance(
+                    myparent.document.querySelector(\'.joomla-modal.show\')).hide();
+                myparent.location.reload();
+               </script>';
     }
 }

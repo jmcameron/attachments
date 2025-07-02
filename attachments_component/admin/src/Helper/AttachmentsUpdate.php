@@ -55,7 +55,7 @@ class AttachmentsUpdate
     /**
      * Add icon filenames for all attachments missing an icon
      */
-    public static function add_icon_filenames()
+    public static function addIconFilenames()
     {
         static::checkAccess();
 
@@ -99,8 +99,12 @@ class AttachmentsUpdate
                 if (StringHelper::strlen($new_icon_filename) > 0) {
                     $attachment->icon_filename = $new_icon_filename;
                     if (!$attachment->store()) {
-                        $errmsg = Text::sprintf('ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S', $attachment->filename) .
-                            ' ' . $attachment->getError() . ' (ERR 69)';
+                        $errmsg = Text::sprintf(
+                            'ATTACH_ERROR_ADDING_ICON_FILENAME_FOR_ATTACHMENT_S',
+                            $attachment->filename
+                        ) .
+                                    ' ' .
+                                    $attachment->getError() . ' (ERR 69)';
                         throw new \Exception($errmsg, 500);
                     }
                     $numUpdated++;
@@ -115,7 +119,7 @@ class AttachmentsUpdate
     /**
      * Update dates for all attachments with null dates
      */
-    public static function update_null_dates()
+    public static function updateNullDates()
     {
         static::checkAccess();
 
@@ -185,7 +189,7 @@ class AttachmentsUpdate
      * comment out the line that deletes the attachments table.  Note that
      * this only affects the table, not the attachments files.
      */
-    public static function disable_sql_uninstall($dbtype = 'mysql')
+    public static function disableSqlUninstall($dbtype = 'mysql')
     {
         static::checkAccess();
 
@@ -294,7 +298,7 @@ class AttachmentsUpdate
      * from one computer to another and the actual file paths need to be
      * updated.
      */
-    public static function regenerate_system_filenames()
+    public static function regenerateSystemFilenames()
     {
         static::checkAccess();
 
@@ -391,7 +395,11 @@ class AttachmentsUpdate
                 if ($finfo->oldstyle && $finfo->prefix) {
                     $new_filename_sys = $new_path . $finfo->basename_no_prefix;
                     $attachment->filename = $finfo->basename_no_prefix;
-                    $new_url = str_replace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $newdir . $finfo->basename_no_prefix);
+                    $new_url = str_replace(
+                        DIRECTORY_SEPARATOR,
+                        '/',
+                        $upload_url . '/' . $newdir . $finfo->basename_no_prefix
+                    );
                 } else {
                     $new_filename_sys = $new_path . $basename;
                     $new_url = str_replace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $newdir . $basename);
@@ -410,7 +418,7 @@ class AttachmentsUpdate
                         $errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $new_path) . ' (ERR 74)';
                         throw new \Exception($errmsg, 500);
                     }
-                    AttachmentsHelper::write_empty_index_html($new_path);
+                    AttachmentsHelper::writeEmptyIndex($new_path);
                 }
 
                 // Move the file!
@@ -461,7 +469,7 @@ class AttachmentsUpdate
      *
      * The spaces are replaces with underscores '_'
      */
-    public static function remove_spaces_from_system_filenames()
+    public static function removeSpacesFromSystemFilenames()
     {
         static::checkAccess();
 
@@ -555,7 +563,7 @@ class AttachmentsUpdate
     /**
      * Update the file sizes for all attachments (only applies to files)
      */
-    public static function update_file_sizes()
+    public static function updateFilezizes()
     {
         static::checkAccess();
 
@@ -613,7 +621,7 @@ class AttachmentsUpdate
     /**
      * Check all files and make sure they exist
      */
-    public static function check_files_existance()
+    public static function checkFilesExistence()
     {
         static::checkAccess();
 
@@ -675,7 +683,7 @@ class AttachmentsUpdate
     /**
      * Validate all URLS and update their "valid" status
      */
-    public static function validate_urls()
+    public static function validateUrls()
     {
         static::checkAccess();
 
@@ -715,7 +723,7 @@ class AttachmentsUpdate
 
             $a = new \stdClass();
 
-            AttachmentsHelper::get_url_info($attachment->url, $a, false, false);
+            AttachmentsHelper::getUrlInfo($attachment->url, $a, false, false);
 
             if ($attachment->url_valid != $a->url_valid) {
                 $attachment->url_valid = $a->url_valid;

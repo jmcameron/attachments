@@ -46,7 +46,9 @@ if ($row_num == 'JGRID_HEADING_ROW_NUMBER') {
     <input type="text" name="search" id="search" value="<?php echo $lists['search'];?>"
        class="text_area" onchange="document.adminForm.submit();" />
     <button onclick="this.form.submit();"><?php echo Text::_('ATTACH_GO'); ?></button>
-    <button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo Text::_('ATTACH_RESET') ?></button>
+    <button onclick="document.getElementById('search').value='';this.form.submit();">
+        <?php echo Text::_('ATTACH_RESET') ?>
+    </button>
 </div>
     <table class="adminlist" cellspacing="1">
     <thead>
@@ -71,7 +73,10 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
         <tr class="<?php echo "row$k" ?>">
            <td><?php echo $i ?></td>
            <td>
-               <a style="cursor: pointer;" onclick="window.parent.jSelectParentArticle('<?php echo $item->id; ?>', '<?php echo str_replace(array("'", "\""), array("\\'", ""), $item->title); ?>', '<?php echo $app->getInput()->get('object'); ?>');">
+               <a style="cursor: pointer;" 
+                  onclick="window.parent.jSelectParentArticle('<?php echo $item->id; ?>', '
+                             <?php echo str_replace(array("'", "\""), array("\\'", ""), $item->title); ?>', '
+                             <?php echo $app->getInput()->get('object'); ?>');">
            <?php echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8'); ?></a>
            </td>
            <td><?php echo $item->id; ?></td>

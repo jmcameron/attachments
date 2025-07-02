@@ -899,7 +899,7 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
         $secure       = $aparams->get('secure', false);
         $hta_filename = $attach_dir . '/ . htaccess';
         if (($secure && !file_exists($hta_filename)) || (!$secure && file_exists($hta_filename))) {
-            AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
+            AttachmentsHelper::setupUploadDirectory($attach_dir, $secure);
         }
 
         $i = 0;

@@ -173,17 +173,23 @@ class AttachmentsModel extends ListModel
                 } else {
                     $queryStr =
                         '('
-                        . 'LOWER (a.filename) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
-                        . 'LOWER (a.description) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
-                        . 'LOWER (a.display_name) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+                        . 'LOWER (a.filename) LIKE ' .
+                          $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
+                        . 'LOWER (a.description) LIKE ' .
+                          $db->quote('%' . $db->escape($search, true) . '%', false) . ' OR '
+                        . 'LOWER (a.display_name) LIKE ' .
+                          $db->quote('%' . $db->escape($search, true) . '%', false);
                     if (!empty($params->get('user_field_1_name', ''))) {
-                        $queryStr .= 'OR LOWER (a.user_field_1) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+                        $queryStr .= 'OR LOWER (a.user_field_1) LIKE ' .
+                        $db->quote('%' . $db->escape($search, true) . '%', false);
                     }
                     if (!empty($params->get('user_field_2_name', ''))) {
-                        $queryStr .= 'OR LOWER (a.user_field_2) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+                        $queryStr .= 'OR LOWER (a.user_field_2) LIKE ' .
+                        $db->quote('%' . $db->escape($search, true) . '%', false);
                     }
                     if (!empty($params->get('user_field_3_name', ''))) {
-                        $queryStr .= 'OR LOWER (a.user_field_3) LIKE ' . $db->quote('%' . $db->escape($search, true) . '%', false);
+                        $queryStr .= 'OR LOWER (a.user_field_3) LIKE ' .
+                        $db->quote('%' . $db->escape($search, true) . '%', false);
                     }
                     $queryStr .= ')';
 
@@ -220,7 +226,10 @@ class AttachmentsModel extends ListModel
         if (!empty($filterParentState)) {
             $countFilterEntityParts = count($filterEntityParts);
 
-            if (($filterParentState != '') && ($filterParentState != 'ALL') && ($countFilterEntityParts == 2 || $countFilterEntityParts == 0)) {
+            if (
+                ($filterParentState != '') && ($filterParentState != 'ALL') &&
+                ($countFilterEntityParts == 2 || $countFilterEntityParts == 0)
+            ) {
                 $fpsWheres = [];
 
                 // Get the contributions for all the known content types

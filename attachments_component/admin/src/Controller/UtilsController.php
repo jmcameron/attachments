@@ -43,8 +43,12 @@ class UtilsController extends BaseController
      *
      * @return  BaseController
      */
-    public function __construct($config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
-    {
+    public function __construct(
+        $config = array('default_task' => 'noop'),
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null
+    ) {
         $config['default_task'] = 'noop';
         parent::__construct($config, $factory, $app, $input);
 
@@ -92,9 +96,9 @@ class UtilsController extends BaseController
 
     /**
      * Add icon filenames for attachments missing an icon
-     * (See AttachmentsUpdate::add_icon_filenames() in update.php for details )
+     * (See AttachmentsUpdate::addIconFilenames() in update.php for details )
      */
-    public function add_icon_filenames()
+    public function addIconFilenames()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -103,16 +107,16 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 151)', 404);
         }
 
-        $msg = AttachmentsUpdate::add_icon_filenames();
+        $msg = AttachmentsUpdate::addIconFilenames();
         $this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
     }
 
 
     /**
      * Update any null dates in any attachments
-     * (See AttachmentsUpdate::update_null_dates() in update.php for details )
+     * (See AttachmentsUpdate::updateNullDates() in update.php for details )
      */
-    public function update_null_dates()
+    public function updateNullDates()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -121,7 +125,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 152)', 404);
         }
 
-        $numUpdated = AttachmentsUpdate::update_null_dates();
+        $numUpdated = AttachmentsUpdate::updateNullDates();
         $msg = Text::sprintf('ATTACH_UPDATED_N_ATTACHMENTS', $numUpdated);
         $this->setRedirect('index.php?option=' . $this->input->get("option"), $msg);
     }
@@ -130,9 +134,9 @@ class UtilsController extends BaseController
 
     /**
      * Disable SQL uninstall of existing attachments (when Attachments is uninstalled)
-     * (See AttachmentsUpdate::disable_sql_uninstall() in update.php for details )
+     * (See AttachmentsUpdate::disableSqlUninstall() in update.php for details )
      */
-    public function disable_sql_uninstall()
+    public function disableSqlUninstall()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -141,7 +145,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 153)', 404);
         }
 
-        $msg = AttachmentsUpdate::disable_sql_uninstall();
+        $msg = AttachmentsUpdate::disableSqlUninstall();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -157,9 +161,9 @@ class UtilsController extends BaseController
 
     /**
      * Regenerate system filenames
-     * (See AttachmentsUpdate::regenerate_system_filenames() in update.php for details )
+     * (See AttachmentsUpdate::regenerateSystemFilenames() in update.php for details )
      */
-    public function regenerate_system_filenames()
+    public function regenerateSystemFilenames()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -168,7 +172,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 154)', 404);
         }
 
-        $msg = AttachmentsUpdate::regenerate_system_filenames();
+        $msg = AttachmentsUpdate::regenerateSystemFilenames();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -184,9 +188,9 @@ class UtilsController extends BaseController
 
     /**
      * Remove spaces from system filenames for all attachments
-     * (See AttachmentsUpdate::remove_spaces_from_system_filenames() in update.php for details )
+     * (See AttachmentsUpdate::removeSpacesFromSystemFilenames() in update.php for details )
      */
-    public function remove_spaces_from_system_filenames()
+    public function removeSpacesFromSystemFilenames()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -195,7 +199,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 155)', 404);
         }
 
-        $msg = AttachmentsUpdate::remove_spaces_from_system_filenames();
+        $msg = AttachmentsUpdate::removeSpacesFromSystemFilenames();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -211,9 +215,9 @@ class UtilsController extends BaseController
 
     /**
      * Update file sizes for all attachments
-     * (See AttachmentsUpdate::update_file_sizes() in update.php for details )
+     * (See AttachmentsUpdate::updateFilezizes() in update.php for details )
      */
-    public function update_file_sizes()
+    public function updateFilezizes()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -222,7 +226,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
         }
 
-        $msg = AttachmentsUpdate::update_file_sizes();
+        $msg = AttachmentsUpdate::updateFilezizes();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -238,9 +242,9 @@ class UtilsController extends BaseController
 
     /**
      * Check all files in any attachments
-     * (See AttachmentsUpdate::check_files() in update.php for details )
+     * (See AttachmentsUpdate::checkFiles() in update.php for details )
      */
-    public function check_files()
+    public function checkFiles()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -249,7 +253,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 157)', 404);
         }
 
-        $msg = AttachmentsUpdate::check_files_existance();
+        $msg = AttachmentsUpdate::checkFilesExistence();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -264,9 +268,9 @@ class UtilsController extends BaseController
 
     /**
      * Validate all URLS in any attachments
-     * (See AttachmentsUpdate::validate_urls() in update.php for details )
+     * (See AttachmentsUpdate::validateUrls() in update.php for details )
      */
-    public function validate_urls()
+    public function validateUrls()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -275,7 +279,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR' . ' (ERR 158)'), 404);
         }
 
-        $msg = AttachmentsUpdate::validate_urls();
+        $msg = AttachmentsUpdate::validateUrls();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {
@@ -291,9 +295,9 @@ class UtilsController extends BaseController
 
     /**
      * Validate all URLS in any attachments
-     * (See AttachmentsUpdate::reinstall_permissions() in update.php for details )
+     * (See AttachmentsUpdate::reinstallPermissions() in update.php for details )
      */
-    public function reinstall_permissions()
+    public function reinstallPermissions()
     {
         // Access check.
         $user = $this->app->getIdentity();

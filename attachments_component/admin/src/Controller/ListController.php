@@ -40,8 +40,12 @@ class ListController extends BaseController
      *
      * @return  BaseController
      */
-    public function __construct($config = array('default_task' => 'noop'), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
-    {
+    public function __construct(
+        $config = array('default_task' => 'noop'),
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null
+    ) {
         parent::__construct($config, $factory, $app, $input);
     }
 
@@ -115,7 +119,7 @@ class ListController extends BaseController
         $view->update_url = $update_url;
 
         // Construct the delete URL template
-        $delete_url = "index.php?option=com_attachments&task=attachment.delete_warning&id=%d";
+        $delete_url = "index.php?option=com_attachments&task=attachment.deleteWarning&id=%d";
         $delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
         $delete_url .= "&from=$from&tmpl=component";
         $view->delete_url = $delete_url;

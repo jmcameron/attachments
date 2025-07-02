@@ -23,15 +23,16 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
-
 // Access check.
 $app = Factory::getApplication();
 $user = $app->getIdentity();
 if ($user === null or !$user->authorise('core.admin', 'com_attachments')) {
     throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 174)', 404);
 }
+// phpcs:enable PSR1.Files.SideEffects
+
+
+
 
 /**
  * View for editing the component parameters

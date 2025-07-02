@@ -119,7 +119,7 @@ class AttachmentsController extends AdminController
         $view->update_url = $update_url;
 
         // Construct the delete URL template
-        $delete_url = "index.php?option=com_attachments&task=attachment.delete_warning&id=%d";
+        $delete_url = "index.php?option=com_attachments&task=attachment.deleteWarning&id=%d";
         $delete_url .= "&parent_type=$parent_type&parent_entity=$parent_entity&parent_id=" . (int)$parent_id;
         $delete_url .= "&from=$from&tmpl=component";
         $view->delete_url = $delete_url;
@@ -195,7 +195,7 @@ class AttachmentsController extends AdminController
                     // Delete the actual file
                     if (File::exists($attachment->filename_sys)) {
                         File::delete($attachment->filename_sys);
-                        AttachmentsHelper::clean_directory($attachment->filename_sys);
+                        AttachmentsHelper::cleanDirectory($attachment->filename_sys);
                     }
                     $deleted_ids[] = $id;
 
@@ -270,7 +270,15 @@ class AttachmentsController extends AdminController
             $uri = Uri::getInstance();
             $base_url = $uri->base(true);
             $lang = $input->getCmd('lang', '');
-            AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from, false);
+            AttachmentsJavascript::closeIframeRefreshAttachments(
+                $base_url,
+                $parent_type,
+                $parent_entity,
+                $pid,
+                $lang,
+                $from,
+                false
+            );
             exit();
         }
 
@@ -335,6 +343,7 @@ class AttachmentsController extends AdminController
         }
         $extension = $input->getCmd('extension');
         $extensionURL = ($extension) ? '&extension=' . $input->getCmd('extension') : '';
-        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' .
+                            $this->view_list . $extensionURL, false));
     }
 }

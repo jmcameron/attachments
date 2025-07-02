@@ -52,7 +52,8 @@ $document->addScriptDeclaration($hide_scrollbar);
        <input type="submit" name="submit" value="<?php echo $this->action_button_label ?>" />
        <span class="right">
           <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-                 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+                 onClick="window.parent.bootstrap.Modal.getInstance(
+                            window.parent.document.querySelector('.joomla-modal.show')).hide();" />
        </span>
     </div>
     <input type="hidden" name="option" value="<?php echo $this->option;?>" />

@@ -28,8 +28,9 @@ $lists = $this->lists;
     <tr>
     <td width="100%">
     <label class="filter-search-lbl" for="filter_search"><?php echo Text::_('JSEARCH_FILTER_LABEL'); ?></label>
-    <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>"
-       class="text_area" onchange="this.form.submit();" />
+    <input type="text" name="filter_search" id="filter_search"
+           value="<?php echo $this->escape($this->state->get('filter.search')); ?>"
+           class="text_area" onchange="this.form.submit();" />
     <button class="filter_button" onclick="this.form.submit();"><?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?></button>
     <button class="filter_button" onclick="document.getElementById('filter_search').value='';this.form.submit();">
        <?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>

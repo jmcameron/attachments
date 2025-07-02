@@ -188,10 +188,12 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         if ($attachment->uri_type == 'file') {
             // Handle file attachments
             if ($this->secure) {
-                $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+                $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" .
+                               (int)$attachment->id);
             } else {
                 // We need to urlencode the filename
-                $offset = strlen(AttachmentsDefines::$ATTACHMENTS_SUBDIR . "/{$attachment->parent_entity}/{$attachment->parent_id}/");
+                $offset = strlen(AttachmentsDefines::$ATTACHMENTS_SUBDIR .
+                                 "/{$attachment->parent_entity}/{$attachment->parent_id}/");
                 $url_path = mb_strcut($attachment->url, 0, $offset);
                 $url_filename = rawurlencode(mb_strcut($attachment->url, $offset));
                 $url = $base_url . $url_path . $url_filename;
@@ -205,7 +207,9 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         } else {
             // Handle URL "attachments"
             if ($this->secure) {
-                $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id);
+                $url = Route::_($base_url .
+                                "index.php?option=com_attachments&task=download&id=" .
+                                (int)$attachment->id);
                 $tooltip = Text::sprintf('ATTACH_ACCESS_THIS_URL_S', $filename);
             } else {
                 // Handle the link url if not logged in but link displayed for guests
@@ -227,7 +231,10 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             }
         }
 
-        $show_in_modal = (!$app->client->mobile) && ($this->file_link_open_mode == 'in_a_popup') && ($attachment->file_type === "application/pdf" || str_starts_with($attachment->file_type, "image/"));
+        $show_in_modal = (!$app->client->mobile) &&
+                         ($this->file_link_open_mode == 'in_a_popup') &&
+                         ($attachment->file_type === "application/pdf" ||
+                          str_starts_with($attachment->file_type, "image/"));
 
         if ($show_in_modal) {
             $a_class = 'modal-button';
@@ -247,12 +254,15 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
                 'libraries.html.bootstrap.modal.main',
                 [
                     'selector' => 'modal-' . $randomId,
-                    'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'></iframe>",
+                    'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'>
+                               </iframe>",
                     'params' => $modalParams
                 ]
             );
 
-            $show_link = "<a class=\"$a_class\" type=\"button\" data-bs-toggle='modal' data-bs-target='#modal-$randomId'";
+            $show_link = "<a class=\"$a_class\"
+                             type=\"button\" data-bs-toggle='modal'
+                             data-bs-target='#modal-$randomId'";
             $show_link .= "title=\"$tooltip\">";
             if ($this->use_fontawesome_icons) {
                 $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
@@ -276,13 +286,23 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
                 if ($this->use_fontawesome_icons) {
                     $html .= '<i class="' . $faIconsStyle . ' fa-eye-slash"></i>';
                 } else {
-                    $html .= HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                    $html .= HTMLHelper::image(
+                        'com_attachments/file_icons/link_arrow.png',
+                        '',
+                        'class="link_overlay"',
+                        true
+                    );
                 }
             } else {
                 if ($this->use_fontawesome_icons) {
                     $html .= '<i class="' . $faIconsStyle . ' fa-eye-slash redicon"></i>';
                 } else {
-                    $html .= HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                    $html .= HTMLHelper::image(
+                        'com_attachments/file_icons/link_broken.png',
+                        '',
+                        'class="link_overlay"',
+                        true
+                    );
                 }
             }
         }
@@ -387,7 +407,9 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $html .= '<td class="at_file_size">' . $file_size_str . '</td>';
     }
     if ($this->show_raw_download &&  $show_in_modal) {
-        $url = Route::_($base_url . "index.php?option=com_attachments&task=download&id=" . (int)$attachment->id . "&raw=1");
+        $url = Route::_($base_url .
+                        "index.php?option=com_attachments&task=download&id=" .
+                        (int)$attachment->id . "&raw=1");
         $html .=  '<td class="at_icon">';
         $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
         if ($this->use_fontawesome_icons) {
@@ -481,7 +503,11 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe width=\"100%\" height=\"200\" src=\"$delete_url\" scrolling=\"yes\" loading=\"lazy\"></iframe>",
+                'body' => "<iframe width=\"100%\"
+                            height=\"200\"
+                            src=\"$delete_url\"
+                            scrolling=\"yes\" loading=\"lazy\">
+                          </iframe>",
                 'params' => $modalParams
             ]
         );

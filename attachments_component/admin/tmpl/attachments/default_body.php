@@ -61,7 +61,8 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
     $access = $this->level_name[$item->access];
 
     $size_kb = (int)(10 * $item->file_size / 1024) / 10.0;
-    $link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' . (int)$item->id);
+    $link = OutputFilter::ampReplace('index.php?option=com_attachments&amp;task=attachment.edit&amp;cid[]=' .
+                                    (int)$item->id);
     $view_parent_title = Text::_('ATTACH_VIEW_ARTICLE_TITLE');
     if ($use_fontawesome_icons) {
         $icon = AttachmentsFileTypes::fa_icon_filename('', $item->file_type);
@@ -98,11 +99,15 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
         }
         if (($item->parent_id == null) || !$item->parent_exists) {
             $artLine = '<tr><td class="at_parentsep" colspan="' . $this->num_columns . '">';
-            $artLine .= '<b>' . $item->parent_entity_type . ':</b> <span class="error">' . $item->parent_title . '</span>';
+            $artLine .= '<b>' . $item->parent_entity_type . ':</b> 
+                        <span class="error">' .
+                            $item->parent_title .
+                        '</span>';
             $artLine .= '</td></tr>';
         } else {
-            $addAttachLink = 'index.php?option=com_attachments&amp;task=attachment.add&amp;parent_id=' . $item->parent_id .
-                '&amp;parent_type=' . $parent_type . '&amp;editor=add_to_parent';
+            $addAttachLink = 'index.php?option=com_attachments&amp;task=attachment.add&amp;parent_id=' .
+                             $item->parent_id .
+                            '&amp;parent_type=' . $parent_type . '&amp;editor=add_to_parent';
             $addAttachLink = OutputFilter::ampReplace($addAttachLink);
             $artLine = "<tr><td class=\"at_parentsep\" colspan=\"$this->num_columns\">";
             $artLine .= "<b>" . $item->parent_entity_type . ":</b> <a title=\"$view_parent_title\" " .
@@ -146,13 +151,23 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
                         if ($use_fontawesome_icons) {
                             echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash"></i>';
                         } else {
-                            echo HTMLHelper::image('com_attachments/file_icons/link_arrow.png', '', 'class="link_overlay"', true);
+                            echo HTMLHelper::image(
+                                'com_attachments/file_icons/link_arrow.png',
+                                '',
+                                'class="link_overlay"',
+                                true
+                            );
                         }
                     } else {
                         if ($use_fontawesome_icons) {
                             echo '&nbsp;<i class="' . $use_fontawesome_icons_style . ' fa-eye-slash redicon"></i>';
                         } else {
-                            echo HTMLHelper::image('com_attachments/file_icons/link_broken.png', '', 'class="link_overlay"', true);
+                            echo HTMLHelper::image(
+                                'com_attachments/file_icons/link_broken.png',
+                                '',
+                                'class="link_overlay"',
+                                true
+                            );
                         }
                     }
                 }

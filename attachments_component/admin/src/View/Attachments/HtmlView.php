@@ -145,8 +145,16 @@ class HtmlView extends BaseHtmlView
         $filter_parent_state = $this->state->get('filter.parent_state', 'ALL');
         $filter_parent_state_options = array();
         $filter_parent_state_options[] = HTMLHelper::_('select.option', 'ALL', Text::_('ATTACH_ALL_PARENTS'));
-        $filter_parent_state_options[] = HTMLHelper::_('select.option', 'PUBLISHED', Text::_('ATTACH_PUBLISHED_PARENTS'));
-        $filter_parent_state_options[] = HTMLHelper::_('select.option', 'UNPUBLISHED', Text::_('ATTACH_UNPUBLISHED_PARENTS'));
+        $filter_parent_state_options[] = HTMLHelper::_(
+            'select.option',
+            'PUBLISHED',
+            Text::_('ATTACH_PUBLISHED_PARENTS')
+        );
+        $filter_parent_state_options[] = HTMLHelper::_(
+            'select.option',
+            'UNPUBLISHED',
+            Text::_('ATTACH_UNPUBLISHED_PARENTS')
+        );
         $filter_parent_state_options[] = HTMLHelper::_('select.option', 'ARCHIVED', Text::_('ATTACH_ARCHIVED_PARENTS'));
         $filter_parent_state_options[] = HTMLHelper::_('select.option', 'TRASHED', Text::_('ATTACH_TRASHED_PARENTS'));
         $filter_parent_state_options[] = HTMLHelper::_('select.option', 'NONE', Text::_('ATTACH_NO_PARENTS'));

@@ -18,7 +18,9 @@ use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 
-defined('JPATH_BASE') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Supports an HTML select list of icon filenames

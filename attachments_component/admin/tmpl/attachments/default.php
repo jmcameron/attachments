@@ -35,7 +35,8 @@ $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_attachments'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_attachments'); ?>"
+      method="post" name="adminForm" id="adminForm">
     <div class="row">
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">
@@ -46,13 +47,16 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
                 ?>
                 <?php if (empty($this->items)) : ?>
                     <div class="alert alert-info">
-                        <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+                        <span class="icon-info-circle" aria-hidden="true"></span>
+                        <span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
                         <?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
                     </div>
                 <?php else : ?>
                     <?php if ($this->editor) : ?>
                         <p><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS_DESCRIPTION'); ?></p>
-                        <button onclick="insertAttachmentsIdToken(jQuery, '<?php echo $this->editor ?>');"><?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS'); ?></button>
+                        <button onclick="insertAttachmentsIdToken(jQuery, '<?php echo $this->editor ?>');">
+                            <?php echo Text::_('ATTACH_ADD_ATTACHMENT_IDS'); ?>
+                         </button>
                     <?php endif; ?>
                     <table class="table itemList" id="attachmentsList">
                         <thead><?php echo $this->loadTemplate('head');?></thead>

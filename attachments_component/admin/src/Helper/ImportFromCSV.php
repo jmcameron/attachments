@@ -40,36 +40,36 @@ class ImportFromCSV
     /**
      * The CSV filename
      */
-    protected $_filename = null;
+    protected $filename = null;
 
     /**
      * The CSV file object
      */
-    protected $_file = null;
+    protected $file = null;
 
     /**
      * The current line number
      */
-    protected $_line_number = null;
+    protected $line_number = null;
 
     /**
      * The data for the current CSV record/line
      */
-    protected $_data = null;
+    protected $data = null;
 
     /**
      * The required field names
      *
      * @var array
      */
-    protected $_fields = null;
+    protected $fields = null;
 
     /**
      * Optional field names
      *
      * @var array
      */
-    protected $_optional_fields = null;
+    protected $optional_fields = null;
 
     /**
      * Field defaults (associative array)
@@ -84,7 +84,7 @@ class ImportFromCSV
      *
      * @var array
      */
-    protected $_field_default = null;
+    protected $field_default = null;
 
 
     /**
@@ -99,7 +99,7 @@ class ImportFromCSV
      *
      * @var array
      */
-    protected $_extra_fields = null;
+    protected $extra_fields = null;
 
 
     /**
@@ -109,7 +109,7 @@ class ImportFromCSV
      *
      * @var array
      */
-    protected $_field_map = null;
+    protected $field_map = null;
 
 
     /**
@@ -126,15 +126,15 @@ class ImportFromCSV
         $field_default = array(),
         $extra_fields = array()
     ) {
-        $this->_filename = null;
-        $this->_file = null;
-        $this->_line_number = null;
-        $this->_data = null;
-        $this->_fields = $required_fields;
-        $this->_optional_fields = $optional_fields;
-        $this->_field_default = $field_default;
-        $this->_extra_fields = $extra_fields;
-        $this->_field_map = array();
+        $this->filename = null;
+        $this->file = null;
+        $this->line_number = null;
+        $this->data = null;
+        $this->fields = $required_fields;
+        $this->optional_fields = $optional_fields;
+        $this->field_default = $field_default;
+        $this->extra_fields = $extra_fields;
+        $this->field_map = array();
     }
 
 
@@ -147,20 +147,20 @@ class ImportFromCSV
      */
     public function open($csv_filename)
     {
-        $this->_filename = null;
-        $this->_file = null;
-        $this->_line_number = 0;
+        $this->filename = null;
+        $this->file = null;
+        $this->line_number = 0;
 
         // Open the CSV file
-        $this->_file = @fopen($csv_filename, 'r');
-        if (! $this->_file) {
+        $this->file = @fopen($csv_filename, 'r');
+        if (! $this->file) {
             return Text::sprintf('ATTACH_ERROR_UNABLE_TO_OPEN_CSV_FILE_S', $csv_filename) . ' (ERR 98)';
         }
 
         // Parse the first row to process field names and indices
-        $result = $this->_parseFieldNames($this->_file);
+        $result = $this->parseFieldNames($this->file);
         if ($result !== true) {
-            fclose($this->_file);
+            fclose($this->file);
             return $result;
         }
 
@@ -173,12 +173,12 @@ class ImportFromCSV
      */
     public function close()
     {
-        if ($this->_file) {
-            fclose($this->_file);
+        if ($this->file) {
+            fclose($this->file);
         }
-        $this->_file = null;
-        $this->_filename = null;
-        $this->_line_number = 0;
+        $this->file = null;
+        $this->filename = null;
+        $this->line_number = 0;
     }
 
 
@@ -191,23 +191,23 @@ class ImportFromCSV
      */
     public function readNextRecord()
     {
-        if (feof($this->_file)) {
+        if (feof($this->file)) {
             // Extra check just to be safe
             return false;
         }
 
         // Keep reading until we get a non-blank line
-        while (!feof($this->_file)) {
+        while (!feof($this->file)) {
             // Read the line
-            $this->_data = fgetcsv($this->_file);
-            $this->_line_number += 1;
+            $this->data = fgetcsv($this->file);
+            $this->line_number += 1;
 
             // Do we have data?
-            if ($this->_data) {
+            if ($this->data) {
                 break;
             } else {
                 // Fail if the blank line is at the end of the file
-                if (feof($this->_file)) {
+                if (feof($this->file)) {
                     return false;
                 }
             }
@@ -215,8 +215,8 @@ class ImportFromCSV
 
         // Make sure the extra fields are present
         $missing_fields = array();
-        foreach ($this->_extra_fields as $efield) {
-            if (!isset($this->_data[$efield])) {
+        foreach ($this->extra_fields as $efield) {
+            if (!isset($this->data[$efield])) {
                 $missing_fields[] = $efield;
             }
         }
@@ -233,10 +233,10 @@ class ImportFromCSV
      *
      * @return the field data if available (otherwise null)
      */
-    protected function _getData($fieldName)
+    protected function getData($fieldName)
     {
-        if (isset($this->_data[$fieldName])) {
-            return $this->_data[$fieldName];
+        if (isset($this->data[$fieldName])) {
+            return $this->data[$fieldName];
         } else {
             return null;
         }
@@ -251,23 +251,23 @@ class ImportFromCSV
     public function bind(&$record)
     {
         // Bind the required fields
-        foreach ($this->_fields as $field) {
-            $fdata = $this->_getData($field);
+        foreach ($this->fields as $field) {
+            $fdata = $this->getData($field);
             if ($fdata) {
                 $record->$field = $fdata;
             }
         }
 
         // Bind the optional fields, if present
-        foreach ($this->_optional_fields as $field) {
-            $fdata = $this->_getData($field);
+        foreach ($this->optional_fields as $field) {
+            $fdata = $this->getData($field);
             if ($fdata) {
                 $record->$field = $fdata;
             }
         }
 
         // Bind any defaults (not already set in required or optional fields)
-        foreach ($this->_field_default as $field => $val) {
+        foreach ($this->field_default as $field => $val) {
             if (
                 (isset($record->$field) &&  ( $record->$field == '' )) ||
                  !isset($record->$field)
@@ -285,19 +285,19 @@ class ImportFromCSV
      *
      * @return various true if successful and a translated error message if not
      */
-    protected function _parseFieldNames($file)
+    protected function parseFieldNames($file)
     {
         $bad_fields = array();
 
         // Load the field names from the file
         $header_line = fgetcsv($file);
-        $this->_line_number += 1;
+        $this->line_number += 1;
         for ($i = 0; $i < count($header_line); $i++) {
             $field_name = strtolower(trim($header_line[$i]));
             if (
-                in_array($field_name, $this->_fields) ||
-                 in_array($field_name, $this->_optional_fields) ||
-                 in_array($field_name, $this->_extra_fields)
+                in_array($field_name, $this->fields) ||
+                 in_array($field_name, $this->optional_fields) ||
+                 in_array($field_name, $this->extra_fields)
             ) {
                 $field[$field_name] = $i;
             } else {
@@ -311,14 +311,17 @@ class ImportFromCSV
 
         // Make sure all required field names were found
         $missing = array();
-        foreach ($this->_fields as $fname) {
-            if (!array_key_exists($fname, $this->_field_map)) {
+        foreach ($this->fields as $fname) {
+            if (!array_key_exists($fname, $this->field_map)) {
                 $missing[] = $fname;
             }
         }
         if (count($missing) > 0) {
             // Warn if there were missing required field names
-            throw new \Exception(Text::sprintf('ATTACH_ERROR_MISSING_FIELDS_S', implode(', ', $missing)) . ' (ERR 101)', 500);
+            throw new \Exception(Text::sprintf(
+                'ATTACH_ERROR_MISSING_FIELDS_S',
+                implode(', ', $missing)
+            ) . ' (ERR 101)', 500);
             return;
         }
 
@@ -334,7 +337,7 @@ class ImportFromCSV
      *
      * @return true if ok, error message if not
      */
-    protected function _verifyUser($user_id, $expected_username)
+    protected function verifyUser($user_id, $expected_username)
     {
         /** @var \Joomla\Database\DatabaseDriver $db */
         $db = Factory::getContainer()->get('DatabaseDriver');
@@ -345,10 +348,18 @@ class ImportFromCSV
             $db->setQuery($query, 0, 1);
             $actual_username = $db->loadResult();
         } catch (\RuntimeException $e) {
-            return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
+            return Text::sprintf(
+                'ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N',
+                $user_id,
+                $expected_username
+            ) . ' (ERR 102)';
         }
         if (empty($actual_username)) {
-            return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N', $user_id, $expected_username) . ' (ERR 102)';
+            return Text::sprintf(
+                'ATTACH_ERROR_UNABLE_TO_FIND_USER_S_ID_N',
+                $user_id,
+                $expected_username
+            ) . ' (ERR 102)';
         }
         if (strtolower($expected_username) != strtolower($actual_username)) {
             return Text::sprintf(
@@ -371,7 +382,7 @@ class ImportFromCSV
      *
      * @return true if ok, error message if not
      */
-    protected function _verifyCategory($category_id, $expected_category_title)
+    protected function verifyCategory($category_id, $expected_category_title)
     {
         /** @var \Joomla\Database\DatabaseDriver $db */
         $db = Factory::getContainer()->get('DatabaseDriver');
@@ -382,10 +393,18 @@ class ImportFromCSV
             $db->setQuery($query, 0, 1);
             $actual_category_title = $db->loadResult();
         } catch (\RuntimeException $e) {
-            return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
+            return Text::sprintf(
+                'ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S',
+                $category_id,
+                $expected_category_title
+            ) . ' (ERR 104)';
         }
         if (empty($actual_category_title)) {
-            return Text::sprintf('ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S', $category_id, $expected_category_title) . ' (ERR 104)';
+            return Text::sprintf(
+                'ATTACH_ERROR_UNABLE_TO_FIND_CATEGORY_ID_S',
+                $category_id,
+                $expected_category_title
+            ) . ' (ERR 104)';
         }
         if (strtolower($expected_category_title) != strtolower($actual_category_title)) {
             return Text::sprintf(

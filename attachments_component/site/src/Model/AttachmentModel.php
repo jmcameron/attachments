@@ -35,15 +35,14 @@ class AttachmentModel extends BaseDatabaseModel
     /**
      * Attachment ID
      */
-    var $_id = null;
+    protected $id = null;
 
 
     /**
      * Attachment object/data
      *
-     * @var object
      */
-    var $_attachment = null;
+    protected $attachment = null;
 
 
     /**
@@ -73,8 +72,8 @@ class AttachmentModel extends BaseDatabaseModel
      */
     public function setId($id = 0)
     {
-        $this->_id = $id;
-        $this->_attachment = null;
+        $this->id = $id;
+        $this->attchment = null;
     }
 
 
@@ -83,13 +82,13 @@ class AttachmentModel extends BaseDatabaseModel
      *
      * @return true if loaded successfully
      */
-    private function _loadAttachment()
+    private function loadAttachment()
     {
-        if ($this->_id == 0) {
+        if ($this->id == 0) {
             return false;
         }
 
-        if (empty($this->_attachment)) {
+        if (empty($this->attchment)) {
             $user   = Factory::getApplication()->getIdentity();
             $user_levels = $user->getAuthorisedViewLevels();
 
@@ -116,31 +115,31 @@ class AttachmentModel extends BaseDatabaseModel
             $query  = $db->getQuery(true);
             $query->select('a.*, a.id as id');
             $query->from('#__attachments as a');
-            $query->where('a.id = ' . (int)$this->_id);
+            $query->where('a.id = ' . (int)$this->id);
             if (!$user->authorise('core.admin')) {
                 $query->where('a.access in (' . $user_levels . ')');
             }
             $db->setQuery($query, 0, 1);
-            $this->_attachment = $db->loadObject();
-            if (empty($this->_attachment)) {
+            $this->attchment = $db->loadObject();
+            if (empty($this->attchment)) {
                 return false;
             }
 
             // Retrieve the information about the parent
-            $parent_type = $this->_attachment->parent_type;
-            $parent_entity = $this->_attachment->parent_entity;
+            $parent_type = $this->attchment->parent_type;
+            $parent_entity = $this->attchment->parent_entity;
             PluginHelper::importPlugin('attachments');
             $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
             if (!$apm->attachmentsPluginInstalled($parent_type)) {
-                $this->_attachment->parent_type = false;
+                $this->attchment->parent_type = false;
                 return false;
             }
             $parent = $apm->getAttachmentsPlugin($parent_type);
 
             // Set up the parent info
-            $parent_id = $this->_attachment->parent_id;
-            $this->_attachment->parent_title = $parent->getTitle($parent_id, $parent_entity);
-            $this->_attachment->parent_published =
+            $parent_id = $this->attchment->parent_id;
+            $this->attchment->parent_title = $parent->getTitle($parent_id, $parent_entity);
+            $this->attchment->parent_published =
                 $parent->isParentPublished($parent_id, $parent_entity);
         }
 
@@ -151,7 +150,7 @@ class AttachmentModel extends BaseDatabaseModel
     /**
      * Create a new Attachment object
      */
-    private function _initAttachment()
+    private function initAttachment()
     {
         echo "_initData not implemented yet <br />";
         return null;
@@ -165,12 +164,12 @@ class AttachmentModel extends BaseDatabaseModel
      */
     public function getAttachment()
     {
-        if (!$this->_loadAttachment()) {
+        if (!$this->loadAttachment()) {
             // If the load fails, create a new one
-            $this->_initAttachment();
+            $this->initAttachment();
         }
 
-        return $this->_attachment;
+        return $this->attchment;
     }
 
 
@@ -209,7 +208,7 @@ class AttachmentModel extends BaseDatabaseModel
         $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
         $query->update('#__attachments')->set('download_count = (download_count + 1)');
-        $query->where('id = ' . (int)$this->_id);
+        $query->where('id = ' . (int)$this->id);
         $db->setQuery($query);
         try {
             $db->execute();

@@ -49,7 +49,7 @@ class AttachmentsHelper
      *
      * @return the truncated filename
      */
-    protected static function truncate_filename($raw_filename, $maxlen)
+    protected static function truncateFilename($raw_filename, $maxlen)
     {
         // Do not truncate if $maxlen is 0 or no truncation is needed
         if (($maxlen == 0) || (strlen($raw_filename) <= $maxlen)) {
@@ -88,7 +88,7 @@ class AttachmentsHelper
      *
      * @return the truncated URL
      */
-    protected static function truncate_url($raw_url, $maxlen)
+    protected static function truncateUrl($raw_url, $maxlen)
     {
         // Do not truncate if $maxlen is 0 or no truncation is needed
         if (($maxlen == 0) || (strlen($raw_url) <= $maxlen)) {
@@ -131,7 +131,7 @@ class AttachmentsHelper
      *
      * @return true if the file was successfully written
      */
-    public static function write_empty_index_html($dir)
+    public static function writeEmptyIndex($dir)
     {
         $index_fname = $dir . '/index.html';
         if (File::exists($index_fname)) {
@@ -150,7 +150,7 @@ class AttachmentsHelper
      *
      * @param string $filename path of the file to have its containing directory cleaned.
      */
-    public static function clean_directory($filename)
+    public static function cleanDirectory($filename)
     {
         // Assume anything with a trailing DS or '/' is a directory
         if (($filename[strlen($filename) - 1] == DIRECTORY_SEPARATOR) || ($filename[strlen($filename) - 1] == '/')) {
@@ -203,7 +203,7 @@ class AttachmentsHelper
      *
      * @return true if successful
      */
-    public static function setup_upload_directory($upload_dir, $secure)
+    public static function setupUploadDirectory($upload_dir, $secure)
     {
         $subdir_ok = false;
 
@@ -237,7 +237,7 @@ class AttachmentsHelper
         // Add a simple index.html file to the upload directory to prevent browsing
         $index_ok = false;
         $index_fname = $upload_dir . '/index.html';
-        if (!AttachmentsHelper::write_empty_index_html($upload_dir)) {
+        if (!AttachmentsHelper::writeEmptyIndex($upload_dir)) {
             $errmsg = Text::sprintf('ATTACH_ERROR_ADDING_INDEX_HTML_IN_S', $upload_dir) . ' (ERR 31)';
             throw new \Exception($errmsg, 500);
         }
@@ -277,7 +277,7 @@ class AttachmentsHelper
      * @param int $attachment_id id for the attachment
      * @param string $from the from ($option) value
      */
-    public static function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
+    public static function addViewUrls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
     {
         // Construct the url to save the form
         $url_base = Uri::base(false) . "index.php?option=com_attachments";
@@ -346,7 +346,7 @@ class AttachmentsHelper
      *
      * @return true if it is an image file
      */
-    public static function is_image_file($filename)
+    public static function isImageFile($filename)
     {
         // Partly based on PHP getimagesize documentation for PHP 5.3+
         static $imageTypes = 'xcf|odg|gif|jpg|jpeg|png|bmp|psd|tiff|swc|iff|jpc|jp2|jpx|jb2|xbm|wbmp';
@@ -361,7 +361,7 @@ class AttachmentsHelper
      *
      * @return true if it is a valid image file
      */
-    public static function is_valid_image_file($filepath)
+    public static function isValidImageFile($filepath)
     {
         return getimagesize($filepath) !== false;
     }
@@ -375,7 +375,7 @@ class AttachmentsHelper
      *
      * @return true if it is an exploit file
      */
-    public static function is_double_extension_exploit($filename)
+    public static function isDoubleExtensionExploit($filename)
     {
         return preg_match("/\.php\.[a-z0-9]+$/i", $filename);
     }
@@ -397,7 +397,7 @@ class AttachmentsHelper
      * NOTE: The caller should set up all the parent info in the record before calling this
      *       (see $parent->* below for necessary items)
      */
-    public static function upload_file(&$attachment, &$parent, $attachment_id = false, $save_type = 'update')
+    public static function uploadFile(&$attachment, &$parent, $attachment_id = false, $save_type = 'update')
     {
         $app = Factory::getApplication();
         $user = $app->getIdentity();
@@ -420,7 +420,7 @@ class AttachmentsHelper
         // Make sure the attachments directory exists
         $upload_dir = JPATH_SITE . '/' . AttachmentsDefines::$ATTACHMENTS_SUBDIR;
         $secure = $params->get('secure', false);
-        if (!AttachmentsHelper::setup_upload_directory($upload_dir, $secure)) {
+        if (!AttachmentsHelper::setupUploadDirectory($upload_dir, $secure)) {
             $errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 33)';
             throw new \Exception($errmsg, 500);
         }
@@ -474,7 +474,7 @@ class AttachmentsHelper
 
         // Truncate the filename, if necessary and alert the user
         if (StringHelper::strlen($filename) > $max_filename_length) {
-            $filename = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
+            $filename = AttachmentsHelper::truncateFilename($filename, $max_filename_length);
             $msg = Text::_('ATTACH_WARNING_FILENAME_TRUNCATED');
             if ($app->isClient('administrator')) {
                 $lang = $app->getLanguage();
@@ -503,7 +503,7 @@ class AttachmentsHelper
 
         // Check for double-extension exploit
         $bad_filename = false;
-        if (AttachmentsHelper::is_double_extension_exploit($filename)) {
+        if (AttachmentsHelper::isDoubleExtensionExploit($filename)) {
             $bad_filename = true;
         }
 
@@ -575,7 +575,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
                 $view = $mvc->createView('Update', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'update',
                     $attachment->parent_id,
@@ -593,7 +593,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
                 $view = $mvc->createView('Upload', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'upload',
                     $attachment->parent_id,
@@ -672,8 +672,8 @@ class AttachmentsHelper
         }
 
         // If it is an image file, make sure it is a valid image file (and not some kind of exploit)
-        if (AttachmentsHelper::is_image_file($filename)) {
-            if (!AttachmentsHelper::is_valid_image_file($_FILES['upload']['tmp_name'])) {
+        if (AttachmentsHelper::isImageFile($filename)) {
+            if (!AttachmentsHelper::isValidImageFile($_FILES['upload']['tmp_name'])) {
                 $error = 'illegal_file_extension';
                 $error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
                 $error_msg .= "<br />" . Text::_('ATTACH_ERROR_ILLEGAL_FILE_EXTENSION') . " (corrupted image file)";
@@ -706,7 +706,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
                 $view = $mvc->createView('Update', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'update',
                     $attachment->parent_id,
@@ -724,7 +724,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
                 $view = $mvc->createView('Upload', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'upload',
                     $attachment->parent_id,
@@ -780,7 +780,7 @@ class AttachmentsHelper
                 $errmsg = Text::sprintf('ATTACH_ERROR_UNABLE_TO_SETUP_UPLOAD_DIR_S', $upload_dir) . ' (ERR 34)';
                 throw new \Exception($errmsg, 500);
             }
-            AttachmentsHelper::write_empty_index_html($fullpath);
+            AttachmentsHelper::writeEmptyIndex($fullpath);
         }
 
         // Get ready to save the file
@@ -846,7 +846,7 @@ class AttachmentsHelper
                 ->getMVCFactory();
             /** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
             $view = $mvc->createView('Upload', 'Site', 'html');
-            AttachmentsHelper::add_view_urls(
+            AttachmentsHelper::addViewUrls(
                 $view,
                 'upload',
                 $attachment->parent_id,
@@ -880,7 +880,7 @@ class AttachmentsHelper
              ( StringHelper::strlen($attachment->display_name) == 0 ) &&
              ( StringHelper::strlen($filename) > $max_filename_length )
         ) {
-            $attachment->display_name = AttachmentsHelper::truncate_filename($filename, $max_filename_length);
+            $attachment->display_name = AttachmentsHelper::truncateFilename($filename, $max_filename_length);
         }
 
         // Copy the info about the uploaded file into the new record
@@ -981,7 +981,7 @@ class AttachmentsHelper
         if ($save_type == 'update') {
             if (($filename_sys != $old_filename_sys) && File::exists($old_filename_sys)) {
                 File::delete($old_filename_sys);
-                AttachmentsHelper::clean_directory($old_filename_sys);
+                AttachmentsHelper::cleanDirectory($old_filename_sys);
             }
         }
 
@@ -998,7 +998,7 @@ class AttachmentsHelper
      *
      * @return an object (if successful) with the parts as attributes (or a error string in case of error)
      */
-    private static function parse_url(&$raw_url, $relative_url)
+    private static function parseUrl(&$raw_url, $relative_url)
     {
         // Set up the return object
         $result = new \stdClass();
@@ -1123,7 +1123,7 @@ class AttachmentsHelper
      *
      * @return true if the URL is okay, or an error object if not
      */
-    public static function get_url_info($raw_url, &$attachment, $verify, $relative_url)
+    public static function getUrlInfo($raw_url, &$attachment, $verify, $relative_url)
     {
         // Check the URL for existence
         // * Get 'size' (null if the there were errors accessing the link,
@@ -1133,7 +1133,7 @@ class AttachmentsHelper
         //
         // * Rename all occurrences of 'display_name' to 'display_name'
 
-        $u = AttachmentsHelper::parse_url($raw_url, $relative_url);
+        $u = AttachmentsHelper::parseUrl($raw_url, $relative_url);
 
         // Deal with parsing errors
         if ($u->error) {
@@ -1327,7 +1327,7 @@ class AttachmentsHelper
      *
      * @return an error message if there is a problem
      */
-    public static function add_url(
+    public static function addUrl(
         &$attachment,
         &$parent,
         $verify,
@@ -1371,7 +1371,7 @@ class AttachmentsHelper
         $from = $input->getWord('from');
 
         // Get the info from the url
-        $result = AttachmentsHelper::get_url_info($attachment->url, $attachment, $verify, $relative_url);
+        $result = AttachmentsHelper::getUrlInfo($attachment->url, $attachment, $verify, $relative_url);
 
         // Save the info about the URL flags
         $attachment->url_verify = $verify;
@@ -1395,7 +1395,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Update\HtmlView $view */
                 $view = $mvc->createView('Update', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'update',
                     $attachment->parent_id,
@@ -1412,7 +1412,7 @@ class AttachmentsHelper
                 /** @var \JMCameron\Component\Attachments\Site\View\Upload\HtmlView $view */
                 $view = $mvc->createView('Upload', 'Site', 'html');
 
-                AttachmentsHelper::add_view_urls(
+                AttachmentsHelper::addViewUrls(
                     $view,
                     'upload',
                     $attachment->parent_id,
@@ -1468,13 +1468,13 @@ class AttachmentsHelper
         if (($max_filename_length > 0) && (strlen($attachment->display_name) == 0)) {
             if ($attachment->filename) {
                 $attachment->display_name =
-                    AttachmentsHelper::truncate_filename(
+                    AttachmentsHelper::truncateFilename(
                         $attachment->filename,
                         $max_filename_length
                     );
             } else {
                 $attachment->display_name =
-                    AttachmentsHelper::truncate_url(
+                    AttachmentsHelper::truncateUrl(
                         $attachment->url,
                         $max_filename_length
                     );
@@ -1538,7 +1538,7 @@ class AttachmentsHelper
         if ($old_filename_sys) {
             if (File::exists($old_filename_sys)) {
                 File::delete($old_filename_sys);
-                AttachmentsHelper::clean_directory($old_filename_sys);
+                AttachmentsHelper::cleanDirectory($old_filename_sys);
             }
         }
 
@@ -1557,7 +1557,7 @@ class AttachmentsHelper
      *
      * @param int $id the attachment id
      */
-    public static function download_attachment($id, $raw = 0, $popup = 0)
+    public static function downloadAttachment($id, $raw = 0, $popup = 0)
     {
         $base_url = Uri::base(false);
 
@@ -1676,7 +1676,10 @@ class AttachmentsHelper
 
             // If x-sendfile is available, use it
             $using_ssl = strtolower(substr($base_url, 0, 5)) == 'https';
-            if (!$using_ssl && function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+            if (
+                !$using_ssl && function_exists('apache_get_modules') &&
+                in_array('mod_xsendfile', apache_get_modules())
+            ) {
                 // TODO: Figure out why mod_xsendfile does not work in ssl/https ???
                 header("X-Sendfile: $filename_sys");
             } elseif ($file_size <= 1048576) {
@@ -1716,7 +1719,7 @@ class AttachmentsHelper
      *
      * @return '' if successful, else an error message
      */
-    public static function switch_parent(
+    public static function switchParentt(
         &$attachment,
         $old_parent_id,
         $new_parent_id,
@@ -1771,12 +1774,16 @@ class AttachmentsHelper
         // Construct the new filename and URL
         $old_filename_sys = $attachment->filename_sys;
         $new_filename_sys = $new_fullpath . $attachment->filename;
-        $new_url = StringHelper::str_ireplace(DIRECTORY_SEPARATOR, '/', $upload_url . '/' . $new_path . $attachment->filename);
+        $new_url = StringHelper::str_ireplace(
+            DIRECTORY_SEPARATOR,
+            '/',
+            $upload_url . '/' . $new_path . $attachment->filename
+        );
 
         // Rename the file
         if (File::exists($new_filename_sys)) {
             return Text::sprintf(
-                'ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
+                'ATTACH_ERROR_CANNOT_switchParentT_S_NEW_FILE_S_ALREADY_EXISTS',
                 $parent_entity_name,
                 $attachment->filename
             );
@@ -1784,12 +1791,12 @@ class AttachmentsHelper
         if (!File::move($old_filename_sys, $new_filename_sys)) {
             $new_filename = $new_path . $attachment->filename;
             return Text::sprintf(
-                'ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
+                'ATTACH_ERROR_CANNOT_switchParentT_S_RENAMING_FILE_S_FAILED',
                 $parent_entity_name,
                 $new_filename
             );
         }
-        AttachmentsHelper::write_empty_index_html($new_fullpath);
+        AttachmentsHelper::writeEmptyIndex($new_fullpath);
 
         // Save the changes to the attachment record immediately
         $attachment->parent_id = $new_parent_id;
@@ -1799,7 +1806,7 @@ class AttachmentsHelper
         $attachment->url = $new_url;
 
         // Clean up after ourselves
-        AttachmentsHelper::clean_directory($old_filename_sys);
+        AttachmentsHelper::cleanDirectory($old_filename_sys);
 
         return '';
     }
@@ -1907,7 +1914,7 @@ class AttachmentsHelper
                 ($secure && !file_exists($hta_filename)) ||
                  (!$secure && file_exists($hta_filename))
             ) {
-                AttachmentsHelper::setup_upload_directory($attach_dir, $secure);
+                AttachmentsHelper::setupUploadDirectory($attach_dir, $secure);
             }
 
             if ($app->isClient('administrator')) {
@@ -2007,7 +2014,8 @@ class AttachmentsHelper
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe width=\"100%\" height=\"600\" src=\"$url\" scrolling=\"auto\" loading=\"lazy\"></iframe>",
+                'body' => "<iframe width=\"100%\" height=\"600\" src=\"$url\" scrolling=\"auto\" loading=\"lazy\">
+                           </iframe>",
                 'params' => $modalParams
             ]
         );

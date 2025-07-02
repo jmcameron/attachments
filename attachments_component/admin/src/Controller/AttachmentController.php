@@ -53,8 +53,13 @@ class AttachmentController extends FormController
      *
      * @return  FormController
      */
-    public function __construct($config = array(), MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null, FormFactoryInterface $formFactory = null)
-    {
+    public function __construct(
+        $config = array(),
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null,
+        FormFactoryInterface $formFactory = null
+    ) {
         parent::__construct($config, $factory, $app, $input, $formFactory);
 
         $this->registerTask('applyNew', 'saveNew');
@@ -211,8 +216,8 @@ class AttachmentController extends FormController
         $document = $app->getDocument();
         $view = $this->getView('Add', $document->getType(), 'Administrator', ['option' => $this->option]);
 
-        $this->add_view_urls($view, 'upload', $parent_id, $parent_type, null, $from);
-        // ??? Move the add_view_urls function to attachments base view class
+        $this->addViewUrls($view, 'upload', $parent_id, $parent_type, null, $from);
+        // ??? Move the addViewUrls function to attachments base view class
 
         // We do not have a real attachment yet so fake it
         $attachment = new \stdClass();
@@ -383,8 +388,8 @@ class AttachmentController extends FormController
             $attachment->parent_entity = $parent_entity;
 
             // Upload a new file
-            $result = AttachmentsHelper::upload_file($attachment, $parent, false, 'upload');
-            // NOTE: store() is not needed if upload_file() is called since it does it
+            $result = AttachmentsHelper::uploadFile($attachment, $parent, false, 'upload');
+            // NOTE: store() is not needed if uploadFile() is called since it does it
 
             if (is_object($result)) {
                 $error = true;
@@ -399,8 +404,8 @@ class AttachmentController extends FormController
             $attachment->url_verify = $verify_url;
 
             // Upload/add the new URL
-            $result = AttachmentsHelper::add_url($attachment, $parent, $verify_url, $relative_url);
-            // NOTE: store() is not needed if add_url() is called since it does it
+            $result = AttachmentsHelper::addUrl($attachment, $parent, $verify_url, $relative_url);
+            // NOTE: store() is not needed if addUrl() is called since it does it
 
             if (is_object($result)) {
                 $error = true;
@@ -493,7 +498,14 @@ class AttachmentController extends FormController
             // Close the iframe and refresh the attachments list in the parent window
             $base_url = Uri::base(true);
             $lang = $input->getCmd('lang', '');
-            AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $pid, $lang, $from);
+            AttachmentsJavascript::closeIframeRefreshAttachments(
+                $base_url,
+                $parent_type,
+                $parent_entity,
+                $pid,
+                $lang,
+                $from
+            );
             exit();
         }
 
@@ -608,7 +620,11 @@ class AttachmentController extends FormController
 
                 // Set up the 'select parent' button
                 $selpar_label = Text::sprintf('ATTACH_SELECT_ENTITY_S_COLON', $new_parent_entity_name);
-                $selpar_btn_text = '&nbsp;' . Text::sprintf('ATTACH_SELECT_ENTITY_S', $new_parent_entity_name) . '&nbsp;';
+                $selpar_btn_text = '&nbsp;' .
+                Text::sprintf(
+                    'ATTACH_SELECT_ENTITY_S',
+                    $new_parent_entity_name
+                ) . '&nbsp;';
                 $selpar_btn_tooltip = Text::sprintf('ATTACH_SELECT_ENTITY_S_TOOLTIP', $new_parent_entity_name);
 
                 $selpar_btn_url = $new_parent->getSelectEntityURL($new_parent_entity);
@@ -639,7 +655,7 @@ class AttachmentController extends FormController
         $document = $app->getDocument();
         $view = $this->getView('Edit', $document->getType(), 'Administrator', ['option' => $this->option]);
 
-        $this->add_view_urls(
+        $this->addViewUrls(
             $view,
             'update',
             $parent_id,
@@ -745,7 +761,10 @@ class AttachmentController extends FormController
         $input = $app->getInput();
         $attachment_id = $input->getInt('id');
         if (!$attachment->load($attachment_id)) {
-            $errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N', $attachment_id) . ' (ERR 135)';
+            $errmsg = Text::sprintf(
+                'ATTACH_ERROR_CANNOT_UPDATE_ATTACHMENT_INVALID_ID_N',
+                $attachment_id
+            ) . ' (ERR 135)';
             throw new \Exception($errmsg, 500);
         }
 
@@ -838,7 +857,7 @@ class AttachmentController extends FormController
                 $db->setQuery($query, 0, 1);
                 $filename_sys = $db->loadResult();
                 File::delete($filename_sys);
-                AttachmentsHelper::clean_directory($filename_sys);
+                AttachmentsHelper::cleanDirectory($filename_sys);
             } else {
                 // Otherwise switch the file/url to the new parent
                 if ($old_parent_id == null) {
@@ -856,7 +875,7 @@ class AttachmentController extends FormController
                     //       renaming/moving.
                 }
 
-                $error_msg = AttachmentsHelper::switch_parent(
+                $error_msg = AttachmentsHelper::switchParentt(
                     $attachment,
                     $old_parent_id,
                     $attachment->parent_id,
@@ -939,17 +958,17 @@ class AttachmentController extends FormController
         $msgType = 'message';
         if ($new_uri_type == 'file') {
             // Upload a new file
-            $result = AttachmentsHelper::upload_file($attachment, $parent, $attachment_id, 'update');
+            $result = AttachmentsHelper::uploadFile($attachment, $parent, $attachment_id, 'update');
             if (is_object($result)) {
                 $msg = $result->error_msg . ' (ERR 140)';
                 $msgType = 'error';
             } else {
                 $msg = $result;
             }
-            // NOTE: store() is not needed if upload_file() is called since it does it
+            // NOTE: store() is not needed if uploadFile() is called since it does it
         } elseif ($new_uri_type == 'url') {
             // Upload/add the new URL
-            $result = AttachmentsHelper::add_url(
+            $result = AttachmentsHelper::addUrl(
                 $attachment,
                 $parent,
                 $verify_url,
@@ -958,7 +977,7 @@ class AttachmentController extends FormController
                 $attachment_id
             );
 
-            // NOTE: store() is not needed if add_url() is called since it does it
+            // NOTE: store() is not needed if addUrl() is called since it does it
             if (is_object($result)) {
                 $msg = $result->error_msg . ' (ERR 141)';
                 $msgType = 'error';
@@ -1039,7 +1058,14 @@ class AttachmentController extends FormController
             $uri = Uri::getInstance();
             $base_url = $uri->base(true);
             $lang = $input->getCmd('lang', '');
-            AttachmentsJavascript::closeIframeRefreshAttachments($base_url, $parent_type, $parent_entity, $parent_id, $lang, $from);
+            AttachmentsJavascript::closeIframeRefreshAttachments(
+                $base_url,
+                $parent_type,
+                $parent_entity,
+                $parent_id,
+                $lang,
+                $from
+            );
             exit();
         }
 
@@ -1058,8 +1084,14 @@ class AttachmentController extends FormController
      * @param int $attachment_id id for the attachment
      * @param string $from the from ($option) value
      */
-    private function add_view_urls(&$view, $save_type, $parent_id, $parent_type, $attachment_id, $from)
-    {
+    private function addViewUrls(
+        &$view,
+        $save_type,
+        $parent_id,
+        $parent_type,
+        $attachment_id,
+        $from
+    ) {
         // Construct the url to save the form
         $url_base = "index.php?option=com_attachments";
 
@@ -1089,17 +1121,17 @@ class AttachmentController extends FormController
 
         // Construct the URL to upload a URL instead of a file
         if ($save_type == 'upload') {
-            $upload_file_url = $url_base . "&task=$add_task&uri=file" . $parentinfo . $template;
+            $uploadFile_url = $url_base . "&task=$add_task&uri=file" . $parentinfo . $template;
             $upload_url_url  = $url_base . "&task=$add_task&uri=url" . $parentinfo . $template;
 
             // Keep track of what are supposed to do after saving
             if ($from == 'closeme') {
-                $upload_file_url .= "&from=closeme";
+                $uploadFile_url .= "&from=closeme";
                 $upload_url_url .= "&from=closeme";
             }
 
             // Add the URL
-            $view->upload_file_url = Route::_($upload_file_url);
+            $view->uploadFile_url = Route::_($uploadFile_url);
             $view->upload_url_url  = Route::_($upload_url_url);
         } elseif ($save_type == 'update') {
             $change_url = $url_base . "&task=$edit_task" . $idinfo;
@@ -1134,8 +1166,8 @@ class AttachmentController extends FormController
             throw new \Exception($errmsg, 500);
         }
 
-        // NOTE: AttachmentsHelper::download_attachment($id) checks access permission
-        AttachmentsHelper::download_attachment($id);
+        // NOTE: AttachmentsHelper::downloadAttachment($id) checks access permission
+        AttachmentsHelper::downloadAttachment($id);
     }
 
 
@@ -1144,7 +1176,7 @@ class AttachmentController extends FormController
     /**
      * Put up a dialog to double-check before deleting an attachment
      */
-    public function delete_warning()
+    public function deleteWarning()
     {
         // Access check.
         /** @var \Joomla\CMS\Application\CMSApplication $app */
@@ -1163,7 +1195,10 @@ class AttachmentController extends FormController
         if (is_numeric($attachment_id)) {
             $attachment_id = (int)$attachment_id;
         } else {
-            $errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 145)';
+            $errmsg = Text::sprintf(
+                'ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N',
+                $attachment_id
+            ) . ' (ERR 145)';
             throw new \Exception($errmsg, 500);
         }
 
@@ -1175,13 +1210,19 @@ class AttachmentController extends FormController
         // Make sure the article ID is valid
         $attachment_id = $input->getInt('id');
         if (!$attachment->load($attachment_id)) {
-            $errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) . ' (ERR 146)';
+            $errmsg = Text::sprintf('ATTACH_ERROR_CANNOT_DELETE_INVALID_ATTACHMENT_ID_N', $attachment_id) .
+            ' (ERR 146)';
             throw new \Exception($errmsg, 500);
         }
 
         // Set up the view
         $document = $app->getDocument();
-        $view = $this->getView('Warning', $document->getType(), 'Administrator', ['option' => $input->getCmd('option')]);
+        $view = $this->getView(
+            'Warning',
+            $document->getType(),
+            'Administrator',
+            ['option' => $input->getCmd('option')]
+        );
         $view->parent_id = $attachment_id;
         $view->from = $input->getWord('from');
         $view->tmpl = $input->getWord('tmpl');
@@ -1196,7 +1237,8 @@ class AttachmentController extends FormController
         $view->warning_question = Text::_('ATTACH_REALLY_DELETE_ATTACHMENT') . '<br/>' . $msg;
         $view->action_button_label = Text::_('ATTACH_DELETE');
 
-        $view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]=" . (int)$attachment_id;
+        $view->action_url = "index.php?option=com_attachments&amp;task=attachments.delete&amp;cid[]="
+        . (int)$attachment_id;
         $view->action_url .= "&amp;from=" . $view->from;
 
         $view->display();

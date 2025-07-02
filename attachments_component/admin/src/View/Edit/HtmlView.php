@@ -25,9 +25,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
-
 // Access check.
 $user = Factory::getApplication()->getIdentity();
 if (
@@ -38,6 +35,10 @@ if (
     throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 177)', 404);
     return;
 }
+// phpcs:enable PSR1.Files.SideEffects
+
+
+
 
 /**
  * HTML View class for editing new attachments
@@ -111,9 +112,12 @@ class HtmlView extends BaseHtmlView
 
         // Set up some tooltips
         $this->enter_url_tooltip = Text::_('ATTACH_ENTER_URL') . '::' . Text::_('ATTACH_ENTER_URL_TOOLTIP');
-        $this->display_filename_tooltip = Text::_('ATTACH_DISPLAY_FILENAME') . '::' . Text::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
-        $this->display_url_tooltip = Text::_('ATTACH_DISPLAY_URL') . '::' . Text::_('ATTACH_DISPLAY_URL_TOOLTIP');
-        $this->download_count_tooltip = Text::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' . Text::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
+        $this->display_filename_tooltip = Text::_('ATTACH_DISPLAY_FILENAME') . '::' .
+                                          Text::_('ATTACH_DISPLAY_FILENAME_TOOLTIP');
+        $this->display_url_tooltip = Text::_('ATTACH_DISPLAY_URL') . '::' .
+                                     Text::_('ATTACH_DISPLAY_URL_TOOLTIP');
+        $this->download_count_tooltip = Text::_('ATTACH_NUMBER_OF_DOWNLOADS') . '::' .
+                                        Text::_('ATTACH_NUMBER_OF_DOWNLOADS_TOOLTIP');
 
         // Set up modal
         AttachmentsJavascript::setupModalJavascript();

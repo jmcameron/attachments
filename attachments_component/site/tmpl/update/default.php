@@ -202,11 +202,21 @@ if ($this->error) {
            <input type="text" name="description" id="description"
                   size="70" maxlength="255" value="<?php echo stripslashes($attachment->description) ?>" /></p>
 <?php if ($this->may_publish) : ?>
-        <div class="at_control"><label><?php echo Text::_('ATTACH_PUBLISHED'); ?></label><?php echo $this->lists['published']; ?></div>
+        <div class="at_control">
+            <label>
+                <?php echo Text::_('ATTACH_PUBLISHED'); ?>
+            </label>
+            <?php echo $this->lists['published']; ?>
+        </div>
 <?php endif; ?>
 <?php if ($params->get('allow_frontend_access_editing', false)) : ?>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="at_control"><label for="access" title="<?php echo $this->access_level_tooltip; ?>"><?php echo Text::_('ATTACH_ACCESS_COLON'); ?></label> <?php echo $this->access_level; ?></div>
+        <div class="at_control">
+            <label for="access" title="<?php echo $this->access_level_tooltip; ?>">
+                <?php echo Text::_('ATTACH_ACCESS_COLON'); ?>
+            </label>
+            <?php echo $this->access_level; ?>
+        </div>
 <?php endif; ?>
         <?php if ($params->get('user_field_1_name')) : ?>
         <p><label for="user_field_1"><?php echo $params->get('user_field_1_name'); ?>:</label>
@@ -246,7 +256,8 @@ if ($this->error) {
         <input type="submit" name="submit" value="<?php echo Text::_('ATTACH_UPDATE'); ?>" />
         <span class="right">
           <input type="button" name="cancel" value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
-                 onClick="window.parent.bootstrap.Modal.getInstance(window.parent.document.querySelector('.joomla-modal.show')).hide();" />
+                 onClick="window.parent.bootstrap.Modal.getInstance(
+                            window.parent.document.querySelector('.joomla-modal.show')).hide();" />
         </span>
     </div>
 </form>

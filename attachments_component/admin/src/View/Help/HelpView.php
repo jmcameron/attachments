@@ -291,8 +291,10 @@ class HelpView extends HtmlView
      *
      * @param   string  $type          The type of admonition (hint, note, important, warning)
      * @param   string  $type_code     Language token for the name of the admonition (eg, $type)
-     * @param   array   $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
-     * @param   array   $replacements  Array of replacements to be applied to the body text (see replace function)
+     * @param   array   $text_codes    Array of Language tokens for the body text (as separate paragraphs
+     *                                 in the admonition)
+     * @param   array   $replacements  Array of replacements to be applied to the body text
+     *                                (see replace function)
      * @param   bool    $terminate     Whether to terminate the <div> that contains the note
      *
      * @return nothing
@@ -335,8 +337,10 @@ class HelpView extends HtmlView
     /**
      * Add a 'hint' admonition
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
-     * @param   array  $replacements  Array of replacements to be applied to the body text (see replace function)
+     * @param   array  $text_codes    Array of Language tokens for the body text
+     *                                (as separate paragraphs in the admonition)
+     * @param   array  $replacements  Array of replacements to be applied to the body text
+     *                               (see replace function)
      * @param   bool   $terminate     Whether to terminate the <div> that contains the note
      *
      * @return nothing
@@ -349,8 +353,10 @@ class HelpView extends HtmlView
     /**
      * Add an 'important' admonition
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
-     * @param   array  $replacements  Array of replacements to be applied to the body text (see replace function)
+     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs
+     *                                in the admonition)
+     * @param   array  $replacements  Array of replacements to be applied to the body text
+     *                               (see replace function)
      * @param   bool   $terminate     Whether to terminate the <div> that contains the note
      *
      * @return nothing
@@ -363,8 +369,10 @@ class HelpView extends HtmlView
     /**
      * Add a 'note' admonition
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
-     * @param   array  $replacements  Array of replacements to be applied to the body text (see replace function)
+     * @param   array  $text_codes    Array of Language tokens for the body text
+     *                                (as separate paragraphs in the admonition)
+     * @param   array  $replacements  Array of replacements to be applied to the body text
+     *                               (see replace function)
      * @param   bool   $terminate     Whether to terminate the <div> that contains the note
      *
      * @return nothing
@@ -377,8 +385,10 @@ class HelpView extends HtmlView
     /**
      * Add a 'warning' admonition
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs in the admonition)
-     * @param   array  $replacements  Array of replacements to be applied to the body text (see replace function)
+     * @param   array  $text_codes    Array of Language tokens for the body text
+     *                               (as separate paragraphs in the admonition)
+     * @param   array  $replacements  Array of replacements to be applied to the body text
+     *                               (see replace function)
      * @param   bool   $terminate     Whether to terminate the <div> that contains the note
      *
      * @return nothing
@@ -391,8 +401,10 @@ class HelpView extends HtmlView
     /**
      * Add a paragraph
      *
-     * @param   array   $text_codes    Array of Language tokens for the body text (as separate paragraphs)
-     * @param   array   $replacements  Array of replacements to be applied to the text (see replace function)
+     * @param   array   $text_codes    Array of Language tokens for the body text
+     *                                 (as separate paragraphs)
+     * @param   array   $replacements  Array of replacements to be applied to the text
+     *                                 (see replace function)
      * @param   string  $pclass        The class for the paragraph HTML <p> element
      *
      * @return nothing
@@ -451,8 +463,10 @@ class HelpView extends HtmlView
     /**
      * Add a list element
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs inside the list element)
-     * @param   array  $replacements  Array of replacements to be applied to the text (see replace function)
+     * @param   array  $text_codes    Array of Language tokens for the body text
+     *                               (as separate paragraphs inside the list element)
+     * @param   array  $replacements  Array of replacements to be applied to the text
+     *                               (see replace function)
      * @param   bool   $terminate     Whether to terminate the <li> that contains the text
      *
      * @return nothing
@@ -480,7 +494,8 @@ class HelpView extends HtmlView
     /**
      * Add a list element for a definition for a term (a word or phrase)
      *
-     * @param   array  $text_codes    Array of Language tokens for the body text (as separate paragraphs inside the list element)
+     * @param   array  $text_codes    Array of Language tokens for the body text
+     *                               (as separate paragraphs inside the list element)
      * @param   array  $replacements  Array of replacements to be applied to the text (see replace function)
      * @param   bool   $terminate     Whether to terminate the <li> that contains the text
      *
