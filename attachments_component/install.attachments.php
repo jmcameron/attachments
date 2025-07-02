@@ -66,7 +66,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * name of moved attachments directory (if present)
      */
-    protected string $moved_attachments_dir = null;
+    protected $moved_attachments_dir = null;
 
     /**
      * List of the plugins
