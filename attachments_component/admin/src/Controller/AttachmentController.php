@@ -1121,17 +1121,17 @@ class AttachmentController extends FormController
 
         // Construct the URL to upload a URL instead of a file
         if ($save_type == 'upload') {
-            $uploadFile_url = $url_base . "&task=$add_task&uri=file" . $parentinfo . $template;
+            $upload_file_url = $url_base . "&task=$add_task&uri=file" . $parentinfo . $template;
             $upload_url_url  = $url_base . "&task=$add_task&uri=url" . $parentinfo . $template;
 
             // Keep track of what are supposed to do after saving
             if ($from == 'closeme') {
-                $uploadFile_url .= "&from=closeme";
+                $upload_file_url .= "&from=closeme";
                 $upload_url_url .= "&from=closeme";
             }
 
             // Add the URL
-            $view->uploadFile_url = Route::_($uploadFile_url);
+            $view->upload_file_url = Route::_($upload_file_url);
             $view->upload_url_url  = Route::_($upload_url_url);
         } elseif ($save_type == 'update') {
             $change_url = $url_base . "&task=$edit_task" . $idinfo;

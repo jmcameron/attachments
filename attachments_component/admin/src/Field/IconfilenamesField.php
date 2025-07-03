@@ -49,19 +49,19 @@ class IconfilenamesField extends FormField
         $html = array();
 
         // Construct the list of legal icon filenames
-        $iconFilenames = array();
-        foreach (AttachmentsFileTypes::uniqueIconFilenames() as $ifname) {
-            $iconFilenames[] = HTMLHelper::_('select.option', $ifname);
+        $icon_filenames = array();
+        foreach (AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
+            $icon_filenames[] = HTMLHelper::_('select.option', $ifname);
         }
         $icon_list = HTMLHelper::_(
             'select.genericlist',
-            $iconFilenames,
-            'jform[iconFilename]',
+            $icon_filenames,
+            'jform[icon_filename]',
             'class="inputbox" size="1"',
             'value',
             'text',
             $this->value,
-            'jform_iconFilename'
+            'jform_icon_filename'
         );
 
         // Is it readonly?

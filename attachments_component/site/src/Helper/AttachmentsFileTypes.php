@@ -100,7 +100,7 @@ class AttachmentsFileTypes
      *
      * @since   1.0.0
      */
-    public const attachments_icon_from_file_extension_fa = [
+    public const ATTACHMENTS_ICON_FROM_FILE_EXTENSION_FA = [
         'aif' => 'fa-file-audio',
         'aiff' => 'fa-file-audio',
         'avi' => 'fa-file-video',
@@ -231,7 +231,7 @@ class AttachmentsFileTypes
      *
      * @since   1.0.0
      */
-    public const ATTACHMENTS_ICON_FROM_MIMETYPE_FA = [
+    public const $ATTACHMENTS_ICON_FROM_MIME_TYPE_FA = [
         'application/bzip2' => 'fa-file-archive',
         'application/excel' => 'fa-file-excel',
         'application/msword' => 'fa-file-word',
@@ -292,7 +292,7 @@ class AttachmentsFileTypes
     ];
 
     /** Array of lookups for mime type from filename extension */
-    public static $attachments_mimeType_from_extension =
+    public static $attachments_mime_type_from_extension =
         array( 'aif' => 'audio/x-aiff',
                'aiff' => 'audio/x-aiff',
                'avi' => 'video/x-msvideo',
@@ -351,7 +351,7 @@ class AttachmentsFileTypes
                );
 
     /** Array of known PDF mime types */
-    public static $attachments_pdf_mimeTypes =
+    public static $attachments_pdf_mime_types =
         array('application/pdf',
               'application/x-pdf',
               'application/vnd.fdf',
@@ -369,13 +369,13 @@ class AttachmentsFileTypes
      *
      * @return the icon filename (or '' if none is found)
      */
-    public static function iconFilename($filename, $mimeType)
+    public static function iconFilename($filename, $mime_type)
     {
         // Recognize some special cases first
-        if (($mimeType == 'link/unknown') or ($mimeType == 'unknown')) {
+        if (($mime_type == 'link/unknown') or ($mime_type == 'unknown')) {
             return 'link.gif';
         }
-        if ($mimeType == 'link/broken') {
+        if ($mime_type == 'link/broken') {
             return 'link_bad.gif';
         }
 
@@ -398,8 +398,8 @@ class AttachmentsFileTypes
             }
         } else {
             // Try the mime type
-            if (array_key_exists($mimeType, AttachmentsFileTypes::$attachments_icon_from_mimeType)) {
-                $iconf = AttachmentsFileTypes::$attachments_icon_from_mimeType[$mimeType];
+            if (array_key_exists($mime_type, AttachmentsFileTypes::$attachments_icon_from_mime_type)) {
+                $iconf = AttachmentsFileTypes::$attachments_icon_from_mime_type[$mime_type];
                 if ($iconf && (StringHelper::strlen($iconf) > 0)) {
                     return $iconf;
                 }
@@ -449,8 +449,8 @@ class AttachmentsFileTypes
             }
         } else {
             // Try the mime type
-            if (array_key_exists($mimeType, self::ATTACHMENTS_ICON_FROM_MIMETYPE_FA)) {
-                return self::ATTACHMENTS_ICON_FROM_MIMETYPE_FA[$mimeType];
+            if (array_key_exists($mimeType, self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA)) {
+                return self::ATTACHMENTS_ICON_FROM_MIME_TYPE_FA[$mimeType];
             }
         }
 
@@ -489,10 +489,10 @@ class AttachmentsFileTypes
 
         // Try the extension first
         $extension = strtolower($path_info['extension']);
-        if (array_key_exists($extension, AttachmentsFileTypes::$attachments_mimeType_from_extension)) {
-            $mimeType = AttachmentsFileTypes::$attachments_mimeType_from_extension[$extension];
-            if (strlen($mimeType) > 0) {
-                return $mimeType;
+        if (array_key_exists($extension, AttachmentsFileTypes::$attachments_mime_type_from_extension)) {
+            $mime_type = AttachmentsFileTypes::$attachments_mime_type_from_extension[$extension];
+            if (strlen($mime_type) > 0) {
+                return $mime_type;
             }
         }
 

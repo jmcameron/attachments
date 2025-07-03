@@ -50,8 +50,8 @@ if ($attachment->uri_type == 'file') {
     $upload_button_text = Text::_('ATTACH_UPLOAD_VERB');
 } else {
     $upload_toggle_button_text = Text::_('ATTACH_SELECT_FILE_TO_UPLOAD_INSTEAD');
-    $upload_toggle_url = $this->uploadFile_url;
-    $upload_button_text = Text::_('ATTACH_addUrl');
+    $upload_toggle_url = $this->upload_file_url;
+    $upload_button_text = Text::_('ATTACH_ADD_URL');
 }
 
 // If this is for an existing content item, modify the URL appropriately

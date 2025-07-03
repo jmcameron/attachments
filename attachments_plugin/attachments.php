@@ -428,7 +428,7 @@ class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
             }
 
             // Change the filename/URL as necessary
-            $error_msg = AttachmentsHelper::switchParentt($attachment, null, $item->id);
+            $error_msg = AttachmentsHelper::switchParent($attachment, null, $item->id);
             if ($error_msg != '') {
                 $errmsg = Text::_($error_msg) . ' (ERR 201)';
                 throw new \Exception($errmsg, 500);

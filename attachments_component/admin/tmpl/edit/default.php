@@ -309,8 +309,8 @@ if ($update == 'file') {
   </tr>
   <?php endif; ?>
   <tr>
-      <td class="key"><label for="iconFilename"><?php echo Text::_('ATTACH_ICON_FILENAME'); ?></label></td>
-      <td><?php echo $this->lists['iconFilenames']; ?></td>
+      <td class="key"><label for="icon_filename"><?php echo Text::_('ATTACH_ICON_FILENAME'); ?></label></td>
+      <td><?php echo $this->lists['icon_filenames']; ?></td>
       <td class="key2"><label><?php echo Text::_('ATTACH_FILE_TYPE'); ?></label></td>
       <?php if ($secure) {
             $ncols = 1;

@@ -73,7 +73,7 @@ class AttachmentModel extends BaseDatabaseModel
     public function setId($id = 0)
     {
         $this->id = $id;
-        $this->attchment = null;
+        $this->attachment = null;
     }
 
 
@@ -88,7 +88,7 @@ class AttachmentModel extends BaseDatabaseModel
             return false;
         }
 
-        if (empty($this->attchment)) {
+        if (empty($this->attachment)) {
             $user   = Factory::getApplication()->getIdentity();
             $user_levels = $user->getAuthorisedViewLevels();
 
@@ -120,26 +120,26 @@ class AttachmentModel extends BaseDatabaseModel
                 $query->where('a.access in (' . $user_levels . ')');
             }
             $db->setQuery($query, 0, 1);
-            $this->attchment = $db->loadObject();
-            if (empty($this->attchment)) {
+            $this->attachment = $db->loadObject();
+            if (empty($this->attachment)) {
                 return false;
             }
 
             // Retrieve the information about the parent
-            $parent_type = $this->attchment->parent_type;
-            $parent_entity = $this->attchment->parent_entity;
+            $parent_type = $this->attachment->parent_type;
+            $parent_entity = $this->attachment->parent_entity;
             PluginHelper::importPlugin('attachments');
             $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
             if (!$apm->attachmentsPluginInstalled($parent_type)) {
-                $this->attchment->parent_type = false;
+                $this->attachment->parent_type = false;
                 return false;
             }
             $parent = $apm->getAttachmentsPlugin($parent_type);
 
             // Set up the parent info
-            $parent_id = $this->attchment->parent_id;
-            $this->attchment->parent_title = $parent->getTitle($parent_id, $parent_entity);
-            $this->attchment->parent_published =
+            $parent_id = $this->attachment->parent_id;
+            $this->attachment->parent_title = $parent->getTitle($parent_id, $parent_entity);
+            $this->attachment->parent_published =
                 $parent->isParentPublished($parent_id, $parent_entity);
         }
 
@@ -169,7 +169,7 @@ class AttachmentModel extends BaseDatabaseModel
             $this->initAttachment();
         }
 
-        return $this->attchment;
+        return $this->attachment;
     }
 
 

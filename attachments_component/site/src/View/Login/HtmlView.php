@@ -69,7 +69,7 @@ class HtmlView extends BaseHtmlView
         $this->login_url = Route::_($base_url . $login_url);
 
         // Get the warning message
-        $this->must_be_logged_in = Text::_('ATTACH_WARNING_MUST_LOGIN_TO_downloadAttachment');
+        $this->must_be_logged_in = Text::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
 
         // Get a phrase from the login module to create the account
         $lang->load('com_users');

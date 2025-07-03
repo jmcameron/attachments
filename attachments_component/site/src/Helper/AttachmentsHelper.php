@@ -661,9 +661,9 @@ class AttachmentsHelper
             if ($cmparams->get('check_mime', true)) {
                 $allowed_mime = explode(',', $cmparams->get('upload_mime'));
                 if (StringHelper::strlen($ftype) && !in_array($ftype, $allowed_mime)) {
-                    $error = 'illegal_mimeType';
+                    $error = 'illegal_mime_type';
                     $error_msg = Text::sprintf('ATTACH_ERROR_UPLOADING_FILE_S', $filename);
-                    $error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_mimeType') . " $ftype";
+                    $error_msg .= ', ' . Text::_('ATTACH_ERROR_ILLEGAL_FILE_MIME_TYPE') . " $ftype";
                     if ($user->authorise('core.admin')) {
                         $error_msg .= "	 <br />" . Text::_('ATTACH_ERROR_CHANGE_IN_MEDIA_MANAGER');
                     }
@@ -683,7 +683,7 @@ class AttachmentsHelper
 
         // Handle PDF mime types
         if ($extension == 'pdf') {
-            if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mimeTypes)) {
+            if (in_array($ftype, AttachmentsFileTypes::$attachments_pdf_mime_types)) {
                 $ftype = 'application/pdf';
             }
         }
