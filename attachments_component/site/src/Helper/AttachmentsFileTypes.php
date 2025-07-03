@@ -231,7 +231,7 @@ class AttachmentsFileTypes
      *
      * @since   1.0.0
      */
-    public const $ATTACHMENTS_ICON_FROM_MIME_TYPE_FA = [
+    public const ATTACHMENTS_ICON_FROM_MIME_TYPE_FA = [
         'application/bzip2' => 'fa-file-archive',
         'application/excel' => 'fa-file-excel',
         'application/msword' => 'fa-file-word',

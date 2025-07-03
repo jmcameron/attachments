@@ -66,7 +66,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     /**
      * name of moved attachments directory (if present)
      */
-    protected $moved_attachments_dir = null;
+    protected string $moved_attachments_dir = "";
 
     /**
      * List of the plugins
@@ -286,8 +286,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
 
         $app = Factory::getApplication();
         /**
- * @var \Joomla\Database\DatabaseDriver $db
-*/
+         * @var \Joomla\Database\DatabaseDriver $db
+        */
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Make sure the translations are available
@@ -380,8 +380,8 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         include_once "site/src/Helper/AttachmentsHelper.php";
 
         /**
- * Load the Attachments defines
-*/
+         * Load the Attachments defines
+        */
         \JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate::installAttachmentsPermissions();
     }
 
