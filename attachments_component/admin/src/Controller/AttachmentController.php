@@ -875,7 +875,7 @@ class AttachmentController extends FormController
                     //       renaming/moving.
                 }
 
-                $error_msg = AttachmentsHelper::switchParentt(
+                $error_msg = AttachmentsHelper::switchParent(
                     $attachment,
                     $old_parent_id,
                     $attachment->parent_id,

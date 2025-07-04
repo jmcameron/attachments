@@ -1719,7 +1719,7 @@ class AttachmentsHelper
      *
      * @return '' if successful, else an error message
      */
-    public static function switchParentt(
+    public static function switchParent(
         &$attachment,
         $old_parent_id,
         $new_parent_id,
@@ -1783,7 +1783,7 @@ class AttachmentsHelper
         // Rename the file
         if (File::exists($new_filename_sys)) {
             return Text::sprintf(
-                'ATTACH_ERROR_CANNOT_switchParentT_S_NEW_FILE_S_ALREADY_EXISTS',
+                'ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_NEW_FILE_S_ALREADY_EXISTS',
                 $parent_entity_name,
                 $attachment->filename
             );
@@ -1791,7 +1791,7 @@ class AttachmentsHelper
         if (!File::move($old_filename_sys, $new_filename_sys)) {
             $new_filename = $new_path . $attachment->filename;
             return Text::sprintf(
-                'ATTACH_ERROR_CANNOT_switchParentT_S_RENAMING_FILE_S_FAILED',
+                'ATTACH_ERROR_CANNOT_SWITCH_PARENT_S_RENAMING_FILE_S_FAILED',
                 $parent_entity_name,
                 $new_filename
             );
