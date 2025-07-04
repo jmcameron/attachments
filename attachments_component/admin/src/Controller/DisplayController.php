@@ -157,7 +157,7 @@ class DisplayController extends BaseController
 
         // Set up the HTML for the 'Disable MySQL uninstallation' command
         $disable_mysql_uninstall_url =
-            "$url_top&amp;task=utils.disableSqlUninstall" . $closeme;
+			"$url_top&amp;task=utils.disableSqlUninstall" . $closeme;
         $disable_mysql_uninstall_tooltip =
             Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION') . '::' .
             Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION_TOOLTIP');
@@ -172,14 +172,14 @@ class DisplayController extends BaseController
 
         // Set up the HTML for the 'Reinstall Attachments Permissions' command
         $reinstallPermissions_url = "$url_top&amp;task=utils.reinstallPermissions" . $closeme;
-        $reinstallPermissions_tooltip = Text::_('ATTACH_reinstallPermissions') . '::' .
-                                         Text::_('ATTACH_reinstallPermissions_TOOLTIP');
+        $reinstallPermissions_tooltip = Text::_('ATTACH_REINSTALL_PERMISSIONS') . '::' .
+                                         Text::_('ATTACH_REINSTALL_PERMISSIONS_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
             $reinstallPermissions_tooltip,
             null,
             null,
-            Text::_('ATTACH_reinstallPermissions'),
+            Text::_('ATTACH_REINSTALL_PERMISSIONS'),
             $reinstallPermissions_url
         );
 
@@ -230,25 +230,25 @@ class DisplayController extends BaseController
 
         // Set up the HTML for the 'Check Files' command
         $checkFiles_url = "$url_top&amp;task=utils.checkFiles" . $closeme;
-        $checkFiles_tooltip = Text::_('ATTACH_checkFiles') . '::' . Text::_('ATTACH_checkFiles_TOOLTIP');
+        $checkFiles_tooltip = Text::_('ATTACH_CHECK_FILES') . '::' . Text::_('ATTACH_CHECK_FILES_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
             $checkFiles_tooltip,
             null,
             null,
-            Text::_('ATTACH_checkFiles'),
+            Text::_('ATTACH_CHECK_FILES'),
             $checkFiles_url
         );
 
         // Set up the HTML for the 'Validate URLs' command
         $validateUrls_url = "$url_top&amp;task=utils.validateUrls" . $closeme;
-        $validateUrls_tooltip = Text::_('ATTACH_validateUrls') . '::' . Text::_('ATTACH_validateUrls_TOOLTIP');
+        $validateUrls_tooltip = Text::_('ATTACH_VALIDATE_URLS') . '::' . Text::_('ATTACH_VALIDATE_URLS_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
             $validateUrls_tooltip,
             null,
             null,
-            Text::_('ATTACH_validateUrls'),
+            Text::_('ATTACH_VALIDATE_URLS'),
             $validateUrls_url
         );
 
