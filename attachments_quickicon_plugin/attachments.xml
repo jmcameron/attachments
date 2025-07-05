@@ -9,10 +9,12 @@
 	<authorEmail>jmcameron@jmcameron.net</authorEmail>
 	<authorUrl>https://github.com/jmcameron/attachments</authorUrl>
 	<description>PLG_QUICKICON_ATTACHMENTS_XML_DESCRIPTION</description>
+    <namespace path="src">JMCameron\Plugin\Quickicon\Attachments</namespace>
 	<files>
-		<filename plugin="attachments">attachments.php</filename>
 		<filename>index.html</filename>
 		<folder>language</folder>
+        <folder>src</folder>
+        <folder plugin="attachments">services</folder>
 	</files>
 	<config>
 		<fields name="params">

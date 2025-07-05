@@ -4,13 +4,15 @@
  * Attachments quickicon plugin
  *
  * @package Attachments
- * @subpackage Attachments.Quickicon_Plugin
+ * @subpackage Attachments_Quickicon_Plugin
  *
  * @copyright Copyright (C) 2013-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
+
+namespace JMCameron\Plugin\Quickicon\Attachments\Extension;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
@@ -31,7 +33,7 @@ use Joomla\Module\Quickicon\Administrator\Event\QuickIconsEvent;
  * @package     Attachments
  * @subpackage  Attachments.Quickicon_Plugin
  */
-class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
+class Attachments extends CMSPlugin implements SubscriberInterface
 {
     /**
      * $db and $app are loaded on instantiation
@@ -96,7 +98,7 @@ class PlgQuickiconAttachments extends CMSPlugin implements SubscriberInterface
                 'link' => 'index.php?option=com_attachments',
                 'image' => $image,
                 'text' => Text::_('PLG_QUICKICON_ATTACHMENTS_ICON'),
-                'id' => 'plg_quickicon_attachment'
+                'id' => 'plg_quickicon_attachments'
             ]
         ];
 
