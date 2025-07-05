@@ -16,13 +16,15 @@
 
 function refreshAttachments(siteUrl, ptype, pentity, pid, lang, from)
 {
+    // phpcs:disable
     let id = "attachmentsList_" + ptype + "_" + pentity + "_" + pid,
         alist = document.getElementById(id),
-        url = `${siteUrl} / index.php ? option = com_attachments & task = attachmentsList`;
-    url += ` & parent_id = ${pid}`;
-    url += ` & parent_type = ${ptype} & parent_entity = ${pentity}`;
-    url += ` & lang = ${lang}`;
-    url += ` & from = ${from} & tmpl = component & format = raw`;
+        url = `${siteUrl}/index.php?option=com_attachments&task=attachmentsList`;
+    url += `&parent_id=${pid}`;
+    url += `&parent_type=${ptype}&parent_entity=${pentity}`;
+    url += `&lang=${lang}`;
+    url += `&from=${from}&tmpl=component&format=raw`;
+    // phpcs:enable
     if (!alist) {
         alist = window.parent.document.getElementById(id);
     }
