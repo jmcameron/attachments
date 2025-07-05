@@ -56,7 +56,7 @@ class AttachmentTable extends Table
      * @param   integer The user id of the user performing the operation.
      * @return  int Number of attachments published ( false if 0 )
      * @since   1.0.4
-     * @link https://github.com/jmcameron/attachments
+     * @link http://docs.joomla.org/JTable/publish
      */
     public function publish($pks = null, $state = 1, $userId = 0)
     {
@@ -195,7 +195,7 @@ class AttachmentTable extends Table
      *
      * @return  boolean  True on success.
      *
-     * @link https://github.com/jmcameron/attachments
+     * @link http://docs.joomla.org/JTable/store
      */
     public function store($updateNulls = false)
     {
