@@ -214,18 +214,18 @@ class DisplayController extends BaseController
         );
 
         // Set up the HTML for the 'Update attachment file sizes' command
-        $updateFilezizes_url =
-            "$url_top&amp;task=utils.updateFilezizes" . $closeme;
-        $updateFilezizes_tooltip =
+        $updateFileSizes_url =
+            "$url_top&amp;task=utils.updateFileSizes" . $closeme;
+        $updateFileSizes_tooltip =
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES') . '::' .
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES_TOOLTIP');
         $entries[] = HTMLHelper::_(
             'tooltip',
-            $updateFilezizes_tooltip,
+            $updateFileSizes_tooltip,
             null,
             null,
             Text::_('ATTACH_UPDATE_ATTACHMENT_FILE_SIZES'),
-            $updateFilezizes_url
+            $updateFileSizes_url
         );
 
         // Set up the HTML for the 'Check Files' command

@@ -215,9 +215,9 @@ class UtilsController extends BaseController
 
     /**
      * Update file sizes for all attachments
-     * (See AttachmentsUpdate::updateFilezizes() in update.php for details )
+     * (See AttachmentsUpdate::updateFileSizes() in update.php for details )
      */
-    public function updateFilezizes()
+    public function updateFileSizes()
     {
         // Access check.
         $user = $this->app->getIdentity();
@@ -226,7 +226,7 @@ class UtilsController extends BaseController
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 156)', 404);
         }
 
-        $msg = AttachmentsUpdate::updateFilezizes();
+        $msg = AttachmentsUpdate::updateFileSizes();
 
         $input = $this->app->getInput();
         if ($input->getBool('close')) {

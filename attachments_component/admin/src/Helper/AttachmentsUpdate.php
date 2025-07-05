@@ -563,7 +563,7 @@ class AttachmentsUpdate
     /**
      * Update the file sizes for all attachments (only applies to files)
      */
-    public static function updateFilezizes()
+    public static function updateFileSizes()
     {
         static::checkAccess();
 
