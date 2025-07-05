@@ -142,7 +142,7 @@ $wa->useScript('form.validate');
 <?php if ($attachment->uri_type == 'file') : ?>
   <tr>
     <td class="key">
-        <label for="upload" id="uploadFile_label">
+        <label for="upload" id="upload_file_label">
         <?php echo Text::_('ATTACH_ATTACH_FILE_COLON') ?>
         </label>
     </td>
