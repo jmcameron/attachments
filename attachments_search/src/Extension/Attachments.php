@@ -12,6 +12,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Plugin\Search\Attachments\Extension;
+
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
@@ -34,7 +36,7 @@ use Joomla\String\StringHelper;
  *
  * @package     Attachments
  */
-class plgSearchAttachments extends CMSPlugin implements SubscriberInterface
+class Attachments extends CMSPlugin implements SubscriberInterface
 {
     /**
      * $db and $app are loaded on instantiation
