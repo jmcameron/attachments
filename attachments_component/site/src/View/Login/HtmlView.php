@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Attachments component
  *
  * @package Attachments
  * @subpackage Attachments_Component
  *
- * @copyright Copyright (C) 2007-2018 Jonathan M. Cameron, All Rights Reserved
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
- * @link http://joomlacode.org/gf/project/attachments/frs/
+ * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
 
@@ -21,8 +22,10 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-// no direct access
-defined( '_JEXEC' ) or die('Restricted access');
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 
 /**
  * HTML View class for asking the user to log in
@@ -31,51 +34,51 @@ defined( '_JEXEC' ) or die('Restricted access');
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * Display the login view
-	 */
-	public function display($tpl = null)
-	{
-		// Add the stylesheets
-		HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
-		$app = Factory::getApplication();
-		$lang = $app->getLanguage();
-		if ( $lang->isRTL() ) {
-			HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
-			}
+    /**
+     * Display the login view
+     */
+    public function display($tpl = null)
+    {
+        // Add the stylesheets
+        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        $app = Factory::getApplication();
+        $lang = $app->getLanguage();
+        if ($lang->isRTL()) {
+            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+        }
 
-		// Is the user already logged in?
-		$user = $app->getIdentity();
-		$this->logged_in = $user->get('username') <> '';
+        // Is the user already logged in?
+        $user = $app->getIdentity();
+        $this->logged_in = $user->get('username') <> '';
 
-		// Get the component parameters for the registration and login URL
-		$params = ComponentHelper::getParams('com_attachments');
+        // Get the component parameters for the registration and login URL
+        $params = ComponentHelper::getParams('com_attachments');
 
-		$base_url = Uri::base(false);
-		$register_url = $params->get('register_url', 'index.php?option=com_users&view=registration');
-		$register_url = Route::_($base_url . $register_url);
-		$this->register_url = $register_url;
+        $base_url = Uri::base(false);
+        $register_url = $params->get('register_url', 'index.php?option=com_users&view=registration');
+        $register_url = Route::_($base_url . $register_url);
+        $this->register_url = $register_url;
 
-		// Construct the login URL
-		$return = '';
-		if ( $this->return_url ) {
-			$return = '&return=' . $this->return_url;
-			}
-		$base_url = Uri::base(false);
-		$login_url = $params->get('login_url', 'index.php?option=com_users&view=login') . $return;
-		$this->login_url = Route::_($base_url . $login_url);
-		
-		// Get the warning message
-		$this->must_be_logged_in = Text::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
+        // Construct the login URL
+        $return = '';
+        if ($this->return_url) {
+            $return = '&return=' . $this->return_url;
+        }
+        $base_url = Uri::base(false);
+        $login_url = $params->get('login_url', 'index.php?option=com_users&view=login') . $return;
+        $this->login_url = Route::_($base_url . $login_url);
 
-		// Get a phrase from the login module to create the account
-		$lang->load('com_users');
-		$register = Text::_('COM_USERS_REGISTER_DEFAULT_LABEL');
-		$this->register_label = $register;
+        // Get the warning message
+        $this->must_be_logged_in = Text::_('ATTACH_WARNING_MUST_LOGIN_TO_DOWNLOAD_ATTACHMENT');
 
-		$login = Text::_('JLOGIN');
-		$this->login_label = $login;
+        // Get a phrase from the login module to create the account
+        $lang->load('com_users');
+        $register = Text::_('COM_USERS_REGISTER_DEFAULT_LABEL');
+        $this->register_label = $register;
 
-		parent::display($tpl);
-	}
+        $login = Text::_('JLOGIN');
+        $this->login_label = $login;
+
+        parent::display($tpl);
+    }
 }

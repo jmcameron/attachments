@@ -1,6 +1,20 @@
 <?php
 
+/**
+ * Insert Attachments Id Token Button plugin
+ *
+ * @package Attachments
+ * @subpackage Insert_Attachment_Id_Token_Button_Plugin
+ *
+ * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link https://github.com/jmcameron/attachments
+ * @author Jonathan M. Cameron
+ */
+
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
