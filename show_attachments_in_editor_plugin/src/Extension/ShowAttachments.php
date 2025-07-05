@@ -12,6 +12,8 @@
  * @author Jonathan M. Cameron
  */
 
+namespace JMCameron\Plugin\System\ShowAttachments\Extension;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
@@ -38,7 +40,7 @@ if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.
  *
  * @package Attachments
  */
-class Plgsystemshow_attachments extends CMSPlugin implements SubscriberInterface
+class ShowAttachments extends CMSPlugin implements SubscriberInterface
 {
     /**
      * $db and $app are loaded on instantiation

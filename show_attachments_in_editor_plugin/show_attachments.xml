@@ -9,9 +9,11 @@
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
     <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
     <description>ATTACH_SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_DESCRIPTION</description>
-
+    <namespace path="src">JMCameron\Plugin\System\ShowAttachments</namespace>
+	
     <files>
-	<filename plugin="show_attachments">show_attachments.php</filename>
+	<folder>src</folder>
+	<folder plugin="show_attachments">services</folder>
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>
