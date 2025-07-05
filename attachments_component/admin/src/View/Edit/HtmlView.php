@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
         foreach (AttachmentsFileTypes::uniqueIconFilenames() as $ifname) {
             $icon_filenames[] = HTMLHelper::_('select.option', $ifname);
         }
-        $this->lists['iconFilenames'] = HTMLHelper::_(
+        $this->lists['icon_filenames'] = HTMLHelper::_(
             'select.genericlist',
             $icon_filenames,
             'icon_filename',
