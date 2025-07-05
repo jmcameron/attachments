@@ -87,7 +87,7 @@ class ImportArticles extends ImportFromCSV
             $this->bind($record);
 
             // Verify the category
-            $cat_ok = $this->_verifyCategory(
+            $cat_ok = $this->verifyCategory(
                 (int)$record->catid,
                 $record->category_title
             );
@@ -97,7 +97,7 @@ class ImportArticles extends ImportFromCSV
             }
 
             // Verify the creator
-            $creator_ok = $this->_verifyUser(
+            $creator_ok = $this->verifyUser(
                 (int)$record->created_by,
                 $record->created_by_name
             );
