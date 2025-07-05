@@ -13,6 +13,8 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScriptInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -25,14 +27,36 @@ use Joomla\CMS\Factory;
  * @package Attachments
  */
  // phcs:ignore
-class plgContentAttachmentsInstallerScript
+return new class () implements InstallerScriptInterface
 {
+    /**
+     * Attachments plugin install function
+     *
+     * @param $adapter : the installer adapter
+     */
+    public function install(InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
+    /**
+     * Attachments plugin update function
+     *
+     * @param $adapter : the installer adapter
+     */
+    public function update(InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
     /**
      * Attachments plugin uninstall function
      *
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
-    public function uninstall($parent)
+    public function uninstall(InstallerAdapter $adapter): bool
     {
         // List all the Attachments plugins
         $plugins = array('plg_content_attachments',
@@ -59,5 +83,35 @@ class plgContentAttachmentsInstallerScript
             // NOTE: Do NOT complain if there was an error
             // (in case any plugin is already uninstalled and this query fails)
         }
+
+        return true;
     }
-}
+    
+    /**
+     * Function called before extension installation/update/removal procedure commences.
+     *
+     * @param   string            $type     The type of change (install or discover_install, update, uninstall)
+     * @param   InstallerAdapter  $adapter  The adapter calling this method
+     *
+     * @return  boolean  True on success
+     */
+    public function preflight(string $type, InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
+    /**
+     * Function called after extension installation/update/removal procedure commences.
+     *
+     * @param   string            $type     The type of change (install or discover_install, update, uninstall)
+     * @param   InstallerAdapter  $adapter  The adapter calling this method
+     *
+     * @return  boolean  True on success
+     */
+    public function postflight(string $type, InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+};

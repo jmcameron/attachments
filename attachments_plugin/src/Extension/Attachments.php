@@ -12,6 +12,8 @@
  * @link https://github.com/jmcameron/attachments
  */
 
+namespace JMCameron\Plugin\Content\Attachments\Extension;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
@@ -45,7 +47,7 @@ if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.
  * @package  Attachments
  * @since    1.3.4
  */
-class PlgContentAttachments extends CMSPlugin implements SubscriberInterface
+class Attachments extends CMSPlugin implements SubscriberInterface
 {
     /**
      * $db and $app are loaded on instantiation
