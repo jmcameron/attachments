@@ -13,6 +13,8 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScriptInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -24,15 +26,36 @@ use Joomla\CMS\Factory;
  *
  * @package Attachments
  */
-//phcs:ignore
-class plgAttachmentsAttachments_plugin_frameworkInstallerScript
+return new class () implements InstallerScriptInterface
 {
+    /**
+     * Attachments plugin install function
+     *
+     * @param $parent : the installer parent
+     */
+    public function install(InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
+    /**
+     * Attachments plugin update function
+     *
+     * @param $parent : the installer parent
+     */
+    public function update(InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
     /**
      * Attachments plugin uninstall function
      *
      * @param $parent : the installer parent
      */
-    public function uninstall($parent)
+    public function uninstall(InstallerAdapter $adapter): bool
     {
         // List all the Attachments plugins
         $plugins = array('plg_content_attachments',
@@ -59,5 +82,31 @@ class plgAttachmentsAttachments_plugin_frameworkInstallerScript
             // NOTE: Do NOT complain if there was an error
             // (in case any plugin is already uninstalled and this query fails)
         }
+
+        return true;
     }
-}
+
+    /**
+     * Attachments plugin preflight function
+     *
+     * @param $type : the type of change (install, update, discover_install, uninstall)
+     * @param $parent : the installer parent
+     */
+    public function preflight(string $type, InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+
+    /**
+     * Attachments plugin postflight function
+     *
+     * @param $type : the type of change (install, update, discover_install, uninstall)
+     * @param $parent : the installer parent
+     */
+    public function postflight(string $type, InstallerAdapter $adapter): bool
+    {
+        // Nothing to do here
+        return true;
+    }
+};
