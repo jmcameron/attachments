@@ -50,7 +50,7 @@ class IconfilenamesField extends FormField
 
         // Construct the list of legal icon filenames
         $icon_filenames = array();
-        foreach (AttachmentsFileTypes::unique_icon_filenames() as $ifname) {
+        foreach (AttachmentsFileTypes::uniqueIconFilenames() as $ifname) {
             $icon_filenames[] = HTMLHelper::_('select.option', $ifname);
         }
         $icon_list = HTMLHelper::_(
