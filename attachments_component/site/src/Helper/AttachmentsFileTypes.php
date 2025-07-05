@@ -165,7 +165,7 @@ class AttachmentsFileTypes
     ];
 
     /** Array of lookups for icon filename from mime type */
-    public static $attachments_icon_from_mimeType =
+    public static $attachments_icon_from_mime_type =
         array( 'application/bzip2' => 'archive.gif',
                'application/excel' => 'excel.gif',
                'application/msword' => 'word.gif',
