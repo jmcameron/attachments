@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\String\Normalise;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -230,10 +231,26 @@ class AttachmentsPluginManager
             return true;
         }
 
+        $classNamePostfix = str_replace('com_', 'for_', $parent_type);
+        $className = 'Attachments' . Normalise::toCamelCase($classNamePostfix);
+        $namespace = "JMCameron\\Plugin\\Attachments\\$className\\Extension\\";
+        if (!class_exists($namespace . $className)) {
+            // Try the old style class name
+            $className = 'PlgAttachmentsAttachments_' . $classNamePostfix;
+            $namespace = '';
+
+            if (!class_exists($className)) {
+                // If the class does not exist, we cannot install the plugin
+                $errmsg = Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . ' (ERR 305)';
+                Log::add($errmsg, Log::ERROR, 'jerror');
+                throw new \Exception($errmsg, 406);
+            }
+        }
+
         // Install the plugin
         $dispatcher                 = Factory::getApplication()->getDispatcher();
-        $className                  = 'PlgAttachmentsAttachments_' . str_replace('com_', 'for_', $parent_type);
-        $this->plugin[$parent_type] = new $className($dispatcher);
+        $full_class_name = $namespace . $className;
+        $this->plugin[$parent_type] = new $full_class_name($dispatcher);
 
         return is_object($this->plugin[$parent_type]);
     }
