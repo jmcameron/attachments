@@ -234,6 +234,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $show_in_modal = (!$app->client->mobile) &&
                          ($this->file_link_open_mode == 'in_a_popup') &&
                          ($attachment->file_type === "application/pdf" ||
+                          str_starts_with($attachment->file_type, "text/") ||
                           str_starts_with($attachment->file_type, "image/"));
 
         if ($show_in_modal) {
@@ -249,7 +250,9 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             $modalParams['width']  = '80%';
             $modalParams['bodyHeight'] = '80';
             $modalParams['modalWidth'] = '80';
-            $url .= "&popup=1";
+            if ($this->secure) {
+                $url .= "&popup=1";
+            }
             $html .= LayoutHelper::render(
                 'libraries.html.bootstrap.modal.main',
                 [
