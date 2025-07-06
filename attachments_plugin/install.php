@@ -86,7 +86,7 @@ return new class () implements InstallerScriptInterface
 
         return true;
     }
-    
+
     /**
      * Function called before extension installation/update/removal procedure commences.
      *

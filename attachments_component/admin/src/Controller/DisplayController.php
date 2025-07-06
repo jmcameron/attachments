@@ -157,7 +157,7 @@ class DisplayController extends BaseController
 
         // Set up the HTML for the 'Disable MySQL uninstallation' command
         $disable_mysql_uninstall_url =
-			"$url_top&amp;task=utils.disableSqlUninstall" . $closeme;
+            "$url_top&amp;task=utils.disableSqlUninstall" . $closeme;
         $disable_mysql_uninstall_tooltip =
             Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION') . '::' .
             Text::_('ATTACH_DISABLE_MYSQL_UNINSTALLATION_TOOLTIP');
