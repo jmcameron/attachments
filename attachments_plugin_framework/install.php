@@ -31,7 +31,7 @@ return new class () implements InstallerScriptInterface
     /**
      * Attachments plugin install function
      *
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
     public function install(InstallerAdapter $adapter): bool
     {
@@ -42,7 +42,7 @@ return new class () implements InstallerScriptInterface
     /**
      * Attachments plugin update function
      *
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
     public function update(InstallerAdapter $adapter): bool
     {
@@ -53,7 +53,7 @@ return new class () implements InstallerScriptInterface
     /**
      * Attachments plugin uninstall function
      *
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
     public function uninstall(InstallerAdapter $adapter): bool
     {
@@ -90,7 +90,7 @@ return new class () implements InstallerScriptInterface
      * Attachments plugin preflight function
      *
      * @param $type : the type of change (install, update, discover_install, uninstall)
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
     public function preflight(string $type, InstallerAdapter $adapter): bool
     {
@@ -102,7 +102,7 @@ return new class () implements InstallerScriptInterface
      * Attachments plugin postflight function
      *
      * @param $type : the type of change (install, update, discover_install, uninstall)
-     * @param $parent : the installer parent
+     * @param $adapter : the installer adapter
      */
     public function postflight(string $type, InstallerAdapter $adapter): bool
     {
