@@ -12,6 +12,8 @@
  * @link https://github.com/jmcameron/attachments
  */
 
+namespace JMCameron\Plugin\Attachments\AttachmentsForContent\Extension;
+
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use JMCameron\Plugin\AttachmentsPluginFramework\PlgAttachmentsFramework;
@@ -38,7 +40,7 @@ if (!PluginHelper::importPlugin('attachments', 'framework')) {
  * @package  Attachments
  * @since    3.0
  */
-class PlgAttachmentsAttachments_for_content extends PlgAttachmentsFramework
+class AttachmentsForContent extends PlgAttachmentsFramework
 {
     /**
      * Constructor
