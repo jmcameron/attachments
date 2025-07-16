@@ -241,7 +241,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             $a_class = 'modal-button';
             AttachmentsJavascript::setupModalJavascript();
 
-            $randomId = base64_encode('show' . $actual_filename);
+            $randomId = base64_encode('show' . $attachment->id . $actual_filename);
             // Remove +,/,= from the $randomId
             $randomId = strtr($randomId, "+/=", "AAA");
             $modalParams['title']  = $this->escape($tooltip);
@@ -459,7 +459,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $update_url = str_replace('%d', (string)$attachment->id, $this->update_url);
         $tooltip = Text::_('ATTACH_UPDATE_THIS_FILE') . ' (' . $actual_filename . ')';
 
-        $randomId = base64_encode('update' . $actual_filename);
+        $randomId = base64_encode('update' . $attachment->id . $actual_filename);
         // Remove +,/,= from the $randomId
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $this->escape($tooltip);
@@ -493,7 +493,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $delete_url = str_replace('%d', (string)$attachment->id, $this->delete_url);
         $tooltip = Text::_('ATTACH_DELETE_THIS_FILE') . ' (' . $actual_filename . ')';
 
-        $randomId = base64_encode('delete' . $actual_filename);
+        $randomId = base64_encode('delete' . $attachment->id . $actual_filename);
         // Remove +,/,= from the $randomId
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $this->escape($tooltip);
