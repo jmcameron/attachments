@@ -1,5 +1,5 @@
 @media (prefers-color-scheme: dark) {
-	.form-horizontal .control-group .control-label {
-		color: white;
-	}
+    .form-horizontal .control-group .control-label {
+        color: white;
+    }
 }

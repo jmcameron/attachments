@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" version="4.0" method="upgrade">
     <name>plg_system_show_attachments_in_editor</name>
-    <version>4.1.4</version>
-    <creationDate>June 28, 2025</creationDate>
+    <version>4.1.5</version>
+    <creationDate>July 12, 2025</creationDate>
     <author>Jonathan M. Cameron</author>
-    <copyright>(C) 2011-2024 Jonathan M. Cameron. All rights reserved.</copyright>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
-    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
     <description>ATTACH_SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_DESCRIPTION</description>
-
+    <namespace path="src">JMCameron\Plugin\System\ShowAttachments</namespace>
+	
     <files>
-	<filename plugin="show_attachments">show_attachments.php</filename>
+	<folder>src</folder>
+	<folder plugin="show_attachments">services</folder>
 	<filename>index.html</filename>
 	<folder>language</folder>
     </files>

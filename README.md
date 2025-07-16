@@ -1,4 +1,4 @@
-# attachments 4.1.4
+# attachments 4.1.5
 
 ## Quick Start
 
@@ -7,6 +7,11 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 ## Requirements
 
 Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
+
+
+## 2025-06-22 version 4.1.5
+
+- fix issue [#137](/../../issues/137) PSR12 compatibility
 
 
 ## 2025-06-22 version 4.1.4

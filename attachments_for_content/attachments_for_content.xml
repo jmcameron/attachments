@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="attachments" version="2.5" method="upgrade">
-    <name>plg_attachments_for_content</name>
-    <version>4.1.4</version>
-    <creationDate>June 28, 2025</creationDate>
+    <name>plg_attachments_attachments_for_content</name>
+    <version>4.1.5</version>
+    <creationDate>July 12, 2025</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
-    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-    <copyright>(C) 2009-2024 Jonathan M. Cameron. All rights reserved.</copyright>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <description>ATTACH_ATTACHMENTS_FOR_CONTENT_PLUGIN_DESCRIPTION</description>
+    <namespace path="src">JMCameron\Plugin\Attachments\AttachmentsForContent</namespace>
 
     <scriptfile>install.php</scriptfile>
 
     <files>
-        <filename plugin="attachments_for_content">attachments_for_content.php</filename>
-	<filename>index.html</filename>
-	<folder>language</folder>
+        <folder>src</folder>
+        <folder plugin="attachments_for_content">services</folder>
+        <filename>index.html</filename>
+        <folder>language</folder>
     </files>
 
 </extension>

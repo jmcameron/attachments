@@ -1,4 +1,4 @@
-VERSION = "4.1.4"
+VERSION = "4.1.5"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 ZIPFILE = attachments-$(VERSION2).zip
 
@@ -82,7 +82,7 @@ fixsha:
 	./fixsha.sh $(ZIPFILE) 'update_pkg.xml'
 
 fixcopyrights:
-	@find . \( -name '*.php' -o -name '*.ini' -o -name '*.xml' \) -exec ./fixcopyright {} \;
+	@find . \( -name '*.php' -o -name '*.ini' -o -name '*.xml' \) -exec ./fixcopyright.sh {} \;
 
 check: 
 	find . -type f -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual|coverage_|/temp/)'

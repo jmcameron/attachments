@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="attachments" version="4.0" method="upgrade">
     <name>plg_attachments_plugin_framework</name>
-    <version>4.1.4</version>
-    <creationDate>June 28, 2025</creationDate>
+    <version>4.1.5</version>
+    <creationDate>July 12, 2025</creationDate>
     <author>Jonathan M. Cameron</author>
     <authorEmail>jmcameron@jmcameron.net</authorEmail>
-    <authorUrl>http://joomlacode.org/gf/project/attachments/</authorUrl>
-    <copyright>(C) 2009-2018 Jonathan M. Cameron. All rights reserved.</copyright>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
     <description>ATTACH_ATTACHMENTS_FOR_COMPONENTS_PLUGIN_FRAMEWORK_DESCRIPTION</description>
 

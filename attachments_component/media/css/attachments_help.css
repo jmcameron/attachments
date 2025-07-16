@@ -80,7 +80,7 @@ div.help-document img.drop-shadow {
     -webkit-box-shadow: 10px 10px 5px #444;
 }
 
-div.help-document ul { 
+div.help-document ul {
     margin: 0;
 }
 
@@ -320,7 +320,7 @@ div.help-document table.permissions {
     border: 1;
     cellspacing: 0;
     cellpadding: 2px;
-    background: transparent;    
+    background: transparent;
     border-collapse:collapse;
 }
 
@@ -330,7 +330,7 @@ div.help-document table#permissions {
 
 div.help-document table#permissions th,
 div.help-document table#permissions td {
-    background: transparent; 
+    background: transparent;
     padding: 2px 4px 2px 4px;
     border: 1px solid #000;
 }

@@ -1,0 +1,1221 @@
+<?php
+
+/**
+ * Attachments plugins for content
+ *
+ * @package     Attachments
+ * @subpackage  Attachments_Plugin_For_Content
+ *
+ * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
+ * @copyright   Copyright (C) 2009-2025 Jonathan M. Cameron, All Rights Reserved
+ * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @link https://github.com/jmcameron/attachments
+ */
+
+namespace JMCameron\Plugin\Attachments\AttachmentsForContent\Extension;
+
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use JMCameron\Plugin\AttachmentsPluginFramework\PlgAttachmentsFramework;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+
+
+/** Load the attachments plugin class */
+if (!PluginHelper::importPlugin('attachments', 'framework')) {
+    // Fail gracefully if the Attachments plugin framework plugin is disabled
+    return;
+}
+// phpcs:enable PSR1.Files.SideEffects
+
+/**
+ * The class for the Attachments plugin for regular Joomla! content (articles, categories)
+ *
+ * @package  Attachments
+ * @since    3.0
+ */
+class AttachmentsForContent extends PlgAttachmentsFramework
+{
+    /**
+     * Constructor
+     *
+     * @param   object  &$subject  The object to observe
+     * @param   array   $config    An optional associative array of configuration settings.
+     *
+     * Recognized key values include 'name', 'group', 'params', 'language'
+     * (this list is not meant to be comprehensive).
+     */
+    public function __construct(&$subject, $config = array())
+    {
+        parent::__construct($subject, $config);
+
+        // Configure the plugin
+        $this->_name          = 'attachments_for_content';
+
+        // Set basic attachments defaults
+        $this->parent_type    = 'com_content';
+        $this->default_entity = 'article';
+
+        // Add the information about the default entity (article)
+        $this->entities[]                    = 'article';
+        $this->entity_name['article']        = 'article';
+        $this->entity_name['default']        = 'article';
+        $this->entity_table['article']       = 'content';
+        $this->entity_id_field['article']    = 'id';
+        $this->entity_title_field['article'] = 'title';
+
+        // Add information about the category description entity
+        $this->entities[]                     = 'category';
+        $this->entity_name['category']        = 'category';
+        $this->entity_table['category']       = 'categories';
+        $this->entity_id_field['category']    = 'id';
+        $this->entity_title_field['category'] = 'title';
+
+        // Always load the language
+        $this->loadLanguage();
+
+        /** Register this attachments type */
+        $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+        $apm->addParentType('com_content');
+    }
+
+    /**
+     * Determine the parent entity
+     *
+     * From the view and the class of the parent (row of onPrepareContent plugin),
+     * determine what the entity type is for this entity.
+     *
+     * @param   &object  &$parent  The object for the parent (row) that onPrepareContent gets
+     *
+     * @return the correct parent entity (eg, 'article', 'category')
+     */
+    public function determineParentEntity(&$parent)
+    {
+        $input = $this->app->getInput();
+        $view = $input->getCmd('view');
+
+        // Handle category calls
+        if (($view == 'category') && (get_class($parent) == 'JTableContent')) {
+            return 'category';
+        }
+
+        // Handle everything else (articles)
+        // (apparently this is called before parents are displayed so ignore those calls)
+        if (isset($parent->id)) {
+            return 'default';
+        }
+
+        return false;
+    }
+
+    /**
+     * Return the name of the field with the content item text
+     *
+     * During the display of content items (eg, articles, categories), the
+     * onContentPrepare (etc) callbacks are used to insert attachments lists.
+     * The second argument of the onContentPrepare() function is an object
+     * (usually $row) for the content item (eg, article).  This function will
+     * return the appropriate field for the text of the content item.  In some
+     * cases it is 'text', in others, 'introtext'.  Attachments plugins can
+     * override this function to provide the field name more intelligently.
+     *
+     * Note: returns null if the text field is unknown/not present.
+     *
+     * @param   &object  &$row           the content object (eg, article) being displayed
+     * @param   string   $parent_entity  the type of entity for this content item.
+     *
+     * @return string name of the text field of this content item object.
+     */
+    protected function getTextFieldName(&$row, $parent_entity)
+    {
+        $input = $this->app->getInput();
+        $view = $input->getCmd('view');
+        $layout = $input->getCmd('layout');
+
+        $text_field_name = parent::getTextFieldName($row, $parent_entity);
+
+        // The following isn't true any more?
+        //
+        // In the case of a blog, we know what text_field_name should be
+        // if (isset($row->introtext) AND ($layout == 'blog'))
+        // {
+        //  $text_field_name = 'introtext';
+        // }
+
+        // Featured also uses 'introtext'
+        if (isset($row->introtext) and ($view == 'featured')) {
+            $text_field_name = 'introtext';
+        }
+
+        // Check for non-menu category view
+        if (
+            isset($row->introtext) and  ($view == 'category') and
+            (($parent_entity == 'default') or ($parent_entity == 'article'))
+        ) {
+            $text_field_name = 'introtext';
+        }
+
+        if (($view == 'category') and ($layout == 'blog') and ($parent_entity == 'article')) {
+            $text_field_name = 'text';
+        }
+
+        return $text_field_name;
+    }
+
+    /**
+     * Return the URL that can be called to select a specific content item.
+     *
+     * @param   string  $parent_entity  the type of entity to select from
+     *
+     * @return the URL that can be called to select a specific content item
+     */
+    public function getSelectEntityURL($parent_entity = 'default')
+    {
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        switch ($parent_entity) {
+            case 'category':
+                return parent::getSelectEntityURL($parent_entity);
+                break;
+
+            default:
+                return "index.php?option=com_content&amp;view=articles" .
+                        "&amp;layout=modal&amp;tmpl=component&amp;function=jSelectParentArticle";
+        }
+    }
+
+    /**
+     * Return an array of entity items (with id,title pairs for each item)
+     *
+     * @param   string  $parent_entity  the type of entity to search for
+     * @param   string  $filter         filter the results for matches for this filter string
+     *
+     * @return the array of entity id,title pairs
+     */
+    public function getEntityItems($parent_entity = 'default', $filter = '')
+    {
+        $db = $this->db;
+
+        $parent_entity      = $this->getCanonicalEntityId($parent_entity);
+        $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+
+        // Note that article is handled separately
+        if (StringHelper::strtolower($parent_entity) != 'category') {
+            $errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) . ' (ERR 400)';
+            throw new \Exception($errmsg, 500);
+        }
+
+        $entity_table       = $this->entity_table[$parent_entity];
+        $entity_title_field = $this->entity_title_field[$parent_entity];
+        $entity_id_field    = $this->entity_id_field[$parent_entity];
+
+        // Get the ordering information
+        $order     = $this->app->getUserStateFromRequest(
+            'com_attachments.selectEntity.filter_order',
+            'filter_order',
+            '',
+            'cmd'
+        );
+        $order_Dir = $this->app->getUserStateFromRequest(
+            'com_attachments.selectEntity.filter_order_Dir',
+            'filter_order_Dir',
+            '',
+            'word'
+        );
+
+        // Get all the items
+        $query = $db->getQuery(true);
+        $query->select('*')->from('#__categories');
+
+        // Filter
+        if ($filter) {
+            $filter = $db->quote('%' . $db->escape($filter, true) . '%', false);
+            $query->where('title LIKE ' . $filter);
+        }
+        $query->where('extension=' . $db->quote('com_content'));
+
+        // NOTE: Ignore any requested order since only ordering by lft makes the hierarchy work
+        $query->order('lft');
+
+        // Do the query
+        $db->setQuery($query);
+        try {
+            $items = $db->loadObjectList();
+        } catch (\Exception $e) {
+            $errmsg = Text::sprintf('ATTACH_ERROR_GETTING_LIST_OF_ENTITY_S_ITEMS', $parent_entity_name) .
+                             ' (ERR 401) <br/>' . $e->getMessage();
+            throw new \Exception($errmsg, 500);
+        }
+
+        if ($items == null) {
+            return null;
+        }
+
+        // Set up the hierarchy indenting
+        foreach ($items as &$item) {
+            $repeat      = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
+            $item->title = str_repeat('- ', $repeat) . $item->title;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Return the ID of the creator/owner of the parent entity
+     *
+     * @param   int     $parent_id      the ID for the parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
+     *
+     * @return creators id if found, 0 otherwise
+     */
+    public function getParentCreatorId($parent_id, $parent_entity = 'default')
+    {
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        $db    = $this->db;
+        $query = $db->getQuery(true);
+
+        $result = 0;
+
+        // Return the right thing for each entity
+        switch ($parent_entity) {
+            case 'category':
+                $query->select('created_user_id')->from('#__categories')->where('id = ' . (int) $parent_id);
+                $db->setQuery($query, 0, 1);
+                try {
+                    $result = $db->loadResult();
+                } catch (\Exception $e) {
+                    $errmsg = Text::_('ATTACH_ERROR_CHECKING_CATEGORY_PERMISSIONS') . ' (ERR 402)';
+                    throw new \Exception($errmsg, 500);
+                }
+                break;
+
+            default: // Article
+                $query->select('created_by')->from('#__content')->where('id = ' . (int) $parent_id);
+                $db->setQuery($query, 0, 1);
+                try {
+                    $result = $db->loadResult();
+                } catch (\Exception $e) {
+                    $errmsg = Text::_('ATTACH_ERROR_CHECKING_ARTICLE_PERMISSIONS') . ' (ERR 403)';
+                    throw new \Exception($errmsg, 500);
+                }
+        }
+
+        if (is_numeric($result)) {
+            return (int) $result;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Get a URL to view the content article
+     *
+     * @param   int     $parent_id      the ID for this parent object
+     * @param   string  $parent_entity  the type of parent element/entity
+     *
+     * @return a URL to view the entity (non-SEF form)
+     */
+    public function getEntityViewURL($parent_id, $parent_entity = 'default')
+    {
+        $uri = Uri::getInstance();
+
+        $base_url = $uri->root(true) . '/';
+
+        // Return the right thing for each entity
+        switch ($parent_entity) {
+            case 'category':
+                return $base_url . 'index.php?option=com_content&view=category&id=' . $parent_id;
+                break;
+
+            default:
+                return $base_url . 'index.php?option=com_content&view=article&id=' . $parent_id;
+        }
+    }
+
+    /**
+     * Get a URL to add an attachment to a specific entity
+     *
+     * @param   int     $parent_id      the ID for the parent entity object (null if the parent does not exist)
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   string  $from           where the call should return to
+     *
+     * @return the url to add a new attachments to the specified entity
+     */
+    public function getEntityAddUrl($parent_id, $parent_entity = 'default', $from = 'closeme')
+    {
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        // Determine the task
+        if ($this->app->isClient("administrator")) {
+            $task = 'attachment.add';
+        } else {
+            $task = 'upload';
+        }
+
+        // Handle article creation
+        $url = "index.php?option=com_attachments&task=$task";
+        if ($parent_id == null) {
+            $url .= "&parent_id=$parent_id,new";
+        } else {
+            $url .= "&parent_id=$parent_id";
+        }
+
+        // Build the right URL for each entity
+        switch ($parent_entity) {
+            case 'category':
+                $url .= "&parent_type=com_content.$parent_entity&from=$from";
+                break;
+
+            default:
+                $url .= "&parent_type=com_content.article&from=$from";
+        }
+
+        return $url;
+    }
+
+    /**
+     * Check to see if a custom title applies to this parent
+     *
+     * Note: this function assumes that the parent_id's match
+     *
+     * @param   string  $parent_entity         parent entity for the parent of the list
+     * @param   string  $rtitle_parent_entity  the entity of the candidate attachment list title (from params)
+     *
+     * @return true if the custom title should be used
+     */
+    public function checkAttachmentsListTitle($parent_entity, $rtitle_parent_entity)
+    {
+        if (
+            (($parent_entity == 'default') || ($parent_entity == 'article'))
+            && (($rtitle_parent_entity == 'default') || ($rtitle_parent_entity == 'article'))
+        ) {
+            return true;
+        }
+
+        if (($parent_entity == 'category') && ($parent_entity == $rtitle_parent_entity)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Is the parent new (based on the parent_id)
+     *
+     * @param   object  &$attachment  the attachment
+     *
+     * @return true if the parent is new (being created)
+     */
+    public function newParent(&$attachment)
+    {
+        if ($attachment->parent_id != 0) {
+            return false;
+        }
+
+        if ($attachment->parent_entity == 'article') {
+            // Seems to be true for articles
+            return true;
+        }
+
+        if ($attachment->parent_entity == 'category') {
+            // Assume this is true for category (but not sure)
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check to see if the parent is published
+     *
+     * @param   int     $parent_id      is the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
+     *
+     * @return true if the parent is published
+     */
+    public function isParentPublished($parent_id, $parent_entity = 'default')
+    {
+        $db = $this->db;
+
+        $published = false;
+
+        $parent_entity      = $this->getCanonicalEntityId($parent_entity);
+        $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+
+        // Return the right thing for each entity
+        switch ($parent_entity) {
+            case 'category':
+                $entity_table = $this->entity_table[$parent_entity];
+                $query        = $db->getQuery(true);
+                $query->select('published')->from("#__$entity_table")->where('id = ' . (int) $parent_id);
+                $db->setQuery($query, 0, 1);
+                try {
+                    $obj = $db->loadObject();
+                } catch (\Exception $e) {
+                    $errmsg = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 404)';
+                    throw new \Exception($errmsg, 500);
+                }
+                if (is_object($obj)) {
+                    $published = $obj->published == 1;
+                } else {
+                    $published = false;
+                }
+                break;
+
+            default:
+                // Check for articles
+                $query = $db->getQuery(true);
+                $query->select('state, publish_up, publish_down')->from('#__content');
+                $query->where('id = ' . (int) $parent_id);
+                $db->setQuery($query, 0, 1);
+                try {
+                    $article = $db->loadObject();
+                } catch (\Exception $e) {
+                    $errmsg = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 405)';
+                    throw new \Exception($errmsg, 500);
+                }
+
+                $now      = Factory::getDate()->toUnix();
+
+                if ($article) {
+                    $publish_up   = $article->publish_up ? Factory::getDate($article->publish_up)->toUnix() : null;
+                    $publish_down = $article->publish_down ? Factory::getDate($article->publish_down)->toUnix() : null;
+
+                    $published = (($article->state == 1) && ($now >= $publish_up) &&
+                                  (($publish_down === null) || ($now <= $publish_down)));
+                } else {
+                    $published = false;
+                }
+        }
+
+        return $published;
+    }
+
+    /**
+     * Check to see if the parent is archived
+     *
+     * @param   int     $parent_id      is the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
+     *
+     * @return true if the parent is archived
+     */
+    public function isParentArchived($parent_id, $parent_entity = 'default')
+    {
+        $archived = false;
+
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        // Return the right thing for each entity
+        switch ($parent_entity) {
+            case 'category':
+                // You apparently cannot archive categories
+                break;
+
+            default:
+                // Articles
+                $db    = $this->db;
+                $query = $db->getQuery(true);
+                $query->select('state')->from('#__content')->where(' id = ' . (int) $parent_id);
+                $db->setQuery($query, 0, 1);
+                try {
+                    $article = $db->loadObject();
+                } catch (\Exception $e) {
+                    $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+                    $errmsg             = Text::sprintf(
+                        'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                        $parent_entity_name,
+                        $parent_id
+                    ) . ' (ERR 406)';
+                    throw new \Exception($errmsg, 500);
+                }
+
+                if ($article) {
+                    $archived = $article->state == -1;
+                } else {
+                    $archived = false;
+                }
+        }
+
+        return $archived;
+    }
+
+    /**
+     * Return a string of the where clause for filtering the the backend list of attachments
+     *
+     * @param   string  $parent_state   the state ('ALL', 'PUBLISHED', 'UNPUBLISHED', 'ARCHIVED', 'NONE')
+     * @param   string  $filter_entity  the entity filter ('ALL', 'ARTICLE', 'CATEGORY')
+     *
+     * @return an array of where clauses
+     */
+    public function getParentPublishedFilter($parent_state, $filter_entity)
+    {
+        // If we want all attachments, do no filtering
+        if ($parent_state == 'ALL') {
+            return array();
+        }
+
+        $db = $this->db;
+
+        $where = array();
+
+        $filter_entity = StringHelper::strtoupper($filter_entity);
+
+        // NOTE: These WHERE clauses will be combined by OR
+
+        if ($parent_state == 'PUBLISHED') {
+            if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE')) {
+                $now      = Factory::getDate()->toSql();
+                $where[]  = "EXISTS (SELECT * FROM #__content AS c1 " .
+                    "WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=1 AND " .
+                    '(c1.publish_up IS null OR c1.publish_up <= ' . $db->quote($now) . ') AND ' .
+                    '(c1.publish_down IS null OR c1.publish_down >= ' . $db->quote($now) . ')))';
+            }
+
+            if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY')) {
+                $where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+                    "WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=1))";
+            }
+        } elseif ($parent_state == 'UNPUBLISHED') {
+            // These WHERE clauses will be combined by OR
+            if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE')) {
+                $where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+                    "WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=0))";
+                $where[] = "(a.parent_entity = 'article' AND NOT EXISTS " .
+                           "(select * from #__content as c1 where c1.id = a.parent_id))";
+
+                // ??? Add clauses here to get articles that are unpublished because of publish_up/publish_down
+            }
+
+            if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY')) {
+                $where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+                    "WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=0))";
+                $where[] = "(a.parent_entity = 'category' AND NOT EXISTS " .
+                           "(select * from #__categories as c1 where c1.id = a.parent_id))";
+            }
+        } elseif ($parent_state == 'ARCHIVED') {
+            // These WHERE clauses will be combined by OR
+            if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE')) {
+                $where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+                    "WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=2))";
+            }
+
+            if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY')) {
+                $where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+                    "WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=2))";
+            }
+        } elseif ($parent_state == 'TRASHED') {
+            // These WHERE clauses will be combined by OR
+            if (($filter_entity == 'ALL') || ($filter_entity == 'ARTICLE')) {
+                $where[] = "EXISTS (SELECT * FROM #__content AS c1 " .
+                    "WHERE (a.parent_entity = 'article' AND c1.id = a.parent_id AND c1.state=-2))";
+            }
+
+            if (($filter_entity == 'ALL') || ($filter_entity == 'CATEGORY')) {
+                $where[] = "EXISTS (SELECT * FROM #__categories AS c2 " .
+                    "WHERE (a.parent_entity = 'category' AND c2.id = a.parent_id AND c2.published=-2))";
+            }
+        } elseif ($parent_state == 'NONE') {
+            // NOTE: The 'NONE' clauses will be combined with AND (with other tests for a.parent_id)
+            $where[] = "(NOT EXISTS( SELECT * FROM #__content as c1 " .
+                "WHERE a.parent_entity = 'article' AND c1.id = a.parent_id ))";
+
+            $where[] = "(NOT EXISTS( SELECT * FROM #__categories as c2 " .
+                "WHERE a.parent_entity = 'category' AND c2.id = a.parent_id ))";
+        } else {
+            $errmsg = Text::sprintf('ATTACH_ERROR_UNRECOGNIZED_PARENT_STATE_S', $parent_state) . ' (ERR 407)';
+            throw new \Exception($errmsg, 500);
+        }
+
+        return $where;
+    }
+
+    /**
+     * May the parent be viewed by the user?
+     *
+     * @param   int     $parent_id      the ID for this parent object
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+     *
+     * @return true if the parent may be viewed by the user
+     */
+    public function userMayViewParent($parent_id, $parent_entity = 'default', $user_id = null)
+    {
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        // Return the right thing for each entity
+        $table = null;
+        switch ($parent_entity) {
+            case 'category':
+                $table = 'categories';
+                break;
+
+            default:
+                // Article
+                $table = 'content';
+                break;
+        }
+
+        // Get the user's permitted access levels
+        $user        = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($user_id);
+        $user_levels = array_unique($user->getAuthorisedViewLevels());
+
+        // See if the parent's access level is permitted for the user
+        $db    = $this->db;
+        $query = $db->getQuery(true);
+        $query->select('id')->from("#__$table");
+        $query->where('id = ' . (int) $parent_id . ' AND access in (' . implode(',', $user_levels) . ')');
+        $db->setQuery($query, 0, 1);
+        try {
+            $obj = $db->loadObject();
+        } catch (\Exception $e) {
+            $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+            $errmsg             = Text::sprintf(
+                'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                $parent_entity_name,
+                $parent_id
+            ) . ' (ERR 408)';
+            throw new \Exception($errmsg, 500);
+        }
+
+        return !empty($obj);
+    }
+
+    /** Return true if the attachments should be hidden for this parent
+     *
+     * @param   &object  &$parent        the object for the parent that onPrepareContent gives
+     * @param   int      $parent_id      the ID of the parent the attachment is attached to
+     * @param   string   $parent_entity  the type of entity for this parent type
+     *
+     * @return true if the attachments should be hidden for this parent
+     */
+    public function attachmentsHiddenForParent(&$parent, $parent_id, $parent_entity)
+    {
+        // Check for generic options
+        if (parent::attachmentsHiddenForParent($parent, $parent_id, $parent_entity)) {
+            return true;
+        }
+        $pclass = get_class($parent);
+
+        $parent_entity      = $this->getCanonicalEntityId($parent_entity);
+        $parent_entity_name = Text::_('ATTACH_' . $parent_entity);
+
+        // Make sure we have a valid parent ID
+        $input = $this->app->getInput();
+        if (!$parent_id && ($parent_entity == 'category')) {
+            $parent_id = $input->getInt('id');
+        }
+        if ($parent_id !== 0) {
+            // Note: parent_id of 0 may be allowed for categories, so don't abort
+            if (($parent_id == null) || ($parent_id == '') || !is_numeric($parent_id)) {
+                $errmsg = Text::sprintf('ATTACH_ERROR_BAD_ENTITY_S_ID', $parent_entity_name) . ' (ERR 409)';
+                throw new \Exception($errmsg, 500);
+            }
+        }
+
+        // Check to see if it should be hidden with readmore
+        $aparams = $this->attachmentsParams();
+        $hide_with_readmore = $aparams->get('hide_with_readmore', false);
+        if ($hide_with_readmore && isset($parent->readmore) && $parent->readmore) {
+            return true;
+        }
+
+        // Get the options
+        $all_but_article_views = $aparams->get('hide_except_article_views', false);
+
+        // Make sure the parent is valid and get info about it
+        $db = $this->db;
+
+        if ($parent_entity == 'category') {
+            // Handle categories
+            $always_show_category_attachments = $aparams->get('always_show_category_attachments', false);
+            if ($always_show_category_attachments) {
+                return false;
+            }
+            if ($all_but_article_views) {
+                return true;
+            }
+
+            // Check to see whether the attachments should be hidden for this category
+            $hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', array());
+            if (in_array($parent_id, $hide_attachments_for_categories)) {
+                return true;
+            }
+
+            // Make sure a category with this ID exists
+            $query       = $db->getQuery(true);
+            $query->select('id')->from('#__categories');
+            $query->where('id = ' . (int) $parent_id);
+            $db->setQuery($query, 0, 1);
+            $result = (int) $db->loadResult();
+            if ((int) $parent_id != $result) {
+                return true;
+            }
+        } else {
+            // Handle articles
+            if ($parent_id == 0) {
+                return false;
+            }
+
+            // Make sure we have a valid article
+            $query = $db->getQuery(true);
+            $query->select('created_by, catid')->from('#__content')->where('id = ' . (int) $parent_id);
+            $db->setQuery($query);
+            try {
+                $attachments = $db->loadObjectList();
+            } catch (\Exception $e) {
+                $errmsg = Text::sprintf(
+                    'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                    $parent_entity_name,
+                    $parent_id
+                ) . ' (ERR 410)';
+                throw new \Exception($errmsg, 500);
+            }
+            if (count($attachments) === false) {
+                $errmsg = Text::sprintf(
+                    'ATTACH_ERROR_INVALID_PARENT_S_ID_N',
+                    $parent_entity_name,
+                    $parent_id
+                ) . ' (ERR 410)';
+                throw new \Exception($errmsg, 500);
+            }
+
+            // Honor all_but_article_view option
+            $view = $input->getCmd('view');
+            if ($all_but_article_views) {
+                if ($view != 'article') {
+                    return true;
+                }
+            }
+
+            // See if the options apply to this article
+            // $created_by = (int) $attachments[0]->created_by;
+            $catid      = !empty($attachments) ? (int) $attachments[0]->catid : 0;
+
+            // First, check to see whether the attachments should be hidden for this parent
+            $hide_attachments_for_categories = $aparams->get('hide_attachments_for_categories', array());
+            if (in_array($catid, $hide_attachments_for_categories)) {
+                return true;
+            }
+        }
+
+        // The default is: attachments are not hidden
+        return false;
+    }
+
+    /**
+     * Return true if the user may add an attachment to this parent
+     *
+     * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+     *  It is up to the caller to validate these objects before calling this function.)
+     *
+     * @param   int     $parent_id      the ID of the parent the attachment is attached to
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   bool    $new_parent     if true, the parent is being created and does not exist yet
+     * @param   object  $user_id        the user_id to check (optional, primarily for testing)
+     *
+     * @return true if this user may add attachments to this parent
+     */
+    public function userMayAddAttachment($parent_id, $parent_entity, $new_parent = false, $user_id = null)
+    {
+        if ($user_id) {
+            $user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+        } else {
+            $user = $this->app->getIdentity();
+        }
+
+        // Handle each entity type
+        $parent_entity = $this->getCanonicalEntityId($parent_entity);
+
+        switch ($parent_entity) {
+            case 'category':
+                // First, determine if the user can edit this category
+                if (!AttachmentsPermissions::userMayEditCategory($parent_id)) {
+                    return false;
+                }
+
+                // Finally, see if the user has permissions to create attachments
+                return $user->authorise('core.create', 'com_attachments');
+
+                break;
+
+            default:
+                // For articles
+
+                // First, determine if the user can edit this article
+                if (!AttachmentsPermissions::userMayEditArticle($parent_id)) {
+                    return false;
+                }
+
+                // Finally, see if the user has permissions to create attachments
+                return $user->authorise('core.create', 'com_attachments');
+        }
+
+        // No one else is allowed to add attachments
+        return false;
+    }
+
+    /**
+     * Return true if this user may edit (modify/update/delete) this attachment for this parent
+     *
+     * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+     *  It is up to the caller to validate these objects before calling this function.)
+     *
+     * @param   &record  &$attachment  database record for the attachment
+     * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+     *
+     * @return true if this user may edit this attachment
+     */
+    public function userMayEditAttachment(&$attachment, $user_id = null)
+    {
+        // If the user generally has permissions to edit all content, they
+        // may edit this attachment (editor, publisher, admin, etc)
+        if ($user_id) {
+            $user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+        } else {
+            $user = $this->app->getIdentity();
+        }
+
+        if ($user->authorise('com_content', 'edit', 'content', 'all')) {
+            return true;
+        }
+
+        // Handle each entity type
+
+        switch ($attachment->parent_entity) {
+            case 'category':
+                // ?? Deal with parents being created (parent_id == 0)
+
+                // First, determine if the user can edit this category
+                if (!AttachmentsPermissions::userMayEditCategory($attachment->parent_id)) {
+                    return false;
+                }
+
+                // See if the user can edit any attachment
+                if ($user->authorise('core.edit', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has permissions to edit their own attachments
+                if (
+                    $user->authorise('core.edit.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to edit attachments on their own category
+                if ($user->authorise('attachments.edit.ownparent', 'com_attachments')) {
+                    $category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
+                    return (int) $user->id == (int) $category_creator_id;
+                }
+
+                break;
+
+            default:
+                // Articles
+
+                // ?? Deal with parents being created (parent_id == 0)
+
+                // First, determine if the user can edit this article
+                if (!AttachmentsPermissions::userMayEditArticle($attachment->parent_id)) {
+                    return false;
+                }
+
+                // See if the user can edit any attachment
+                if ($user->authorise('core.edit', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has permissions to edit their own attachments
+                if (
+                    $user->authorise('core.edit.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to edit attachments on their own article
+                if ($user->authorise('attachments.edit.ownparent', 'com_attachments')) {
+                    $article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
+                    return (int) $user->id == (int) $article_creator_id;
+                }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return true if this user may delete this attachment for this parent
+     *
+     * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+     *  It is up to the caller to validate the arguments before calling this function.)
+     *
+     * @param   &record  &$attachment  database record for the attachment
+     * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+     *
+     * @return true if this user may delete this attachment
+     */
+    public function userMayDeleteAttachment(&$attachment, $user_id = null)
+    {
+        // If the user generally has permissions to edit ALL content, they
+        // may edit this attachment (editor, publisher, admin, etc)
+        if ($user_id) {
+            $user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+        } else {
+            $user = $this->app->getIdentity();
+        }
+
+        if ($user->authorise('com_content', 'edit', 'content', 'all')) {
+            return true;
+        }
+
+        // Handle each entity type
+
+        switch ($attachment->parent_entity) {
+            case 'category':
+                // First, determine if the user can edit this category
+                if (!AttachmentsPermissions::userMayEditCategory($attachment->parent_id)) {
+                    return false;
+                }
+
+                // Ok if the user can delete any attachment
+                if ($user->authorise('core.delete', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has edit.own and created it
+                if (
+                    $user->authorise('attachments.delete.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to delete any attachments for categories they created
+                if ($user->authorise('attachments.delete.ownparent', 'com_attachments')) {
+                    $category_creator_id = $this->getParentCreatorId($attachment->parent_id, 'category');
+                    return (int) $user->id == (int) $category_creator_id;
+                }
+
+                break;
+
+            default: // Articles
+                // ?? Deal with parents being created (parent_id == 0)
+
+                // First, determine if the user can edit this article
+                if (!AttachmentsPermissions::userMayEditArticle($attachment->parent_id)) {
+                    return false;
+                }
+
+                // Ok if the user can delete any attachment
+                if ($user->authorise('core.delete', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has permissions to delete their own attachments
+                if (
+                    $user->authorise('attachments.delete.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment->created_by)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to delete any attachments for articles they created
+                if ($user->authorise('attachments.delete.ownparent', 'com_attachments')) {
+                    $article_creator_id = $this->getParentCreatorId($attachment->parent_id, 'article');
+                    return (int) $user->id == (int) $article_creator_id;
+                }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return true if this user may change the state of this attachment
+     *
+     * (Note that all of the arguments are assumed to be valid; no sanity checking is done.
+     *  It is up to the caller to validate the arguments before calling this function.)
+     *
+     * @param   int     $parent_id              the ID for the parent object
+     * @param   string  $parent_entity          the type of entity for this parent type
+     * @param   int     $attachment_creator_id  the ID of the creator of the attachment
+     * @param   object  $user_id                the user_id to check (optional, primarily for testing)
+     *
+     * @return true if this user may change the state of this attachment
+     */
+    public function userMayChangeAttachmentState($parent_id, $parent_entity, $attachment_creator_id, $user_id = null)
+    {
+        // If the user generally has permissions to edit all content, they
+        // may change this attachment state (editor, publisher, admin, etc)
+        if ($user_id) {
+            $user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+        } else {
+            $user = $this->app->getIdentity();
+        }
+
+        if ($user->authorise('com_content', 'edit', 'content', 'all')) {
+            return true;
+        }
+
+        // Handle each entity type
+
+        switch ($parent_entity) {
+            case 'category':
+                // ?? Deal with parents being created (parent_id == 0)
+
+                // First, determine if the user can edit this category
+                if (!AttachmentsPermissions::userMayEditCategory($parent_id)) {
+                    return false;
+                }
+
+                // See if the user can change the state of any attachment
+                if ($user->authorise('core.edit.state', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has permissions to change the state of their own attachments
+                if (
+                    $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment_creator_id)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to change the state of any attachments for categories they created
+                if ($user->authorise('attachments.edit.state.ownparent', 'com_attachments')) {
+                    $category_creator_id = $this->getParentCreatorId($parent_id, 'category');
+                    return (int) $user->id == (int) $category_creator_id;
+                }
+
+                break;
+
+            default:
+                // Articles
+
+                // ?? Deal with parents being created (parent_id == 0)
+
+                // First, determine if the user can edit this article
+                if (!AttachmentsPermissions::userMayEditArticle($parent_id)) {
+                    return false;
+                }
+
+                // See if the user can change the state of any attachment
+                if ($user->authorise('core.edit.state', 'com_attachments')) {
+                    return true;
+                }
+
+                // See if the user has permissions to change the state of their own attachments
+                if (
+                    $user->authorise('attachments.edit.state.own', 'com_attachments') &&
+                    ((int) $user->id == (int) $attachment_creator_id)
+                ) {
+                    return true;
+                }
+
+                // See if the user has permission to edit the state of any attachments for articles they created
+                if ($user->authorise('attachments.edit.state.ownparent', 'com_attachments')) {
+                    $article_creator_id = $this->getParentCreatorId($parent_id, 'article');
+                    return (int) $user->id == (int) $article_creator_id;
+                }
+        }
+
+        return false;
+    }
+
+    /** Check to see if the user may access (see/download) the attachments
+     *
+     * @param   &record  &$attachment  database record for the attachment
+     * @param   object   $user_id      the user_id to check (optional, primarily for testing)
+     *
+     * @return true if access is okay (false if not)
+     */
+    public function userMayAccessAttachment(&$attachment, $user_id = null)
+    {
+        if ($user_id) {
+            $user = $this->app->get(UserFactoryInterface::class)->loadUserById($user_id);
+        } else {
+            $user = $this->app->getIdentity();
+        }
+
+        return in_array($attachment->access, $user->getAuthorisedViewLevels());
+    }
+
+
+    /** See if the attachments list should be displayed in its content description editor
+     *
+     * @param   string  $parent_entity  the type of entity for this parent type
+     * @param   string  $view           the view
+     * @param   string  $layout         the layout on the view
+     *
+     * @return  true if the attachments list should be added to the editor
+     */
+    public function showAttachmentsInEditor($parent_entity, $view, $layout)
+    {
+        return ($layout == 'edit') && (($view == 'form') || ($view == 'article') || ($view == 'category'));
+    }
+
+    /** Get the parent_id in the component content item editor
+     *  (the article or category editor)
+     *
+     * @param  string  $parent_entity  the type of entity for this parent type
+     *
+     * @return the parent ID, null if the content item is being created, and false if there is no match
+     *
+     * @since    Attachments 3.2
+     */
+    public function getParentIdInEditor($parent_entity, $view, $layout)
+    {
+        $input = $this->app->getInput();
+        if ($this->app->isClient("administrator")) {
+            // The default works fine for the back end
+            return parent::getParentIdInEditor($parent_entity, $view, $layout);
+        }
+
+        // Note categories cannot be created or edited from the frontend
+        if ($parent_entity == 'category') {
+            return false;
+        }
+
+        // Deal with articles (in frontend)
+        $id = null;
+        if (($view == 'article') or ($view == 'form')) {
+            $id = $input->getInt('a_id', $default = null);
+        } else {
+            $id = false;
+        }
+
+        // If we got one, convert it to an int
+        if (is_numeric($id)) {
+            $id = (int)$id;
+        }
+
+        return $id;
+    }
+
+
+    /** Known from keywords
+     *
+     * Attachment pop-dialogs will be closed using javascript if they are called from pages of these 'from' types
+     *
+     * @return array  An array of known tokens (strings)
+     */
+    public function knownFroms()
+    {
+        return array_merge(parent::knownFroms(), array('frontpage', 'featured', 'article', 'category', 'details'));
+    }
+}
