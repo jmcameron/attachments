@@ -2001,7 +2001,7 @@ class AttachmentsHelper
         $a_class = 'modal-button mx-2';
         $tooltip = $add_attachment_txt;
 
-        $randomId = base64_encode('add' . $url);
+        $randomId = base64_encode('add' . $parent_id);
         // Remove +,/,= from the $randomId
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $tooltip === null ? '' : htmlspecialchars($tooltip, ENT_QUOTES, 'UTF-8');
