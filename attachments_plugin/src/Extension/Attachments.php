@@ -216,14 +216,6 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         // Always include the hide rule (since it may be needed to hide the custom tags)
         HTMLHelper::stylesheet('media/com_attachments/css/attachments_hide.css');
 
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        if (jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-        }
-
         // Exit if we should not display attachments for this parent
         if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity)) {
             return false;
@@ -327,14 +319,6 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         // Exit if there is no parent
         if ($parent_id === false) {
             return false;
-        }
-
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        if (jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
         }
 
         // Exit if we should not display attachments for this parent

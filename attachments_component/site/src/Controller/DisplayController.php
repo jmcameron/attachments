@@ -822,15 +822,6 @@ class DisplayController extends BaseController
             return '';
         }
 
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        $lang = $input->getWord('lang', '');
-        if ($lang and jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-        }
-
         /** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */
         $controller = $this->factory->createController('Attachments', 'Site', [], $this->app, $this->input);
         $response = $controller->displayString(

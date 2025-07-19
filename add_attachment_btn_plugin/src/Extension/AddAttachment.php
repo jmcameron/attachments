@@ -169,14 +169,6 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
             return;
         }
 
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        if (jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-        }
-
         // Add the regular css file
         HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
         HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
