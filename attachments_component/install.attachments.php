@@ -74,7 +74,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
     protected array $plugins = array('plg_content_attachments',
                          'plg_search_attachments',
                          'plg_attachments_plugin_framework',
-                         'plg_attachments_for_content',
+                         'plg_attachments_attachments_for_content',
                          'plg_editors-xtd_add_attachment_btn',
                          'plg_editors-xtd_insert_attachments_id_token_btn',
                          'plg_editors-xtd_insert_attachments_token_btn',
@@ -294,29 +294,31 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         $lang = $app->getLanguage();
         $lang->load('com_attachments', JPATH_ADMINISTRATOR);
 
-        // Enable all the plugins
-        foreach ($this->plugins as $plugin_name) {
-            // Make the query to enable the plugin
-            $plugin_title = Text::_($plugin_name);
-            $query = $db->getQuery(true);
-            $query->update('#__extensions');
-            $query->set("enabled = 1");
-            $query->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
-            try {
-                $db->setQuery($query);
-                $db->execute();
-            } catch (\RuntimeException $e) {
-                // Complain if there was an error
-                $errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
-                $errmsg .= $db->errorMsg;
-                $app->enqueueMessage($errmsg, 'error');
-                return false;
+        if ($type == "install" || $type == "discover_install") {
+            // Enable all the plugins
+            foreach ($this->plugins as $plugin_name) {
+                // Make the query to enable the plugin
+                $plugin_title = Text::_($plugin_name);
+                $query = $db->getQuery(true);
+                $query->update('#__extensions');
+                $query->set("enabled = 1");
+                $query->where('type=' . $db->quote('plugin') . ' AND name=' . $db->quote($plugin_name));
+                try {
+                    $db->setQuery($query);
+                    $db->execute();
+                } catch (\RuntimeException $e) {
+                    // Complain if there was an error
+                    $errmsg = Text::sprintf('ATTACH_WARNING_FAILED_ENABLING_PLUGIN_S', $plugin_title);
+                    $errmsg .= $db->errorMsg;
+                    $app->enqueueMessage($errmsg, 'error');
+                    return false;
+                }
+    
+                $app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
             }
-
-            $app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
+    
+            $app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
         }
-
-        $app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
 
         // Restore the attachments directory (if renamed)
         $attachdir = JPATH_ROOT . '/attachments';
