@@ -408,7 +408,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             // Fresh install, update the DB directly (otherwise, this should not be necessary)
             $query = $db->getQuery(true);
             $query->update('#__extensions');
-            $query->set('params=' . $db->quote('{\"secure\":\"1\"}'));
+            $query->set('params=' . $db->quote('{"secure":"1"}'));
             $query->where('type=' . $db->quote('component') . ' AND name=' . $db->quote('com_attachments'));
             try {
                 $db->setQuery($query);
