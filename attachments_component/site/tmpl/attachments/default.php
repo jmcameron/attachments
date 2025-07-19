@@ -270,7 +270,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             if ($this->use_fontawesome_icons) {
                 $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
             } else {
-                $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, $tooltip, null, true);
+                $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, null, null, true);
             }
             $show_link .= "&nbsp;" . $filename . "</a>";
         } else {
