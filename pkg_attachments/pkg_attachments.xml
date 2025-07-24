@@ -16,7 +16,6 @@
     <scriptfile>install.attachments.php</scriptfile>
 
     <files folder="packages">
-        <file type="component" id="com_attachments">attachments_component.zip</file>
         <file type="plugin" id="attachments" group="content">attachments_plugin.zip</file>
         <file type="plugin" id="attachments" group="search">attachments_search.zip</file>
         <file type="plugin" id="framework" group="attachments">attachments_plugin_framework.zip</file>
@@ -27,6 +26,9 @@
         <file type="plugin" id="insert_attachments_token" group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
         <file type="plugin" id="attachments" group="quickicon">attachments_quickicon_plugin.zip</file>
         <file type="plugin" id="attachments" group="finder">attachments_finder_plugin.zip</file>
+
+        <!-- Attachments Component enables all plugins on first install so it should be last in this list -->
+        <file type="component" id="com_attachments">attachments_component.zip</file>
     </files>
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>
