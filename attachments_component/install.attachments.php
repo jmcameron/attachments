@@ -363,7 +363,7 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
         // Ask the user for feedback
         $msg = Text::sprintf(
             'ATTACH_PLEASE_REPORT_BUGS_AND_SUGGESTIONS_TO_S',
-            '<a href="mailto:jmcameron@jmcameron.net">jmcameron@jmcameron.net</a>'
+            '<a href="https://github.com/jmcameron/attachments">Github JMCameron Attachments repository</a>'
         );
         $app->enqueueMessage("<div style=\"$emphasis $padding\">$msg</div>", 'message');
 
