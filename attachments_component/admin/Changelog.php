@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -61,12 +61,12 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2014-01-26 Fix for icon on editor-xtd add attachment button (J3)
     - 2014-05-30 Fixes to be more robust to partial/failed uninstalls
     - 2015-06-08 Disable all attachments plugins if component is uninstalled.
-        This should prevent problems when incorrectly uninstalling only the 
+        This should prevent problems when incorrectly uninstalling only the
         component. To uninstall correctly, uninstall the Attachments Package;
         it will uninstall the component and all plugins.
     - 2014-08-22 Refactored displaying attachments lists in editors
     - 2014-08-23 Disable all attachments plugins if uninstalling
-        the Attachments content plugin, the Attachments plugin framework 
+        the Attachments content plugin, the Attachments plugin framework
         plugin, and the Attachments for content plugin. See 2014-06-08 note.
     - 2014-08-23 Added checking for supported databases during installation.
     - 2014-09-14 Refactor of Attachments plugin API to better support
@@ -83,7 +83,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2015-02-01 Switched to semver-compatible version numbering
         (This version is not quite semver compliant but future ones will be)
     - 2015-02-01 Tested with Joomla 3.3.6 and 2.5.28 on Ubuntu
- 
+
 2013-11-15: Release 3.1.3 (Joomla 3.2 Compatibility Release)
     - 2013-09-21 Allow display of attachments lists in editors for non-article
     - 2013-10-13 Fixed migration importer handle obsolete 'section' attachments
@@ -140,7 +140,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
         Apparently, raiseWarning is not well supported by Joomla.   Switched the
         permissions related errors to 403 in the backend for nicer error handling.
     - 2012-11-12 Improved config variable (show_creator --> show_creator_name).
-    - 2012-11-12 Fixed stylesheet issue in editor by moving stylesheet additions 
+    - 2012-11-12 Fixed stylesheet issue in editor by moving stylesheet additions
         from show_attachments::contentAfterRender() to add_attachment::onDisplay()
         since afterRender is too late to add stylesheets.
     - 2012-11-12 Fix to show_attachments to handle various article editors better.
@@ -160,7 +160,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2013-02-22 Updates to catch up with Joomla deprecations (eg JRequest::checkToken()).
     - 2013-02-22 Fixed display of Attachments options in Joomla 3.x.
     - 2013-02-22 Got rid of old references to Joomla 1.7 (no longer compatible).
-    - 2013-02-22 Cosmetic improvements to frontend update/update dialogs.       
+    - 2013-02-22 Cosmetic improvements to frontend update/update dialogs.
     - 2013-03-01 Added ability to display non-public attachments to non-logged in users
         but require they log in before actually being able to access the attachments.
     - 2013-03-05 Fixed issue creating attachment for an article being created in Joomla 3.x.
@@ -195,7 +195,7 @@ Attachments 3.x Extension for Joomla 2.5+ and 3.x
     - 2013-05-15 Policy change: let super-user see attachments for all access levels.
     - 2013-05-17 Updated help page for Attachments 3.1 release.
     - 2013-05-19 Cleaned up code for attachments plugin framework and attachments_for_content.
-    - 2013-05-31 Fixed a few minor issues that came up in testing.  
+    - 2013-05-31 Fixed a few minor issues that came up in testing.
         Tested on Joomla 2.5.11 on Linux (Firefox), Windows (Firefox, IE, Chrome).
 
 2012-09-07: Release 3.0.4

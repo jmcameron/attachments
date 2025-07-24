@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -56,7 +56,7 @@ class AttachmentTable extends Table
      * @param   integer The user id of the user performing the operation.
      * @return  int Number of attachments published ( false if 0 )
      * @since   1.0.4
-     * @link http://docs.joomla.org/JTable/publish
+     * @link https://docs.joomla.org/JTable/publish
      */
     public function publish($pks = null, $state = 1, $userId = 0)
     {
@@ -195,7 +195,7 @@ class AttachmentTable extends Table
      *
      * @return  boolean  True on success.
      *
-     * @link http://docs.joomla.org/JTable/store
+     * @link https://docs.joomla.org/JTable/store
      */
     public function store($updateNulls = false)
     {

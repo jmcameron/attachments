@@ -11,7 +11,7 @@ There is only one supported version of Attachments:
     Attachments version 3.2+ for Joomla 2.5.7+ or 3.x
     -- The current version is 3.2.5 (updated for Joomla 3.7.0)
     -- The 3.x versions will NOT work on Joomla 1.5
-    -- See demo video: http://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
+    -- See demo video: https://www.youtube.com/watch?v=XMzOVNfYJIo&hd=1
     -- DOWNLOAD: http://joomlacode.org/gf/project/attachments3/frs/
     -- FORUMS: http://joomlacode.org/gf/project/attachments3/forum/
 

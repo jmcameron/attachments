@@ -8,7 +8,7 @@
  *
  * @author    Jonathan M. Cameron
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link      https://github.com/jmcameron/attachments
  */
 
@@ -313,10 +313,10 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
                     $app->enqueueMessage($errmsg, 'error');
                     return false;
                 }
-    
+
                 $app->enqueueMessage(Text::sprintf('ATTACH_ENABLED_ATTACHMENTS_PLUGIN_S', $plugin_title), 'message');
             }
-    
+
             $app->enqueueMessage(Text::_('ATTACH_ALL_ATTACHMENTS_PLUGINS_ENABLED'), 'message');
         }
 

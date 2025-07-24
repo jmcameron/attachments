@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -128,7 +128,7 @@ if ($this->error) {
         <p><label for="<?php echo $update_id; ?>"><?php echo Text::_('ATTACH_ENTER_URL') ?></label>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <label for="verify_url"><?php echo Text::_('ATTACH_VERIFY_URL_EXISTENCE') ?></label>
-        <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?> 
+        <input type="checkbox" name="verify_url" value="verify" <?php echo $this->verify_url_checked ?>
                title="<?php echo Text::_('ATTACH_VERIFY_URL_EXISTENCE_TOOLTIP'); ?>" />
         &nbsp;&nbsp;&nbsp;&nbsp;
         <label for="relative_url"><?php echo Text::_('ATTACH_RELATIVE_URL') ?></label>

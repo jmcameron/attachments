@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -73,7 +73,7 @@ for ($i = 0, $n = count($this->items); $i < $n; $i++) {
         <tr class="<?php echo "row$k" ?>">
            <td><?php echo $i ?></td>
            <td>
-               <a style="cursor: pointer;" 
+               <a style="cursor: pointer;"
                   onclick="window.parent.jSelectParentArticle('<?php echo $item->id; ?>', '
                              <?php echo str_replace(array("'", "\""), array("\\'", ""), $item->title); ?>', '
                              <?php echo $app->getInput()->get('object'); ?>');">

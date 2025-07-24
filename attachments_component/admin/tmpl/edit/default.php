@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -280,7 +280,7 @@ if ($update == 'file') {
 <?php endif; ?>
   <tr>
     <td class="key">
-        <label for="access" class="hasTip" 
+        <label for="access" class="hasTip"
            title="<?php echo $this->access_level_tooltip ?>">
            <?php echo Text::_('JFIELD_ACCESS_LABEL'); ?>
         </label>
@@ -321,7 +321,7 @@ if ($update == 'file') {
       <?php if ($secure) : ?>
       <td class="key hasTip" title="<?php echo $this->download_count_tooltip; ?>">
           <label for="download_count"><?php echo Text::_('ATTACH_NUMBER_OF_DOWNLOADS'); ?></label></td>
-      <td class="hasTip" name="download_count" 
+      <td class="hasTip" name="download_count"
           title="<?php echo $this->download_count_tooltip; ?>">
             <?php echo $attachment->download_count ?>
       </td>
@@ -356,7 +356,7 @@ if ($update == 'file') {
 <input type="hidden" name="old_parent_type" value="<?php echo $attachment->parent_type ?>" />
 <input type="hidden" name="old_parent_entity" value="<?php echo $attachment->parent_entity ?>" />
 <input type="hidden" name="new_parent_type" id="new_parent_type" value="<?php echo $this->new_parent_type; ?>" />
-<input type="hidden" name="new_parent_entity" id="new_parent_entity" 
+<input type="hidden" name="new_parent_entity" id="new_parent_entity"
        value="<?php echo $this->new_parent_entity;?>"
 />
 <input type="hidden" name="old_display_name" value="<?php echo $attachment->display_name; ?>" />
@@ -365,10 +365,10 @@ if ($update == 'file') {
 <input type="hidden" name="task" value="attachment.save" />
 <?php if ($this->in_popup) : ?>
 <div class="form_buttons" align="center">
-    <input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')" 
+    <input type="submit" name="submit" onclick="javascript: submitbutton('attachment.save')"
            value="<?php echo Text::_('ATTACH_SAVE'); ?>" />
     <span class="right">
-        <input type="button" name="cancel" 
+        <input type="button" name="cancel"
                value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
                onClick="window.parent.bootstrap.Modal.getInstance(
                          window.parent.document.querySelector('.joomla-modal.show')).hide();" />

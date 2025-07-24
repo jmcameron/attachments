@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -48,8 +48,8 @@ $uri = Uri::getInstance();
     }
 </script>
 
-<form action="<?php echo Route::_('index.php?option=com_config');?>" 
-      id="component-form" method="post" name="adminForm" autocomplete="off" 
+<form action="<?php echo Route::_('index.php?option=com_config');?>"
+      id="component-form" method="post" name="adminForm" autocomplete="off"
       class="form-validate form-horizontal">
     <div class="row-fluid">
         <div class="span10">

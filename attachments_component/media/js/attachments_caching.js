@@ -1,7 +1,7 @@
 /**
  * Include CSS via Javascript
  *
- * Adapted from:  http://snippets.dzone.com/posts/show/4554
+ * Adapted from:  https://snippets.dzone.com/posts/show/4554
  *
  * By Jonathan Cameron
  *
