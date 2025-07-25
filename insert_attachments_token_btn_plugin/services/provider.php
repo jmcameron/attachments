@@ -12,13 +12,14 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Plugin\EditorsXtd\InsertAttachmentsToken\Extension\InsertAttachmentsToken;
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use JMCameron\Plugin\EditorsXtd\InsertAttachmentsToken\Extension\InsertAttachmentsToken;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -36,6 +37,21 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        // Only register the plugin if com_attachments is installed and enabled
+        if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
+            !PluginHelper::isEnabled('attachments', 'framework')) {
+
+            // Show an error message if the plugin is not available
+            $lang = Factory::getApplication()->getLanguage();
+            $lang->load('plg_editors-xtd_insert_attachments_token_btn', JPATH_PLUGINS . '/editors-xtd/insert_attachments_token');
+            Factory::getApplication()->enqueueMessage(
+                Text::_('ATTACH_INSERT_ATTACHMENTS_TOKEN_PLUGIN_ATTACHMENTS_FRAMEWORK_NOT_AVAILABLE'),
+                'error'
+            );
+            return;
+        }
+
+
         $container->set(
             PluginInterface::class,
             function (Container $container) {

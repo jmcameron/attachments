@@ -12,13 +12,15 @@
  * @author Jonathan M. Cameron
  */
 
+use JMCameron\Plugin\System\ShowAttachments\Extension\ShowAttachments;
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use JMCameron\Plugin\System\ShowAttachments\Extension\ShowAttachments;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -36,6 +38,24 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        // Only register the plugin if com_attachments is installed and enabled
+        if (!class_exists("JMCameron\\Component\\Attachments\\Site\\Helper\\AttachmentsHelper") || 
+            !class_exists("JMCameron\\Component\\Attachments\\Site\\Helper\\AttachmentsJavascript") || 
+            !class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") ||
+            !ComponentHelper::isEnabled('com_attachments') ||
+            !PluginHelper::isEnabled('attachments', 'framework')) {
+
+            // Show an error message if the plugin is not available
+            $lang = Factory::getApplication()->getLanguage();
+            $lang->load('plg_system_show_attachments_in_editor', JPATH_PLUGINS . '/system/show_attachments');
+            Factory::getApplication()->enqueueMessage(
+                Text::_('ATTACH_SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_ATTACHMENTS_COMPONENT_NOT_AVAILABLE'),
+                'error'
+            );
+
+            return;
+        }
+
         $container->set(
             PluginInterface::class,
             function (Container $container) {

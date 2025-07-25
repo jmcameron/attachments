@@ -26,15 +26,7 @@ use Joomla\Event\SubscriberInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-
-
-/** Load the Attachments defines (if available) */
-if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_attachments/attachments.xml')) {
-    // Exit quietly if the attachments component has been uninstalled or deleted
-    return;
-}
 // phpcs:enable PSR1.Files.SideEffects
-
 /**
  * Show Attachments in Editor system plugin
  *
@@ -124,10 +116,6 @@ class ShowAttachments extends CMSPlugin implements SubscriberInterface
         // Get the article/parent handler
         if (!PluginHelper::importPlugin('attachments')) {
             // Exit if the framework does not exist (eg, during uninstallaton)
-            return false;
-        }
-        if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager")) {
-            // Exit if the function does not exist (eg, during uninstallaton)
             return false;
         }
 

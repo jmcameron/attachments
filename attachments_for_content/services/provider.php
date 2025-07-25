@@ -13,8 +13,10 @@
  */
 
 use JMCameron\Plugin\Attachments\AttachmentsForContent\Extension\AttachmentsForContent;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -36,6 +38,24 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        // Only register the plugin if com_attachments is installed and enabled
+        if (!class_exists("JMCameron\\Component\\Attachments\\Administrator\\Helper\\AttachmentsPermissions") || 
+            !class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
+            !class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\PlgAttachmentsFramework") || 
+            !ComponentHelper::isEnabled('com_attachments') ||
+            !PluginHelper::isEnabled('attachments', 'framework')) {
+
+            // Show an error message if the plugin is not available
+            $lang = Factory::getApplication()->getLanguage();
+            $lang->load('plg_attachments_attachments_for_content', JPATH_PLUGINS . '/attachments/attachments_for_content');
+            Factory::getApplication()->enqueueMessage(
+                Text::_('ATTACH_ATTACHMENTS_FOR_CONTENT_COM_ATTACHMENTS_COMPONENT_NOT_AVAILABLE'),
+                'error'
+            );
+
+            return;
+        }
+
         $container->set(
             PluginInterface::class,
             function (Container $container) {
