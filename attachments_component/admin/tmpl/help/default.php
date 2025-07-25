@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -704,7 +704,7 @@ $toggle_img = Uri::root(true) . '/media/system/images/tooltip.png';
                     $this->addWarning('ATTACH_HELP_100200_WARNING');
                     $this->addParagraph('ATTACH_HELP_100300_TEXT');
                     $this->startList();
-                    $manual_url = 'http://jmcameron.net/attachments/';
+                    $manual_url = 'https://jmcameron.net/attachments/';
                     $manual_url_text = Text::sprintf('ATTACH_HELP_100400_TEXT', $manual_url);
                     $this->addListElementHtml(
                         "<a class=\"reference external\" href=\"$manual_url\">$manual_url_text</a>"
@@ -901,7 +901,7 @@ $toggle_img = Uri::root(true) . '/media/system/images/tooltip.png';
                         'ATTACH_HELP_191100_TEXT'
                     );
                     $this->addListElementLink(
-                        'http://www.zap.org.au/documents/icons/file-icons/sample.html',
+                        'https://www.zap.org.au/documents/icons/file-icons/sample.html',
                         'ATTACH_HELP_191200_TEXT'
                     );
                     $this->addListElementLink(
@@ -937,7 +937,7 @@ $toggle_img = Uri::root(true) . '/media/system/images/tooltip.png';
 
                     ?>
 
-<a id="tc_toggle" href="<?php echo $this->toggledURL() ?>" 
+<a id="tc_toggle" href="<?php echo $this->toggledURL() ?>"
    title="<?php echo $tlc ?>"><img src="<?php echo $toggle_img ?>">
 </a>
 </div><!-- end div.main -->

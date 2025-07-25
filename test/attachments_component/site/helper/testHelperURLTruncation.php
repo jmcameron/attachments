@@ -7,7 +7,7 @@
  * @subpackage Attachments_helper
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -32,9 +32,9 @@ class AttachmentsHelper3 extends AttachmentsHelper
      * Truncate the URL if it is longer than the maxlen
      * Do this by deleting necessary characters from the middle of the URL
      *
-     * Always preserve the 'http://' part on the left.
+     * Always preserve the 'https://' or 'http://' part on the left.
      *
-     * NOTE: The 'maxlen' applies only to the part after the 'http://'
+     * NOTE: The 'maxlen' applies only to the part after the 'https://' or 'https://'
      *
      * @param string $raw_url the input URL
      * @param int $maxlen the maximum allowed length (0 means no limit)

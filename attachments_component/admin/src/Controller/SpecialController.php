@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -75,7 +75,7 @@ class SpecialController extends BaseController
      */
     public function showSEF()
     {
-        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">';
         echo "<html><head><title>SEF Status</title></head><body>";
         echo "SEF: " . $this->app->getCfg('sef') . "<br />";
         echo "</body></html>";
@@ -122,7 +122,7 @@ class SpecialController extends BaseController
             throw new \Exception($errmsg, 500);
         }
 
-        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">';
         echo '<html><head><title>Attachment IDs</title></head><body>';
         echo 'Attachment IDs:<br/>';
 

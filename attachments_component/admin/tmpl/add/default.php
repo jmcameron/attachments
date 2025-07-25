@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -117,7 +117,7 @@ $wa->useScript('form.validate');
   <tr>
     <td class="key"><label for="parent_title"><?php echo $this->selpar_label ?></label></td>
     <td><?php echo $alt_parent_html; ?>
-      <input id="parent_title" 
+      <input id="parent_title"
               value="<?php echo $attachment->parent_title ?>"
               disabled="disabled" type="text" size="60" />&nbsp;
     <?php
@@ -155,7 +155,7 @@ $wa->useScript('form.validate');
     </td>
   </tr>
   <tr>
-    <td class="key"><label for="display_name" class="hasTip" 
+    <td class="key"><label for="display_name" class="hasTip"
         title="<?php echo $this->display_filename_tooltip; ?>">
         <?php echo Text::_('ATTACH_DISPLAY_FILENAME'); ?></label></td>
     <td>
@@ -258,12 +258,12 @@ $wa->useScript('form.validate');
     <?php if ($this->from == 'closeme') : ?>
     <div class="form_buttons" align="center">
         <button type="button"
-                class="btn btn-primary" 
+                class="btn btn-primary"
                 onclick="Joomla.submitbutton('attachment.saveNew')">
             <?php echo Text::_('ATTACH_UPLOAD_VERB'); ?>
        </button>
        <span class="right">
-          <input class="btn btn-primary" type="button" 
+          <input class="btn btn-primary" type="button"
                  value="<?php echo Text::_('ATTACH_CANCEL'); ?>"
                  onClick="window.parent.bootstrap.Modal.getInstance(
                                 window.parent.document.querySelector('.joomla-modal.show')

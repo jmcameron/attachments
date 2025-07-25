@@ -8,7 +8,7 @@
  *
  * @author      Jonathan M. Cameron <jmcameron@jmcameron.net>
  * @copyright   Copyright (C) 2009-2025 Jonathan M. Cameron, All Rights Reserved
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  */
 

@@ -7,7 +7,7 @@
  * @subpackage Add_Attachment_Button_Plugin
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -169,14 +169,6 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
             return;
         }
 
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        if (jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-        }
-
         // Add the regular css file
         HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
         HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
@@ -205,7 +197,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
         $button->link = $link;
         $button->icon = 'attachment';
         // phpcs:disable
-        $button->iconSVG = '<svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512">
+        $button->iconSVG = '<svg xmlns="https://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512">
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
         <path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"/>
         </svg>';

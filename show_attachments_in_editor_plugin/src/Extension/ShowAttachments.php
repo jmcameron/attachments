@@ -7,7 +7,7 @@
  * @subpackage Show_Attachments_In_Editor_Plugin
  *
  * @copyright Copyright (C) 2009-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -151,14 +151,6 @@ class ShowAttachments extends CMSPlugin implements SubscriberInterface
         if ($parent->showAttachmentsInEditor($parent_entity, $view, $layout)) {
             // Get the article/parent handler
             $user_can_add = $parent->userMayAddAttachment($parent_id, $parent_entity);
-
-            // NOTE: I cannot find anything about AttachmentsRemapper class.
-            // Could it be old unnecessary code that needs deletion?
-            // ------------------------------------------------------
-            // Allow remapping of parent ID (eg, for Joomfish)
-            if (jimport('attachments_remapper.remapper')) {
-                $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
-            }
 
             // Force the ID to zero when creating the entity
             if (!$parent_id) {

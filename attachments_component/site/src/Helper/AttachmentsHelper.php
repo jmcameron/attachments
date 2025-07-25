@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -79,9 +79,9 @@ class AttachmentsHelper
      * Truncate the URL if it is longer than the maxlen
      * Do this by deleting necessary characters from the middle of the URL
      *
-     * Always preserve the 'http://' part on the left.
+     * Always preserve the 'https://' or 'http://' part on the left.
      *
-     * NOTE: The 'maxlen' applies only to the part after the 'http://'
+     * NOTE: The 'maxlen' applies only to the part after the 'https://' or 'http://'
      *
      * @param string $raw_url the input URL
      * @param int $maxlen the maximum allowed length (0 means no limit)
@@ -95,7 +95,7 @@ class AttachmentsHelper
             return $raw_url;
         }
 
-        // Get the part after the protocol ('http://')
+        // Get the part after the protocol ('https://' or 'http://')
         $parts = explode('//', $raw_url, 2);
         $protocol = $parts[0];
 
@@ -369,7 +369,7 @@ class AttachmentsHelper
 
     /**
      * Make sure a file is not a double-extension exploit
-     *   See:  http://www.acunetix.com/websitesecurity/upload-forms-threat/
+     *   See:  https://www.acunetix.com/websitesecurity/upload-forms-threat/
      *
      * @param string $filename  the filename
      *
@@ -1012,7 +1012,7 @@ class AttachmentsHelper
             $url = $uri->base(true) . "/" . $raw_url;
         }
 
-        // Thanks to http://www.roscripts.com/PHP_regular_expressions_examples-136.html
+        // Thanks to https://www.roscripts.com/PHP_regular_expressions_examples-136.html
         // For parts of the URL regular expression here
 
         if (

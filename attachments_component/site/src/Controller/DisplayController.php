@@ -7,7 +7,7 @@
  * @subpackage Attachments_Component
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
@@ -820,15 +820,6 @@ class DisplayController extends BaseController
 
         if (($parent_id === false) || ($parent_type == '')) {
             return '';
-        }
-
-        // NOTE: I cannot find anything about AttachmentsRemapper class.
-        // Could it be old unnecessary code that needs deletion?
-        // ------------------------------------------------------
-        // Allow remapping of parent ID (eg, for Joomfish)
-        $lang = $input->getWord('lang', '');
-        if ($lang and jimport('attachments_remapper.remapper')) {
-            $parent_id = AttachmentsRemapper::remapParentID($parent_id, $parent_type, $parent_entity);
         }
 
         /** @var \JMCameron\Component\Attachments\Site\Controller\AttachmentsController $controller */

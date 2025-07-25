@@ -7,7 +7,7 @@
  * @subpackage Attachments_Quickicon_Plugin
  *
  * @copyright Copyright (C) 2013-2025 Jonathan M. Cameron, All Rights Reserved
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
