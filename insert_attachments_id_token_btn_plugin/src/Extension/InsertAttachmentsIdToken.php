@@ -14,8 +14,6 @@
 
 namespace JMCameron\Plugin\EditorsXtd\InsertAttachmentsIdToken\Extension;
 
-use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
-use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Button\Button;
@@ -25,8 +23,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
 
