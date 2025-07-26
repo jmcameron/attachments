@@ -38,6 +38,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        if (!PluginHelper::isEnabled('attachments', 'attachments_for_content')) {
+            return;
+        }
         // Only register the plugin if com_attachments is installed and enabled
         if (!class_exists("JMCameron\\Component\\Attachments\\Administrator\\Helper\\AttachmentsPermissions") || 
             !class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 

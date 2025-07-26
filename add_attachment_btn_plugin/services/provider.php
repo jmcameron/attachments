@@ -38,6 +38,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        if (!PluginHelper::isEnabled('editors-xtd', 'add_attachment')) {
+            return;
+        }
         // Only register the plugin if com_attachments is installed and enabled
         if (!class_exists("JMCameron\\Component\\Attachments\\Site\\Helper\\AttachmentsJavascript") || 
             !class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
@@ -46,7 +49,7 @@ return new class () implements ServiceProviderInterface {
 
             // Show an error message if the plugin is not available
             $lang = Factory::getApplication()->getLanguage();
-            $lang->load('plg_editors-xtd_add_attachment_btn', JPATH_PLUGINS . '/editors-xtd/add_attachment');
+            $lang->load('plg_editors-xtd_add_attachment', JPATH_PLUGINS . '/editors-xtd/add_attachment');
             Factory::getApplication()->enqueueMessage(
                 Text::_('ATTACH_ADD_ATTACHMENT_BTN_COM_ATTACHMENTS_COMPONENT_NOT_AVAILABLE'),
                 'error'

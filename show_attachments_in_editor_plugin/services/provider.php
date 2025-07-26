@@ -38,6 +38,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        if (!PluginHelper::isEnabled('system', 'show_attachments')) {
+            return;
+        }
         // Only register the plugin if com_attachments is installed and enabled
         if (!class_exists("JMCameron\\Component\\Attachments\\Site\\Helper\\AttachmentsHelper") || 
             !class_exists("JMCameron\\Component\\Attachments\\Site\\Helper\\AttachmentsJavascript") || 
@@ -47,7 +50,7 @@ return new class () implements ServiceProviderInterface {
 
             // Show an error message if the plugin is not available
             $lang = Factory::getApplication()->getLanguage();
-            $lang->load('plg_system_show_attachments_in_editor', JPATH_PLUGINS . '/system/show_attachments');
+            $lang->load('plg_system_show_attachments', JPATH_PLUGINS . '/system/show_attachments');
             Factory::getApplication()->enqueueMessage(
                 Text::_('ATTACH_SHOW_ATTACHMENTS_IN_EDITOR_PLUGIN_ATTACHMENTS_COMPONENT_NOT_AVAILABLE'),
                 'error'

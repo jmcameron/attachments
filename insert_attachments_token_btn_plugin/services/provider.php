@@ -37,6 +37,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        if (!PluginHelper::isEnabled('editors-xtd', 'insert_attachments_token')) {
+            return;
+        }
         // Only register the plugin if com_attachments is installed and enabled
         if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
             !PluginHelper::isEnabled('attachments', 'framework')) {

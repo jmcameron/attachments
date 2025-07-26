@@ -37,6 +37,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
+        if (!PluginHelper::isEnabled('search', 'attachments')) {
+            return;
+        }
         // Only register the plugin if com_attachments and attachments_framework are installed and enabled
         if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
             !PluginHelper::isEnabled('attachments', 'framework')) {
