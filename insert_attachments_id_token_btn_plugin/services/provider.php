@@ -11,15 +11,16 @@
  * @link https://github.com/jmcameron/attachments
  * @author Jonathan M. Cameron
  */
+
 use JMCameron\Plugin\EditorsXtd\InsertAttachmentsIdToken\Extension\InsertAttachmentsIdToken;
-
-
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -39,6 +40,7 @@ return new class () implements ServiceProviderInterface {
         if (!PluginHelper::isEnabled('editors-xtd', 'insert_attachments_id_token')) {
             return;
         }
+
         // Only register the plugin if com_attachments is installed and enabled
         if (!class_exists("JMCameron\\Plugin\\AttachmentsPluginFramework\\AttachmentsPluginManager") || 
             !PluginHelper::isEnabled('attachments', 'framework')) {
@@ -52,6 +54,7 @@ return new class () implements ServiceProviderInterface {
             );
             return;
         }
+        
         $container->set(
             PluginInterface::class,
             function (Container $container) {
