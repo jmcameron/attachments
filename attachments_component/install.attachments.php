@@ -376,10 +376,22 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
      */
     protected function installPermissions()
     {
-        include_once "admin/src/Helper/AttachmentsUpdate.php";
-        include_once "site/src/Helper/AttachmentsDefines.php";
-        include_once "site/src/Helper/AttachmentsFileTypes.php";
-        include_once "site/src/Helper/AttachmentsHelper.php";
+        if (!class_exists('\JMCameron\Component\Attachments\Administrator\Helper\AttachmentsUpdate')) {
+            // Include the AttachmentsUpdate class if it is not already loaded
+            include_once 'admin/src/Helper/AttachmentsUpdate.php';
+        }
+        if (!class_exists('\JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines')) {
+            // Include the AttachmentsDefines class if it is not already loaded
+            include_once 'site/src/Helper/AttachmentsDefines.php';
+        }
+        if (!class_exists('\JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes')) {
+            // Include the AttachmentsFileTypes class if it is not already loaded
+            include_once "site/src/Helper/AttachmentsFileTypes.php";
+        }
+        if (!class_exists('\JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper')) {
+            // Include the AttachmentsHelper class if it is not already loaded
+            include_once 'site/src/Helper/AttachmentsHelper.php';
+        }
 
         /**
          * Load the Attachments defines
