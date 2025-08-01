@@ -1,4 +1,4 @@
-# attachments 4.1.5
+# attachments 4.1.6
 
 ## Quick Start
 
@@ -9,10 +9,21 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
 
 
+## 2025-08-01 version 4.1.6
+
+- fix issue [#140](/../../issues/140) Accessibility issue
+- fix issue [#145](/../../issues/145) The add attachment link on the articles of the front page does not correspond to the right article
+- Fix model ids for adding, editing, deleting attachments [#146](/../../pull/146)
+- Remove some unknown legacy code
+- Fixes for installation [#140](/../../pull/140)
+- Fixes some links in copyrights
+- Fixes for JED Checker warnings
+- Fix issue [#150](/../../issues/150) Missing attachments.xml brakes joomla 
+
+
 ## 2025-06-22 version 4.1.5
 
 - fix issue [#137](/../../issues/137) PSR12 compatibility
-
 
 ## 2025-06-22 version 4.1.4
 
