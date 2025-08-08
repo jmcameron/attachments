@@ -82,7 +82,7 @@ fixsha:
 	./fixsha.sh $(ZIPFILE) 'update_pkg.xml'
 
 fixcopyrights:
-	@find . \( -name '*.php' -o -name '*.ini' -o -name '*.xml' \) -exec ./fixcopyright.sh {} \;
+	@find . \( -name '*.php' -o -name '*.ini' -o -name '*.xml' \) -exec ./fixcopyrights.sh {} \;
 
 check: 
 	find . -type f -exec grep -n '???' {} /dev/null \; | egrep -v -e '(\.git|\.zip|\.gif|\.png|\.org|plugin_manual|coverage_|/temp/)'
