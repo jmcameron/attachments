@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="attachments" version="2.5" method="upgrade">
+    <name>plg_attachments_attachments_for_content</name>
+    <version>4.1.6</version>
+    <creationDate>August  1, 2025</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <description>ATTACH_ATTACHMENTS_FOR_CONTENT_PLUGIN_DESCRIPTION</description>
+    <namespace path="src">JMCameron\Plugin\Attachments\AttachmentsForContent</namespace>
+
+    <scriptfile>install.php</scriptfile>
+
+    <files>
+        <folder>src</folder>
+        <folder plugin="attachments_for_content">services</folder>
+        <filename>index.html</filename>
+        <folder>language</folder>
+</files>
+<languages>
+    <language tag="pt-BR">language/pt-BR/pt-BR.plg_attachments_attachments_for_content.ini</language>
+    <language tag="pt-BR">language/pt-BR/pt-BR.plg_attachments_attachments_for_content.sys.ini</language>
+</languages>
+    </files>
+
+</extension>

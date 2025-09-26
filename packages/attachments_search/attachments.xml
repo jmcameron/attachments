@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="search" version="4.0" method="upgrade">
+    <name>plg_search_attachments</name>
+    <version>4.1.6</version>
+    <creationDate>August  1, 2025</creationDate>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <description>ATTACH_ATTACHMENTS_SEARCH_PLUGIN_DESCRIPTION</description>
+    <namespace path="src">JMCameron\Plugin\Search\Attachments</namespace>
+
+    <files>
+    <folder>src</folder>
+    <folder plugin="attachments">services</folder>
+	<filename>index.html</filename>
+	<folder>language</folder>
+    </files>
+    <languages>
+        <language tag="pt-BR">language/pt-BR/pt-BR.plg_search_attachments.ini</language>
+        <language tag="pt-BR">language/pt-BR/pt-BR.plg_search_attachments.sys.ini</language>
+    </languages>
+    </files>
+
+    <config>
+	<fields name="params">
+	    <fieldset name="basic">
+		<field name="search_limit" type="text" size="5" default="50"
+		       label="ATTACH_SEARCH_LIMIT" description="ATTACH_SEARCH_LIMIT_DESCRIPTION"/>
+	    </fieldset>
+	</fields>
+    </config>
+
+</extension>

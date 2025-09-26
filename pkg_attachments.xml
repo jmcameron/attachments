@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="4.0" method="upgrade">
+    <name>pkg_attachments</name>
+    <packagename>attachments</packagename>
+    <version>4.1.6</version>
+    <creationDate>August  1, 2025</creationDate>
+    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <author>Jonathan M. Cameron</author>
+    <authorEmail>jmcameron@jmcameron.net</authorEmail>
+    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+    <packager>Jonathan M. Cameron</packager>
+    <packagerurl>https://github.com/jmcameron/attachments</packagerurl>
+    <description>ATTACH_PACKAGE_ATTACHMENTS_FOR_JOOMLA_40PLUS</description>
+
+    <scriptfile>install.attachments.php</scriptfile>
+
+    <files folder="packages">
+        <file type="plugin" id="attachments" group="content">attachments_plugin.zip</file>
+        <file type="plugin" id="attachments" group="search">attachments_search.zip</file>
+        <file type="plugin" id="framework" group="attachments">attachments_plugin_framework.zip</file>
+        <file type="plugin" id="attachments_for_content" group="attachments">attachments_for_content.zip</file>
+        <file type="plugin" id="show_attachments" group="system">show_attachments_in_editor_plugin.zip</file>
+        <file type="plugin" id="add_attachment"	 group="editors-xtd">add_attachment_btn_plugin.zip</file>
+        <file type="plugin" id="insert_attachments_id_token" group="editors-xtd">insert_attachments_id_token_btn_plugin.zip</file>
+        <file type="plugin" id="insert_attachments_token" group="editors-xtd">insert_attachments_token_btn_plugin.zip</file>
+        <file type="plugin" id="attachments" group="quickicon">attachments_quickicon_plugin.zip</file>
+        <file type="plugin" id="attachments" group="finder">attachments_finder_plugin.zip</file>
+
+        <!-- Attachments Component enables all plugins on first install so it should be last in this list -->
+        <file type="component" id="com_attachments">attachments_component.zip</file>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_attachments.sys.ini</language>
+        <language tag="el-GR">language/el-GR/el-GR.pkg_attachments.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.pkg_attachments.sys.ini</language>
+    <language tag="pt-BR">language/pt-BR/pt-BR.pkg_attachments.sys.ini</language>
+    </languages>
+
+    <updateservers>
+       <server type="extension" priority="1" name="Attachments Updates">https://raw.githubusercontent.com/jmcameron/attachments/master/pkg_attachments/update_pkg.xml</server>
+    </updateservers>
+
+</extension>
