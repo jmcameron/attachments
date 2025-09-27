@@ -8,6 +8,16 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
 
+## Translations
+
+The translations for 
+- fr-FR (France)
+- gb-GB (Great Britain)
+- gr-GR (Greek)
+are included in current package
+
+The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations/https://github.com/jmcameron/attachments_translations)
+
 
 ## 2025-08-01 version 4.1.6
 
