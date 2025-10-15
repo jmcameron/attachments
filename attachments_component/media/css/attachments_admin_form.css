@@ -88,12 +88,12 @@ table.adminlist th {
 
 table.adminlist th.at_checked {
     padding: 0;
-    text-align: center;
+    text-align: left;
     width: 20px;
 }
 
 table.adminlist th.at_published {
-    text-align: center;
+    text-align: left;
 }
 
 table.adminlist th.at_filename {
@@ -105,7 +105,7 @@ table.adminlist th.at_description {
 }
 
 table.adminlist th.at_access {
-    text-align: center;
+    text-align: left;
 }
 
 table.adminlist th.at_user_field {
@@ -113,11 +113,11 @@ table.adminlist th.at_user_field {
 }
 
 table.adminlist th.at_file_type {
-    text-align: center;
+    text-align: left;
 }
 
 table.adminlist th.at_file_size {
-    text-align: center;
+    text-align: left;
 }
 
 table.adminlist th.at_creator_name {
@@ -133,7 +133,7 @@ table.adminlist th.at_mod_date {
 }
 
 table.adminlist th.at_downloads {
-    text-align: center;
+    text-align: left;
 }
 
 table.adminlist td {
@@ -164,13 +164,13 @@ table.adminlist td.at_filename a img {
 }
 
 table.adminlist td.at_checked {
-    text-align: center;
+    text-align: left;
     width: 20px;
     padding: 0;
 }
 
 table.adminlist td.at_published {
-    text-align: center;
+    text-align: left;
     padding: 4px 0 4px 8px;
 }
 
@@ -180,7 +180,7 @@ table.adminlist td.at_description {
 }
 
 table.adminlist td.at_access {
-    text-align: center;
+    text-align: left;
     padding: 4px 0 4px 8px;
 }
 
@@ -190,12 +190,12 @@ table.adminlist td.at_user_field {
 }
 
 table.adminlist td.at_file_type {
-    text-align: center;
+    text-align: left;
     padding: 4px 0 4px 8px;
 }
 
 table.adminlist td.at_file_size {
-    text-align: center;
+    text-align: left;
     padding: 4px 0 4px 8px;
 }
 
@@ -215,7 +215,7 @@ table.adminlist td.at_mod_date {
 }
 
 table.adminlist td.at_downloads {
-    text-align: center;
+    text-align: left;
     padding: 4px 0 4px 8px;
 }
 
@@ -241,7 +241,7 @@ span.error {
 table.adminlist td.showlinks a {
     font-size: 110%;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -517,7 +517,7 @@ div.attachmentsWarning div.form_buttons,
 form.attachmentsBackend div.form_buttons {
     margin-top: 4px;
     padding: 8px 20px 8px 20px;
-    text-align: center;
+    text-align: left;
 }
 
 form.attachmentsBackend span.right {
@@ -553,7 +553,7 @@ form.attachmentsBackend table.admintable td.key2 {
     padding: 0 4px 0 4px;
     margin: 2px 0 2px 0;
     vertical-align: middle;
-    text-align: right;
+    text-align: left;
 }
 
 form.attachmentsBackend table.admintable td.key2 {
@@ -572,7 +572,7 @@ form.attachmentsBackend table.admintable td.at_title {
 
 form.attachmentsBackend fieldset.adminform label {
     vertical-align: middle;
-    text-align: right;
+    text-align: left;
 }
 
 form.attachmentsBackend fieldset.adminform label#upload_file_label {
@@ -679,7 +679,7 @@ ul#attachments-options>li select {
 ul#attachments-options>li>label {
     min-width: 21em;
     width: 21em;
-    text-align: right;
+    text-align: left;
     padding: 0 8px 0 0;
     margin: 0 2px 4px 0;
 }
@@ -733,7 +733,7 @@ div.attachmentsWarning h1 {
     line-height: normal;
     font-size: 250%;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     color: #F00;
     border-bottom: 1px solid #DDD;
 }
@@ -742,7 +742,7 @@ div.attachmentsWarning h2 {
     line-height: normal;
     font-size: 175%;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     margin: 1em 0 1em 0;
 }
 
