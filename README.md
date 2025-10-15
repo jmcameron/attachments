@@ -25,7 +25,7 @@ The other translations are managed with separate packages under repo [attachment
 - fix issue [#145](/../../issues/145) The add attachment link on the articles of the front page does not correspond to the right article
 - Fix model ids for adding, editing, deleting attachments [#146](/../../pull/146)
 - Remove some unknown legacy code
-- Fixes for installation [#140](/../../pull/140)
+- Fixes for installation [#148](/../../pull/148)
 - Fixes some links in copyrights
 - Fixes for JED Checker warnings
 - Fix issue [#150](/../../issues/150) Missing attachments.xml brakes joomla 
