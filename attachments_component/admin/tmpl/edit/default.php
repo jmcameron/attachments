@@ -71,7 +71,7 @@ if ($update == 'file') {
 ?>
 <?php if ($this->in_popup) : ?>
 <div class="attachmentsBackendTitle">
-    <h1><?php echo Text::_('ATTACH_UPDATE_ATTACHMENT_COLON') . " " . $attachment->filename; ?></h1>
+    <h2><?php echo Text::_('ATTACH_UPDATE_ATTACHMENT_COLON') . " " . $attachment->filename; ?></h2>
 </div>
 <?php endif; ?>
 <form class="attachmentsBackend" action="<?php echo $this->save_url; ?>" method="post" <?php echo $enctype ?>
