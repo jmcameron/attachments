@@ -398,8 +398,9 @@ class AttachmentsModel extends BaseDatabaseModel
             $user_id = $user->get('id');
             $query->where('a.parent_id IS NULL AND u.id=' . (int)$user_id);
         } else {
-            $query->where('a.parent_id=' . (int)$parent_id);
-
+            if ($attachmentid == NULL) {
+                $query->where('a.parent_id=' . $parent_id);
+            }
             // Handle the state part of the query
             if ($user->authorise('core.edit.state', 'com_attachments')) {
                 // Do not filter on state since this user can change the state of any attachment
