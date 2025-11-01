@@ -16,7 +16,7 @@ The translations for
 - gr-GR (Greek)
 are included in current package
 
-The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations/https://github.com/jmcameron/attachments_translations)
+The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations)
 
 
 ## 2025-08-01 version 4.1.6
