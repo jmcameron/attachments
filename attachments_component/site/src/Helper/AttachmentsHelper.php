@@ -1567,7 +1567,7 @@ class AttachmentsHelper
             ->bootComponent("com_attachments")
             ->getMVCFactory();
         /** @var \JMCameron\Component\Attachments\Site\Model\AttachmentModel $model */
-        $model = $mvc->createModel('Attachment');
+        $model = $mvc->createModel('Attachment', 'Site');
         $model->setId($id);
         $attachment = $model->getAttachment();
         if (!$attachment) {
