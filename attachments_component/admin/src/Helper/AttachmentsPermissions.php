@@ -35,7 +35,7 @@ class AttachmentsPermissions
     /**
      * Get the actions
      *
-     * @return an array of which actions are permitted for this user
+     * @return Registry a registry object of which actions are permitted for this user
      */
     public static function getActions($user_id = null)
     {
