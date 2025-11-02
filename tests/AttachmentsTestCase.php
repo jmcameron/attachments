@@ -74,6 +74,13 @@ abstract class AttachmentsTestCase extends TestCase
         if (!defined('_JEXEC')) {
             define('_JEXEC', 1);
         }
+        if (!defined('JPATH_CONFIGURATION')) {
+            define('JPATH_CONFIGURATION', JPATH_ROOT);
+        }
+        if (!defined('JDEBUG')) {
+            define('JDEBUG', 0);
+        }
+
 
         $this->setUpJoomlaMocks();
     }
@@ -83,37 +90,7 @@ abstract class AttachmentsTestCase extends TestCase
      */
     protected function setUpJoomlaMocks(): void
     {
-        // Mock the User class first (required for AttachmentsTestCase)
-        if (!class_exists('Joomla\CMS\User\User')) {
-            eval('
-                namespace Joomla\CMS\User {
-                    class User {
-                        public $id;
-                        public $name;
-                        public $username;
-                        public $email;
-                        public $groups = [];
-                        
-                        public function authorise($action, $assetName = null) {
-                            return false;
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Mock the Container class
-        if (!class_exists('Joomla\DI\Container')) {
-            eval('
-                namespace Joomla\DI {
-                    class Container {
-                        public function get($key) {
-                            return new \stdClass();
-                        }
-                    }
-                }
-            ');
-        }
+        $this->getMockBuilder(\Joomla\CMS\User\UserFactory::class);
 
         // Create mock container
         $this->mockContainer = $this->getMockBuilder('Joomla\DI\Container')
@@ -131,54 +108,11 @@ abstract class AttachmentsTestCase extends TestCase
             ->onlyMethods(['authorise'])
             ->getMock();
 
-        // Mock the UserFactoryInterface
-        if (!interface_exists('Joomla\CMS\User\UserFactoryInterface')) {
-            eval('
-                namespace Joomla\CMS\User {
-                    interface UserFactoryInterface {
-                        public function loadUserById($id);
-                    }
-                }
-            ');
-        }
-
-        // Mock the base application classes if they don't exist
-        if (!class_exists('Joomla\Application\AbstractApplication')) {
-            eval('
-                namespace Joomla\Application {
-                    abstract class AbstractApplication {
-                        protected $config;
-                        public function get($name, $default = null) {
-                            return $default;
-                        }
-                    }
-                }
-            ');
-        }
-
-        if (!class_exists('Joomla\CMS\Application\CMSApplication')) {
-            eval('
-                namespace Joomla\CMS\Application {
-                    class CMSApplication extends \Joomla\Application\AbstractApplication {
-                        public function getIdentity() {
-                            return null;
-                        }
-                        
-                        public function enqueueMessage($msg, $type = "message") {}
-                        
-                        public function getLanguage() {
-                            return null;
-                        }
-                    }
-                }
-            ');
-        }
-
         // Create mock application
         $this->mockApp = $this->getMockBuilder('Joomla\CMS\Application\CMSApplication')
             ->disableOriginalConstructor()
             ->onlyMethods(['getIdentity'])
-            ->getMock();
+            ->getMockForAbstractClass();
 
         // Set up basic user properties
         $this->mockUser->id = 42;
@@ -198,92 +132,6 @@ abstract class AttachmentsTestCase extends TestCase
         // Default app to return our mock user
         $this->mockApp->method('getIdentity')
             ->willReturn($this->mockUser);
-
-        // Set up the Joomla Factory class if not already defined
-        if (!class_exists('Joomla\CMS\Factory')) {
-            eval('
-                namespace Joomla\CMS {
-                    class Factory {
-                        public static $application;
-
-                        public static function getApplication() {
-                            return \Tests\AttachmentsTestCase::$instance->mockApp;
-                        }
-                        public static function getContainer() {
-                            return \Tests\AttachmentsTestCase::$instance->mockContainer;
-                        }
-                        public static function getLanguage() {
-                            return self::$application ? self::$application->getLanguage() : new \stdClass();
-                        }
-                        public static function getUser() {
-                            return self::$application ? self::$application->getIdentity() : new \stdClass();
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Mock the User class (required for AttachmentsTestCase)
-        if (!class_exists('Joomla\CMS\User\User')) {
-            eval('
-                namespace Joomla\CMS\User {
-                    class User {
-                        public $id;
-                        public $name;
-                        public $username;
-                        public $email;
-                        public $groups = [];
-                        
-                        public function authorise($action, $assetName = null) {
-                            return false;
-                        }
-                    }
-                }
-            ');
-        }
-
-
-		// Mock the UserFactory class
-        if (!class_exists('Joomla\CMS\User\UserFactory')) {
-            eval('
-                namespace Joomla\CMS\User {
-                    class UserFactory implements UserFactoryInterface {
-                        public function loadUserById($id) {
-                            return new User();
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Mock the CMSApplication class
-        if (!class_exists('Joomla\CMS\Application\CMSApplication')) {
-            eval('
-                namespace Joomla\CMS\Application {
-                    abstract class CMSApplication {
-                        public function getIdentity() {
-                            return new \Joomla\CMS\User\User();
-                        }
-                        public function getLanguage() {
-                            return new \stdClass();
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Mock the Text class
-        if (!class_exists('Joomla\CMS\Language\Text')) {
-            eval('
-                namespace Joomla\CMS\Language {
-                    class Text {
-                        public static function _($text) {
-                            return $text;
-                        }
-                    }
-                }
-            ');
-        }
     }
 
     /**
@@ -325,7 +173,8 @@ abstract class AttachmentsTestCase extends TestCase
         $this->mockApp->method('getIdentity')
             ->willReturn($this->mockUser);
 
-        $this->mockUserFactory->method('loadUserById')
+        $this->mockUserFactory
+            ->method('loadUserById')
             ->willReturn($this->mockUser);
     }
 

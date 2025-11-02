@@ -2,8 +2,11 @@
 namespace Tests\Unit\Helper;
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
+use JMCameron\Plugin\Content\Attachments\Extension\Attachments;
+use Joomla\CMS\Factory;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
-use PHPUnit\Framework\TestCase;
+use Tests\AttachmentsTestCase;
 
 // Define required Joomla constants
 defined('JPATH_ROOT') or define('JPATH_ROOT', realpath(__DIR__ . '/../../..'));
@@ -11,201 +14,10 @@ defined('JPATH_SITE') or define('JPATH_SITE', JPATH_ROOT);
 defined('JPATH_ADMINISTRATOR') or define('JPATH_ADMINISTRATOR', JPATH_ROOT . '/administrator');
 defined('_JEXEC') or define('_JEXEC', 1);
 
-class AttachmentsPermissionsTest extends TestCase
+class AttachmentsPermissionsTest extends AttachmentsTestCase
 {
     /** @var mixed Mock user for testing */
     public static $user = null;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Define required Joomla Registry
-        if (!class_exists('Joomla\Registry\Registry')) {
-            eval('
-                namespace Joomla\Registry {
-                    class Registry {
-                        private $data = [];
-                        public function set($key, $value) {
-                            $this->data[$key] = $value;
-                        }
-                        public function get($key) {
-                            return $this->data[$key] ?? null;
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Define required Joomla Database classes
-        if (!class_exists('Joomla\Database\DatabaseQuery')) {
-            eval('
-                namespace Joomla\Database {
-                    class DatabaseQuery {
-                        private $parts = [];
-                        
-                        public function __toString() {
-                            return implode(" ", $this->parts);
-                        }
-
-                        public function select($columns) {
-                            $this->parts[] = "SELECT " . $columns;
-                            return $this;
-                        }
-
-                        public function from($table) {
-                            $this->parts[] = "FROM " . $table;
-                            return $this;
-                        }
-
-                        public function join($type, $table, $condition) {
-                            $this->parts[] = $type . " JOIN " . $table . " ON " . $condition;
-                            return $this;
-                        }
-
-                        public function where($conditions) {
-                            $this->parts[] = "WHERE " . $conditions;
-                            return $this;
-                        }
-                    }
-                }
-            ');
-        }
-
-        if (!class_exists('Joomla\Database\DatabaseDriver')) {
-            eval('
-                namespace Joomla\Database {
-                    class DatabaseDriver {
-                        private $query;
-                        
-                        public function getQuery() {
-                            return new DatabaseQuery();
-                        }
-                        
-                        public function setQuery($query) {
-                            $this->query = $query;
-                            return $this;
-                        }
-                        
-                        public function loadObject() {
-                            $obj = new \stdClass();
-                            $obj->id = 1;
-                            $obj->created_by = 42;
-                            $obj->created_user_id = 42;
-                            return $obj;
-                        }
-                        
-                        public function loadResult() {
-                            return 1;
-                        }
-                    }
-                }
-            ');
-        }
-
-        // Define required Joomla Factory
-        if (!class_exists('Joomla\CMS\Factory')) {
-            eval('
-                namespace Joomla\CMS {
-                    class Factory {
-                        public static function getApplication() {
-                            static $app;
-                            if ($app === null) {
-                                $app = new class {
-                                    public function getIdentity() {
-                                        return \Tests\Unit\Helper\AttachmentsPermissionsTest::$user;
-                                    }
-
-                                    public function getDatabase() {
-                                        static $db;
-                                        if ($db === null) {
-                                            $db = new class {
-                                                public function getQuery() {
-                                                    return new \Joomla\Database\DatabaseQuery();
-                                                }
-                                                public function setQuery($query) {
-                                                    return $this;
-                                                }
-                                                public function loadObject() {
-                                                    $obj = new \stdClass();
-                                                    $obj->id = 1;
-                                                    $obj->created_by = 42;
-                                                    $obj->created_user_id = 42;
-                                                    return $obj;
-                                                }
-                                                public function loadResult() {
-                                                    return 1;
-                                                }
-                                            };
-                                        }
-                                        return $db;
-                                    }
-                                };
-                            }
-                            return $app;
-                        }
-
-                        public static function getContainer() {
-                            return new class {
-                                public function get($class) {
-                                    if ($class === "Joomla\CMS\User\UserFactoryInterface") {
-                                        return new class {
-                                            public function loadUserById($id) {
-                                                return \Tests\Unit\Helper\AttachmentsPermissionsTest::$user;
-                                            }
-                                        };
-                                    } elseif ($class === "DatabaseDriver") {
-                                        return new \Joomla\Database\DatabaseDriver();
-                                    }
-                                    return null;
-                                }
-                            };
-                        }
-                    }
-                }
-            ');
-        }
-    }
-
-    /**
-     * Set up a user with specified permissions
-     */
-    private function setUpUserWithPermissions(array $permissions, array $userProps = []): void
-    {
-        // Create user object with authorization method
-        self::$user = new class($permissions) {
-            private $permissions;
-            private $props;
-
-            public function __construct($perms) {
-                $this->permissions = $perms;
-                $this->props = [
-                    'id' => 42,
-                    'username' => 'testuser',
-                    'name' => 'Test User',
-                    'email' => 'test@example.com',
-                    'groups' => [2]
-                ];
-            }
-
-            public function __get($name) {
-                return $this->props[$name] ?? null;
-            }
-
-            public function __set($name, $value) {
-                $this->props[$name] = $value;
-            }
-
-            public function authorise($action, $assetName = null) {
-                return $this->permissions[$action] ?? false;
-            }
-        };
-
-        // Set any custom properties
-        foreach ($userProps as $prop => $value) {
-            self::$user->$prop = $value;
-        }
-    }
 
     /**
      * Test the getActions method returns the correct permissions for a super admin
