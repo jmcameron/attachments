@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Integration\Component\Site\FileTypes;
+
 /**
  * Attachments component
  *
@@ -13,12 +15,7 @@
  */
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
-
-/** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Load the CSV file iterator class */
-require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
+use Tests\AttachmentsTestCase;
 
 /**
  * Tests for file_type functions
@@ -26,7 +23,7 @@ require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
  * @package Attachments_test
  * @subpackage Attachments_file_types
  */
-class FileTypeRoundTripTest extends PHPUnit_Framework_TestCase
+class FileTypesRoundTripTest extends AttachmentsTestCase
 {
     /**
      * Test the round-trip conversions form icon-filename to mime-type and back

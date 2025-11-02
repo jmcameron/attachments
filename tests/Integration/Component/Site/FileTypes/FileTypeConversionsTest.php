@@ -3,8 +3,8 @@
 /**
  * Attachments component
  *
- * @package Attachments_test
- * @subpackage Attachments_file_types
+ * @package Attachments
+ * @subpackage Tests
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
@@ -12,21 +12,19 @@
  * @author Jonathan M. Cameron
  */
 
+namespace Tests\Integration\Component\Site\FileTypes;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsFileTypes;
-
-/** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Load the CSV file iterator class */
-require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
+use Tests\AttachmentsTestCase;
+use Tests\Utils\CsvFileIterator;
 
 /**
  * Tests for file_type conversion functions
  *
- * @package Attachments_test
- * @subpackage Attachments_file_types
+ * @package Attachments
+ * @subpackage Tests
  */
-class FileTypeConversionsTest extends PHPUnit_Framework_TestCase
+class FileTypeConversionsTest extends AttachmentsTestCase
 {
     /**
      * Test various file type and mime type conversions to icon filenames
@@ -42,15 +40,15 @@ class FileTypeConversionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($iconFilename, AttachmentsFileTypes::iconFilename($filename, $mime_type));
 
         if ($filename) {
-            $this->assertEquals($mime_type, AttachmentsFileTypes::mime_type($filename));
+            $this->assertEquals($mime_type, AttachmentsFileTypes::mimeType($filename));
         }
     }
 
     /**
      * Get the test data from CSV file
      */
-    public function provider()
+    public static function provider(): CsvFileIterator
     {
-        return new CsvFileIterator(dirname(__FILE__) . '/testFileTypesConversionsData.csv');
+        return new CsvFileIterator(__DIR__ . '/testFileTypesConversionsData.csv');
     }
 }

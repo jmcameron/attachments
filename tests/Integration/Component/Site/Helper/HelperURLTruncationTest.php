@@ -3,8 +3,8 @@
 /**
  * Attachments component
  *
- * @package Attachments_test
- * @subpackage Attachments_helper
+ * @package Attachments
+ * @subpackage Tests
  *
  * @copyright Copyright (C) 2007-2025 Jonathan M. Cameron, All Rights Reserved
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
@@ -12,19 +12,17 @@
  * @author Jonathan M. Cameron
  */
 
+namespace Tests\Integration\Component\Site\Helper;
+
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
-
-/** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Load the CSV file iterator class */
-require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
+use Tests\AttachmentsTestCase;
+use Tests\Utils\CsvFileIterator;
 
 /**
  * Work-around class to expose protected method for testing
  *
- * @package Attachments_test
- * @subpackage Attachments_helper
+ * @package Attachments
+ * @subpackage Tests
  */
 class AttachmentsHelper3 extends AttachmentsHelper
 {
@@ -41,20 +39,19 @@ class AttachmentsHelper3 extends AttachmentsHelper
      *
      * @return the truncated URL
      */
-    public static function truncate_url($raw_url, $maxlen)
+    public static function truncateUrl($raw_url, $maxlen)
     {
-        return parent::truncate_url($raw_url, $maxlen);
+        return parent::truncateUrl($raw_url, $maxlen);
     }
 }
 
-
 /**
- * Tests URL trunction
+ * Tests URL truncation
  *
- * @package Attachments_test
- * @subpackage Attachments_helper
+ * @package Attachments
+ * @subpackage Tests
  */
-class HelperURLTruncationTest extends PHPUnit_Framework_TestCase
+class HelperURLTruncationTest extends AttachmentsTestCase
 {
     /**
      * Test truncating a url
@@ -71,7 +68,7 @@ class HelperURLTruncationTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $truncated_url,
-            AttachmentsHelper3::truncate_url($full_url, $maxlen)
+            AttachmentsHelper3::truncateUrl($full_url, $maxlen)
         );
     }
 
@@ -79,8 +76,8 @@ class HelperURLTruncationTest extends PHPUnit_Framework_TestCase
     /**
      * Get the test data from CSV file
      */
-    public function provider()
+    public static function provider(): CsvFileIterator
     {
-        return new CsvFileIterator(dirname(__FILE__) . '/testHelperURLTruncationData.csv');
+        return new CsvFileIterator(__DIR__ . '/testHelperURLTruncationData.csv');
     }
 }

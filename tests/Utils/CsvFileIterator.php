@@ -3,18 +3,20 @@
 /**
  * Copied from the PHPUnit documentation
  *
- * @package Attachments_test
- * @subpackage Attachments_utils
+ * @package Attachments
+ * @subpackage Tests
  */
 
+
+namespace Tests\Utils;
 
 /**
  * Class to iterate through a Comma-Separated-Value file
  *
- * @package Attachments_test
- * @subpackage Attachments_utils
+ * @package Attachments
+ * @subpackage Tests
  */
-class CsvFileIterator implements Iterator
+class CsvFileIterator implements \Iterator
 {
     /** the filename */
     protected $filename;
@@ -42,39 +44,45 @@ class CsvFileIterator implements Iterator
     /** Destructor */
     public function __destruct()
     {
-        fclose($this->file);
+        if ($this->file) {
+            fclose($this->file);
+        }
     }
 
     /** Rewind to the beginning of the file */
-    public function rewind()
+    public function rewind(): void
     {
-        rewind($this->file);
-        $this->current = fgetcsv($this->file);
-        $this->key = 0;
+        if ($this->file) {
+            rewind($this->file);
+            $this->current = fgetcsv($this->file, 0, ',', '"', '\\');
+            $this->key = 0;
+        }
     }
 
     /** @return if the file is valid (not at the end) */
-    public function valid()
+    public function valid(): bool
     {
-        return !feof($this->file);
+        return $this->file && !feof($this->file);
     }
 
     /** @return the key */
-    public function key()
+    public function key(): mixed
     {
         return $this->key;
     }
 
     /** Get the current line of data */
-    public function current()
+    public function current(): mixed
     {
         return $this->current;
     }
 
     /** Read the next line of data */
-    public function next()
+    public function next(): void
     {
-        $this->current = fgetcsv($this->file);
-        $this->key++;
+        if ($this->file) {
+            $this->current = fgetcsv($this->file, 0, ',', '"', '\\');
+            $this->key++;
+        }
     }
 }

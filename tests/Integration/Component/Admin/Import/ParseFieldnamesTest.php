@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Integration\Component\Admin\Import;
+
 /**
  * Attachments component
  *
@@ -12,43 +14,10 @@
  * @author Jonathan M. Cameron
  */
 
-/** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Load the CSV file iterator class */
-require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
-
-jimport('joomla.log.log');
-
-jimport('joomla.plugin.plugin');
-jimport('joomla.plugin.helper');
-jimport('joomla.event.dispatcher');
-jimport('joomla.filter.filterinput');
-jimport('joomla.environment.request');
-jimport('joomla.application.component.helper');
-
-require_once JPATH_BASE . '/administrator/components/com_attachments/import.php';
-
-
-/**
- * Work-around class to expose protected method for testing
- *
- * @package Attachments_test
- * @subpackage Attachments_helper
- */
-class AttachmentsImport2 extends AttachmentsImport
-{
-    /**
-     * Parse the field names from the first(next) line of the CSV file
-     * @param file $file the opened file object
-     * @return the associative array (fieldname => index) or error message
-     */
-    public static function parseFieldNames($file)
-    {
-        return AttachmentsImport::_parseFieldNames($file);
-    }
-}
-
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
+use Joomla\CMS\Factory;
+use Joomla\Test\DatabaseTestCase;
+use Tests\Utils\CsvFileIterator;
 
 /**
  * Tests for ACL action permissions for various users
@@ -56,18 +25,18 @@ class AttachmentsImport2 extends AttachmentsImport
  * @package Attachments_test
  * @subpackage Attachments_permissions
  */
-class ImportParseFieldnamesTest extends JoomlaDatabaseTestCase
+class ParseFieldnamesTest extends DatabaseTestCase
 {
     /**
      * Sets up the fixture
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         parent::setUpBeforeClass();
 
         // Force loading the component language
-        $lang =  JFactory::getLanguage();
+        $lang =  Factory::getApplication()->getLanguage();
         $lang->load('com_attachments', JPATH_BASE . '/administrator/components/com_attachments');
     }
 
@@ -113,7 +82,7 @@ class ImportParseFieldnamesTest extends JoomlaDatabaseTestCase
     /**
      * Get the test data from CSV file
      */
-    public function provider()
+    public static function provider()
     {
         return new CsvFileIterator(dirname(__FILE__) . '/testParseFieldnamesData.csv');
     }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Integration\Component\Admin\Import;
+
 /**
  * Attachments component
  *
@@ -12,24 +14,10 @@
  * @author Jonathan M. Cameron
  */
 
-/** Load the PHPUnit test framework */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Load the CSV file iterator class */
-require_once JPATH_TESTS . '/utils/CsvFileIterator.php';
-
-jimport('joomla.log.log');
-
-jimport('joomla.plugin.plugin');
-jimport('joomla.plugin.helper');
-jimport('joomla.event.dispatcher');
-jimport('joomla.filter.filterinput');
-jimport('joomla.environment.request');
-jimport('joomla.application.component.helper');
-
-require_once JPATH_BASE . '/administrator/components/com_attachments/import.php';
-
-
+use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
+use Joomla\CMS\Factory;
+use Joomla\Test\DatabaseTestCase;
+use Tests\Utils\CsvFileIterator;
 
 /**
  * Tests for ACL action permissions for various users
@@ -37,32 +25,20 @@ require_once JPATH_BASE . '/administrator/components/com_attachments/import.php'
  * @package Attachments_test
  * @subpackage Attachments_permissions
  */
-class ImportAttachmentsTest extends JoomlaDatabaseTestCase
+class ImportAttachmentsTest extends DatabaseTestCase
 {
     /**
      * Sets up the fixture
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         parent::setUpBeforeClass();
 
         // Force loading the component language
-        $lang =  JFactory::getLanguage();
+        $lang =  Factory::getApplication()->getLanguage();
         $lang->load('com_attachments', JPATH_BASE . '/administrator/components/com_attachments');
     }
-
-
-    /**
-     * Gets the data set to be loaded into the database during setup
-     *
-     * @return xml dataset
-     */
-    protected function getDataSet()
-    {
-        return $this->createXMLDataSet(JPATH_TESTS . '/joomla_db.xml');
-    }
-
 
     /**
      *
@@ -106,7 +82,7 @@ class ImportAttachmentsTest extends JoomlaDatabaseTestCase
     /**
      * Get the test data from CSV file
      */
-    public function provider()
+    public static function provider()
     {
         return new CsvFileIterator(dirname(__FILE__) . '/testImportAttachmentsData.csv');
     }
