@@ -1,0 +1,17 @@
+services:
+  joomla:
+    build:
+      context: ./docker/joomla
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER:-joomla_user}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME:-joomla_db}
+      JOOMLA_VERSION: ${JOOMLA_VERSION:-latest}
+    depends_on:
+      - db
+  db:
+    image: mariadb:latest

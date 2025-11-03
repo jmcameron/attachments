@@ -1,0 +1,4 @@
+ARG JOOMLA_VERSION
+
+FROM joomla:${JOOMLA_VERSION:-latest}
+
