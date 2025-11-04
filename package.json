@@ -1,0 +1,25 @@
+{
+  "name": "attachments",
+  "version": "1.0.0",
+  "description": "Download <a href=\"https://github.com/jmcameron/attachments/releases/latest\" target=\"_blank\">latest version</a> of package",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DSE-Western-Thessaloniki/attachments.git"
+  },
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/DSE-Western-Thessaloniki/attachments/issues"
+  },
+  "homepage": "https://github.com/DSE-Western-Thessaloniki/attachments#readme",
+  "devDependencies": {
+    "joomla-cypress": "^1.3.1"
+  }
+}

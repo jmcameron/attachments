@@ -1,8 +1,11 @@
 services:
   joomla:
     build:
-      context: ./docker/joomla
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: docker/joomla/Dockerfile
+      args:
+        JOOMLA_VERSION: ${JOOMLA_VERSION:-latest}
+        JOOMLA_FRAMEWORK_VERSION: ${JOOMLA_FRAMEWORK_VERSION:-^4.0}
     ports:
       - "8080:80"
     environment:
@@ -14,4 +17,20 @@ services:
     depends_on:
       - db
   db:
-    image: mariadb:latest
+    image: mariadb:${MARIADB_VERSION:-latest}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-password}
+      MYSQL_DATABASE: ${JOOMLA_DB_NAME:-joomla_db}
+      MYSQL_USER: ${JOOMLA_DB_USER:-joomla_user}
+      MYSQL_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+  phpmyadmin:
+    profiles: ["only_on_demand"]
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${JOOMLA_DB_USER:-joomla_user}
+      PMA_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+    depends_on:
+      - db
