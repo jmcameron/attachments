@@ -45,6 +45,12 @@ class AttachmentsUpdate
     public static function checkAccess()
     {
         $app = Factory::getApplication();
+
+        // Skip authorization check in CLI context
+        if ($app->isClient('cli')) {
+            return;
+        }
+
         $user = $app->getIdentity();
         if ($user === null or !$user->authorise('core.admin', 'com_attachments')) {
             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR') . ' (ERR 67)', 404);
