@@ -10,6 +10,9 @@ RUN apt-get update && \
 	curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
 	apt-get install -y nodejs&& \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+	# Install necessary build tools
+	apt-get install -y make zip && \
+	# Clean up
 	apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY . /attachments
@@ -30,5 +33,10 @@ RUN sed -Ei 's/"joomla\/test": ".*"/"joomla\/test": "'"${JOOMLA_FRAMEWORK_VERSIO
 
 RUN composer update && \
 	npm ci
+
+RUN rm -f attachments-*.zip && make && \
+	mkdir /var/www/extensions/ && \
+	mv `ls -1 attachments-*.zip` /var/www/extensions/attachments.zip && \
+	chown -R www-data:www-data /var/www/extensions
 
 WORKDIR /var/www/html
