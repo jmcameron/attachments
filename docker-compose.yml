@@ -48,13 +48,15 @@ services:
   cypress:
     profiles: ["testing"]
     image: cypress/included:${CYPRESS_VERSION:-13.17.0}
+    entrypoint: ["/usr/local/bin/cypress", "open", '--project', '/app']
     volumes:
-      - ./tests/e2e:/e2e
-      - .:/app:ro
+      - .:/app
     environment:
       JOOMLA_URL: http://joomla/
+      DISPLAY: novnc:0.0
     depends_on:
       - joomla
+      - novnc
     networks:
       - joomla
 
@@ -63,8 +65,12 @@ services:
     build:
       context: ./docker/novnc
       dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "pidof", "novnc_server"]
+      timeout: 20s
+      retries: 10
     ports:
-      - "8080:8080"
+      - "8090:8080"
     networks:
       - joomla
 
@@ -72,7 +78,7 @@ services:
     profiles: ["only_on_demand"]
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8081:80"
+      - "8888:80"
     environment:
       PMA_HOST: db
       PMA_USER: ${JOOMLA_DB_USER:-joomla_user}
