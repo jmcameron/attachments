@@ -20,7 +20,7 @@ services:
       # Admin password must be at least 12 characters long
       JOOMLA_ADMIN_PASSWORD: ${JOOMLA_ADMIN_PASSWORD:-joomla_password}
       JOOMLA_ADMIN_EMAIL: ${JOOMLA_ADMIN_EMAIL:-joomla@example.com}
-      JOOMLA_EXTENSIONS_PATHS: ${JOOMLA_EXTENSIONS_PATHS:-/var/www/extensions/attachments.zip}
+      #JOOMLA_EXTENSIONS_PATHS: ${JOOMLA_EXTENSIONS_PATHS:-/var/www/extensions/attachments.zip}
     volumes:
       - joomla_data:/var/www/html
     depends_on:
@@ -65,7 +65,6 @@ services:
       CYPRESS_JOOMLA_ADMIN_USERNAME: ${JOOMLA_ADMIN_USERNAME:-joomla}
       CYPRESS_JOOMLA_ADMIN_PASSWORD: ${JOOMLA_ADMIN_PASSWORD:-joomla_password}
       CYPRESS_JOOMLA_ADMIN_EMAIL: ${JOOMLA_ADMIN_EMAIL:-joomla@example.com}
-      CYPRESS_JOOMLA_EXTENSIONS_PATHS: ${JOOMLA_EXTENSIONS_PATHS:-/var/www/extensions/attachments.zip}
     depends_on:
       - joomla
       - novnc
