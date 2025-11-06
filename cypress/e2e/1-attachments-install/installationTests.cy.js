@@ -28,7 +28,11 @@ describe("Attachments package installation tests", () => {
     // Verify that the extension appears in the installed extensions list
     cy.visit("/administrator/index.php?option=com_installer&view=manage");
     cy.searchForItem(extensionName);
-    // cy.get('input[placeholder="Search Extensions"]').type(extensionName);
     cy.contains(extensionName).should("exist");
+    // Verify that there are 11 items listed (Attachments component, 9 plugins and 1 package)
+    cy.get('tbody > tr').should('have.length', 11);
+    cy.get('tbody > tr > :nth-child(5)').filter(':contains("Component")').should('have.length', 1);
+    cy.get('tbody > tr > :nth-child(5)').filter(':contains("Package")').should('have.length', 1);
+    cy.get('tbody > tr > :nth-child(5)').filter(':contains("Plugin")').should('have.length', 9);
   });
 });
