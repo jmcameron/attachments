@@ -17,6 +17,15 @@
 import "./commands";
 
 before(() => {
+  // Disable the Joomla! Statistics plugin to avoid issues with tests
+  cy.dbDisableExtension('plg_system_stats').then(() => {
+    cy.log("Disabled System - Joomla! Statistics plugin");
+  });
+  // Disable the EOS Quickicon plugin to avoid issues with tests
+  cy.dbDisableExtension('plg_quickicon_eos').then(() => {
+    cy.log("Disabled EOS Quickicon plugin");
+  });
+
   // Dump the database to create a clean backup before any test runs
   cy.task("dumpDatabase");
 });
@@ -32,4 +41,11 @@ Cypress.Commands.add("adminLogin", () => {
     Cypress.env("JOOMLA_ADMIN_USERNAME"),
     Cypress.env("JOOMLA_ADMIN_PASSWORD")
   );
+});
+
+// Disable an extension via direct database query
+Cypress.Commands.add("dbDisableExtension", (extensionName) => {
+  cy.log('Extension Name: ' + extensionName)
+  const query = `UPDATE joom_extensions SET enabled = 0 WHERE name = '${extensionName}';`;
+  return cy.query(query);
 });
