@@ -14,4 +14,22 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
+
+before(() => {
+  // Dump the database to create a clean backup before any test runs
+  cy.task("dumpDatabase");
+});
+
+beforeEach(() => {
+  // Reset the database before each test
+  cy.task("resetDatabase");
+  Cypress.session.clearAllSavedSessions();
+});
+
+Cypress.Commands.add("adminLogin", () => {
+  return cy.doAdministratorLogin(
+    Cypress.env("JOOMLA_ADMIN_USERNAME"),
+    Cypress.env("JOOMLA_ADMIN_PASSWORD")
+  );
+});

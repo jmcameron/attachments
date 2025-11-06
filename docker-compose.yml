@@ -47,13 +47,25 @@ services:
 
   cypress:
     profiles: ["testing"]
-    image: cypress/included:${CYPRESS_VERSION:-13.17.0}
+    build:
+      context: ./
+      dockerfile: docker/cypress/Dockerfile
+      args:
+        CYPRESS_VERSION: ${CYPRESS_VERSION:-13.17.0}
     entrypoint: ["/usr/local/bin/cypress", "open", '--project', '/app']
     volumes:
       - .:/app
     environment:
-      JOOMLA_URL: http://joomla/
       DISPLAY: novnc:0.0
+      JOOMLA_URL: http://joomla/
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER:-joomla_user}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME:-joomla_db}
+      CYPRESS_JOOMLA_ADMIN_USERNAME: ${JOOMLA_ADMIN_USERNAME:-joomla}
+      CYPRESS_JOOMLA_ADMIN_PASSWORD: ${JOOMLA_ADMIN_PASSWORD:-joomla_password}
+      CYPRESS_JOOMLA_ADMIN_EMAIL: ${JOOMLA_ADMIN_EMAIL:-joomla@example.com}
+      CYPRESS_JOOMLA_EXTENSIONS_PATHS: ${JOOMLA_EXTENSIONS_PATHS:-/var/www/extensions/attachments.zip}
     depends_on:
       - joomla
       - novnc
