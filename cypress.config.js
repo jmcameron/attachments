@@ -1,33 +1,42 @@
 const fs = require("fs");
-const path = require("path");
+const mysql = require('cypress-mysql');
+
+const db = {
+  host: process.env.JOOMLA_DB_HOST,
+  user: process.env.JOOMLA_DB_USER,
+  password: process.env.JOOMLA_DB_PASSWORD,
+  database: process.env.JOOMLA_DB_NAME,
+};
 
 module.exports = {
   e2e: {
     baseUrl: process.env.JOOMLA_URL,
+    env: {
+      db: db,
+    },
     setupNodeEvents(on, config) {
-      const db = {
-        host: process.env.JOOMLA_DB_HOST,
-        user: process.env.JOOMLA_DB_USER,
-        password: process.env.JOOMLA_DB_PASSWORD,
-        database: process.env.JOOMLA_DB_NAME,
-      };
+      mysql.configurePlugin(on);
+
       on("task", {
+        // Use mysql client to restore from a clean backup
         resetDatabase: () => {
-          // Use mysqldump to restore from a clean backup
           const { execSync } = require("child_process");
           execSync(
             `mysql -h ${db.host} -u ${db.user} -p${db.password} ${db.database} < /tmp/clean_backup.sql`
           );
           return null;
         },
+
+        // Use mysqldump to create a backup of the database
         dumpDatabase: () => {
-          // Use mysqldump to create a backup of the database
           const { execSync } = require("child_process");
           execSync(
             `mysqldump -h ${db.host} -u ${db.user} -p${db.password} ${db.database} > /tmp/clean_backup.sql`
           );
           return null;
         },
+
+        // Find the built attachment file in the specified directory
         findAttachmentFile(directory) {
           const files = fs.readdirSync(directory);
           const attachmentFile = files.find(
@@ -35,8 +44,9 @@ module.exports = {
           );
           return attachmentFile || null;
         },
+
+        // Run make to build the Joomla extension package
         makePackage: () => {
-          // Use mysqldump to create a backup of the database
           const { execSync } = require("child_process");
           execSync(
             "cd /app && make veryclean && make && mv attachments-*.zip /app/cypress/fixtures/"
