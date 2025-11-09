@@ -90,8 +90,6 @@ abstract class AttachmentsTestCase extends TestCase
      */
     protected function setUpJoomlaMocks(): void
     {
-        $this->getMockBuilder(\Joomla\CMS\User\UserFactory::class);
-
         // Create mock container
         $this->mockContainer = $this->getMockBuilder('Joomla\DI\Container')
             ->disableOriginalConstructor()
@@ -132,6 +130,10 @@ abstract class AttachmentsTestCase extends TestCase
         // Default app to return our mock user
         $this->mockApp->method('getIdentity')
             ->willReturn($this->mockUser);
+
+        // Register the mock container and application with the Joomla Factory so production code uses them
+        \Joomla\CMS\Factory::$container   = $this->mockContainer;
+        \Joomla\CMS\Factory::$application = $this->mockApp;
     }
 
     /**
