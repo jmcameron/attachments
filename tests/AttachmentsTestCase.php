@@ -44,6 +44,11 @@ abstract class AttachmentsTestCase extends TestCase
     protected $mockUser;
 
     /**
+     * @var MockObject The mock database driver
+     */
+    protected $mockDatabaseDriver;
+
+    /**
      * @var array Permission configuration for current test
      */
     protected $permissions = [];
@@ -122,10 +127,27 @@ abstract class AttachmentsTestCase extends TestCase
         $this->mockUser->method('authorise')
             ->willReturn(false);
 
+        // Set up database driver mock
+        $this->mockDatabaseDriver = $this->getMockBuilder('Joomla\Database\DatabaseDriver')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockDatabaseDriver->method('getQuery')
+            ->willReturnCallback(function() {
+                return new \Joomla\Database\Mysqli\MysqliQuery();
+            });
+            
+        $this->mockDatabaseDriver->method('loadObject')
+            ->willReturnCallback(function() {
+                return null;
+            });
+
         // Set up container to return user factory
         $this->mockContainer->method('get')
-            ->with('Joomla\CMS\User\UserFactoryInterface')
-            ->willReturn($this->mockUserFactory);
+            ->willReturnMap([
+                ['Joomla\CMS\User\UserFactoryInterface', $this->mockUserFactory],
+                ['DatabaseDriver', $this->mockDatabaseDriver],
+            ]);
 
         // Default app to return our mock user
         $this->mockApp->method('getIdentity')
