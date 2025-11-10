@@ -47,7 +47,7 @@ class AttachmentsPermissions
             $user = Factory::getApplication()->getIdentity();
         }
 
-        $result = new Registry();
+        $result = new Registry(null, "");
 
         $assetName = 'com_attachments';
 
