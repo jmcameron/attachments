@@ -16,6 +16,7 @@ namespace JMCameron\Component\Attachments\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 
@@ -47,7 +48,7 @@ class AttachmentsPermissions
             $user = Factory::getApplication()->getIdentity();
         }
 
-        $result = new Registry();
+        $result = new CMSObject();
 
         $assetName = 'com_attachments';
 
