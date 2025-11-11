@@ -34,6 +34,8 @@ if (!file_exists($composerAutoload)) {
 
 require_once $composerAutoload;
 
+define('_JEXEC', 1);
+
 // Set up the Joomla testing framework if available
 if (class_exists('\\Joomla\\CMS\\Factory')) {
     // If running within a Joomla installation, use the Joomla factory
