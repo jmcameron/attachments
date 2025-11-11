@@ -8,7 +8,9 @@
         "joomla/database": "^4.0",
         "joomla/application": "^4.0",
         "joomla/di": "^4.0",
-        "joomla/session": "^4.0"
+        "joomla/session": "^4.0",
+        "joomla/language": "^4.0",
+        "joomla/filter": "^4.0"
     },
     "autoload": {
         "psr-4": {
