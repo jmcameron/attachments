@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d429800449f536b043e0afa0ca5ed12b",
+    "content-hash": "82c4176bacb17ed1e5b8f1cd19d5116a",
     "packages": [],
     "packages-dev": [
         {
@@ -272,6 +272,54 @@
                 "source": "https://github.com/joomla-framework/event/tree/4.0.0"
             },
             "time": "2025-07-24T09:34:33+00:00"
+        },
+        {
+            "name": "joomla/filesystem",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/filesystem.git",
+                "reference": "cfcda2935605f14f396ccda7535f4417e27af868"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/filesystem/zipball/cfcda2935605f14f396ccda7535f4417e27af868",
+                "reference": "cfcda2935605f14f396ccda7535f4417e27af868",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3.0"
+            },
+            "require-dev": {
+                "joomla/test": "^4.0",
+                "mikey179/vfsstream": "^1.6.11",
+                "phpstan/phpstan": "^2.1.17",
+                "phpstan/phpstan-deprecation-rules": "^2.0.3",
+                "phpunit/phpunit": "^12.2.7",
+                "squizlabs/php_codesniffer": "^3.13.2"
+            },
+            "type": "joomla-package",
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Filesystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Joomla Filesystem Package",
+            "homepage": "https://github.com/joomla/joomla-framework-filesystem",
+            "keywords": [
+                "filesystem",
+                "framework",
+                "joomla"
+            ],
+            "support": {
+                "issues": "https://github.com/joomla-framework/filesystem/issues",
+                "source": "https://github.com/joomla-framework/filesystem/tree/4.1.0"
+            },
+            "time": "2025-08-27T18:49:28+00:00"
         },
         {
             "name": "joomla/filter",

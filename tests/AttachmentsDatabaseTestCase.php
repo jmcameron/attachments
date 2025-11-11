@@ -97,7 +97,9 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
         if (!defined('JDEBUG')) {
             define('JDEBUG', 0);
         }
-
+        if (!defined('JPATH_CACHE')) {
+            define('JPATH_CACHE', "temp");
+        }
 
         $this->setUpJoomlaMocks();
     }
