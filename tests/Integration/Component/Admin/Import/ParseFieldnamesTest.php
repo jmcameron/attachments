@@ -43,18 +43,6 @@ class ParseFieldnamesTest extends AttachmentsDatabaseTestCase
         $lang->load('com_attachments', JPATH_BASE . '/attachments_component/admin', 'en-GB', true);
     }
 
-
-    /**
-     * Gets the data set to be loaded into the database during setup
-     *
-     * @return xml dataset
-     */
-    protected function getDataSet()
-    {
-        return $this->createXMLDataSet(JPATH_TESTS . '/joomla_db.xml');
-    }
-
-
     /**
      *
      *
@@ -80,7 +68,6 @@ class ParseFieldnamesTest extends AttachmentsDatabaseTestCase
             $this->assertEquals($errmsg, $result);
         }
     }
-
 
     /**
      * Get the test data from CSV file
