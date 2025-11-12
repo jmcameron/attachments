@@ -90,6 +90,9 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
             // Cut off the error number for comparison
             $errmsg = substr($result, 0, strpos($result, ' (ERR'));
 
+            // Replace "  [LINE: x] " with empty string for comparison
+            $errmsg = preg_replace('/  \[LINE: \d+\] /', '', $errmsg);
+
             // Replace %base_path% with actual path in the expected result
             $expected_result = str_replace("%base_path%", dirname(__FILE__), $expected_result);
 
