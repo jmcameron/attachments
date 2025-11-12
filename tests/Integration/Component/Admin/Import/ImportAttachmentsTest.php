@@ -29,6 +29,8 @@ use Tests\Utils\CsvFileIterator;
  */
 class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
 {
+    protected static bool $first_run = true;
+    
     /**
      * Sets up the fixture
      */
@@ -37,12 +39,35 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
         parent::setUp();
         parent::setUpBeforeClass();
 
+        if (static::$first_run) {
+            static::$first_run = false;
+            // Possibly not needed, remember to remove later
+            $this->populateViewLevels();
+            // var_dump($this->populateViewLevels());
+            // $db = $this->getDatabaseManager()->getConnection();
+            // $query = $db->getQuery(true);
+            // $query->select('*')->from('#__viewlevels');
+            // $db->setQuery($query);
+            // $db->execute();
+            // var_dump($db->loadObjectList());
+        }
         // Force loading the component language
         /** @var \Joomla\CMS\Application\WebApplication $app */
         $app = Factory::getApplication();
         $app->loadLanguage();
         $lang =  Factory::getApplication()->getLanguage();
         $lang->load('com_attachments', JPATH_BASE . '/attachments_component/admin', 'en-GB', true);
+
+        // Set up mock functions to avoid further db queries and dependencies
+        $this->mockUser->method('getAuthorisedViewLevels')
+            ->willReturn([1, 2, 3]);
+        
+        // It is only used in the plugin framework to load the language files
+        // and it looks at the wrong path anyway as it assumes being in site context
+        // so we define the constant here just to avoid errors
+        if (!defined('JPATH_PLUGINS')) {
+            define('JPATH_PLUGINS', JPATH_ROOT . '/plugins');
+        }
     }
 
     /**

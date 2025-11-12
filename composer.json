@@ -16,7 +16,8 @@
     "autoload": {
         "psr-4": {
             "JMCameron\\Component\\Attachments\\Administrator\\": "attachments_component/admin/src/",
-            "JMCameron\\Component\\Attachments\\Site\\": "attachments_component/site/src/"
+            "JMCameron\\Component\\Attachments\\Site\\": "attachments_component/site/src/",
+            "JMCameron\\Plugin\\AttachmentsPluginFramework\\": "attachments_plugin_framework/src"
         }
     },
     "autoload-dev": {

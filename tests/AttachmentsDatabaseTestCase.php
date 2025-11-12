@@ -10,12 +10,6 @@
 namespace Tests;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Joomla\CMS\Factory;
-use Joomla\CMS\User\User;
-use Joomla\CMS\User\UserFactory;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\Database\DatabaseDriver;
-use Joomla\DI\Container;
 use Joomla\Test\DatabaseTestCase;
 
 /**
@@ -122,7 +116,7 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
         // Create mock user
         $this->mockUser = $this->getMockBuilder('Joomla\CMS\User\User')
             ->disableOriginalConstructor()
-            ->onlyMethods(['authorise'])
+            ->onlyMethods(['authorise', 'getAuthorisedViewLevels'])
             ->getMock();
 
         // Create mock application
@@ -266,5 +260,47 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
         $this->mockUser = null;
 
         parent::tearDown();
+    }
+
+    protected function populateViewLevels()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__viewlevels') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY,
+                " . $db->quoteName('title') . " VARCHAR(255) NOT NULL,
+                " . $db->quoteName('ordering') . " INTEGER DEFAULT 0,
+                " . $db->quoteName('rules') . " TEXT
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert viewlevels one at a time
+            $viewlevels = [
+                ['id' => 1, 'title' => 'Public', 'ordering' => 0, 'rules' => '[1]'],
+                ['id' => 2, 'title' => 'Registered', 'ordering' => 1, 'rules' => '[6,2,8]'],
+                ['id' => 3, 'title' => 'Special', 'ordering' => 2, 'rules' => '[6,3,8]'],
+            ];
+            
+            $count = 0;
+            foreach ($viewlevels as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__viewlevels')
+                    ->columns(['id', 'title', 'ordering', 'rules'])
+                    ->values($db->quote($level['id']) . ', ' . $db->quote($level['title']) . ', ' . 
+                            $db->quote($level['ordering']) . ', ' . $db->quote($level['rules']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
     }
 }
