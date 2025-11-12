@@ -15,9 +15,14 @@ namespace Tests\Integration\Component\Admin\Import;
  */
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
+use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
+use Joomla\CMS\Dispatcher\ComponentDispatcherFactory;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
+use Joomla\CMS\MVC\Factory\MVCFactory;
+use Joomla\CMS\Table\Table;
 use Joomla\Language\Parser\IniParser;
+use Joomla\Registry\Registry;
 use Tests\AttachmentsDatabaseTestCase;
 use Tests\Utils\CsvFileIterator;
 
@@ -30,7 +35,7 @@ use Tests\Utils\CsvFileIterator;
 class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
 {
     protected static bool $first_run = true;
-    
+
     /**
      * Sets up the fixture
      */
@@ -43,6 +48,12 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
             static::$first_run = false;
             // Possibly not needed, remember to remove later
             $this->populateViewLevels();
+
+            // Populate users table
+            $this->populateUsers();
+
+            // Create attachments table
+            $this->createAttachmentsTable();
             // var_dump($this->populateViewLevels());
             // $db = $this->getDatabaseManager()->getConnection();
             // $query = $db->getQuery(true);
@@ -50,6 +61,9 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
             // $db->setQuery($query);
             // $db->execute();
             // var_dump($db->loadObjectList());
+
+            $this->mockApp->method('getConfig')
+                ->willReturn(new Registry());
         }
         // Force loading the component language
         /** @var \Joomla\CMS\Application\WebApplication $app */
@@ -58,16 +72,59 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
         $lang =  Factory::getApplication()->getLanguage();
         $lang->load('com_attachments', JPATH_BASE . '/attachments_component/admin', 'en-GB', true);
 
-        // Set up mock functions to avoid further db queries and dependencies
-        $this->mockUser->method('getAuthorisedViewLevels')
-            ->willReturn([1, 2, 3]);
-        
         // It is only used in the plugin framework to load the language files
         // and it looks at the wrong path anyway as it assumes being in site context
         // so we define the constant here just to avoid errors
         if (!defined('JPATH_PLUGINS')) {
             define('JPATH_PLUGINS', JPATH_ROOT . '/plugins');
         }
+
+        if (!defined('JPATH_COMPONENT')) {
+            define('JPATH_COMPONENT', JPATH_BASE . '/attachments_component/admin/src');
+        }
+
+        Table::addIncludePath(JPATH_BASE . '/attachments_component/admin/src/Table');
+
+        // Set up mock functions to avoid further db queries and dependencies
+        $this->mockUser->method('getAuthorisedViewLevels')
+            ->willReturn([1, 2, 3]);
+        
+        $namespace = "JMCameron\\Component\\Attachments";
+        $mvcFactory = new MVCFactory($namespace);
+        $dispatcher = new ComponentDispatcherFactory($namespace, $mvcFactory);
+        $mvcComponent = new \Joomla\CMS\Extension\MVCComponent($dispatcher);
+        $mvcComponent->setMVCFactory($mvcFactory);
+        
+        $this->mockApp->method('bootComponent')
+            ->willReturnMap([
+                ['com_attachments', $mvcComponent],
+            ]);
+        $this->mockApp->method('getInput')
+            ->willReturn(Factory::getApplication()->input);
+
+        // Add com_content as a known parent type
+        $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+        $apm->addParentType('com_content');
+
+        // Inject a lightweight stub plugin to avoid installPlugin() trying to load real plugin classes
+        $ref = new \ReflectionClass($apm);
+        $prop = $ref->getProperty('plugin');
+        $prop->setAccessible(true);
+        $plugins = $prop->getValue($apm) ?: [];
+
+        $plugins['com_content'] = new class {
+            // implement the minimal methods AttachmentsImport/getInstalledEntityInfo expect
+            public function getEntities(): array
+            {
+                return ['article']; // adjust to match entities used in your CSV/testdata
+            }
+            public function getCanonicalEntityId(string $entity): string
+            {
+                return strtolower($entity);
+            }
+        };
+
+        $prop->setValue($apm, $plugins);
     }
 
     /**
@@ -81,7 +138,7 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
         $path = dirname(__FILE__) . '/' . $test_filename;
 
         // Open the CSV file
-        $result = AttachmentsImport::importAttachmentsFromCSVFile($path, $verify_parent = true, $update, $dry_run);
+        $result = AttachmentsImport::importAttachmentsFromCSVFile($path, true, $update, $dry_run);
         if (is_numeric($expected_result) && is_numeric($result)) {
             $this->assertEquals((int)$expected_result, (int)$result);
         } elseif (is_array($result)) {
@@ -121,5 +178,124 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
     public static function provider()
     {
         return new CsvFileIterator(dirname(__FILE__) . '/testImportAttachmentsData.csv');
+    }
+
+    protected function populateUsers()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__users') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY NOT NULL,
+                " . $db->quoteName('name') . " TEXT NOT NULL,
+                " . $db->quoteName('username') . " TEXT NOT NULL,
+                " . $db->quoteName('email') . " TEXT NOT NULL,
+                " . $db->quoteName('password') . " TEXT NOT NULL,
+                " . $db->quoteName('block') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('sendEmail') . " INTEGER DEFAULT 0,
+                " . $db->quoteName('registerDate') . " NUMERIC NOT NULL DEFAULT NULL,
+                " . $db->quoteName('lastvisitDate') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('activation') . " TEXT NOT NULL,
+                " . $db->quoteName('params') . " MEDIUMTEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('lastResetTime') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('resetCount') . " INT(11) NOT NULL DEFAULT 0,
+                " . $db->quoteName('otpKey') . " TEXT NOT NULL,
+                " . $db->quoteName('otep') . " TEXT NOT NULL,
+                " . $db->quoteName('requireReset') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('authProvider') . " TEXT NOT NULL
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert users one at a time
+            $users = [
+                ['id' => 42, 'name' => 'admin', 'username' => 'admin', 'email' => 'admin@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+            ];
+            
+            $count = 0;
+            foreach ($users as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__users')
+                    ->columns(['id', 'name', 'username', 'email', 'password', 'block', 'sendEmail', 'registerDate',
+                               'lastvisitDate', 'activation', 'params', 'lastResetTime', 'resetCount',
+                               'otpKey', 'otep', 'requireReset', 'authProvider'])
+                    ->values($db->quote($level['id']) . ', ' . $db->quote($level['name']) . ', ' . 
+                            $db->quote($level['username']) . ', ' . $db->quote($level['email']) . ', ' . 
+                            $db->quote($level['password']) . ', ' . $db->quote($level['block']) . ', ' . 
+                            $db->quote($level['sendEmail']) . ', ' . $db->quote($level['registerDate']) . ', ' . 
+                            $db->quote($level['lastvisitDate']) . ', ' . $db->quote($level['activation']) . ', ' . 
+                            $db->quote($level['params']) . ', ' . $db->quote($level['lastResetTime']) . ', ' . 
+                            $db->quote($level['resetCount']) . ', ' . $db->quote($level['otpKey']) . ', ' . 
+                            $db->quote($level['otep']) . ', ' . $db->quote($level['requireReset']) . ', ' . $db->quote($level['authProvider']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function createAttachmentsTable()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the attachments table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__attachments') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                " . $db->quoteName('filename') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('filename_sys') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('file_type') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('file_size') . " INTEGER NOT NULL DEFAULT NULL,
+                " . $db->quoteName('url') . " TEXT NOT NULL,
+                " . $db->quoteName('url_valid') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('url_relative') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('url_verify') . " INTEGER NOT NULL DEFAULT 1,
+                " . $db->quoteName('display_name') . " TEXT NOT NULL,
+                " . $db->quoteName('description') . " TEXT NOT NULL,
+                " . $db->quoteName('icon_filename') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('access') . " INTEGER NOT NULL DEFAULT 1,
+                " . $db->quoteName('state') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('user_field_1') . " TEXT NOT NULL,
+                " . $db->quoteName('user_field_2') . " TEXT NOT NULL,
+                " . $db->quoteName('user_field_3') . " TEXT NOT NULL,
+                " . $db->quoteName('parent_type') . " TEXT NOT NULL DEFAULT 'com_content',
+                " . $db->quoteName('parent_entity') . " TEXT NOT NULL DEFAULT 'article',
+                " . $db->quoteName('parent_id') . " INTEGER DEFAULT NULL,
+                " . $db->quoteName('created') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('created_by') . " INTEGER NOT NULL DEFAULT NULL,
+                " . $db->quoteName('modified') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('modified_by') . " INTEGER NOT NULL DEFAULT NULL,
+                " . $db->quoteName('download_count') . " INTEGER DEFAULT 0
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            return true;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        // Reset the AttachmentsPluginManager singleton
+        $ref = new \ReflectionClass(AttachmentsPluginManager::class);
+        if ($ref->hasProperty('instance')) {
+            $prop = $ref->getProperty('instance');
+            $prop->setAccessible(true);
+            $prop->setValue(null);
+        }
+        parent::tearDown();
     }
 }

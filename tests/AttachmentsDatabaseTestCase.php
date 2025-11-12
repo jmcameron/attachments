@@ -121,8 +121,8 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
 
         // Create mock application
         $this->mockApp = $this->getMockBuilder('Joomla\CMS\Application\CMSApplication')
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getIdentity', 'getDispatcher', 'getSession'])
+            // ->disableOriginalConstructor()
+            ->onlyMethods(['getIdentity', 'getDispatcher', 'getSession', 'bootComponent', 'getInput', 'getConfig'])
             ->getMockForAbstractClass();
 
         // Set up basic user properties
