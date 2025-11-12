@@ -16,7 +16,7 @@ namespace Tests\Integration\Component\Admin\Import;
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsImport;
 use Joomla\CMS\Factory;
-use Joomla\Test\DatabaseTestCase;
+use Tests\AttachmentsDatabaseTestCase;
 use Tests\Utils\CsvFileIterator;
 
 /**
@@ -25,7 +25,7 @@ use Tests\Utils\CsvFileIterator;
  * @package Attachments_test
  * @subpackage Attachments_permissions
  */
-class ParseFieldnamesTest extends DatabaseTestCase
+class ParseFieldnamesTest extends AttachmentsDatabaseTestCase
 {
     /**
      * Sets up the fixture
@@ -36,8 +36,11 @@ class ParseFieldnamesTest extends DatabaseTestCase
         parent::setUpBeforeClass();
 
         // Force loading the component language
+        /** @var \Joomla\CMS\Application\WebApplication $app */
+        $app = Factory::getApplication();
+        $app->loadLanguage();
         $lang =  Factory::getApplication()->getLanguage();
-        $lang->load('com_attachments', JPATH_BASE . '/administrator/components/com_attachments');
+        $lang->load('com_attachments', JPATH_BASE . '/attachments_component/admin', 'en-GB', true);
     }
 
 
