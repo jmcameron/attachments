@@ -11,7 +11,9 @@
         "joomla/session": "^4.0",
         "joomla/language": "^4.0",
         "joomla/filter": "^4.0",
-        "joomla/filesystem": "^4.1"
+        "joomla/filesystem": "^4.1",
+        "joomla/input": "^4.0",
+        "joomla/uri": "^4.0"
     },
     "autoload": {
         "psr-4": {
