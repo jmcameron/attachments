@@ -169,10 +169,11 @@ class AttachmentsImport
             if (!$apm->attachmentsPluginInstalled($parent_type)) {
                 return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
             }
-            $parent = $apm->getAttachmentsPlugin($parent_type);
-
+            
             // Does the parent exist?
             if ($verify_parent) {
+                $parent = $apm->getAttachmentsPlugin($parent_type);
+
                 // Make sure a parent with the specified ID exists
                 if (!$parent->parentExists($parent_id, $parent_entity)) {
                     return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . $line_str . ' (ERR 88)';
