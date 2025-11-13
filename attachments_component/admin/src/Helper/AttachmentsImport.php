@@ -134,12 +134,12 @@ class AttachmentsImport
             $ids_ok = array();
         }
 
-        iconv_set_encoding("internal_encoding", "UTF-8");
+        iconv_set_encoding("default_charset", "UTF-8");
         setlocale(LC_ALL, 'en_US.UTF-8');
 
         while (!feof($f)) {
             // Read the next line
-            $adata = fgetcsv($f);
+            $adata = fgetcsv($f, escape: '\\');
             $line_num += 1;
             $line_str = '  [LINE: ' . $line_num . '] ';
 
@@ -318,7 +318,7 @@ class AttachmentsImport
     {
         // Load the field names from the file
         $field = array();
-        $header_line = fgetcsv($file);
+        $header_line = fgetcsv($file, escape: '\\');
         // Strip of the leading BOM, if present
         $header_line = filter_var_array($header_line, FILTER_DEFAULT , FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
         for ($i = 0; $i < count($header_line); $i++) {

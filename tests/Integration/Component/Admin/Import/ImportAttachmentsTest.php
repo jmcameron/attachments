@@ -312,7 +312,7 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
         if ($ref->hasProperty('instance')) {
             $prop = $ref->getProperty('instance');
             $prop->setAccessible(true);
-            $prop->setValue(null);
+            $prop->setValue(null, null);
         }
         parent::tearDown();
     }
