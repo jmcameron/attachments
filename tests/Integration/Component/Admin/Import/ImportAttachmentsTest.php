@@ -122,6 +122,24 @@ class ImportAttachmentsTest extends AttachmentsDatabaseTestCase
             {
                 return strtolower($entity);
             }
+
+            public function parentExists($parent_id, $parent_entity): bool
+            {
+                if ($parent_id === 1) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            public function getTitle($parent_id, $parent_entity): string
+            {
+                if ($parent_id === 1) {
+                    return "Welcome";
+                }
+
+                return "Test Article Title";
+            }
         };
 
         $prop->setValue($apm, $plugins);
