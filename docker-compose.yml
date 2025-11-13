@@ -1,0 +1,107 @@
+services:
+  joomla:
+    build:
+      context: ./
+      dockerfile: docker/joomla/Dockerfile
+      args:
+        JOOMLA_VERSION: ${JOOMLA_VERSION:-latest}
+        JOOMLA_FRAMEWORK_VERSION: ${JOOMLA_FRAMEWORK_VERSION:-^4.0}
+    ports:
+      - "8080:80"
+    environment:
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER:-joomla_user}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME:-joomla_db}
+      JOOMLA_VERSION: ${JOOMLA_VERSION:-latest}
+      JOOMLA_SITE_NAME: Joomla
+      JOOMLA_ADMIN_USER: Joomla Hero
+      JOOMLA_ADMIN_USERNAME: ${JOOMLA_ADMIN_USERNAME:-joomla}
+      # Admin password must be at least 12 characters long
+      JOOMLA_ADMIN_PASSWORD: ${JOOMLA_ADMIN_PASSWORD:-joomla_password}
+      JOOMLA_ADMIN_EMAIL: ${JOOMLA_ADMIN_EMAIL:-joomla@example.com}
+      #JOOMLA_EXTENSIONS_PATHS: ${JOOMLA_EXTENSIONS_PATHS:-/var/www/extensions/attachments.zip}
+    volumes:
+      - joomla_data:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - joomla
+
+  db:
+    image: mariadb:${MARIADB_VERSION:-latest}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-password}
+      MYSQL_DATABASE: ${JOOMLA_DB_NAME:-joomla_db}
+      MYSQL_USER: ${JOOMLA_DB_USER:-joomla_user}
+      MYSQL_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - joomla
+
+  cypress:
+    profiles: ["testing"]
+    build:
+      context: ./
+      dockerfile: docker/cypress/Dockerfile
+      args:
+        CYPRESS_VERSION: ${CYPRESS_VERSION:-13.17.0}
+    entrypoint: ["/usr/local/bin/cypress", "open", '--project', '/app']
+    volumes:
+      - .:/app
+    environment:
+      DISPLAY: novnc:0.0
+      JOOMLA_URL: http://joomla/
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER:-joomla_user}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME:-joomla_db}
+      CYPRESS_JOOMLA_ADMIN_USERNAME: ${JOOMLA_ADMIN_USERNAME:-joomla}
+      CYPRESS_JOOMLA_ADMIN_PASSWORD: ${JOOMLA_ADMIN_PASSWORD:-joomla_password}
+      CYPRESS_JOOMLA_ADMIN_EMAIL: ${JOOMLA_ADMIN_EMAIL:-joomla@example.com}
+    depends_on:
+      - joomla
+      - novnc
+    networks:
+      - joomla
+
+  novnc:
+    profiles: ["testing"]
+    build:
+      context: ./docker/novnc
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "pidof", "novnc_server"]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "8090:8080"
+    networks:
+      - joomla
+
+  phpmyadmin:
+    profiles: ["only_on_demand"]
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8888:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${JOOMLA_DB_USER:-joomla_user}
+      PMA_PASSWORD: ${JOOMLA_DB_PASSWORD:-joomla_pass}
+    depends_on:
+      - db
+    networks:
+      - joomla
+
+volumes:
+  joomla_data:
+  db_data:
+
+networks:
+  joomla:
