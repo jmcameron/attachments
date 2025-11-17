@@ -11,11 +11,6 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Joomla\CMS\Factory;
-use Joomla\CMS\User\User;
-use Joomla\CMS\User\UserFactory;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\DI\Container;
 
 /**
  * Base class for Attachments tests
@@ -113,7 +108,7 @@ abstract class AttachmentsTestCase extends TestCase
 
         $this->mockDatabaseDriver->method('getQuery')
             ->willReturnCallback(function() {
-                return new \Joomla\Database\Mysqli\MysqliQuery();
+                return new \Joomla\Database\Sqlite\SqliteQuery();
             });
             
         $this->mockDatabaseDriver->method('loadObject')

@@ -2,23 +2,11 @@
 namespace Tests\Unit\Helper;
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
-use JMCameron\Plugin\Content\Attachments\Extension\Attachments;
-use Joomla\CMS\Factory;
-use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 use Tests\AttachmentsTestCase;
 
-// Define required Joomla constants
-defined('JPATH_ROOT') or define('JPATH_ROOT', realpath(__DIR__ . '/../../..'));
-defined('JPATH_SITE') or define('JPATH_SITE', JPATH_ROOT);
-defined('JPATH_ADMINISTRATOR') or define('JPATH_ADMINISTRATOR', JPATH_ROOT . '/administrator');
-defined('_JEXEC') or define('_JEXEC', 1);
-
 class AttachmentsPermissionsTest extends AttachmentsTestCase
 {
-    /** @var mixed Mock user for testing */
-    public static $user = null;
-
     /**
      * Test the getActions method returns the correct permissions for a super admin
      */

@@ -25,7 +25,6 @@ use PHPUnit\Framework\Attributes\Test;
  */
 class AttachmentsBasicTest extends TestCase
 {
-    #[Test]
     public function testBasicStructure(): void
     {
         // Test that the source file exists and has correct structure
@@ -34,11 +33,10 @@ class AttachmentsBasicTest extends TestCase
         // Basic file checks
         $this->assertDirectoryExists($sourceFile, 'Attachments component directory should exist');
         
-        // Check namespace existence
+        // Check AttachmentsHelper class existence
         $this->assertTrue(class_exists('JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper'), 'AttachmentsHelper class should exist');
     }
     
-    #[Test]
     public function testBasicAssertions(): void
     {
         $this->assertTrue(true, 'Basic true assertion should pass');

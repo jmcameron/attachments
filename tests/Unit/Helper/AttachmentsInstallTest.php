@@ -14,7 +14,6 @@
 
 namespace Tests\Unit\Helper;
 
-use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
 use Tests\AttachmentsTestCase;
 
 /**
