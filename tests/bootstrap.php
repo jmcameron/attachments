@@ -23,6 +23,9 @@ defined('JPATH_SITE') or define('JPATH_SITE', JPATH_ROOT);
 defined('JPATH_ADMINISTRATOR') or define('JPATH_ADMINISTRATOR', JPATH_ROOT . '/administrator');
 defined('JPATH_LIBRARIES') or define('JPATH_LIBRARIES', JPATH_ROOT . '/libraries');
 defined('JPATH_TESTS') or define('JPATH_TESTS', __DIR__);
+defined('JPATH_CONFIGURATION') or define('JPATH_CONFIGURATION', JPATH_ROOT);
+defined('JDEBUG') or define('JDEBUG', 0);
+defined('JPATH_CACHE') or define('JPATH_CACHE', "temp");
 
 // Set up Composer autoloader
 $composerAutoload = __DIR__ . '/../vendor/autoload.php';

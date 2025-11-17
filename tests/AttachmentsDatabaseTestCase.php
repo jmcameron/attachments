@@ -72,29 +72,6 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
         parent::setUp();
         self::$instance = $this;
 
-        // Set up required Joomla constants if not already defined
-        if (!defined('JPATH_ROOT')) {
-            define('JPATH_ROOT', realpath(__DIR__ . '/..'));
-        }
-        if (!defined('JPATH_SITE')) {
-            define('JPATH_SITE', JPATH_ROOT);
-        }
-        if (!defined('JPATH_ADMINISTRATOR')) {
-            define('JPATH_ADMINISTRATOR', JPATH_ROOT . '/administrator');
-        }
-        if (!defined('_JEXEC')) {
-            define('_JEXEC', 1);
-        }
-        if (!defined('JPATH_CONFIGURATION')) {
-            define('JPATH_CONFIGURATION', JPATH_ROOT);
-        }
-        if (!defined('JDEBUG')) {
-            define('JDEBUG', 0);
-        }
-        if (!defined('JPATH_CACHE')) {
-            define('JPATH_CACHE', "temp");
-        }
-
         $this->setUpJoomlaMocks();
     }
 
