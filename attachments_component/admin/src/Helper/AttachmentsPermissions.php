@@ -65,9 +65,9 @@ class AttachmentsPermissions
                          );
 
         foreach ($actions as $action) {
+            /** @var \Joomla\CMS\User\User $user */
             $result->set($action, $user->authorise($action, $assetName));
         }
-
         return $result;
     }
 

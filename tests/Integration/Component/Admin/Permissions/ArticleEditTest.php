@@ -28,7 +28,6 @@ class ArticleEditTest extends AttachmentsTestCase
 {
     /**
      * Test to see whether a user may edit a specified article
-     * This is a simplified version since we can't test with real users without a DB
      *
      * @dataProvider provider
      *
@@ -39,13 +38,12 @@ class ArticleEditTest extends AttachmentsTestCase
      */
     public function testArticleEdit($user_id, $username, $art_id, $may_edit)
     {
-        // Since we can't test real permissions without a DB and Joomla environment,
-        // we'll test that the method signature works correctly
         $result = AttachmentsPermissions::userMayEditArticle((int)$art_id, (int)$user_id);
-        
-        // We can't validate the actual permissions result without a database,
-        // but we can ensure the method returns a boolean
+        $errmsg = "----> Failed test for $username edit article $art_id, expected $may_edit, got $result";
+
+        // Ensure the method returns a boolean
         $this->assertIsBool($result);
+        $this->assertEquals($result, (bool)$may_edit, $errmsg);        
     }
 
     /**

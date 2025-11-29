@@ -109,8 +109,8 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
         $this->mockUser->email = 'test@example.com';
 
         // Default authorise to false
-        $this->mockUser->method('authorise')
-            ->willReturn(false);
+        // $this->mockUser->method('authorise')
+        //     ->willReturn(false);
 
         // Set up database driver mock
         $this->mockDatabaseDriver = $this->getMockBuilder('Joomla\Database\DatabaseDriver')
@@ -269,6 +269,234 @@ abstract class AttachmentsDatabaseTestCase extends DatabaseTestCase
                     ->columns(['id', 'title', 'ordering', 'rules'])
                     ->values($db->quote($level['id']) . ', ' . $db->quote($level['title']) . ', ' . 
                             $db->quote($level['ordering']) . ', ' . $db->quote($level['rules']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function populateUsers()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__users') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY NOT NULL,
+                " . $db->quoteName('name') . " TEXT NOT NULL,
+                " . $db->quoteName('username') . " TEXT NOT NULL,
+                " . $db->quoteName('email') . " TEXT NOT NULL,
+                " . $db->quoteName('password') . " TEXT NOT NULL,
+                " . $db->quoteName('block') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('sendEmail') . " INTEGER DEFAULT 0,
+                " . $db->quoteName('registerDate') . " NUMERIC NOT NULL DEFAULT NULL,
+                " . $db->quoteName('lastvisitDate') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('activation') . " TEXT NOT NULL,
+                " . $db->quoteName('params') . " MEDIUMTEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('lastResetTime') . " NUMERIC DEFAULT NULL,
+                " . $db->quoteName('resetCount') . " INT(11) NOT NULL DEFAULT 0,
+                " . $db->quoteName('otpKey') . " TEXT NOT NULL,
+                " . $db->quoteName('otep') . " TEXT NOT NULL,
+                " . $db->quoteName('requireReset') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('authProvider') . " TEXT NOT NULL
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert users one at a time
+            $users = [
+                ['id' => 42, 'name' => 'admin', 'username' => 'admin', 'email' => 'admin@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 43, 'name' => 'jmc', 'username' => 'jmc', 'email' => 'jmc@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 50, 'name' => 'joe', 'username' => 'joe', 'email' => 'joe@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 51, 'name' => 'art', 'username' => 'art', 'email' => 'art@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 52, 'name' => 'ed', 'username' => 'ed', 'email' => 'ed@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 53, 'name' => 'pub', 'username' => 'pub', 'email' => 'pub@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 54, 'name' => 'manny', 'username' => 'manny', 'email' => 'manny@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+                ['id' => 55, 'name' => 'adam', 'username' => 'adam', 'email' => 'adam@example.com', 'password' => 'hashed_password', 'block' => 0,
+                 'sendEmail' => 0, 'registerDate' => '2024-01-01 00:00:00', 'lastvisitDate' => null,
+                 'activation' => '', 'params' => '', 'lastResetTime' => null, 'resetCount' => 0,
+                 'otpKey' => '', 'otep' => '', 'requireReset' => 0, 'authProvider' => ''],
+            ];
+            
+            $count = 0;
+            foreach ($users as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__users')
+                    ->columns(['id', 'name', 'username', 'email', 'password', 'block', 'sendEmail', 'registerDate',
+                               'lastvisitDate', 'activation', 'params', 'lastResetTime', 'resetCount',
+                               'otpKey', 'otep', 'requireReset', 'authProvider'])
+                    ->values($db->quote($level['id']) . ', ' . $db->quote($level['name']) . ', ' . 
+                            $db->quote($level['username']) . ', ' . $db->quote($level['email']) . ', ' . 
+                            $db->quote($level['password']) . ', ' . $db->quote($level['block']) . ', ' . 
+                            $db->quote($level['sendEmail']) . ', ' . $db->quote($level['registerDate']) . ', ' . 
+                            $db->quote($level['lastvisitDate']) . ', ' . $db->quote($level['activation']) . ', ' . 
+                            $db->quote($level['params']) . ', ' . $db->quote($level['lastResetTime']) . ', ' . 
+                            $db->quote($level['resetCount']) . ', ' . $db->quote($level['otpKey']) . ', ' . 
+                            $db->quote($level['otep']) . ', ' . $db->quote($level['requireReset']) . ', ' . $db->quote($level['authProvider']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function populateUserGroups()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__usergroups') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY NOT NULL,
+                " . $db->quoteName('parent_id') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('lft') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('rgt') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('title') . " TEXT NOT NULL
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert users one at a time
+            $users = [
+                ['id' => 1, 'parent_id' => 0, 'lft' => 1, 'rgt' => 16, 'title' => 'Public'],
+                ['id' => 2, 'parent_id' => 1, 'lft' => 6, 'rgt' => 13, 'title' => 'Registered'],
+                ['id' => 3, 'parent_id' => 2, 'lft' => 7, 'rgt' => 12, 'title' => 'Author'],
+                ['id' => 4, 'parent_id' => 3, 'lft' => 8, 'rgt' => 11, 'title' => 'Editor'],
+                ['id' => 5, 'parent_id' => 4, 'lft' => 9, 'rgt' => 10, 'title' => 'Publisher'],
+                ['id' => 6, 'parent_id' => 1, 'lft' => 2, 'rgt' => 5, 'title' => 'Manager'],
+                ['id' => 7, 'parent_id' => 6, 'lft' => 3, 'rgt' => 4, 'title' => 'Administrator'],
+                ['id' => 8, 'parent_id' => 1, 'lft' => 14, 'rgt' => 15, 'title' => 'Super Users'],
+            ];
+            
+            $count = 0;
+            foreach ($users as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__usergroups')
+                    ->columns(['id', 'parent_id', 'lft', 'rgt', 'title'])
+                    ->values($db->quote($level['id']) . ', ' . $db->quote($level['parent_id']) . ', ' . 
+                            $db->quote($level['lft']) . ', ' . $db->quote($level['rgt']) . ', ' . 
+                            $db->quote($level['title']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function populateUserGroupMap()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__user_usergroup_map') . " (
+                " . $db->quoteName('user_id') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('group_id') . " INTEGER NOT NULL DEFAULT 0,
+                PRIMARY KEY (" . $db->quoteName('user_id') . "," . $db->quoteName('group_id') . ")
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert users one at a time
+            $users = [
+                ['user_id' => 42, 'group_id' => 8],
+                ['user_id' => 50, 'group_id' => 1],
+            ];
+            
+            $count = 0;
+            foreach ($users as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__user_usergroup_map')
+                    ->columns(['user_id', 'group_id'])
+                    ->values($db->quote($level['user_id']) . ', ' . $db->quote($level['group_id']));
+                
+                $db->setQuery($query);
+                if ($db->execute()) {
+                    $count++;
+                }
+            }
+            return $count;
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    protected function populateAssets()
+    {
+        $db = $this->getDatabaseManager()->getConnection();
+        
+        try {
+            // Create the viewlevels table if it doesn't exist using raw SQL
+            $createTableSQL = "CREATE TABLE IF NOT EXISTS " . $db->quoteName('#__assets') . " (
+                " . $db->quoteName('id') . " INTEGER PRIMARY KEY NOT NULL DEFAULT NULL,
+                " . $db->quoteName('parent_id') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('lft') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('rgt') . " INTEGER NOT NULL DEFAULT 0,
+                " . $db->quoteName('level') . " INTEGER NOT NULL DEFAULT NULL,
+                " . $db->quoteName('name') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('title') . " TEXT NOT NULL DEFAULT NULL,
+                " . $db->quoteName('rules') . " TEXT NOT NULL DEFAULT NULL
+            )";
+            
+            $db->setQuery($createTableSQL);
+            $db->execute();
+            
+            // Insert users one at a time
+            $users = [
+                ['id' => 1, 'parent_id' => 0, 'lft' => 1, 'rgt' => 6, 'level' => 0, 'name' => 'root.1', 'title' => 'Root Asset', 'rules' => '{"core.login.site":{"6":1,"2":1},"core.login.admin":{"6":1},"core.login.offline":{"6":1},"core.admin":{"8":1},"core.manage":{"7":1},"core.create":{"6":1,"3":1},"core.delete":{"6":1},"core.edit":{"6":1,"4":1},"core.edit.state":{"6":1,"5":1},"core.edit.own":{"6":1,"3":1},"attachments.delete.own":{"6":1,"3":1},"attachments.edit.state.own":{"6":1,"4":1},"attachments.edit.state.ownparent":{"6":1,"4":1},"attachments.edit.ownparent":{"6":1,"3":1},"attachments.delete.ownparent":{"6":1,"3":1}}'],
+                ['id' => 2, 'parent_id' => 1, 'lft' => 2, 'rgt' => 5, 'level' => 1, 'name' => 'com_attachments', 'title' => 'com_attachments', 'rules' => '{"core.create":{"12":1,"13":1,"11":1,"10":1},"core.edit.own":{"12":1,"13":1,"11":1,"10":1},"attachments.edit.state.own":{"12":1,"13":1,"11":1,"10":1},"attachments.delete.own":{"12":1,"13":1,"11":1,"10":1},"attachments.edit.ownparent":{"12":1,"13":1,"11":1,"10":1},"attachments.edit.state.ownparent":{"12":1,"13":1,"11":1,"10":1},"attachments.delete.ownparent":{"12":1,"13":1,"11":1,"10":1}}'],
+                ['id' => 8, 'parent_id' => 1, 'lft' => 3, 'rgt' => 4, 'level' => 1, 'name' => "com_content", 'title' => "com_content", 'rules' => "{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.edit\":{\"4\":1},\"core.edit.state\":{\"5\":1},\"core.edit.own\":{\"12\":1,\"11\":1,\"10\":1}}"]
+            ];
+            
+            $count = 0;
+            foreach ($users as $level) {
+                $query = $db->getQuery(true);
+                $query->insert('#__assets')
+                    ->columns(['id', 'parent_id', 'lft', 'rgt', 'level', 'name', 'title', 'rules'])
+                    ->values($db->quote($level['id']) . ', ' . $db->quote($level['parent_id']) . ', ' . 
+                            $db->quote($level['lft']) . ', ' . $db->quote($level['rgt']) . ', ' . 
+                            $db->quote($level['level']) . ', ' . $db->quote($level['name']) . ', ' . 
+                            $db->quote($level['title']) . ', ' . $db->quote($level['rules']));
                 
                 $db->setQuery($query);
                 if ($db->execute()) {

@@ -13,7 +13,8 @@
         "joomla/filter": "^4.0",
         "joomla/filesystem": "^4.1",
         "joomla/input": "^4.0",
-        "joomla/uri": "^4.0"
+        "joomla/uri": "^4.0",
+        "algo26-matthias/idna-convert": "^4.2"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +36,7 @@
     },
     "scripts": {
         "check-compatibility": "phpcs -p . --standard=PHPCompatibility --runtime-set testVersion 7.4- --ignore=*/vendor/*,temp/*",
-        "test": "phpunit -c phpunit.xml",
+        "test": "phpunit -c ./phpunit.xml || pwd",
         "test-coverage": "phpunit -c phpunit.xml --coverage-html ./tests/coverage-report"
     }
 }
