@@ -15,6 +15,7 @@
 namespace Tests\Integration\Component\Admin\Permissions;
 
 use JMCameron\Component\Attachments\Administrator\Helper\AttachmentsPermissions;
+use Tests\AttachmentsDatabaseTestCase;
 use Tests\AttachmentsTestCase;
 use Tests\Utils\CsvFileIterator;
 
@@ -24,8 +25,23 @@ use Tests\Utils\CsvFileIterator;
  * @package Attachments
  * @subpackage Tests
  */
-class CategoryEditTest extends AttachmentsTestCase
+class CategoryEditTest extends AttachmentsDatabaseTestCase
 {
+    /**
+     * Sets up the fixture
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        parent::setUpBeforeClass();
+
+        $this->populateUsers();
+        $this->populateUserGroups();
+        $this->populateUserGroupMap();
+        $this->populateAssets();
+        $this->populateCategories();
+    }
+
     /**
      * Test to see whether a user may edit a specified category
      *

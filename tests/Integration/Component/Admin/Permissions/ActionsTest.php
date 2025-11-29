@@ -64,22 +64,7 @@ class ActionsTest extends AttachmentsDatabaseTestCase
         $errmsg = "ERROR: ========> USERNAME=$username does not exist!";
         $this->assertNotEquals((int)$user_id, 0, $errmsg);
 
-        $this->mockUserFactory
-            ->method('loadUserById')
-            ->willReturn(new User($user_id));
-        // $this->setUpUserWithPermissions([
-        //     'core.admin' => (bool)(int)$admin,
-        //     'core.manage' => (bool)(int)$manage,
-        //     'core.create' => (bool)(int)$create,
-        //     'core.delete' => (bool)(int)$delete,
-        //     'core.edit' => (bool)(int)$edit,
-        //     'core.edit.state' => (bool)(int)$edit_state,
-        //     'core.edit.own' => (bool)(int)$edit_own,
-        //     'attachments.delete.own' => (bool)(int)$delete_own
-        // ], UserHelper::getUserProps($user_id));
-
         $result = AttachmentsPermissions::getActions((int)$user_id);
-        var_dump($result);
         $this->assertInstanceOf(Registry::class, $result);
         
          $errmsg = "----> Failed test for $username core.admin for com_attachments, " .
@@ -87,7 +72,7 @@ class ActionsTest extends AttachmentsDatabaseTestCase
         $this->assertEquals($result->get('core.admin'), (bool)(int)$admin, $errmsg);
 
         $errmsg = "----> Failed test for $username core.manage for com_attachments, " .
-            "expected ".var_export((bool)(int)$manage, true).", got " . $result->get('core.manage') . " for " . $username;
+            "expected ".var_export((bool)(int)$manage, true).", got " . var_export($result->get('core.manage'),true) . " for " . $username;
         $this->assertEquals($result->get('core.manage'), (bool)(int)$manage, $errmsg);
 
         $errmsg = "----> Failed test for $username core.create for com_attachments, " .
