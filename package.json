@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jmcameron/attachments#readme",
   "devDependencies": {
     "cypress-mysql": "^1.0.4",
-    "joomla-cypress": "^1.3.1"
+    "joomla-cypress": "^1.3.1",
+    "typescript": "^5.9.3"
   }
 }

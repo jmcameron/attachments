@@ -1,8 +1,4 @@
-/// <reference types="cypress" />
-
-import * as joomlaCypress from "joomla-cypress";
-
-joomlaCypress.registerCommands();
+import "../../support"
 
 describe("Joomla is ready", () => {
   it("should load the Joomla admin login page", () => {

@@ -1,8 +1,4 @@
-/// <reference types="cypress" />
-
-import * as joomlaCypress from "joomla-cypress";
-
-joomlaCypress.registerCommands();
+import "../../support"
 
 describe("Attachments package installation tests", () => {
   it("should appear in the installed extensions list after installation", () => {

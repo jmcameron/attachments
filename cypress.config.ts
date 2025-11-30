@@ -1,5 +1,6 @@
-const fs = require("fs");
-const mysql = require('cypress-mysql');
+import * as fs from "fs";
+import * as  mysql from 'cypress-mysql';
+import { defineConfig } from "cypress";
 
 const db = {
   host: process.env.JOOMLA_DB_HOST,
@@ -8,7 +9,7 @@ const db = {
   database: process.env.JOOMLA_DB_NAME,
 };
 
-module.exports = {
+export default defineConfig({
   e2e: {
     baseUrl: process.env.JOOMLA_URL,
     env: {
@@ -56,4 +57,4 @@ module.exports = {
       });
     },
   },
-};
+});
