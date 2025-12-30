@@ -375,8 +375,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentBeforeSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            true
+            true,
+            null
         ]);
 
         // Upload new file/url and create the attachment
@@ -783,8 +783,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentBeforeSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            false
+            false,
+            null
         ]);
 
         $apm = AttachmentsPluginManager::getAttachmentsPluginManager();

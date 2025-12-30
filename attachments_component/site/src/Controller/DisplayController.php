@@ -377,15 +377,15 @@ class DisplayController extends BaseController
             $app->triggerEvent('onContentBeforeSave', [
                 'com_attachments.attachment',
                 $attachment,
-                null,
-                true
+                true,
+                null
             ]);
         } else {
             $app->triggerEvent('onContentBeforeSave', [
                 'com_attachments.attachment',
                 $attachment,
-                null,
-                false
+                false,
+                null
             ]);
         }
 
