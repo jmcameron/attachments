@@ -376,7 +376,7 @@ class AttachmentController extends FormController
             'com_attachments.attachment',
             $attachment,
             true,
-            null
+            $attachment->getProperties()
         ]);
 
         // Upload new file/url and create the attachment
@@ -429,8 +429,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentAfterSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            true
+            true,
+            $attachment->getProperties()
         ]);
 
         // See where to go to next
@@ -784,7 +784,7 @@ class AttachmentController extends FormController
             'com_attachments.attachment',
             $attachment,
             false,
-            null
+            $attachment->getProperties()
         ]);
 
         $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
@@ -1007,8 +1007,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentAfterSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            false
+            false,
+            $attachment->getProperties()
         ]);
 
         switch ($this->getTask()) {

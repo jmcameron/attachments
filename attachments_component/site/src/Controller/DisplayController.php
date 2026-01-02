@@ -378,14 +378,14 @@ class DisplayController extends BaseController
                 'com_attachments.attachment',
                 $attachment,
                 true,
-                null
+                $attachment->getProperties()
             ]);
         } else {
             $app->triggerEvent('onContentBeforeSave', [
                 'com_attachments.attachment',
                 $attachment,
                 false,
-                null
+                $attachment->getProperties()
             ]);
         }
 
@@ -440,15 +440,15 @@ class DisplayController extends BaseController
             $app->triggerEvent('onContentAfterSave', [
                 'com_attachments.attachment',
                 $attachment,
-                null,
-                true
+                true,
+                $attachment->getProperties()
             ]);
         } else {
             $app->triggerEvent('onContentAfterSave', [
                 'com_attachments.attachment',
                 $attachment,
-                null,
-                false
+                false,
+                $attachment->getProperties()
             ]);
         }
 
@@ -581,9 +581,7 @@ class DisplayController extends BaseController
         PluginHelper::importPlugin('content');
         Factory::getApplication()->triggerEvent('onContentAfterDelete', [
             'com_attachments.attachment',
-            $attachment,
-            null,
-            false
+            $attachment
         ]);
 
         // Clean up after ourselves
