@@ -372,12 +372,6 @@ class AttachmentController extends FormController
         $attachment->modified_by = $user->get('id');
 
         PluginHelper::importPlugin('content');
-        $app->triggerEvent('onContentBeforeSave', [
-            'com_attachments.attachment',
-            $attachment,
-            true,
-            $attachment->getProperties()
-        ]);
 
         // Upload new file/url and create the attachment
         $msg = '';
@@ -417,6 +411,13 @@ class AttachmentController extends FormController
         } else {
             // Set up the parent entity to save
             $attachment->parent_entity = $parent_entity;
+
+            $app->triggerEvent('onContentBeforeSave', [
+                'com_attachments.attachment',
+                $attachment,
+                true,
+                $attachment->getProperties()
+            ]);
 
             // Save the updated attachment info
             if (!$attachment->store()) {
@@ -780,12 +781,6 @@ class AttachmentController extends FormController
         // Get the parent handler for this attachment
         PluginHelper::importPlugin('attachments');
         PluginHelper::importPlugin('content');
-        $app->triggerEvent('onContentBeforeSave', [
-            'com_attachments.attachment',
-            $attachment,
-            false,
-            $attachment->getProperties()
-        ]);
 
         $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
         if (!$apm->attachmentsPluginInstalled($attachment->parent_type)) {
@@ -996,6 +991,13 @@ class AttachmentController extends FormController
             if (isset($attachment->parent_entity_name)) {
                 unset($attachment->parent_entity_name);
             }
+
+            $app->triggerEvent('onContentBeforeSave', [
+                'com_attachments.attachment',
+                $attachment,
+                false,
+                $attachment->getProperties()
+            ]);
 
             // Save the updated attachment info
             if (!$attachment->store()) {

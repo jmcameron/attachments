@@ -373,20 +373,6 @@ class DisplayController extends BaseController
         if ($save_type == 'upload') {
             $attachment->created_by = $user->get('id');
             $attachment->parent_id = $parent_id;
-
-            $app->triggerEvent('onContentBeforeSave', [
-                'com_attachments.attachment',
-                $attachment,
-                true,
-                $attachment->getProperties()
-            ]);
-        } else {
-            $app->triggerEvent('onContentBeforeSave', [
-                'com_attachments.attachment',
-                $attachment,
-                false,
-                $attachment->getProperties()
-            ]);
         }
 
         // Update the modified info
@@ -424,6 +410,13 @@ class DisplayController extends BaseController
             );
             // NOTE: store() is not needed if addUrl() is called since it does it
         } else {
+            $app->triggerEvent('onContentBeforeSave', [
+                'com_attachments.attachment',
+                $attachment,
+                $save_type == 'upload' ? true : false,
+                $attachment->getProperties()
+            ]);
+
             // Save the updated attachment info
             if (!$attachment->store()) {
                 $errmsg = $attachment->getError() . ' (ERR 11)';
