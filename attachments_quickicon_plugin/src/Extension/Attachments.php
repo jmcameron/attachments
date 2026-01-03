@@ -85,9 +85,6 @@ class Attachments extends CMSPlugin implements SubscriberInterface
             return;
         }
 
-        // Add the CSS file
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_quickicon.css');
-
         $image = 'icon-attachment';
 
         $result = $event->getArgument('result', []);
