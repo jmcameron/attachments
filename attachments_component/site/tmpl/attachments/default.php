@@ -231,58 +231,49 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             }
         }
 
-        $show_in_modal = (!$app->client->mobile) &&
-                         ($this->file_link_open_mode == 'in_a_popup') &&
+        $show_in_modal = ($this->file_link_open_mode == 'in_a_popup') &&
                          ($attachment->file_type === "application/pdf" ||
                           str_starts_with($attachment->file_type, "text/") ||
                           str_starts_with($attachment->file_type, "image/"));
 
+        AttachmentsJavascript::setupModalJavascript();
+
+        $randomId = base64_encode('show' . $attachment->id . $actual_filename);
+        // Remove +,/,= from the $randomId
+        $randomId = strtr($randomId, "+/=", "AAA");
+        $modalParams['title']  = $this->escape($tooltip);
+        $modalParams['url']    = $url;
+        $modalParams['height'] = '80%';
+        $modalParams['width']  = '80%';
+        $modalParams['bodyHeight'] = '80';
+        $modalParams['modalWidth'] = '80';
+        if ($this->secure) {
+            $url .= "&popup=1";
+        }
+        $html .= LayoutHelper::render(
+            'libraries.html.bootstrap.modal.main',
+            [
+                'selector' => 'modal-' . $randomId,
+                'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'>
+                            </iframe>",
+                'params' => $modalParams
+            ]
+        );
+
         if ($show_in_modal) {
-            $a_class = 'modal-button';
-            AttachmentsJavascript::setupModalJavascript();
-
-            $randomId = base64_encode('show' . $attachment->id . $actual_filename);
-            // Remove +,/,= from the $randomId
-            $randomId = strtr($randomId, "+/=", "AAA");
-            $modalParams['title']  = $this->escape($tooltip);
-            $modalParams['url']    = $url;
-            $modalParams['height'] = '80%';
-            $modalParams['width']  = '80%';
-            $modalParams['bodyHeight'] = '80';
-            $modalParams['modalWidth'] = '80';
-            if ($this->secure) {
-                $url .= "&popup=1";
-            }
-            $html .= LayoutHelper::render(
-                'libraries.html.bootstrap.modal.main',
-                [
-                    'selector' => 'modal-' . $randomId,
-                    'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'>
-                               </iframe>",
-                    'params' => $modalParams
-                ]
-            );
-
-            $show_link = "<a class=\"$a_class\"
-                             type=\"button\" data-bs-toggle='modal'
-                             data-bs-target='#modal-$randomId'";
-            $show_link .= "title=\"$tooltip\">";
-            if ($this->use_fontawesome_icons) {
-                $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
-            } else {
-                $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, null, null, true);
-            }
-            $show_link .= "&nbsp;" . $filename . "</a>";
+            $a_class = 'attachment modal-button';
         } else {
             $a_class = 'at_icon';
-            $show_link = "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">";
-            if ($this->use_fontawesome_icons) {
-                $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
-            } else {
-                $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, null, null, true);
-            }
-            $show_link .= "&nbsp;" . $filename . "</a>";
         }
+
+        $show_link = "<a class=\"" . $a_class . "\" href=\"$url\"$target data-bs-target='#modal-$randomId' title=\"$tooltip\">";
+        if ($this->use_fontawesome_icons) {
+            $show_link .= '<i class="' . $faIconsStyle . ' ' . $icon . '"></i>';
+        } else {
+            $show_link .= HTMLHelper::image('com_attachments/file_icons/' . $icon, null, null, true);
+        }
+        $show_link .= "&nbsp;" . $filename . "</a>";
+
         $html .= $show_link;
         if (($attachment->uri_type == 'url') && $this->superimpose_link_icons) {
             if ($attachment->url_valid) {
@@ -534,6 +525,9 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
 
 // Close the HTML
 $html .= "</tbody></table>\n";
+
+// If attachments should be opened in a popup on desktop, modify the links
+AttachmentsJavascript::modifyLinksForDesktop();
 
 if ($format != 'raw') {
     $html .= "</div>\n";
