@@ -202,8 +202,8 @@ class AttachmentsController extends AdminController
                     Factory::getApplication()->triggerEvent('onContentAfterDelete', [
                         'com_attachments.attachment',
                         $attachment,
-                        null,
-                        false
+                        false,
+                        $attachment->getProperties()
                     ]);
                 } else {
                     $parent_entity = $parent->getCanonicalEntityId($parent_entity);

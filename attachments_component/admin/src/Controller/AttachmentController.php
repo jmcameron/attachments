@@ -372,12 +372,6 @@ class AttachmentController extends FormController
         $attachment->modified_by = $user->get('id');
 
         PluginHelper::importPlugin('content');
-        $app->triggerEvent('onContentBeforeSave', [
-            'com_attachments.attachment',
-            $attachment,
-            null,
-            true
-        ]);
 
         // Upload new file/url and create the attachment
         $msg = '';
@@ -418,6 +412,13 @@ class AttachmentController extends FormController
             // Set up the parent entity to save
             $attachment->parent_entity = $parent_entity;
 
+            $app->triggerEvent('onContentBeforeSave', [
+                'com_attachments.attachment',
+                $attachment,
+                true,
+                $attachment->getProperties()
+            ]);
+
             // Save the updated attachment info
             if (!$attachment->store()) {
                 $errmsg = $attachment->getError() . ' (ERR 131)';
@@ -429,8 +430,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentAfterSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            true
+            true,
+            $attachment->getProperties()
         ]);
 
         // See where to go to next
@@ -780,12 +781,6 @@ class AttachmentController extends FormController
         // Get the parent handler for this attachment
         PluginHelper::importPlugin('attachments');
         PluginHelper::importPlugin('content');
-        $app->triggerEvent('onContentBeforeSave', [
-            'com_attachments.attachment',
-            $attachment,
-            null,
-            false
-        ]);
 
         $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
         if (!$apm->attachmentsPluginInstalled($attachment->parent_type)) {
@@ -997,6 +992,13 @@ class AttachmentController extends FormController
                 unset($attachment->parent_entity_name);
             }
 
+            $app->triggerEvent('onContentBeforeSave', [
+                'com_attachments.attachment',
+                $attachment,
+                false,
+                $attachment->getProperties()
+            ]);
+
             // Save the updated attachment info
             if (!$attachment->store()) {
                 $errmsg = $attachment->getError() . ' (ERR 142)';
@@ -1007,8 +1009,8 @@ class AttachmentController extends FormController
         $app->triggerEvent('onContentAfterSave', [
             'com_attachments.attachment',
             $attachment,
-            null,
-            false
+            false,
+            $attachment->getProperties()
         ]);
 
         switch ($this->getTask()) {
