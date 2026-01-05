@@ -928,6 +928,13 @@ class AttachmentsHelper
         // Add the icon file type
         $attachment->icon_filename = AttachmentsFileTypes::iconFilename($filename, $ftype);
 
+        $app->triggerEvent('onContentBeforeSave', [
+            'com_attachments.attachment',
+            $attachment,
+            $attachment_id === false ? true : false,
+            $attachment->getProperties()
+        ]);
+
         // Save the updated attachment
         if (!$attachment->store()) {
             $errmsg = Text::_('ATTACH_ERROR_SAVING_FILE_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 37)';
@@ -1528,6 +1535,13 @@ class AttachmentsHelper
             throw new \Exception($errmsg, 500);
         }
 
+        $app->triggerEvent('onContentBeforeSave', [
+            'com_attachments.attachment',
+            $attachment,
+            $attachment_id === false ? true : false,
+            $attachment->getProperties()
+        ]);
+        
         // Save the updated attachment
         if (!$attachment->store()) {
             $errmsg = Text::_('ATTACH_ERROR_SAVING_URL_ATTACHMENT_RECORD') . $attachment->getError() . ' (ERR 40)';

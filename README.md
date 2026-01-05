@@ -1,4 +1,4 @@
-# attachments 4.1.6
+# attachments 4.2.0
 
 ## Quick Start
 
@@ -6,7 +6,7 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 ## Requirements
 
-Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+
+Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+ and Joomla 6.0+
 
 ## Translations
 
@@ -16,7 +16,16 @@ The translations for
 - gr-GR (Greek)
 are included in current package
 
-The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations/https://github.com/jmcameron/attachments_translations)
+The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations)
+
+
+## 2025-11-07 version 4.2.0
+
+- Announce compatibility with Joomla 6.0 [#164](/../../issues/164)
+- better look for attachemnts edit in backend [#156](/../../pull/156)
+- add the possibility to insert attachments from other articles issue [#157](/../../issues/157)
+- Force creation of site attachment model  issue [#159](/../../issues/159)
+- Allow installation of the component from the joomla cli [#163](/../../pull/163)
 
 
 ## 2025-08-01 version 4.1.6

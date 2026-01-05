@@ -351,6 +351,11 @@ class Attachments extends CMSPlugin implements SubscriberInterface
             $isNew = $event->getArgument('isNew');
         }
 
+        if ($context == 'com_attachments.attachment') {
+            // Do not do anything for this component's own items
+            return false;
+        }
+        
         if (!$isNew) {
             // If the item is not new, this step is not needed
             return true;

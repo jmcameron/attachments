@@ -108,20 +108,11 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
             return false;
         }
 
-        // Add the regular css file
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button.css');
-
         // Get ready for language things
         $lang = $this->app->getLanguage();
         if (!$lang->load('plg_editors-xtd_insert_attachments_id_token', dirname(__FILE__))) {
             // If the desired translation is not available, at least load the English
             $lang->load('plg_editors-xtd_insert_attachments_id_token', JPATH_ADMINISTRATOR, 'en-GB');
-        }
-        if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
-            HTMLHelper::stylesheet('media/com_attachments/css/add_attachment_button_rtl.css');
         }
 
         // Load the language file from the frontend
