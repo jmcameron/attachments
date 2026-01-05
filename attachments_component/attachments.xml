@@ -176,8 +176,6 @@
     <media destination="com_attachments" folder="media">
        <filename>index.html</filename>
        <filename>css/index.html</filename>
-       <filename>css/add_attachment_button.css</filename>
-       <filename>css/add_attachment_button_rtl.css</filename>
        <filename>css/attachments_admin.css</filename>
        <filename>css/attachments_admin_dark.css</filename>
        <filename>css/attachments_admin_form.css</filename>
@@ -193,9 +191,6 @@
        <filename>css/attachments_list.css</filename>
        <filename>css/attachments_list_dark.css</filename>
        <filename>css/attachments_list_rtl.css</filename>
-       <filename>css/attachments_quickicon.css</filename>
-       <filename>css/insert_attachments_token_button.css</filename>
-       <filename>css/insert_attachments_token_button_rtl.css</filename>
        <filename>images/index.html</filename>
        <filename>images/add_attachment.gif</filename>
        <filename>images/add_attachment_button.png</filename>
