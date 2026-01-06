@@ -1,165 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
-    <name>com_attachments</name>
-    <version>4.2.0</version>
-    <creationDate>November  7, 2025</creationDate>
-    <author>Jonathan M. Cameron</author>
-    <authorEmail>jmcameron@jmcameron.net</authorEmail>
-    <authorUrl>https://github.com/jmcameron/attachments</authorUrl>
-    <copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
-    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
-
-    <scriptfile>install.attachments.php</scriptfile>
-
-    <install>
+	<name>com_attachments</name>
+	<version>4.2.1</version>
+	<creationDate>November  7, 2025</creationDate>
+	<author>Jonathan M. Cameron</author>
+	<authorEmail>jmcameron@jmcameron.net</authorEmail>
+	<authorUrl>https://github.com/jmcameron/attachments</authorUrl>
+	<copyright>(C) 2007-2025 Jonathan M. Cameron. All rights reserved.</copyright>
+	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<description>ATTACH_ATTACHMENTS_COMPONENT_DESCRIPTION</description>
+	<scriptfile>install.attachments.php</scriptfile>
+	<install>
 	<sql>
-	    <file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
+		<file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
 	</sql>
-    </install>
-
-    <update>
-        <schemas>
-            <schemapath type="mysql">sql/updates/mysql</schemapath>
-        </schemas>
-    </update>
-
-    <uninstall>
+	</install>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+	<uninstall>
 	<sql>
-	    <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
+		<file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
 	</sql>
-    </uninstall>
-
+	</uninstall>
 	<namespace path="src/">JMCameron\Component\Attachments</namespace>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>router.php</filename>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+		<folder>language</folder>
+	</files>
 
-    <files folder="site">
-	<filename>index.html</filename>
-	<filename>router.php</filename>
-	<filename>src/Model/AttachmentModel.php</filename>
-	<filename>src/Model/AttachmentsModel.php</filename>
-	<filename>src/Model/index.html</filename>
-	<filename>src/Controller/AttachmentsController.php</filename>
-	<filename>src/Controller/DisplayController.php</filename>
-	<filename>src/Controller/index.html</filename>
-	<filename>src/Helper/AttachmentsDefines.php</filename>
-	<filename>src/Helper/AttachmentsHelper.php</filename>
-	<filename>src/Helper/AttachmentsJavascript.php</filename>
-	<filename>src/Helper/AttachmentsFileTypes.php</filename>
-	<filename>src/index.html</filename>
-	<filename>src/View/Warning/HtmlView.php</filename>
-	<filename>src/View/Warning/index.html</filename>
-	<filename>src/View/Upload/metadata.xml</filename>
-	<filename>src/View/Upload/HtmlView.php</filename>
-	<filename>src/View/Upload/index.html</filename>
-	<filename>src/View/Login/HtmlView.php</filename>
-	<filename>src/View/Login/index.html</filename>
-	<filename>src/View/AttachmentsFormView.php</filename>
-	<filename>src/View/Attachments/metadata.xml</filename>
-	<filename>src/View/Attachments/RawView.php</filename>
-	<filename>src/View/Attachments/HtmlView.php</filename>
-	<filename>src/View/Attachments/index.html</filename>
-	<filename>src/View/Update/metadata.xml</filename>
-	<filename>src/View/Update/HtmlView.php</filename>
-	<filename>src/View/Update/index.html</filename>
-	<filename>tmpl/attachments/default.xml</filename>
-	<filename>tmpl/attachments/index.html</filename>
-	<filename>tmpl/attachments/default.php</filename>
-	<filename>tmpl/login/index.html</filename>
-	<filename>tmpl/login/default.php</filename>
-	<filename>tmpl/index.html</filename>
-	<filename>tmpl/update/index.html</filename>
-	<filename>tmpl/update/default.php</filename>
-	<filename>tmpl/warning/index.html</filename>
-	<filename>tmpl/warning/default.php</filename>
-	<filename>tmpl/upload/index.html</filename>
-	<filename>tmpl/upload/default.php</filename>
-	<folder>language</folder>
-    </files>
-
-    <administration>
+	<administration>
 	<menu img="../media/com_attachments/images/attachments.png">ATTACH_ATTACHMENTS</menu>
 	<submenu>
-	     <menu link="option=com_attachments" img="class:icon-attachments">ATTACH_ATTACHMENTS</menu>
-	     <menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
-	     <menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
+		<menu link="option=com_attachments" img="class:icon-attachments">ATTACH_ATTACHMENTS</menu>
+		<menu link="option=com_attachments&amp;task=attachment.add" img="class:newarticle">ATTACH_ADD_NEW_ATTACHMENT</menu>
+		<menu link="option=com_attachments&amp;task=params.edit" img="class:config">JTOOLBAR_OPTIONS</menu>
 	</submenu>
 
 	<files folder="admin">
-	    <filename>attachments.php</filename>
-	    <filename>access.xml</filename>
-	    <filename>config.xml</filename>
-	    <filename>index.html</filename>
-	    <filename>forms/index.html</filename>
-	    <filename>forms/attachment.xml</filename>
-		<filename>forms/filter_attachments.xml</filename>
-	    <filename>sql/index.html</filename>
-	    <filename>sql/install.mysql.sql</filename>
-	    <filename>sql/uninstall.mysql.sql</filename>
-		<filename>services/provider.php</filename>
-		<filename>tmpl/utils/index.html</filename>
-		<filename>tmpl/utils/default.php</filename>
-		<filename>tmpl/attachments/default_body.php</filename>
-		<filename>tmpl/attachments/default_filter.php</filename>
-		<filename>tmpl/attachments/default_head.php</filename>
-		<filename>tmpl/attachments/index.html</filename>
-		<filename>tmpl/attachments/default_foot.php</filename>
-		<filename>tmpl/attachments/default.php</filename>
-		<filename>tmpl/entity/index.html</filename>
-		<filename>tmpl/entity/default.php</filename>
-		<filename>tmpl/params/index.html</filename>
-		<filename>tmpl/params/default.php</filename>
-		<filename>tmpl/index.html</filename>
-		<filename>tmpl/add/index.html</filename>
-		<filename>tmpl/add/default.php</filename>
-		<filename>tmpl/help/index.html</filename>
-		<filename>tmpl/help/default.php</filename>
-		<filename>tmpl/edit/index.html</filename>
-		<filename>tmpl/edit/default.php</filename>
-		<filename>tmpl/warning/index.html</filename>
-		<filename>tmpl/warning/default.php</filename>
-		<filename>src/Model/AttachmentModel.php</filename>
-		<filename>src/Model/AttachmentsModel.php</filename>
-		<filename>src/Model/index.html</filename>
-		<filename>src/Controller/DisplayController.php</filename>
-		<filename>src/Controller/SpecialController.php</filename>
-		<filename>src/Controller/AttachmentsController.php</filename>
-		<filename>src/Controller/ListController.php</filename>
-		<filename>src/Controller/ParamsController.php</filename>
-		<filename>src/Controller/AttachmentController.php</filename>
-		<filename>src/Controller/index.html</filename>
-		<filename>src/Controller/UtilsController.php</filename>
-		<filename>src/Field/IconfilenamesField.php</filename>
-		<filename>src/Field/AccessLevelsField.php</filename>
-		<filename>src/Field/index.html</filename>
-		<filename>src/index.html</filename>
-		<filename>src/Helper/AttachmentsPermissions.php</filename>
-	    <filename>src/Helper/AttachmentsImport.php</filename>
-	    <filename>src/Helper/AttachmentsUpdate.php</filename>
-	    <filename>src/Helper/ImportArticles.php</filename>
-	    <filename>src/Helper/ImportAttachments.php</filename>
-	    <filename>src/Helper/ImportFromCSV.php</filename>
-		<filename>src/Table/AttachmentTable.php</filename>
-		<filename>src/Table/index.html</filename>
-		<filename>src/View/Warning/HtmlView.php</filename>
-		<filename>src/View/Warning/index.html</filename>
-		<filename>src/View/Edit/HtmlView.php</filename>
-		<filename>src/View/Edit/index.html</filename>
-		<filename>src/View/Entity/HtmlView.php</filename>
-		<filename>src/View/Entity/index.html</filename>
-		<filename>src/View/Add/HtmlView.php</filename>
-		<filename>src/View/Add/index.html</filename>
-		<filename>src/View/Attachments/HtmlView.php</filename>
-		<filename>src/View/Attachments/index.html</filename>
-		<filename>src/View/Help/HtmlView.php</filename>
-		<filename>src/View/Help/index.html</filename>
-		<filename>src/View/Help/HelpView.php</filename>
-		<filename>src/View/Utils/HtmlView.php</filename>
-		<filename>src/View/Utils/index.html</filename>
-		<filename>src/View/Params/HtmlView.php</filename>
-		<filename>src/View/Params/index.html</filename>
-	    <filename>Changelog.php</filename>
-	    <folder>sql/updates</folder>
-	    <folder>language</folder>
+		<filename>attachments.php</filename>
+		<filename>access.xml</filename>
+		<filename>config.xml</filename>
+		<filename>index.html</filename>
+		<folder>forms</folder>
+		<folder>sql</folder>
+		<folder>services</folder>
+		<folder>tmpl</folder>
+		<folder>src</folder>
+		<filename>Changelog.php</filename>
+		<folder>language</folder>
 	</files>
 
 	<languages>
@@ -171,57 +65,21 @@
 		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.sys.ini</language>
 		<language tag="fr-FR">admin/language/fr-FR/fr-FR.com_attachments.ini</language>
 	</languages>
-    </administration>
+	</administration>
 
-    <media destination="com_attachments" folder="media">
-       <filename>index.html</filename>
-       <filename>css/index.html</filename>
-       <filename>css/attachments_admin.css</filename>
-       <filename>css/attachments_admin_dark.css</filename>
-       <filename>css/attachments_admin_form.css</filename>
-       <filename>css/attachments_admin_form_dark.css</filename>
-       <filename>css/attachments_admin_form_rtl.css</filename>
-       <filename>css/attachments_admin_rtl.css</filename>
-       <filename>css/attachments_admin_utils.css</filename>
-       <filename>css/attachments_admin_utils_rtl.css</filename>
-       <filename>css/attachments_frontend_form.css</filename>
-       <filename>css/attachments_frontend_form_rtl.css</filename>
-       <filename>css/attachments_hide.css</filename>
-       <filename>css/attachments_help.css</filename>
-       <filename>css/attachments_list.css</filename>
-       <filename>css/attachments_list_dark.css</filename>
-       <filename>css/attachments_list_rtl.css</filename>
-       <filename>images/index.html</filename>
-       <filename>images/add_attachment.gif</filename>
-       <filename>images/add_attachment_button.png</filename>
-       <filename>images/add_attachment_button_rtl.png</filename>
-       <filename>images/add_attachment_button_small.png</filename>
-       <filename>images/add_attachment_button_small_rtl.png</filename>
-       <filename>images/attachment.gif</filename>
-       <filename>images/attachments.png</filename>
-       <filename>images/attachments_help_logo32.png</filename>
-       <filename>images/attachments_logo32.png</filename>
-       <filename>images/attachments_logo48.png</filename>
-       <filename>images/attachments_utils32.png</filename>
-       <filename>images/delete.gif</filename>
-       <filename>images/download.gif</filename>
-       <filename>images/insert_attachments_token_button.png</filename>
-       <filename>images/insert_attachments_token_button_rtl.png</filename>
-       <filename>images/insert_attachments_token_button_small.png</filename>
-       <filename>images/insert_attachments_token_button_small_rtl.png</filename>
-       <filename>images/pencil.gif</filename>
-       <filename>images/update.gif</filename>
-       <filename>js/index.html</filename>
-       <filename>js/attachments_caching.js</filename>
-       <filename>js/attachments_refresh.js</filename>
-       <folder>images/file_icons</folder>
-       <folder>images/help</folder>
-    </media>
+	<media destination="com_attachments" folder="media">
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>images</folder>
+		<folder>images</folder>
+	</media>
 
-    <!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
-    <languages>
+	<!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
+	<languages>
 		<language tag="en-GB">site/language/en-GB/en-GB.com_attachments.ini</language>
-    	<language tag="el-GR">site/language/el-GR/el-GR.com_attachments.ini</language>
+		<language tag="el-GR">site/language/el-GR/el-GR.com_attachments.ini</language>
 		<language tag="fr-FR">site/language/fr-FR/fr-FR.com_attachments.ini</language>
 	</languages>
 
