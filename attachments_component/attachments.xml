@@ -47,12 +47,12 @@
 		<filename>access.xml</filename>
 		<filename>config.xml</filename>
 		<filename>index.html</filename>
+		<filename>Changelog.php</filename>
 		<folder>forms</folder>
 		<folder>sql</folder>
 		<folder>services</folder>
 		<folder>tmpl</folder>
 		<folder>src</folder>
-		<filename>Changelog.php</filename>
 		<folder>language</folder>
 	</files>
 
@@ -72,8 +72,6 @@
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
-		<folder>images</folder>
-		<folder>images</folder>
 	</media>
 
 	<!-- Install the package language file this way since it is not clear how to install it directly with the package installer -->
