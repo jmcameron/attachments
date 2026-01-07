@@ -2028,8 +2028,7 @@ class AttachmentsHelper
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe width=\"100%\" height=\"600\" src=\"$url\" scrolling=\"auto\" loading=\"lazy\">
-                           </iframe>",
+                'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\"  style=\"width: 100%; height: 60vh; resize: both; overflow: auto;\"></iframe>",
                 'params' => $modalParams
             ]
         );

@@ -463,7 +463,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe src=\"$update_url\" scrolling=\"yes\" loading=\"lazy\"></iframe>",
+                'body' => "<iframe src=\"$update_url\" scrolling=\"yes\" loading=\"lazy\" style=\"width: 100%; height: 60vh; resize: both; overflow: auto;\"></iframe>",
                 'params' => $modalParams
             ]
         );
