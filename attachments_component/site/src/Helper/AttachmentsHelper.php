@@ -2020,15 +2020,18 @@ class AttachmentsHelper
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $tooltip === null ? '' : htmlspecialchars($tooltip, ENT_QUOTES, 'UTF-8');
         $modalParams['url']    = $url;
-        $modalParams['height'] = '100%';
+        $modalParams['height'] = '60vh';
         $modalParams['width']  = '100%';
-        $modalParams['bodyHeight'] = 75;
+        $modalParams['bodyHeight'] = 80;
         $modalParams['modalWidth'] = 80;
         $links = LayoutHelper::render(
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\"  style=\"width: 100%; height: 60vh; resize: both; overflow: auto;\"></iframe>",
+                'body' => "<iframe
+                            src=\"$url\"
+                            scrolling=\"auto\"
+                            loading=\"lazy\"</iframe>",
                 'params' => $modalParams
             ]
         );
