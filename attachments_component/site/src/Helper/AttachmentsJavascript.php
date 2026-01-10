@@ -15,6 +15,7 @@
 namespace JMCameron\Component\Attachments\Site\Helper;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -65,12 +66,14 @@ class AttachmentsJavascript
 
 
     /**
-     * Set up the Javascript for the modal button
+     * Set up the Javascript for the modal button selector is the selector of the modal
      */
     public static function setupModalJavascript()
     {
-        HTMLHelper::_('bootstrap.modal', 'a.modal-button');
+        HTMLHelper::_('bootstrap.modal', '.joomla-modal');
     }
+
+
 
 
     /**
