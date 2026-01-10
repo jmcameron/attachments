@@ -65,11 +65,11 @@ class AttachmentsJavascript
 
 
     /**
-     * Set up the Javascript for the modal button
+     * Set up the Javascript for the modal button selector is the selector of the modal
      */
     public static function setupModalJavascript()
     {
-        HTMLHelper::_('bootstrap.modal', 'a.modal-button');
+        HTMLHelper::_('bootstrap.modal', '.joomla-modal');
     }
 
 

@@ -243,8 +243,8 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $this->escape($tooltip);
         $modalParams['url']    = $url;
-        $modalParams['height'] = '80%';
-        $modalParams['width']  = '80%';
+        $modalParams['height'] = '60vh';
+        $modalParams['width']  = '100%';
         $modalParams['bodyHeight'] = '80';
         $modalParams['modalWidth'] = '80';
         if ($this->secure) {
@@ -254,8 +254,11 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe src=\"$url\" scrolling=\"auto\" loading=\"lazy\" width='95%' height='95%'>
-                            </iframe>",
+                'body' => "<iframe
+                            src=\"$url\"
+                            scrolling=\"auto\"
+                            loading=\"lazy\">
+                           </iframe>",
                 'params' => $modalParams
             ]
         );
@@ -455,7 +458,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $randomId = strtr($randomId, "+/=", "AAA");
         $modalParams['title']  = $this->escape($tooltip);
         $modalParams['url']    = $update_url;
-        $modalParams['height'] = '100%';
+        $modalParams['height'] = '60vh';
         $modalParams['width']  = '100%';
         $modalParams['bodyHeight'] = 75;
         $modalParams['modalWidth'] = 80;
@@ -463,7 +466,11 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe src=\"$update_url\" scrolling=\"yes\" loading=\"lazy\"></iframe>",
+                'body' => "<iframe
+                            src=\"$update_url\"
+                            scrolling=\"yes\"
+                            loading=\"lazy\">
+                           </iframe>",
                 'params' => $modalParams
             ]
         );
@@ -497,10 +504,10 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
             'libraries.html.bootstrap.modal.main',
             [
                 'selector' => 'modal-' . $randomId,
-                'body' => "<iframe width=\"100%\"
-                            height=\"200\"
+                'body' => "<iframe
                             src=\"$delete_url\"
-                            scrolling=\"yes\" loading=\"lazy\">
+                            scrolling=\"yes\"
+                            loading=\"lazy\">
                           </iframe>",
                 'params' => $modalParams
             ]
