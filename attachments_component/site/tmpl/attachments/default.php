@@ -498,7 +498,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $modalParams['url']    = $delete_url;
         $modalParams['height'] = '100%';
         $modalParams['width']  = '100%';
-        $modalParams['bodyHeight'] = 30;
+        $modalParams['bodyHeight'] = 40;
         $modalParams['modalWidth'] = 80;
         $html .= LayoutHelper::render(
             'libraries.html.bootstrap.modal.main',
