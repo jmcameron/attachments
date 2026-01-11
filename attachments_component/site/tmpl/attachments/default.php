@@ -404,6 +404,8 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         $html .= '<td class="at_file_size">' . $file_size_str . '</td>';
     }
     if ($this->show_raw_download &&  $show_in_modal) {
+        // avoid beeing scanned by javascript it is not a modal link
+        $a_class = 'at_icon';
         $url = Route::_($base_url .
                         "index.php?option=com_attachments&task=download&id=" .
                         (int)$attachment->id . "&raw=1");
