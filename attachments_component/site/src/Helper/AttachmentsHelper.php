@@ -2031,7 +2031,8 @@ class AttachmentsHelper
                 'body' => "<iframe
                             src=\"$url\"
                             scrolling=\"auto\"
-                            loading=\"lazy\"</iframe>",
+                            loading=\"lazy\">
+                            </iframe>",
                 'params' => $modalParams
             ]
         );
