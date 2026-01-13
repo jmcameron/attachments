@@ -89,7 +89,7 @@ if ($this->show_column_titles) {
     if ($this->show_file_size) {
         $html .= "<th class=\"at_file_size\">" . Text::_('ATTACH_FILE_SIZE') . "</th>";
     }
-    if ($this->secure && $this->show_downloads) {
+    if ($this->show_raw_download) {
         $html .= "<th class=\"at_downloads\">" . Text::_('ATTACH_DOWNLOADS') . "</th>";
     }
     if ($this->show_created_date) {
@@ -406,21 +406,25 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         }
         $html .= '<td class="at_file_size">' . $file_size_str . '</td>';
     }
-    if ($this->show_raw_download &&  $show_in_modal) {
+    if ($this->show_raw_download) {
         // avoid beeing scanned by javascript it is not a modal link
         $a_class = 'at_icon';
         $url = Route::_($base_url .
                         "index.php?option=com_attachments&task=download&id=" .
                         (int)$attachment->id . "&raw=1");
+        //add td part also (empty) if not $show_in_modal for the line
         $html .=  '<td class="at_icon">';
-        $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
-        if ($this->use_fontawesome_icons) {
-            $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
-                '<i class="' . $faIconsStyle . ' fa-download"></i></a></td>';
-        } else {
-            $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
-                HTMLHelper::image("com_attachments/download.gif", "", null, true) . '</a></td>';
+        if ($show_in_modal) {
+            $tooltip = Text::sprintf('ATTACH_DOWNLOAD_THIS_FILE_S', $actual_filename);
+            if ($this->use_fontawesome_icons) {
+                $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
+                    '<i class="' . $faIconsStyle . ' fa-download"></i></a>';
+            } else {
+                $html .= "<a class=\"" . $a_class . "\" href=\"$url\"$target title=\"$tooltip\">" .
+                    HTMLHelper::image("com_attachments/download.gif", "", null, true) . '</a>';
+            }
         }
+        $html .= '</td>';
     }
     // Show number of downloads (maybe)
     if ($this->secure && $this->show_downloads) {
