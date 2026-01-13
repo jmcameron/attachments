@@ -119,14 +119,19 @@ purge:
 	@find . -name '*.bak' -exec rm {} \;
 	@rm -f .tx/*.bak
 
-unittests:
+test:
 	@echo
 	@echo "Running unit tests..."
-	@cd test; phing -Droot=/var/www/test/joomla25/ unit_tests
+	@php vendor/bin/phpunit -c phpunit.xml
 	@echo
 
-unittests_show: unittests
-	@firefox test/coverage_result/index.html
+test-coverage:
+	@echo
+	@echo "Running unit tests with coverage..."
+	@php vendor/bin/phpunit -c phpunit.xml --coverage-html ./tests/coverage-report
+	@echo
+	@echo "Coverage report generated in tests/coverage-report/index.html"
+	@echo
 
 manual: extensions_manual/manual.rst
 	@echo "Creating Attachments Extension Manual"
