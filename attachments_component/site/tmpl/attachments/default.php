@@ -250,18 +250,21 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
         if ($this->secure) {
             $url .= "&popup=1";
         }
-        $html .= LayoutHelper::render(
-            'libraries.html.bootstrap.modal.main',
-            [
-                'selector' => 'modal-' . $randomId,
-                'body' => "<iframe
-                            src=\"$url\"
-                            scrolling=\"auto\"
-                            loading=\"lazy\">
-                           </iframe>",
-                'params' => $modalParams
-            ]
-        );
+        /* do not add modal if not needed */
+        if ($show_in_modal) {
+            $html .= LayoutHelper::render(
+                'libraries.html.bootstrap.modal.main',
+                [
+                    'selector' => 'modal-' . $randomId,
+                    'body' => "<iframe
+                                src=\"$url\"
+                                scrolling=\"auto\"
+                                loading=\"lazy\">
+                               </iframe>",
+                    'params' => $modalParams
+                ]
+            );
+        }
 
         if ($show_in_modal) {
             $a_class = 'attachment modal-button';
