@@ -1,12 +1,33 @@
 {
     "require-dev": {
-        "phpunit/phpunit": "^10.3",
-        "phpcompatibility/php-compatibility": "^10.0@dev"
+        "phpunit/phpunit": "^10.0",
+        "phpcompatibility/php-compatibility": "^9.0",
+        "joomla/test": "^4.0",
+        "joomla/string": "^4.0",
+        "joomla/registry": "^4.0",
+        "joomla/database": "^4.0",
+        "joomla/application": "^4.0",
+        "joomla/di": "^4.0",
+        "joomla/session": "^4.0",
+        "joomla/language": "^4.0",
+        "joomla/filter": "^4.0",
+        "joomla/filesystem": "^4.1",
+        "joomla/input": "^4.0",
+        "joomla/uri": "^4.0",
+        "algo26-matthias/idna-convert": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "JMCameron\\Component\\Attachments\\Administrator\\": "attachments_component/admin/src/",
+            "JMCameron\\Component\\Attachments\\Site\\": "attachments_component/site/src/",
+            "JMCameron\\Plugin\\AttachmentsPluginFramework\\": "attachments_plugin_framework/src"
+        }
     },
     "autoload-dev": {
-        "Tests\\": "tests",
-        "JMCameron\\Component\\Attachments\\Administrator\\": "attachments_component/admin/src/",
-        "JMCameron\\Component\\Attachments\\Site\\": "attachments_component/site/src/"
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Joomla\\CMS\\": "temp/joomla/libraries/src/"
+        }
     },
     "config": {
         "allow-plugins": {
@@ -14,6 +35,8 @@
         }
     },
     "scripts": {
-        "check-compatibility": "phpcs -p . --standard=PHPCompatibility --runtime-set testVersion 7.4- --ignore=*/vendor/*,temp/*"
+        "check-compatibility": "phpcs -p . --standard=PHPCompatibility --runtime-set testVersion 7.4- --ignore=*/vendor/*,temp/*",
+        "test": "phpunit -c ./phpunit.xml || pwd",
+        "test-coverage": "phpunit -c phpunit.xml --coverage-html ./tests/coverage-report"
     }
 }

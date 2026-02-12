@@ -134,12 +134,12 @@ class AttachmentsImport
             $ids_ok = array();
         }
 
-        iconv_set_encoding("internal_encoding", "UTF-8");
+        iconv_set_encoding("default_charset", "UTF-8");
         setlocale(LC_ALL, 'en_US.UTF-8');
 
         while (!feof($f)) {
             // Read the next line
-            $adata = fgetcsv($f);
+            $adata = fgetcsv($f, escape: '\\');
             $line_num += 1;
             $line_str = '  [LINE: ' . $line_num . '] ';
 
@@ -169,10 +169,11 @@ class AttachmentsImport
             if (!$apm->attachmentsPluginInstalled($parent_type)) {
                 return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_TYPE_S', $parent_type) . $line_str . ' (ERR 87)';
             }
-            $parent = $apm->getAttachmentsPlugin($parent_type);
-
+            
             // Does the parent exist?
             if ($verify_parent) {
+                $parent = $apm->getAttachmentsPlugin($parent_type);
+
                 // Make sure a parent with the specified ID exists
                 if (!$parent->parentExists($parent_id, $parent_entity)) {
                     return Text::sprintf('ATTACH_ERROR_UNKNOWN_PARENT_ID_N', $parent_id) . $line_str . ' (ERR 88)';
@@ -317,7 +318,7 @@ class AttachmentsImport
     {
         // Load the field names from the file
         $field = array();
-        $header_line = fgetcsv($file);
+        $header_line = fgetcsv($file, escape: '\\');
         // Strip of the leading BOM, if present
         $header_line = filter_var_array($header_line, FILTER_DEFAULT , FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
         for ($i = 0; $i < count($header_line); $i++) {

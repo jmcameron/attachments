@@ -199,7 +199,7 @@ class ImportFromCSV
         // Keep reading until we get a non-blank line
         while (!feof($this->file)) {
             // Read the line
-            $this->data = fgetcsv($this->file);
+            $this->data = fgetcsv($this->file, escape: '\\');
             $this->line_number += 1;
 
             // Do we have data?
@@ -290,7 +290,7 @@ class ImportFromCSV
         $bad_fields = array();
 
         // Load the field names from the file
-        $header_line = fgetcsv($file);
+        $header_line = fgetcsv($file, escape: '\\');
         $this->line_number += 1;
         for ($i = 0; $i < count($header_line); $i++) {
             $field_name = strtolower(trim($header_line[$i]));
