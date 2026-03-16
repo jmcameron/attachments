@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php">
+  <testsuites>
+    <testsuite name="Unit">
+      <directory>tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Integration">
+      <directory>tests/Integration</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <const name="JTEST_DATABASE_MYSQL_DSN" value="mysql:host=localhost;port=3306;dbname=joomla_tests"/>
+    <const name="JTEST_DATABASE_MYSQL_USERNAME" value="root"/>
+    <const name="JTEST_DATABASE_MYSQL_PASSWORD" value=""/>
+    <const name="JTEST_DATABASE_MYSQL_TEST_DATABASE_NAME" value="joomla_tests"/>
+  </php>
+  <source>
+    <include>
+      <directory suffix=".php">attachments_component/admin/src</directory>
+      <directory suffix=".php">attachments_component/site/src</directory>
+      <directory suffix=".php">attachments_plugin/src</directory>
+      <directory suffix=".php">attachments_for_content/src</directory>
+      <directory suffix=".php">attachments_search/src</directory>
+      <directory suffix=".php">attachments_plugin_framework/src</directory>
+      <directory suffix=".php">add_attachment_btn_plugin/src</directory>
+      <directory suffix=".php">insert_attachments_token_btn_plugin/src</directory>
+      <directory suffix=".php">show_attachments_in_editor_plugin/src</directory>
+    </include>
+  </source>
+</phpunit>

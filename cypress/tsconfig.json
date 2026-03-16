@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"lib": [
+			"es6",
+			"dom"
+		],
+		"sourceMap": true,
+		"types": [
+			"cypress",
+			"node"
+		],
+		"moduleResolution": "nodenext",
+		"module": "nodenext"
+	},
+	"include": [
+		"**/*.ts"
+	]
+}
