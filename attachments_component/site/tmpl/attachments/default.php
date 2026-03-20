@@ -256,11 +256,7 @@ for ($i = 0, $n = count($attachments); $i < $n; $i++) {
                 'libraries.html.bootstrap.modal.main',
                 [
                     'selector' => 'modal-' . $randomId,
-                    'body' => "<iframe
-                                src=\"$url\"
-                                scrolling=\"auto\"
-                                loading=\"lazy\">
-                               </iframe>",
+                    'body' => "",
                     'params' => $modalParams
                 ]
             );
