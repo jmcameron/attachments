@@ -67,6 +67,12 @@ if ($format != 'raw') {
 $html .= "<table>\n";
 $html .= "<caption style=\"caption-side:top\">{$this->title}</caption>\n";
 
+
+if ($this->use_fontawesome_icons) {
+    $faIconsStyle = $this->use_fontawesome_icons_style;
+}
+
+
 // Add the column titles, if requested
 if ($this->show_column_titles) {
     $html .= "<thead>\n<tr>";
@@ -90,7 +96,12 @@ if ($this->show_column_titles) {
         $html .= "<th class=\"at_file_size\">" . Text::_('ATTACH_FILE_SIZE') . "</th>";
     }
     if ($this->show_raw_download) {
-        $html .= "<th class=\"at_downloads\">" . Text::_('ATTACH_DOWNLOADS') . "</th>";
+        $img =($this->use_fontawesome_icons) ? '<i class="' . $faIconsStyle . ' fa-download">' :
+                                                HTMLHelper::image("com_attachments/download.gif", "", null, true);
+        $html .= "<th class=\"at_downloads\">" . $img . "</th>";
+    }
+    if ($this->secure && $this->show_downloads) {
+        $html .= "<th class=\"at_number_downloads\">" . Text::_('ATTACH_DOWNLOADS') . "</th>";
     }
     if ($this->show_created_date) {
         $html .= "<th class=\"at_created_date\">" . Text::_('ATTACH_CREATED') . "</th>";
@@ -109,10 +120,6 @@ $html .= "<tbody>\n";
 // Load Bootstrap modal code
 if ($this->file_link_open_mode == 'in_a_popup') {
     AttachmentsJavascript::setupModalJavascript();
-}
-
-if ($this->use_fontawesome_icons) {
-    $faIconsStyle = $this->use_fontawesome_icons_style;
 }
 
 // Construct the lines for the attachments
