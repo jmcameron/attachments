@@ -40,8 +40,8 @@ class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
             ->select($db->quoteName('enabled'))
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
-            ->where($db->quoteName('element') . ' = ' . $db->quote('compatibility'))  // plugin name
-            ->where($db->quoteName('folder') . ' = ' . $db->quote('system'));          // plugin group
+            ->where($db->quoteName('element') . ' = ' . $db->quote('compat6'))  // plugin name
+            ->where($db->quoteName('folder') . ' = ' . $db->quote('behaviour'));          // plugin group
 
         $db->setQuery($query);
 
