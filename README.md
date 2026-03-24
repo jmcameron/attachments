@@ -1,4 +1,4 @@
-# attachments 4.2.0
+# attachments 4.2.2
 
 ## Quick Start
 
@@ -17,6 +17,25 @@ The translations for
 are included in current package
 
 The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations)
+
+
+## 2026-03-24 version 4.2.2
+
+- Fix Issue [#181](/../../issues/181) : Add width and height directives Edit attachment iframe via front end
+- Fix Issue [#183](/../../issues/183) : Accessibility error and alert after updating to the latest version of Attachments 4.2.1
+- Fix Issue [#188](/../../issues/188) : Installation error on Joomla 6
+
+
+## 2026-01-06 version 4.2.1
+
+- accept version 6.0 for upgrading
+- Registry is not the correct class for storing access rights by @JLTRY in [#168](/../../pull/168)
+- Use filter_var_array instead of filter_var. Fixes importing csv files by @parapente in [#169](/../../pull/169)
+- Removed unnecessary file and its use. by @yild in [#174](/../../pull/174)
+- Removed unnecessary files and its uses. by @yild in [#175](/../../pull/175)
+- Check using js if we are on mobile and modify the links when needed. by @parapente in [#178](/../../pull/178)
+- Fix order of arguments for onContentBeforeSave event by @parapente in [#173](/../../pull/173)
+- Some fixes after #174 and #175 PR by @yild in [#180](/../../pull/180)
 
 
 ## 2025-11-07 version 4.2.0
