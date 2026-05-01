@@ -21,6 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Log\Log;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -199,6 +200,7 @@ class AttachmentTable extends Table
      */
     public function store($updateNulls = false)
     {
+        Log::Add("attachment:store:" . gettype($this->parent_id) . ":", Log::WARNING , "attachments");
         // make sure the display name and description are escaped since they may contain quotes
         $this->display_name = $this->_db->escape($this->display_name);
         $this->description  = $this->_db->escape($this->description);
@@ -212,6 +214,10 @@ class AttachmentTable extends Table
         $this->url_relative = $this->url_relative ? 1 : 0;
         $this->url_verify = $this->url_verify ? 1 : 0;
 
+        // modify parent_id if empty
+        if ($this->parent_id == '') {
+            $this->parent_id = NULL;
+        }
         // Let the parent class do the real work!
         return parent::store($updateNulls);
     }
