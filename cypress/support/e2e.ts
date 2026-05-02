@@ -27,12 +27,12 @@ before(() => {
   });
 
   // Dump the database to create a clean backup before any test runs
-  cy.task("dumpDatabase");
+  // cy.task("dumpDatabase");
 });
 
 beforeEach(() => {
   // Reset the database before each test
-  cy.task("resetDatabase");
+  // cy.task("resetDatabase");
   Cypress.session.clearAllSavedSessions();
 });
 
@@ -46,6 +46,38 @@ Cypress.Commands.add("adminLogin", () => {
 // Disable an extension via direct database query
 Cypress.Commands.add("dbDisableExtension", (extensionName) => {
   cy.log('Extension Name: ' + extensionName)
-  const query = `UPDATE joom_extensions SET enabled = 0 WHERE name = '${extensionName}';`;
-  return cy.query(query);
+  const query = `UPDATE joom_extensions SET enabled = 0 WHERE name = ?;`;
+  return cy.query(query, [extensionName]);
 });
+
+Cypress.Commands.add("isExtensionInstalled", (extensionName) => {
+  cy.log('is extension ' + extensionName + ' installed?')
+  const query = 'SELECT * FROM joom_extensions WHERE name = ? AND enabled = 1';
+  return cy.query(query, [extensionName]);
+});
+
+Cypress.Commands.add("installAttachmentsIfNeeded", () => {
+      cy.visit("/administrator/index.php?option=com_installer&view=manage");
+    cy.searchForItem("Attachments");
+    cy.get("body").then(($body) => {
+      if ($body.find('tbody > tr').length > 0 && $body.text().includes("Attachments")) {
+        cy.log("Attachments already installed");
+      } else {
+        cy.task("findAttachmentFile", "/app/cypress/fixtures").then((filename) => {
+          if (filename) {
+            cy.log(`Found file: ${filename}`);
+            cy.installExtensionFromFileUpload(filename);
+          }
+        });
+      }
+    });
+});
+
+// Fix for "Cannot read properties of undefined (reading 'addEventListener')" error caused by Joomla's toolbar in 4.4
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false prevents Cypress from failing the test
+  if (err.message.includes('Cannot read properties of undefined (reading \'addEventListener\')')) {
+    console.log('Caught expected exception:', err.message);
+    return false
+  }
+})

@@ -7,6 +7,15 @@ describe("Attachments package installation tests", () => {
     // Log in as administrator
     cy.adminLogin();
 
+    cy.isExtensionInstalled('com_attachments').then((result) => {
+      if (result.length > 0) {
+        cy.log(`Extension ${extensionName} is already installed, uninstalling before reinstalling.`);
+        cy.uninstallExtension(`Package: ${extensionName}`);
+      } else {
+        cy.log(`Extension ${extensionName} is not currently installed, proceeding with installation test.`);
+      }
+    });
+
     // Verify that no extension with this name exists in the installed extensions list
     cy.visit("/administrator/index.php?option=com_installer&view=manage");
     cy.searchForItem(extensionName);
@@ -40,9 +49,17 @@ describe("Attachments package installation tests", () => {
     // Log in as administrator
     cy.adminLogin();
 
+    cy.isExtensionInstalled('com_attachments').then((result) => {
+      cy.log(result);
+      if (result.length > 0) {
+        cy.log(`Extension ${extensionName} is already installed, uninstalling before reinstalling.`);
+        cy.uninstallExtension(`Package: ${extensionName}`);
+      } else {
+        cy.log(`Extension ${extensionName} is not currently installed, proceeding with installation test.`);
+      }
+    });
+
     // Verify that no extension with this name exists in the installed extensions list
-    // Note: The previous test already installed the extension, so the files are present
-    // but the database entries were removed before this test
     cy.visit("/administrator/index.php?option=com_installer&view=manage");
     cy.searchForItem(extensionName);
     cy.contains(extensionName).should("not.exist");

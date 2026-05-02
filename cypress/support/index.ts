@@ -7,7 +7,9 @@ import "./user"
 declare global {
   namespace Cypress {
     interface Chainable {
-      dbDisableExtension(extensionName: string): Chainable<JQuery<HTMLElement>>
+      dbDisableExtension(extensionName: string): Chainable
+      isExtensionInstalled(extensionName: string): Chainable
+      installAttachmentsIfNeeded(): Chainable
       adminLogin(): Chainable
     }
   }
