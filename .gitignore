@@ -21,3 +21,5 @@
 /.phpunit.result.cache
 /.phpunit.cache
 /.env
+/cypress/screenshots
+/cypress/videos
