@@ -29,7 +29,12 @@ RUN sed -Ei 's/"joomla\/test": ".*"/"joomla\/test": "'"${JOOMLA_FRAMEWORK_VERSIO
 	sed -Ei 's/"joomla\/database": ".*"/"joomla\/database": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
 	sed -Ei 's/"joomla\/application": ".*"/"joomla\/application": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
 	sed -Ei 's/"joomla\/di": ".*"/"joomla\/di": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
-	sed -Ei 's/"joomla\/session": ".*"/"joomla\/session": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json
+	sed -Ei 's/"joomla\/session": ".*"/"joomla\/session": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
+	sed -Ei 's/"joomla\/language": ".*"/"joomla\/language": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
+	sed -Ei 's/"joomla\/filter": ".*"/"joomla\/filter": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
+	sed -Ei 's/"joomla\/filesystem": ".*"/"joomla\/filesystem": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json &&\
+	sed -Ei 's/"joomla\/input": ".*"/"joomla\/input": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json && \
+	sed -Ei 's/"joomla\/uri": ".*"/"joomla\/uri": "'${JOOMLA_FRAMEWORK_VERSION}'"/' composer.json
 
 RUN composer update && \
 	npm ci
