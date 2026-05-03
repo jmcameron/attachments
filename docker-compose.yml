@@ -55,6 +55,7 @@ services:
     entrypoint: ["/usr/local/bin/cypress", "open", '--project', '/app']
     volumes:
       - .:/app
+      - joomla_data:/var/www/html
     environment:
       DISPLAY: novnc:0.0
       JOOMLA_URL: http://joomla/

@@ -14,6 +14,7 @@ export default defineConfig({
     baseUrl: process.env.JOOMLA_URL,
     env: {
       db: db,
+      chromeWebSecurity: false,
     },
     setupNodeEvents(on, config) {
       mysql.configurePlugin(on);
@@ -54,7 +55,15 @@ export default defineConfig({
           );
           return null;
         },
-      });
+
+        clearAttachmentsDir() {
+          const attachmentsDir = "/var/www/html/attachments";
+          if (fs.existsSync(attachmentsDir)) {
+            fs.rmSync(attachmentsDir, { recursive: true, force: true });
+          }
+          return null;
+        }
+    });
     },
   },
 });

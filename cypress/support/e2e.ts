@@ -57,7 +57,7 @@ Cypress.Commands.add("isExtensionInstalled", (extensionName) => {
 });
 
 Cypress.Commands.add("installAttachmentsIfNeeded", () => {
-      cy.visit("/administrator/index.php?option=com_installer&view=manage");
+    cy.visit("/administrator/index.php?option=com_installer&view=manage");
     cy.searchForItem("Attachments");
     cy.get("body").then(($body) => {
       if ($body.find('tbody > tr').length > 0 && $body.text().includes("Attachments")) {
@@ -71,6 +71,43 @@ Cypress.Commands.add("installAttachmentsIfNeeded", () => {
         });
       }
     });
+});
+
+Cypress.Commands.add("removeAllArticles", () => {
+  const query = 'DELETE FROM joom_content';
+  return cy.query(query);
+});
+
+Cypress.Commands.add("removeAllAttachments", () => {
+  cy.task("clearAttachmentsDir");
+
+  const query = 'DELETE FROM joom_attachments';
+  return cy.query(query);
+});
+
+Cypress.Commands.add("showAddAttachmentDialogThroughEditor", () => {
+  cy.get('body').then(($body) => {
+    if ($body.find('button.tox-tbtn').length > 0) {
+      // Joomla 4.4+ with TinyMCE 6
+      cy.log("Found editor toolbar button");
+      cy.get('button.tox-tbtn').contains("CMS Content").click({
+        waitForAnimations: false,
+      });
+      cy.get('div[title="Add attachment"]').click();
+    } else {
+      throw new Error("Editor toolbar button not found");
+    }
+  });
+});
+
+Cypress.Commands.add("setEditorContent", (content: string) => {
+  cy.window().then((win) => {
+    if (win.tinyMCE) {
+      win.tinyMCE.activeEditor.setContent(content);
+    } else {
+      throw new Error("TinyMCE not found");
+    }
+  });
 });
 
 // Fix for "Cannot read properties of undefined (reading 'addEventListener')" error caused by Joomla's toolbar in 4.4

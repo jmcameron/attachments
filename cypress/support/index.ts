@@ -10,6 +10,10 @@ declare global {
       dbDisableExtension(extensionName: string): Chainable
       isExtensionInstalled(extensionName: string): Chainable
       installAttachmentsIfNeeded(): Chainable
+      removeAllArticles(): Chainable
+      removeAllAttachments(): Chainable
+      setEditorContent(content: string): Chainable
+      showAddAttachmentDialogThroughEditor(): Chainable
       adminLogin(): Chainable
     }
   }
