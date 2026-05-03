@@ -9,7 +9,7 @@ declare global {
        * Some hints taken and adapted from:
        * https://gitlab.com/kgroat/cypress-iframe/-/blob/master/src/index.ts
        */
-      iframe($iframes: HTMLIFrameElement[]): Chainable
+      iframe($iframes?: HTMLIFrameElement[]): Chainable
     }
   }
 }

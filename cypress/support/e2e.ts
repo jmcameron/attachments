@@ -50,6 +50,12 @@ Cypress.Commands.add("dbDisableExtension", (extensionName) => {
   return cy.query(query, [extensionName]);
 });
 
+Cypress.Commands.add("dbEnableExtension", (extensionName) => {
+  cy.log('Extension Name: ' + extensionName)
+  const query = `UPDATE joom_extensions SET enabled = 1 WHERE name = ?;`;
+  return cy.query(query, [extensionName]);
+});
+
 Cypress.Commands.add("isExtensionInstalled", (extensionName) => {
   cy.log('is extension ' + extensionName + ' installed?')
   const query = 'SELECT * FROM joom_extensions WHERE name = ? AND enabled = 1';
@@ -108,6 +114,61 @@ Cypress.Commands.add("setEditorContent", (content: string) => {
       throw new Error("TinyMCE not found");
     }
   });
+});
+
+Cypress.Commands.add("addArticleWithAttachment", (title: string = "Test Article for Attachments", content: string = "This is a test article to verify attachments functionality.", attachmentPath: string = "test-image.png") => {
+    // Create a new article
+    cy.visit("/administrator/index.php?option=com_content&task=article.add");
+    cy.get("#jform_title").type(title);
+    cy.setEditorContent(content);
+
+    // Go to the attachments tab and add an attachment
+    cy.showAddAttachmentDialogThroughEditor();
+    cy.wait(1000); // Wait for the upload to complete and the page to update
+    cy.get(".iframe").then(($iframe) => {
+      const $body = $iframe.contents().find("body");
+      cy.wrap($body)
+        .find("#upload")
+        .attachFile(attachmentPath, { subjectType: "input" });
+      cy.wrap($body)
+        .find("form.attachmentsBackend")
+        .contains("button", "Upload")
+        .click();
+    });
+
+    // Verify the attachment is listed
+    cy.get(".attachmentsList").should("contain", "test-image.png");
+
+    cy.clickToolbarButton("save");
+    cy.get(".alert-message").should("contain", "Article saved");
+
+    // Verify the attachment is still listed
+    cy.get(".attachmentsList").should("contain", "test-image.png");
+
+    cy.clickToolbarButton("cancel");
+
+    cy.query("SELECT id FROM joom_content order by id desc limit 1").then((result) => {
+      const articleId = result[0].id;
+      cy.wrap(articleId).as("articleId");
+    });
+
+    return cy.get("@articleId");
+  });
+
+Cypress.Commands.add("addArticleWithoutAttachment", (title: string = "Test Article for Attachments", content: string = "This is a test article to verify attachments functionality.") => {
+    // Create a new article
+    cy.visit("/administrator/index.php?option=com_content&task=article.add");
+    cy.get("#jform_title").type(title);
+    cy.setEditorContent(content);
+
+    cy.clickToolbarButton("save & close");
+    cy.get(".alert-message").should("contain", "Article saved");
+    cy.query("SELECT id FROM joom_content order by id desc limit 1").then((result) => {
+      const articleId = result[0].id;
+      cy.wrap(articleId).as("articleId");
+    });
+
+    return cy.get("@articleId");
 });
 
 // Fix for "Cannot read properties of undefined (reading 'addEventListener')" error caused by Joomla's toolbar in 4.4
