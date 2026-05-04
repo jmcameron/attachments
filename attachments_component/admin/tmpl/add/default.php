@@ -47,6 +47,7 @@ if (!in_array($editor, $exceptions)) {
     $alt_parent_html .= '<div id="attachmentsPotentialParents">';
     $alt_parent_html .= '<p>';
 
+    $lang = $app->getLanguage();
     // For normal LTR, put the label on the left
     if (!$lang->isRTL()) {
         $alt_parent_html .= '<span>' . Text::_('ATTACH_ADD_ATTACHMENT_TO') . '</span> ';
