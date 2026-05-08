@@ -1,4 +1,4 @@
-# attachments 4.2.2
+# attachments 4.2.3
 
 ## Quick Start
 
@@ -6,7 +6,8 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 ## Requirements
 
-Joomla 4.0+ ; the extensions is also compatible with Joomla 5.0+ and Joomla 6.0+
+Joomla 6.0+ : The plugin that needs to be enable has full name "Behaviour - Backward Compatibility 6" 
+Joomla 5.0+ : the extensions is also compatible with Joomla 6.0+
 
 ## Translations
 
@@ -18,6 +19,11 @@ are included in current package
 
 The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations)
 
+## 2026-05-08
+
+- Fix Issue [#198](/../../issues/198) : Error when creating a new attachment #198
+- Fix Issue [#196](/../../issues/196) : Error when changing an attachment on an new article
+- Fix Issue [#194](/../../issues/194) : Fail to install attachment package due to bad compat plugin check #194
 
 ## 2026-03-24 version 4.2.2
 
