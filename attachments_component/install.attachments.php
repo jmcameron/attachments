@@ -200,27 +200,6 @@ class com_AttachmentsInstallerScript implements InstallerScriptInterface
             return false;
         }
 
-        // If there is debris from a previous failed attempt to install Attachments, delete it
-        // NOTE: Creating custom query because using JComponentHelper::isEnabled insists on
-        //       printing a warning if the component is not installed
-        $db = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
-        $query->select('extension_id AS id, enabled');
-        $query->from('#__extensions');
-        $query->where($query->qn('type') . ' = ' . $db->quote('component'));
-        $query->where($query->qn('element') . ' = ' . $db->quote('com_attachments'));
-        $db->setQuery($query);
-        if ($db->loadResult() == 0) {
-            if (
-                Folder::exists(JPATH_ROOT . '/components/com_attachments')
-                or Folder::exists(JPATH_ROOT . '/administrator/components/com_attachments')
-            ) {
-                $msg = Text::_('ATTACH_ERROR_UINSTALL_OLD_VERSION');
-                $app->enqueueMessage($msg, 'error');
-                return false;
-            }
-        }
-
         // Temporarily move the attachments directory out of the way to avoid conflicts
         $attachdir = JPATH_ROOT . '/attachments';
         if (Folder::exists($attachdir)) {
