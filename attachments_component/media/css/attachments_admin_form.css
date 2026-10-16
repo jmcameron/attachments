@@ -490,8 +490,6 @@ form.attachmentsBackend legend {
 form.attachmentsBackend input {
     float: none;
     border: 1px solid #888;
-    color: #333333;
-    background-color: #CCC;
     margin: 2px;
 }
 
