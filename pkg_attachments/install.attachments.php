@@ -13,7 +13,7 @@
  */
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
@@ -96,6 +96,7 @@ class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
     {
         $app = Factory::getApplication();
 
+        /*no need any more 
         if (
             version_compare(JVERSION, '6', 'ge') &&
             !$this->isCompatibilityPluginEnabled()
@@ -104,7 +105,7 @@ class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
             $app->enqueueMessage($msg, 'warning');
 
             return false;
-        }
+        }*/
 
         // Load the installation language
         $lang = $app->getLanguage();

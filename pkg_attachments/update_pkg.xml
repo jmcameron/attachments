@@ -6,10 +6,10 @@
 		<element>pkg_attachments</element>
 		<type>package</type>
 		<client>site</client>
-		<version>4.2.5</version>
+		<version>5.0.0</version>
 		<infourl title="Attachments">https://github.com/jmcameron/attachments/</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/jmcameron/attachments/releases/download/v4.2.5/attachments-4.2.5.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/jmcameron/attachments/releases/download/v5.0.0/attachments-5.0.0.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>Stable</tag>
@@ -17,9 +17,9 @@
 		<maintainer>Jonathan M. Cameron</maintainer>
 		<maintainerurl>https://github.com/jmcameron/attachments</maintainerurl>
 		<php_minimum>8.0</php_minimum>
-		<targetplatform name="joomla" version="(4\.[01234]|5\.[0123]|6\.[01])"/>
-		<sha256>C13F482ACDA1B2D4D1F01E043FF25D58F385CFCB65BB71794AE4E460D9A48A2A</sha256>
-		<sha384>CAC13085545F6B9465C0A06AED7EF17E8EEB6CEECE15E7E860533CFCDCD478EE591A15F6A41BBB2F840961474D165B63</sha384>
-		<sha512>3D26276E38C460F3E7AB1E71D2BF06ED2D47E6765A419EBEE36D00F065790611A8E141064B901F6FAB275D3623006780956C9AE9E651C579556785006D7A53DA</sha512>
+		<targetplatform name="joomla" version="(5\.[0123]|6\.[01])"/>
+		<sha256>0DFDD5187889A5D9E5DE2A9D12C683E446062B8352639069DEA5E42FCD780ED1</sha256>
+		<sha384>1AC0D0D17068006379EBF822177E489DCABF81E071EB59C8578C015487A549B31CB4A1BB2398E2B81CF7F0335383D69E</sha384>
+		<sha512>05BC5DA8990E38691253BFF0F1706A36802379709D5FF1941EA0BB2E54607BF8876E86881846722965C6365ED0FECA2F01FC73D83AB71F67E8D91495B26A9EA9</sha512>
 	</update>
 </updates>
