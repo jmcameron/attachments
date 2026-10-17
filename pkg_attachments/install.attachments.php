@@ -96,16 +96,14 @@ class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
     {
         $app = Factory::getApplication();
 
-        /*no need any more 
-        if (
-            version_compare(JVERSION, '6', 'ge') &&
-            !$this->isCompatibilityPluginEnabled()
-        ) {
-            $msg = Text::_('ATTACH_PACKAGE_NEEDS_COMPATIBILITY_PLUGIN');
+        /* no more comaptible with Joomla 4 */
+       if (version_compare(JVERSION, '5.0.0', '<')) {
+            //!$this->isCompatibilityPluginEnabled()
+            $msg = Text::_('ATTACH_PACKAGE_NO_JOOMLA4');
             $app->enqueueMessage($msg, 'warning');
 
             return false;
-        }*/
+        }
 
         // Load the installation language
         $lang = $app->getLanguage();
