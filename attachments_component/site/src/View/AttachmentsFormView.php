@@ -16,7 +16,7 @@ namespace JMCameron\Component\Attachments\Site\View;
 
 use Joomla\CMS\Document\Renderer\Html\HeadRenderer;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\HtmlView;
 
