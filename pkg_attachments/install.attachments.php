@@ -96,7 +96,7 @@ class pkg_AttachmentsInstallerScript implements InstallerScriptInterface
     {
         $app = Factory::getApplication();
 
-        /* no more comaptible with Joomla 4 */
+        /* no more compatible with Joomla 4 */
        if (version_compare(JVERSION, '5.0.0', '<')) {
             //!$this->isCompatibilityPluginEnabled()
             $msg = Text::_('ATTACH_PACKAGE_NO_JOOMLA4');
