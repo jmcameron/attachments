@@ -19,9 +19,7 @@ use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -76,7 +74,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
         $button = $this->onDisplay($event->getEditorId());
 
         if ($button) {
-            $subject->add(new Button($this->_name, $button->getProperties()));
+            $subject->add(new Button($this->_name, \get_object_vars($button)));
         }
     }
 
@@ -87,7 +85,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
      * @param int $asset The asset ID for the entity being edited
      * @param int $author The ID of the author of the entity
      *
-     * @return CMSObject button
+     * @return \stdClass|null Button configuration, or null when unavailable.
      */
     public function onDisplay($name)
     {
@@ -178,7 +176,7 @@ class AddAttachment extends CMSPlugin implements SubscriberInterface
         $link = $parent->getEntityAddUrl($parent_id, $parent_entity, 'closeme');
         $link .= '&amp;editor=' . $editor;
 
-        $button = new CMSObject();
+        $button = new \stdClass();
 
         // Finalize the [Add Attachment] button info
         $button->modal = true;
