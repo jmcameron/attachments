@@ -42,7 +42,7 @@ class ListController extends BaseController
      */
     public function __construct(
         $config = array('default_task' => 'noop'),
-        MVCFactoryInterface $factory = null,
+        ?MVCFactoryInterface $factory = null,
         ?CMSApplication $app = null,
         ?Input $input = null
     ) {
