@@ -234,7 +234,7 @@ class HtmlView extends BaseHtmlView
 
         // Display the attachments
         if ($this->editor) {
-            $document = Factory::getDocument();
+            $document = $this->getDocument();
             HTMLHelper::_('jquery.framework');
             $document->addScriptDeclaration('function insertAttachmentsIdToken($, editorName) {
 				let editor = parent.Joomla.editors.instances[editorName];

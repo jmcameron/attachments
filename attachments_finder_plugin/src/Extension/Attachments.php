@@ -105,20 +105,11 @@ final class Attachments extends Adapter implements SubscriberInterface
     public static function getSubscribedEvents(): array
     {
         $parentEvents = [];
-        // Joomla 4 Adapter class doesn't have a getSubscribedEvents method
-        if (method_exists(Adapter::class, 'getSubscribedEvents')) {
-            if (version_compare(phpversion(), '8.2.0', '<')) {
-                $parentEvents = call_user_func('parent::getSubscribedEvents');
-            } else {
-                $parentEvents = call_user_func(array(parent::class, 'getSubscribedEvents'));
-            }
+
+        if (version_compare(phpversion(), '8.2.0', '<')) {
+            $parentEvents = call_user_func('parent::getSubscribedEvents');
         } else {
-            $parentEvents = [
-                'onStartIndex' => 'onStartIndex',
-                'onBeforeIndex' => 'onBeforeIndex',
-                'onBuildIndex' => 'onBuildIndex',
-                'onFinderGarbageCollection' => 'onFinderGarbageCollection'
-            ];
+            $parentEvents = call_user_func(array(parent::class, 'getSubscribedEvents'));
         }
 
         return array_merge($parentEvents, [
@@ -153,12 +144,8 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderAfterDelete(Event $event): void
     {
-        if (version_compare(JVERSION, '5.0', 'ge')) {
-            $context = $event->getArgument('context');
-            $table = $event->getArgument('subject');
-        } else {
-            [$context, $table] = $event->getArguments();
-        }
+        $context = $event->getArgument('context');
+        $table = $event->getArgument('subject');
 
         if ($context === 'com_attachments.attachment') {
             $id = $table->id;
@@ -184,13 +171,9 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderAfterSave(Event $event): void
     {
-        if (version_compare(JVERSION, '5.0', 'ge')) {
-            $context = $event->getArgument('context');
-            $subject     = $event->getArgument('subject');
-            $isNew   = $event->getArgument('isNew');
-        } else {
-            [$context, $subject, $isNew] = $event->getArguments();
-        }
+        $context = $event->getArgument('context');
+        $subject     = $event->getArgument('subject');
+        $isNew   = $event->getArgument('isNew');
 
         // We only want to handle categories here.
         if ($context === 'com_attachments.attachment') {
@@ -218,13 +201,10 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderBeforeSave(Event $event): void
     {
-        if (version_compare(JVERSION, '5.0', 'ge')) {
-            $context = $event->getArgument('context');
-            $subject     = $event->getArgument('subject');
-            $isNew   = $event->getArgument('isNew');
-        } else {
-            [$context, $subject, $isNew] = $event->getArguments();
-        }
+        $context = $event->getArgument('context');
+        $subject     = $event->getArgument('subject');
+        $isNew   = $event->getArgument('isNew');
+
 
         // We only want to handle categories here.
         if ($context === 'com_attachments.attachment') {
@@ -249,13 +229,9 @@ final class Attachments extends Adapter implements SubscriberInterface
      */
     public function onFinderChangeState(Event $event): void
     {
-        if (version_compare(JVERSION, '5.0', 'ge')) {
-            $context = $event->getArgument('context');
-            $pks     = $event->getArgument('pks');
-            $value   = $event->getArgument('value');
-        } else {
-            [$context, $pks, $value] = $event->getArguments();
-        }
+        $context = $event->getArgument('context');
+        $pks     = $event->getArgument('pks');
+        $value   = $event->getArgument('value');
 
         // We only want to handle attachments here.
         if ($context === 'com_attachments.attachment') {
