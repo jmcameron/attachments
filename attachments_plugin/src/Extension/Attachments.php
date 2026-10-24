@@ -102,13 +102,10 @@ class Attachments extends CMSPlugin implements SubscriberInterface
     // public function onContentPrepare($context, &$row, &$params, $page = 0)
     public function onContentPrepare(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $row, $params, $page] = $event->getArguments();
-        } else {
-            $context = $event['context'];
-            $row = $event['subject'];
-            $params = $event['params'];
-        }
+        $context = $event['context'];
+        $row = $event['subject'];
+        $params = $event['params'];
+
         // Enable the following four diagnostic lines to see if a component uses onContentPrepare
         // $msg = "<br/>onContentPrepare: CONTEXT: $context,
         // OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
@@ -244,13 +241,10 @@ class Attachments extends CMSPlugin implements SubscriberInterface
      */
     public function onContentBeforeDisplay(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $row, $params, $page] = $event->getArguments();
-        } else {
-            $context = $event['context'];
-            $row = $event['subject'];
-            $params = $event['params'];
-        }
+        $context = $event['context'];
+        $row = $event['subject'];
+        $params = $event['params'];
+
         $input = $this->app->getInput();
         $view = $input->getCmd('view');
         $layout = $input->getCmd('layout');
@@ -343,13 +337,9 @@ class Attachments extends CMSPlugin implements SubscriberInterface
      */
     public function onContentAfterSave(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $item, $isNew] = $event->getArguments();
-        } else {
-            $context = $event->getArgument('context');
-            $item = $event->getArgument('subject');
-            $isNew = $event->getArgument('isNew');
-        }
+        $context = $event->getArgument('context');
+        $item = $event->getArgument('subject');
+        $isNew = $event->getArgument('isNew');
 
         if ($context == 'com_attachments.attachment') {
             // Do not do anything for this component's own items
