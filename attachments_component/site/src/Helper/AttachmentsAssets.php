@@ -24,8 +24,15 @@ final class AttachmentsAssets
         $assetName = 'com_attachments.' . $name;
         $webAssetManager = Factory::getApplication()->getDocument()->getWebAssetManager();
 
-        if (!$webAssetManager->assetExists('style', $assetName)) {
-            $webAssetManager->registerStyle($assetName, 'com_attachments/css/' . $name . '.css');
+        if (
+            !$webAssetManager->assetExists('style', $assetName)
+            || !$webAssetManager->getAsset('style', $assetName)->getUri()
+        ) {
+            $webAssetManager->registerStyle($assetName, 'com_attachments/' . $name . '.css');
+        }
+
+        if ($webAssetManager->getAssetState('style', $assetName) > 0) {
+            return;
         }
 
         $webAssetManager->useStyle($assetName);
