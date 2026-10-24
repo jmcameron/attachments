@@ -27,6 +27,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\String\StringHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -218,11 +219,11 @@ class HtmlView extends BaseHtmlView
         $this->project_url = AttachmentsDefines::$PROJECT_URL;
 
         // Add the style sheets
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_dark.css');
+        AttachmentsAssets::useStyle('attachments_admin');
+        AttachmentsAssets::useStyle('attachments_admin_dark');
         $lang = $app->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css');
+            AttachmentsAssets::useStyle('attachments_admin_rtl');
         }
 
         // Set the toolbar

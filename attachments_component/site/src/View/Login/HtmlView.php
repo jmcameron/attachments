@@ -16,11 +16,11 @@ namespace JMCameron\Component\Attachments\Site\View\Login;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -40,11 +40,11 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         // Add the stylesheets
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
         $app = Factory::getApplication();
+        AttachmentsAssets::useStyle('attachments_frontend_form');
         $lang = $app->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+            AttachmentsAssets::useStyle('attachments_frontend_form_rtl');
         }
 
         // Is the user already logged in?

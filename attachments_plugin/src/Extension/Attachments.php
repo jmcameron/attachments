@@ -16,11 +16,11 @@ namespace JMCameron\Plugin\Content\Attachments\Extension;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -204,7 +204,7 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         AttachmentsJavascript::setupJavascript();
 
         // Always include the hide rule (since it may be needed to hide the custom tags)
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_hide.css');
+        AttachmentsAssets::useStyle('attachments_hide');
 
         // Exit if we should not display attachments for this parent
         if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity)) {
@@ -271,7 +271,7 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         AttachmentsJavascript::setupJavascript();
 
         // Always include the hide rule (since it may be needed to hide the custom tags)
-        HtmlHelper::stylesheet('media/com_attachments/css/attachments_hide.css');
+        AttachmentsAssets::useStyle('attachments_hide');
 
         // Get the article/parent handler
         PluginHelper::importPlugin('attachments');

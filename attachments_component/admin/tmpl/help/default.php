@@ -12,10 +12,9 @@
  * @author Jonathan M. Cameron
  */
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -47,18 +46,8 @@ define('SECT_CONTCT', 20);
 // Load the tooltip behavior.
 // JHtml::_('bootstrap.tooltip');
 
-// Add the CSS for the attachments list (whether we need it or not)
-HTMLHelper::stylesheet('media/com_attachments/css/attachments_help.css');
-
-// If the user specifies 'show=codes' in the url, the language item codes will
-// be shown by default.  Note that they can still be toggled with the toggles
-// at the top right and bottom right of the page.
-$app = Factory::getApplication();
-if ($app->getInput()->getCmd('show') == 'codes') {
-    HTMLHelper::stylesheet('media/com_attachments/css/attachments_help_show_codes.css');
-}
-
-
+// Add the help page stylesheet.
+AttachmentsAssets::useStyle('attachments_help');
 
 $this->saveSectionInfo(SECT_INTRO, 'introduction', 'ATTACH_HELP_010000_SECTION_TITLE');
 $this->saveSectionInfo(SECT_NEW_V4, 'v4-features', 'ATTACH_HELP_020000_SECTION_TITLE');

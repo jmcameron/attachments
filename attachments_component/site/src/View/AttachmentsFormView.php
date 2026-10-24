@@ -17,8 +17,8 @@ namespace JMCameron\Component\Attachments\Site\View;
 use Joomla\CMS\Document\Renderer\Html\HeadRenderer;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\HtmlView;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -50,10 +50,16 @@ class AttachmentsFormView extends HtmlView
 
         $this->template = $app->getTemplate(true)->template;
         $template_dir = $this->baseurl . '/templates/' . $this->template;
+        $webAssetManager = $document->getWebAssetManager();
 
         $file = '/templates/system/css/system.css';
         if (File::exists(JPATH_SITE . $file)) {
-            $document->addStyleSheet($this->baseurl . $file);
+            $assetName = 'com_attachments.template.system';
+            $styleUri = $this->baseurl . $file;
+            if (!$webAssetManager->assetExists('style', $assetName)) {
+                $webAssetManager->registerStyle($assetName, $styleUri);
+            }
+            $webAssetManager->useStyle($assetName);
         }
 
         // Try to add the typical template stylesheets
@@ -61,13 +67,18 @@ class AttachmentsFormView extends HtmlView
         foreach ($files as $file) {
             $path = JPATH_SITE . '/templates/' . $this->template . '/css/' . $file;
             if (File::exists($path)) {
-                $document->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/' . $file);
+                $styleUri = $this->baseurl . '/templates/' . $this->template . '/css/' . $file;
+                $assetName = 'com_attachments.template.' . md5($styleUri);
+                if (!$webAssetManager->assetExists('style', $assetName)) {
+                    $webAssetManager->registerStyle($assetName, $styleUri);
+                }
+                $webAssetManager->useStyle($assetName);
             }
         }
 
         // Add the CSS for the attachments list (whether we need it or not)
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
+        AttachmentsAssets::useStyle('attachments_list');
+        AttachmentsAssets::useStyle('attachments_list_dark');
 
         $head_renderer = new HeadRenderer($document);
 

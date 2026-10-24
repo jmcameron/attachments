@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -48,11 +49,11 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         // Add the style sheets
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_dark.css');
+        AttachmentsAssets::useStyle('attachments_admin_form');
+        AttachmentsAssets::useStyle('attachments_admin_form_dark');
         $lang = Factory::getApplication()->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_form_rtl.css');
+            AttachmentsAssets::useStyle('attachments_admin_form_rtl');
         }
         $this->addToolBar();
         parent::display($tpl);

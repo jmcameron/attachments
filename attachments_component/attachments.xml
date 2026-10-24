@@ -69,6 +69,7 @@
 
 	<media destination="com_attachments" folder="media">
 		<filename>index.html</filename>
+		<filename>joomla.asset.json</filename>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>

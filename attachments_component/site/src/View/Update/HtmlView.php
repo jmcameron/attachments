@@ -16,6 +16,7 @@ namespace JMCameron\Component\Attachments\Site\View\Update;
 
 use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use JMCameron\Component\Attachments\Site\View\AttachmentsFormView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -91,10 +92,10 @@ class HtmlView extends AttachmentsFormView
         }
 
         // Add the stylesheets
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        AttachmentsAssets::useStyle('attachments_frontend_form');
         $lang = $app->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+            AttachmentsAssets::useStyle('attachments_frontend_form_rtl');
         }
 
         // Display the form
