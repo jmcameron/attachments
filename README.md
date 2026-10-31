@@ -1,4 +1,4 @@
-# attachments 4.2.3
+# attachments 5.0.0
 
 ## Quick Start
 
@@ -8,6 +8,8 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 Joomla 6.0+ : The plugin that needs to be enable has full name "Behaviour - Backward Compatibility 6" 
 Joomla 5.0+ : the extensions is also compatible with Joomla 6.0+
+Joomla 4.0+ : the extensions is compatible with Joomla 4.0+ only with lower that 5.0.0
+
 
 ## Translations
 
@@ -19,11 +21,24 @@ are included in current package
 
 The other translations are managed with separate packages under repo [attachments_translations](https://github.com/jmcameron/attachments_translations)
 
-## 2026-05-08
+## 2026-10/31 version 5.0.0
 
-- Fix Issue [#198](/../../issues/198) : Error when creating a new attachment #198
+Fix issue [#206](/../../issues/206) Description and filename fields in Joomla6 backend are illegible
+Fix issue [#207](/../../issues/207) Joomla 6 deprecations (WIP)
+
+## 2026-08-14 version 4.2.5
+
+- Fixed issue [#204](/../../issues/204) Cut of attachment details, dates, etc., on small mobile devices
+
+## 2026-06-30 version 4.2.4
+
+- Use deprecated Folder class for now to support Joomla 4.4 by @parapente in [#202](/../../pull/202)
+
+## 2026-05-08 version 4.2.3
+
+- Fix Issue [#198](/../../issues/198) : Error when creating a new attachment [#198](/../../pull/198)
 - Fix Issue [#196](/../../issues/196) : Error when changing an attachment on an new article
-- Fix Issue [#194](/../../issues/194) : Fail to install attachment package due to bad compat plugin check #194
+- Fix Issue [#194](/../../issues/194) : Fail to install attachment package due to bad compat plugin check [#194](/../../pull/194)
 
 ## 2026-03-24 version 4.2.2
 
