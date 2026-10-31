@@ -19,9 +19,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -78,7 +76,7 @@ class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
         $button = $this->onDisplay($event->getEditorId());
 
         if ($button) {
-            $subject->add(new Button($this->_name, $button->getProperties()));
+            $subject->add(new Button($this->_name, \get_object_vars($button)));
         }
     }
     /**
@@ -145,7 +143,7 @@ class InsertAttachmentsToken extends CMSPlugin implements SubscriberInterface
 
         $doc->addScriptDeclaration($js);
 
-        $button = new CMSObject();
+        $button = new \stdClass();
         $button->modal = false;
         $button->class = 'btn';
         $button->text = Text::_('ATTACH_ATTACHMENTS_TOKEN');

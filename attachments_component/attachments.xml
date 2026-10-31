@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
 	<name>com_attachments</name>
-	<version>4.2.5</version>
-	<creationDate>August 14, 2026</creationDate>
+	<version>5.0.0</version>
+	<creationDate>October 17, 2026</creationDate>
 	<author>Jonathan M. Cameron</author>
 	<authorEmail>jmcameron@jmcameron.net</authorEmail>
 	<authorUrl>https://github.com/jmcameron/attachments</authorUrl>
@@ -69,6 +69,7 @@
 
 	<media destination="com_attachments" folder="media">
 		<filename>index.html</filename>
+		<filename>joomla.asset.json</filename>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>

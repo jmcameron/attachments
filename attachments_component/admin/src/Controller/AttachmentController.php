@@ -22,7 +22,7 @@ use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Form\FormFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -55,10 +55,10 @@ class AttachmentController extends FormController
      */
     public function __construct(
         $config = array(),
-        MVCFactoryInterface $factory = null,
+        ?MVCFactoryInterface $factory = null,
         ?CMSApplication $app = null,
         ?Input $input = null,
-        FormFactoryInterface $formFactory = null
+        ?FormFactoryInterface $formFactory = null
     ) {
         parent::__construct($config, $factory, $app, $input, $formFactory);
 

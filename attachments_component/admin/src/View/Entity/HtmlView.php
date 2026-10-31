@@ -15,8 +15,8 @@
 namespace JMCameron\Component\Attachments\Administrator\View\Entity;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -36,10 +36,10 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         // Add the style sheets
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin.css');
+        AttachmentsAssets::useStyle('attachments_admin');
         $lang = Factory::getApplication()->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_admin_rtl.css');
+            AttachmentsAssets::useStyle('attachments_admin_rtl');
         }
 
         parent::display($tpl);

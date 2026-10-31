@@ -16,11 +16,11 @@ namespace JMCameron\Plugin\Content\Attachments\Extension;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -102,13 +102,10 @@ class Attachments extends CMSPlugin implements SubscriberInterface
     // public function onContentPrepare($context, &$row, &$params, $page = 0)
     public function onContentPrepare(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $row, $params, $page] = $event->getArguments();
-        } else {
-            $context = $event['context'];
-            $row = $event['subject'];
-            $params = $event['params'];
-        }
+        $context = $event['context'];
+        $row = $event['subject'];
+        $params = $event['params'];
+
         // Enable the following four diagnostic lines to see if a component uses onContentPrepare
         // $msg = "<br/>onContentPrepare: CONTEXT: $context,
         // OBJ: " . get_class($row) . ", VIEW: " . JRequest::getCmd('view');
@@ -207,7 +204,7 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         AttachmentsJavascript::setupJavascript();
 
         // Always include the hide rule (since it may be needed to hide the custom tags)
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_hide.css');
+        AttachmentsAssets::useStyle('attachments_hide');
 
         // Exit if we should not display attachments for this parent
         if ($parent->attachmentsHiddenForParent($row, $parent_id, $parent_entity)) {
@@ -244,13 +241,10 @@ class Attachments extends CMSPlugin implements SubscriberInterface
      */
     public function onContentBeforeDisplay(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $row, $params, $page] = $event->getArguments();
-        } else {
-            $context = $event['context'];
-            $row = $event['subject'];
-            $params = $event['params'];
-        }
+        $context = $event['context'];
+        $row = $event['subject'];
+        $params = $event['params'];
+
         $input = $this->app->getInput();
         $view = $input->getCmd('view');
         $layout = $input->getCmd('layout');
@@ -277,7 +271,7 @@ class Attachments extends CMSPlugin implements SubscriberInterface
         AttachmentsJavascript::setupJavascript();
 
         // Always include the hide rule (since it may be needed to hide the custom tags)
-        HtmlHelper::stylesheet('media/com_attachments/css/attachments_hide.css');
+        AttachmentsAssets::useStyle('attachments_hide');
 
         // Get the article/parent handler
         PluginHelper::importPlugin('attachments');
@@ -343,13 +337,9 @@ class Attachments extends CMSPlugin implements SubscriberInterface
      */
     public function onContentAfterSave(Event $event)
     {
-        if (version_compare(JVERSION, '5', 'lt')) {
-            [$context, $item, $isNew] = $event->getArguments();
-        } else {
-            $context = $event->getArgument('context');
-            $item = $event->getArgument('subject');
-            $isNew = $event->getArgument('isNew');
-        }
+        $context = $event->getArgument('context');
+        $item = $event->getArgument('subject');
+        $isNew = $event->getArgument('isNew');
 
         if ($context == 'com_attachments.attachment') {
             // Do not do anything for this component's own items

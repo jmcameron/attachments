@@ -1,0 +1,93 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_attachments",
+    "version": "5.0.0",
+    "assets": [
+        {
+            "name": "attachments_hide",
+            "type": "style",
+            "uri": "com_attachments/attachments_hide.css"
+        },
+        {
+            "name": "attachments_list",
+            "type": "style",
+            "uri": "com_attachments/attachments_list.css"
+        },
+        {
+            "name": "attachments_list_dark",
+            "type": "style",
+            "uri": "com_attachments/attachments_list_dark.css",
+            "dependencies": [
+                "attachments_list"
+            ]
+        },
+        {
+            "name": "attachments_list_rtl",
+            "type": "style",
+            "uri": "com_attachments/attachments_list_rtl.css",
+            "dependencies": [
+                "attachments_list"
+            ]
+        },
+        {
+            "name": "attachments_admin",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin.css"
+        },
+        {
+            "name": "attachments_admin_dark",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin_dark.css",
+            "dependencies": [
+                "attachments_admin"
+            ]
+        },
+        {
+            "name": "attachments_admin_rtl",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin_rtl.css",
+            "dependencies": [
+                "attachments_admin"
+            ]
+        },
+        {
+            "name": "attachments_admin_form",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin_form.css"
+        },
+        {
+            "name": "attachments_admin_form_dark",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin_form_dark.css",
+            "dependencies": [
+                "attachments_admin_form"
+            ]
+        },
+        {
+            "name": "attachments_admin_form_rtl",
+            "type": "style",
+            "uri": "com_attachments/attachments_admin_form_rtl.css",
+            "dependencies": [
+                "attachments_admin_form"
+            ]
+        },
+        {
+            "name": "attachments_frontend_form",
+            "type": "style",
+            "uri": "com_attachments/attachments_frontend_form.css"
+        },
+        {
+            "name": "attachments_frontend_form_rtl",
+            "type": "style",
+            "uri": "com_attachments/attachments_frontend_form_rtl.css",
+            "dependencies": [
+                "attachments_frontend_form"
+            ]
+        },
+        {
+            "name": "attachments_help",
+            "type": "style",
+            "uri": "com_attachments/attachments_help.css"
+        }
+    ]
+}

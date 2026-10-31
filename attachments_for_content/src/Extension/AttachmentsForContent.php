@@ -20,6 +20,7 @@ use JMCameron\Plugin\AttachmentsPluginFramework\PlgAttachmentsFramework;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 
@@ -94,7 +95,7 @@ class AttachmentsForContent extends PlgAttachmentsFramework
         $view = $input->getCmd('view');
 
         // Handle category calls
-        if (($view == 'category') && (get_class($parent) == 'JTableContent')) {
+        if (($view == 'category') && ($parent instanceof Table)) {
             return 'category';
         }
 

@@ -15,6 +15,7 @@
 namespace JMCameron\Component\Attachments\Site\View\Attachments;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -77,11 +78,11 @@ class HtmlView extends BaseHtmlView
         }
 
         // if we have attachments, add the stylesheets for the attachments list
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
+        AttachmentsAssets::useStyle('attachments_list');
+        AttachmentsAssets::useStyle('attachments_list_dark');
         $lang = $app->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
+            AttachmentsAssets::useStyle('attachments_list_rtl');
         }
 
         // Add the default path

@@ -19,9 +19,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
@@ -83,7 +81,7 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
         $button = $this->onDisplay($event->getEditorId(), $jinput->getInt('id', null));
 
         if ($button && $this->_name) {
-            $subject->add(new Button($this->_name, $button->getProperties()));
+            $subject->add(new Button($this->_name, \get_object_vars($button)));
         }
     }
 
@@ -94,7 +92,7 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
      * @param int $asset The asset ID for the entity being edited
      * @param int $author The ID of the author of the entity
      *
-     * @return CMSObject button
+     * @return \stdClass|false|null Button configuration, or false/null when unavailable.
      */
     public function onDisplay($name, $id)
     {
@@ -120,7 +118,7 @@ class InsertAttachmentsIdToken extends CMSPlugin implements SubscriberInterface
 
         $link = "/index.php?option=com_attachments&tmpl=component&parent_id=" . $id;
         $link .= '&amp;editor=' . $name;
-        $button = new CMSObject();
+        $button = new \stdClass();
 
         // Finalize the [Add Attachment] button info
         $button->modal = true;

@@ -16,6 +16,7 @@ namespace JMCameron\Component\Attachments\Site\View\Upload;
 
 use JMCameron\Component\Attachments\Administrator\Field\AccessLevelsField;
 use JMCameron\Component\Attachments\Site\View\AttachmentsFormView;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -73,10 +74,10 @@ class HtmlView extends AttachmentsFormView
         $this->verify_url_checked = $attachment->url_verify ? 'checked="yes"' : '';
 
         // Add the stylesheets for the form
-        HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form.css');
+        AttachmentsAssets::useStyle('attachments_frontend_form');
         $lang = $app->getLanguage();
         if ($lang->isRTL()) {
-            HTMLHelper::stylesheet('media/com_attachments/css/attachments_frontend_form_rtl.css');
+            AttachmentsAssets::useStyle('attachments_frontend_form_rtl');
         }
 
         // Display the upload form

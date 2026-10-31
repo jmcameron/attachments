@@ -15,6 +15,7 @@
 namespace JMCameron\Plugin\System\ShowAttachments\Extension;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsJavascript;
 use JMCameron\Plugin\AttachmentsPluginFramework\AttachmentsPluginManager;
 use Joomla\CMS\Application\CMSApplication;
@@ -57,6 +58,7 @@ class ShowAttachments extends CMSPlugin implements SubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            'onBeforeCompileHead' => 'onBeforeCompileHead',
             'onBeforeRender' => 'onBeforeRender',
             'onAfterRender' => 'onAfterRender',
         ];
@@ -65,6 +67,43 @@ class ShowAttachments extends CMSPlugin implements SubscriberInterface
     public function onBeforeRender()
     {
         AttachmentsJavascript::setupModalJavascript();
+    }
+
+    public function onBeforeCompileHead()
+    {
+        $input = $this->app->getInput();
+        $parent_type = $input->getCmd('option');
+        $parent_entity = 'default';
+
+        if ($parent_type === 'com_categories') {
+            $parent_type = 'com_content';
+            $parent_entity = 'category';
+        }
+
+        if (!$parent_type || !PluginHelper::importPlugin('attachments')) {
+            return;
+        }
+
+        $apm = AttachmentsPluginManager::getAttachmentsPluginManager();
+        if (!$apm->attachmentsPluginInstalled($parent_type)) {
+            return;
+        }
+
+        $parent = $apm->getAttachmentsPlugin($parent_type);
+        $parent_entity = $parent->getCanonicalEntityId($parent_entity);
+        $view = $input->getCmd('view');
+        $layout = $input->getWord('layout');
+
+        if (!$parent->showAttachmentsInEditor($parent_entity, $view, $layout)) {
+            return;
+        }
+
+        AttachmentsAssets::useStyle('attachments_list');
+        AttachmentsAssets::useStyle('attachments_list_dark');
+
+        if ($this->app->getLanguage()->isRTL()) {
+            AttachmentsAssets::useStyle('attachments_list_rtl');
+        }
     }
 
     /**

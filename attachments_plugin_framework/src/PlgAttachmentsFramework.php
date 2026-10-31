@@ -16,10 +16,10 @@ namespace JMCameron\Plugin\AttachmentsPluginFramework;
 
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsDefines;
 use JMCameron\Component\Attachments\Site\Helper\AttachmentsHelper;
+use JMCameron\Component\Attachments\Site\Helper\AttachmentsAssets;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseDriver;
@@ -960,13 +960,13 @@ class PlgAttachmentsFramework extends CMSPlugin implements SubscriberInterface
 
             if ($html || $user_can_add) {
                 // Add the style sheet
-                HTMLHelper::stylesheet('media/com_attachments/css/attachments_list.css');
-                HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_dark.css');
+                AttachmentsAssets::useStyle('attachments_list');
+                AttachmentsAssets::useStyle('attachments_list_dark');
 
                 // Handle RTL styling (if necessary)
                 $lang = $this->app->getLanguage();
                 if ($lang->isRTL()) {
-                    HTMLHelper::stylesheet('media/com_attachments/css/attachments_list_rtl.css');
+                    AttachmentsAssets::useStyle('attachments_list_rtl');
                 }
             }
 
