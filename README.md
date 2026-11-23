@@ -1,4 +1,4 @@
-# attachments 5.0.0
+# Attachments 5.0.0
 
 ## Quick Start
 
@@ -6,9 +6,9 @@ Download <a href="https://github.com/jmcameron/attachments/releases/latest" targ
 
 ## Requirements
 
-Joomla 6.0+ : The plugin that needs to be enable has full name "Behaviour - Backward Compatibility 6" 
-Joomla 5.0+ : the extensions is also compatible with Joomla 6.0+
-Joomla 4.0+ : the extensions is compatible with Joomla 4.0+ only with lower that 5.0.0
+- **Joomla 6.0+** : (_without enabling "Behaviour - Backward Compatibility 6" plugin_)
+- **Joomla 5.0+** : the extensions is also compatible with Joomla 6.0+
+- **Joomla 4.0+** : the extensions is compatible with Joomla 4.0+ only with version lower that 5.0.0 (last version is [V4.2.5](https://github.com/jmcameron/attachments/releases/tag/v4.2.5)
 
 
 ## Translations
@@ -23,8 +23,8 @@ The other translations are managed with separate packages under repo [attachment
 
 ## 2026-10/31 version 5.0.0
 
-Fix issue [#206](/../../issues/206) Description and filename fields in Joomla6 backend are illegible
-Fix issue [#207](/../../issues/207) Joomla 6 deprecations (WIP)
+- Fix issue [#206](/../../issues/206) Description and filename fields in Joomla6 backend are illegible
+- Fix issue [#207](/../../issues/207) Joomla 6 deprecations (WIP)
 
 ## 2026-08-14 version 4.2.5
 
