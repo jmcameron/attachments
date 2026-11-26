@@ -69,14 +69,19 @@ if ($row_num == 'JGRID_HEADING_ROW_NUMBER') {
     $app = Factory::getApplication();
 for ($i = 0, $n = count($this->items); $i < $n; $i++) {
     $item = $this->items[$i];
+    $jsonFlags = JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE;
+    $arguments = [
+        json_encode(trim((string) $item->id), $jsonFlags),
+        json_encode(trim((string) $item->title), $jsonFlags),
+        json_encode(trim((string) $app->getInput()->get('object')), $jsonFlags),
+    ];
+    $onclick = 'window.parent.jSelectParentArticle(' . implode(', ', $arguments) . ');';
     ?>
         <tr class="<?php echo "row$k" ?>">
            <td><?php echo $i ?></td>
            <td>
                <a style="cursor: pointer;"
-                  onclick="window.parent.jSelectParentArticle('<?php echo $item->id; ?>',
-                          '<?php echo str_replace(array("'", "\""), array("\\'", ""), $item->title); ?>',
-                          '<?php echo $app->getInput()->get('object'); ?>');">
+                  onclick="<?php echo htmlspecialchars($onclick, ENT_QUOTES, 'UTF-8'); ?>">
            <?php echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8'); ?></a>
            </td>
            <td><?php echo $item->id; ?></td>
